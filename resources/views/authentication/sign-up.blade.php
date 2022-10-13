@@ -10,7 +10,7 @@
     <style>
         .login-main
         {
-            width: 750px !important;
+            width: 650px !important;
         }
     </style>
 @endsection
