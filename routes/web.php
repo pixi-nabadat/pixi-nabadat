@@ -26,11 +26,40 @@ Route::prefix('authentication')->group(function () {
     Route::view('maintenance', 'authentication.maintenance')->name('maintenance');
 });
 
-Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
-    Route::get('/', function () {
-       dd(auth()->user());
-    })->name('/');
-});
+// Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
+    #Country Module
+    Route::GET('country/index', [App\Http\Controllers\CountryController::class,'index'])->name('list.country');
+    Route::GET('country/create', [App\Http\Controllers\CountryController::class,'create'])->name('create.country');
+    Route::POST('country/store', [App\Http\Controllers\CountryController::class,'store'])->name('store.country');
+    Route::DELETE('country/delete/{id}', [App\Http\Controllers\CountryController::class,'delete'])->name('delete.country');
+    Route::GET('country/edit/{id}', [App\Http\Controllers\CountryController::class,'edit'])->name('edit.country');
+    Route::GET('country/show/{id}', [App\Http\Controllers\CountryController::class,'show'])->name('show.country');
+    Route::POST('country/update/{id}', [App\Http\Controllers\CountryController::class,'update'])->name('update.country');
+
+
+    #Governorate Module
+    Route::GET('governorate/index', [App\Http\Controllers\GovernorateController::class,'index'])->name('list.governorate');
+    Route::GET('governorate/create', [App\Http\Controllers\GovernorateController::class,'create'])->name('create.governorate');
+    Route::POST('governorate/store', [App\Http\Controllers\GovernorateController::class,'store'])->name('store.governorate');
+    Route::DELETE('governorate/delete/{id}', [App\Http\Controllers\GovernorateController::class,'delete'])->name('delete.governorate');
+    Route::GET('governorate/edit/{id}', [App\Http\Controllers\GovernorateController::class,'edit'])->name('edit.governorate');
+    Route::GET('governorate/show/{id}', [App\Http\Controllers\GovernorateController::class,'show'])->name('show.governorate');
+    Route::POST('governorate/update/{id}', [App\Http\Controllers\GovernorateController::class,'update'])->name('update.governorate');
+
+
+    #City Module
+    Route::GET('city/index', [App\Http\Controllers\CityController::class,'index'])->name('list.city');
+    Route::GET('city/create', [App\Http\Controllers\CityController::class,'create'])->name('create.city');
+    Route::POST('city/store', [App\Http\Controllers\CityController::class,'store'])->name('store.city');
+    Route::DELETE('city/delete/{id}', [App\Http\Controllers\CityController::class,'delete'])->name('delete.city');
+    Route::GET('city/edit/{id}', [App\Http\Controllers\CityController::class,'edit'])->name('edit.city');
+    Route::GET('city/show/{id}', [App\Http\Controllers\CityController::class,'show'])->name('show.city');
+    Route::POST('city/update/{id}', [App\Http\Controllers\CityController::class,'update'])->name('update.city');
+
+    #attachment routes
+    Route::POST('file/upload', [App\Http\Controllers\AttachmentController::class, 'upload']);
+    Route::POST('file/delete', [App\Http\Controllers\AttachmentController::class, 'delete'])->name('file.delete');
+// });
 
 Route::get('/clear-cache', function() {
     Artisan::call('config:cache');
@@ -40,3 +69,8 @@ Route::get('/clear-cache', function() {
     Artisan::call('route:clear');
     return "Cache is cleared";
 })->name('clear.cache');
+
+
+
+#TODO remove this
+

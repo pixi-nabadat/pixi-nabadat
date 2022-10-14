@@ -15,10 +15,8 @@ return new class extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
-            $table->string('slug', 191);
+            $table->string('slug', 191)->nullable();
             $table->text('title');
-            $table->string('iso_code_3', 3)->nullable();
-            $table->string('iso_code_2', 3)->nullable();
             $table->foreignIdFor(\App\Models\Currency::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
