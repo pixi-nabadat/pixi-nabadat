@@ -97,7 +97,7 @@
 
                 <div class="form-group">
                     <div class="mb-2">
-                        <div class="col-form-label">{{__('lang.cities')}}</div>
+                        <label  class="col-form-label" for="select_city">{{__('lang.cities')}}</label>
                         <select id="select_city" name="location_id" class="js-example-basic-single col-sm-12 @error('location_id') is-invalid @enderror">
 
                             <option value="AL">Alabama</option>
