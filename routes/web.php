@@ -25,6 +25,7 @@ Route::prefix('authentication')->group(function () {
     Route::view('reset-password', 'authentication.reset-password')->name('reset-password');
     Route::view('maintenance', 'authentication.maintenance')->name('maintenance');
 });
+Route::get('/', function () {})->middleware('auth')->name('/');
 
 Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::get('/', function () {

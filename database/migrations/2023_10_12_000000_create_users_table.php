@@ -17,9 +17,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('phone')->unique();
+            $table->tinyInteger('type')->default(\App\Models\User::CUSTOMERTYPE);
+            $table->foreignIdFor(Location::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->timestamp('last_login')->nullable();
+            $table->date('date_of_birth');
+            $table->boolean('is_active')->default(User::ACTIVE);
+            $table->string('description');
             $table->timestamps();
         });
     }
