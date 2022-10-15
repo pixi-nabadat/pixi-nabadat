@@ -23,3 +23,7 @@ Route::group(['prefix'=>'auth'],function (){
     Route::post('password/forget',  PhoneVerifyController::class);
     Route::post('password/reset', RestPasswordController::class);
 });
+
+Route::fallback(function() {
+    return apiResponse(message:'Invalid Route',code: 404 );
+});
