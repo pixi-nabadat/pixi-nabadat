@@ -37,7 +37,7 @@ class UsersDataTable extends DataTable
      */
     public function query(UserService $userService): QueryBuilder
     {
-        return $userService->queryGet($this->filters);
+        return $userService->queryGet($this->filters)->with('location');
     }
 
     /**
