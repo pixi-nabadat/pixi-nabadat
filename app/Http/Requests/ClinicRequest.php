@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ClinicRequest extends FormRequest
 {
@@ -24,10 +26,16 @@ class ClinicRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'',
-            'name'=>'',
-            'name'=>'',
-            'name'=>'',
+            'name'=>'required|string',
+            'address'=>'string|required',
+            'lat'=>'nullable|string',
+            'lng'=>'nullable|string',
+            'phones'=>'string|required',
+            'doctor_id'=>['integer',
+                Rule::exists('users', 'id')
+                    ->where('type', User::DOCTORTYPE),
+                ],
+            'location_id'=>'required|exists:locations,id',
         ];
     }
 }

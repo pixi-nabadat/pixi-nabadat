@@ -20,11 +20,11 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone')->unique();
             $table->tinyInteger('type')->default(\App\Models\User::CUSTOMERTYPE);
-            $table->foreignIdFor(Location::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignIdFor(\App\Models\Location::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->timestamp('last_login')->nullable();
             $table->date('date_of_birth');
-            $table->boolean('is_active')->default(User::ACTIVE);
-            $table->string('description');
+            $table->boolean('is_active')->default(\App\Models\User::ACTIVE);
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

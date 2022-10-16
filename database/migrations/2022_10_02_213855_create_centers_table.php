@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('phone'); //cast array accept multiple phones
             $table->foreignIdFor(\App\Models\Location::class);
             $table->text('description')->nullable();
+            $table->string('address')->nullable();
+            $table->string('lat')->nullable();
+            $table->string('lng')->nullable();
             $table->boolean('is_active')->default(\App\Models\Center::ACTIVE);
             $table->boolean('is_support_auto_service')->default(\App\Models\Center::NON_SUPPORT_AUTO_SERVICE);
             $table->timestamps();

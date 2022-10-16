@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\ClinicController;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -61,6 +63,12 @@ Route::get('/', function () {})->middleware('auth')->name('/');
     Route::POST('file/upload', [App\Http\Controllers\AttachmentController::class, 'upload']);
     Route::POST('file/delete', [App\Http\Controllers\AttachmentController::class, 'delete'])->name('file.delete');
 // });
+Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
+
+    Route::resource('doctors',DoctorController::class);
+    Route::resource('clinics',ClinicController::class);
+
+});
 
 Route::get('/clear-cache', function() {
     Artisan::call('config:cache');

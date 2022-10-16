@@ -13,7 +13,7 @@ class CenterRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class CenterRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string',
+            'address' => 'string|required',
+            'lat' => 'nullable|string',
+            'lng' => 'nullable|string',
+            'phones' => 'array|min:1|required',
+            'location_id' => 'required|exists:locations,id',
         ];
     }
 }
