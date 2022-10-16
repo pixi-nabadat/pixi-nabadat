@@ -29,7 +29,7 @@ Route::prefix('authentication')->group(function () {
 });
 Route::get('/', function () {})->middleware('auth')->name('/');
 
-// Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
+Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     #Country Module
     Route::GET('country/index', [App\Http\Controllers\CountryController::class,'index'])->name('list.country');
     Route::GET('country/create', [App\Http\Controllers\CountryController::class,'create'])->name('create.country');
@@ -62,8 +62,6 @@ Route::get('/', function () {})->middleware('auth')->name('/');
     #attachment routes
     Route::POST('file/upload', [App\Http\Controllers\AttachmentController::class, 'upload']);
     Route::POST('file/delete', [App\Http\Controllers\AttachmentController::class, 'delete'])->name('file.delete');
-// });
-Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     Route::resource('doctors',DoctorController::class);
     Route::resource('clinics',ClinicController::class);
