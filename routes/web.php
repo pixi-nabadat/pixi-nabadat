@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ClinicController;
-
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ClientController;
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
     if (!in_array($locale, ['en', 'ar'])) {
@@ -27,12 +28,13 @@ Route::prefix('authentication')->group(function () {
     Route::view('reset-password', 'authentication.reset-password')->name('reset-password');
     Route::view('maintenance', 'authentication.maintenance')->name('maintenance');
 });
-Route::get('/', function () {})->middleware('auth')->name('/');
+
 
 Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
-
+    Route::get('/',HomeController::class)->name('home');
     Route::resource('doctors',DoctorController::class);
     Route::resource('clinics',ClinicController::class);
+    Route::resource('clients',ClientController::class);
 
 });
 

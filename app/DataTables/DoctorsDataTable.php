@@ -3,19 +3,15 @@
 namespace App\DataTables;
 
 use App\Models\User;
-use App\Services\UserService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class UsersDataTable extends DataTable
+class DoctorsDataTable extends DataTable
 {
-
     /**
      * Build DataTable class.
      *
@@ -25,19 +21,19 @@ class UsersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'users.action')
+            ->addColumn('action', 'doctorsdatatable.action')
             ->setRowId('id');
     }
 
     /**
      * Get query source of dataTable.
      *
+     * @param User $model
      * @return \Illuminate\Database\Eloquent\Builder
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function query(UserService $userService): QueryBuilder
+    public function query(User $model): QueryBuilder
     {
-        return $userService->queryGet($this->filters);
+        return $model->newQuery()->where('type',User::DOCTORTYPE);
     }
 
     /**
@@ -48,15 +44,18 @@ class UsersDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('users-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->responsive()
-                    ->orderBy(1)
-                    ->parameters([
-                        'scrollX' => true,
-                        'lengthMenu' => [[25, 50,100,"All"], [25, 50,100,"All"]]
-                    ]);
+            ->setTableId('doctorsdatatable-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->dom('Bfrtip')
+            ->orderBy(1)
+            ->buttons(
+                Button::make('create'),
+                Button::make('export'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            );
     }
 
     /**
@@ -68,11 +67,12 @@ class UsersDataTable extends DataTable
     {
         return [
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
             Column::make('id'),
+            Column::make('add your columns'),
             Column::make('created_at'),
             Column::make('updated_at'),
         ];
@@ -85,6 +85,6 @@ class UsersDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Users_' . date('YmdHis');
+        return 'Doctors_' . date('YmdHis');
     }
 }
