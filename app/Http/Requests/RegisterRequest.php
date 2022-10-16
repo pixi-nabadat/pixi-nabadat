@@ -31,7 +31,8 @@ class RegisterRequest extends BaseRequest
             'location_id'=>'required|integer|exists:locations,id'
         ];
     }
-//
+
+//    todo trans all validation message
 //    public function messages()
 //    {
 //       return[
