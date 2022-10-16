@@ -23,6 +23,7 @@ class RegisterRequest extends BaseRequest
     {
         return [
             'name'=>'required|string',
+            'user_name'=>'required|string',
             'email'=>'required|email|unique:users',
             'phone'=>'required|numeric|unique:users',
             'password'=>'required|string|confirmed|min:6',
