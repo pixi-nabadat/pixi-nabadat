@@ -53,7 +53,7 @@ abstract class QueryFilter
      */
     public function filters()
     {
-        return $this->request->all();
+        return $this->request;
     }
 
 }
