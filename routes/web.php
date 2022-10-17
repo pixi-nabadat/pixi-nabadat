@@ -29,7 +29,7 @@ Route::prefix('authentication')->group(function () {
 });
 Route::get('/', function () {})->middleware('auth')->name('/');
 
-Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
+// Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     #Country Module
     Route::GET('country/index', [App\Http\Controllers\CountryController::class,'index'])->name('list.country');
     Route::GET('country/create', [App\Http\Controllers\CountryController::class,'create'])->name('create.country');
@@ -65,8 +65,12 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     Route::resource('doctors',DoctorController::class);
     Route::resource('clinics',ClinicController::class);
+    Route::resource('centers','App\Http\Controllers\CentersController');
 
-});
+    Route::get('gevernorate/all', [App\Http\Controllers\CentersController::class, 'allGov'])->name('getcovernorates');
+    Route::get('city/all', [App\Http\Controllers\CentersController::class, 'allCities'])->name('getcities');
+
+// });
 
 Route::get('/clear-cache', function() {
     Artisan::call('config:cache');

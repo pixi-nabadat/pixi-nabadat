@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Location;
 use App\Repositories\LocationRepository;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Expr\FuncCall;
+
 class LocationService extends BaseService
 {
     public function storeLocation($locationData)
@@ -110,6 +112,12 @@ class LocationService extends BaseService
     public function getAllGovernorates()
     {
         return Location::withDepth()->having('depth', '=', 1)->where('is_active', 1)->get();
+    }
+
+    public Function getallGovernorateJosn($id)
+    {
+        return Location::where('parent_id', $id)->get();
+        // return $all;
     }
 
     public function getLocation($id)
