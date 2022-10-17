@@ -1,17 +1,17 @@
 <div class="sidebar-wrapper">
 	<div>
 		<div class="logo-wrapper">
-			<a href="{{route('/')}}"><img class="img-fluid for-light" src="{{asset('assets/images/logo/logo.png')}}" alt=""><img class="img-fluid for-dark" src="{{asset('assets/images/logo/logo_dark.png')}}" alt=""></a>
+			<a href="{{route('home')}}"><img class="img-fluid for-light" src="{{asset('assets/images/logo/logo.png')}}" alt=""><img class="img-fluid for-dark" src="{{asset('assets/images/logo/logo_dark.png')}}" alt=""></a>
 			<div class="back-btn"><i class="fa fa-angle-left"></i></div>
 			<div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
 		</div>
-		<div class="logo-icon-wrapper"><a href="{{route('/')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a></div>
+		<div class="logo-icon-wrapper"><a href="{{route('home')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a></div>
 		<nav class="sidebar-main">
 			<div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
 			<div id="sidebar-menu">
 				<ul class="sidebar-links" id="simple-bar">
 					<li class="back-btn">
-						<a href="{{route('/')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a>
+						<a href="{{route('home')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a>
 						<div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
 					</li>
 					<li class="sidebar-main-title">
@@ -72,7 +72,7 @@
 							<i data-feather="git-pull-request"> </i><span>{{ trans('lang.File manager') }}</span>
 						</a>
 					</li>
-					<li class="sidebar-list">  
+					<li class="sidebar-list">
 						<label class="badge badge-info">{{ trans('lang.Latest') }}</label>
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='kanban' ? 'active' : '' }}" href="{{route('kanban')}}">
 							<i data-feather="monitor"> </i><span>{{ trans('lang.Kanban Board') }}</span>
@@ -260,7 +260,7 @@
 							<li><a href="{{route('popover')}}" class="{{ Route::currentRouteName()=='popover' ? 'active' : '' }}">Popover</a></li>
 							<li><a href="{{route('tooltip')}}" class="{{ Route::currentRouteName()=='tooltip' ? 'active' : '' }}">Tooltip</a></li>
 							<li><a href="{{route('loader')}}" class="{{ Route::currentRouteName()=='loader' ? 'active' : '' }}">Spinners</a></li>
-							<li><a href="{{route('dropdown')}}" class="{{ Route::currentRouteName()=='dropdown' ? 'active' : '' }}">Dropdown</a></li>  
+							<li><a href="{{route('dropdown')}}" class="{{ Route::currentRouteName()=='dropdown' ? 'active' : '' }}">Dropdown</a></li>
 							<li><a href="{{route('accordion')}}" class="{{ Route::currentRouteName()=='accordion' ? 'active' : '' }}">Accordion</a></li>
 							<li>
 								<a class="submenu-title {{ in_array(Route::currentRouteName(), ['tab-bootstrap','tab-material']) ? 'active' : '' }}" href="#">Tabs
@@ -365,7 +365,7 @@
 						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/charts' ? 'active' : '' }}" href="#"><i data-feather="bar-chart"></i><span>{{ trans('lang.Charts') }}</span>
 							<div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/charts' ? 'down' : 'right' }}"></i></div>
 						</a>
-						<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/charts' ? 'block;' : 'none;' }}"> 
+						<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/charts' ? 'block;' : 'none;' }}">
 							<li><a href="{{route('echarts')}}" class="{{ Route::currentRouteName()=='echarts' ? 'active' : '' }}">Echarts</a></li>
 							<li><a href="{{route('chart-apex')}}" class="{{ Route::currentRouteName()=='chart-apex' ? 'active' : '' }}">Apex Chart</a></li>
 		                    <li><a href="{{route('chart-google')}}" class="{{ Route::currentRouteName()=='chart-google' ? 'active' : '' }}">Google Chart</a></li>

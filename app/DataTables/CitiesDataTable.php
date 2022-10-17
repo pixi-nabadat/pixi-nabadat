@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Location;
+use App\Services\LocationService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -27,26 +28,19 @@ class CitiesDataTable extends DataTable
                 return view('dashboard.locations.city.action',compact('location'))->render();
             })
             ->addcolumn('title', function(Location $location){
-                // $title = json_decode($location->title ?? []);
                 return $location->title ;
-            })
-            // ->addcolumn('title_en', function(Location $location){
-            //     $title = json_decode($location->title ?? []);
-            //     return $title->en ??'';
-            // })
-            ;
+            });
     }
 
-  /**
+    /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Location $model
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param LocationService $locationService
      */
-    public function query(Location $model)
+    public function query(LocationService $locationService)
     {
-       return $model->withDepth()->having('depth', '=', 2)->where('is_active', 1);
-        //   return $model->whereIsLeaf();
+       return $locationService->queryGet($this->filters);
+
     }
 
     /**
@@ -63,9 +57,9 @@ class CitiesDataTable extends DataTable
                 'dom'     => 'Blfrtip',
                 'order'   => [[0, 'desc']],
                 "lengthMenu" => [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                // 'buttons'      => ['export', 'print', 'create'],
-                // 'buttons'      => ['ADD'],
-                // 'language' => ['url' => asset('dashboard/assets/js/ar-datatable.json')],
+//                 'buttons'      => ['export', 'print', 'create'],
+//                 'buttons'      => ['ADD'],
+//                 'language' => ['url' => asset('dashboard/assets/js/ar-datatable.json')],
 
                 'responsive'=>true,
                 "bSort" => false
@@ -95,11 +89,6 @@ class CitiesDataTable extends DataTable
                 'data'=>'title',
                 'title'=> 'title',
             ],
-            // [
-            //     'name'=>'title_en',
-            //     'data'=>'title_en',
-            //     'title_en'=> 'title_en',
-            // ],
             [
                 'name'=>'action',
                 'data'=>'action',

@@ -3,117 +3,61 @@
 namespace App\Services;
 
 use App\Models\Location;
-use App\Repositories\LocationRepository;
-use Illuminate\Support\Facades\Auth;
+use App\QueryFilters\LocationsFilter;
+
 class LocationService extends BaseService
 {
-    public function storeLocation($locationData)
+    /**
+     * @param array $filter
+     * @return mixed
+     */
+    public function queryGet(array $filter = [])
     {
-        try {
-            $data = [];
-            if (!empty($locationData)) {
-                $data['slug'] = $locationData['slug'];
-                $data['title'] = [
-                    'en' => $locationData['title_en'],
-                    'ar' => $locationData['title_ar'],
-                ];
-                $data['created_by'] = Auth::user()->id ?? 1;
-                $data['currency_id'] = $locationData['currency_id'] ?? NULL;
-                $data['parent_id'] = $locationData['parent_id'] ?? NULL;
-                $data['is_active'] = $locationData['is_active'] ?? 0;
-            }
-            Location::create($data);
-            $toast = [
-                'type'=>'success',
-                'title'=>'Success',
-                'message'=> 'Country Saved Successfully'
-            ];
-            return redirect()->back()->with('toast',$toast);
-        } catch(\Exception $ex) {
-            $toast =[
-                'type'=>'error',
-                'title'=>'error',
-                'message'=> $ex->getMessage(),
-            ];
-            return redirect()->back()->with('toast',$toast);
-        }
+        $result = Location::query();
+        return $result->filter(new LocationsFilter($filter));
     }
 
-    public function updateLocation($id, $locationData)
+    /**
+     * @param array $filters
+     * @return mixed
+     */
+    public function getAll(array $filters = [])
     {
-        try{
-            if(!empty($locationData['slug'])) {
-                $countryData['slug'] = $locationData['slug'];
-            }
-            if(!empty($locationDatatitle_en)) {
-               $translatedTitle['en'] = $locationData['title_en'];
-            }
-            if(!empty($locationData['title_ar'])) {
-               $translatedTitle['ar'] = $locationData['title_ar'];
-            }
-            $countryData['title'] = $translatedTitle;
-            if(!empty($locationData['currency_id'])) {
-                $countryData['currency_id'] = $locationData['currency_id'];
-            }
-            if(!empty($locationData['parent_id'])) {
-                $countryData['parent_id'] = $locationData['parent_id'];
-            }
-            if(!isset($locationData['is_active'])) {
-                $countryData['is_active'] = $locationData['is_active'];
-            }
-            if(!empty($countryData)) {
-                Location::where('id', $id)->update($countryData);
-                $toast = [
-                    'type'=>'success',
-                    'title'=>'Success',
-                    'message'=> 'Country Updated Successfully'
-                ];
-                return redirect()->back()->with('toast',$toast);
-            }
-            return true;
-        } catch(\Exception $ex) {
-            $toast =[
-                'type'=>'error',
-                'title'=>'error',
-                'message'=> $ex->getMessage(),
-            ];
-            return redirect()->back()->with('toast',$toast);
-        }
+        return $this->queryGet($filters)->get();
     }
 
-    public function deleteLocation($id)
+    /**
+     * @param array $locationData
+     * @return mixed
+     */
+    public function store(array $locationData = []): mixed
     {
-        try {
-            $location = Location::where('id', $id)->first();
-            $location->delete();
-            $toast = [
-                'type'=>'errror',
-                'title'=>'Success',
-                'message'=> 'Country Deleted Successfully'
-            ];
-            return redirect()->back()->with('toast',$toast);
-        } catch(\Exception $ex) {
-            $toast =[
-                'type'=>'error',
-                'title'=>'error',
-                'message'=> $ex->getMessage(),
-            ];
-            return redirect()->back()->with('toast',$toast);
-        }
+        return Location::create($locationData);
     }
 
-    public function getAllCountries()
+    /**
+     * @param int $id
+     * @param array $locationData
+     * @return false
+     */
+    public function update(int $id,array $locationData): bool
     {
-        return Location::whereIsRoot()->where('is_active', 1)->get();
+        $location = Location::find($id);
+        if ($location)
+            return $location->update($locationData);
+        return false;
     }
 
-    public function getAllGovernorates()
+    public function delete($id): bool
     {
-        return Location::withDepth()->having('depth', '=', 1)->where('is_active', 1)->get();
+        $location = Location::find($id);
+        if ($location)
+            return $location->delete();
+        return false;
     }
 
-    public function getLocation($id)
+    public function getLocationById($id)
     {
-        return Location::where('id', $id)->first();
+        return Location::find($id);
     }
 }
