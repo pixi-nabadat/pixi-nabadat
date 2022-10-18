@@ -33,6 +33,8 @@ Route::prefix('authentication')->group(function () {
 Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::get('/',HomeController::class)->name('home');
     Route::get('doctors/changeStatus/{doctor}',[DoctorController::class,'changeStatus'])->name('doctors.changeStatus');
+    Route::get('doctors/destroy/{doctor}',[DoctorController::class,'destroy'])->name('doctors.destroy');
+
     Route::resource('doctors',DoctorController::class);
     Route::resource('clinics',ClinicController::class);
     Route::resource('clients',ClientController::class);
