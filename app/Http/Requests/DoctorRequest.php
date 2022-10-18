@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class RegisterRequest extends BaseRequest
+class DoctorRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,16 +23,15 @@ class RegisterRequest extends BaseRequest
     {
         return [
             'name'=>'required|string',
-            'user_name'=>'required|string',
             'email'=>'required|email|unique:users',
             'phone'=>'required|numeric|unique:users',
             'password'=>'required|string|confirmed|min:6',
             'date_of_birth'=>'required|date',
-            'location_id'=>'required|integer|exists:locations,id'
+            'location_id'=>'required|integer|exists:locations,id',
+            'description'=>'nullable|string'
         ];
     }
-
-//    todo trans all validation message
+//
 //    public function messages()
 //    {
 //       return[
