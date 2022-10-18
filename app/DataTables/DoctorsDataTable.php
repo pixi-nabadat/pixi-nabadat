@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\User;
+
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -21,8 +22,12 @@ class DoctorsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'doctorsdatatable.action')
-            ->setRowId('id');
+        ->addColumn('action', function(User $doctor){
+            return view('dashboard.Doctors.action',compact('doctor'))->render();
+        })
+        ->addcolumn('name', function(User $doctor){
+            return $doctor->name ;
+        });
     }
 
     /**
@@ -66,16 +71,15 @@ class DoctorsDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
+            Column::make('name'),
+            Column::make('email'),
+            Column::make('phone'),
+            Column::make('date_of_birth'),
             Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
-        ];
+            ->exportable(false)
+            ->printable(false)
+            ->addClass('text-center'),
+        ];  
     }
 
     /**
