@@ -21,9 +21,9 @@ class StoreLocationRequest extends BaseRequest
      */
     public function rules()
     {
-        $rul =   [
-            'title_en' => 'required|string',
-            'title_ar' => 'required|string',
+        $rules =   [
+            'title.ar' => 'required|string',
+            'title.en' => 'required|string',
         ];
 
         if (isset($this->parent_id)) {
@@ -37,10 +37,8 @@ class StoreLocationRequest extends BaseRequest
     public function messages()
     {
         return [
-            'title_en.string' => __('lang.title_en_should_be_string'),
-            'title_en.required' => __('lang.title_en_should_be_required'),
-            'title_ar.required' => __('lang.title_ar_should_be_required'),
-            'title_en.required' => __('lang.title_ar_should_be_required'),
+            'title.*.string' => __('lang.title_en_should_be_string'),
+            'title.*.required' => __('lang.title_in_ar__should_be_required'),
             'currency_id.required' => __('lang.currency_should_be_required'),
             'parent_id.required' => __('lang.parent_should_be_required'),
         ];

@@ -5,9 +5,6 @@
 @section('breadcrumb-title')
     <h3>{{trans('lang.clinics')}}</h3>
 @endsection
-@section('css')
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/datatables.css')}}">
-@endsection
 
 @section('breadcrumb-items')
     <li class="breadcrumb-item">{{trans('lang.dashboard')}}</li>
@@ -40,6 +37,5 @@
 @endsection
 
 @section('script')
-    <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
     {!! $dataTable->scripts() !!}
 @endsection

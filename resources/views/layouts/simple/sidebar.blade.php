@@ -14,13 +14,27 @@
 						<a href="{{route('home')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a>
 						<div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
 					</li>
-					{{-- <li class="sidebar-main-title">
+					<li class="sidebar-main-title">
 						<div>
 							<h6 class="lan-1">{{ trans('lang.General') }} </h6>
                      		<p class="lan-2">{{ trans('lang.general_routes') }}</p>
 						</div>
 					</li>
 					<li class="sidebar-list">
+
+                        {{--                        start locations ------------------------------------------}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/locations' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.locations') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/locations' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-4 {{ Route::currentRouteName()==route('country.index') ? 'active' : '' }}" href="{{route('country.index')}}">{{ trans('lang.countries') }}</a></li>
+                            <li><a class="lan-4 {{ Route::currentRouteName()==route('governorate.index') ? 'active' : '' }}" href="{{route('governorate.index')}}">{{ trans('lang.governorates') }}</a></li>
+                            <li><a class="lan-4 {{ Route::currentRouteName()==route('city.index') ? 'active' : '' }}" href="{{route('city.index')}}">{{ trans('lang.cities') }}</a></li>
+                        </ul>
+
+                        {{--                        end locations --------------------------------------}}
+
+
 
                         {{--                        start clients ------------------------------------------}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/doctors' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.clients') }}</span>
@@ -55,7 +69,7 @@
                         </ul>
 {{--                        end clincs ------------------------------------------}}
 					</li>
-                </ul> --}}
+                </ul>
 			</div>
 			<div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
 		</nav>

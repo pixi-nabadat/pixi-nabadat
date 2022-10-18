@@ -23,7 +23,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        return view('dashboard.Doctors.create');
+        return view('dashboard.doctors.create');
     }
 
     /**

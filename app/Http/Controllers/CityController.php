@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Location;
 use App\DataTables\CitiesDataTable;
 use App\Services\LocationService;
 use App\Http\Requests\StoreLocationRequest;
@@ -11,50 +10,95 @@ use App\Http\Requests\StoreLocationRequest;
 class CityController extends Controller
 {
 
-    private function LocationServiceObj(): LocationService
+    public function __construct(private LocationService $locationService)
     {
-        return new LocationService();
+
     }
 
-
-    public function index(CitiesDataTable $dataTables)
+    public function index(CitiesDataTable $dataTables,Request $request)
     {
-        return $dataTables->render('dashboard.locations.city.index');
+        $request = $request->merge(['depth'=>2,'is_active'=>$request->is_active??1]);
+        return $dataTables->with(['filters'=>$request->all()])->render('dashboard.locations.city.index');
     }
 
     public function create()
     {
-        $governates = Location::withDepth()->having('depth', '=', 1)->get();
-        return view('dashboard.locations.city.form')->with('governates' , $governates);
+        $filter = ['depth'=> 1];
+        $governorates = $this->locationService->getAll($filter);
+        return view('dashboard.locations.city.create',['governorates'=>$governorates]);
     }
 
     public function store(StoreLocationRequest $request)
     {
-        $cityData = $request->all();
-        return $this->LocationServiceObj()->storeLocation($cityData);
+        try {
+            return $this->locationService->store($request->all());
+        }catch (\Exception $exception)
+        {
+            $toast=[
+                'type'=>'error',
+                'title'=>trans('lang.error'),
+                'message'=>$exception->getMessage()
+            ];
+            return back()->with('toast',$toast);
+        }
     }
 
     public function edit($id)
     {
-        $city = $this->LocationServiceObj()->getLocation($id);
-        $city->title_translations = $city->getTranslations('title');
-        $governates = $this->LocationServiceObj()->getAllGovernorates();
-        return view('dashboard.locations.city.edit')->with(['city' => $city, 'governates' =>$governates]);
+        $city = $this->locationService->getLocationById($id);
+        if (!$city)
+        {
+            $toast = [
+              'type'=>'error',
+              'title'=>trans('error'),
+              'message'=>trans('lang.notfound')
+            ];
+            return back()->with('toast',$toast);
+        }
+        $filter =[
+            'depth'=> 1,
+            'is_active'=>1
+        ];
+        $governorates = $this->locationService->getAll($filter);
+        return view('dashboard.locations.city.edit',['city' => $city, 'governorates' =>$governorates]);
     }
 
     public function update($id, StoreLocationRequest $request)
     {
-        return $this->LocationServiceObj->updateLocation($id, $request);
+        try {
+            $this->locationService->update($id, $request->all());
+            $toast=[
+                'title'=>trans('lang.success'),
+                'message'=>trans('lang.success')
+            ];
+            return  redirect(route('city.index'))->with('toast',$toast);
+        }catch (\Exception $exception)
+        {
+            $toast = [
+                'type'=>'error',
+                'title'=>trans('lang.error'),
+                'message'=>$exception->getMessage()
+            ];
+            return back()->with('toast',$toast);
+        }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
-        return $this->LocationServiceObj()->deleteLocation($id);
+        try {
+            $result =  $this->locationService->delete($id);
+            if(!$result)
+                return apiResponse(message: trans('lang.not_found'),code: 404);
+            return apiResponse(message: trans('lang.success'));
+
+        }catch (\Exception $exception)
+        {
+            return apiResponse(message: $exception->getMessage(),code: 422);
+        }
     }
 
     public function show($id)
     {
-        $city = $this->LocationServiceObj()->getLocation($id);
-        return view('dashboard.locations.city.show')->with('city', $city);
+
     }
 }
