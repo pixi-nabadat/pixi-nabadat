@@ -106,11 +106,8 @@
                                         <div class="mb-2">
                                             <div class="col-form-label">{{__('lang.governorates')}}</div>
                                             <select id="select_governorate" class="js-example-basic-single col-sm-12">
-                                                <option value=1>Ala  bama</option>
-                                                <option value=2>Wyoming</option>
-                                                <option value=3>Peter</option>
-                                                <option value=4>Hanry Die</option>
-                                                <option value=5>John Doe</option>
+                                                <option value=2>Cairo</option>
+                                                <option value=6>Banisuef</option>
                                             </select>
                                         </div>
                                     </div>
@@ -121,11 +118,8 @@
                                         <div class="mb-2">
                                             <label  class="col-form-label" for="select_city">{{__('lang.cities')}}</label>
                                             <select id="select_city" name="location_id" class="js-example-basic-single col-sm-12 @error('location_id') is-invalid @enderror">
-                                                <option value=1>Ala  bama</option>
-                                                <option value=2>Wyoming</option>
-                                                <option value=3>Peter</option>
-                                                <option value=4>Hanry Die</option>
-                                                <option value=5>John Doe</option>
+                                                <option value=2>Cairo</option>
+                                                <option value=6>Banisuef</option>
                                             </select>
                                         </div>
                                         @error('location_id')

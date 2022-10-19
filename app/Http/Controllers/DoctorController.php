@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\DoctorsDataTable;
 use App\DataTables\UsersDataTable;
 use App\Http\Requests\DoctorRequest;
+use App\Models\Location;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -24,8 +25,10 @@ class DoctorController extends Controller
     } //end of index
 
     public function create()
-    {
+    { 
+
         return view('dashboard.Doctors.create');
+
     } //end of create
 
     public function show($id)
@@ -57,11 +60,11 @@ class DoctorController extends Controller
         }
     } //end of store
 
-    public function update(Request $request, $id)
+    public function update(DoctorRequest $request, $id)
     {
 
         try {
-
+            $request->validated();
             $request['type'] = User::DOCTORTYPE;
             $this->UserService->update($id,$request->all());
 
@@ -96,4 +99,5 @@ class DoctorController extends Controller
         $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'Doctor status change Successfully'];
         return redirect()->route('doctors.index')->with('toast', $toast);
     } //end of changeStatus
+
 }

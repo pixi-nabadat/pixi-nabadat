@@ -24,6 +24,7 @@ Route::prefix('authentication')->group(function () {
         Route::get('sign-up', [AuthController::class,'registerForm'])->name('sign-up');
         Route::post('sign-up', [AuthController::class,'register'])->name('sign-up');
     });
+
     Route::view('forget-password', 'authentication.forget-password')->name('forget-password');
     Route::view('reset-password', 'authentication.reset-password')->name('reset-password');
     Route::view('maintenance', 'authentication.maintenance')->name('maintenance');
@@ -33,8 +34,7 @@ Route::prefix('authentication')->group(function () {
 Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::get('/',HomeController::class)->name('home');
     Route::get('doctors/changeStatus/{doctor}',[DoctorController::class,'changeStatus'])->name('doctors.changeStatus');
-    Route::get('doctors/destroy/{doctor}',[DoctorController::class,'destroy'])->name('doctors.destroy');
-
+    
     Route::resource('doctors',DoctorController::class);
     Route::resource('clinics',ClinicController::class);
     Route::resource('clients',ClientController::class);

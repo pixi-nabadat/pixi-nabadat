@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
+
+
 class DoctorRequest extends BaseRequest
 {
     /**
@@ -21,31 +24,49 @@ class DoctorRequest extends BaseRequest
      */
     public function rules()
     {
+        if (request()->routeIS('doctors.store')) {
+
+            $userNameRule = 'unique:users';
+            $emailRule = 'unique:users';
+            $phoneRule = 'unique:users';
+            $password ='required|string|min:6';
+
+        } elseif (request()->routeIS('doctors.update')) {
+
+            $userNameRule = 'unique:users,user_name,' . $this->doctor;
+            $emailRule = 'unique:users,email,' . $this->doctor;
+            $phoneRule = 'unique:users,phone,' . $this->doctor;
+            $password ='';
+            
+        }
+
         return [
-            'user_name'=>'required|unique:users',
-            'name'=>'required',
-            'email'=>'required|email|unique:users',
-            'phone'=>'required|numeric|unique:users',
-            'password'=>'required|string|confirmed|min:6',
-            'date_of_birth'=>'required|date',
-            'location_id'=>'required|integer|exists:locations,id',
-            'description'=>'nullable|string'
+            
+            'user_name' => ['required', $userNameRule],
+            'name' => 'required',
+            'email' => ['required', 'email', $emailRule],
+            'phone' => ['required', 'numeric', $phoneRule],
+            'password' => ['confirmed',$password],
+            'date_of_birth' => 'required|date',
+            'location_id' => 'required|integer|exists:locations,id',
+            'description' => 'nullable|string'
+
         ];
     }
-//
-//    public function messages()
-//    {
-//       return[
-//           'name.required'=>__(''),
-//           'email.required'=>__(''),
-//           'email.email'=>__(''),
-//           'phone.required'=>__(''),
-//           'phone.numeric'=>__(''),
-//           'password.required'=>__(''),
-//           'password.confirmed'=>__(''),
-//           'password.min'=>__(''),
-//           'date_of_birth.required'=>__(''),
-//           'location_id.required'=>__(''),
-//       ];
-//    }
+    //
+    //    public function messages()
+    //    {
+    //       return[
+    //           'name.required'=>__(''),
+    //           'email.required'=>__(''),
+    //           'email.email'=>__(''),
+    //           'phone.required'=>__(''),
+    //           'phone.numeric'=>__(''),
+    //           'password.required'=>__(''),
+    //           'password.confirmed'=>__(''),
+    //           'password.min'=>__(''),
+    //           'date_of_birth.required'=>__(''),
+    //           'location_id.required'=>__(''),
+    //       ];
+    //    }
 }
