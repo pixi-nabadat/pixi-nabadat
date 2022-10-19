@@ -25,7 +25,7 @@
                             @csrf
                             @method('put')
                             <div class="row g-3">
-                                
+
                                 <div class="col-md-6">
                                     <label class="form-label" for="user_name">{{ trans('lang.user_name') }}</label>
                                     <input name="user_name" disabled="true" value='{{ $user->user_name }}'
@@ -92,7 +92,8 @@
 
                             <div class="row g-3">
                                 <div class="col-md-12">
-                                    <label class="form-label my-2" for="description">{{ trans('lang.description') }}</label>
+                                    <label class="form-label my-2"
+                                        for="description">{{ trans('lang.description') }}</label>
                                     <input name="description" disabled="true"
                                         class="form-control  @error('description') is-invalid @enderror" id="description"
                                         value='{{ $user->description }}' type="text">
@@ -109,7 +110,11 @@
                                             <div class="col-form-label">{{ __('lang.governorates') }}</div>
                                             <select disabled="true" id="select_governorate"
                                                 class="js-example-basic-single col-sm-12">
-                                                <option value=1>Ala bama</option>
+                                                @foreach ($governorates as $governorate)
+                                                    <option value="{{ $governorate->id }}"
+                                                        {{ $user->location->parent_id == $governorate->id ? 'selected' : '' }}>
+                                                        {{ $governorate->title }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -121,7 +126,8 @@
                                             <label class="col-form-label" for="select_city">{{ __('lang.cities') }}</label>
                                             <select disabled="true" id="select_city" name="location_id"
                                                 class="js-example-basic-single col-sm-12 @error('location_id') is-invalid @enderror">
-                                                <option value=1>Ala bama</option>
+                                                <option value={{ $user->location->id }}>{{ $user->location->title }}
+                                                </option>
                                             </select>
                                         </div>
                                         @error('location_id')
@@ -132,7 +138,7 @@
                             </div>
 
                             <div class="media mb-2">
-                                <label class="col-form-label m-r-10">{{__('lang.is_active')}}</label>
+                                <label class="col-form-label m-r-10">{{ __('lang.is_active') }}</label>
                                 <div class="media-body  icon-state">
                                     <label class="switch">
                                         <input type="checkbox" disabled="true" name="is_active"

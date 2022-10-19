@@ -60,3 +60,28 @@
         });
     }
 </script>
+
+<script>
+    $(document).ready(function() {
+        $('select[name="governorate"]').on('change', function() {
+            var governorateId = $(this).val();
+            console.log(governorateId);
+            if (governorateId) {
+                $.ajax({
+                    url: "{{ URL::to('dashboard/doctors/getAllCities') }}/" + governorateId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        $('select[name="location_id"]').empty();
+                        $.each(data, function(key,value) {
+                            console.log(value['title']);
+                            $('select[name="location_id"]').append('<option value=" ' + value['id'] + ' ">' + value['title']['en'] + '</option>');
+                        });
+                    },
+                });
+            } else {
+                console.log('AJAX load did not work');
+            }
+        });
+    });
+</script>

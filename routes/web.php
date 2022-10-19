@@ -34,7 +34,8 @@ Route::prefix('authentication')->group(function () {
 Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::get('/',HomeController::class)->name('home');
     Route::get('doctors/changeStatus/{doctor}',[DoctorController::class,'changeStatus'])->name('doctors.changeStatus');
-    
+    Route::get('doctors/getAllCities/{doctor}',[DoctorController::class,'getAllCities'])->name('doctors.getAllCities');
+
     Route::resource('doctors',DoctorController::class);
     Route::resource('clinics',ClinicController::class);
     Route::resource('clients',ClientController::class);

@@ -29,14 +29,14 @@ class DoctorRequest extends BaseRequest
             $userNameRule = 'unique:users';
             $emailRule = 'unique:users';
             $phoneRule = 'unique:users';
-            $password ='required|string|min:6';
+            $password =['required','string','min:6','confirmed'];
 
         } elseif (request()->routeIS('doctors.update')) {
 
             $userNameRule = 'unique:users,user_name,' . $this->doctor;
             $emailRule = 'unique:users,email,' . $this->doctor;
             $phoneRule = 'unique:users,phone,' . $this->doctor;
-            $password ='';
+            $password ='confirmed';
             
         }
 
@@ -46,7 +46,7 @@ class DoctorRequest extends BaseRequest
             'name' => 'required',
             'email' => ['required', 'email', $emailRule],
             'phone' => ['required', 'numeric', $phoneRule],
-            'password' => ['confirmed',$password],
+            'password' => $password,
             'date_of_birth' => 'required|date',
             'location_id' => 'required|integer|exists:locations,id',
             'description' => 'nullable|string'
