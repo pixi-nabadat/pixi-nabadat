@@ -37,27 +37,23 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     Route::get('/',HomeController::class)->name('home');
 
-    #Country Module
-    Route::resource('country',CountryController::class);
 
-    #Governorate Module
     Route::resource('governorate',GovernorateController::class);
-
-    #City Module
+    Route::resource('country',CountryController::class);
     Route::resource('city',CityController::class);
 
     #attachment routes
-    Route::POST('file/upload', [App\Http\Controllers\AttachmentController::class, 'upload']);
-    Route::POST('file/delete', [App\Http\Controllers\AttachmentController::class, 'delete'])->name('file.delete');
+    // Route::POST('file/upload', [App\Http\Controllers\AttachmentController::class, 'upload']);
+    // Route::POST('file/delete', [App\Http\Controllers\AttachmentController::class, 'delete'])->name('file.delete');
 
     Route::resource('doctors',DoctorController::class);
     Route::resource('clinics',ClinicController::class);
     Route::resource('clients',ClientController::class);
 
-    Route::get('gevernorate/all', [App\Http\Controllers\CentersController::class, 'allGov'])->name('getcovernorates');
-    Route::get('city/all', [App\Http\Controllers\CentersController::class, 'allCities'])->name('getcities');
+    // Route::get('gevernorate/all', [App\Http\Controllers\CentersController::class, 'allGov'])->name('getcovernorates');
+    // Route::get('city/all', [App\Http\Controllers\CentersController::class, 'allCities'])->name('getcities');
 
-// });
+});
 
 Route::get('/clear-cache', function() {
     Artisan::call('config:cache');

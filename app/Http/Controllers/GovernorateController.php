@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\DataTables\GovernoratesDataTable;
 use App\Http\Requests\StoreLocationRequest;
 use App\Services\LocationService;
@@ -9,50 +10,102 @@ use App\Services\LocationService;
 class GovernorateController extends Controller
 {
 
-    private function LocationServiceObj(): LocationService
+    public function __construct(private LocationService $locationService)
     {
-        return new LocationService();
+
     }
 
-    public function index(GovernoratesDataTable $dataTables)
+    public function index(GovernoratesDataTable $dataTables,Request $request)
     {
-        return $dataTables->render('dashboard.locations.governorate.index');
+        $request = $request->merge(['depth'=> 1,'is_active'=>$request->is_active??1]);
+        return $dataTables->with(['filters'=>$request->all()])->render('dashboard.locations.governorate.index');
     }
 
     public function create()
     {
-        $countries = $this->LocationServiceObj()->getAllCountries();
-        return view('dashboard.locations.governorate.form')->with('countries',$countries);
+        $filter = ['depth'=> 0];
+        $countries = $this->locationService->getAll($filter);
+        return view('dashboard.locations.governorate.create',['countries'=>$countries]);
     }
 
     public function store(StoreLocationRequest $request)
     {
-        $governoareteData = $request->all();
-        return $this->LocationServiceObj()->storeLocation($governoareteData);
+        try {
+            $this->locationService->store($request->all());
+            $toast=[
+                'type'=>'success',
+                'title'=>trans('lang.title'),
+                'message'=> 'governorate saved Successfully'
+            ];
+            return back()->with('toast',$toast);
+        }catch (\Exception $exception)
+        {
+            $toast=[
+                'type'=>'error',
+                'title'=>trans('lang.error'),
+                'message'=>$exception->getMessage()
+            ];
+            return back()->with('toast',$toast);
+        }
     }
 
     public function edit($id)
     {
-        $governorate = $this->LocationServiceObj()->getLocation($id);
-        $countries = $this->LocationServiceObj()->getAllCountries();
-        $governorate->title_translations = $governorate->getTranslations('title');
-        return view('dashboard.locations.governorate.edit')->with(['governorate'  => $governorate, "countries" => $countries]);
+        $governorate = $this->locationService->getLocationById($id);
+        if (!$governorate)
+        {
+            $toast = [
+              'type'=>'error',
+              'title'=>trans('error'),
+              'message'=>trans('lang.notfound')
+            ];
+            return back()->with('toast',$toast);
+        }
+        $filter =[
+            'depth'=> 0,
+            'is_active'=>1
+        ];
+        $countries = $this->locationService->getAll($filter);
+        return view('dashboard.locations.governorate.edit',['governorate' => $governorate, 'countries' =>$countries]);
     }
 
     public function update($id, StoreLocationRequest $request)
     {
-        $governoareteData = $request->all();
-        return $this->LocationServiceObj()->updateLocation($id, $governoareteData);
+        try {
+            $this->locationService->update($id, $request->all());
+            $toast=[
+                'type' => 'success',
+                'title'=>trans('lang.success'),
+                'message'=>trans('lang.success')
+            ];
+            return  redirect(route('governorate.index'))->with('toast',$toast);
+        }catch (\Exception $exception)
+        {
+            $toast = [
+                'type'=>'error',
+                'title'=>trans('lang.error'),
+                'message'=>$exception->getMessage()
+            ];
+            return back()->with('toast',$toast);
+        }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
-        return $this->LocationServiceObj()->deleteLocation($id);
+        try {
+            $result =  $this->locationService->delete($id);
+            if(!$result)
+                return apiResponse(message: trans('lang.not_found'),code: 404);
+            return apiResponse(message: trans('lang.success'));
+
+        }catch (\Exception $exception)
+        {
+            return apiResponse(message: $exception->getMessage(),code: 422);
+        }
     }
 
     public function show($id)
     {
-        $country = $this->LocationServiceObj()->getLocation($id);
-        return view('dashboard.locations.country.show')->with('country', $country);
+
     }
 }

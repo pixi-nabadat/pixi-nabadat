@@ -68,6 +68,7 @@ class CityController extends Controller
         try {
             $this->locationService->update($id, $request->all());
             $toast=[
+                'type' => 'success',
                 'title'=>trans('lang.success'),
                 'message'=>trans('lang.success')
             ];

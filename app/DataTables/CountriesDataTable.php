@@ -38,15 +38,14 @@ class CountriesDataTable extends DataTable
             ;
     }
 
-    /**
+     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\City $model
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param LocationService $locationService
      */
-    public function query(Location $model)
+    public function query(LocationService $locationService)
     {
-        return $model->whereIsRoot()->where('is_active', 1);
+       return $locationService->queryGet($this->filters);
     }
 
     /**

@@ -16,7 +16,7 @@ class LocationsTableSeeder extends Seeder
     {
         $node = \App\Models\Location::create(
         [
-            [
+
                 'slug' => 'Eg',
                 'title' => 'Egypt',
                 'children' => [
@@ -47,39 +47,7 @@ class LocationsTableSeeder extends Seeder
                         ],
                     ],
                 ],
-            ],
-            [
-                'slug' => 'UAE',
-                'title' => 'Egypt',
-                'children' => [
-                    [
-                        'slug' => 'Ca',
-                        'title' => 'Cairo',
-                        'children' => [
-                            ['slug' => 'Gi', 'title' => 'Giza'],
-                            ['slug' => 'Alm', 'title' => 'Almokattem'],
-                            ['slug' => 'nas', 'title' => 'Nasr city'],
-                        ],
-                    ],
-                    [
-                        'slug' => 'bns',
-                        'title' => 'Banisuef',
-                        'children' => [
-                            ['slug' => 'Eh', 'title' => 'Ehnasia'],
-                            ['slug' => 'Bb', 'title' => 'Biba'],
-                            ['slug' => 'nas', 'title' => 'Elfashn'],
-                        ],
-                    ],
-                    [
-                        'slug' => 'GZ',
-                        'title' => 'Giza',
-                        'children' => [
-                            ['slug' => 'elayat', 'title' => '3ayat'],
-                            ['slug' => 'saft', 'title' => 'Saft'],
-                        ],
-                    ],
-                ],
-            ]
+
         ]
     );
   }

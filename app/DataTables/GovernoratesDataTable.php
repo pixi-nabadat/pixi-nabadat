@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Location;
+use App\Services\LocationService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -37,15 +38,14 @@ class GovernoratesDataTable extends DataTable
             ;
     }
 
-  /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Location $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function query(Location $model)
+    /**
+    * Get query source of dataTable.
+    *
+    * @param LocationService $locationService
+    */
+    public function query(LocationService $locationService)
     {
-       return $model->withDepth()->having('depth', '=', 1)->where('is_active', 1);
+       return $locationService->queryGet($this->filters);
     }
 
     /**
@@ -118,3 +118,4 @@ class GovernoratesDataTable extends DataTable
      */
 
 }
+

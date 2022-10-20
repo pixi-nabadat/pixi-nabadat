@@ -9,12 +9,12 @@
 @endsection
 
 @section('breadcrumb-title')
-<h3>Country Form</h3>
+<h3>{{trans('lang.cities')}}</h3>
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item">Form Controls</li>
-<li class="breadcrumb-item active">City Form</li>
+<li class="breadcrumb-item">{{trans('lang.dashboard')}}</li>
+    <li class="breadcrumb-item active">{{trans('lang.cities')}}</li>
 @endsection
 
 @section('content')
@@ -26,28 +26,33 @@
 					<h5>{{trans("lang.Edit_City")}}</h5>
 				</div>
 				<div class="card-body">
-					<form class="needs-validation" novalidate="" method="POST" action="{{route('update.city',['id' => $city->id])}}" >
+					<form class="needs-validation" novalidate="" method="POST" action="{{route('city.update',['city' => $city->id])}}" >
                         @csrf
+                        @method('PUT')
 						<div class="row">
-							<div class="col-md-4 mb-3">
+							<div class="col-md-6 mb-3">
 								<label for="validationCustom01">{{trans('lang.Slug')}}</label>
 								<input name="slug" value="{{$city->slug}}" class="form-control" id="validationCustom01" type="text" placeholder="Slug" required="">
 								<div class="valid-feedback">Looks good!</div>
 							</div>
                             <div class="col-md-6 mb-3">
-								<label for="validationCustom02"> {{__("TITLE")}}</label>
-								<input name="title_en" value="{{$city->title_translations['en']}}" class="form-control" id="validationCustom02" type="text" placeholder="{{__('TITLE')}}" required="">
-								<div class="valid-feedback">Looks good!</div>
+								<label for="validationCustom02"> {{trans("lang.title_ar")}}</label>
+								<input name="title[ar]" value="{{$city->getTranslation('title','ar')}}" class="form-control @error('title.ar') is-invalid @enderror" id="validationCustom02" type="text" placeholder="Arabic Title" required="">
+                                @error('title.ar')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="validationCustom02">{{trans("lang.title_en")}}</label>
+								<input name="title[en]" value="{{$city->getTranslation('title','en')}}" class="form-control @error('title.en') is-invalid @enderror" id="validationCustom02" type="text" placeholder="English Title" required="">
+								@error('title.en')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
 							</div>
                             <div class="col-md-6 mb-3">
-								<label for="validationCustom02"> {{__("ARABIC_TITLE")}}</label>
-								<input name="title_ar" value="{{$city->title_translations['ar']}}" class="form-control" id="validationCustom02" type="text" placeholder="{{__('ARABIC_TITLE')}}" required="">
-								<div class="valid-feedback">Looks good!</div>
-							</div>
-                            <div class="mb-2">
                                 <div class="col-form-label">Choose Governorate</div>
                                 <select name="parent_id"  class="js-example-placeholder-multiple col-sm-12" multiple="multiple">
-                                    @foreach ($governates as $governate)
+                                    @foreach ($governorates as $governate)
                                     <option value="{{$governate->id}}">{{$governate->title}}</option>
                                     @endforeach
                                 </select>

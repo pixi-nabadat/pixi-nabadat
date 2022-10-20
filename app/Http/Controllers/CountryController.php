@@ -2,53 +2,103 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreLocationRequest;
 use App\DataTables\CountriesDataTable;
 use App\Services\LocationService;
 
 class CountryController extends Controller
 {
-    private function LocationServiceObj(): LocationService
+
+    public function __construct(private LocationService $locationService)
     {
-        return new LocationService();
+
     }
 
-    public function index(CountriesDataTable $dataTables)
+    public function index(CountriesDataTable $dataTables,Request $request)
     {
-        return $dataTables->render('dashboard.locations.country.index');
+        $request = $request->merge(['depth'=>0,'is_active'=>$request->is_active??1]);
+        return $dataTables->with(['filters'=>$request->all()])->render('dashboard.locations.country.index');
     }
 
     public function create()
     {
-        return view('dashboard.locations.country.form');
+        return view('dashboard.locations.country.create');
     }
 
     public function store(StoreLocationRequest $request)
     {
-        $countryData = $request->all();
-        return $this->LocationServiceObj()->storeLocation($countryData);
+        try {
+            $this->locationService->store($request->all());
+            $toast=[
+                'type'=>'success',
+                'title'=>trans('lang.title'),
+                'message'=> 'country saved Successfully'
+            ];
+            return back()->with('toast',$toast);
+        }catch (\Exception $exception)
+        {
+            $toast=[
+                'type'=>'error',
+                'title'=>trans('lang.error'),
+                'message'=>$exception->getMessage()
+            ];
+            return back()->with('toast',$toast);
+        }
     }
 
     public function edit($id)
     {
-        $country = $this->LocationServiceObj()->getLocation($id);
-        $country->title_translations = $country->getTranslations('title');
-        return view('dashboard.locations.country.edit')->with('country' , $country);
+        $country = $this->locationService->getLocationById($id);
+        if (!$country)
+        {
+            $toast = [
+              'type'=>'error',
+              'title'=>trans('error'),
+              'message'=>trans('lang.notfound')
+            ];
+            return back()->with('toast',$toast);
+        }
+        return view('dashboard.locations.country.edit',['country' => $country]);
     }
 
     public function update($id, StoreLocationRequest $request)
     {
-        return $this->LocationServiceObj()->updateLocation($id, $request);
+        try {
+            $this->locationService->update($id, $request->all());
+            $toast=[
+                'type' => 'success',
+                'title'=>trans('lang.success'),
+                'message'=>trans('lang.success')
+            ];
+            return  redirect(route('country.index'))->with('toast',$toast);
+        }catch (\Exception $exception)
+        {
+            $toast = [
+                'type'=>'error',
+                'title'=>trans('lang.error'),
+                'message'=>$exception->getMessage()
+            ];
+            return back()->with('toast',$toast);
+        }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
-        return $this->LocationServiceObj()->deleteLocation($id);
+        try {
+            $result =  $this->locationService->delete($id);
+            if(!$result)
+                return apiResponse(message: trans('lang.not_found'),code: 404);
+            return apiResponse(message: trans('lang.success'));
+
+        }catch (\Exception $exception)
+        {
+            return apiResponse(message: $exception->getMessage(),code: 422);
+        }
     }
 
     public function show($id)
     {
-        $country = $this->LocationServiceObj()->getLocation($id);
-        return view('dashboard.locations.country.show')->with('country', $country);
+
     }
 }
