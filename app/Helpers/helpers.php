@@ -39,6 +39,21 @@ if (!function_exists('createDir')) {
 }
 
 
+if (!function_exists('fileDir')) {
+    function fileDir($fileType)
+    {
+        $url = url('/');
+        $dir = "uploads/";
+        switch ($fileType) {
+            case 'profile_photo':
+                return $dir.="user/profile_photo/";
+                break;
+            default:
+                return "";
+                break;
+        }
+    }
+}
 
 
 
