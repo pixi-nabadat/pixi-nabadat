@@ -27,7 +27,8 @@ class DoctorStoreRequest extends BaseRequest
         return [
 
             'user_name' => 'required|string',
-            'name' => 'required',
+            'name.ar' => 'required|string',
+            'name.en' => 'required|string',
             'email' => 'required|email|unique:users',
             'phone' => 'required|unique:users',
             'password' => 'required|string|min:6|confirmed',
@@ -38,19 +39,12 @@ class DoctorStoreRequest extends BaseRequest
         ];
     }
 
-    //    public function messages()
-    //    {
-    //       return[
-    //           'name.required'=>__(''),
-    //           'email.required'=>__(''),
-    //           'email.email'=>__(''),
-    //           'phone.required'=>__(''),
-    //           'phone.numeric'=>__(''),
-    //           'password.required'=>__(''),
-    //           'password.confirmed'=>__(''),
-    //           'password.min'=>__(''),
-    //           'date_of_birth.required'=>__(''),
-    //           'location_id.required'=>__(''),
-    //       ];
-    //    }
+    public function messages()
+    {
+        return [
+            'title.*.string' => __('lang.title_en_should_be_string'),
+            'title.*.required' => __('lang.title_in_ar__should_be_required'),
+        ];
+    }
+
 }

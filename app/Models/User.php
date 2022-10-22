@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\Filterable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +11,7 @@ use Spatie\Translatable\HasTranslations;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,Filterable;
+    use HasApiTokens, HasFactory, Notifiable,Filterable,HasTranslations;
 
     const SUPERADMINTYPE = 1;
     const CUSTOMERTYPE = 2;
@@ -21,7 +20,6 @@ class User extends Authenticatable
 
     const ACTIVE = 1;
     const NONACTIVE = 0;
-    use HasTranslations;
 
     public $translatable = ['name'];
     /**

@@ -7,7 +7,7 @@
 @endsection
 
 @section('breadcrumb-items')
-    <li class="breadcrumb-item">{{ trans('lang.dashboard') }}</li>
+    <li class="breadcrumb-item"><a href="{{route('home')}}">{{ trans('lang.dashboard') }}</a></li>
     <li class="breadcrumb-item active">{{ trans('lang.doctors') }}</li>
 @endsection
 

@@ -29,7 +29,7 @@
                                     <input name="user_name" class="form-control @error('user_name') is-invalid @enderror"
                                         id="user_name" type="text" required>
                                     @error('user_name')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -38,25 +38,25 @@
                                     <input name="email" class="form-control @error('email') is-invalid @enderror"
                                         id="email" type="text" required>
                                     @error('email')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <div class="col-md-6">
                                     <label class="form-label" for="full_name">{{ trans('lang.full_name_en') }}</label>
-                                    <input name="name[en]" class="form-control @error('name') is-invalid @enderror"
-                                        id="clinic_name" type="text" required>
-                                    @error('name')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    <input name="name[en]" class="form-control @error('name.en') is-invalid @enderror"
+                                        id="name_en" type="text" required>
+                                    @error('name.en')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label class="form-label" for="full_name">{{ trans('lang.full_name_ar') }}</label>
-                                    <input name="name[ar]" class="form-control @error('name') is-invalid @enderror"
-                                        id="clinic_name" type="text" required>
-                                    @error('name')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    <label for="name_ar"> {{ trans('lang.full_name_ar') }}</label>
+                                    <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
+                                                                        id="name_ar" type="text" required/>
+                                    @error('name.ar')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -65,7 +65,7 @@
                                     <input class="form-control  @error('phone') is-invalid @enderror" name="phone"
                                         id="phone" type="text" required="">
                                     @error('phone')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -73,9 +73,9 @@
                                     <label class="form-label" for="date_of_birth">{{ trans('lang.data_of_birth') }}</label>
                                     <input
                                         class="form-control digits datepicker-here @error('date_of_birth') is-invalid @enderror"
-                                        name="date_of_birth" id="date_of_birth" type="text" required="">
+                                        name="date_of_birth" id="date_of_birth" type="text" data-language="en" autocomplete="off" data-bs-original-title title required>
                                     @error('date_of_birth')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -84,7 +84,7 @@
                                     <input class="form-control @error('password') is-invalid @enderror" name="password"
                                         id="password" type="password" required="">
                                     @error('password')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -94,7 +94,7 @@
                                     <input class="form-control @error('password_confirmation') is-invalid @enderror"
                                         name="password_confirmation" id="password" type="password" required="">
                                     @error('password_confirmation')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -108,7 +108,7 @@
                                         class="form-control  @error('description') is-invalid @enderror" id="description"
                                         type="text">
                                     @error('address')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
@@ -138,11 +138,11 @@
                                                 <option value="0" disabled selected>{{trans('lang.please_select...')}}</option>
                                                 @foreach ($cities as $city)
                                                 <option class="city_{{$city->parent_id}}" value="{{ $city->id }}">{{ $city->title }}</option>
-                                                @endforeach                                                
+                                                @endforeach
                                             </select>
                                         </div>
                                         @error('location_id')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            <div class="invalid-feedback text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
