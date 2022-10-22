@@ -19,7 +19,7 @@
 </script>
 @if(session()->has('toast'))
     <script>
-        @switch(session('toast')['type'])
+        @switch(session('toast')['type']??'success')
 
         @case('error')
             toastr.error("{{session('toast')['message']}}","{{session('toast')['title']}}");

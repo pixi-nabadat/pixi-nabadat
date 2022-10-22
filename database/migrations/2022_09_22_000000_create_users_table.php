@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('user_name');
-            $table->string('email')->nullable()->unique();
+            $table->string('email')->unique();
             $table->string('password');
             $table->string('phone')->unique();
             $table->tinyInteger('type')->default(\App\Models\User::CUSTOMERTYPE);
