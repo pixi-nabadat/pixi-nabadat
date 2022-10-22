@@ -27,9 +27,9 @@ class DoctorStoreRequest extends BaseRequest
         return [
 
             'user_name' => 'required|string',
-            'name' => 'required|string',
+            'name' => 'required',
             'email' => 'required|email|unique:users',
-            'phone' => 'required|email|unique:users',
+            'phone' => 'required|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'date_of_birth' => 'required|date',
             'location_id' => 'required|integer|exists:locations,id',

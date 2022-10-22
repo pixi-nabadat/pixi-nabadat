@@ -50,9 +50,10 @@ class DoctorController extends Controller
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.doctor_not_found')];
             return back()->with('toast', $toast);
         }
-        $filter = ['depth' => 1];
-        $governorates = $this->locationService->getAll($filter);
-        return view('dashboard.Doctors.edit', compact('user', 'governorates'));
+        $filters = ['governorates_filter'=>['depth' => 1],'city_filter'=>['depth' => 2]];
+        $governorates = $this->locationService->getAll($filters['governorates_filter']);
+        $cities = $this->locationService->getAll($filters['city_filter']);
+        return view('dashboard.Doctors.edit', compact('user', 'governorates','cities'));
     } //end of edit
 
     public function store(DoctorStoreRequest $request)
@@ -72,7 +73,6 @@ class DoctorController extends Controller
 
     public function update(DoctorUpdateRequest $request, $id)
     {
-
         try {
             $request->validated();
             $request['type'] = User::DOCTORTYPE;

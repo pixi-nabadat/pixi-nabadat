@@ -25,11 +25,10 @@ class DoctorUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-
             'user_name' => 'required|string',
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,'. $this->doctor,
-            'phone' => 'required|email|unique:users,'. $this->doctor,
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'. $this->doctor,
+            'phone' => 'required|unique:users,phone,'. $this->doctor,
             'password' => 'sometimes|nullable|string',
             'date_of_birth' => 'required|date',
             'location_id' => 'required|integer|exists:locations,id',

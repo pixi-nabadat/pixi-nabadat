@@ -137,8 +137,8 @@
                                             <select id="select_city" name="location_id" class="form-control col-sm-12 @error('location_id') is-invalid @enderror">
                                                 <option value="0" disabled selected>{{trans('lang.please_select...')}}</option>
                                                 @foreach ($cities as $city)
-                                                    <option class="city_{{$city->parent_id}}" value="{{ $city->id }}">{{ $city->title }}</option>
-                                                @endforeach
+                                                <option class="city_{{$city->parent_id}}" value="{{ $city->id }}">{{ $city->title }}</option>
+                                                @endforeach                                                
                                             </select>
                                         </div>
                                         @error('location_id')
