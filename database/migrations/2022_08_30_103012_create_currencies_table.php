@@ -13,13 +13,15 @@ class CreateCurrenciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('currencies', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->text('name')->unique();
-            $table->string('code', 50)->unique();
-            $table->string('symbol', 5)->nullable();
-            $table->timestamps();
-        });
+        if (!Schema::connection(env('DB_CONNECTION', 'mysql'))->hasTable('currencies')) {
+            Schema::create('currencies', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->text('name')->unique();
+                $table->string('code', 50)->unique();
+                $table->string('symbol', 5)->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

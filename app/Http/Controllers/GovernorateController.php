@@ -21,6 +21,17 @@ class GovernorateController extends Controller
         return $dataTables->with(['filters'=>$request->all()])->render('dashboard.locations.governorate.index');
     }
 
+    public function getAllGovernorates(Request $request)
+    {
+        $filter =[
+            // 'depth'=> 1,
+            'is_active'=>1,
+            'parent' =>  $request->country_id,
+        ];
+        $governorates = $this->locationService->getAll($filter);
+        return $governorates;
+    }
+
     public function create()
     {
         $filter = ['depth'=> 0];

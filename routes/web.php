@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CenterController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ClinicController;
 use App\Http\Controllers\HomeController;
@@ -41,7 +42,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::resource('governorate',GovernorateController::class);
     Route::resource('country',CountryController::class);
     Route::resource('city',CityController::class);
-
+    Route::resource('centers', CenterController::class);
     #attachment routes
     // Route::POST('file/upload', [App\Http\Controllers\AttachmentController::class, 'upload']);
     // Route::POST('file/delete', [App\Http\Controllers\AttachmentController::class, 'delete'])->name('file.delete');
@@ -50,9 +51,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::resource('clinics',ClinicController::class);
     Route::resource('clients',ClientController::class);
 
-    // Route::get('gevernorate/all', [App\Http\Controllers\CentersController::class, 'allGov'])->name('getcovernorates');
-    // Route::get('city/all', [App\Http\Controllers\CentersController::class, 'allCities'])->name('getcities');
-
+    Route::get('gevernorate/all', [App\Http\Controllers\GovernorateController::class, 'getAllGovernorates'])->name('allGovernorates');
 });
 
 Route::get('/clear-cache', function() {

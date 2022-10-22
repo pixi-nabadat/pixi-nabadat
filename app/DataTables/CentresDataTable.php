@@ -2,7 +2,8 @@
 
 namespace App\DataTables;
 
-use App\Models\Centre;
+use App\Models\Center;
+use App\Services\CenterService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -17,25 +18,38 @@ class CentresDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
+     * @param mixed $query Results from query() method.
+     * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable(QueryBuilder $query): EloquentDataTable
+    public function dataTable($query)
     {
-        return (new EloquentDataTable($query))
-            ->addColumn('action', 'centres.action')
-            ->setRowId('id');
+        return datatables($query)
+            ->addColumn('action', function(Center $center){
+                return view('dashboard.centers.action',compact('center'))->render();
+            })
+            ->addcolumn('name', function(Center $center){
+                return $center->name ;
+            })
+            ->addcolumn('address', function(Center $center){
+                return $center->address;
+            })
+            // ->addcolumn('name', function(Center $center){
+            //     return $center->name ;
+            // })
+             ->addcolumn('location', function(Center $center){
+                return $center->location->title;
+            });
     }
 
-    /**
+     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Centre $model
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param CenterService $locationService
      */
-    public function query(Centre $model): QueryBuilder
+    public function query(CenterService $centerService)
     {
-        return $model->newQuery();
+       return $centerService->queryGet($this->filters);
+
     }
 
     /**
@@ -43,21 +57,18 @@ class CentresDataTable extends DataTable
      *
      * @return \Yajra\DataTables\Html\Builder
      */
-    public function html(): HtmlBuilder
+    public function html()
     {
         return $this->builder()
-                    ->setTableId('centres-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->parameters([
+                'dom'     => 'Blfrtip',
+                'order'   => [[0, 'desc']],
+                "lengthMenu" => [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                'responsive'=>true,
+                "bSort" => false
+            ]);
     }
 
     /**
@@ -68,25 +79,41 @@ class CentresDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            [
+                'name'=>'id',
+                'data'=>'id',
+                'title'=>'#',
+            ],
+            [
+                'name'=>'name',
+                'data'=>'name',
+                'title'=> 'name',
+            ],
+            [
+                'name'=>'address',
+                'data'=>'address',
+                'title'=> 'address',
+            ],
+            [
+                'name'=>'phone',
+                'data'=>'phone',
+                'title'=> 'phone',
+            ],
+            [
+                'name'=>'location',
+                'data'=>'location',
+                'title'=> 'location',
+            ],
+            [
+                'name'=>'action',
+                'data'=>'action',
+                'title'=> 'action ',
+                'exportable' => false,
+                'printable' => false,
+                'searchable' => false,
+                'orderable' => false,
+            ],
         ];
     }
 
-    /**
-     * Get filename for export.
-     *
-     * @return string
-     */
-    protected function filename(): string
-    {
-        return 'Centres_' . date('YmdHis');
-    }
 }

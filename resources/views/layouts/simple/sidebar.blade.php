@@ -52,6 +52,14 @@
 
                         {{--                        end locations --------------------------------------}}
 
+                          {{--                        end locations --------------------------------------}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/city' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.city') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/city' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-4 {{ Route::currentRouteName()==route('city.index') ? 'active' : '' }}" href="{{route('city.index')}}">{{ trans('lang.city') }}</a></li>
+                            <li><a class="lan-4 {{ Route::currentRouteName()==route('city.create') ? 'active' : '' }}" href="{{route('city.create')}}">{{ trans('lang.create_city') }}</a></li>
+                        </ul>
 
 
                         {{--                        start clients ------------------------------------------}}
@@ -65,6 +73,14 @@
 
                         {{--                        end clients --------------------------------------}}
 
+
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/centers' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.center') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/centers' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-4 {{ Route::currentRouteName()==route('centers.index') ? 'active' : '' }}" href="{{route('centers.index')}}">{{ trans('lang.center') }}</a></li>
+                            <li><a class="lan-4 {{ Route::currentRouteName()==route('centers.create') ? 'active' : '' }}" href="{{route('centers.create')}}">{{ trans('lang.create_center') }}</a></li>
+                        </ul>
 
 {{--                        start doctors ------------------------------------------}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/doctors' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.doctors') }}</span>

@@ -13,15 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('locations', function (Blueprint $table) {
-            $table->id();
-            $table->string('slug', 191)->nullable();
-            $table->text('title');
-            $table->foreignIdFor(\App\Models\Currency::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->tinyInteger('is_active')->default(1);
-            $table->timestamps();
-            $table->nestedSet();
-        });
+        if (!Schema::connection(env('DB_CONNECTION', 'mysql'))->hasTable('locations')) {
+            Schema::create('locations', function (Blueprint $table) {
+                $table->id();
+                $table->string('slug', 191)->nullable();
+                $table->text('title');
+                $table->foreignIdFor(\App\Models\Currency::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+                $table->tinyInteger('is_active')->default(1);
+                $table->timestamps();
+                $table->nestedSet();
+            });
+        }
     }
 
     /**

@@ -60,4 +60,10 @@ class LocationService extends BaseService
     {
         return Location::find($id);
     }
+
+    public function getAllCountries($filters)
+    {
+        $locations = $this->getAll($filters);
+        return $locations;
+    }
 }

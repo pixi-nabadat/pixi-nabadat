@@ -4,7 +4,7 @@ namespace App\QueryFilters;
 
 use App\Abstracts\QueryFilter;
 
-class LocationsFilter extends QueryFilter
+class CentersFilter extends QueryFilter
 {
 
     public function __construct($params = array())
@@ -17,14 +17,14 @@ class LocationsFilter extends QueryFilter
         return $this->builder->where('is_active',$term);
     }
 
-    public function depth($term)
+    public function name($term)
     {
-        return $this->builder->withDepth()->having('depth', $term);
+        return $this->builder->where('name',$term);
     }
 
-    public function parent($term)
+    public function location_id($term)
     {
-        return $this->builder->where('parent_id', $term);
+        return $this->builder->where('location_id',$term);
     }
 
 }
