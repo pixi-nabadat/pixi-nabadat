@@ -20,6 +20,7 @@
 <script src="{{asset('assets/js/sweet-alert/sweetalert.min.js')}}"></script>
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
 <script src="{{asset('assets/js/select2/select2-custom.js')}}"></script>
+<script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
 @yield('script')
 
 @if(Route::current()->getName() != 'popover')
@@ -59,29 +60,4 @@
             }
         });
     }
-</script>
-
-<script>
-    $(document).ready(function() {
-        $('select[name="governorate"]').on('change', function() {
-            var governorateId = $(this).val();
-            console.log(governorateId);
-            if (governorateId) {
-                $.ajax({
-                    url: "{{ URL::to('dashboard/doctors/getAllCities') }}/" + governorateId,
-                    type: "GET",
-                    dataType: "json",
-                    success: function(data) {
-                        $('select[name="location_id"]').empty();
-                        $.each(data, function(key,value) {
-                            console.log(value['title']);
-                            $('select[name="location_id"]').append('<option value=" ' + value['id'] + ' ">' + value['title']['en'] + '</option>');
-                        });
-                    },
-                });
-            } else {
-                console.log('AJAX load did not work');
-            }
-        });
-    });
 </script>

@@ -120,10 +120,9 @@
                                             <div class="col-form-label">{{ __('lang.governorates') }}</div>
                                             <select id="select_governorate" name="governorate"
                                                 class="js-example-basic-single col-sm-12">
-                                                <option>Please Choose Governorate</option>
+                                                <option>{{trans('lang.please_select...')}}</option>
                                                 @foreach ($governorates as $governorate)
-                                                    <option value="{{ $governorate->id }}">{{ $governorate->title }}
-                                                    </option>
+                                                    <option value="{{ $governorate->id }}">{{ $governorate->title }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -135,8 +134,11 @@
                                         <div class="mb-2">
                                             <label class="col-form-label"
                                                 for="select_city">{{ __('lang.cities') }}</label>
-                                            <select id="select_city" name="location_id"
-                                                class="js-example-basic-single col-sm-12 @error('location_id') is-invalid @enderror">
+                                            <select id="select_city" name="location_id" class="form-control col-sm-12 @error('location_id') is-invalid @enderror">
+                                                <option value="0" disabled selected>{{trans('lang.please_select...')}}</option>
+                                                @foreach ($cities as $city)
+                                                    <option class="city_{{$city->parent_id}}" value="{{ $city->id }}">{{ $city->title }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         @error('location_id')
@@ -167,5 +169,13 @@
 @endsection
 
 @section('script')
-
+<script>
+    $(document).ready(function () {
+        $("#select_city").find("option:gt(0)").hide();
+        $("#select_governorate").change(function (){
+            $("#select_city").find("option:gt(0)").hide();
+            $(".city_"+$(this).val()).show();
+        });
+    });
+</script>
 @endsection

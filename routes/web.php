@@ -30,7 +30,7 @@ Route::prefix('authentication')->group(function () {
     Route::view('maintenance', 'authentication.maintenance')->name('maintenance');
 });
 
-
+Route::get('/',HomeController::class)->name('/')->middleware('auth');
 Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::get('/',HomeController::class)->name('home');
     Route::get('doctors/changeStatus/{doctor}',[DoctorController::class,'changeStatus'])->name('doctors.changeStatus');

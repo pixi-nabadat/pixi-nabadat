@@ -22,16 +22,23 @@ class UserService extends BaseService
         return $users->filter(new UsersFilter($where_condition));
     }
 
-    public function create($data)
+    public function store($data)
     {
 
         $data['password'] = bcrypt($data['password']);
         $data['date_of_birth'] = Carbon::parse($data['date_of_birth']);
         isset($data['is_active'])  ?   $data['is_active']=1 : $data['is_active']= 0;
-
-        User::create($data);
+        return User::create($data);
 
     } //end of create
+
+    public function find($id)
+    {
+        $user = User::find($id);
+        if ($user)
+            return $user;
+        return false;
+    }
 
     public function changeStatus($id)
     {
@@ -54,7 +61,7 @@ class UserService extends BaseService
         $data['date_of_birth'] = Carbon::parse($data['date_of_birth']);
         isset($data['is_active'])  ?   $data['is_active']=1 : $data['is_active']= 0;
 
-        
+
         $user=User::find($id);
         if ($user)
             $user->update($data);

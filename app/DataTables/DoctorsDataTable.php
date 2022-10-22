@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\User;
 
+use App\Services\UserService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -36,9 +37,9 @@ class DoctorsDataTable extends DataTable
      * @param User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(User $model): QueryBuilder
+    public function query(UserService $userService): QueryBuilder
     {
-        return $model->newQuery()->where('type',User::DOCTORTYPE);
+       return $userService->queryGet($this->filters)->with('location');
     }
 
     /**
@@ -52,15 +53,7 @@ class DoctorsDataTable extends DataTable
             ->setTableId('doctorsdatatable-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('Bfrtip')
-            ->orderBy(1)
-            ->buttons(
-                Button::make('create'),
-                Button::make('export'),
-                Button::make('print'),
-                Button::make('reset'),
-                Button::make('reload')
-            );
+            ->orderBy(1);
     }
 
     /**
@@ -79,7 +72,7 @@ class DoctorsDataTable extends DataTable
             ->exportable(false)
             ->printable(false)
             ->addClass('text-center'),
-        ];  
+        ];
     }
 
     /**

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Validation\Rule;
 
 
-class DoctorRequest extends BaseRequest
+class DoctorStoreRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,36 +24,20 @@ class DoctorRequest extends BaseRequest
      */
     public function rules()
     {
-        if (request()->routeIS('doctors.store')) {
-
-            $userNameRule = 'unique:users';
-            $emailRule = 'unique:users';
-            $phoneRule = 'unique:users';
-            $password =['required','string','min:6','confirmed'];
-
-        } elseif (request()->routeIS('doctors.update')) {
-
-            $userNameRule = 'unique:users,user_name,' . $this->doctor;
-            $emailRule = 'unique:users,email,' . $this->doctor;
-            $phoneRule = 'unique:users,phone,' . $this->doctor;
-            $password ='confirmed';
-            
-        }
-
         return [
-            
-            'user_name' => ['required', $userNameRule],
-            'name' => 'required',
-            'email' => ['required', 'email', $emailRule],
-            'phone' => ['required', 'numeric', $phoneRule],
-            'password' => $password,
+
+            'user_name' => 'required|string',
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'phone' => 'required|email|unique:users',
+            'password' => 'required|string|min:6|confirmed',
             'date_of_birth' => 'required|date',
             'location_id' => 'required|integer|exists:locations,id',
             'description' => 'nullable|string'
 
         ];
     }
-    //
+
     //    public function messages()
     //    {
     //       return[
