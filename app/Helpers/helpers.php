@@ -43,10 +43,10 @@ if (!function_exists('fileDir')) {
     function fileDir($fileType)
     {
         $url = url('/');
-        $dir = "uploads/";
+        $dir = $url."/uploads/";
         switch ($fileType) {
             case 'profile_photo':
-                return $dir.="user/profile_photo/";
+                return $dir.="user/";
                 break;
             default:
                 return "";
