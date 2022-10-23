@@ -6,13 +6,31 @@ use Illuminate\Http\Request;
 use App\DataTables\CitiesDataTable;
 use App\Services\LocationService;
 use App\Http\Requests\StoreLocationRequest;
-
+use App\Traits\AttachmentTrait;
 class CityController extends Controller
 {
+    use AttachmentTrait;
 
     public function __construct(private LocationService $locationService)
     {
 
+    }
+
+    public function storeFile(Request $request)
+    {
+        // $file = $request->file('file');
+
+        $path = 'user/';
+        $path = $this->storeAttachment($request->image,$path);
+        dd($path);
+    }
+
+    public function showFile()
+    {
+        $PhotoPath = fileDir('profile_photo');
+        $file = $PhotoPath.'JeLmxmSttDfl7O7NfMecduLLUBUEjHhnYIuKvj26.png';
+        dd($file);
+        return view('dashboard.show_file',['file' => $file]);
     }
 
     public function index(CitiesDataTable $dataTables,Request $request)
