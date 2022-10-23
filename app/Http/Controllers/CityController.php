@@ -16,23 +16,6 @@ class CityController extends Controller
 
     }
 
-    public function storeFile(Request $request)
-    {
-        // $file = $request->file('file');
-
-        $path = 'user/';
-        $path = $this->storeAttachment($request->image,$path);
-        dd($path);
-    }
-
-    public function showFile()
-    {
-        $PhotoPath = fileDir('profile_photo');
-        $file = $PhotoPath.'JeLmxmSttDfl7O7NfMecduLLUBUEjHhnYIuKvj26.png';
-        dd($file);
-        return view('dashboard.show_file',['file' => $file]);
-    }
-
     public function index(CitiesDataTable $dataTables,Request $request)
     {
         $request = $request->merge(['depth'=>2,'is_active'=>$request->is_active??1]);
