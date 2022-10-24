@@ -3,9 +3,7 @@
 namespace App\Traits;
 use App\Models\Attachment;
 use App\Services\FileService;
-use App\Services\ImageService;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\ImageManagerStatic as Image;
 trait AttachmentTrait
 {
     private function uploadAttachment($file, $path)

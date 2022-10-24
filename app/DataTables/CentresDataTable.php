@@ -30,14 +30,11 @@ class CentresDataTable extends DataTable
             ->addcolumn('name', function(Center $center){
                 return $center->name ;
             })
-            ->addcolumn('address', function(Center $center){
-                return $center->address;
-            })
-            // ->addcolumn('name', function(Center $center){
-            //     return $center->name ;
-            // })
              ->addcolumn('location', function(Center $center){
                 return $center->location->title;
+            })
+            ->addcolumn('is_active', function(Center $center){
+                 return $center->is_active==1? trans('lang.active') : trans('lang.non_active');
             });
     }
 
@@ -103,6 +100,11 @@ class CentresDataTable extends DataTable
                 'name'=>'location',
                 'data'=>'location',
                 'title'=> 'location',
+            ],
+            [
+                'name'=>'is_active',
+                'data'=>'is_active',
+                'title'=> 'status',
             ],
             [
                 'name'=>'action',

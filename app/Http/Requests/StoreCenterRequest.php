@@ -24,7 +24,15 @@ class StoreCenterRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name.*'=>'required|string',
+            'phone'=>'required|string',
+            'location_id'=>'required|integer',
+            'lat'=>'nullable|string',
+            'lng'=>'nullable|string',
+            'address.*'=>'string|required',
+            'description.*'=>'string|nullable',
+            'doctor_ids'=>'required|array|min:1',
+            'doctor_ids.*'=>'required|integer|exists:users,id',
         ];
     }
 }

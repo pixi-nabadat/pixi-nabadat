@@ -7,7 +7,7 @@
 
 @section('breadcrumb-items')
     <li class="breadcrumb-item"><a href="{{route('home')}}">{{trans('lang.dashboard')}}</a></li>
-    <li class="breadcrumb-item"><a href="{{route('country.index')}}">{{trans('lang.centers')}}</a></li>
+    <li class="breadcrumb-item"><a href="{{route('centers.index')}}">{{trans('lang.centers')}}</a></li>
     <li class="breadcrumb-item">{{trans('lang.add')}}</li>
 @endsection
 
@@ -84,7 +84,7 @@
 
 							<div class="col-md-6 mb-3">
                                 <div class="col-form-label">{{trans("lang.Choose_Country")}}</div>
-                                <select  id="country" class="form-select form-select-lg mb-3 @error('parent_id') is-invalid @enderror" >
+                                <select  id="country" class="form-select form-control mb-3 @error('parent_id') is-invalid @enderror" >
                                     <option selected value="">{{trans('lang.choose_country')}}</option>
                                     @foreach ($countries as $country)
                                     <option value="{{$country->id}}">{{$country->title}}</option>
@@ -93,30 +93,15 @@
                             </div>
 							<div class="col-md-6 mb-3">
                                 <div class="col-form-label">{{trans("lang.Governorate")}}</div>
-                                <select class="form-select form-select-lg mb-3" id="governorate"></select>
+                                <select class="form-select form-control mb-3" id="governorate"></select>
                             </div>
 							<div class="col-md-6 mb-3">
                                 <div class="col-form-label">{{trans("lang.City")}}</div>
-                                <select name="location_id" class="form-select form-select-lg mb-3" id="city"></select>
+                                <select name="location_id" class="form-select form-control mb-3 @error('location_id') is-invalid @enderror" id="city"></select>
                                 @error('location_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                             </div>
-                               {{-- <div class="col-md-6 mb-3">
-                                <div class="@error('phone') is-invalid @enderror input-group input-group-air">
-                                    <button class="btn btn-danger"
-                                        id="DeleteRow" type="button">
-                                        <i class="bi bi-trash"></i>
-                                        X
-                                    </button>
-                                    <input type="text" name="phone[]" class="form-control @error('phone') is-invalid @enderror" id="validationCustom01">
-                                </div>
-                                <div id="newinput"></div>
-                                <button id="rowAdder" type="button" class="btn btn-dark"> <span class="bi bi-plus-square-dotted">
-                                    </span> +
-                                </button>
-                            </div> --}}
-
                             <div class="col-md-6 mb-3">
 								<label for="validationCustom02">{{trans("lang.phone")}}</label>
 								<input name="phone" class="form-control @error('phone') is-invalid @enderror" id="validationCustom02" type="text" placeholder="phone" required="">

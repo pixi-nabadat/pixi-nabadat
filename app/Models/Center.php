@@ -10,10 +10,12 @@ use App\Traits\Filterable;
 class Center extends Model
 {
     use HasTranslations, HasFactory,Filterable;
+
     const   ACTIVE = 1 ,
             SUPPORT_AUTO_SERVICE = 1,
             NON_ACTIVE = 0 ,
             NON_SUPPORT_AUTO_SERVICE = 0;
+
     protected $fillable = [
         'name', 'phone', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
     ];
