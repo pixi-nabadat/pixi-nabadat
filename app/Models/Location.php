@@ -10,8 +10,7 @@ use App\Traits\Filterable;
 
 class Location extends Model
 {
-    use NodeTrait, HasTranslations, HasFactory,Filterable;
-
+    use HasFactory,HasTranslations,NodeTrait,Filterable;
     protected $fillable = [
         'slug', 'currency_id', 'is_active', 'lft' ,'rgt','title','created_by','_lft','_lft','parent_id'
     ];

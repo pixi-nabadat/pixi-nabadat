@@ -22,6 +22,7 @@
 <script src="{{asset('assets/js/select2/select2-custom.js')}}"></script>
 <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
 @yield('script')
+
 @if(Route::current()->getName() != 'popover')
 	<script src="{{asset('assets/js/tooltip-init.js')}}"></script>
 @endif
@@ -31,32 +32,32 @@
 <script src="{{asset('assets/js/script.js')}}"></script>
 <script src="{{asset('assets/js/theme-customizer/customizer.js')}}"></script>
 <script>
-        function destroy(url) {
-            swal({
-                title: "{{__('lang.create_account')}}",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            }).then((confirmed) => {
-                if (confirmed) {
-                    $.ajax({
-                        method: 'DELETE',
-                        url: url,
-                        dataType: 'json',
-                        data:{
-                            '_token': '{{ csrf_token() }}',
-                        },
-                        success: function(result) {
-                            if (result.status)
-                            {
-                                toastr.success(result.message);
-                                $('.dataTable').DataTable().ajax.reload(null, false);
-                            }
-                            else
-                                toastr.error(result.msg);
+    function destroy(url) {
+        swal({
+            title: "{{__('lang.create_account')}}",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((confirmed) => {
+            if (confirmed) {
+                $.ajax({
+                    method: 'DELETE',
+                    url: url,
+                    dataType: 'json',
+                    data:{
+                        '_token': '{{ csrf_token() }}',
+                    },
+                    success: function(result) {
+                        if (result.status)
+                        {
+                            toastr.success(result.message);
+                            $('.dataTable').DataTable().ajax.reload(null, false);
                         }
-                    });
-                }
-            });
-        }
+                        else
+                            toastr.error(result.msg);
+                    }
+                });
+            }
+        });
+    }
 </script>

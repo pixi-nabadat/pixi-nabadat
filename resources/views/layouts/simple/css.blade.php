@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/select2.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/datatables.css')}}">
 
+
 @yield('css')
 <!-- App css-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">

@@ -41,5 +41,21 @@
         'CITIES' => 'Cities',
         'IS_Active' =>'Is Active',
 
+		'doctors'=>'Doctors',
+		'user_name'=>'User Name',
+		'full_name_en'=>'Full Name English',
+		'full_name_ar'=>'Full Name Arabic',
+		'password_confirmation'=>'Password Confirmation',
+		'description'=>'Description',
+		'is_active'=>'Is Active',
+		'submit'=>'Submit',
+		'add'=>'Add',
+		'dashboard'=>'Dashboard',
+		'cities'=>'Cities',
+		'governorates'=>'Governorates',
+		'view'=>'View',
+		'create'=>'Create',
+		'edit'=>'Edit',
+		'show'=>'show',
     ]
 ?>

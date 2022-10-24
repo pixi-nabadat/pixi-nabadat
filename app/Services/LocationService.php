@@ -15,6 +15,7 @@ class LocationService extends BaseService
     {
         $result = Location::query();
         return $result->filter(new LocationsFilter($filter));
+
     }
 
     /**
