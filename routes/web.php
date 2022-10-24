@@ -44,9 +44,6 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::resource('city',CityController::class);
     Route::resource('centers', CenterController::class);
     #attachment routes
-    // Route::POST('file/upload', [App\Http\Controllers\AttachmentController::class, 'upload']);
-    // Route::POST('file/delete', [App\Http\Controllers\AttachmentController::class, 'delete'])->name('file.delete');
-
     Route::resource('doctors',DoctorController::class);
     Route::resource('clinics',ClinicController::class);
     Route::resource('clients',ClientController::class);

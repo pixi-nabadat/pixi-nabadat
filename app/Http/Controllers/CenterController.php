@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Centers;
 use App\Models\User;
 use App\Services\CenterService;
 use App\DataTables\CentresDataTable;
-use App\DataTables\CountriesDataTable;
-use App\Http\Requests\StoreCenterRequest;
+use App\Http\Requests\StoreCenterRequest as StoreCenterRequest;
+use App\Http\Requests\StoreCenterRequest as UpdateCenterRequest;
 use App\Services\LocationService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class CenterController extends Controller
@@ -32,13 +32,13 @@ class CenterController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
-        $doctors = $this->centerService->getAllDoctors();
+        $doctors = app(UserService::class)->getAll(['type'=>User::DOCTORTYPE]);
         $filters =['depth'=>0,'is_active'=>1];
-        $countries = $this->locationService->getAllCountries($filters);
+        $countries = $this->locationService->getAll($filters);
         return view('dashboard.centers.create',['doctors'=>$doctors, 'countries' => $countries]);
     }
 
@@ -75,14 +75,12 @@ class CenterController extends Controller
             ];
             return back()->with('toast',$toast);
         }
-        $filter =[
-        ];
         $filters =['depth'=>0,'is_active'=>1];
-        $countries = $this->locationService->getAllCountries($filters);
+        $countries = $this->locationService->getAll($filters);
         return view('dashboard.centers.edit',['center' => $center,'countries' => $countries]);
     }
 
-    public function update($id, StoreCenterRequest $request)
+    public function update($id, UpdateCenterRequest $request)
     {
         try {
             $this->centerService->update($id, $request->except(['doctor_ids','_token','_method']), $request->doctor_ids);
