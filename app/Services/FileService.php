@@ -16,33 +16,13 @@ class FileService
         "zip" => ['application/x-zip-compressed'],
     ];
 
-    public function storeFile($file , $extension, $fullDir)
+    function prepareImage ($image, $path)
     {
-        $fileName = uniqid() . "." . $extension;
-        if (!file_exists($fullDir)) {
-            createDir($fullDir . "file");
-        }
-        $path = $fullDir.$fileName;
-        Storage::disk('public_uploads')->put($fullDir, $file);
-        return $path;
-    }
+        $extension = $image->getClientOriginalExtension();
+        $filename  = time().'.' . $extension;
+        $image->move(public_path($path), $filename);
 
-    public function storeImage($file , $extension, $fullDir)
-    {
-        $img = Image::make($file);
-        $size = $img->filesize();
-        if ($size > 400000) {
-            $img->resize(1500, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-        }
-        $fileName = uniqid() . "." . $extension;
-        if (!file_exists($fullDir)) {
-            createDir($fullDir . "file");
-        }
-        $path = $fullDir.$fileName;
-        $img->save(Storage::disk('public_uploads')->put($fullDir, $file));
-        return $path;
+        return $filename;
     }
 
     public function uploadImage($file, $dir, $exe)

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 trait AttachmentTrait
 {
-    private function uploadAttachment($file, $path)
+    public function uploadAttachment($file, $path)
     {
         $fileService = new FileService();
         $extension = $file->getClientOriginalExtension();
@@ -19,15 +19,11 @@ trait AttachmentTrait
         }
     }
 
-    private function storeAttachment($file, $path)
+    public function storeAttachment($file, $path)
     {
         $fileService = new FileService();
-        $extension = $file->getClientOriginalExtension();
-        if (in_array($extension , Attachment::$types['image']) ) {
-            return $fileService->storeImage($file, $extension,$path);
-        } else {
-            return $fileService->storeFile($file , $extension, $path);
-        }
+        $filename = $fileService->prepareImage($file, $path);
+        return $filename;
     }
 
     private function removeAttachment($fileName, $path)

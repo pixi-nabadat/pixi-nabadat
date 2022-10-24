@@ -45,7 +45,7 @@ if (!function_exists('fileDir')) {
         $url = url('/');
         $dir = $url."/uploads/";
         switch ($fileType) {
-            case 'profile_photo':
+            case 'user':
                 return $dir.="user/";
                 break;
             default:
