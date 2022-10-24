@@ -19,12 +19,12 @@ class LocationsFilter extends QueryFilter
 
     public function depth($term)
     {
-        return $this->builder->withDepth()->having('depth', $term); 
+        return $this->builder->withDepth()->having('depth', $term);
     }
 
     public function parent_id($term)
     {
-        return $this->builder->where('parent_id', $term); 
+        return $this->builder->where('parent_id', $term);
     }
 
 }
