@@ -7,6 +7,8 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ClinicController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DeviceController;
+
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
     if (!in_array($locale, ['en', 'ar'])) {
@@ -37,6 +39,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::get('doctors/getAllCities/{doctor}',[DoctorController::class,'getAllCities'])->name('doctors.getAllCities');
 
     Route::resource('doctors',DoctorController::class);
+    Route::resource('devices',DeviceController::class);
     Route::resource('clinics',ClinicController::class);
     Route::resource('clients',ClientController::class);
 

@@ -36,5 +36,19 @@
 		'create'=>'Create',
 		'edit'=>'Edit',
 		'show'=>'show',
+
+		'add_device'=>'Add Device',
+		'device'=>'Device',
+		'devices'=>'Devices',
+		'name_ar'=>'Arabic Name',
+		'name_en'=>'English Name',
+		'description_ar'=>'Arabic Descriptiom',
+		'description_en'=>'English Descriptiom',
+		'image'=>'Image',
+		''=>'',
+		''=>'',
+		''=>'',
+		''=>'',
+
     ]
 ?>

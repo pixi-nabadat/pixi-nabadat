@@ -11,4 +11,6 @@ class DevicesFilter extends QueryFilter
     {
         parent::__construct($params);
     }
+
+    
 }
