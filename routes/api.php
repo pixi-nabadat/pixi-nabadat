@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PhoneVerifyController;
 use App\Http\Controllers\Api\RestPasswordController;
+use App\Http\Controllers\Api\CenterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,7 @@ Route::group(['prefix'=>'auth'],function (){
     Route::post('phone/verify',  PhoneVerifyController::class);
     Route::post('password/forget',  PhoneVerifyController::class);
     Route::post('password/reset', RestPasswordController::class);
+    Route::post('centers/all/{location_id?}', [CenterController::class, 'getAllLocationCenters']);
 });
 
 Route::fallback(function() {

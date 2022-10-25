@@ -63,7 +63,7 @@
                                 </div>
                                 
                                 <div class="form-group my-3">
-                                    <img src="{{ asset('uploads/device/images/default.png') }}" style="width: 100px" class="img-thumbnail image-preview " alt="">
+                                    <img src="{{ asset('/uploads/device/'.$device->image) }}" style="width: 100px" class="img-thumbnail image-preview " alt="">
                                 </div>
                         </form>
                     </div>

@@ -6,10 +6,12 @@ use Intervention\Image\Facades\Image;
 use App\Models\Device;
 use App\QueryFilters\DevicesFilter;
 use Illuminate\Database\Eloquent\Builder;
+use App\Traits\AttachmentTrait;
 
 class DeviceService extends BaseService
 {
 
+    use AttachmentTrait;
     public function getAll(array $where_condition = [])
     {
         $Devices = $this->queryGet($where_condition);
@@ -24,11 +26,11 @@ class DeviceService extends BaseService
 
     public function store($data)
     {
-        $image = $data['image'];
 
-        // if($image){
-            
-        // }
+        if (isset($data['image']))
+            $data['image'] = $this->storeAttachment($data['image'], 'uploads\device');
+        else
+            $data['image'] = 'default.png';
 
         return Device::create($data);
     } //end of store
@@ -39,27 +41,31 @@ class DeviceService extends BaseService
         if ($device)
             return $device;
         return false;
-    }//end of find
+    } //end of find
 
     public function delete($id)
     {
-        $device=Device::find($id);
-        if ($device)
+        $device = Device::find($id);
+        if ($device) {
+            if ($device->image != 'default.png') {
+                $this->removeAttachment($device->image, 'uploads/device/');
+            }
             return $device->delete();
+        }
         return false;
-    }//end of delete
+    } //end of delete
 
-    public function update($id , $data)
+    public function update($id, $data)
     {
-        $image = $data['image'];
-
-        // if($image){
-            
-        // }
-        
-        $device=Device::find($id);
-        if ($device)
+        $device = Device::find($id);
+        if ($device) {
+            if (isset($data['image'])) {
+                $this->removeAttachment($device->image, 'uploads/device/');
+                $data['image'] = $this->storeAttachment($data['image'], 'uploads\device');
+            }
             $device->update($data);
+        }
         return false;
-    }//end of update
+
+    } //end of update
 }

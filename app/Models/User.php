@@ -57,4 +57,9 @@ class User extends Authenticatable
         return $this->belongsTo(Location::class);
     }
 
+    public function center()
+    {
+        return $this->belongsToMany(Center::class, CenterDoctor::class, 'doctor_id','center_id');
+    }
+
 }

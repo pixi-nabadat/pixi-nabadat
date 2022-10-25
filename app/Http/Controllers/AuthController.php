@@ -29,7 +29,7 @@ class AuthController extends Controller
                 'message'=>__('lang.sign_in'),
                 'title'=>'ok'
             ];
-            return redirect()->route('/')->with('toast',$toast);
+            return redirect()->route('home')->with('toast',$toast);
         }catch (UserNotFoundException $e) {
             $toast=[
               'type'=>'error',

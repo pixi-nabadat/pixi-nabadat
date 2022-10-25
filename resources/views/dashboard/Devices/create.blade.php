@@ -21,42 +21,42 @@
                 <div class="card">
                     <div class="card-body">
                         
-                        <form method="post" class="needs-validation" novalidate="" action="{{ route('devices.store') }}">
+                        <form method="post" class="needs-validation" enctype="multipart/form-data" novalidate="" action="{{ route('devices.store') }}">
                             @csrf
 
                             <div class="row g-3">
                                 <div class="col-md-12">
                                     <label class="form-label" for="name_ar">{{ trans('lang.name_ar') }}</label>
-                                    <input name="name[ar]" class="form-control @error('name_ar') is-invalid @enderror"
+                                    <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
                                         id="name_ar" type="text" required>
-                                    @error('name_ar')
+                                    @error('name.ar')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <div class="col-md-12">
                                     <label class="form-label" for="name_en">{{ trans('lang.name_en') }}</label>
-                                    <input name="name[en]" class="form-control @error('name_en') is-invalid @enderror"
+                                    <input name="name[en]" class="form-control @error('name.en') is-invalid @enderror"
                                         id="name_en" type="text" required>
-                                    @error('name_en')
+                                    @error('name.en')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <div class="col-md-12">
                                     <label class="form-label" for="description_ar">{{ trans('lang.description_ar') }}</label>
-                                    <input name="description[ar]" class="form-control @error('description_ar') is-invalid @enderror"
+                                    <input name="description[ar]" class="form-control @error('description.ar') is-invalid @enderror"
                                         id="description_ar" type="text" required>
-                                    @error('description_ar')
+                                    @error('description.ar')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <div class="col-md-12">
                                     <label class="form-label" for="description_en">{{ trans('lang.description_en') }}</label>
-                                    <input name="description[en]" class="form-control @error('description_en') is-invalid @enderror"
+                                    <input name="description[en]" class="form-control @error('description.en') is-invalid @enderror"
                                         id="description_en" type="text" required>
-                                    @error('description_en')
+                                    @error('description.en')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -71,7 +71,7 @@
                                 </div>
         
                                 <div class="form-group">
-                                    <img src="{{ asset('uploads/device/images/default.png') }}" style="width: 100px" class="img-thumbnail image-preview " alt="">
+                                    <img src="{{ asset('/uploads/device/default.png') }}" style="width: 100px" class="img-thumbnail image-preview " alt="">
                                 </div>
 
                             </div>

@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('centers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->text('name');
             $table->string('phone'); //cast array accept multiple phones
             $table->foreignIdFor(\App\Models\Location::class);
             $table->text('description')->nullable();
-            $table->string('address')->nullable();
+            $table->text('address')->nullable();
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
             $table->boolean('is_active')->default(\App\Models\Center::ACTIVE);

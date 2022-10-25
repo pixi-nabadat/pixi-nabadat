@@ -21,6 +21,40 @@ if (!function_exists('successCode')) {
 }
 
 
+if (!function_exists('createDir')) {
+    function createDir($fullDir)
+    {
+        $dir = pathinfo($fullDir, PATHINFO_DIRNAME);
+        if (is_dir($dir)) {
+            return true;
+        }else{
+            if (createDir($dir)) {
+                if (mkdir($dir, 0777, true)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+
+
+if (!function_exists('fileDir')) {
+    function fileDir($fileType)
+    {
+        $url = url('/');
+        $dir = $url."/uploads/";
+        switch ($fileType) {
+            case 'user':
+                return $dir.="user/";
+                break;
+            default:
+                return "";
+                break;
+        }
+    }
+}
+
 
 
 

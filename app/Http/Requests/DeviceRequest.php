@@ -26,7 +26,7 @@ class DeviceRequest extends BaseRequest
     {
         return [
             'name.*' => 'required|string',
-            // 'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'description.*' => 'nullable|string',
         ];
     }
@@ -36,10 +36,8 @@ class DeviceRequest extends BaseRequest
         return [
             'name.*.string' => __('lang.name_en_should_be_string'),
             'name.*.required' => __('lang.name_in_ar__should_be_required'),
-
             'description.*.string' => __('lang.description_en_should_be_string'),
             'description.*.required' => __('lang.description_in_ar__should_be_required'),
-        
         ];
     }
 
