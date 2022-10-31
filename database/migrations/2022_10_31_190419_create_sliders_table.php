@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('sliders', function (Blueprint $table) {
             $table->id();
+            $table->integer('order');
             $table->foreignIdFor(\App\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->dateTime('from');
-            $table->dateTime('to');
-            $table->string('day');//day in arabic and english
-            $table->string('time_periob');
+            $table->time('duration');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('sliders');
     }
 };

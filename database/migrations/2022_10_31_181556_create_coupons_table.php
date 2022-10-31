@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('coupons', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->dateTime('from');
-            $table->dateTime('to');
-            $table->string('day');//day in arabic and english
-            $table->string('time_periob');
+            $table->unsignedInteger('added_by');
+            $table->string('code')->unique();
+            $table->double('discount');
+            $table->tinyInteger('discount_type');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('min_buy');
             $table->timestamps();
         });
     }
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('coupons');
     }
 };

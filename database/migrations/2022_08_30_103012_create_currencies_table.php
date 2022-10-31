@@ -18,6 +18,8 @@ class CreateCurrenciesTable extends Migration
             $table->string('name', 50)->unique();
             $table->string('code', 50)->unique();
             $table->string('symbol', 5)->nullable();
+            $table->double('exchange_rate');
+            $table->boolean('is_default')->default(1); 
             $table->timestamps();
         });
     }
