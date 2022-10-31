@@ -4,15 +4,41 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
+use App\Traits\Filterable;
 
 class Center extends Model
 {
-    use HasFactory;
+    use HasTranslations, HasFactory,Filterable;
+
     const   ACTIVE = 1 ,
             SUPPORT_AUTO_SERVICE = 1,
             NON_ACTIVE = 0 ,
             NON_SUPPORT_AUTO_SERVICE = 0;
 
-    protected $fillable = ['name','email','password','google_map_url','phone','description','is_support_auto_service',
-    'address','is_active',];
+    protected $fillable = [
+        'name', 'phone', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
+    ];
+
+    protected $casts = [
+        'phone' => 'array',
+    ];
+
+    protected $table = 'centers';
+
+    public $timestamps = false;
+
+    public $translatable = ['name','description','address'];
+
+    public function doctors()
+    {
+        return $this->belongsToMany(User::class, CenterDoctor::class,'center_id','doctor_id')->where('type', User::DOCTORTYPE);
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
+
+
 }
