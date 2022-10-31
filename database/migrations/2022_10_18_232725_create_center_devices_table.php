@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Device::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->float('unit_price');
             $table->float('unit_price_with_auto_service')->nullable()->default(0);//not used this column for future
+         
             $table->integer('number_of_devices');
             $table->timestamps();
         });

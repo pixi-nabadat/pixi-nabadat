@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('centers', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
+            $table->string('name');
             $table->string('phone'); //cast array accept multiple phones
             $table->foreignIdFor(\App\Models\Location::class);
             $table->text('description')->nullable();
@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('lng')->nullable();
             $table->boolean('is_active')->default(\App\Models\Center::ACTIVE);
             $table->boolean('is_support_auto_service')->default(\App\Models\Center::NON_SUPPORT_AUTO_SERVICE);
+            $table->string('google_map_url');
             $table->timestamps();
         });
     }
