@@ -30,6 +30,9 @@ class CentresDataTable extends DataTable
             ->addcolumn('name', function(Center $center){
                 return $center->name ;
             })
+            ->addcolumn('address', function(Center $center){
+                return $center->address ;
+            })
              ->addcolumn('location', function(Center $center){
                 return $center->location->title;
             })
