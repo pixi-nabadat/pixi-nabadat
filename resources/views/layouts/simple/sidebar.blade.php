@@ -92,6 +92,16 @@
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('clinics.index') ? 'active' : '' }}" href="{{route('clinics.index')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
 {{--                        end clincs ------------------------------------------}}
+
+                        {{--start category ---}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/categories' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.category') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/categories' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('categories.index') ? 'active' : '' }}" href="{{route('categories.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('categories.create') ? 'active' : '' }}" href="{{route('categories.create')}}">{{ trans('lang.create') }}</a></li>
+                        </ul>
+                        {{--end category --}}
 					</li>
                 </ul>
 			</div>
