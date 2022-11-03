@@ -13,7 +13,7 @@ class AuthService extends BaseService
     public function loginWithEmailOrPhone(string $identifier, string $password,int $userType=null) :User|Model
     {
 
-        $identifierField = filter_var($identifier,FILTER_VALIDATE_EMAIL) ? 'email':'phone';
+        $identifierField = filter_var($identifier,FILTER_VALIDATE_EMAIL) ? 'email':'user_name';
         $credential = [$identifierField=>$identifier,'password'=>$password];
         if (isset($userType))
             $credential['type']=User::CUSTOMERTYPE;

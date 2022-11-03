@@ -11,4 +11,9 @@ class CategoriesFilter extends QueryFilter
     {
         parent::__construct($params);
     }
+
+    public function is_active($term)
+    {
+        return $this->builder->where('is_active',$term);
+    }
 }

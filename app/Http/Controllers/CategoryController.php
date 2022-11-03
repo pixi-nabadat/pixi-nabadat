@@ -3,18 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\CategoriesDataTable;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Services\CategoryService;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     public function __construct(private CategoryService $categoryService)
     {
-        
+
     }
-    
+
     public function index(CategoriesDataTable $dataTable){
 
         return $dataTable->render('dashboard.categories.index');
@@ -29,7 +27,7 @@ class CategoryController extends Controller
             return back()->with('toast', $toast);
         }
         return view('dashboard.categories.edit', compact('category'));
-    }//end of edit 
+    }//end of edit
 
     public function create(){
         return view('dashboard.categories.create');
@@ -37,8 +35,7 @@ class CategoryController extends Controller
 
     public function store(CategoryRequest $request){
         try {
-            $request->validated();
-            $this->categoryService->store($request->all());
+            $this->categoryService->store($request->validated());
             $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'category Saved Successfully'];
             return redirect()->route('categories.index')->with('toast', $toast);
         } catch (\Exception $ex) {
@@ -50,8 +47,7 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, $id)
     {
         try {
-            $request->validated();
-            $this->categoryService->update($id, $request->all());
+            $this->categoryService->update($id, $request->validated());
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect(route('categories.index'))->with('toast', $toast);
         } catch (\Exception $ex) {
@@ -60,7 +56,7 @@ class CategoryController extends Controller
             return redirect()->back()->with('toast', $toast);
         }
     } //end of update
-    
+
     public function destroy($id)
     {
         try {
@@ -82,7 +78,7 @@ class CategoryController extends Controller
             return back()->with('toast', $toast);
         }
        return view('dashboard.categories.show', compact('category'));
-    } //end of show   
+    } //end of show
 
     public function changeStatus($id)
     {

@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Category;
-use App\Models\User;
 use App\QueryFilters\CategoriesFilter;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -16,15 +15,15 @@ class CategoryService extends BaseService
         return $categories->get();
     }
 
-    public function queryGet(array $where_condition = []): Builder
+    public function queryGet(array $where_condition = [],$with=[]): Builder
     {
-        $categories = category::query();
+        $categories = category::query()->with($with);
         return $categories->filter(new CategoriesFilter($where_condition));
     }
 
     public function store($data)
     {
-        isset($data['is_active'])  ?   $data['is_active']=1 : $data['is_active']= 0;
+        $data['is_active'] = isset($data['is_active'])  ?  1 :  0;
         return category::create($data);
     } //end of store
 
