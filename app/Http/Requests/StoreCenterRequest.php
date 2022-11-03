@@ -31,8 +31,6 @@ class StoreCenterRequest extends FormRequest
             'lng'=>'nullable|string',
             'address.*'=>'string|required',
             'description.*'=>'string|nullable',
-            'doctor_ids'=>'required|array|min:1',
-            'doctor_ids.*'=>'required|integer|exists:users,id',
         ];
     }
 }

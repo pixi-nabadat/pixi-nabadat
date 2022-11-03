@@ -80,21 +80,6 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <div class="col-form-label">{{trans("lang.Choose_Doctor")}}</div>
-                                <select name="doctor_ids[]"  class="js-example-placeholder-multiple col-sm-12 @error('doctor_ids') is-invalid @enderror" multiple="multiple">
-                                    {{-- @foreach ($currencies as $currency) --}}
-                                    <option value="1">Yoins</option>
-                                    <option value="2">Zain</option>
-                                    <option value="3">Omar</option>
-                                    <option value="4">Belal</option>
-                                    {{-- @endforeach --}}
-                                </select>
-                                @error('doctor_ids')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                              @enderror
-                            </div>
-
 							<div class="col-md-6 mb-3">
                                 <div class="col-form-label">{{trans("lang.Choose_Country")}}</div>
                                 <select  id="country" class="form-select form-select-lg mb-3 @error('parent_id') is-invalid @enderror">
@@ -152,6 +137,13 @@
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
 							</div>
+                            <div class="mb-3">
+								<label for="validationCustom01">{{trans("lang.google_map_url")}}</label>
+								<input name="google_map_url" value="{{$center->google_map_url}}" class="form-control @error('google_map_url') is-invalid @enderror" id="validationCustom01" type="text" placeholder="{{trans("lang.google_map_url")}}" required="">
+                                @error('google_map_url')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+							</div>
 
                             <div class="mb-3">
                                 <div class="media mb-2">
@@ -174,7 +166,7 @@
                                 </div>
                             </div>
                         </div>
-						<button class="btn btn-primary" type="submit">ADD country</button>
+						<button class="btn btn-primary" type="submit">Update country</button>
 					</form>
 				</div>
 			</div>
