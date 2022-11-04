@@ -4,26 +4,24 @@ namespace App\Services;
 
 
 use App\Models\Center;
-use App\Models\Location;
-use App\Models\User;
 use App\QueryFilters\CentersFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Auth;
-
+use App\Http\Resources\GetListCenterResource;
 class CenterService extends BaseService
 {
 
 
     public function queryGet(array $where_condition = []): Builder
     {
-        $centers = Center::query();
+        $centers = Center::query()->with('Location');
         return $centers->filter(new CentersFilter($where_condition));
     }
 
     public function getAll(array $where_condition = [])
     {
         $centers = $this->queryGet($where_condition);
-        return $centers->get();
+        $centers = $centers->cursorPaginate(10);
+        return GetListCenterResource::collection($centers);
     }
 
     public function store(array $centerData = [], array $doctorIds =[])

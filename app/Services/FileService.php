@@ -25,6 +25,22 @@ class FileService
         return $filename;
     }
 
+    public function upload($file, $type, $dir)
+    {
+        $fullDir = 'uploads/' . $dir;
+        if (!file_exists($fullDir)) {
+            createDir($fullDir . "file");
+        }
+        list($fileType, $file) = explode(';', $file);
+        list(, $file) = explode(',', $file);
+        $file = base64_decode($file);
+        if ($type == 'image') {
+            return $this->processImage($fileType, $fullDir, $file);
+        } else {
+            return $this->uploadFile($fileType, $fullDir, $file);
+        }
+    }
+
     public function uploadImage($file, $dir, $exe)
     {
         $fullDir = 'uploads/'.$dir;
@@ -42,33 +58,15 @@ class FileService
         ];
     }
 
-    public function uploadFile($file, $type, $dir)
+    public function uploadFile($fileType, $fullDir, $file)
     {
-        $fullDir = 'uploads/' . $dir;
-        if (!file_exists($fullDir)) {
-            createDir($fullDir . "file");
-        }
-        list($fileType, $file) = explode(';', $file);
-        list(, $file) = explode(',', $file);
-        $file = base64_decode($file);
-        $exe = $this->getExtension($type, $fileType, $fullDir, $file);
-        if (empty($exe)) {
-            return [
-                "status" => false,
-                "message" => "File type not Supported",
-                "code" => 203,
-            ];
-        }
-        $fileName = uniqid() . "." . $exe;
-        file_put_contents($fullDir . $fileName, $file);
-        return [
-            "dir" => url('/') . '/' . $fullDir,
-            "file_name" => $fileName
-        ];
-    }
-
-    private function getExtension($type, $fileType, $fullDir, $file)
-    {
+        // $fullDir = 'uploads/' . $dir;
+        // if (!file_exists($fullDir)) {
+        //     createDir($fullDir . "file");
+        // }
+        // list($fileType, $file) = explode(';', $file);
+        // list(, $file) = explode(',', $file);
+        // $file = base64_decode($file);
         $fileTypes =  [
             'data:application/pdf' => 'pdf',
             'data:"application/octet-stream"' => 'docx',
@@ -80,11 +78,20 @@ class FileService
             'data:"application/octet-stream"' => 'docx',
             'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document"'  => 'docx',
         ];
-        $exe = match ($type) {
-            'image' => $this->processImage($fileType, $fullDir, $file),
-            'attachment' => $fileTypes[$fileType],
-        };
-        return $exe;
+        $exe =  $fileTypes[$fileType];
+        if (empty($exe)) {
+            return [
+                "status" => false,
+                "message" => "File type not Supported",
+                "code" => 203,
+            ];
+        }
+        $fileName = uniqid() . "." . $exe;
+        file_put_contents($fullDir . $fileName, $file);
+        return [
+            "dir" => url('/') .'/'. $fullDir,
+            "file_name" => $fileName
+        ];
     }
 
     private function processImage($fileType, $fullDir, $file)

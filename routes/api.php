@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PhoneVerifyController;
 use App\Http\Controllers\Api\RestPasswordController;
 use App\Http\Controllers\Api\CenterController;
+use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\AttachmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +26,18 @@ Route::group(['prefix'=>'auth'],function (){
     Route::post('password/forget',  PhoneVerifyController::class);
     Route::post('password/reset', RestPasswordController::class);
     Route::post('centers/all/{location_id?}', [CenterController::class, 'getAllLocationCenters']);
+    Route::post('get/all/doctors', [DoctorController::class, 'getAllDoctors']);
+    Route::post('store/doctor', [DoctorController::class, 'storeDoctor']);
+    Route::get('find/doctor/{doctorId}', [DoctorController::class, 'findDoctor']);
+    Route::delete('delete/doctor/{doctorId}', [DoctorController::class, 'deleteDoctor']);
+    Route::Patch('update/doctor/{doctorId}', [DoctorController::class, 'editDoctor']);
+    Route::post('get/all/centers', [CenterController::class, 'getAllCenters']);
+
+
+    Route::post('file/upload', [AttachmentController::class, 'upload']);
+
+
+
 });
 
 Route::fallback(function() {

@@ -35,7 +35,7 @@ class Center extends Model
         return $this->belongsToMany(User::class, CenterDoctor::class,'center_id','doctor_id')->where('type', User::DOCTORTYPE);
     }
 
-    public function location()
+    public function Location()
     {
         return $this->belongsTo(Location::class);
     }

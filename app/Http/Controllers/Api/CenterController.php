@@ -33,4 +33,15 @@ class CenterController extends Controller
             return apiResponse($e->getMessage(), 'Unauthorized',$e->getCode());
         }
     }
+
+    public function getAllCenters(Request $request)
+    {
+        try {
+            $filters = $request->all();
+            $list = $this->centerService->getAll($filters);
+            return apiResponse($list,__('lang.success'));
+        } catch (\Exception $e) {
+            return apiResponse($e->getMessage(), 'Unauthorized',$e->getCode());
+        }
+    }
 }

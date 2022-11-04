@@ -52,6 +52,11 @@ class User extends Authenticatable
         return $this->createToken(config('app.name'))->plainTextToken;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function location()
     {
         return $this->belongsTo(Location::class);

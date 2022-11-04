@@ -16,7 +16,7 @@ class AuthService extends BaseService
         $identifierField = filter_var($identifier,FILTER_VALIDATE_EMAIL) ? 'email':'phone';
         $credential = [$identifierField=>$identifier,'password'=>$password];
         if (isset($userType))
-            $credential['type']=User::CUSTOMERTYPE;
+            $credential['type']=User::SUPERADMINTYPE;
         if (!auth()->attempt($credential))
             return throw new UserNotFoundException(__('lang.login failed'));
         return User::where($identifierField, $identifier)->first();

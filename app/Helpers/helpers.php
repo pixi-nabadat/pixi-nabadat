@@ -48,6 +48,9 @@ if (!function_exists('fileDir')) {
             case 'user':
                 return $dir.="user/";
                 break;
+            case 'doctor':
+                return $dir.="doctor/";
+                break;
             default:
                 return "";
                 break;
