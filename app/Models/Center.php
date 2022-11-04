@@ -18,6 +18,7 @@ class Center extends Model
 
     protected $fillable = [
         'name', 'phone', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
+        'google_map_url'
     ];
 
     protected $casts = [
@@ -30,10 +31,6 @@ class Center extends Model
 
     public $translatable = ['name','description','address'];
 
-    public function doctors()
-    {
-        return $this->belongsToMany(User::class, CenterDoctor::class,'center_id','doctor_id')->where('type', User::DOCTORTYPE);
-    }
 
     public function Location()
     {

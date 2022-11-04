@@ -57,5 +57,10 @@
 		'create'=>'Create',
 		'edit'=>'Edit',
 		'show'=>'show',
+		'categories'=>'Categories',
+		'name_ar'=>'Arabic Name',
+		'name_en'=>'English Name',
+		'category'=>'Category',
+		'add_category'=>'Add Category',
     ]
 ?>

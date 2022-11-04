@@ -10,7 +10,7 @@
         <i class="fa fa-trash-o"></i>
     </button>
 
-    <a href="{{ route('clients.changeStatus', $center) }}" class=" btn-sm btn-warning me-1">
+    <a href="{{ route('centers.changeStatus', $center) }}" class=" btn-sm btn-warning me-1">
         @if ($center->is_active == 1)
             <i class="fa fa-check my-2">{{trans('lang.de_active')}}</i>
         @else

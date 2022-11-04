@@ -67,21 +67,6 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <div class="col-form-label">{{trans("lang.Choose_Doctor")}}</div>
-                                <select name="doctor_ids[]" class="js-example-placeholder-multiple col-sm-12 @error('doctor_ids') is-invalid @enderror" multiple="multiple">
-                                    {{-- @foreach ($currencies as $currency) --}}
-                                    <option value="1">Yoins</option>
-                                    <option value="2">Zain</option>
-                                    <option value="3">Omar</option>
-                                    <option value="4">Belal</option>
-                                    {{-- @endforeach --}}
-                                </select>
-                                @error('doctor_ids')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                              @enderror
-                            </div>
-
 							<div class="col-md-6 mb-3">
                                 <div class="col-form-label">{{trans("lang.Choose_Country")}}</div>
                                 <select  id="country" class="form-select form-control mb-3 @error('parent_id') is-invalid @enderror" >
@@ -124,6 +109,13 @@
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
 							</div>
+                            <div class="mb-3">
+								<label for="validationCustom01">{{trans("lang.google_map_url")}}</label>
+								<input name="google_map_url" class="form-control @error('google_map_url') is-invalid @enderror" id="validationCustom01" type="text" placeholder="{{trans("lang.google_map_url")}}" required="">
+                                @error('google_map_url')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+							</div>
 
                             <div class="mb-3">
                                 <div class="media mb-2">
@@ -156,6 +148,33 @@
 @endsection
 
 @section('script')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var maxField = 10; //Input fields increment limitation
+        var addButton = $('.add_button'); //Add button selector
+        var wrapper = $('.field_wrapper'); //Input field wrapper
+        var fieldHTML = '<div><input type="text" class="form-control" name="phone[]" value=""/><a href="javascript:void(0);" class="remove_button"><img src="public/uploads/remove-icon.png"/></a></div>'; //New input field html
+        var x = 1; //Initial field counter is 1
+
+        //Once add button is clicked
+        $(addButton).click(function(){
+            //Check maximum number of input fields
+            if(x < maxField){
+                x++; //Increment field counter
+                $(wrapper).append(fieldHTML); //Add field html
+            }
+        });
+
+        //Once remove button is clicked
+        $(wrapper).on('click', '.remove_button', function(e){
+            e.preventDefault();
+            $(this).parent('div').remove(); //Remove field html
+            x--; //Decrement field counter
+        });
+    });
+</script>
 
 <script type="text/javascript">
     $(document).ready(function () {
