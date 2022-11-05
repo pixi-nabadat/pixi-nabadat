@@ -44,7 +44,7 @@
 
         .icon {
             color: white;
-            font-size: 100px;
+            font-size: 50px;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -125,7 +125,7 @@
                                             <div class="col-md-3 col-lg-3 col-sm-12">
                                                 <div class="img-container">
                                                     <div class="form-group my-3">
-                                                        <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" class="img-thumbnail image" alt="">
+                                                        <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 250px;height: 200px" class="img-thumbnail image" alt="">
                                                     </div>
                                                     <div class="overlay">
                                                         <a href="{{route('attachment.destroy',$attachment->id)}}" class="icon" title="{{trans('lang.delete_image')}}">
