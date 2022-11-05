@@ -11,8 +11,8 @@ class CategoryService extends BaseService
 
     public function getAll(array $where_condition = [])
     {
-        $categories = $this->queryGet($where_condition);
-        return $categories->get();
+        $categories = Category::all();
+        return $categories;
     }
 
     public function queryGet(array $where_condition = [],$with=[]): Builder

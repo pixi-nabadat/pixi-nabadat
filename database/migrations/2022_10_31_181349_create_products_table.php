@@ -25,8 +25,9 @@ return new class extends Migration
             $table->tinyInteger('discount_type');
             $table->date('discount_start_date');
             $table->date('discount_end_date');
+            $table->tinyInteger('tax_type');
             $table->double('tax');
-            $table->string('featured')->nullable();
+            $table->tinyInteger('featured')->nullable();
             $table->integer('num_points');
             $table->timestamps();
         });
