@@ -11,6 +11,53 @@
 <li class="breadcrumb-item active"><a href="{{route('devices.index')}}">{{ trans('lang.devices') }}</a></li>
 <li class="breadcrumb-item active">{{ trans('lang.edit') }}</li>
 @endsection
+@section('style')
+    <style>
+        .img-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .image {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: .3s ease;
+            background-color: #ff5151;
+        }
+
+        .img-container:hover .overlay {
+            opacity: 1;
+        }
+
+        .icon {
+            color: white;
+            font-size: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .fa-user:hover {
+            color: #eee;
+        }
+    </style>
+@endsection
 
 @section('content')
 
@@ -19,7 +66,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-body">           
+                    <div class="card-body">
                         <form class="needs-validation" novalidate="" enctype="multipart/form-data"  action="{{ route('devices.update',$device) }}" method="post" >
                             @csrf
                             @method('put')
@@ -61,22 +108,42 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                
+
                                 <div class="col-md-12">
                                     <label class="form-label mt-3" for="image">{{ trans('lang.image') }}</label>
-                                    <input name="image" class="form-control image @error('image') is-invalid @enderror"
+                                    <input name="images[]" class="form-control image @error('image') is-invalid @enderror"
                                         id="image" type="file" value={{ $device->image}}  required>
                                     @error('image')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-        
-                                <div class="form-group my-3">
-                                    <img src="{{ asset('/uploads/device/'.$device->image) }}" style="width: 100px" class="img-thumbnail image-preview " alt="">
+
+                            <div class="col-md-12">
+                                <div class="row">
+                                    @if($device->attachments->count())
+                                        @foreach($device->attachments as $attachment)
+                                            <div class="col-md-3 col-lg-3 col-sm-12">
+                                                <div class="img-container">
+                                                    <div class="form-group my-3">
+                                                        <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" class="img-thumbnail image" alt="">
+                                                    </div>
+                                                    <div class="overlay">
+                                                        <a href="{{route('attachment.destroy',$attachment->id)}}" class="icon" title="{{trans('lang.delete_image')}}">
+                                                            <i class="fa fa-trash-o"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
+
                                 </div>
 
+                            </div>
+
+
                             <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
-                            
+
                         </form>
                     </div>
                 </div>

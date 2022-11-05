@@ -26,7 +26,8 @@ class DeviceRequest extends BaseRequest
     {
         return [
             'name.*' => 'required|string',
-            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'description.*' => 'nullable|string',
         ];
     }

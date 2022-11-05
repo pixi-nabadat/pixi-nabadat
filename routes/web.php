@@ -12,6 +12,7 @@ use App\Http\Controllers\CountryController ;
 use App\Http\Controllers\GovernorateController ;
 use App\Http\Controllers\CityController ;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\AttachmentController;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -54,6 +55,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::resource('devices',DeviceController::class);
     Route::resource('clinics',ClinicController::class);
     Route::resource('clients',ClientController::class);
+    Route::resource('attachment',AttachmentController::class);
 
     Route::get('gevernorate/all', [App\Http\Controllers\GovernorateController::class, 'getAllGovernorates'])->name('allGovernorates');
 });

@@ -12,6 +12,7 @@ class DeviceService extends BaseService
 {
 
     use AttachmentTrait;
+
     public function getAll(array $where_condition = [])
     {
         $Devices = $this->queryGet($where_condition);
@@ -27,17 +28,21 @@ class DeviceService extends BaseService
     public function store($data)
     {
 
-        if (isset($data['image']))
-            $data['image'] = $this->storeAttachment($data['image'], 'uploads\device');
-        else
-            $data['image'] = 'default.png';
+        $device = Device::create($data);
+        if (!$device)
+            return false ;
 
-        return Device::create($data);
+        if (isset($data['images'])&&is_array($data['images']))
+            foreach ($data['images'] as $image)
+            {
+                $fileData = FileService::saveImage(file: $image,path: 'uploads\devices');
+                $device->storeAttachment($fileData);
+            }
     } //end of store
 
-    public function find($id)
+    public function find($id,$with=[])
     {
-        $device = Device::find($id);
+        $device = Device::with($with)->find($id);
         if ($device)
             return $device;
         return false;
@@ -45,11 +50,9 @@ class DeviceService extends BaseService
 
     public function delete($id)
     {
-        $device = Device::find($id);
+        $device = $this->find($id);
         if ($device) {
-            if ($device->image != 'default.png') {
-                $this->removeAttachment($device->image, 'uploads/device/');
-            }
+            $device->deleteAttachments();
             return $device->delete();
         }
         return false;
@@ -59,10 +62,12 @@ class DeviceService extends BaseService
     {
         $device = Device::find($id);
         if ($device) {
-            if (isset($data['image'])) {
-                $this->removeAttachment($device->image, 'uploads/device/');
-                $data['image'] = $this->storeAttachment($data['image'], 'uploads\device');
-            }
+            if (isset($data['images'])&&is_array($data['images']))
+                foreach ($data['images'] as $image)
+                {
+                    $fileData = FileService::saveImage(file: $image,path: 'uploads\devices');
+                    $device->storeAttachment($fileData);
+                }
             $device->update($data);
         }
         return false;

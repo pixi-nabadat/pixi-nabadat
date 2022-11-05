@@ -12,9 +12,9 @@ class DeviceController extends Controller
 {
     public function __construct(private DeviceService $deviceService)
     {
-        
+
     }
-    
+
     public function index(DevicesDataTable $dataTable){
 
         return $dataTable->render('dashboard.Devices.index');
@@ -22,14 +22,15 @@ class DeviceController extends Controller
     }//end of index
 
     public function edit($id){
-        $device = $this->deviceService->find($id);
+        $withRelation = ['attachments'];
+        $device = $this->deviceService->find($id,$withRelation);
         if (!$device)
         {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.device_not_found')];
             return back()->with('toast', $toast);
         }
         return view('dashboard.Devices.edit', compact('device'));
-    }//end of index 
+    }//end of index
 
     public function create(){
         return view('dashboard.Devices.create');
@@ -38,27 +39,25 @@ class DeviceController extends Controller
     public function update(DeviceRequest $request, $id)
     {
         try {
-            $request->validated();
-            $this->deviceService->update($id, $request->all());
+
+            $this->deviceService->update($id,$request->validated());
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect(route('devices.index'))->with('toast', $toast);
         } catch (\Exception $ex) {
 
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
-            return redirect()->back()->with('toast', $toast);
+            return back()->with('toast', $toast);
         }
     } //end of update
-    
+
     public function store(DeviceRequest $request){
         try {
-            $request->validated();
-            $this->deviceService->store($request->all());
+            $this->deviceService->store($request->validated());
             $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'Device Saved Successfully'];
             return redirect()->route('devices.index')->with('toast', $toast);
         } catch (\Exception $ex) {
-
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
-            return redirect()->back()->with('toast', $toast);
+            return back()->with('toast', $toast);
         }
     }//end of store
 
