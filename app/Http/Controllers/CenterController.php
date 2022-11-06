@@ -8,7 +8,6 @@ use App\DataTables\CentresDataTable;
 use App\Http\Requests\StoreCenterRequest as StoreCenterRequest;
 use App\Http\Requests\StoreCenterRequest as UpdateCenterRequest;
 use App\Services\LocationService;
-use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class CenterController extends Controller
@@ -26,7 +25,8 @@ class CenterController extends Controller
     public function index(CentresDataTable $dataTables,Request $request)
     {
         $request = $request->merge(['is_active' =>1]);
-        return $dataTables->with(['filters'=>$request->all()])->render('dashboard.centers.index');
+        $loadRelation = ['location'];
+        return $dataTables->with(['filters'=>$request->all(),'withRelations'=>$loadRelation])->render('dashboard.centers.index');
     }
 
     /**
@@ -36,24 +36,22 @@ class CenterController extends Controller
      */
     public function create()
     {
-        $doctors = app(UserService::class)->getAll(['type'=>User::DOCTORTYPE]);
         $filters =['depth'=>0,'is_active'=>1];
         $countries = $this->locationService->getAll($filters);
-        return view('dashboard.centers.create',['doctors'=>$doctors, 'countries' => $countries]);
+        return view('dashboard.centers.create',['countries' => $countries]);
     }
 
     public function store(StoreCenterRequest $request)
     {
         try {
-            $this->centerService->store($request->except('doctor_ids'), $request->doctor_ids);
+            $this->centerService->store($request->except('_token'));
             $toast=[
                 'type'=>'sucess',
                 'title'=>trans('lang.success'),
                 'message'=> 'Center Saved Successfully'
             ];
             return back()->with('toast',$toast);
-        }catch (\Exception $exception)
-        {
+        } catch (\Exception $exception) {
             $toast=[
                 'type'=>'error',
                 'title'=>trans('lang.error'),
@@ -83,15 +81,15 @@ class CenterController extends Controller
     public function update($id, UpdateCenterRequest $request)
     {
         try {
-            $this->centerService->update($id, $request->except(['doctor_ids','_token','_method']), $request->doctor_ids);
+            $this->centerService->update($id, $request->except(['_token','_method']));
             $toast=[
                 'type' => 'success',
                 'title'=>trans('lang.success'),
                 'message'=>'Center updated Successfully'
             ];
-            return  redirect(route('centers.index'))->with('toast',$toast);
-        }catch (\Exception $exception)
-        {
+            return back()->with('toast',$toast);
+            // return  redirect(route('centers.index'))->with('toast',$toast);
+        } catch (\Exception $exception) {
             $toast = [
                 'type'=>'error',
                 'title'=>trans('lang.error'),
@@ -113,6 +111,13 @@ class CenterController extends Controller
         {
             return apiResponse(message: $exception->getMessage(),code: 422);
         }
+    }
+
+    public function changeStatus($id)
+    {
+        $this->centerService->changeStatus($id);
+        $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
+        return redirect(route('centers.index'))->with('toast', $toast);
     }
 
     public function show($id)

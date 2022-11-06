@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCenterRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,16 @@ class StoreCenterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name.*'=>'required|string',
-            'phone'=>'required|string',
-            'location_id'=>'required|integer',
-            'lat'=>'nullable|string',
-            'lng'=>'nullable|string',
-            'address.*'=>'string|required',
-            'description.*'=>'string|nullable',
+            'name.ar' => 'required|string',
+            'name.en' => 'required|string',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.*.string' => __('lang.name_should_be_string'),
+            'name.*.required' => __('lang.name__should_be_required'),
         ];
     }
 }
