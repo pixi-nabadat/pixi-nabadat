@@ -23,8 +23,15 @@ class DevicesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'devicesdatatable.action')
-            ->setRowId('id');
+        ->addColumn('action', function(Device $device){
+            return view('dashboard.Devices.action',compact('device'))->render();
+        })
+        ->addcolumn('name', function(Device $device){
+            return $device->name ;
+        })
+        ->addcolumn('description', function(Device $device){
+            return $device->description ;
+        });
     }
 
     /**
@@ -68,15 +75,15 @@ class DevicesDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
+            Column::make('name'),
+            Column::make('description'),
+            Column::make('created_at'),
+            Column::make('updated_at'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+                  ->addClass('text-center'),     
         ];
     }
 

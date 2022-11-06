@@ -11,6 +11,9 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CountryController ;
 use App\Http\Controllers\GovernorateController ;
 use App\Http\Controllers\CityController ;
+use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\AttachmentController;
+
 use App\Http\Controllers\CategoryController;
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -51,8 +54,10 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::get('centers/changeStatus/{center}',[CenterController::class,'changeStatus'])->name('centers.changeStatus');
     #attachment routes
     Route::resource('doctors',DoctorController::class);
+    Route::resource('devices',DeviceController::class);
     Route::resource('clinics',ClinicController::class);
     Route::resource('clients',ClientController::class);
+    Route::delete('attachments/{attachment}',[AttachmentController::class,'destroy'])->name('attachment.destroy');
     Route::resource('categories',CategoryController::class);
     Route::get('categories/changeStatus/{category}',[CategoryController::class,'changeStatus'])->name('categories.changeStatus');
 
