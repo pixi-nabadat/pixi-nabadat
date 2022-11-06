@@ -55,7 +55,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::resource('devices',DeviceController::class);
     Route::resource('clinics',ClinicController::class);
     Route::resource('clients',ClientController::class);
-    Route::resource('attachment',AttachmentController::class);
+    Route::delete('attachments/{attachment}',[AttachmentController::class,'destroy'])->name('attachment.destroy');
 
     Route::get('gevernorate/all', [App\Http\Controllers\GovernorateController::class, 'getAllGovernorates'])->name('allGovernorates');
 });

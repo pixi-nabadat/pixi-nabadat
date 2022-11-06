@@ -112,7 +112,7 @@
                                 <div class="col-md-12">
                                     <label class="form-label mt-3" for="image">{{ trans('lang.image') }}</label>
                                     <input name="images[]" class="form-control image @error('image') is-invalid @enderror"
-                                        id="image" type="file" value={{ $device->image}}  required>
+                                        id="image" type="file" multiple>
                                     @error('image')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
@@ -128,7 +128,7 @@
                                                         <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 250px;height: 200px" class="img-thumbnail image" alt="">
                                                     </div>
                                                     <div class="overlay">
-                                                        <a href="{{route('attachment.destroy',$attachment->id)}}" class="icon" title="{{trans('lang.delete_image')}}">
+                                                        <a role="button" onclick="destroyWithReloadPage('{{route('attachment.destroy',$attachment->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
                                                             <i class="fa fa-trash-o"></i>
                                                         </a>
                                                     </div>
