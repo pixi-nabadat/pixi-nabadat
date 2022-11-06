@@ -125,10 +125,10 @@
                                             <div class="col-md-3 col-lg-3 col-sm-12">
                                                 <div class="img-container">
                                                     <div class="form-group my-3">
-                                                        <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 250px;height: 200px" class="img-thumbnail image" alt="">
+                                                        <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
                                                     </div>
                                                     <div class="overlay">
-                                                        <a role="button" onclick="destroyWithReloadPage('{{route('attachment.destroy',$attachment->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
+                                                        <a role="button" onclick="destroy('{{route('attachment.destroy',$attachment->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
                                                             <i class="fa fa-trash-o"></i>
                                                         </a>
                                                     </div>

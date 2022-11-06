@@ -51,38 +51,13 @@
                         if (result.status)
                         {
                             toastr.success(result.message);
-                            $('.dataTable').DataTable().ajax.reload(null, false);
+                            if (result.data == 'reload')
+                                window.location.reload();
+                            else
+                                $('.dataTable').DataTable().ajax.reload(null, false);
                         }
                         else
-                            toastr.error(result.msg);
-                    }
-                });
-            }
-        });
-    }
-    function destroyWithReloadPage(url) {
-        swal({
-            title: "{{__('lang.are_you_sure_you_want_to_delete')}}",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((confirmed) => {
-            if (confirmed) {
-                $.ajax({
-                    method: 'DELETE',
-                    url: url,
-                    dataType: 'json',
-                    data:{
-                        '_token': '{{ csrf_token() }}',
-                    },
-                    success: function(result) {
-                        if (result.status)
-                        {
-                            toastr.success(result.message);
-                            window.location.reload();
-                        }
-                        else
-                            toastr.error(result.msg);
+                            toastr.error(result.message);
                     }
                 });
             }
