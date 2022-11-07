@@ -13,12 +13,12 @@ class FileService
      * Save the uploaded image.
      *
      * @param UploadedFile $file     Uploaded file.
-     * @param int          $maxWidth
-     * @param string       $path
+     * @param int $maxWidth
+     * @param string|null $path
      *
      * @return array File name.
      */
-    public static function saveImage(UploadedFile $file, $maxWidth = 150, $path = null)
+    public static function saveImage(UploadedFile $file, int $maxWidth = 576, string $path = null)
     {
 
         $fileName = self::getFileName($file);
@@ -76,11 +76,11 @@ class FileService
      * Resize image to the configured size.
      *
      * @param \Intervention\Image\Image $img
-     * @param int                       $maxWidth
+     * @param int $maxWidth
      *
      * @return \Intervention\Image\Image
      */
-    protected static function resizeImage(\Intervention\Image\Image $img, $maxWidth = 150)
+    protected static function resizeImage(\Intervention\Image\Image $img, int $maxWidth = 576)
     {
         $img->resize($maxWidth, null, function (Constraint $constraint) {
             $constraint->aspectRatio();
