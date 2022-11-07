@@ -12,6 +12,55 @@
 <li class="breadcrumb-item active">{{ trans('lang.edit') }}</li>
 @endsection
 
+
+@section('style')
+    <style>
+        .img-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .image {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: .3s ease;
+            background-color: #ff5151;
+        }
+
+        .img-container:hover .overlay {
+            opacity: 1;
+        }
+
+        .icon {
+            color: white;
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .fa-user:hover {
+            color: #eee;
+        }
+    </style>
+@endsection
+
 @section('content')
 
     <!-- Container-fluid starts-->
@@ -19,63 +68,50 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-body">           
-                        <form class="needs-validation" novalidate="" action="{{ route('devices.show',$device) }}" method="post" >
-                            @csrf
-                            @method('put')
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <label class="form-label mt-3" for="name_ar">{{ trans('lang.name_ar') }}</label>
+                            <p class="form-control" id="name_ar">{{ $device->getTranslation('name', 'ar') }}</p>
+                        </div>
 
-                                <div class="col-md-12">
-                                    <label class="form-label mt-3" for="name_ar">{{ trans('lang.name_ar') }}</label>
-                                    <input name="name[ar]" disabled="true"  class="form-control @error('name_ar') is-invalid @enderror"
-                                        id="name_ar" type="text" value={{ $device->getTranslation('name', 'ar') }} required>
-                                    @error('name_ar')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                        <div class="col-md-12">
+                            <label class="form-label mt-3" for="name_en">{{ trans('lang.name_en') }}</label>
+                            <p  class="form-control" id="name_en">{{ $device->getTranslation('name', 'en') }}</p>
+                        </div>
 
-                                <div class="col-md-12">
-                                    <label class="form-label mt-3" for="name_en">{{ trans('lang.name_en') }}</label>
-                                    <input name="name[en]" disabled="true" class="form-control @error('name_en') is-invalid @enderror"
-                                        id="name_en" type="text"  value={{ $device->getTranslation('name', 'en') }} required>
-                                    @error('name_en')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                        <div class="col-md-12">
+                            <label class="form-label mt-3" for="description_ar">{{ trans('lang.description_ar') }}</label>
 
-                                <div class="col-md-12">
-                                    <label class="form-label mt-3" for="description_ar">{{ trans('lang.description_ar') }}</label>
+                            <p class="form-control" id="description_ar">{{ $device->getTranslation('description', 'ar') }} </p>
+                        </div>
 
-                                    <input name="description[ar]" disabled='true'  class="form-control @error('description_ar') is-invalid @enderror"
-                                    id="description_ar" type="text" required value={{ $device->getTranslation('description', 'ar') }} >
-
-                                    @error('description_ar')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-12">
-                                    <label class="form-label mt-3" for="description_en">{{ trans('lang.description_en') }}</label>
-                                    <input name="description[en]" disabled="true"  class="form-control @error('description_en') is-invalid @enderror"
-                                        id="description_en" type="text" required  value={{ $device->getTranslation('description', 'en') }}>
-                                    @error('description_en')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                {{-- image --}}
-                                    <div class="row col-md-12">
-                                        @if($device->attachments->count())
-                                            @foreach($device->attachments as $attachment)
-                                                <div class="col-md-3 col-lg-3 col-sm-12">
-                                                    <div class="img-container">
-                                                        <div class="form-group my-3">
-                                                            <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        @endif
+                        <div class="col-md-12">
+                            <label class="form-label mt-3" for="description_en">{{ trans('lang.description_en') }}</label>
+                            <p class="form-control" id="description_en">{{ $device->getTranslation('description', 'en') }}</p>
+                        </div>
+                        {{-- image --}}
+                        <div class="col-md-12">
+                        <div class="row">
+                            @if($device->attachments->count())
+                                @foreach($device->attachments as $attachment)
+                                    <div class="col-md-3 col-lg-3 col-sm-12">
+                                        <div class="img-container">
+                                            <div class="form-group my-3">
+                                                <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" class="img-fluid image" alt="">
+                                            </div>
+                                            <div class="overlay">
+                                                <a role="button" onclick="destroy('{{route('attachment.destroy',$attachment->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
-                        </form>
+                                @endforeach
+                            @endif
+
+                        </div>
+
+                    </div>
                     </div>
                 </div>
             </div>
