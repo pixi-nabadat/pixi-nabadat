@@ -28,7 +28,7 @@ class DoctorService extends BaseService
 
     public function storeDoctor(array $doctorData=[]): mixed
     {
-        $center_id =  $doctorData['center_id'] ?? Auth::user()->center_id ?? 1 ;
+        $center_id =  $doctorData['center_id'] ?? Auth::user()->center_id;
         if (! $center_id)
             return throw new BadRequestHttpException(__('lang.invalid_inputs'), 400);
         return Doctor::create($doctorData);

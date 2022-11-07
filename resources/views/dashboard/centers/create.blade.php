@@ -17,7 +17,7 @@
 		<div class="col-sm-12">
 			<div class="card">
 				<div class="card-body">
-					<form class="needs-validation" novalidate="" method="post" action="{{route('centers.store')}}" >
+					<form class="needs-validation" novalidate="" method="post" enctype="multipart/form-data" action="{{route('centers.store')}}" >
                         @csrf
 						<div class="row">
 							<div class="col-md-6 mb-3">
@@ -137,6 +137,20 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label" for="image">{{ trans('lang.image') }}</label>
+                                <input name="images[]" class="form-control image @error('image') is-invalid @enderror"
+                                    id="image" type="file" multiple>
+                                @error('image')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <img src="{{ asset('/uploads/device/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                            </div>
+
                         </div>
 						<button class="btn btn-primary" type="submit">{{trans("lang.submit")}}</button>
 					</form>

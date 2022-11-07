@@ -6,7 +6,8 @@
         <i class="fa fa-pencil-square-o"></i>
     </a>
 
-    <button role="button" onclick="destroy('{{route("centers.destroy",$center->id)}}')" class="btn btn-danger delete-btn">
+    <button role="button" onclick="destroy('{{ route('centers.destroy', $center->id) }}')"
+        class="btn btn-danger delete-btn me-1">
         <i class="fa fa-trash-o"></i>
     </button>
 

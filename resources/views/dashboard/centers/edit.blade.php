@@ -5,6 +5,51 @@
 @endsection
 
 @section('style')
+    <style>
+        .img-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .image {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: .3s ease;
+            background-color: #ff5151;
+        }
+
+        .img-container:hover .overlay {
+            opacity: 1;
+        }
+
+        .icon {
+            color: white;
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .fa-user:hover {
+            color: #eee;
+        }
+    </style>
 @endsection
 
 @section('breadcrumb-title')
@@ -25,7 +70,7 @@
 					<h5>{{trans("lang.Edit_Country")}}</h5>
 				</div>
 				<div class="card-body">
-					<form class="needs-validation" novalidate="" method="POST" action="{{route('centers.update',['center' => $center->id])}}" >
+					<form class="needs-validation" novalidate="" method="POST" enctype="multipart/form-data" action="{{route('centers.update',['center' => $center->id])}}" >
                         @csrf
                         @method('PUT')
                         <div class="row">
@@ -83,7 +128,8 @@
 							<div class="col-md-6 mb-3">
                                 <div class="col-form-label">{{trans("lang.Choose_Country")}}</div>
                                 <select  id="country" class="form-select form-select-lg mb-3 @error('parent_id') is-invalid @enderror">
-                                    <option selected>{{trans('lang.choose_country')}}</option>
+                                    {{-- <option selected>{{trans('lang.choose_country')}}</option> --}}
+                                    <option value="{{$location[0]->title}}">{{$location[0]->title}}</option>
                                     @foreach ($countries as $country)
                                     <option value="{{$country->id}}">{{$country->title}}</option>
                                     @endforeach
@@ -91,11 +137,15 @@
                             </div>
 							<div class="col-md-6 mb-3">
                                 <div class="col-form-label">{{trans("lang.Choose_governorate")}}</div>
-                                <select class="form-select form-select-lg mb-3" id="governorate"></select>
+                                <select class="form-select form-select-lg mb-3" id="governorate">
+                                    <option value="{{$location[1]->title}}">{{$location[1]->title}}</option>
+                                </select>
                             </div>
 							<div class="col-md-6 mb-3">
                                 <div class="col-form-label">{{trans("lang.Choose_city")}}</div>
-                                <select name="location_id" value="{{$center->location_id}}"  class="form-select form-select-lg mb-3" id="city"></select>
+                                <select name="location_id" value="{{$center->location_id}}"  class="form-select form-select-lg mb-3" id="city">
+                                    <option value="{{$location[2]->title}}">{{$location[2]->title}}</option>
+                                </select>
                                 @error('location_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -144,6 +194,38 @@
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
 							</div>
+
+                            <div class="col-md-12">
+                                <label class="form-label mt-3" for="image">{{ trans('lang.image') }}</label>
+                                <input name="images[]" class="form-control image @error('image') is-invalid @enderror"
+                                    id="image" type="file" multiple>
+                                @error('image')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="row">
+                                    @if($center->attachments->count())
+                                        @foreach($center->attachments as $attachment)
+                                            <div class="col-md-3 col-lg-3 col-sm-12">
+                                                <div class="img-container">
+                                                    <div class="form-group my-3">
+                                                        <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 250px;height: 200px" class="img-thumbnail image" alt="">
+                                                    </div>
+                                                    <div class="overlay">
+                                                        <a role="button" onclick="destroyWithReloadPage('{{route('attachment.destroy',$attachment->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
+                                                            <i class="fa fa-trash-o"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
+
+                                </div>
+
+                            </div>
 
                             <div class="mb-3">
                                 <div class="media mb-2">

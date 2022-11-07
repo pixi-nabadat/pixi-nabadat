@@ -7,9 +7,11 @@ use App\Models\Center;
 use App\QueryFilters\CentersFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Resources\GetListCenterResource;
+use App\Traits\HasAttachment;
 class CenterService extends BaseService
 {
 
+    use HasAttachment;
 
     public function queryGet(array $where_condition = [],$with=[]): Builder
     {
@@ -27,8 +29,14 @@ class CenterService extends BaseService
     public function store(array $centerData = [])
     {
         $center = Center::create($centerData);
-        if ($center)
-            return true;
+        if (! $center)
+            return false;
+        if (isset($centerData['images'])&&is_array($centerData['images']))
+            foreach ($centerData['images'] as $image)
+            {
+                $fileData = FileService::saveImage(file: $image,path: 'uploads/centers');
+                $center->storeAttachment($fileData);
+            }
         return false;
     }
 
@@ -37,11 +45,28 @@ class CenterService extends BaseService
         return Center::find($id);
     }
 
+    public function find($id,$with=[])
+    {
+        $center = Center::with($with)->find($id);
+        if ($center)
+            return $center;
+        return false;
+    }
+
+
     public  function update(int $centerId, array $centerData)
     {
-        $center = $this->getCenterById($centerId);
-        $center->update($centerData);
-        return true;
+        $center = $this->find($centerId);
+        if ($center) {
+            if (isset($centerData['images'])&&is_array($centerData['images']))
+                foreach ($centerData['images'] as $image)
+                {
+                    $fileData = FileService::saveImage(file: $image,path: 'uploads/centers');
+                    $center->storeAttachment($fileData);
+                }
+            $center->update($centerData);
+        }
+        return false;
     }
 
     public function changeStatus($id)
@@ -53,9 +78,11 @@ class CenterService extends BaseService
 
     public function delete($id): bool
     {
-        $center = $this->getCenterById($id);
-        if ($center)
+        $center = $this->find($id);
+        if ($center) {
+            $center->deleteAttachments();
             return $center->delete();
+        }
         return false;
     }
 }

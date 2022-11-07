@@ -63,19 +63,21 @@ class CenterController extends Controller
 
     public function edit($id)
     {
-        $center = $this->centerService->getCenterById($id);
+        $withRelation = ['attachments'];
+        $center = $this->centerService->find($id,$withRelation);
         if (!$center)
         {
             $toast = [
-              'type'=>'error',
-              'title'=>trans('error'),
-              'message'=>trans('lang.notfound')
+                'type'=>'error',
+                'title'=>trans('error'),
+                'message'=>trans('lang.notfound')
             ];
             return back()->with('toast',$toast);
         }
+        $location = $this->locationService->GetLocationAncestors($center->location_id);
         $filters =['depth'=>0,'is_active'=>1];
         $countries = $this->locationService->getAll($filters);
-        return view('dashboard.centers.edit',['center' => $center,'countries' => $countries]);
+        return view('dashboard.centers.edit',['center' => $center,'countries' => $countries,'location' =>$location]);
     }
 
     public function update($id, UpdateCenterRequest $request)
