@@ -61,10 +61,20 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                
-                                <div class="form-group my-3">
-                                    <img src="{{ asset('/uploads/device/'.$device->image) }}" style="width: 100px" class="img-thumbnail image-preview " alt="">
-                                </div>
+                                {{-- image --}}
+                                    <div class="row col-md-12">
+                                        @if($device->attachments->count())
+                                            @foreach($device->attachments as $attachment)
+                                                <div class="col-md-3 col-lg-3 col-sm-12">
+                                                    <div class="img-container">
+                                                        <div class="form-group my-3">
+                                                            <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
                         </form>
                     </div>
                 </div>
