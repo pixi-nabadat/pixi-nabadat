@@ -27,7 +27,7 @@ trait HasAttachment
     {
 
         $this->attachments()->each(function ($attachment){
-            unlink(public_path($attachment->path."//".$attachment->filename));
+            unlink(public_path($attachment->path."/".$attachment->filename));
            $attachment->delete();
         });
     }

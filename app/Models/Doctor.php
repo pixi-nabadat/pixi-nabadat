@@ -22,4 +22,8 @@ class Doctor extends Model
 
     public $translatable = ['name','description'];
 
+    protected $casts =[
+      'phone'  => 'array'
+    ];
+
 }

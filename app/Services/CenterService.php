@@ -13,16 +13,16 @@ class CenterService extends BaseService
 
     use HasAttachment;
 
-    public function queryGet(array $where_condition = [],$with=[]): Builder
+    public function queryGet(array $where_condition = [],$withRelation=[]): Builder
     {
-        $centers = Center::query()->with('Location');
+        $centers = Center::query()->with($withRelation);
         return $centers->filter(new CentersFilter($where_condition));
     }
 
-    public function getAll(array $where_condition = [])
+    public function getAll(array $where_condition = [],$with=[])
     {
-        $centers = $this->queryGet($where_condition);
-        $centers = $centers->cursorPaginate(10);
+        $centers = $this->queryGet($where_condition,$with);
+        $centers = $centers->cursorPaginate();
         return GetListCenterResource::collection($centers);
     }
 

@@ -32,10 +32,14 @@ class Center extends Model
     public $translatable = ['name','description','address'];
 
 
-    public function Location()
+    public function location()
     {
         return $this->belongsTo(Location::class);
     }
 
 
+    public function doctors()
+    {
+        return $this->hasMany(CenterDoctor::class,'center_id');
+    }
 }

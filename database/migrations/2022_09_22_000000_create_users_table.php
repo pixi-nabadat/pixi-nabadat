@@ -17,15 +17,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('user_name');
+            $table->string('user_name')->unique();
             $table->string('password');
-            $table->string('phone')->unique();
+            $table->string('phone');
             $table->tinyInteger('type')->default(\App\Models\User::CUSTOMERTYPE);
             $table->boolean('is_active')->default(\App\Models\User::ACTIVE);
             $table->foreignIdFor(\app\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-           
+
             $table->foreignIdFor(\App\Models\Location::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->date('date_of_birth');
+            $table->date('date_of_birth')->nullable();
             $table->string('description')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->timestamps();
