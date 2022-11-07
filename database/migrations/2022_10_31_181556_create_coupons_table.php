@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('added_by');
             $table->string('code')->unique();
-            $table->double('discount');
             $table->tinyInteger('discount_type');
+            $table->double('discount');
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('min_buy');
+            $table->double('min_buy')->nullable();
             $table->timestamps();
         });
     }

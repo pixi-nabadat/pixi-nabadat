@@ -102,6 +102,16 @@
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('categories.create') ? 'active' : '' }}" href="{{route('categories.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
                         {{--end category --}}
+
+                        {{--start coupon ---}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/coupons' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.coupon') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/coupons' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('coupons.index') ? 'active' : '' }}" href="{{route('coupons.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('coupons.create') ? 'active' : '' }}" href="{{route('coupons.create')}}">{{ trans('lang.create') }}</a></li>
+                        </ul>
+                        {{--end coupon --}}
 					</li>
                 </ul>
 			</div>

@@ -12,6 +12,8 @@ use App\Http\Controllers\CountryController ;
 use App\Http\Controllers\GovernorateController ;
 use App\Http\Controllers\CityController ;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CouponController;
+
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
     if (!in_array($locale, ['en', 'ar'])) {
@@ -55,6 +57,8 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::resource('clients',ClientController::class);
     Route::resource('categories',CategoryController::class);
     Route::get('categories/changeStatus/{category}',[CategoryController::class,'changeStatus'])->name('categories.changeStatus');
+  
+    Route::resource('coupons',CouponController::class);
 
     Route::get('gevernorate/all', [App\Http\Controllers\GovernorateController::class, 'getAllGovernorates'])->name('allGovernorates');
 });
