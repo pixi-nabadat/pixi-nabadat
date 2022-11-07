@@ -1,128 +1,109 @@
 <?php
 
 namespace App\Services;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\ImageManagerStatic as Image;
 
+use Illuminate\Support\Facades\File;
+use Image;
+use Intervention\Image\Constraint;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileService
 {
-    protected $types = [
-        "image" => ['jpg', 'jpeg', 'gif', 'png'],
-        "master_plan" => ['jpg', 'jpeg', 'gif', 'png'],
-        "pdf" => ['application/pdf'],
-        "docx" => ['application/octet-stream'],
-        "3DS" => ['application/3DS'],
-        "zip" => ['application/x-zip-compressed'],
-    ];
-
-    function prepareImage ($image, $path)
+    /**
+     * Save the uploaded image.
+     *
+     * @param UploadedFile $file     Uploaded file.
+     * @param int $maxWidth
+     * @param string|null $path
+     *
+     * @return array File name.
+     */
+    public static function saveImage(UploadedFile $file, int $maxWidth = 576, string $path = null)
     {
-        $extension = $image->getClientOriginalExtension();
-        $filename  = time().'.' . $extension;
-        $image->move(public_path($path), $filename);
 
+        $fileName = self::getFileName($file);
+        $fileExt = self::getFileExtenetion($file);
+        $fileSize = self::getFileSize($file);
+        $img = self::makeImage($file);
+        $img = self::resizeImage($img, $maxWidth);
+        self::uploadImage($img, $fileName, $path);
+
+        return [
+            'filename'=>$fileName,
+            'extention'=>$fileExt,
+            'size'=>$fileSize,
+            'path'=>$path
+        ];
+    }
+
+    /**
+     * Get uploaded file's name.
+     *
+     * @param UploadedFile $file
+     *
+     * @return null|string
+     */
+    protected static function getFileName(UploadedFile $file)
+    {
+        $filename = $file->getClientOriginalName();
+        $filename = date('Ymd_His') . '_' . strtolower(pathinfo($filename, PATHINFO_FILENAME)) . '.' . pathinfo($filename, PATHINFO_EXTENSION);
         return $filename;
     }
 
-    public function uploadImage($file, $dir, $exe)
+    protected static function getFileExtenetion(UploadedFile $file)
     {
-        $fullDir = 'uploads/'.$dir;
-        if (!file_exists($fullDir)) {
-            createDir($fullDir . "file");
-        }
-        $img = Image::make($file);
-        //save image to directory
-        $fileName = uniqid() . "." . $exe;
-        $img->save($fullDir . $fileName);
-        return [
-            "status" => true,
-            "dir" => url('/') . $fullDir,
-            "file_name" => $fileName
-        ];
+        return  $file->getClientOriginalExtension();
     }
 
-    public function uploadFile($file, $type, $dir)
+    protected static function getFileSize(UploadedFile $file)
     {
-        $fullDir = 'uploads/' . $dir;
-        if (!file_exists($fullDir)) {
-            createDir($fullDir . "file");
-        }
-        list($fileType, $file) = explode(';', $file);
-        list(, $file) = explode(',', $file);
-        $file = base64_decode($file);
-        $exe = $this->getExtension($type, $fileType, $fullDir, $file);
-        if (empty($exe)) {
-            return [
-                "status" => false,
-                "message" => "File type not Supported",
-                "code" => 203,
-            ];
-        }
-        $fileName = uniqid() . "." . $exe;
-        file_put_contents($fullDir . $fileName, $file);
-        return [
-            "dir" => url('/') . '/' . $fullDir,
-            "file_name" => $fileName
-        ];
+        return  $file->getSize();
     }
 
-    private function getExtension($type, $fileType, $fullDir, $file)
+    /**
+     * Create the image from upload file.
+     *
+     * @param UploadedFile $file
+     *
+     * @return \Intervention\Image\Image
+     */
+    protected static function makeImage(UploadedFile $file)
     {
-        $fileTypes =  [
-            'data:application/pdf' => 'pdf',
-            'data:"application/octet-stream"' => 'docx',
-            'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'xlsx',
-            'data:text/csv' => 'xlsx',
-            'data:application/octet-stream' => 'xls',
-            'data:application/vnd.ms-excel' => 'xls',
-            'application/x-zip-compressed' => 'zip',
-            'data:"application/octet-stream"' => 'docx',
-            'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document"'  => 'docx',
-        ];
-        $exe = match ($type) {
-            'image' => $this->processImage($fileType, $fullDir, $file),
-            'attachment' => $fileTypes[$fileType],
-        };
-        return $exe;
+        return Image::make($file);
     }
 
-    private function processImage($fileType, $fullDir, $file)
+    /**
+     * Resize image to the configured size.
+     *
+     * @param \Intervention\Image\Image $img
+     * @param int $maxWidth
+     *
+     * @return \Intervention\Image\Image
+     */
+    protected static function resizeImage(\Intervention\Image\Image $img, int $maxWidth = 576)
     {
-        $fileType = explode("image/", $fileType);
-        $exe = strtolower($fileType[1] ?? "");
+        $img->resize($maxWidth, null, function (Constraint $constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        });
 
-        $img = Image::make($file);
-        $size = $img->filesize();
-        if ($size > 400000) {
-            $img->resize(1500, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-        }
-
-        $fileName = uniqid() . "." . $exe;
-        $img->save($fullDir . $fileName);
-        return [
-            "dir" => url('/') . '/' . $fullDir,
-            "file_name" => $fileName
-        ];
+        return $img;
     }
 
-    public function removeFile($dir, $fileName)
+    /**
+     * Save the uploaded image to the file system.
+     *
+     * @param \Intervention\Image\Image $img
+     * @param string                    $fileName
+     * @param string                    $path
+     */
+    protected static function uploadImage($file, $fileName, $path)
     {
-        $fullDir = "uploads/" . $dir;
-        $disk = Storage::build([
-            'driver' => 'public_uploads',
-            'root' => $fullDir,
-        ]);
-        if ($disk->exists($fileName)) {
-            $disk->delete($fileName);
-            return [
-                "status" => true,
-                "message" => 'File Deleted Successflly'
-            ];
-        } else {
-            return false;
+        $destinationPath = public_path($path);
+        if(!File::isDirectory($destinationPath)){
+            //make the directory because it doesn't exists
+            File::makeDirectory($destinationPath, 0777, true, true);
         }
+        $file->save($destinationPath ."/". $fileName);
     }
 }

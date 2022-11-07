@@ -4,18 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Attachment extends Model
 {
     use HasFactory;
 
-    public static $types = [
-        "image" => ['jpg', 'jpeg', 'gif', 'png'],
-        "pdf" => ['application/pdf'],
-        "docx" => ['application/octet-stream'],
-        "3DS" => ['application/3DS'],
-        "zip" => ['application/x-zip-compressed'],
-    ];
+    protected $fillable = ['filename', 'path', 'caption', 'extention','size','attachmentable_type','attachmentable_id'];
 
     public function attachmentable()
     {

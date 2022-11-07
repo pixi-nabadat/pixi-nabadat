@@ -34,7 +34,7 @@
 <script>
     function destroy(url) {
         swal({
-            title: "{{__('lang.create_account')}}",
+            title: "{{__('lang.are_you_sure_you_want_to_delete')}}",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -51,13 +51,32 @@
                         if (result.status)
                         {
                             toastr.success(result.message);
-                            $('.dataTable').DataTable().ajax.reload(null, false);
+                            if (result.data == 'reload')
+                                window.location.reload();
+                            else
+                                $('.dataTable').DataTable().ajax.reload(null, false);
                         }
                         else
-                            toastr.error(result.msg);
+                            toastr.error(result.message);
                     }
                 });
             }
         });
     }
+</script>
+
+ {{-- image preview --}}
+<script>
+$(".image").change(function () {
+
+if (this.files && this.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        $('.image-preview').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(this.files[0]);
+}
+});
 </script>
