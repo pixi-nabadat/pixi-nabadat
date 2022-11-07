@@ -44,7 +44,7 @@ class CenterController extends Controller
     public function store(StoreCenterRequest $request)
     {
         try {
-            $this->centerService->store($request->except('_token'));
+            $this->centerService->store($request->validated());
             $toast=[
                 'type'=>'sucess',
                 'title'=>trans('lang.success'),
@@ -74,7 +74,7 @@ class CenterController extends Controller
             ];
             return back()->with('toast',$toast);
         }
-        $location = $this->locationService->GetLocationAncestors($center->location_id);
+        $location = $this->locationService->getLocationAncestors($center->location_id);
         $filters =['depth'=>0,'is_active'=>1];
         $countries = $this->locationService->getAll($filters);
         return view('dashboard.centers.edit',['center' => $center,'countries' => $countries,'location' =>$location]);

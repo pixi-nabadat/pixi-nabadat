@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('lng')->nullable();
             $table->boolean('is_active')->default(\App\Models\Center::ACTIVE);
             $table->boolean('is_support_auto_service')->default(\App\Models\Center::NON_SUPPORT_AUTO_SERVICE);
-            $table->string('google_map_url');
+            $table->string('google_map_url')->nullable();
             $table->timestamps();
         });
     }

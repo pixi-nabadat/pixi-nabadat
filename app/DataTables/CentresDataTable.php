@@ -27,12 +27,6 @@ class CentresDataTable extends DataTable
             ->addColumn('action', function(Center $center){
                 return view('dashboard.centers.action',compact('center'))->render();
             })
-            ->addcolumn('name', function(Center $center){
-                return $center->name ;
-            })
-            ->addcolumn('address', function(Center $center){
-                return $center->address ;
-            })
              ->addcolumn('location', function(Center $center){
                 return $center->location->title;
             })

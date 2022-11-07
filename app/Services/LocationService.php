@@ -62,7 +62,7 @@ class LocationService extends BaseService
         return Location::find($id);
     }
 
-    public function GetLocationAncestors($id)
+    public function getLocationAncestors($id)
     {
         // $location = $this->getLocationById($id);
         return Location::defaultOrder()->ancestorsAndSelf($id);
