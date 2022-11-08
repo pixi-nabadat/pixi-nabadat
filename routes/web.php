@@ -66,6 +66,8 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
    
     Route::resource('categories',CategoryController::class);
     Route::get('categories/changeStatus/{category}',[CategoryController::class,'changeStatus'])->name('categories.changeStatus');
+    Route::delete('attachments/{attachment}',[AttachmentController::class,'destroy'])->name('attachment.destroy');
+
 
     Route::get('gevernorate/all', [App\Http\Controllers\GovernorateController::class, 'getAllGovernorates'])->name('allGovernorates');
 });
