@@ -85,6 +85,6 @@ class CategoryService extends BaseService
     {
         $category = Category::find($id);
         $category->is_active = !$category->is_active;
-        $category->save();
+        return $category->save();
     }//end of changeStatus
 }
