@@ -43,15 +43,15 @@
                                 </div>
 
                                 <div class="media my-3">
-                                 <label class="col-form-label m-r-10">{{ __('lang.is_active') }}</label>
-                                 <div class="media-body  icon-state">
-                                     <label class="switch">
-                                         <input type="checkbox" disabled="true" name="is_active"
-                                             {{ $category->is_active == 1 ? 'checked' : '' }}><span
-                                             class="switch-state"></span>
-                                     </label>
-                                 </div>
-                             </div>
+                                    <label class="col-form-label m-r-10">{{ __('lang.is_active') }}</label>
+                                    <div class="media-body  icon-state">
+                                        <label class="switch">
+                                            <input type="checkbox" disabled="true" name="is_active"
+                                                {{ $category->is_active == 1 ? 'checked' : '' }}><span
+                                                class="switch-state"></span>
+                                        </label>
+                                    </div> 
+                                </div>
                         </form>
                     </div>
                 </div>

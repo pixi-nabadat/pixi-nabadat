@@ -17,7 +17,7 @@ class DeviceController extends Controller
 
     public function index(DevicesDataTable $dataTable){
 
-        return $dataTable->render('dashboard.Devices.index');
+        return $dataTable->render('dashboard.devices.index');
 
     }//end of index
 
@@ -29,11 +29,11 @@ class DeviceController extends Controller
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.device_not_found')];
             return back()->with('toast', $toast);
         }
-        return view('dashboard.Devices.edit', compact('device'));
+        return view('dashboard.devices.edit', compact('device'));
     }//end of index
 
     public function create(){
-        return view('dashboard.Devices.create');
+        return view('dashboard.devices.create');
     }//end of index
 
     public function update(DeviceRequest $request, $id)
@@ -75,12 +75,26 @@ class DeviceController extends Controller
 
     public function show($id)
     {
-        $device = $this->deviceService->find($id);
+        $withRelation = ['attachments'];
+        $device = $this->deviceService->find($id,$withRelation);
         if (!$device)
         {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.device_not_found')];
             return back()->with('toast', $toast);
         }
-       return view('dashboard.Devices.show', compact('device'));
+       return view('dashboard.devices.show', compact('device'));
     } //end of show
+
+    public function changeStatus(Request $request)
+    {
+
+        try {
+            $result =  $this->deviceService->changeStatus($request->id);
+            if (!$result)
+                return apiResponse(message: trans('lang.not_found'), code: 404);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+    } //end of changeStatus
 }
