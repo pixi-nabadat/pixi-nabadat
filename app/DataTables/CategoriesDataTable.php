@@ -30,7 +30,10 @@ class CategoriesDataTable extends DataTable
         })
         ->addcolumn('name', function(Category $category){
             return $category->name ;
-        });   
+        })
+            ->addcolumn('is_active', function(Category $category){
+                return  view('dashboard.components.status-btn',['model'=>$category,'url'=>route('categories.changeStatus')]);
+            })->rawColumns(['action','is_active']);;
     }
 
     /**
@@ -58,9 +61,6 @@ class CategoriesDataTable extends DataTable
                     ->dom('Bfrtip')
                     ->orderBy(1)
                     ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
                     );
@@ -76,12 +76,10 @@ class CategoriesDataTable extends DataTable
         return [
             Column::make('name'),
             Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::computed('is_active'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
                   ->width(60)
-                  ->addClass('text-center'),     
+                  ->addClass('text-center'),
         ];
     }
 
