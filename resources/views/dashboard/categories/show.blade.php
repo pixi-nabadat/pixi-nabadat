@@ -28,18 +28,12 @@
                                     <label class="form-label mt-3" for="name_ar">{{ trans('lang.name_ar') }}</label>
                                     <input name="name[ar]" disabled="true"  class="form-control @error('name_ar') is-invalid @enderror"
                                         id="name_ar" type="text" value={{ $category->getTranslation('name', 'ar') }} required>
-                                    @error('name_ar')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
 
                                 <div class="col-md-12">
                                     <label class="form-label mt-3" for="name_en">{{ trans('lang.name_en') }}</label>
                                     <input name="name[en]" disabled="true" class="form-control @error('name_en') is-invalid @enderror"
                                         id="name_en" type="text"  value={{ $category->getTranslation('name', 'en') }} required>
-                                    @error('name_en')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
 
                                 <div class="media my-3">
@@ -52,6 +46,24 @@
                                      </label>
                                  </div>
                              </div>
+
+
+                             <div class="col-md-12">
+                                <div class="row">
+                                    @if($category->attachments->count())
+                                        @foreach($category->attachments as $attachment)
+                                            <div class="col-md-3 col-lg-3 col-sm-12">
+                                                <div class="img-container">
+                                                    <div class="form-group my-3">
+                                                        <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+
                         </form>
                     </div>
                 </div>

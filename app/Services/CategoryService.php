@@ -5,9 +5,13 @@ namespace App\Services;
 use App\Models\Category;
 use App\QueryFilters\CategoriesFilter;
 use Illuminate\Database\Eloquent\Builder;
+use App\Traits\AttachmentTrait;
 
 class CategoryService extends BaseService
 {
+
+    use AttachmentTrait;
+
 
     public function getAll(array $where_condition = [])
     {
@@ -24,7 +28,18 @@ class CategoryService extends BaseService
     public function store($data)
     {
         $data['is_active'] = isset($data['is_active'])  ?  1 :  0;
-        return category::create($data);
+        $category = Category::create($data);
+
+        if (!$category)
+            return false ;
+
+        if (isset($data['images'])&&is_array($data['images']))
+        foreach ($data['images'] as $image)
+        {
+            $fileData = FileService::saveImage(file: $image,path: 'uploads\categories');
+            $category->storeAttachment($fileData);
+        }
+
     } //end of store
 
     public function find($id)
@@ -41,6 +56,8 @@ class CategoryService extends BaseService
     {
         $category = category::find($id);
         if ($category) {
+
+            $category->deleteAttachments();
             return $category->delete();
         }
         return false;
@@ -51,6 +68,14 @@ class CategoryService extends BaseService
         isset($data['is_active'])  ?   $data['is_active']=1 : $data['is_active']= 0;
         $category = category::find($id);
         if ($category) {
+
+            if (isset($data['images'])&&is_array($data['images']))
+            foreach ($data['images'] as $image)
+            {
+                $fileData = FileService::saveImage(file: $image,path: 'uploads\categories');
+                $category->storeAttachment($fileData);
+            }
+
             $category->update($data);
         }
         return false;
