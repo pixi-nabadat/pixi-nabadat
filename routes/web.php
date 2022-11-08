@@ -55,7 +55,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     #attachment routes
     Route::resource('doctors',DoctorController::class);
     Route::resource('devices',DeviceController::class);
-    Route::get('devices/changeStatus/{device}',[DeviceController::class,'changeStatus'])->name('devices.changeStatus');
+    Route::post('devices/changeStatus',[DeviceController::class,'changeStatus'])->name('devices.changeStatus');
 
     Route::resource('clinics',ClinicController::class);
     Route::resource('clients',ClientController::class);

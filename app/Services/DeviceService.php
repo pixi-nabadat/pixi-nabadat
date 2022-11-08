@@ -61,7 +61,7 @@ class DeviceService extends BaseService
     public function update($id, $data)
     {
         $device = Device::find($id);
-        isset($data['is_active'])  ?   $data['is_active']=1 : $data['is_active']= 0;
+        $data['is_active'] = isset($data['is_active'])  ?  1 :  0;
         if ($device) {
             if (isset($data['images'])&&is_array($data['images']))
             foreach ($data['images'] as $image)
@@ -77,8 +77,8 @@ class DeviceService extends BaseService
 
     public function changeStatus($id)
     {
-        $device = Device::find($id);
+        $device = $this->find($id);
         $device->is_active = !$device->is_active;
-        $device->save();
+        return $device->save();
     }//end of changeStatus
 }
