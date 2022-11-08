@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-body">           
+                    <div class="card-body">
                         <form class="needs-validation" novalidate="" action="{{ route('categories.show',$category) }}" method="post" >
                             @csrf
                             @method('put')

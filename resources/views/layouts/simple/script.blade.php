@@ -63,6 +63,29 @@
             }
         });
     }
+    function changeModelStatus(url,id){
+        $.ajax({
+            method: 'post',
+            url: url,
+            dataType: 'json',
+            data:{
+                '_token': '{{ csrf_token() }}',
+                'id' : id
+            },
+            success: function(result) {
+                if (result.status)
+                {
+                    toastr.success(result.message);
+                    if (result.data == 'reload')
+                        window.location.reload();
+                    else
+                        $('.dataTable').DataTable().ajax.reload(null, false);
+                }
+                else
+                    toastr.error(result.message);
+            }
+        });
+    }
 </script>
 
  {{-- image preview --}}
