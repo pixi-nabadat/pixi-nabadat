@@ -3,12 +3,14 @@
 namespace App\Services;
 
 use App\Models\Product;
-use App\Models\User;
 use App\QueryFilters\ProductsFilter;
 use Illuminate\Database\Eloquent\Builder;
+use App\Traits\AttachmentTrait;
 
 class ProductService extends BaseService
 {
+
+    use AttachmentTrait;
 
     public function getAll(array $where_condition = [])
     {
@@ -25,7 +27,17 @@ class ProductService extends BaseService
     public function store($data)
     {
         isset($data['featured'])  ?   $data['featured']=1 : $data['featured']= 0;
-        return product::create($data);
+        $product=product::create($data);
+
+        if (!$product)
+        return false ;
+        if (isset($data['images'])&&is_array($data['images']))
+            foreach ($data['images'] as $image)
+            {
+                $fileData = FileService::saveImage(file: $image,path: 'uploads\products');
+                $product->storeAttachment($fileData);
+            }
+
     } //end of store
 
     public function find($id)
@@ -42,6 +54,7 @@ class ProductService extends BaseService
     {
         $product = Product::find($id);
         if ($product) {
+            $product->deleteAttachments();
             return $product->delete();
         }
         return false;
@@ -52,6 +65,12 @@ class ProductService extends BaseService
         $product = Product::find($id);
         isset($data['featured'])  ?   $data['featured']=1 : $data['featured']= 0;
         if ($product) {
+            if (isset($data['images'])&&is_array($data['images']))
+            foreach ($data['images'] as $image)
+            {
+                $fileData = FileService::saveImage(file: $image,path: 'uploads\products');
+                $product->storeAttachment($fileData);
+            }
             $product->update($data);
         }
         return false;

@@ -12,12 +12,60 @@
     <li class="breadcrumb-item active">{{ trans('lang.add') }}</li>
 @endsection
 
+@section('style')
+    <style>
+        .img-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .image {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: .3s ease;
+            background-color: #ff5151;
+        }
+
+        .img-container:hover .overlay {
+            opacity: 1;
+        }
+
+        .icon {
+            color: white;
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .fa-user:hover {
+            color: #eee;
+        }
+    </style>
+@endsection
+
 @section('content')
 
     <!-- Container-fluid starts-->
     <div class="container-fluid">
 
-        <form class="needs-validation" novalidate="" action="{{ route('products.update',$product) }}" method="post">
+        <form class="needs-validation" novalidate="" enctype="multipart/form-data" action="{{ route('products.update',$product) }}" method="post">
             @csrf
             @method('put')
             <div class="row ">
@@ -121,14 +169,36 @@
                             <h6>{{ __('lang.product_images') }}</h6>
                         </div>
                         <div class="card-body">
-                            <div class="col-md-12  d-flex">
-                                <label class="form-label col-3" for="image">{{ trans('lang.image') }}</label>
-                                <input name="image" class="form-control  @error('image') is-invalid @enderror"
-                                    id="image" type="file" required>
+                            <div class="col-md-12">
+                                <label class="form-label mt-3" for="image">{{ trans('lang.image') }}</label>
+                                <input name="images[]" class="form-control image @error('image') is-invalid @enderror"
+                                    id="image" type="file" multiple>
                                 @error('image')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <div class="col-md-12">
+                                <div class="row">
+                                    @if($product->attachments->count())
+                                        @foreach($product->attachments as $attachment)
+                                            <div class="col-md-3 col-lg-3 col-sm-12">
+                                                <div class="img-container">
+                                                    <div class="form-group my-3">
+                                                        <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
+                                                    </div>
+                                                    <div class="overlay">
+                                                        <a role="button" onclick="destroy('{{route('attachment.destroy',$attachment->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
+                                                            <i class="fa fa-trash-o"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 

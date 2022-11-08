@@ -28,6 +28,8 @@ class ProductRequest extends FormRequest
             'description.*'=>'required|string',
             'unit_price'=>'required',
             'purchase_price'=>'required',
+            'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'discount'=>'required',
             'discount_type'=>'required',
             'discount_start_date'=>'required',

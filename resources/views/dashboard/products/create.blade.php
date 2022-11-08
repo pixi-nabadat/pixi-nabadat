@@ -17,7 +17,7 @@
     <!-- Container-fluid starts-->
     <div class="container-fluid">
 
-        <form method="post" class="needs-validation" novalidate="" action="{{ route('products.store') }}">
+        <form method="post" class="needs-validation" enctype="multipart/form-data" novalidate="" action="{{ route('products.store') }}">
             @csrf
 
             <div class="row ">
@@ -117,13 +117,17 @@
                             <h6>{{ __('lang.product_images') }}</h6>
                         </div>
                         <div class="card-body">
-                            <div class="col-md-12  d-flex">
+                            <div class="col-md-12 d-flex">
                                 <label class="form-label col-3" for="image">{{ trans('lang.image') }}</label>
-                                <input name="image" class="form-control  @error('image') is-invalid @enderror"
-                                    id="image" type="file" required>
-                                @error('image')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                @enderror
+                                    <input name="images[]" class="form-control image @error('image') is-invalid @enderror"
+                                        id="image" type="file" multiple>
+                                    @error('image')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <img src="{{ asset('/uploads/products/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
                             </div>
                         </div>
                     </div>

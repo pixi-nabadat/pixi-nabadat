@@ -35,18 +35,12 @@
                                     <label class="form-label col-3 " for="name_ar">{{ trans('lang.name_ar') }}</label>
                                     <input name="name[ar]" disabled="true" class="form-control @error('name.ar') is-invalid @enderror"
                                         id="name_ar" type="text" value={{ $product->getTranslation('name', 'ar') }} required>
-                                    @error('name.ar')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
                                 {{-- name_en  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <label class="form-label col-3" for="name_en">{{ trans('lang.name_en') }}</label>
                                     <input name="name[en]" disabled="true" class="form-control @error('name.en') is-invalid @enderror"
                                         id="name_en" type="text" value={{ $product->getTranslation('name', 'en') }} required>
-                                    @error('name.en')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
                                 {{--categories  --}}
                                 <div class="col-md-12 d-flex my-3">
@@ -61,9 +55,6 @@
                                     <input type="number" disabled="true" name="purchase_price" step="0.01"
                                         class="form-control @error('purchase_price') is-invalid @enderror"
                                         value={{ $product->purchase_price }} >
-                                    @error('purchase_price')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
                                 {{--  unit_price  --}}
                                 <div class="col-md-12 d-flex my-3">
@@ -71,13 +62,10 @@
                                     <input type="number" disabled="true" name="unit_price" step="0.01"
                                         class="form-control @error('unit_price') is-invalid @enderror"
                                         value={{ $product->unit_price }}>
-                                    @error('unit_price')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
                         </div>
                     </div>
-
+                    
                     {{-- description --}}
                     <div class="card  col-md-12">
                         <div class="card-header py-4">
@@ -91,9 +79,6 @@
                                     <input name="description[ar]" disabled="true"
                                         class="form-control  @error('description.ar') is-invalid @enderror"
                                         id="description_ar" type="text" value={{ $product->getTranslation('description', 'ar')  }} required>
-                                    @error('description.ar')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
 
                                 {{-- description_en --}}
@@ -103,9 +88,6 @@
                                     <input name="description[en]" disabled="true"
                                         class="form-control  @error('description.en') is-invalid @enderror"
                                         id="description_en" type="text" value={{ $product->getTranslation('description', 'en')  }} required>
-                                    @error('description.en')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
                         </div>
                     </div>
@@ -116,13 +98,20 @@
                             <h6>{{ __('lang.product_images') }}</h6>
                         </div>
                         <div class="card-body">
-                            <div class="col-md-12  d-flex">
-                                <label class="form-label col-3" for="image">{{ trans('lang.image') }}</label>
-                                <input name="image" disabled="true" class="form-control  @error('image') is-invalid @enderror"
-                                    id="image" type="file" required>
-                                @error('image')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                @enderror
+                            <div class="col-md-12">
+                                <div class="row">
+                                    @if($product->attachments->count())
+                                        @foreach($product->attachments as $attachment)
+                                            <div class="col-md-3 col-lg-3 col-sm-12">
+                                                <div class="img-container">
+                                                    <div class="form-group my-3">
+                                                        <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -134,7 +123,6 @@
                         </div>
                         <div class="card-body">
                             <div class="col-md-12 row">
-
                                 {{-- discount_type --}}
                                 <div class="col-md-12  d-flex my-3">
                                     <div class="col-form-label  col-3">{{ __('lang.discount_type') }}</div>
@@ -150,9 +138,6 @@
                                     <input type="number" disabled="true" name="discount" step="0.01"
                                         class="form-control @error('discount') is-invalid @enderror"
                                         value={{ $product->discount }}>
-                                    @error('discount')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
                                 {{-- discount_start_date --}}
                                 <div class="col-md-12  d-flex my-3">
@@ -160,9 +145,6 @@
                                     <input type="date" disabled="true" name="discount_start_date"
                                         class="form-control  @error('discount_start_date') is-invalid @enderror"
                                         value={{ $product->discount_start_date }}>
-                                    @error('discount_start_date')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
                                 {{-- discount_end_date --}}
                                 <div class="col-md-12  d-flex my-3">
@@ -170,11 +152,7 @@
                                     <input type="date" disabled="true" name="discount_end_date"
                                         class="form-control @error('discount_end_date') is-invalid @enderror"
                                         value={{ $product->discount_end_date }}>
-                                    @error('discount_end_date')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -194,9 +172,6 @@
                                 <div class="col-md-6 ">
                                     <input type="number" disabled="true" name="tax" step="0.01"
                                         class="form-control @error('tax') is-invalid @enderror" value={{ $product->tax }}>
-                                    @error('tax')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
 
                                 <div class="col-md-6">
@@ -231,26 +206,15 @@
                             <h6>{{ __('lang.product_points') }}</h6>
                         </div>
                         <div class="card-body">
-
                             <div class="col-md-12 row">
                                 <label class="form-label" for="num_points">@lang('lang.num_points')</label>
                                 <input type="number" disabled="true" name="num_points" step="0.01"
                                     class="form-control @error('num_points') is-invalid @enderror"
                                     value={{ $product->num_points }}>
-                                @error('num_points')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                @enderror
                             </div>
-
                         </div>
                     </div>
 
-                </div>
-
-                <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group mr-2" role="group" aria-label="Third group">
-                        <button class="btn btn-primary my-3 type="submit">{{ trans('lang.submit') }}</button>
-                    </div>
                 </div>
             </div>
 
