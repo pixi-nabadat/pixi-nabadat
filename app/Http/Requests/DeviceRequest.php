@@ -29,6 +29,7 @@ class DeviceRequest extends BaseRequest
             'images' => 'nullable|array',
             'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'description.*' => 'nullable|string',
+            'is_active'=>'nullable'
         ];
     }
 

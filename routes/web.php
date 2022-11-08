@@ -15,8 +15,6 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\AttachmentController;
 
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
-
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
     if (!in_array($locale, ['en', 'ar'])) {
@@ -53,21 +51,17 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::resource('country',CountryController::class);
     Route::resource('city',CityController::class);
     Route::resource('centers', CenterController::class);
+    Route::get('centers/changeStatus/{center}',[CenterController::class,'changeStatus'])->name('centers.changeStatus');
     #attachment routes
     Route::resource('doctors',DoctorController::class);
     Route::resource('devices',DeviceController::class);
+    Route::post('devices/changeStatus',[DeviceController::class,'changeStatus'])->name('devices.changeStatus');
+
     Route::resource('clinics',ClinicController::class);
     Route::resource('clients',ClientController::class);
-
-    Route::resource('products',ProductController::class);
-    Route::get('products/featured/{product}',[ProductController::class,'featured'])->name('products.featured');
-    
     Route::delete('attachments/{attachment}',[AttachmentController::class,'destroy'])->name('attachment.destroy');
-   
     Route::resource('categories',CategoryController::class);
-    Route::get('categories/changeStatus/{category}',[CategoryController::class,'changeStatus'])->name('categories.changeStatus');
-    Route::delete('attachments/{attachment}',[AttachmentController::class,'destroy'])->name('attachment.destroy');
-
+    Route::post('categories/changeStatus',[CategoryController::class,'changeStatus'])->name('categories.changeStatus');
 
     Route::get('gevernorate/all', [App\Http\Controllers\GovernorateController::class, 'getAllGovernorates'])->name('allGovernorates');
 });

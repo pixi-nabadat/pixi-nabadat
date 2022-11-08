@@ -12,5 +12,4 @@
         class="btn btn-danger delete-btn me-1">
         <i class="fa fa-trash-o"></i>
     </button>
-
 </div>
