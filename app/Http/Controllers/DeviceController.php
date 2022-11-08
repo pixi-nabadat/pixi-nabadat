@@ -75,13 +75,14 @@ class DeviceController extends Controller
 
     public function show($id)
     {
-        $device = $this->deviceService->find($id);
+        $withRelation = ['attachments'];
+        $device = $this->deviceService->find($id,$withRelation);
         if (!$device)
         {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.device_not_found')];
             return back()->with('toast', $toast);
         }
-       return view('dashboard.Devices.show', compact('device'));
+       return view('dashboard.devices.show', compact('device'));
     } //end of show
 
     public function changeStatus(Request $request)
