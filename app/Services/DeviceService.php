@@ -27,7 +27,7 @@ class DeviceService extends BaseService
 
     public function store($data)
     {
-
+        $data['is_active'] = isset($data['is_active'])  ?  1 :  0;
         $device = Device::create($data);
         if (!$device)
             return false ;
@@ -61,16 +61,24 @@ class DeviceService extends BaseService
     public function update($id, $data)
     {
         $device = Device::find($id);
+        isset($data['is_active'])  ?   $data['is_active']=1 : $data['is_active']= 0;
         if ($device) {
             if (isset($data['images'])&&is_array($data['images']))
-                foreach ($data['images'] as $image)
-                {
-                    $fileData = FileService::saveImage(file: $image,path: 'uploads\devices');
-                    $device->storeAttachment($fileData);
-                }
+            foreach ($data['images'] as $image)
+            {
+                $fileData = FileService::saveImage(file: $image,path: 'uploads\devices');
+                $device->storeAttachment($fileData);
+            }
             $device->update($data);
         }
         return false;
 
     } //end of update
+
+    public function changeStatus($id)
+    {
+        $device = Device::find($id);
+        $device->is_active = !$device->is_active;
+        $device->save();
+    }//end of changeStatus
 }

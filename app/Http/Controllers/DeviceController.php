@@ -83,4 +83,11 @@ class DeviceController extends Controller
         }
        return view('dashboard.Devices.show', compact('device'));
     } //end of show
+
+    public function changeStatus($id)
+    {
+        $this->deviceService->changeStatus($id);
+        $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
+        return redirect(route('devices.index'))->with('toast', $toast);
+    } //end of changeStatus
 }
