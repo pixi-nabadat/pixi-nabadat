@@ -11,4 +11,14 @@ class ProductsFilter extends QueryFilter
     {
         parent::__construct($params);
     }
+
+    public function id($term)
+    {
+        return $this->builder->where('id',$term);
+    }
+
+    public function is_active($term)
+    {
+        return $this->builder->where('is_active',$term);
+    }
 }

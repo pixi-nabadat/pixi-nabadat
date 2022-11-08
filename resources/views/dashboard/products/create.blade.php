@@ -78,7 +78,7 @@
                                 </div>
                         </div>
                     </div>
-                  
+
                     {{-- description --}}
                     <div class="card  col-md-12">
                         <div class="card-header py-4">
@@ -144,7 +144,7 @@
                                 <div class="col-md-12  d-flex my-3">
                                     <div class="col-form-label  col-3">{{ __('lang.discount_type') }}</div>
                                     <select id="select_discount_type" name="discount_type"
-                                        class="js-example-basic-single col-sm-12">
+                                        class="col form-control">
                                         <option value=0>Flat</option>
                                         <option value=1>Percent</option>
                                     </select>
@@ -202,7 +202,7 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <select id="tax_type" name="tax_type" class="js-example-basic-single col-sm-12">
+                                    <select id="tax_type" name="tax_type" class="form-control col-sm-12">
                                         <option value=0>Flat</option>
                                         <option value=1>Percent</option>
                                     </select>
@@ -213,11 +213,11 @@
                     {{-- featured --}}
                     <div class="card col-12">
                         <div class="card-header py-4">
-                            <h6>{{ __('lang.featured') }}</h6>
+                            <h6>{{ __('lang.featured_status') }}</h6>
                         </div>
                         <div class="card-body row">
                             <div class="media mb-2">
-                                <label class="col-form-label m-r-10">{{ __('lang.status') }}</label>
+                                <label class="col-form-label m-r-10">{{ __('lang.featured') }}</label>
                                 <div class="media-body  icon-state">
                                     <label class="switch">
                                         <input type="checkbox" name="featured" checked=""><span
@@ -225,32 +225,22 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    {{-- product_points --}}
-                    <div class="card col-12">
-                        <div class="card-header py-4">
-                            <h6>{{ __('lang.product_points') }}</h6>
-                        </div>
-                        <div class="card-body">
-
-                            <div class="col-md-12 row">
-                                <label class="form-label" for="num_points">@lang('lang.num_points')</label>
-                                <input type="number" name="num_points" step="0.01"
-                                    class="form-control @error('num_points') is-invalid @enderror">
-                                @error('num_points')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                @enderror
+                            <div class="media mb-2">
+                                <label class="col-form-label m-r-10">{{ __('lang.status') }}</label>
+                                <div class="media-body  icon-state">
+                                    <label class="switch">
+                                        <input type="checkbox" name="is_active" checked=""><span
+                                            class="switch-state"></span>
+                                    </label>
+                                </div>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
 
                 <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group mr-2" role="group" aria-label="Third group">
-                        <button class="btn btn-primary my-3 type="submit">{{ trans('lang.submit') }}</button>
+                        <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
                     </div>
                 </div>
             </div>

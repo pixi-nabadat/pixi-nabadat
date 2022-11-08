@@ -36,7 +36,9 @@ class ProductRequest extends FormRequest
             'discount_end_date'=>'required',
             'tax'=>'required',
             'tax_type'=>'required',
-            'num_points'=>'required',
+            'featured'=>'nullable|string',
+            'is_active'=>'nullable|string',
+            'category_id'=>'required|exists:categories,id'
         ];
     }
 

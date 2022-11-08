@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Location;
 use App\Models\User;
 use App\Services\LocationService;
+use App\Services\ProductService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -29,27 +30,36 @@ class ProductsDataTable extends DataTable
         ->addColumn('action', function(Product $product){
             return view('dashboard.products.action',compact('product'))->render();
         })
-        ->addcolumn('name', function(Product $product){
-            return $product->name ;
+        ->editColumn('name', function(Product $product){
+            return  $product->name ;
         })
-        ->addcolumn('added_by', function(Product $product){
-            $user = User::find($product->added_by);
-            return  $user->name ;
+        ->editColumn('description', function(Product $product){
+            return  $product-> description;
         })
-        ->addcolumn('description', function(Product $product){
-            return $product->description ;
-        });   
+        ->editColumn('discount_type', function(Product $product){
+            return  $product-> discount_type==0?trans('lang.flat'):trans('lang.percent');
+        })
+        ->editColumn('added_by', function(Product $product){
+            return  $product->user->name ;
+        })
+        ->addColumn('featured', function(Product $product){
+            return view('dashboard.components.switch-featured-btn',['model'=>$product,'url'=>route('products.featured')])->render();
+        })
+        ->addColumn('is_active', function(Product $product){
+            return view('dashboard.components.switch-btn',['model'=>$product,'url'=>route('products.status')])->render();
+        })
+        ->rawColumns(['action','featured','is_active']);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\ProductsDataTable $model
+     * @param ProductService $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Product $model): QueryBuilder
+    public function query(ProductService $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->queryGet($this->filters,$this->withRelations);
     }
 
     /**
@@ -63,7 +73,6 @@ class ProductsDataTable extends DataTable
                     ->setTableId('productsdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->dom('Bfrtip')
                     ->orderBy(1)
                     ->buttons(
                         Button::make('create'),
@@ -88,11 +97,14 @@ class ProductsDataTable extends DataTable
             Column::make('unit_price'),
             Column::make('purchase_price'),
             Column::make('discount'),
+            Column::make('discount_type'),
+            Column::make('featured'),
+            Column::make('is_active'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
-                  ->addClass('text-center'),     
+                  ->addClass('text-center'),
         ];
     }
 

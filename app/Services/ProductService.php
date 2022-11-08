@@ -12,25 +12,25 @@ class ProductService extends BaseService
 
     use AttachmentTrait;
 
-    public function getAll(array $where_condition = [])
+    public function getAll(array $where_condition = [],$withRelation=[])
     {
-        $products = $this->queryGet($where_condition);
+        $products = $this->queryGet($where_condition,$withRelation);
         return $products->get();
     }
 
-    public function queryGet(array $where_condition = []): Builder
+    public function queryGet(array $where_condition = [],array $withRelation = []): Builder
     {
-        $products = Product::query();
+        $products = Product::query()->with($withRelation);
         return $products->filter(new ProductsFilter($where_condition));
     }
 
     public function store($data)
     {
-        isset($data['featured'])  ?   $data['featured']=1 : $data['featured']= 0;
-        $product=product::create($data);
-
+        $data['featured'] = isset($data['featured'])  ? 1 :  0;
+        $data['is_active'] = isset($data['is_active'])  ? 1 :  0;
+        $product = product::create($data);
         if (!$product)
-        return false ;
+              return false ;
         if (isset($data['images'])&&is_array($data['images']))
             foreach ($data['images'] as $image)
             {
@@ -52,7 +52,7 @@ class ProductService extends BaseService
 
     public function delete($id)
     {
-        $product = Product::find($id);
+        $product = $this->find($id);
         if ($product) {
             $product->deleteAttachments();
             return $product->delete();
@@ -62,8 +62,9 @@ class ProductService extends BaseService
 
     public function update($id, $data)
     {
-        $product = Product::find($id);
-        isset($data['featured'])  ?   $data['featured']=1 : $data['featured']= 0;
+        $product = $this->find($id);
+        $data['featured'] = isset($data['featured'])  ? 1 :  0;
+        $data['is_active'] = isset($data['is_active'])  ? 1 :  0;
         if ($product) {
             if (isset($data['images'])&&is_array($data['images']))
             foreach ($data['images'] as $image)
@@ -78,10 +79,18 @@ class ProductService extends BaseService
 
     public function featured($id)
     {
-        $product = Product::find($id);
+        $product = $this->find($id);
         $product->featured = !$product->featured;
-        $product->save();
+        return $product->save();
 
     }//end of featured
+
+    public function status($id)
+    {
+        $product = $this->find($id);
+        $product->is_active = !$product->is_active;
+        return $product->save();
+
+    }//end of status
 
 }

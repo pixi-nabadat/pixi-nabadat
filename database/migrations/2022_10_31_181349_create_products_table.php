@@ -28,7 +28,6 @@ return new class extends Migration
             $table->tinyInteger('tax_type');
             $table->double('tax');
             $table->tinyInteger('featured')->nullable();
-            $table->integer('num_points');
             $table->timestamps();
         });
     }

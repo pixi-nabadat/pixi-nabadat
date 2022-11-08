@@ -24,7 +24,6 @@ class CenterController extends Controller
 
     public function index(CentresDataTable $dataTables,Request $request)
     {
-        $request = $request->merge(['is_active' =>1]);
         $loadRelation = ['location'];
         return $dataTables->with(['filters'=>$request->all(),'withRelations'=>$loadRelation])->render('dashboard.centers.index');
     }

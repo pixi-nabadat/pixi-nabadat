@@ -15,13 +15,14 @@ class ProductController extends Controller
 {
     public function __construct(private ProductService $productService ,private CategoryService $categoryService )
     {
-        
+
     }
-    
-    public function index(ProductsDataTable $dataTable){
 
-        return $dataTable->render('dashboard.Products.index');
+    public function index(ProductsDataTable $dataTable,Request $request)
+    {
 
+        $loadRelation = ['user'];
+        return $dataTable->with(['filters'=>$request->all(),'withRelations'=>$loadRelation])->render('dashboard.Products.index');
     }//end of index
 
     public function edit($id){
@@ -34,7 +35,7 @@ class ProductController extends Controller
             return back()->with('toast', $toast);
         }
         return view('dashboard.products.edit', compact('categories','product'));
-    }//end of edit 
+    }//end of edit
 
     public function create(){
         $categories=$this->categoryService->getAll();
@@ -43,8 +44,9 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request){
         try {
-            $request->merge(['added_by'=>auth()->user()->id]);
+
             $request->validated();
+            $request->merge(['added_by'=>auth()->id()]);
             $this->productService->store($request->all());
             $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'Product Saved Successfully'];
             return redirect()->route('products.index')->with('toast', $toast);
@@ -67,7 +69,7 @@ class ProductController extends Controller
             return redirect()->back()->with('toast', $toast);
         }
     } //end of update
-    
+
     public function destroy($id)
     {
         try {
@@ -89,13 +91,32 @@ class ProductController extends Controller
             return back()->with('toast', $toast);
         }
        return view('dashboard.products.show', compact('product'));
-    } //end of show   
+    } //end of show
 
-    
-    public function featured($id)
+
+    public function featured(Request $request)
     {
-        $this->productService->featured($id);
-        $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
-        return redirect(route('products.index'))->with('toast', $toast);
-    } //end of featured
+        try {
+            $result =  $this->productService->featured($request->id);
+            if (!$result)
+                return apiResponse(message: trans('lang.not_found'), code: 404);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+
+    } //end of changeStatus
+
+    public function status(Request $request)
+    {
+        try {
+            $result =  $this->productService->status($request->id);
+            if (!$result)
+                return apiResponse(message: trans('lang.not_found'), code: 404);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+
+    } //end of changeStatus
 }
