@@ -37,7 +37,6 @@ class Center extends Model
         return $this->belongsTo(Location::class);
     }
 
-
     public function doctors()
     {
         return $this->hasMany(CenterDoctor::class,'center_id');

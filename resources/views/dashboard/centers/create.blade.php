@@ -4,7 +4,24 @@
 @section('breadcrumb-title')
     <h3>{{ trans('lang.centers') }}</h3>
 @endsection
+@section('style')
+<link rel=”stylesheet” href=”//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css”>
+<link rel=”stylesheet” href=”https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css”>
 
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        margin-top: 1%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #rowAdder {
+        margin-left: 17px;
+    }
+</style>
+@endsection
 @section('breadcrumb-items')
     <li class="breadcrumb-item"><a href="{{route('home')}}">{{trans('lang.dashboard')}}</a></li>
     <li class="breadcrumb-item"><a href="{{route('centers.index')}}">{{trans('lang.centers')}}</a></li>
@@ -24,7 +41,7 @@
                     {{-- center information --}}
                     <div class="card  col-md-12">
                         <div class="card-header py-4">
-                            <h6 class="card-titel">{{ __('lang.product_information') }}</h6>
+                            <h6 class="card-titel">{{ __('lang.centers') }}</h6>
                         </div>
                         <div class="card-body row">
                             {{-- name_ar  --}}
@@ -68,7 +85,7 @@
 
                             {{-- password  --}}
                             <div class="col-md-12 d-flex my-3">
-                                <label class="form-label col-3 " for="name_ar">{{ trans('lang.password') }}</label>
+                                <label class="form-label col-3 " for="password">{{ trans('lang.password') }}</label>
                                 <input name="password" class="form-control @error('password') is-invalid @enderror"
                                        id="name_ar" type="password" required>
                                 @error('password')
@@ -111,17 +128,67 @@
                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+{{--                            date_of_birth--}}
+                            <div class="col-md-12 d-flex my-3">
+                                <label class="col-form-label col-3">{{__('lang.date_of_birth')}}</label>
+                                <div class="input-group">
+                                    <input name="date_of_birth" class="datepicker-here form-control digits @error('date_of_birth') is-invalid @enderror" type="text"
+                                        >
+                                </div>
+                                @error('date_of_birth')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
 
 
                             {{-- phones  --}}
-                            <div class="col-md-12 d-flex my-3">
+                            {{-- <div class="col-md-12 d-flex my-3">
                                 <label class="form-label col-3 " for="phone">{{ trans('lang.phone') }}</label>
                                 <input name="phone[]" class="form-control @error('phone') is-invalid @enderror"
                                        id="phone" type="text" required>
                                 @error('phone')
                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
+                            </div> --}}
+                            <div class="field_wrapper col-md-12 d-flex my-3">
+                                <label class="form-label col-3 " for="phone">{{ trans('lang.phone') }}</label>
+                                {{-- <div class="field_wrapper"> --}}
+                                    <div>
+                                        <input type="text" class="form-control  @error('phone') is-invalid @enderror" name="phone[]" value="" placeholder="primary phone"/>
+                                        @error('phone')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        @enderror
+                                        <a href="javascript:void(0);" class="add_button" title="Add field"><img src="http://demos.codexworld.com/add-remove-input-fields-dynamically-using-jquery/images/add-icon.png"/></a>
+                                    </div>
+                                {{-- </div> --}}
+
                             </div>
+
+                            {{-- <div class="">
+                                <div class="col-md-12 d-flex my-3">
+                                    <div id="row">
+                                        <label class="form-label col-3 " for="phone">{{ trans('lang.phone') }}</label>
+                                        <div class="input-group m-3">
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-danger"
+                                                    id="DeleteRow" type="button">
+                                                    <i class="bi bi-trash"></i>
+                                                    Delete
+                                                </button>
+                                            </div>
+                                            <input type="text" name="phone[]"
+                                                class="form-control m-input">
+                                        </div>
+                                    </div>
+
+                                    <div id="newinput"></div>
+                                    <button id="rowAdder" type="button"
+                                        class="btn btn-dark">
+                                        <span class="bi bi-plus-square-dotted">
+                                        </span> ADD
+                                    </button>
+                                </div>
+                            </div> --}}
 
 
                         </div>
@@ -169,7 +236,7 @@
                             <div class="card-body row">
                                 {{-- name_ar  --}}
                                 <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3 " for="name_ar">{{ trans('lang.name_ar') }}</label>
+                                    <label class="form-label col-3 " for="lat">{{ trans('lang.lat') }}</label>
                                     <input name="lat" class="form-control @error('lat') is-invalid @enderror" id="validationCustom01" type="text" placeholder="{{trans("lang.lat")}}" required="">
                                     @error('lat')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -177,7 +244,7 @@
                                 </div>
                                 {{-- name_en  --}}
                                 <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3" for="name_en">{{ trans('lang.name_en') }}</label>
+                                    <label class="form-label col-3" for="lng">{{ trans('lang.lng') }}</label>
                                     <input name="lng" class="form-control @error('lng') is-invalid @enderror" id="validationCustom01" type="text" placeholder="{{trans("lang.lng")}}" required="">
                                     @error('lng')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -186,7 +253,7 @@
 
                                 {{-- name_en  --}}
                                 <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3" for="name_en">{{ trans('lang.name_en') }}</label>
+                                    <label class="form-label col-3" for="google_map_url">{{ trans('lang.google_map_url') }}</label>
                                     <input name="google_map_url" class="form-control @error('google_map_url') is-invalid @enderror" id="validationCustom01" type="text" placeholder="{{trans("lang.google_map_url")}}" required="">
                                     @error('google_map_url')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -268,15 +335,37 @@
 </div>
 @endsection
 
+
+<script type="text/javascript">
+
+    $("#rowAdder").click(function () {
+        newRowAdd =
+        '<div id="row"> <div class="input-group m-3">' +
+        '<div class="input-group-prepend">' +
+        '<button class="btn btn-danger" id="DeleteRow" type="button">' +
+        '<i class="bi bi-trash"></i> Delete</button> </div>' +
+        '<input type="text" class="form-control m-input"> </div> </div>';
+
+        $('#newinput').append(newRowAdd);
+    });
+
+    $("body").on("click", "#DeleteRow", function () {
+        $(this).parents("#row").remove();
+    })
+</script>
+
 @section('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src=”//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js”></script>
+
 
 <script type="text/javascript">
     $(document).ready(function(){
         var maxField = 10; //Input fields increment limitation
         var addButton = $('.add_button'); //Add button selector
         var wrapper = $('.field_wrapper'); //Input field wrapper
-        var fieldHTML = '<div><input type="text" class="form-control" name="phone[]" value=""/><a href="javascript:void(0);" class="remove_button"><img src="public/uploads/remove-icon.png"/></a></div>'; //New input field html
+        var fieldHTML = '<div><input type="text" class="form-control" name="phone[]" value=""/><a href="javascript:void(0);" class="remove_button"><img src="http://demos.codexworld.com/add-remove-input-fields-dynamically-using-jquery/images/remove-icon.png"/></a></div>'; //New input field html
         var x = 1; //Initial field counter is 1
 
         //Once add button is clicked
@@ -331,21 +420,6 @@
                 });
         });
     });
-
-    $("#rowAdder").click(function () {
-            newRowAdd =
-            '<div id="row"> <div class=" input-group input-group-air">' +
-            '<div class="input-group-prepend">' +
-            '<button class="btn btn-danger" id="DeleteRow" type="button">' +
-            '<i class="bi bi-trash"></i> X </button> </div>' +
-            '<input type="text" class="form-control"> </div> </div>';
-
-            $('#newinput').append(newRowAdd);
-        });
-
-        $("body").on("click", "#DeleteRow", function () {
-            $(this).parents("#row").remove();
-        })
 </script>
 
 @endsection

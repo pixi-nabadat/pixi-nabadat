@@ -21,7 +21,7 @@ class User extends Authenticatable
     const ACTIVE = 1;
     const NONACTIVE = 0;
 
-    public $translatable = ['name'];
+    public $translatable = ['name','description'];
     /**
      * The attributes that are mass assignable.
      *

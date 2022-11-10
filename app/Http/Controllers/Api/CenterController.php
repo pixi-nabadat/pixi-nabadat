@@ -37,8 +37,9 @@ class CenterController extends Controller
     public function getAllCenters(Request $request)
     {
         try {
+            $withRelation = ['doctors'];
             $filters = $request->all();
-            $list = $this->centerService->getAll($filters);
+            $list = $this->centerService->getAll($filters, $withRelation);
             return apiResponse($list,__('lang.success'));
         } catch (\Exception $e) {
             return apiResponse($e->getMessage(), 'Unauthorized',$e->getCode());

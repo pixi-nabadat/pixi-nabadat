@@ -7,7 +7,10 @@ use App\Models\Center;
 use App\QueryFilters\CentersFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Resources\GetListCenterResource;
+use App\Models\User;
 use App\Traits\HasAttachment;
+use App\Services\UserService;
+use Illuminate\Support\Facades\DB;
 class CenterService extends BaseService
 {
 
@@ -26,18 +29,46 @@ class CenterService extends BaseService
         return GetListCenterResource::collection($centers);
     }
 
-    public function store(array $centerData = [])
+    public function store(array $data = [])
     {
-        $center = Center::create($centerData);
+        $center = Center::create($data);
         if (! $center)
             return false;
-        if (isset($centerData['images'])&&is_array($centerData['images']))
-            foreach ($centerData['images'] as $image)
-            {
-                $fileData = FileService::saveImage(file: $image,path: 'uploads/centers');
-                $center->storeAttachment($fileData);
-            }
-        return false;
+        if (! $this->isCenterHasImages($data))
+            return false;
+        foreach ($data['images'] as $image)
+        {
+            $fileData = FileService::saveImage(file: $image,path: 'uploads/centers');
+            $center->storeAttachment($fileData);
+        }
+        $userData = $this->prepareUserData($data , $center);
+        return (new UserService)->store($userData);
+    }
+
+    private function isCenterHasImages($data): bool
+    {
+        return (
+                isset($data['images'])
+                &&is_array($data['images'])
+            );
+    }
+
+    private function prepareUserData($data , $center): array
+    {
+        $userData = [
+            'name'                       => $data['name'],
+            'email'                      => $data['email'],
+            'phone'                      => $data['phone'][0],
+            'user_name'                  => $data['user_name'],
+            'password'                   => $data['password'],
+            'date_of_birth'              => $data['date_of_birth'],
+            'type'                       => User::CENTERTYPE,
+            'is_active'                  => $data['is_active'] ?? 0,
+            'center_id'                  => $center->id,
+            'location_id'                => $data['location_id'],
+            'description'                => $data['description'],
+        ];
+        return $userData;
     }
 
     public function getCenterById($id)

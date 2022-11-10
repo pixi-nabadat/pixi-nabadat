@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Services\CenterService;
 use App\DataTables\CentresDataTable;
 use App\Http\Requests\StoreCenterRequest as StoreCenterRequest;
-use App\Http\Requests\StoreCenterRequest as UpdateCenterRequest;
+use App\Http\Requests\UpdateCenterRequest as UpdateCenterRequest;
 use App\Services\LocationService;
 use Illuminate\Http\Request;
 
@@ -83,14 +83,13 @@ class CenterController extends Controller
     public function update($id, UpdateCenterRequest $request)
     {
         try {
-            $this->centerService->update($id, $request->except(['_token','_method']));
+            $this->centerService->update($id, $request->validated());
             $toast=[
                 'type' => 'success',
                 'title'=>trans('lang.success'),
                 'message'=>'Center updated Successfully'
             ];
             return back()->with('toast',$toast);
-            // return  redirect(route('centers.index'))->with('toast',$toast);
         } catch (\Exception $exception) {
             $toast = [
                 'type'=>'error',
@@ -124,6 +123,9 @@ class CenterController extends Controller
 
     public function show($id)
     {
-
+        $withRelation = ['attachments'];
+        $center = $this->centerService->find($id,$withRelation);
+        $location = $this->locationService->getLocationAncestors($center->location_id);
+        return view('dashboard.centers.show',['center' => $center,'location' =>$location]);
     }
 }
