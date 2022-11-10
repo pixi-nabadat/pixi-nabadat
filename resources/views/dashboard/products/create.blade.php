@@ -145,8 +145,8 @@
                                     <div class="col-form-label  col-3">{{ __('lang.discount_type') }}</div>
                                     <select id="select_discount_type" name="discount_type"
                                         class="col form-control">
-                                        <option value=0>Flat</option>
-                                        <option value=1>Percent</option>
+                                        <option  value = 'flat'>   {{trans('lang.flat')}}</option>
+                                        <option  value = 'percent'>{{trans('lang.percent')}}</option>
                                     </select>
                                 </div>
                                 {{-- discount --}}
@@ -203,8 +203,8 @@
 
                                 <div class="col-md-6">
                                     <select id="tax_type" name="tax_type" class="form-control col-sm-12">
-                                        <option value=0>Flat</option>
-                                        <option value=1>Percent</option>
+                                        <option  value = 'flat'>   {{trans('lang.flat')}}</option>
+                                        <option  value = 'percent'>{{trans('lang.percent')}}</option>
                                     </select>
                                 </div>
                             </div>
