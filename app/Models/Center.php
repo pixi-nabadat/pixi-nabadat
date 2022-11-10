@@ -39,6 +39,7 @@ class Center extends Model
 
     public function doctors()
     {
-        return $this->hasMany(CenterDoctor::class,'center_id');
+        return $this->belongsToMany(Doctor::class);
     }
+
 }

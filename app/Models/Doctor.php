@@ -26,4 +26,9 @@ class Doctor extends Model
       'phone'  => 'array'
     ];
 
+    public function center()
+    {
+        return $this->belongsToMany(Center::class);
+    }
+
 }
