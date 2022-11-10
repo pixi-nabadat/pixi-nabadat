@@ -22,12 +22,13 @@ return new class extends Migration
             $table->double('unit_price');
             $table->double('purchase_price');
             $table->double('discount');
-            $table->tinyInteger('discount_type');
-            $table->date('discount_start_date');
-            $table->date('discount_end_date');
-            $table->double('tax');
-            $table->string('featured')->nullable();
-            $table->integer('num_points');
+            $table->enum('discount_type',['flat','percent'])->default('percent');
+            $table->date('discount_start_date')->nullable();
+            $table->date('discount_end_date')->nullable();
+            $table->enum('tax_type',['flat','percent']);
+            $table->double('tax')->default(0);
+            $table->tinyInteger('featured')->default(0)->nullable();
+            $table->boolean('is_active')->default(1)->nullable();
             $table->timestamps();
         });
     }

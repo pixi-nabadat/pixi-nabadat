@@ -139,7 +139,7 @@
 
                                 </div>
 
-                            </div>   
+                            </div>
 
                             <div class="media my-3">
                                 <label class="col-form-label m-r-10">{{ __('lang.is_active') }}</label>

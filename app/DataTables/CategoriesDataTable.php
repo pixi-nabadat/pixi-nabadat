@@ -32,7 +32,7 @@ class CategoriesDataTable extends DataTable
             return $category->name ;
         })
             ->addcolumn('is_active', function(Category $category){
-                return  view('dashboard.components.status-btn',['model'=>$category,'url'=>route('categories.changeStatus')]);
+                return  view('dashboard.components.switch-btn',['model'=>$category,'url'=>route('categories.changeStatus')]);
             })->rawColumns(['action','is_active']);;
     }
 

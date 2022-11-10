@@ -13,10 +13,10 @@ class CategoryService extends BaseService
     use AttachmentTrait;
 
 
-    public function getAll(array $where_condition = [])
+    public function getAll(array $where_condition = [], array $withRelation=[])
     {
-        $categories = $this->queryGet($where_condition);
-        return $categories->get();
+        return $this->queryGet($where_condition,$withRelation)->get();
+
     }
 
     public function queryGet(array $where_condition = [],$with=[]): Builder

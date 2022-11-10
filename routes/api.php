@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PhoneVerifyController;
 use App\Http\Controllers\Api\RestPasswordController;
-use App\Http\Controllers\Api\CenterController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\LocationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +25,14 @@ Route::group(['prefix'=>'auth'],function (){
     Route::post('phone/verify',  PhoneVerifyController::class);
     Route::post('password/forget',  PhoneVerifyController::class);
     Route::post('password/reset', RestPasswordController::class);
-    Route::post('centers/all/{location_id?}', [CenterController::class, 'getAllLocationCenters']);
+    Route::get('user',[AuthController::class,'profile'])->middleware('auth:sanctum');
 });
+    Route::get('categories',[CategoryController::class,'listing']);
+    Route::get('products',[ProductController::class,'listing']);
+    Route::get('products/{id}/show',[ProductController::class,'show']);
+    Route::get('locations/governorates',[LocationController::class,'getAllGovernorates']);
+    Route::get('locations/{parent_id}',[LocationController::class,'getLocationByParentId']);
+
 
 Route::fallback(function() {
     return apiResponse(message:'Invalid Route',code: 404 );

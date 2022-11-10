@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoriesResource;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
@@ -14,12 +15,13 @@ class CategoryController extends Controller
     {
     }
 
-    public function getAllCategories(Request $request)
+    public function listing(Request $request)
     {
         try {
             $filters = ['is_active' => 1];
-            $list = $this->categoryService->getAll($filters);
-            return apiResponse($list, __('lang.success'));
+            $withRelations = ['attachments'];
+            $categories = $this->categoryService->getAll($filters,$withRelations);
+            return CategoriesResource::collection($categories);
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: $e->getCode());
         }

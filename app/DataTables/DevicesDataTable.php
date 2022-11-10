@@ -33,7 +33,7 @@ class DevicesDataTable extends DataTable
             return $device->description ;
         })
         ->addcolumn('is_active', function(Device $device){
-            return  view('dashboard.components.status-btn',['model'=>$device,'url'=>route('devices.changeStatus')]);
+            return  view('dashboard.components.switch-btn',['model'=>$device,'url'=>route('devices.changeStatus')]);
     })->rawColumns(['action','is_active']);
     }
 

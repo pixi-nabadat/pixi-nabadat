@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileService
 {
+    
     /**
      * Save the uploaded image.
      *
