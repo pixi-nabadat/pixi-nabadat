@@ -6,8 +6,10 @@ use App\Exceptions\UserNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\AuthUserResource;
 use App\Models\User;
 use App\Services\AuthService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -37,11 +39,28 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $data = $request->validated();
-        $data['type'] = User::CUSTOMERTYPE;
+        $data = array_merge($data,['type'=>User::CUSTOMERTYPE , 'email'=>$data['user_name']."@gmail.com",'last_login_at'=>now()]);
+        $data['name'] = [
+          'en'=>$data['name'],
+          'ar'=>$data['name'],
+        ];
         $result = $this->authService->register(data: $data);
         if ($result)
             return apiResponse($result,__('lang.success'),200);
-        return apiResponse(data: null,message: __('lang.error_message',422));    }
+        return apiResponse(message: __('lang.error_message'),code: 422);
+    }
+
+
+    public function profile()
+    {
+        try {
+            $user = $this->authService->getAuthUser();
+            return new AuthUserResource($user);
+        }catch (\Exception $exception)
+        {
+            return apiResponse(message: $exception->getMessage() ,code: 422);
+        }
+    }
 
     public function logout()
     {

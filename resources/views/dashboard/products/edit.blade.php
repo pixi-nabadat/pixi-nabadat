@@ -13,51 +13,7 @@
 @endsection
 
 @section('style')
-    <style>
-        .img-container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .image {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-
-        .overlay {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
-            width: 100%;
-            opacity: 0;
-            transition: .3s ease;
-            background-color: #ff5151;
-        }
-
-        .img-container:hover .overlay {
-            opacity: 1;
-        }
-
-        .icon {
-            color: white;
-            font-size: 50px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            -ms-transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        .fa-user:hover {
-            color: #eee;
-        }
-    </style>
+    <link rel="stylesheet" href="{{asset('assets/css/image-container.css')}}"/>
 @endsection
 
 @section('content')
@@ -67,7 +23,7 @@
 
         <form class="needs-validation" novalidate="" enctype="multipart/form-data" action="{{ route('products.update',$product) }}" method="post">
             @csrf
-            @method('put')
+            @method('PUT')
             <div class="row ">
 
                 <div class="col-md-8">
@@ -99,15 +55,18 @@
                                 {{--categories  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.categories') }}</div>
-                                    <select id="select_category" name="category" class="js-example-basic-single col-sm-12">
-                                        <option></option>
+                                    <select id="select_category" name="category_id" class="js-example-basic-single col-sm-12 @error('category_id') is-invalid @enderror">
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}"
                                                 {{ $product->category_id == $category->id ? 'selected' : '' }}>
                                                 {{ $category->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('category_id')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
                                 {{--  purchase_price  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <label class="form-label col-3" for="purchase_price">@lang('lang.purchase_price')</label>
@@ -214,9 +173,9 @@
                                 <div class="col-md-12  d-flex my-3">
                                     <div class="col-form-label  col-3">{{ __('lang.discount_type') }}</div>
                                     <select id="select_discount_type" name="discount_type"
-                                        class="js-example-basic-single col-sm-12">
-                                        <option {{ $product->discount_type == 0 ? 'selected' : '' }} value=0>Flat</option>
-                                        <option {{ $product->discount_type == 1 ? 'selected' : '' }} value=1>Percent</option>
+                                        class="form-control">
+                                        <option {{ $product->discount_type == 'flat' ? 'selected' : '' }} value='flat'>{{trans('lang.flat')}}</option>
+                                        <option {{ $product->discount_type == 'percent' ? 'selected' : '' }} value='percent'>{{trans('lang.percent')}}</option>
                                     </select>
                                 </div>
                                 {{-- discount --}}
@@ -275,9 +234,9 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <select id="tax_type" name="tax_type" class="js-example-basic-single col-sm-12">
-                                        <option {{ $product->tax_type == 0 ? 'selected' : '' }} value=0>Flat</option>
-                                        <option {{ $product->tax_type == 1 ? 'selected' : '' }} value=1>Percent</option>
+                                    <select id="tax_type" name="tax_type" class="form-control col-sm-12">
+                                        <option {{ $product->tax_type == 'flat' ? 'selected' : '' }} value = 'flat'>{{trans('lang.flat')}}</option>
+                                        <option {{ $product->tax_type == 'percent' ? 'selected' : '' }} value = 'percent'>{{trans('lang.percent')}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -290,7 +249,7 @@
                         </div>
                         <div class="card-body row">
                             <div class="media mb-2">
-                                <label class="col-form-label m-r-10">{{ __('lang.status') }}</label>
+                                <label class="col-form-label m-r-10">{{ __('lang.featured') }}</label>
                                 <div class="media-body  icon-state">
                                     <label class="switch">
                                         <input type="checkbox" name="featured" {{ $product->featured == 1 ? 'checked' : '' }}><span
@@ -298,33 +257,22 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    {{-- product_points --}}
-                    <div class="card col-12">
-                        <div class="card-header py-4">
-                            <h6>{{ __('lang.product_points') }}</h6>
-                        </div>
-                        <div class="card-body">
-
-                            <div class="col-md-12 row">
-                                <label class="form-label" for="num_points">@lang('lang.num_points')</label>
-                                <input type="number" name="num_points" step="0.01"
-                                    class="form-control @error('num_points') is-invalid @enderror"
-                                    value={{ $product->num_points }}>
-                                @error('num_points')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                @enderror
+                            <div class="media mb-2">
+                                <label class="col-form-label m-r-10">{{ __('lang.status') }}</label>
+                                <div class="media-body  icon-state">
+                                    <label class="switch">
+                                        <input type="checkbox" name="is_active" {{ $product->featured == 1 ? 'checked' : '' }}><span
+                                            class="switch-state"></span>
+                                    </label>
+                                </div>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
 
                 <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group mr-2" role="group" aria-label="Third group">
-                        <button class="btn btn-primary my-3 type="submit">{{ trans('lang.submit') }}</button>
+                        <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
                     </div>
                 </div>
             </div>

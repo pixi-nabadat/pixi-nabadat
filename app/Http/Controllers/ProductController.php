@@ -20,7 +20,6 @@ class ProductController extends Controller
 
     public function index(ProductsDataTable $dataTable,Request $request)
     {
-
         $loadRelation = ['user'];
         return $dataTable->with(['filters'=>$request->all(),'withRelations'=>$loadRelation])->render('dashboard.Products.index');
     }//end of index
@@ -29,12 +28,12 @@ class ProductController extends Controller
         $product = $this->productService->find($id);
         $categories=$this->categoryService->getAll();
 
-        if (!$product)
-        {
-            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.product_not_found')];
-            return back()->with('toast', $toast);
-        }
-        return view('dashboard.products.edit', compact('categories','product'));
+        if ($product)
+            return view('dashboard.products.edit', compact('categories','product'));
+
+        $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.product_not_found')];
+        return back()->with('toast', $toast);
+
     }//end of edit
 
     public function create(){

@@ -11,6 +11,9 @@
     <li class="breadcrumb-item active">{{ trans('lang.products') }}</li>
     <li class="breadcrumb-item active">{{ trans('lang.add') }}</li>
 @endsection
+@section('style')
+    <link rel="stylesheet" href="{{asset('assets/css/image-container.css')}}"/>
+@endsection
 
 @section('content')
 
@@ -65,7 +68,7 @@
                                 </div>
                         </div>
                     </div>
-                    
+
                     {{-- description --}}
                     <div class="card  col-md-12">
                         <div class="card-header py-4">
@@ -200,21 +203,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- product_points --}}
-                    <div class="card col-12">
-                        <div class="card-header py-4">
-                            <h6>{{ __('lang.product_points') }}</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="col-md-12 row">
-                                <label class="form-label" for="num_points">@lang('lang.num_points')</label>
-                                <input type="number" disabled="true" name="num_points" step="0.01"
-                                    class="form-control @error('num_points') is-invalid @enderror"
-                                    value={{ $product->num_points }}>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 

@@ -24,6 +24,12 @@ class ProductService extends BaseService
         return $products->filter(new ProductsFilter($where_condition));
     }
 
+//    method for api with pagination
+    public function listing(array $where_condition = [],$withRelation=[],$perPage=10)
+    {
+        return $this->queryGet($where_condition,$withRelation)->cursorPaginate($perPage);
+    } //end of delete
+
     public function store($data)
     {
         $data['featured'] = isset($data['featured'])  ? 1 :  0;
@@ -40,10 +46,10 @@ class ProductService extends BaseService
 
     } //end of store
 
-    public function find($id)
+    public function find($id,$withRelation=[])
     {
 
-        $product = Product::find($id);
+        $product = Product::with($withRelation)->find($id);
         if ($product)
             return $product;
         return false;
@@ -52,7 +58,7 @@ class ProductService extends BaseService
 
     public function delete($id)
     {
-        $product = $this->find($id);
+        $product = Product::find($id);
         if ($product) {
             $product->deleteAttachments();
             return $product->delete();
