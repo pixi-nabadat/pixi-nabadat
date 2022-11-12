@@ -122,6 +122,16 @@
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('products.create') ? 'active' : '' }}" href="{{route('products.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
                         {{--end product --}}
+
+                        {{--start package ---}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/packages' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.package') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/packages' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('packages.index') ? 'active' : '' }}" href="{{route('packages.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('packages.create') ? 'active' : '' }}" href="{{route('packages.create')}}">{{ trans('lang.create') }}</a></li>
+                        </ul>
+                        {{--end package --}}
 					</li>
                 </ul>
 			</div>

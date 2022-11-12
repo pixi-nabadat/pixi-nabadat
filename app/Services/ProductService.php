@@ -24,11 +24,11 @@ class ProductService extends BaseService
         return $products->filter(new ProductsFilter($where_condition));
     }
 
-//    method for api with pagination
+    //method for api with pagination
     public function listing(array $where_condition = [],$withRelation=[],$perPage=10)
     {
         return $this->queryGet($where_condition,$withRelation)->cursorPaginate($perPage);
-    } //end of delete
+    }
 
     public function store($data)
     {
@@ -36,7 +36,7 @@ class ProductService extends BaseService
         $data['is_active'] = isset($data['is_active'])  ? 1 :  0;
         $product = product::create($data);
         if (!$product)
-              return false ;
+            return false ;
         if (isset($data['images'])&&is_array($data['images']))
             foreach ($data['images'] as $image)
             {

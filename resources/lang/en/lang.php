@@ -90,5 +90,10 @@
 		'product_images'=>'Product Images',
 		'product_discount'=>'Product Discount',
 		'add_product'=>'Add Product',
+		'packages'=>'Packages',
+		'package'=>'Package',
+		'add_package'=>'Add Package',
+		'num_nabadat'=>'Number of Nabadat',
+		'price'=>'Price',
     ]
 ?>

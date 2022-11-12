@@ -13,39 +13,40 @@ use Illuminate\Support\Facades\Redis;
 
 class ProductController extends Controller
 {
-    public function __construct(private ProductService $productService ,private CategoryService $categoryService )
+    public function __construct(private ProductService $productService, private CategoryService $categoryService)
     {
-
     }
 
-    public function index(ProductsDataTable $dataTable,Request $request)
+    public function index(ProductsDataTable $dataTable, Request $request)
     {
         $loadRelation = ['user'];
-        return $dataTable->with(['filters'=>$request->all(),'withRelations'=>$loadRelation])->render('dashboard.Products.index');
-    }//end of index
+        return $dataTable->with(['filters' => $request->all(), 'withRelations' => $loadRelation])->render('dashboard.Products.index');
+    } //end of index
 
-    public function edit($id){
+    public function edit($id)
+    {
         $product = $this->productService->find($id);
-        $categories=$this->categoryService->getAll();
+        $categories = $this->categoryService->getAll();
 
         if ($product)
-            return view('dashboard.products.edit', compact('categories','product'));
+            return view('dashboard.products.edit', compact('categories', 'product'));
 
         $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.product_not_found')];
         return back()->with('toast', $toast);
+    } //end of edit
 
-    }//end of edit
+    public function create()
+    {
+        $categories = $this->categoryService->getAll();
+        return view('dashboard.products.create', compact('categories'));
+    } //end of create
 
-    public function create(){
-        $categories=$this->categoryService->getAll();
-        return view('dashboard.products.create',compact('categories'));
-    }//end of create
-
-    public function store(ProductRequest $request){
+    public function store(ProductRequest $request)
+    {
         try {
 
             $request->validated();
-            $request->merge(['added_by'=>auth()->id()]);
+            $request->merge(['added_by' => auth()->id()]);
             $this->productService->store($request->all());
             $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'Product Saved Successfully'];
             return redirect()->route('products.index')->with('toast', $toast);
@@ -53,7 +54,7 @@ class ProductController extends Controller
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
             return redirect()->back()->with('toast', $toast);
         }
-    }//end of store
+    } //end of store
 
     public function update(ProductRequest $request, $id)
     {
@@ -84,12 +85,11 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = $this->productService->find($id);
-        if (!$product)
-        {
+        if (!$product) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.Product_not_found')];
             return back()->with('toast', $toast);
         }
-       return view('dashboard.products.show', compact('product'));
+        return view('dashboard.products.show', compact('product'));
     } //end of show
 
 
@@ -103,8 +103,7 @@ class ProductController extends Controller
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
-
-    } //end of changeStatus
+    } //end of featured
 
     public function status(Request $request)
     {
@@ -116,6 +115,5 @@ class ProductController extends Controller
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
-
-    } //end of changeStatus
+    } //end of status
 }

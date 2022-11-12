@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Package;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('num_nabadat');
             $table->double('price');
+            $table->boolean('is_active')->default(Package::Active)->nullable();
             $table->timestamps();
         });
     }
