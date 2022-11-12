@@ -11,6 +11,10 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CountryController ;
 use App\Http\Controllers\GovernorateController ;
 use App\Http\Controllers\CityController ;
+use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\AttachmentController;
+use App\Http\Controllers\ProductController;
+
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
 
@@ -53,12 +57,24 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::get('centers/changeStatus/{center}',[CenterController::class,'changeStatus'])->name('centers.changeStatus');
     #attachment routes
     Route::resource('doctors',DoctorController::class);
+
+    Route::resource('devices',DeviceController::class);
+    Route::post('devices/changeStatus',[DeviceController::class,'changeStatus'])->name('devices.changeStatus');
+
     Route::resource('clinics',ClinicController::class);
     Route::resource('clients',ClientController::class);
+    Route::delete('attachments/{attachment}',[AttachmentController::class,'destroy'])->name('attachment.destroy');
+
     Route::resource('categories',CategoryController::class);
-    Route::get('categories/changeStatus/{category}',[CategoryController::class,'changeStatus'])->name('categories.changeStatus');
+    Route::post('categories/changeStatus',[CategoryController::class,'changeStatus'])->name('categories.changeStatus');
   
     Route::resource('coupons',CouponController::class);
+    Route::post('coupons/status',[CategoryController::class,'status'])->name('coupons.status');
+
+    Route::resource('products',ProductController::class);
+    Route::post('products/featured',[ProductController::class,'featured'])->name('products.featured');
+    Route::post('products/status',[ProductController::class,'status'])->name('products.status');
+
 
     Route::get('gevernorate/all', [App\Http\Controllers\GovernorateController::class, 'getAllGovernorates'])->name('allGovernorates');
 });

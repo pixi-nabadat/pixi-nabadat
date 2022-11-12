@@ -46,11 +46,11 @@
                                 </div>
                                 {{-- discount_type --}}
                                 <div class="col-md-6  my-3">
-                                    <div class="col-form-label">{{ __('lang.discount_type') }}</div>
+                                    <div class="col-form-label  col-3">{{ __('lang.discount_type') }}</div>
                                     <select id="select_discount_type" name="discount_type"
-                                        class="js-example-basic-single col-sm-12">
-                                        <option {{ $coupon->discount_type == 0 ? 'selected' : '' }} value=0>Flat</option>
-                                        <option {{ $coupon->discount_type == 1 ? 'selected' : '' }} value=1>Percent</option>
+                                        class="form-control">
+                                        <option {{ $coupon->discount_type == 'flat' ? 'selected' : '' }} value='flat'>{{trans('lang.flat')}}</option>
+                                        <option {{ $coupon->discount_type == 'percent' ? 'selected' : '' }} value='percent'>{{trans('lang.percent')}}</option>
                                     </select>
                                 </div>
                                 {{-- discount --}}

@@ -25,7 +25,6 @@
                             @csrf
 
                             <div class="row g-3">
-
                                 {{-- code --}}
                                 <div class="col-md-6">
                                     <label class="form-label" for="code">{{ trans('lang.code') }}</label>
@@ -46,11 +45,11 @@
                                 </div>
                                 {{-- discount_type --}}
                                 <div class="col-md-6  my-3">
-                                    <div class="col-form-label">{{ __('lang.discount_type') }}</div>
+                                    <div class="col-form-label  col-3">{{ __('lang.discount_type') }}</div>
                                     <select id="select_discount_type" name="discount_type"
-                                        class="js-example-basic-single col-sm-12">
-                                        <option value=0>Flat</option>
-                                        <option value=1>Percent</option>
+                                        class="col form-control">
+                                        <option  value = 'flat'>   {{trans('lang.flat')}}</option>
+                                        <option  value = 'percent'>{{trans('lang.percent')}}</option>
                                     </select>
                                 </div>
                                 {{-- discount --}}
@@ -80,7 +79,6 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                
                             </div>
                             <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
 

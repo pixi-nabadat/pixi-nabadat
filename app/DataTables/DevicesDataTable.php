@@ -23,8 +23,18 @@ class DevicesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'devicesdatatable.action')
-            ->setRowId('id');
+        ->addColumn('action', function(Device $device){
+            return view('dashboard.Devices.action',compact('device'))->render();
+        })
+        ->addcolumn('name', function(Device $device){
+            return $device->name ;
+        })
+        ->addcolumn('description', function(Device $device){
+            return $device->description ;
+        })
+        ->addcolumn('is_active', function(Device $device){
+            return  view('dashboard.components.switch-btn',['model'=>$device,'url'=>route('devices.changeStatus')]);
+    })->rawColumns(['action','is_active']);
     }
 
     /**
@@ -49,15 +59,7 @@ class DevicesDataTable extends DataTable
                     ->setTableId('devicesdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+                    ->orderBy(1);
     }
 
     /**
@@ -68,15 +70,13 @@ class DevicesDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
+            Column::make('name'),
+            Column::make('description'),
+            Column::make('is_active'),
+            Column::make('created_at'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 

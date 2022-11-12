@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use App\Traits\Filterable;
+use App\Traits\HasAttachment;
 
 class Category extends Model
 {
-    use HasFactory,HasTranslations;
+    use HasFactory,HasTranslations,HasAttachment,Filterable;
     const ACTIVE = 1;
     const NONACTIVE = 0;
     

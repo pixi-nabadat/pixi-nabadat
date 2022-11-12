@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('added_by');
             $table->string('code')->unique();
-            $table->tinyInteger('discount_type');
+            $table->enum('discount_type',['flat','percent'])->default('percent');
             $table->double('discount');
             $table->date('start_date');
             $table->date('end_date');

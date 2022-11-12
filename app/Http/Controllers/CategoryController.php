@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\CategoriesDataTable;
 use App\Http\Requests\CategoryRequest;
 use App\Services\CategoryService;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -80,10 +81,16 @@ class CategoryController extends Controller
        return view('dashboard.categories.show', compact('category'));
     } //end of show
 
-    public function changeStatus($id)
+    public function changeStatus(Request $request)
     {
-        $this->categoryService->changeStatus($id);
-        $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
-        return redirect(route('categories.index'))->with('toast', $toast);
+        try {
+            $result =  $this->categoryService->changeStatus($request->id);
+            if (!$result)
+                return apiResponse(message: trans('lang.not_found'), code: 404);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+
     } //end of changeStatus
 }

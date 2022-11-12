@@ -9,4 +9,9 @@ class Coupon extends Model
 {
     use HasFactory;
     protected $fillable = ['added_by','code','discount','discount_type','start_date','end_date','min_buy'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'added_by');
+    }
 }

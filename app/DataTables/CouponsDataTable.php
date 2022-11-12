@@ -3,9 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Coupon;
-use App\Models\Location;
 use App\Models\User;
-use App\Services\LocationService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -29,9 +27,17 @@ class CouponsDataTable extends DataTable
         ->addColumn('action', function(Coupon $coupon){
             return view('dashboard.Coupons.action',compact('coupon'))->render();
         })
-        ->addcolumn('added_by', function(Coupon $coupon){
-            $user = User::find($coupon->added_by);
-            return  $user->name ;
+        ->editColumn('added_by', function(Coupon $coupon){
+            return  $coupon->user->name ;
+        })
+        ->addcolumn('discount', function(Coupon $coupon){
+            return $coupon->discount ;
+        })
+        ->addcolumn('start_date', function(Coupon $coupon){
+            return $coupon->start_date ;
+        })
+        ->addcolumn('end_date', function(Coupon $coupon){
+            return $coupon->end_date ;
         });
     }
 
@@ -78,8 +84,9 @@ class CouponsDataTable extends DataTable
         return [
             Column::make('code'),
             Column::make('added_by'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('discount'),
+            Column::make('start_date'),
+            Column::make('end_date'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)

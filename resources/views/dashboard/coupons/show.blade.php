@@ -29,58 +29,38 @@
                                 {{-- code --}}
                                 <div class="col-md-6">
                                     <label class="form-label" for="code">{{ trans('lang.code') }}</label>
-                                    <input disabled="true" name="code" class="form-control @error('code') is-invalid @enderror"
-                                        id="code" type="text"  value={{ $coupon->code }} required>
-                                    @error('code')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <p class="form-control" id="code"> {{ $coupon->code }} </p>
                                 </div>
                                 {{-- min_buy --}}
                                 <div class="col-md-6">
                                     <label class="form-label" for="min_buy">{{ trans('lang.min_buy') }}</label>
-                                    <input disabled="true" name="min_buy" class="form-control @error('min_buy') is-invalid @enderror"
-                                        id="min_buy" type="number"  value={{ $coupon->min_buy }} required>
-                                    @error('min_buy')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <p class="form-control" id="min_buy">{{ $coupon->min_buy }}</p>
                                 </div>
                                 {{-- discount_type --}}
                                 <div class="col-md-6  my-3">
-                                    <div class="col-form-label">{{ __('lang.discount_type') }}</div>
-                                    <select disabled="true" id="select_discount_type" name="discount_type"
-                                        class="js-example-basic-single col-sm-12">
-                                        <option {{ $coupon->discount_type == 0 ? 'selected' : '' }} value=0>Flat</option>
-                                        <option {{ $coupon->discount_type == 1 ? 'selected' : '' }} value=1>Percent</option>
-                                    </select>
+                                    <div class="col-form-label  col-3">{{ __('lang.discount_type') }}</div>
+                                    @if ($coupon->discount_type == 'percent')
+                                        <p class="form-control">{{ trans('lang.percent') }}</p>
+                                    @else
+                                        <p class="form-control">{{ trans('lang.flat') }}</p>
+                                    @endif
                                 </div>
                                 {{-- discount --}}
                                 <div class="col-md-6  my-3">
                                     <label class="form-label" for="discount">@lang('lang.discount')</label>
-                                    <input disabled="true" type="number" name="discount" step="0.01" value={{ $coupon->discount }}
-                                        class="form-control  @error('discount') is-invalid @enderror">
-                                    @error('discount')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <p class="form-control" id="discount" >{{ $coupon->discount }}</p>
                                 </div>
                                 {{-- start_date --}}
                                 <div class="col-md-6  my-3">
                                     <label class="form-label" for="start_date">@lang('lang.start_date')</label>
-                                    <input disabled="true" type="date" name="start_date"
-                                        class="form-control value={{ $coupon->start_date }}  @error('end_date') is-invalid @enderror">
-                                    @error('start_date')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <p class="form-control" id="start_date">{{ $coupon->start_date }}</p>
                                 </div>
                                 {{-- end_date --}}
-                                <div class="col-md-6 ">
-                                    <label class="form-label  col-3" for="end_date">@lang('lang.end_date')</label>
-                                    <input disabled="true" type="date" name="end_date" value={{ $coupon->end_date }}
-                                        class="form-control @error('end_date') is-invalid @enderror">
-                                    @error('end_date')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                <div class="col-md-6  my-3">
+                                    <label class="form-label" for="end_date">@lang('lang.end_date')</label>
+                                    <p class="form-control" id="end_date">{{ $coupon->end_date }}</p>
                                 </div>
-                
+
                             </div>
                         </form>
                     </div>

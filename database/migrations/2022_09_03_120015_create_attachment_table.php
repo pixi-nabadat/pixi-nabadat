@@ -14,13 +14,13 @@ class CreateAttachmentTable extends Migration
      */
     public function up()
     {
-        Schema::create('attachment', function (Blueprint $table) {
+        Schema::create('attachments', function (Blueprint $table) {
             $table->id();
-            $table->string('filename', 191);
-            $table->string('path', 191);
-            $table->string('caption', 45);
-            $table->integer('attachmentable_id');
-            $table->string('attachmentable_type', 45);
+            $table->string('filename');
+            $table->string('path');
+            $table->string('extention');
+            $table->string('size');
+            $table->morphs('attachmentable');
             $table->timestamps();
         });
     }
