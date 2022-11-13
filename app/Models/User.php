@@ -62,4 +62,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Center::class, CenterDoctor::class, 'doctor_id','center_id');
     }
 
+    public function packages(){
+        return $this->belongsToMany(Package::class);
+    }
+
 }

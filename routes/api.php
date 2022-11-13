@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\RestPasswordController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\LocationController;
-
+use App\Http\Controllers\UserPackageController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,6 +32,11 @@ Route::group(['prefix'=>'auth'],function (){
     Route::get('products/{id}/show',[ProductController::class,'show']);
     Route::get('locations/governorates',[LocationController::class,'getAllGovernorates']);
     Route::get('locations/{parent_id}',[LocationController::class,'getLocationByParentId']);
+
+    Route::get ('userPackages',[UserPackageController::class,'index']);
+    Route::post('userPackages/store',[UserPackageController::class,'store']);
+    Route::post('userPackages/update/{userPackage}',[UserPackageController::class,'update']);
+    Route::post('userPackages/destroy/{userPackage}',[UserPackageController::class,'destroy']);
 
 
 Route::fallback(function() {
