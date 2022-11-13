@@ -31,7 +31,10 @@ class DevicesDataTable extends DataTable
         })
         ->addcolumn('description', function(Device $device){
             return $device->description ;
-        });
+        })
+        ->addcolumn('is_active', function(Device $device){
+            return  view('dashboard.components.switch-btn',['model'=>$device,'url'=>route('devices.changeStatus')]);
+    })->rawColumns(['action','is_active']);
     }
 
     /**
@@ -56,15 +59,7 @@ class DevicesDataTable extends DataTable
                     ->setTableId('devicesdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+                    ->orderBy(1);
     }
 
     /**
@@ -77,13 +72,11 @@ class DevicesDataTable extends DataTable
         return [
             Column::make('name'),
             Column::make('description'),
+            Column::make('is_active'),
             Column::make('created_at'),
-            Column::make('updated_at'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
                   ->width(60)
-                  ->addClass('text-center'),     
+                  ->addClass('text-center'),
         ];
     }
 

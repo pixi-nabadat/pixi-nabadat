@@ -13,7 +13,7 @@ class AuthService extends BaseService
     public function loginWithEmailOrPhone(string $identifier, string $password,int $userType=null) :User|Model
     {
 
-        $identifierField = filter_var($identifier,FILTER_VALIDATE_EMAIL) ? 'email':'user_name';
+        $identifierField = is_numeric($identifier) ? 'phone':'user_name';
         $credential = [$identifierField=>$identifier,'password'=>$password];
         if (isset($userType))
             $credential['type']=User::CUSTOMERTYPE; // must define type customer or center
@@ -32,5 +32,10 @@ class AuthService extends BaseService
     public function register(array $data=[]): mixed
     {
         return User::create($data);
+    }
+
+    public function getAuthUser(): ?\Illuminate\Contracts\Auth\Authenticatable
+    {
+        return auth()->user();
     }
 }

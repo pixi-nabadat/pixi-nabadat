@@ -118,8 +118,8 @@
                                     @enderror
                                 </div>
 
-                            <div class="col-md-12">
-                                <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
                                     @if($device->attachments->count())
                                         @foreach($device->attachments as $attachment)
                                             <div class="col-md-3 col-lg-3 col-sm-12">
@@ -141,6 +141,16 @@
 
                             </div>
 
+                            <div class="media my-3">
+                                <label class="col-form-label m-r-10">{{ __('lang.is_active') }}</label>
+                                <div class="media-body  icon-state">
+                                    <label class="switch">
+                                        <input type="checkbox" name="is_active"
+                                            {{ $device->is_active == 1 ? 'checked' : '' }}><span
+                                            class="switch-state"></span>
+                                    </label>
+                                </div>
+                            </div>
 
                             <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
 

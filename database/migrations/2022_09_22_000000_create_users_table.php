@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('user_name')->unique();
+            $table->string('user_name')->unique()->nullable();
             $table->string('password');
-            $table->string('phone');
+            $table->string('phone')->unique();
             $table->tinyInteger('type')->default(\App\Models\User::CUSTOMERTYPE);
             $table->boolean('is_active')->default(\App\Models\User::ACTIVE);
             $table->foreignIdFor(\app\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');

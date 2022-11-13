@@ -21,6 +21,17 @@ if (!function_exists('successCode')) {
 }
 
 
+if (!function_exists('getPriceAfterDiscount')) {
+    function getPriceAfterDiscount(int $price,int$discountValue,int$discountType)
+    {
+        if ($discountType == 0) // refer to flat value
+            return $price - $discountValue ;
+        if ($discountType==1)
+            return  $price - ($price * ($discountValue/100));
+    }
+}
+
+
 if (!function_exists('createDir')) {
     function createDir($fullDir)
     {
