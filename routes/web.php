@@ -14,7 +14,7 @@ use App\Http\Controllers\CityController ;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\ProductController;
-
+use App\Http\Controllers\CancelReasonController;
 use App\Http\Controllers\CategoryController;
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -69,6 +69,8 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::post('products/featured',[ProductController::class,'featured'])->name('products.featured');
     Route::post('products/status',[ProductController::class,'status'])->name('products.status');
 
+    Route::resource('cancelReasons',CancelReasonController::class);
+    Route::post('cancelReasons/changeStatus',[CancelReasonController::class,'changeStatus'])->name('cancelReasons.changeStatus');
 
     Route::get('gevernorate/all', [App\Http\Controllers\GovernorateController::class, 'getAllGovernorates'])->name('allGovernorates');
 });

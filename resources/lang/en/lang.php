@@ -90,5 +90,13 @@
 		'product_images'=>'Product Images',
 		'product_discount'=>'Product Discount',
 		'add_product'=>'Add Product',
+
+		'CancelReasons'=>'Cancel Reasons',
+		'reason_en'=>'English Reason',
+		'reason_ar'=>'Arabic Reason',
+		'add_cancelReason'=>'Add Cancel Reason',
+		''=>'',
+		''=>'',
+
     ]
 ?>
