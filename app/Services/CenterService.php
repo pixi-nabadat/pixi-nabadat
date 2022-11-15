@@ -10,6 +10,7 @@ use App\Http\Resources\GetListCenterResource;
 use App\Models\User;
 use App\Traits\HasAttachment;
 use App\Services\UserService;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 class CenterService extends BaseService
 {
@@ -22,51 +23,43 @@ class CenterService extends BaseService
         return $centers->filter(new CentersFilter($where_condition));
     }
 
-    public function getAll(array $where_condition = [],$with=[])
+    public function listing(array $filters = [] , array $withRelation =[] ): \Illuminate\Contracts\Pagination\CursorPaginator
     {
-        $centers = $this->queryGet($where_condition,$with);
-        $centers = $centers->cursorPaginate();
-        return GetListCenterResource::collection($centers);
+        $perPage = config('app.perPage');
+        return $this->queryGet(where_condition: $filters,withRelation: $withRelation)->cursorPaginate($perPage);
     }
 
-    public function store(array $data = [])
+    public function store(array $data = []): bool
     {
+        $data['is_active'] = isset($data['is_active'])  ?  1 :  0;
+        $data['is_support_auto_service'] = isset($data['is_active'])  ?  1 :  0;
         $center = Center::create($data);
-        if (! $center)
+        if (!$center)
             return false;
-        if (! $this->isCenterHasImages($data))
-            return false;
-        foreach ($data['images'] as $image)
-        {
-            $fileData = FileService::saveImage(file: $image,path: 'uploads/centers');
-            $center->storeAttachment($fileData);
-        }
-        $userData = $this->prepareUserData($data , $center);
+        if (isset($data['images'])&&is_array($data['images']))
+            foreach ($data['images'] as $image)
+            {
+                $fileData = FileService::saveImage(file: $image,path: 'uploads/centers');
+                $center->storeAttachment($fileData);
+            }
+
+        $userData = $this->prepareUserData($data);
+
         return (new UserService)->store($userData);
     }
 
-    private function isCenterHasImages($data): bool
-    {
-        return (
-                isset($data['images'])
-                &&is_array($data['images'])
-            );
-    }
-
-    private function prepareUserData($data , $center): array
+    private function prepareUserData($data): array
     {
         $userData = [
             'name'                       => $data['name'],
             'email'                      => $data['email'],
-            'phone'                      => $data['phone'][0],
+            'phone'                      => Arr::first($data['phone']),
             'user_name'                  => $data['user_name'],
-            'password'                   => $data['password'],
-            'date_of_birth'              => $data['date_of_birth'],
+            'password'                   => bcrypt($data['password']),
             'type'                       => User::CENTERTYPE,
             'is_active'                  => $data['is_active'] ?? 0,
-            'center_id'                  => $center->id,
             'location_id'                => $data['location_id'],
-            'description'                => $data['description'],
+            'description'                => $data['description']??null,
         ];
         return $userData;
     }

@@ -16,6 +16,7 @@ class AttachmentsResource extends JsonResource
     {
 
        return [
+           'id' =>$this->id,
            'image_path'=>url($this->path."\\".$this->filename),
        ];
     }

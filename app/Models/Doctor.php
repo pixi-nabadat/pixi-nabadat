@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasAttachment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use App\Traits\Filterable;
 class Doctor extends Model
 {
-    use HasTranslations, HasFactory,Filterable;
+    use HasTranslations, HasFactory,Filterable,HasAttachment;
 
     protected $fillable = ['name','description','phone','center_id','is_active'];
 
@@ -28,7 +29,7 @@ class Doctor extends Model
 
     public function center()
     {
-        return $this->belongsToMany(Center::class);
+        return $this->belongsTo(Center::class);
     }
 
 }

@@ -45,7 +45,6 @@ class CenterController extends Controller
         try {
             $this->centerService->store($request->validated());
             $toast=[
-                'type'=>'sucess',
                 'title'=>trans('lang.success'),
                 'message'=> 'Center Saved Successfully'
             ];

@@ -31,13 +31,13 @@ class StoreCenterRequest extends BaseRequest
             'address.*' => 'string|required',
             'description.*' => 'string|nullable',
             'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg',
             'user_name'=>'required|unique:users,user_name',
             'password'=>'required|string',
             'email'=>'required|email|unique:users,email',
             'date_of_birth' => 'nullable|date',
-            'is_active' => 'between:0,1',
-            'is_support_auto_service' => 'between:0,1',
+            'is_active' => 'string|nullable',
+            'is_support_auto_service' => 'string|nullable',
         ];
     }
 

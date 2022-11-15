@@ -186,37 +186,32 @@
                                         </div> --}}
 
                                         {{-- phones  --}}
-
-                                        <div class="field_wrapper col-md-12 d-flex my-3">
-                                            @if(count($center->phone))
-                                                <label class="form-label col-3 " for="phone">{{ trans('lang.phone') }}</label>
-                                                @foreach($center->phone as $phone)
-                                                    <div>
-                                                        <input type="text" class="form-control  @error('phone') is-invalid @enderror" name="phone[]" value="{{$phone}}"/>
-                                                            @error('phone')
-                                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        <a href="javascript:void(0);" class="remove_button"><img src="http://demos.codexworld.com/add-remove-input-fields-dynamically-using-jquery/images/remove-icon.png"/></a>
-                                                    </div>
-                                                @endforeach
-                                                <a href="javascript:void(0);" class="add_button" title="Add field"><img src="http://demos.codexworld.com/add-remove-input-fields-dynamically-using-jquery/images/add-icon.png"/></a>
-                                            @endif
-                                        </div>
-
-                                        {{-- <div class="field_wrapper col-md-12 d-flex my-3">
-                                            <label class="form-label col-3 " for="phone">{{ trans('lang.phone') }}</label>
-                                                <div>
-                                                    <input type="text" class="form-control  @error('phone') is-invalid @enderror" name="phone[]" value="" placeholder="primary phone"/>
-                                                    @error('phone')
+                                        <div class="field_wrapper">
+                                            <div class="col-md-12 d-flex my-3">
+                                                <label class="col-form-label col-3">{{ trans('lang.phone') }}</label>
+                                                @if(count($center->phone))
+                                                    @foreach($center->phone as $phone)
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                @if ($loop->first)
+                                                                    <a href="javascript:void(0);" class="add_button" title="Add field">
+                                                                        <i class="fa fa-plus-circle fa-2x"></i>
+                                                                    </a>
+                                                                @else
+                                                                    <a href="javascript:void(0);" class="remove_button" title="remove_field">
+                                                                        <i class="fa fa-plus-circle fa-2x"></i>
+                                                                    </a>
+                                                                @endif
+                                                            </div>
+                                                            <input type="text" class="form-control  @error('phone') is-invalid @enderror" name="phone[]" value="{{$phone}}"/>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                                @error('phone')
                                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                    <a href="javascript:void(0);" class="add_button" title="Add field"><img src="http://demos.codexworld.com/add-remove-input-fields-dynamically-using-jquery/images/add-icon.png"/></a>
-                                                </div>
-                                        </div> --}}
-
-
-
-
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -380,52 +375,57 @@
 @endsection
 
 @section('script')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var maxField = 4; //Input fields increment limitation
+            var addButton = $('.add_button'); //Add button selector
+            var wrapper = $('.field_wrapper'); //Input field wrapperr
+            var fieldHTML =
+                '<div class="col-md-12 d-flex my-3 child">' +
+                '<label class="col-form-label col-3"></label>'+
+                '<div class="input-group">' +
+                '<div class="input-group-prepend">' +
+                '<a href="javascript:void(0);" class="remove_button" title="remove">' +
+                '<i class="fa fa-minus-circle fa-2x"></i>' +
+                '</a>' +
+                '</div>' +
+                '<input type="text" class="form-control  @error('phone') is-invalid @enderror" name="phone[]"/></div></div>'; //New input field html
+            var x = 1; //Initial field counter is 1
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        var maxField = 10; //Input fields increment limitation
-        var addButton = $('.add_button'); //Add button selector
-        var wrapper = $('.field_wrapper'); //Input field wrapper
-        var fieldHTML = '<div><input type="text" class="form-control" name="phone[]" value=""/><a href="javascript:void(0);" class="remove_button"><img src="http://demos.codexworld.com/add-remove-input-fields-dynamically-using-jquery/images/remove-icon.png"/></a></div>'; //New input field html
-        var x = 1; //Initial field counter is 1
-
-        //Once add button is clicked
-        $(addButton).click(function(){
-            //Check maximum number of input fields
-            if(x < maxField){
-                x++; //Increment field counter
-                $(wrapper).append(fieldHTML); //Add field html
-            }
-        });
-
-        //Once remove button is clicked
-        $(wrapper).on('click', '.remove_button', function(e){
-            e.preventDefault();
-            $(this).parent('div').remove(); //Remove field html
-            x--; //Decrement field counter
-        });
-    });
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#country').on('change', function () {
-            var countryId = this.value;
-            $('#governorate').html('');
-            $.ajax({
-                url: '{{ route('allGovernorates') }}?country_id='+countryId,
-                type: 'get',
-                success: function (res) {
-                    $('#governorate').html('<option value="">Select Governorate</option>');
-                    $.each(res, function (key, value) {
-                        $('#governorate').append('<option value="' + value
-                            .id + '">' + value.title['en'] + '</option>');
-                    });
-                    $('#city').html('<option value="">Select City</option>');
+            //Once add button is clicked
+            $(addButton).click(function(){
+                //Check maximum number of input fields
+                if(x < maxField){
+                    x++; //Increment field counter
+                    $(wrapper).append(fieldHTML); //Add field html
                 }
             });
-        });
-        $('#governorate').on('change', function () {
+
+            //Once remove button is clicked
+            $(wrapper).on('click', '.remove_button', function(e){
+                e.preventDefault();
+                $(this).closest(".child").remove(); //Remove field html
+                x--; //Decrement field counter
+            });
+
+
+            $('#country').on('change', function () {
+                var countryId = this.value;
+                $('#governorate').html('');
+                $.ajax({
+                    url: '{{ route('allGovernorates') }}?country_id='+countryId,
+                    type: 'get',
+                    success: function (res) {
+                        $('#governorate').html('<option value="">Select Governorate</option>');
+                        $.each(res, function (key, value) {
+                            $('#governorate').append('<option value="' + value
+                                .id + '">' + value.title['en'] + '</option>');
+                        });
+                        $('#city').html('<option value="">Select City</option>');
+                    }
+                });
+            });
+            $('#governorate').on('change', function () {
                 var governorateId = this.value;
                 $('#city').html('');
                 $.ajax({
@@ -439,7 +439,8 @@
                         });
                     }
                 });
+            });
+
         });
-    });
-</script>
+    </script>
 @endsection

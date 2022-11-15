@@ -9,52 +9,61 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\BadRequestHttpException;
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Resources\GetListDoctortResource;
+use App\Http\Resources\DoctorsResource;
 
 class DoctorService extends BaseService
 {
-    public function queryGet(array $where_condition = [])
+    public function queryGet(array $filters = [] , array $withRelation = []) :builder
     {
-        $doctors = Doctor::query();
-        return $doctors->filter(new DoctorsFilter($where_condition));
+        $doctors = Doctor::query()->with($withRelation);
+        return $doctors->filter(new DoctorsFilter($filters));
     }
 
-    public function getAll(array $where_condition = [])
+    public function listing(array $filters = [] , array $withRelation =[] ): \Illuminate\Contracts\Pagination\CursorPaginator
     {
-        $doctors = $this->queryGet($where_condition);
-        $doctors = $doctors->cursorPaginate(10);
-        return GetListDoctortResource::collection($doctors);
+        $perPage = config('app.perPage');
+        return $this->queryGet(filters: $filters,withRelation: $withRelation)->cursorPaginate($perPage);
     }
 
-    public function storeDoctor(array $doctorData=[]): mixed
+    public function store(array $data = [])
     {
-        $center_id =  $doctorData['center_id'] ?? Auth::user()->center_id;
-        if (! $center_id)
-            return throw new BadRequestHttpException(__('lang.invalid_inputs'), 400);
-        return Doctor::create($doctorData);
+        $data['is_active'] = isset($data['is_active'])  ?  1 :  0;
+
+        $doctor = Doctor::create($data);
+        if (!$doctor)
+            return false ;
+
+        if (isset($data['image']))
+        {
+            $fileData = FileService::saveImage(file: $data['image'],path: 'uploads\doctors');
+            $doctor->storeAttachment($fileData);
+        }
+        return $doctor;
+    } //end of store
+
+    public function update(int $id, array $doctorData=[])
+    {
+        $doctor = $this->find($id);
+        if (!$doctor)
+            return false;
+        return $doctor->update($doctorData);
     }
 
-    public function updateDoctor(int $id, array $doctorData=[])
+    public function find(int $doctorId , array $withRelations = []): Doctor|Model|bool
     {
-        $doctor_id = $this->getDoctorById($id);
-        if (! $doctor_id)
-            return throw new BadRequestHttpException(__('lang.invalid_inputs'), 400);
-        return Doctor::where('id', $id)->update($doctorData);
-    }
-
-    public function getDoctorById($doctorId): Doctor|Model
-    {
-        $doctor =  Doctor::find($doctorId);
-        if (! $doctor)
-            return throw new BadRequestHttpException(__('lang.invalid_inputs'), 400);
+        $doctor =  Doctor::with($withRelations)->find($doctorId);
+        if (!$doctor)
+            return false;
         return $doctor;
     }
 
-    public function deleteDoctor($doctorId)
+    public function delete($id)
     {
-        $doctor = $this->getDoctorById($doctorId);
-        if ($doctor)
+        $doctor = $this->find($id);
+        if ($doctor) {
+            $doctor->deleteAttachments();
             return $doctor->delete();
+        }
         return false;
-    }
+    } //end of delete
 }
