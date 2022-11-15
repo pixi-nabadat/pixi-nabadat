@@ -4,7 +4,7 @@ namespace App\QueryFilters;
 
 use App\Abstracts\QueryFilter;
 
-class CentersFilter extends QueryFilter
+class DoctorsFilter extends QueryFilter
 {
 
     public function __construct($params = array())
@@ -12,18 +12,12 @@ class CentersFilter extends QueryFilter
         parent::__construct($params);
     }
 
-    public function id($term)
-    {
-        return $this->builder->where('id',$term);
-    }
-
-
     public function is_active($term)
     {
         return $this->builder->where('is_active',$term);
     }
 
-    public function name($term)
+    public function title($term)
     {
         return $this->builder->where('name',$term);
     }
@@ -32,5 +26,10 @@ class CentersFilter extends QueryFilter
     {
         return $this->builder->where('location_id',$term);
     }
+
+    // public function center_id($term)
+    // {
+    //     return $this->builder->where('center_id',$term);
+    // }
 
 }

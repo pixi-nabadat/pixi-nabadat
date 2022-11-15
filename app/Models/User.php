@@ -21,7 +21,7 @@ class User extends Authenticatable
     const ACTIVE = 1;
     const NONACTIVE = 0;
 
-    public $translatable = ['name'];
+    public $translatable = ['name','description'];
     /**
      * The attributes that are mass assignable.
      *
@@ -50,6 +50,11 @@ class User extends Authenticatable
     public function getToken(): string
     {
         return $this->createToken(config('app.name'))->plainTextToken;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function location()

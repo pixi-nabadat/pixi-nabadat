@@ -52,13 +52,12 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::resource('country',CountryController::class);
     Route::resource('city',CityController::class);
     Route::resource('centers', CenterController::class);
-    Route::get('centers/changeStatus/{center}',[CenterController::class,'changeStatus'])->name('centers.changeStatus');
+    Route::post('centers/changeStatus',[CenterController::class,'changeStatus'])->name('centers.changeStatus');
     #attachment routes
     Route::resource('doctors',DoctorController::class);
     Route::resource('devices',DeviceController::class);
     Route::post('devices/changeStatus',[DeviceController::class,'changeStatus'])->name('devices.changeStatus');
 
-    Route::resource('clinics',ClinicController::class);
     Route::resource('clients',ClientController::class);
     Route::delete('attachments/{attachment}',[AttachmentController::class,'destroy'])->name('attachment.destroy');
 

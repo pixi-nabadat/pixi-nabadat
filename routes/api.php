@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PhoneVerifyController;
 use App\Http\Controllers\Api\RestPasswordController;
+use App\Http\Controllers\Api\CenterController;
+use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\AttachmentController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\LocationController;
@@ -25,13 +28,26 @@ Route::group(['prefix'=>'auth'],function (){
     Route::post('phone/verify',  PhoneVerifyController::class);
     Route::post('password/forget',  PhoneVerifyController::class);
     Route::post('password/reset', RestPasswordController::class);
-    Route::get('user',[AuthController::class,'profile'])->middleware('auth:sanctum');
+
+    Route::post('file/upload', [AttachmentController::class, 'upload']);
+
+    Route::group(['middleware'=>'auth:sanctum'],function (){
+        Route::get('user',[AuthController::class,'profile']);
+        Route::post('store/doctor', [DoctorController::class, 'store']);
+        Route::delete('doctors/{doctorId}', [DoctorController::class, 'delete']);
+        Route::patch('doctor/{doctorId}', [DoctorController::class, 'update']);
+    });
+
 });
     Route::get('categories',[CategoryController::class,'listing']);
     Route::get('products',[ProductController::class,'listing']);
     Route::get('products/{id}/show',[ProductController::class,'show']);
     Route::get('locations/governorates',[LocationController::class,'getAllGovernorates']);
     Route::get('locations/{parent_id}',[LocationController::class,'getLocationByParentId']);
+
+    Route::get('centers/all/{location_id?}', [CenterController::class, 'getAllLocationCenters']);
+    Route::get('doctor/{id}', [DoctorController::class, 'find']);
+    Route::get('centers', [CenterController::class, 'getAllCenters']);
 
 
 Route::fallback(function() {

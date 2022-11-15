@@ -25,7 +25,7 @@ class DeviceService extends BaseService
         return $Devices->filter(new DevicesFilter($where_condition));
     }
 
-    public function store($data)
+    public function store(array $data = [])
     {
         $data['is_active'] = isset($data['is_active'])  ?  1 :  0;
         $device = Device::create($data);
@@ -38,6 +38,7 @@ class DeviceService extends BaseService
                 $fileData = FileService::saveImage(file: $image,path: 'uploads\devices');
                 $device->storeAttachment($fileData);
             }
+        return $device ;
     } //end of store
 
     public function find($id,$with=[])

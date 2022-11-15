@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use App\Traits\Filterable;
-
+use App\Traits\HasAttachment;
 class Center extends Model
 {
-    use HasTranslations, HasFactory,Filterable;
+    use HasTranslations, HasFactory,Filterable, HasAttachment;
 
     const   ACTIVE = 1 ,
             SUPPORT_AUTO_SERVICE = 1,
@@ -37,5 +37,9 @@ class Center extends Model
         return $this->belongsTo(Location::class);
     }
 
+    public function doctors()
+    {
+        return $this->belongsToMany(Doctor::class);
+    }
 
 }
