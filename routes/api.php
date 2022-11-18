@@ -37,17 +37,16 @@ Route::group(['prefix'=>'auth'],function (){
         Route::delete('doctors/{doctorId}', [DoctorController::class, 'delete']);
         Route::patch('doctor/{doctorId}', [DoctorController::class, 'update']);
     });
-
 });
     Route::get('categories',[CategoryController::class,'listing']);
     Route::get('products',[ProductController::class,'listing']);
     Route::get('products/{id}/show',[ProductController::class,'show']);
+
     Route::get('locations/governorates',[LocationController::class,'getAllGovernorates']);
     Route::get('locations/{parent_id}',[LocationController::class,'getLocationByParentId']);
 
-    Route::get('centers/all/{location_id?}', [CenterController::class, 'getAllLocationCenters']);
+    Route::get('centers', [CenterController::class, 'listing']);
     Route::get('doctor/{id}', [DoctorController::class, 'find']);
-    Route::get('centers', [CenterController::class, 'getAllCenters']);
 
 
 Route::fallback(function() {

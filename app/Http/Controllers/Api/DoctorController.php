@@ -18,19 +18,7 @@ class DoctorController extends Controller
      */
     public function __construct(private DoctorService $doctorService)
     {
-
     }
-
-//    public function getAllDoctors(Request $request)
-//    {
-//        try {
-//            $filters = ['is_active' =>$request->is_active ?? 1, 'name' => $request->name, 'center_id' => $request->center_id];
-//            $list = $this->doctorService->getAll($filters);
-//            return apiResponse($list,__('lang.success'));
-//        } catch (\Exception $e) {
-//            return apiResponse($e->getMessage(),$e->getCode());
-//        }
-//    }
 
     public function store(StoreDoctorReqest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
