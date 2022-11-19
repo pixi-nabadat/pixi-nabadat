@@ -37,7 +37,7 @@ class CenterService extends BaseService
             }
 
         $userData = $this->prepareUserData($data);
-        app()->make(UserService::class)->store($userData);
+        $center->user()->create($userData);
         return $center;
     }
 
@@ -49,7 +49,7 @@ class CenterService extends BaseService
             'phone' => Arr::first(Arr::get($data, 'phone')),
             'user_name' => Arr::get($data, 'user_name'),
             'password' => Arr::get($data, 'password'),
-            'type' => User::CENTERTYPE,
+            'type' => User::CENTERADMIN,
             'is_active' => Arr::get($data, 'is_active') ?? 0,
             'location_id' => Arr::get($data, 'location_id'),
             'description' => Arr::get($data, 'description'),

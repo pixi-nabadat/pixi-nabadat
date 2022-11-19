@@ -19,7 +19,7 @@ return new class extends Migration
             $table->dateTime('from');
             $table->dateTime('to');
             $table->string('day');//day in arabic and english
-            $table->string('time_periob');
+            $table->string('time_period');
             $table->timestamps();
         });
     }
