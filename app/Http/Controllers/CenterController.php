@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Services\CenterService;
 use App\DataTables\CentresDataTable;
 use App\Http\Requests\StoreCenterRequest as StoreCenterRequest;
-use App\Http\Requests\StoreCenterRequest as UpdateCenterRequest;
+use App\Http\Requests\UpdateCenterRequest as UpdateCenterRequest;
 use App\Services\LocationService;
 use Illuminate\Http\Request;
 
@@ -43,9 +43,8 @@ class CenterController extends Controller
     public function store(StoreCenterRequest $request)
     {
         try {
-            $this->centerService->store($request->except('_token'));
+            $this->centerService->store($request->validated());
             $toast=[
-                'type'=>'sucess',
                 'title'=>trans('lang.success'),
                 'message'=> 'Center Saved Successfully'
             ];
@@ -62,32 +61,33 @@ class CenterController extends Controller
 
     public function edit($id)
     {
-        $center = $this->centerService->getCenterById($id);
+        $withRelation = ['attachments'];
+        $center = $this->centerService->find($id,$withRelation);
         if (!$center)
         {
             $toast = [
-              'type'=>'error',
-              'title'=>trans('error'),
-              'message'=>trans('lang.notfound')
+                'type'=>'error',
+                'title'=>trans('error'),
+                'message'=>trans('lang.notfound')
             ];
             return back()->with('toast',$toast);
         }
+        $location = $this->locationService->getLocationAncestors($center->location_id);
         $filters =['depth'=>0,'is_active'=>1];
         $countries = $this->locationService->getAll($filters);
-        return view('dashboard.centers.edit',['center' => $center,'countries' => $countries]);
+        return view('dashboard.centers.edit',['center' => $center,'countries' => $countries,'location' =>$location]);
     }
 
     public function update($id, UpdateCenterRequest $request)
     {
         try {
-            $this->centerService->update($id, $request->except(['_token','_method']));
+            $this->centerService->update($id, $request->validated());
             $toast=[
                 'type' => 'success',
                 'title'=>trans('lang.success'),
                 'message'=>'Center updated Successfully'
             ];
             return back()->with('toast',$toast);
-            // return  redirect(route('centers.index'))->with('toast',$toast);
         } catch (\Exception $exception) {
             $toast = [
                 'type'=>'error',
@@ -121,6 +121,9 @@ class CenterController extends Controller
 
     public function show($id)
     {
-
+        $withRelation = ['attachments'];
+        $center = $this->centerService->find($id,$withRelation);
+        $location = $this->locationService->getLocationAncestors($center->location_id);
+        return view('dashboard.centers.show',['center' => $center,'location' =>$location]);
     }
 }
