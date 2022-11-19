@@ -20,5 +20,5 @@ class Appointment extends Model
         7 =>['en'=>'Friday',        'ar'=>'الجمعة']
     ];
 
-    protected $fillable = ['from','to','day','time_periob'];
+    protected $fillable = ['from','to','day','time_period'];
 }

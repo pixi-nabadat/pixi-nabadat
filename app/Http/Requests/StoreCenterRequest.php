@@ -24,7 +24,7 @@ class StoreCenterRequest extends BaseRequest
         return [
             'name.*' => 'required|string',
             'phone' => 'array|min:1',
-            'phone.*' => 'required|string',
+            'phone.*' => 'required|string|unique:users,phone',
             'location_id' => 'required|integer',
             'lat' => 'nullable|string',
             'lng' => 'nullable|string',
@@ -35,7 +35,6 @@ class StoreCenterRequest extends BaseRequest
             'user_name'=>'required|unique:users,user_name',
             'password'=>'required|string',
             'email'=>'required|email|unique:users,email',
-            'date_of_birth' => 'nullable|date',
             'is_active' => 'string|nullable',
             'is_support_auto_service' => 'string|nullable',
         ];

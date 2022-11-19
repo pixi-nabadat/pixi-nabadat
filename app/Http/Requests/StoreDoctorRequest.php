@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class StoreDoctorRequest extends FormRequest
+class StoreDoctorRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +22,17 @@ class StoreDoctorRequest extends FormRequest
     public function rules()
     {
         return [
-            'center_id'         =>'required|exists:centers,id',
-            'name.*'            =>'required|string',
-            'phone'             =>'required|string',
-            'description.*'     =>'string|nullable',
-            'image'             =>'image|mimes:jpg,png,jpeg,gif,svg'
+            'center_id' => 'required|exists:centers,id',
+            'name.*' => 'required|string',
+            'phone' => 'required|array|min:1',
+            'description.*' => 'string|nullable',
+            'image' => 'image|mimes:jpg,png,jpeg,gif,svg',
+            'is_active' => 'nullable'
         ];
     }
 
     public function validationData(): array
     {
-        return array_merge($this->all(),['center_id' => auth()->user()->center_id]);
+        return array_merge($this->all(), ['center_id' => auth()->user()->center_id]);
     }
 }

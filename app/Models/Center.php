@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
 use App\Traits\HasAttachment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +11,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Center extends Model
 {
-    use HasTranslations, HasFactory,Filterable, HasAttachment;
+    use HasTranslations, HasFactory,Filterable, HasAttachment,EscapeUnicodeJson;
 
     const
         ACTIVE = 1 ,
@@ -28,8 +29,6 @@ class Center extends Model
     ];
 
     protected $table = 'centers';
-
-    public $timestamps = false;
 
     public $translatable = ['name','description','address'];
 
