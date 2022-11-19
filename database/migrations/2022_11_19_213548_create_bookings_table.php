@@ -24,7 +24,7 @@ return new class extends Migration
             $table->enum('booking_status', ['pending', 'confirmed', 'completed', 'expired'])->nullable();
             $table->enum('payment_type', ['cash', 'card'])->nullable();
             $table->boolean('payment_satus')->default(false);
-            $table->string('qr_code');  
+            $table->string('qr_code');    
 
 
             $table->timestamps();
