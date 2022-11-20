@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cancel_resons', function (Blueprint $table) {
+        Schema::create('cancel_reasons', function (Blueprint $table) {
             $table->id();
             $table->string('reason');
-            $table->timestamps();
+            $table->boolean('is_active')->default(1)->nullable();
+            $table->timestamps(); 
         });
     }
 
