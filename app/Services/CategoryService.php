@@ -10,9 +10,6 @@ use App\Traits\AttachmentTrait;
 class CategoryService extends BaseService
 {
 
-    use AttachmentTrait;
-
-
     public function getAll(array $where_condition = [], array $withRelation=[])
     {
         return $this->queryGet($where_condition,$withRelation)->get();

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,12 +12,12 @@ use Spatie\Translatable\HasTranslations;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,Filterable,HasTranslations;
+    use HasApiTokens, HasFactory, Notifiable,Filterable,HasTranslations,EscapeUnicodeJson;
 
     const SUPERADMINTYPE = 1;
     const CUSTOMERTYPE = 2;
-    const DOCTORTYPE = 3;
-    const CENTERTYPE = 4;
+    const CENTERADMIN = 4;
+    const CENTEREMPLOYEE = 5;
 
     const ACTIVE = 1;
     const NONACTIVE = 0;

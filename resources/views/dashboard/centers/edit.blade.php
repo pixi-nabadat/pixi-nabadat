@@ -101,34 +101,34 @@
                                         </div>
 
                                         {{-- username  --}}
-                                        {{-- <div class="col-md-12 d-flex my-3">
+                                         <div class="col-md-12 d-flex my-3">
                                             <label class="form-label col-3 " for="user_name">{{ trans('lang.user_name') }}</label>
                                             <input name="user_name" value="{{$center->user->user_name ?? ''}}" class="form-control @error('user_name') is-invalid @enderror"
                                                    id="user_name" type="text" required>
                                             @error('user_name')
                                             <div class="invalid-feedback text-danger">{{ $message }}</div>
                                             @enderror
-                                        </div> --}}
+                                        </div>
 
                                         {{-- email --}}
-                                        {{-- <div class="col-md-12 d-flex my-3">
+                                         <div class="col-md-12 d-flex my-3">
                                             <label class="form-label col-3 " for="email">{{ trans('lang.email') }}</label>
                                             <input name="email"  value="{{$center->user->email ?? ''}}" class="form-control @error('email') is-invalid @enderror"
                                                    id="email" type="email" required>
                                             @error('email')
                                             <div class="invalid-feedback text-danger">{{ $message }}</div>
                                             @enderror
-                                        </div> --}}
+                                        </div>
 
                                         {{-- password  --}}
-                                        {{-- <div class="col-md-12 d-flex my-3">
+                                         <div class="col-md-12 d-flex my-3">
                                             <label class="form-label col-3 " for="password">{{ trans('lang.password') }}</label>
                                             <input name="password"  value="{{$center->user->password ?? ''}}" class="form-control @error('password') is-invalid @enderror"
                                                    id="name_ar" type="password" required>
                                             @error('password')
                                             <div class="invalid-feedback text-danger">{{ $message }}</div>
                                             @enderror
-                                        </div> --}}
+                                        </div>
 
             {{--                            address_ar--}}
                                         <div class="col-md-12 d-flex my-3">
@@ -224,25 +224,17 @@
                                         </div>
                                         <div class="card-body row">
                                             <div class="col-md-6 mb-3">
-                                                <div class="col-form-label">{{trans("lang.Choose_Country")}}</div>
-                                                <select  id="country" class="form-select form-select-lg mb-3 @error('parent_id') is-invalid @enderror">
-                                                    {{-- <option selected>{{trans('lang.choose_country')}}</option> --}}
-                                                    <option value="{{$location[0]->title}}">{{$location[0]->title}}</option>
-                                                    @foreach ($countries as $country)
-                                                    <option value="{{$country->id}}">{{$country->title}}</option>
+                                                <div class="col-form-label">{{trans("lang.choose_governorate")}}</div>
+                                                <select  id="governorate" data-filling-name ="location_id" class="form-select form-select-lg mb-3 @error('parent_id') is-invalid @enderror">
+                                                    @foreach ($governorates as $governorate)
+                                                        <option value="{{$governorate->id}}" {{$governorate->id ==$location[1]->id?'selected':''}}>{{$governorate->title}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-md-6 mb-3">
-                                                <div class="col-form-label">{{trans("lang.Choose_governorate")}}</div>
-                                                <select class="form-select form-select-lg mb-3" id="governorate">
-                                                    <option value="{{$location[1]->title}}">{{$location[1]->title}}</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <div class="col-form-label">{{trans("lang.Choose_city")}}</div>
-                                                <select name="location_id" value="{{$center->location_id}}"  class="form-select form-select-lg mb-3" id="city">
-                                                    <option value="{{$location[2]->id}}">{{$location[2]->title}}</option>
+                                                <div class="col-form-label">{{trans("lang.choose_city")}}</div>
+                                                <select name="location_id" class="form-select form-select-lg mb-3">
+                                                    <option value="{{$location[2]->id}}" selected>{{$location[2]->title}}</option>
                                                 </select>
                                                 @error('location_id')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -257,7 +249,7 @@
                                     {{-- center information --}}
                                     <div class="card  col-md-12">
                                         <div class="card-header py-4">
-                                            <h6 class="card-titel">{{ __('lang.cordinates') }}</h6>
+                                            <h6 class="card-titel">{{ __('lang.coordinates') }}</h6>
                                         </div>
                                         <div class="card-body row">
                                             {{-- name_ar  --}}
@@ -357,15 +349,12 @@
                                     </div>
                                 </div>
 
-                            </div>
-
-
+                        </div>
                             <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group mr-2" role="group" aria-label="Third group">
                                     <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
                                 </div>
                             </div>
-                        </div>
                     </form>
                 </div>
             </div>
@@ -375,6 +364,8 @@
 @endsection
 
 @section('script')
+
+    <script src="{{asset('assets/js/location.js')}}"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             var maxField = 4; //Input fields increment limitation
@@ -407,40 +398,6 @@
                 $(this).closest(".child").remove(); //Remove field html
                 x--; //Decrement field counter
             });
-
-
-            $('#country').on('change', function () {
-                var countryId = this.value;
-                $('#governorate').html('');
-                $.ajax({
-                    url: '{{ route('allGovernorates') }}?country_id='+countryId,
-                    type: 'get',
-                    success: function (res) {
-                        $('#governorate').html('<option value="">Select Governorate</option>');
-                        $.each(res, function (key, value) {
-                            $('#governorate').append('<option value="' + value
-                                .id + '">' + value.title['en'] + '</option>');
-                        });
-                        $('#city').html('<option value="">Select City</option>');
-                    }
-                });
-            });
-            $('#governorate').on('change', function () {
-                var governorateId = this.value;
-                $('#city').html('');
-                $.ajax({
-                    url: '{{ route('allGovernorates') }}?country_id='+governorateId,
-                    type: 'get',
-                    success: function (res) {
-                        $('#city').html('<option value="">Select City</option>');
-                        $.each(res, function (key, value) {
-                            $('#city').append('<option value="' + value
-                                .id + '">' + value.title['en'] + '</option>');
-                        });
-                    }
-                });
-            });
-
         });
     </script>
 @endsection
