@@ -4,7 +4,7 @@ namespace App\QueryFilters;
 
 use App\Abstracts\QueryFilter;
 
-class CancelReasonFilter extends QueryFilter
+class CancelReasonsFilter extends QueryFilter
 {
 
     public function __construct($params = array())

@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\PhoneVerifyController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RestPasswordController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CancelReasonController;
+use App\Http\Controllers\Api\CancelReasonController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -48,7 +48,7 @@ Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByPa
 Route::get('centers', [CenterController::class, 'listing']);
 Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
-    Route::get('cancelReasons',[CancelReasonController::class,'getAllCancelReasons']);
+Route::get('cancelReasons',[CancelReasonController::class,'listing']);
 
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);

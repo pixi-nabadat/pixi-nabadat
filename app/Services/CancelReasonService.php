@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\CancelReason;
-use App\QueryFilters\CancelReasonFilter;
+use App\QueryFilters\CancelReasonsFilter;
 use Illuminate\Database\Eloquent\Builder;
 
 class CancelReasonService extends BaseService
@@ -19,39 +19,39 @@ class CancelReasonService extends BaseService
 
     public function queryGet(array $where_condition = [],$with=[]): Builder
     {
-        $cancelReasons = cancelReason::query()->with($with);
-        return $cancelReasons->filter(new CancelReasonFilter($where_condition));
+        $cancelReasons = CancelReason::query()->with($with);
+        return $cancelReasons->filter(new CancelReasonsFilter($where_condition));
     }
 
     public function store($data)
     {
         $data['is_active'] = isset($data['is_active'])  ?  1 :  0;
-        return $cancelReason = cancelReason::create($data);
+        return $cancelReason = CancelReason::create($data);
     } //end of store
 
     public function find($id)
     {
 
-        $cancelReason = cancelReason::find($id);
+        $cancelReason = CancelReason::find($id);
         if ($cancelReason)
             return $cancelReason;
         return false;
 
     } //end of find
 
-    public function delete($id)
+    public function delete($id): bool
     {
-        $cancelReason = CancelReason::find($id);
+        $cancelReason = $this->find($id);
         if ($cancelReason) {
             return $cancelReason->delete();
         }
         return false;
     } //end of delete
 
-    public function update($id, $data)
+    public function update($id, $data): bool
     {
-        isset($data['is_active'])  ?   $data['is_active']=1 : $data['is_active']= 0;
-        $cancelReason = cancelReason::find($id);
+        $data['is_active'] =  isset($data['is_active'])  ? 1 : 0;
+        $cancelReason =$this->find($id);
         if ($cancelReason) {
             $cancelReason->update($data);
         }
@@ -60,7 +60,7 @@ class CancelReasonService extends BaseService
 
     public function changeStatus($id)
     {
-        $cancelReason = CancelReason::find($id);
+        $cancelReason = $this->find($id);
         $cancelReason->is_active = !$cancelReason->is_active;
         return $cancelReason->save();
 

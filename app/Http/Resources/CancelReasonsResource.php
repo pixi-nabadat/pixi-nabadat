@@ -18,7 +18,6 @@ class CancelReasonsResource extends JsonResource
        return [
            'id'=>$this->id,
            'reason'=>$this->reason,
-           'is_active'=>$this->is_active 
        ];
     }
 }

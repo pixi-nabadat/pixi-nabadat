@@ -56,7 +56,6 @@ class CancelReasonsDataTable extends DataTable
                     ->setTableId('cancelReasonsdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->dom('Bfrtip')
                     ->orderBy(1)
                     ->buttons(
                         Button::make('reset'),
