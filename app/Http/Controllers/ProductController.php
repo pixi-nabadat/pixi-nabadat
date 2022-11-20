@@ -83,14 +83,14 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $categories=$this->categoryService->getAll();
-        $product = $this->productService->find($id);
+        $withRelation = ['category:id,name'];
+        $product = $this->productService->find(id: $id,withRelation:$withRelation );
         if (!$product)
         {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.Product_not_found')];
             return back()->with('toast', $toast);
         }
-       return view('dashboard.products.show', compact('product','categories'));
+       return view('dashboard.products.show', compact('product'));
     } //end of show
 
 

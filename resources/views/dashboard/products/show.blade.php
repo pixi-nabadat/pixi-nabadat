@@ -19,11 +19,7 @@
 
     <!-- Container-fluid starts-->
     <div class="container-fluid">
-
-        <form class="needs-validation" novalidate="" action="{{ route('products.update', $product) }}" method="post">
-            @csrf
-            @method('put')
-            <div class="row ">
+         <div class="row ">
                 <div class="col-md-8">
 
                     {{-- product_information --}}
@@ -45,11 +41,7 @@
                             {{-- categories  --}}
                             <div class="col-md-12 d-flex my-3">
                                 <div class="col-form-label col-3">{{ __('lang.categories') }}</div>
-                                @foreach ($categories as $category)
-                                    @if ($product->category_id == $category->id)
-                                        <p id="select_category" class="form-control">{{ $category->name }}</p>
-                                    @endif
-                                @endforeach
+                               <p id="select_category" class="form-control">{{ $product->category->name }}</p>
                             </div>
                             {{--  purchase_price  --}}
                             <div class="col-md-12 d-flex my-3">
@@ -203,9 +195,6 @@
                     </div>
                 </div>
             </div>
-
-        </form>
-
     </div>
     <!-- Container-fluid Ends-->
 @endsection

@@ -12,6 +12,10 @@
     <li class="breadcrumb-item active">{{ trans('lang.edit') }}</li>
 @endsection
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/image-container.css') }}" />
+@endsection
+
 @section('content')
 
     <!-- Container-fluid starts-->
@@ -23,13 +27,13 @@
 
                             <div class="col-md-12">
                                 <label class="form-label mt-3" for="name_ar">{{ trans('lang.name_ar') }}</label>
-                                <p name="name[ar]" class="form-control" id="name_ar">
+                                <p class="form-control" id="name_ar">
                                     {{ $category->getTranslation('name', 'ar') }}</p>
                             </div>
 
                             <div class="col-md-12">
                                 <label class="form-label mt-3" for="name_en">{{ trans('lang.name_en') }}</label>
-                                <p name="name[en]" class="form-control " id="name_en">
+                                <p class="form-control " id="name_en">
                                     {{ $category->getTranslation('name', 'en') }}</p>
                             </div>
 
@@ -43,7 +47,7 @@
                                     </label>
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-12">
                                 <div class="row">
                                     @if ($category->attachments->count())
@@ -68,6 +72,5 @@
     </div>
     <!-- Container-fluid Ends-->
 @endsection
-
 @section('script')
 @endsection
