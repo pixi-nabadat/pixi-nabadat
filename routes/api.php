@@ -48,7 +48,7 @@ Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByPa
 Route::get('centers', [CenterController::class, 'listing']);
 Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
-Route::get('cancelReasons',[CancelReasonController::class,'listing']);
+Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
 
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);
