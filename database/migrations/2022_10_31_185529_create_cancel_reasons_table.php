@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('reason');
             $table->boolean('is_active')->default(1)->nullable();
-            $table->timestamps(); 
+            $table->timestamps();
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cancel_resons');
+        Schema::dropIfExists('cancel_reasons');
     }
 };
