@@ -1,9 +1,5 @@
 <div class="d-flex justify-content-center">
 
-    <a href="{{ route('coupons.show', $coupon) }}" class="btn-sm btn-primary me-1">
-        <i class="fa fa-eye  my-2"></i>
-    </a>
-
     <a href="{{ route('coupons.edit', $coupon) }}" class="btn-sm btn-info me-1">
         <i class="fa fa-pencil-square-o  my-2"></i>
     </a>
