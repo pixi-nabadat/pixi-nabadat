@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CentersResource;
 use Illuminate\Http\Request;
 use App\Services\CenterService;
 use App\Services\LocationService;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -17,18 +19,24 @@ class CenterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(private CenterService $centerService,private LocationService $locationService)
+    public function __construct(private CenterService $centerService)
     {
 
     }
 
-    public function getAllLocationCenters(Request $request)
+    public function listing(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $location_id = $request->location_id ?? Auth::user()->location_id;
-            $filters = ['is_active' => 1, 'location_id' => $location_id];
-            $list = $this->centerService->getAll($filters);
-            return apiResponse($list,__('lang.success'));
+//            handle filters from request
+            $filters = ['is_active' => 1];
+            if ($request->location_id != 'all')
+                $filters['location_id'] = $request->location_id;
+            $filters = array_merge($filters,$request->except('location_id'));
+
+
+            $withRelations = ['doctors','location','attachments'];
+            $centers = $this->centerService->listing(filters: $filters,withRelation: $withRelations);
+            return CentersResource::collection($centers);
         } catch (\Exception $e) {
             return apiResponse($e->getMessage(), 'Unauthorized',$e->getCode());
         }

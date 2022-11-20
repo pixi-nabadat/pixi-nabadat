@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\EscapeUnicodeJson;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
@@ -10,7 +11,7 @@ use App\Traits\HasAttachment;
 
 class Product extends Model
 {
-    use HasFactory,HasTranslations,Filterable,HasAttachment;
+    use HasFactory,HasTranslations,Filterable,HasAttachment,EscapeUnicodeJson;
 
     const Active = 1 ;
     const NONActive = 0 ;
