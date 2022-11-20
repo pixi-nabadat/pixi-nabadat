@@ -23,12 +23,15 @@ class CancelReasonsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-        ->addColumn('action', function(CancelReason $cancelReason){
-            return view('dashboard.cancelReasons.action',compact('cancelReason'))->render();
-        })
-        ->addcolumn('reason', function(CancelReason $cancelReason){
-            return $cancelReason->reason ;
-        })
+            ->addColumn('action', function(CancelReason $cancelReason){
+                return view('dashboard.cancelReasons.action',compact('cancelReason'))->render();
+            })
+            ->addcolumn('reason', function(CancelReason $cancelReason){
+                return $cancelReason->reason ;
+            })
+            ->editColumn('created_at', function(CancelReason $cancelReason){
+                return $cancelReason->created_at->format('Y-m-d h:i a') ;
+            })
             ->addcolumn('is_active', function(CancelReason $cancelReason){
                 return  view('dashboard.components.switch-btn',['model'=>$cancelReason,'url'=>route('cancelReasons.changeStatus')]);
             })->rawColumns(['action','is_active']);;
