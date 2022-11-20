@@ -27,6 +27,7 @@ class CentersResource extends JsonResource
             'google_map_url' => $this->google_map_url,
             'is_active'      => ($this->is_active == 1),
             "doctors"        => DoctorsResource::collection($this->doctors),
+            'appointments'   => $this->appointments,
             'is_support_auto_service' => ($this->is_support_auto_service == 1),
             'images'         => $this->whenLoaded('attachments') ? AttachmentsResource::collection($this->attachments) : []
         ];
