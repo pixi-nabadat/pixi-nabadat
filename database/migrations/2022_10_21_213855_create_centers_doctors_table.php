@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('center_doctor', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\Center::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(\App\Models\Doctor::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
