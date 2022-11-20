@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\AttachmentController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\LocationController;
-
+use App\Http\Controllers\CancelReasonController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -49,6 +49,7 @@ Route::group(['prefix'=>'auth'],function (){
     Route::get('doctor/{id}', [DoctorController::class, 'find']);
     Route::get('centers', [CenterController::class, 'getAllCenters']);
 
+    Route::get('cancelReasons',[CancelReasonController::class,'getAllCancelReasons']);
 
 Route::fallback(function() {
     return apiResponse(message:'Invalid Route',code: 404 );

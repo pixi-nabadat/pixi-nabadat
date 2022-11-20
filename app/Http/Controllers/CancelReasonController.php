@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\CancelReasonsDataTable;
 use App\Http\Requests\CancelReasonRequest;
+use App\Http\Resources\CancelReasonsResource;
 use App\Services\cancelReasonService;
 use Illuminate\Http\Request;
 
@@ -13,12 +14,23 @@ class cancelReasonController extends Controller
     {
     }
 
+    
     public function index(CancelReasonsDataTable $dataTable)
     {
-
         return $dataTable->render('dashboard.cancelReasons.index');
     } //end of index
 
+    public function getAllCancelReasons()
+    {
+        try{
+            $allCancelReasons = $this->cancelReasonService->getAll();
+            return cancelReasonsResource::collection($allCancelReasons);
+        }
+        catch(\Exception $exception){
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+    }
+    
     public function edit($id)
     {
         $cancelReason = $this->cancelReasonService->find($id);
