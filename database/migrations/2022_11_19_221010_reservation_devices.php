@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('booking_devices', function (Blueprint $table) {
+        Schema::create('reservation_devices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('booking_id')->references('id')->on('bookings')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('reservation_id')->references('id')->on('reservations')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('device_id')->references('id')->on('center_devices')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->integer('palses_number');
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('booking_devices');    
+        Schema::dropIfExists('reservation_devices');    
     }
 };
