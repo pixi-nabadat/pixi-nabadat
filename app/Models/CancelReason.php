@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
@@ -13,7 +14,7 @@ class CancelReason extends Model
 
     const ACTIVE = 1;
     const NONACTIVE = 0;
-    
+
     public $translatable = ['reason'];
     protected $fillable = ['reason','is_active'];
 }
