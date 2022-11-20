@@ -18,16 +18,16 @@ class CouponService extends BaseService
 
     public function queryGet(array $where_condition = []): Builder
     {
-        $Coupons = Coupon::query();
-        return $Coupons->filter(new CouponsFilter($where_condition));
+        $coupons = Coupon::query();
+        return $coupons->filter(new CouponsFilter($where_condition));
     }
 
-    public function store($data)
+    public function store(array $data = [])
     {
         return Coupon::create($data);
     } //end of store
 
-    public function find($id)
+    public function find(int $id)
     {
 
         $coupon = Coupon::find($id);
@@ -37,18 +37,18 @@ class CouponService extends BaseService
 
     } //end of find
 
-    public function delete($id)
+    public function delete(int $id): bool
     {
-        $coupon = Coupon::find($id);
+        $coupon = $this->find($id);
         if ($coupon) {
             return $coupon->delete();
         }
         return false;
     } //end of delete
 
-    public function update($id, $data)
+    public function update(int $id, array $data = []): bool
     {
-        $coupon = Coupon::find($id);
+        $coupon = $this->find($id);
         if ($coupon) {
             $coupon->update($data);
         }

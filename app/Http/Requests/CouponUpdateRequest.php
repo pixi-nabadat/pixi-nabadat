@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class CouponUpdateRequest extends FormRequest
+class CouponUpdateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,19 +22,17 @@ class CouponUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|string',
-            'discount_type'=>'required',
-            'discount'=>'required',
-            'start_date'=>'required',
-            'end_date'=>'required',
-            'min_buy'=>'required',
+            'code' => 'required|string|unique:coupons,code,' . $this->id,
+            'discount_type' => 'required',
+            'discount' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'min_buy' => 'required',
         ];
     }
 
-    public function messages()
+    public function validationData()
     {
-        return [
-            
-        ];
+        return array_merge($this->all(), ['added_by' => auth()->id()]);
     }
 }

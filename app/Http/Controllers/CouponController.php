@@ -13,16 +13,17 @@ class CouponController extends Controller
 {
     public function __construct(private CouponService $couponService)
     {
-        
+
     }
-    
+
     public function index(CouponsDataTable $dataTable){
 
         return $dataTable->render('dashboard.coupons.index');
 
     }//end of index
 
-    public function edit($id){
+    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
+    {
         $coupon = $this->couponService->find($id);
         if (!$coupon)
         {
@@ -30,39 +31,40 @@ class CouponController extends Controller
             return back()->with('toast', $toast);
         }
         return view('dashboard.coupons.edit', compact('coupon'));
-    }//end of edit 
+    }//end of edit
 
-    public function create(){
+    public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         return view('dashboard.coupons.create');
     }//end of create
 
-    public function store(CouponStoreRequest $request){
+    public function store(CouponStoreRequest $request): \Illuminate\Http\RedirectResponse
+    {
         try {
-            $request->merge(['added_by'=>auth()->user()->id]);
-            $request->validated();
-            $this->couponService->store($request->all());
-            $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'Coupon Saved Successfully'];
+
+            $this->couponService->store($request->validated());
+            $toast = ['type' => 'success', 'title' => trans('lang.success'), 'message' => trans('lang.success_operation')];
             return redirect()->route('coupons.index')->with('toast', $toast);
         } catch (\Exception $ex) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
-            return redirect()->back()->with('toast', $toast);
+            return back()->with('toast', $toast);
         }
     }//end of store
 
-    public function update(CouponUpdateRequest $request, $id)
+    public function update(CouponUpdateRequest $request, $id): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
         try {
-            $request->validated();
-            $this->couponService->update($id, $request->all());
+
+            $this->couponService->update($id,  $request->validated());
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect(route('coupons.index'))->with('toast', $toast);
         } catch (\Exception $ex) {
 
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
-            return redirect()->back()->with('toast', $toast);
+            return back()->with('toast', $toast);
         }
     } //end of update
-    
+
     public function destroy($id)
     {
         try {
@@ -84,6 +86,6 @@ class CouponController extends Controller
             return back()->with('toast', $toast);
         }
        return view('dashboard.coupons.show', compact('coupon'));
-    } //end of show   
+    } //end of show
 
 }
