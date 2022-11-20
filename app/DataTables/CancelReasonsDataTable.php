@@ -35,10 +35,8 @@ class CancelReasonsDataTable extends DataTable
     }
 
     /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\cancelReasonsDataTable $model
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param cancelReason $model
+     * @return QueryBuilder
      */
     public function query(cancelReason $model): QueryBuilder
     {
