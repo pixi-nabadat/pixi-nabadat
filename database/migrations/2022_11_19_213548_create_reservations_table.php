@@ -18,11 +18,11 @@ return new class extends Migration
             $table->foreignId('customer_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(\App\Models\Center::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->date('reservation_date');
-            $table->date('confirm_date')->nullable();//changed to date 
+            $table->date('confirm_date')->nullable();
             $table->date('check_date');
             $table->enum('payment_type', ['cash', 'card'])->nullable();
             $table->boolean('payment_satus')->default(false);
-            $table->string('qr_code')->unique();//changed to unique   
+            $table->string('qr_code')->unique();
 
 
             $table->timestamps();
