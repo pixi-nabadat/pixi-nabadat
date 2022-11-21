@@ -23,7 +23,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         try {
-            $this->authService->loginWithEmailOrPhone(identifier: $request->identifier, password: $request->password);
+            $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password);
             $toast = [
                 'type'=>'success',
                 'message'=>__('lang.sign_in'),

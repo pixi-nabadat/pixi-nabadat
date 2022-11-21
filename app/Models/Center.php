@@ -2,19 +2,22 @@
 
 namespace App\Models;
 
+use App\Traits\EscapeUnicodeJson;
+use App\Traits\Filterable;
+use App\Traits\HasAttachment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
-use App\Traits\Filterable;
 
 class Center extends Model
 {
-    use HasTranslations, HasFactory,Filterable;
+    use HasTranslations, HasFactory,Filterable, HasAttachment,EscapeUnicodeJson;
 
-    const   ACTIVE = 1 ,
-            SUPPORT_AUTO_SERVICE = 1,
-            NON_ACTIVE = 0 ,
-            NON_SUPPORT_AUTO_SERVICE = 0;
+    const
+        ACTIVE = 1 ,
+        NON_ACTIVE = 0 ,
+        SUPPORT_AUTO_SERVICE = 1,
+        NON_SUPPORT_AUTO_SERVICE = 0;
 
     protected $fillable = [
         'name', 'phone', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
@@ -27,8 +30,6 @@ class Center extends Model
 
     protected $table = 'centers';
 
-    public $timestamps = false;
-
     public $translatable = ['name','description','address'];
 
 
@@ -37,5 +38,14 @@ class Center extends Model
         return $this->belongsTo(Location::class);
     }
 
+    public function user()
+    {
+        return $this->hasMany(User::class,'center_id');
+    }
+
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class,'center_id');
+    }
 
 }

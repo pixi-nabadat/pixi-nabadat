@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignIdFor(\App\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->text('description')->nullable();
-            $table->string('phone')->unique();
+            $table->string('phone');
             $table->timestamps();
         });
     }

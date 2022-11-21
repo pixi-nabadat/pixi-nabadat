@@ -24,11 +24,10 @@ class UserPackageRequest extends FormRequest
     public function rules()
     {
         return [
-            
             'num_nabadat' => 'required',
             'price'=>'required',
-            'package_id'=>'required',
-            'user_id'=>'required'
+            'package_id'=>'required|integer',
+            'user_id'=>'required|integer'
         ];
     }
 

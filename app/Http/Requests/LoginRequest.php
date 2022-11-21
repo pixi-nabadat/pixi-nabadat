@@ -23,7 +23,7 @@ class LoginRequest extends BaseRequest
     {
         return [
             'identifier'=>'required|string',
-            'password'=>'required'
+            'password'=>'required',
         ];
     }
 }

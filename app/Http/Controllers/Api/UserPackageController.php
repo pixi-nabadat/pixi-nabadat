@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserPackageRequest;
 use App\Services\UserPackageService;
-use Illuminate\Http\Request;
+use App\Http\Resources\UserPackagesResource;
 
 class UserPackageController extends Controller
 {
@@ -17,7 +17,7 @@ class UserPackageController extends Controller
     public function index(){
         try{
             $userPackages = $this->userPackageService->getAll();
-            return apiResponse( data: $userPackages,message: trans('lang.success'));
+            return UserPackagesResource::collection($userPackages);
         }
         catch(\Exception $exception){
             return apiResponse(message: $exception->getMessage(), code: 422);
@@ -25,27 +25,23 @@ class UserPackageController extends Controller
     }//end of index
 
 
-    public function store(userPackageRequest $request){
+    public function store(UserPackageRequest $request){
         try {
-            $request->validated();
-            $userPackages=$this->userPackageService->store($request->all());
-            return apiResponse(data: $userPackages,message: trans('lang.success'));
+            $userPackages=$this->userPackageService->store($request->validated());
+            return apiResponse(data: $userPackages,message: trans('lang.userPackage_saved_successfully'));
         } catch (\Exception $ex) {
             return apiResponse(message: $ex->getMessage(), code: 422);
         }
     }//end of store
 
-    public function update(userPackageRequest $request, $id)
+    public function update(UserPackageRequest $request, $id)
     {
-       
         try {
-            $request->validated();
-            $userPackages=$this->userPackageService->update($id, $request->all());
-            return apiResponse(data: $userPackages,message: trans('lang.success'));
+            $userPackages=$this->userPackageService->update($id, $request->validated());
+            return apiResponse(data: $userPackages,message: trans('lang.userPackage_updated_successfully'));
         } catch (\Exception $ex) {
             return apiResponse(message: $ex->getMessage(), code: 422);
-        }
-        
+        }   
     } //end of update
     
     public function destroy($id)
@@ -59,5 +55,16 @@ class UserPackageController extends Controller
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
     } //end of destroy
+
+
+    public function find($id)
+    {
+        try {
+            $userPackage = $this->userPackageService->find($id);
+            return new UserPackagesResource($userPackage);
+        } catch (\Exception $ex) {
+            return apiResponse(message: $ex->getMessage(), code: 422);
+        }
+    }
 
 }

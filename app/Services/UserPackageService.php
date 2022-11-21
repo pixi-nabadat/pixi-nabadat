@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\userPackage;
+use App\Models\UserPackage;
 use App\QueryFilters\UserPackagesFilter;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -17,20 +17,20 @@ class UserPackageService extends BaseService
 
     public function queryGet(array $where_condition = []): Builder
     {
-        $userPackages = userPackage::query();
+        $userPackages = UserPackage::query();
         return $userPackages->filter(new UserPackagesFilter($where_condition));
     }
 
     public function store($data)
     {
-        return userPackage::create($data);
+        return UserPackage::create($data);
 
     } //end of store
 
     public function find($id)
     {
 
-        $userPackage = userPackage::find($id);
+        $userPackage = UserPackage::find($id);
         if ($userPackage)
             return $userPackage;
         return false;
@@ -39,7 +39,7 @@ class UserPackageService extends BaseService
 
     public function delete($id)
     {
-        $userPackage = userPackage::find($id);
+        $userPackage = UserPackage::find($id);
         if ($userPackage) {
             return $userPackage->delete();
         }
@@ -48,7 +48,7 @@ class UserPackageService extends BaseService
 
     public function update($id, $data)
     {
-        $userPackage = userPackage::find($id);
+        $userPackage = UserPackage::find($id);
         if ($userPackage) {
              $userPackage->update($data);
              return  $userPackage;

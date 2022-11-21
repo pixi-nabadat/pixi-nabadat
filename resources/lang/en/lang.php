@@ -90,5 +90,7 @@
 		'product_images'=>'Product Images',
 		'product_discount'=>'Product Discount',
 		'add_product'=>'Add Product',
+		'flat'=>'flat',
+		'percent'=>'percent',
     ]
 ?>
