@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');//patient id
             $table->foreignIdFor(\App\Models\Reservation::class)->constrained()->onDelete('cascade')->onUpdate('cascade');//reservation id
-            $table->enum('action', ['pending', 'confirmed', 'completed', 'expired'])->nullable();//action the center user done
+            $table->enum('action', ['pending', 'confirmed', 'completed', 'expired'])->nullable();//action the center user done 
             $table->timestamps();
         });
     }
