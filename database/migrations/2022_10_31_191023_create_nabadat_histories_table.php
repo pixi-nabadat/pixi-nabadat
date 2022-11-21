@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('nabadat_histories', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignIdFor(\App\Models\Reservation::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignIdFor(\App\Models\Reservation::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');//adding the reservation id
             $table->foreignIdFor(\App\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignIdFor(\App\Models\Device::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->integer('num_nabadat');
