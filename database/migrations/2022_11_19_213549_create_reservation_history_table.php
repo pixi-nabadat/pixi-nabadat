@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reservation_devices', function (Blueprint $table) {
+        Schema::create('reservation_history', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('reservation_id')->references('id')->on('reservations')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('device_id')->references('id')->on('center_devices')->onDelete('cascade')->onUpdate('cascade')->nullable();
-            $table->integer('palses_number');
-
-
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(\App\Models\Reservation::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->enum('action', ['pending', 'confirmed', 'completed', 'expired'])->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reservation_devices');    
+        Schema::dropIfExists('reservations');
     }
 };
