@@ -17,6 +17,8 @@ use App\Http\Controllers\LocationController;
 
 use App\Http\Controllers\CancelReasonController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CouponController;
+
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
     if (!in_array($locale, ['en', 'ar'])) {
@@ -63,6 +65,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     #attachment routes
     Route::resource('doctors',DoctorController::class);
+
     Route::resource('devices',DeviceController::class);
     Route::post('devices/changeStatus',[DeviceController::class,'changeStatus'])->name('devices.changeStatus');
 
@@ -72,6 +75,9 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     Route::resource('categories',CategoryController::class);
     Route::post('categories/changeStatus',[CategoryController::class,'changeStatus'])->name('categories.changeStatus');
+  
+    Route::resource('coupons',CouponController::class);
+    Route::post('coupons/status',[CategoryController::class,'status'])->name('coupons.status');
 
     Route::resource('products',ProductController::class);
     Route::post('products/featured',[ProductController::class,'featured'])->name('products.featured');
