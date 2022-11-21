@@ -25,15 +25,16 @@ class CouponStoreRequest extends BaseRequest
     {
         return [
             'code' => 'required|string|unique:coupons',
-            'discount_type'=>'required|float',
-            'discount'=>'required|float',
+            'discount_type'=>'required',
+            'discount'=>'required|numeric',
             'start_date'=>'required|date',
             'end_date'=>'required|date',
             'min_buy'=>'required|numeric',
+            'added_by'=>'required|exists:users,id'
         ];
     }
 
-    public function validationData()
+    public function validationData(): array
     {
         return array_merge($this->all(), ['added_by' => auth()->id()]);
     }

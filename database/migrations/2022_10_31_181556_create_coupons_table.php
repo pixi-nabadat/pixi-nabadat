@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->enum('discount_type',['flat','percent'])->default('percent');
             $table->double('discount');
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->double('min_buy')->nullable();
             $table->timestamps();
         });

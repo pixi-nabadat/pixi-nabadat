@@ -20,7 +20,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        
+
                         <form method="post" class="needs-validation" enctype="multipart/form-data" novalidate="" action="{{ route('coupons.store') }}">
                             @csrf
 
@@ -28,7 +28,7 @@
                                 {{-- code --}}
                                 <div class="col-md-6">
                                     <label class="form-label" for="code">{{ trans('lang.code') }}</label>
-                                    <input name="code" class="form-control @error('code') is-invalid @enderror"
+                                    <input name="code" value="{{old('code')}}" class="form-control @error('code') is-invalid @enderror"
                                         id="code" type="text" required>
                                     @error('code')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -49,7 +49,7 @@
                                     <select id="select_discount_type" name="discount_type"
                                         class="col form-control">
                                         <option  value = 'flat'>   {{trans('lang.flat')}}</option>
-                                        <option  value = 'percent'>{{trans('lang.percent')}}</option>
+                                        <option  value = 'percent' selected>{{trans('lang.percent')}}</option>
                                     </select>
                                 </div>
                                 {{-- discount --}}

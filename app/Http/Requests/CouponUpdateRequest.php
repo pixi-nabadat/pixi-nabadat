@@ -21,8 +21,8 @@ class CouponUpdateRequest extends BaseRequest
      */
     public function rules()
     {
-        return [
-            'code' => 'required|string|unique:coupons,code,' . $this->id,
+       return [
+            'code' => 'required|string|unique:coupons,code,'.$this->coupon,
             'discount_type' => 'required',
             'discount' => 'required',
             'start_date' => 'required',

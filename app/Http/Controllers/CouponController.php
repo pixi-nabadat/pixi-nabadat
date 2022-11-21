@@ -54,7 +54,6 @@ class CouponController extends Controller
     public function update(CouponUpdateRequest $request, $id): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
         try {
-
             $this->couponService->update($id,  $request->validated());
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect(route('coupons.index'))->with('toast', $toast);

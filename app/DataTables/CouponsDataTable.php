@@ -22,20 +22,27 @@ class CouponsDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function (Coupon $coupon) {
-                return view('dashboard.Coupons.action', compact('coupon'))->render();
+                return view('dashboard.coupons.action', compact('coupon'))->render();
             })
             ->editColumn('added_by', function (Coupon $coupon) {
                 return $coupon->creator->name;
             })
             ->editColumn('discount', function (Coupon $coupon) {
-                return $coupon->discount;
+                return $coupon->discount . ($coupon->discount_type == Coupon::DISCOUNT_PERCENTAGE ? ' %' : "L.E");
+            })
+            ->editColumn('min_buy', function (Coupon $coupon) {
+                return $coupon->min_buy . " L.E";
             })
             ->editColumn('start_date', function (Coupon $coupon) {
                 return $coupon->start_date->format('Y-m-d h:i a');
             })
             ->editColumn('end_date', function (Coupon $coupon) {
-                return $coupon->format('Y-m-d h:i a');
-            });
+                return $coupon->end_date->format('Y-m-d h:i a');
+            })
+            ->editColumn('created_at', function (Coupon $coupon) {
+                return $coupon->created_at->format('Y-m-d h:i a');
+            })
+            ;
     }
 
     /**
@@ -77,8 +84,10 @@ class CouponsDataTable extends DataTable
             Column::make('code'),
             Column::make('added_by'),
             Column::make('discount'),
+            Column::make('min_buy'),
             Column::make('start_date'),
             Column::make('end_date'),
+            Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
