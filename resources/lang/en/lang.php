@@ -90,5 +90,13 @@
 		'product_images'=>'Product Images',
 		'product_discount'=>'Product Discount',
 		'add_product'=>'Add Product',
+		'code'=>'code',
+		'coupons'=>'Coupons',
+		'min_buy'=>'Min Buy',
+		'start_date'=>'Start Date',
+		'end_date'=>'End Date',
+		'coupon'=>'Coupon',
+		'add_coupon'=>'Add Coupon'
+
     ]
 ?>

@@ -30,7 +30,7 @@
                             <div class="col-md-12 d-flex my-3">
                                 <label class="form-label col-3 " for="name_ar">{{ trans('lang.name_ar') }}</label>
                                 <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
-                                       id="name_ar" type="text" required>
+                                       id="name_ar" value="{{old('name["ar"]')}}" type="text" required>
                                 @error('name.ar')
                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
@@ -38,7 +38,7 @@
                             {{-- name_en  --}}
                             <div class="col-md-12 d-flex my-3">
                                 <label class="form-label col-3" for="name_en">{{ trans('lang.name_en') }}</label>
-                                <input name="name[en]" class="form-control @error('name.en') is-invalid @enderror"
+                                <input name="name[en]" value="{{old('name["en"]')}}" class="form-control @error('name.en') is-invalid @enderror"
                                        id="name_en" type="text" required>
                                 @error('name.en')
                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -49,7 +49,7 @@
                             <div class="col-md-12 d-flex my-3">
                                 <label class="form-label col-3 " for="user_name">{{ trans('lang.user_name') }}</label>
                                 <input name="user_name" class="form-control @error('user_name') is-invalid @enderror"
-                                       id="user_name" type="text" required>
+                                       id="user_name" value="{{old('user_name')}}" type="text" required>
                                 @error('user_name')
                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
@@ -59,7 +59,7 @@
                             <div class="col-md-12 d-flex my-3">
                                 <label class="form-label col-3 " for="email">{{ trans('lang.email') }}</label>
                                 <input name="email" class="form-control @error('email') is-invalid @enderror"
-                                       id="email" type="email" required>
+                                       id="email" value="{{old('email')}}" type="email" required>
                                 @error('email')
                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
@@ -78,7 +78,7 @@
 {{--                            address_ar--}}
                             <div class="col-md-12 d-flex my-3">
                                 <label class="form-label col-3" for="address_ar">{{ trans('lang.address_ar') }}</label>
-                                <textarea name="address[ar]" class="form-control @error('address.ar') is-invalid @enderror"></textarea>
+                                <textarea name="address[ar]" class="form-control @error('address.ar') is-invalid @enderror">{{old("address[ar]")}}</textarea>
                                 @error('address.ar')
                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
@@ -87,7 +87,7 @@
 {{--                            address_en--}}
                             <div class="col-md-12 d-flex my-3">
                                 <label class="form-label col-3" for="address_ar">{{ trans('lang.address_en') }}</label>
-                                <textarea name="address[en]" class="form-control @error('address.en') is-invalid @enderror"></textarea>
+                                <textarea name="address[en]" class="form-control @error('address.en') is-invalid @enderror">{{old("address[en]")}}</textarea>
                                 @error('address.en')
                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
@@ -96,7 +96,7 @@
 {{--                            description ar--}}
                             <div class="col-md-12 d-flex my-3">
                                 <label class="form-label col-3" for="address_ar">{{ trans('lang.description_ar') }}</label>
-                                <textarea name="description[ar]" class="form-control @error('description.ar') is-invalid @enderror"></textarea>
+                                <textarea name="description[ar]" class="form-control @error('description.ar') is-invalid @enderror">{{old("description[ar]")}}</textarea>
                                 @error('description.ar')
                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
@@ -105,23 +105,11 @@
 {{--                            description_en--}}
                             <div class="col-md-12 d-flex my-3">
                                 <label class="form-label col-3" for="address_ar">{{ trans('lang.description_en') }}</label>
-                                <textarea name="description[en]" class="form-control @error('description.en') is-invalid @enderror"></textarea>
+                                <textarea name="description[en]" class="form-control @error('description.en') is-invalid @enderror">{{old("description[en]")}}</textarea>
                                 @error('description.en')
                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-{{--                            date_of_birth--}}
-                            <div class="col-md-12 d-flex my-3">
-                                <label class="col-form-label col-3">{{__('lang.date_of_birth')}}</label>
-                                <div class="input-group">
-                                    <input name="date_of_birth" class="datepicker-here form-control digits @error('date_of_birth') is-invalid @enderror" type="text"
-                                        >
-                                </div>
-                                @error('date_of_birth')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
 
                             {{-- phones  --}}
                             <div class="field_wrapper">
@@ -133,7 +121,7 @@
                                                 <i class="fa fa-plus-circle fa-2x"></i>
                                             </a>
                                         </div>
-                                        <input type="text" class="form-control  @error('phone') is-invalid @enderror" name="phone[]" value="" placeholder="primary phone"/>
+                                        <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone[]" value="{{old('phone[]')}}" placeholder="primary phone"/>
                                     </div>
                                     @error('phone')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -152,23 +140,19 @@
                             </div>
                             <div class="card-body row">
                                 <div class="col-md-6 mb-3">
-                                    <div class="col-form-label">{{trans("lang.Choose_Country")}}</div>
-                                    <select  id="country" class="form-select form-control mb-3 @error('parent_id') is-invalid @enderror" >
-                                        <option selected value="">{{trans('lang.choose_country')}}</option>
-                                        @foreach ($countries as $country)
-                                            <option value="{{$country->id}}">{{$country->title}}</option>
+                                    <div class="col-form-label">{{trans("lang.choose_governorates")}}</div>
+                                    <select  id="change_location" data-filling-name ="location_id" class="form-select form-control mb-3 @error('parent_id') is-invalid @enderror" >
+                                        <option selected>{{trans('lang.choose_governorates')}}</option>
+                                        @foreach ($governorates as $governorate)
+                                            <option value="{{$governorate->id}}">{{$governorate->title}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <div class="col-form-label">{{trans("lang.Governorate")}}</div>
-                                    <select class="form-select form-control mb-3" id="governorate"></select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <div class="col-form-label">{{trans("lang.City")}}</div>
+                                    <div class="col-form-label">{{trans("lang.city")}}</div>
                                     <select name="location_id" class="form-select form-control mb-3 @error('location_id') is-invalid @enderror" id="city"></select>
                                     @error('location_id')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
@@ -285,6 +269,7 @@
 @endsection
 @section('script')
 
+<script src="{{asset('assets/js/location.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         var maxField = 4; //Input fields increment limitation
@@ -317,42 +302,7 @@
             $(this).closest(".child").remove(); //Remove field html
             x--; //Decrement field counter
         });
-
-
-        $('#country').on('change', function () {
-            var countryId = this.value;
-            $('#governorate').html('');
-            $.ajax({
-                url: '{{ route('allGovernorates') }}?country_id='+countryId,
-                type: 'get',
-                success: function (res) {
-                    $('#governorate').html('<option value="">Select Governorate</option>');
-                    $.each(res, function (key, value) {
-                        $('#governorate').append('<option value="' + value
-                            .id + '">' + value.title['en'] + '</option>');
-                    });
-                    $('#city').html('<option value="">Select City</option>');
-                }
-            });
-        });
-        $('#governorate').on('change', function () {
-            var governorateId = this.value;
-            $('#city').html('');
-            $.ajax({
-                url: '{{ route('allGovernorates') }}?country_id='+governorateId,
-                type: 'get',
-                success: function (res) {
-                    $('#city').html('<option value="">Select City</option>');
-                    $.each(res, function (key, value) {
-                        $('#city').append('<option value="' + value
-                            .id + '">' + value.title['en'] + '</option>');
-                    });
-                }
-            });
-        });
-
     });
 </script>
-
 
 @endsection

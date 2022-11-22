@@ -22,8 +22,7 @@ class AuthController extends Controller
     {
 
         try {
-            $userType = User::CUSTOMERTYPE ;
-            $user = $this->authService->loginWithEmailOrPhone(identifier: $request->identifier, password: $request->password,userType: $userType);
+            $user = $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password);
             $data = [
                 'token'=>$user->getToken(),
                 'token_type'=>'Bearer',

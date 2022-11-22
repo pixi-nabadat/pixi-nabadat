@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreDoctorRequest as StoreDoctorReqest;
-use App\Http\Requests\StoreDoctorRequest as updateDoctorReqest;
+use App\Http\Requests\StoreDoctorRequest as StoreDoctorRequest;
+use App\Http\Requests\StoreDoctorRequest as UpdateDoctorRequest;
 use App\Http\Resources\DoctorsResource;
 use App\Services\DoctorService;
 
@@ -18,31 +18,19 @@ class DoctorController extends Controller
      */
     public function __construct(private DoctorService $doctorService)
     {
-
     }
 
-//    public function getAllDoctors(Request $request)
-//    {
-//        try {
-//            $filters = ['is_active' =>$request->is_active ?? 1, 'name' => $request->name, 'center_id' => $request->center_id];
-//            $list = $this->doctorService->getAll($filters);
-//            return apiResponse($list,__('lang.success'));
-//        } catch (\Exception $e) {
-//            return apiResponse($e->getMessage(),$e->getCode());
-//        }
-//    }
-
-    public function store(StoreDoctorReqest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function store(StoreDoctorRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $this->doctorService->store($request->validated());
-            return apiResponse(message: __('lang.doctor_saved_successfully'));
+            $doctor = $this->doctorService->store($request->validated());
+            return apiResponse(data:$doctor,message: __('lang.doctor_saved_successfully'));
         } catch (\Exception $ex) {
             return apiResponse(message: $ex->getMessage(), code: 422);
         }
     }
 
-    public function update($id, updateDoctorReqest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function update($id, UpdateDoctorRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             $this->doctorService->update($id, $request->validated());

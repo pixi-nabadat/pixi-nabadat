@@ -31,7 +31,7 @@ class CenterController extends Controller
             $filters = ['is_active' => 1];
             if ($request->location_id != 'all')
                 $filters['location_id'] = $request->location_id;
-            $filters = array_merge($filters,$request->all());
+            $filters = array_merge($filters,$request->except('location_id'));
 
 
             $withRelations = ['doctors','location','attachments'];
