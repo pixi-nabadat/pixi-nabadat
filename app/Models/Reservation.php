@@ -11,12 +11,12 @@ class Reservation extends Model
 
     protected $fillable = [
         'customer_id',
-         'center_id',
-         'confirm_date',
-         'check_date',
-         'payment_type',
-         'payment_status',
-         'qr_code',
+        'center_id',
+        'confirm_date',
+        'check_date',
+        'payment_type',
+        'payment_status',
+        'qr_code',
     ];
-    
+
 }

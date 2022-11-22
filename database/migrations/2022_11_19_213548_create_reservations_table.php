@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('confirm_date')->nullable();
             $table->date('check_date');
             $table->enum('payment_type', ['cash', 'card'])->nullable();
-            $table->boolean('payment_satus')->default(false);
+            $table->boolean('payment_status')->default(false);
             $table->string('qr_code')->unique();
 
 
