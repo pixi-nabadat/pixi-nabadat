@@ -29,6 +29,11 @@ Route::get('lang/{locale}', function ($locale) {
     return redirect()->back();
 })->name('lang');
 
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ], function(){
 Route::prefix('authentication')->group(function () {
     Route::middleware('guest')->group(function (){
         Route::get('login',[AuthController::class,'index'])->name('login');
@@ -86,6 +91,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::resource('cancelReasons',CancelReasonController::class);
     Route::post('cancelReasons/changeStatus',[CancelReasonController::class,'changeStatus'])->name('cancelReasons.changeStatus');
 });
+});
 
 Route::get('/clear-cache', function() {
     Artisan::call('config:cache');
@@ -95,3 +101,4 @@ Route::get('/clear-cache', function() {
     Artisan::call('route:clear');
     return "Cache is cleared";
 })->name('clear.cache');
+
