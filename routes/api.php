@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RestPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CancelReasonController;
+use App\Http\Controllers\APi\ReservationController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -49,7 +51,11 @@ Route::get('centers', [CenterController::class, 'listing']);
 Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
 Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
-
+Route::resource('reservations', ReservationController::class)->except('update');
+Route::post('reservations/{id}/confirm',  [ReservationController::class, 'confirm']);
+Route::post('reservations/{id}/attend',   [ReservationController::class, 'attend']);
+Route::post('reservations/{id}/cancel',   [ReservationController::class, 'cancel']);
+Route::post('reservations/{id}/complete', [ReservationController::class, 'complete']);
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);
 });
