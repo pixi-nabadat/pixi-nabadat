@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(\App\Models\Center::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->date('reservation_date');
-            $table->date('confirm_date')->nullable();
             $table->date('check_date');
             $table->enum('payment_type', ['cash', 'card'])->nullable();
             $table->boolean('payment_status')->default(false);
