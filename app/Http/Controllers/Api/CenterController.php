@@ -34,7 +34,7 @@ class CenterController extends Controller
             $filters = array_merge($filters,$request->except('location_id'));
 
 
-            $withRelations = ['doctors','location','attachments'];
+            $withRelations = ['doctors','location','attachments','appointments'];
             $centers = $this->centerService->listing(filters: $filters,withRelation: $withRelations);
             return CentersResource::collection($centers);
         } catch (\Exception $e) {
