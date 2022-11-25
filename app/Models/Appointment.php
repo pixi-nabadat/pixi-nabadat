@@ -2,23 +2,32 @@
 
 namespace App\Models;
 
+use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class Appointment extends Model
 {
-    use HasFactory,Filterable;
+    use HasFactory,Filterable,HasTranslations,EscapeUnicodeJson;
     public const WEEKDAYS = [
-        0 =>['en'=>'All The Days',  'ar'=>'كل ايام الاسبوع'],
-        1 =>['en'=>'Saturday',      'ar'=>'السبت'],
-        2 =>['en'=>'Sunday',        'ar'=>'الأحد '],
-        3 =>['en'=>'Monday',        'ar'=>'الاثنين'],
-        4 =>['en'=>'Tuesday',       'ar'=>'الثلاثاء'],
-        5 =>['en'=>'Wednesday',     'ar'=>'الأربعاء'],
-        6 =>['en'=>'Thursday',      'ar'=>'الخميس '],
-        7 =>['en'=>'Friday',        'ar'=>'الجمعة']
+        ['day_of_week'=>0,'en'=>'Sunday',        'ar'=>'الأحد '],
+        ['day_of_week'=>1,'en'=>'Monday',        'ar'=>'الاثنين'],
+        ['day_of_week'=>2,'en'=>'Tuesday',       'ar'=>'الثلاثاء'],
+        ['day_of_week'=>3,'en'=>'Wednesday',     'ar'=>'الأربعاء'],
+        ['day_of_week'=>4,'en'=>'Thursday',      'ar'=>'الخميس '],
+        ['day_of_week'=>5,'en'=>'Friday',        'ar'=>'الجمعة'],
+        ['day_of_week'=>6,'en'=>'Saturday',      'ar'=>'السبت'],
     ];
 
-    protected $fillable = ['from','to','day','time_period'];
+    protected $fillable = ['day_of_week','day_text','center_id','is_active'];
+
+    public $translatable =['day_text'];
+
+
+    public function center(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Center::class,'center_id');
+    }
 }
