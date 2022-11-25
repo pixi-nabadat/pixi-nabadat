@@ -53,12 +53,10 @@ class AppointmentController extends Controller
         try {
             $is_active = $request->is_active ?? 0;
             $updated_data = [
-                'day_of_week'   =>$request->day,
-                'day_text'      =>Arr::except((Appointment::WEEKDAYS)[$request->day],'day_of_week'),
                 'is_active'     =>$is_active
             ];
             $this->appointmentService->update($id , $updated_data);
-            return apiResponse(message: trans('lang.created_successfully'));
+            return apiResponse(message: trans('lang.updated_successfully'));
         }catch (\Exception $exception)
         {
             return apiResponse(message: trans('there is an error'));
