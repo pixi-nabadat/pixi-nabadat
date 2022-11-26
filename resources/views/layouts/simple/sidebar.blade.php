@@ -22,7 +22,17 @@
 					</li>
 					<li class="sidebar-list">
 
-                        {{--                        start locations ------------------------------------------}}
+                        {{--                        start clincs -------}}
+{{--                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/doctors' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.clinics') }}</span>--}}
+{{--                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/doctors' ? 'down' : 'right' }}"></i></div>--}}
+{{--                        </a>--}}
+{{--                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">--}}
+{{--                            <li><a class="lan-5 {{ Route::currentRouteName()==route('clinics.index') ? 'active' : '' }}" href="{{route('clinics.index')}}">{{ trans('lang.view') }}</a></li>--}}
+{{--                            <li><a class="lan-5 {{ Route::currentRouteName()==route('clinics.index') ? 'active' : '' }}" href="{{route('clinics.index')}}">{{ trans('lang.create') }}</a></li>--}}
+{{--                        </ul>--}}
+{{--                        end clincs --}}
+
+                        {{-- start country --}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/country' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.country') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/country' ? 'down' : 'right' }}"></i></div>
                         </a>
@@ -30,9 +40,9 @@
                             <li><a class="lan-4 {{ Route::currentRouteName()==route('country.index') ? 'active' : '' }}" href="{{route('country.index')}}">{{ trans('lang.countries') }}</a></li>
                             <li><a class="lan-4 {{ Route::currentRouteName()==route('country.create') ? 'active' : '' }}" href="{{route('country.create')}}">{{ trans('lang.create_country') }}</a></li>
                         </ul>
+                        {{-- end country --}}
 
-
-                        {{--                        end locations --------------------------------------}}
+                        {{-- start governorate --}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/governorate' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.governorate') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/governorate' ? 'down' : 'right' }}"></i></div>
                         </a>
@@ -40,8 +50,9 @@
                             <li><a class="lan-4 {{ Route::currentRouteName()==route('governorate.index') ? 'active' : '' }}" href="{{route('governorate.index')}}">{{ trans('lang.governorate') }}</a></li>
                             <li><a class="lan-4 {{ Route::currentRouteName()==route('governorate.create') ? 'active' : '' }}" href="{{route('governorate.create')}}">{{ trans('lang.create_governorate') }}</a></li>
                         </ul>
+                        {{-- end governorate --}}
 
-                          {{--                        end locations --------------------------------------}}
+                        {{-- end city --}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/city' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.city') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/city' ? 'down' : 'right' }}"></i></div>
                         </a>
@@ -49,10 +60,9 @@
                             <li><a class="lan-4 {{ Route::currentRouteName()==route('city.index') ? 'active' : '' }}" href="{{route('city.index')}}">{{ trans('lang.city') }}</a></li>
                             <li><a class="lan-4 {{ Route::currentRouteName()==route('city.create') ? 'active' : '' }}" href="{{route('city.create')}}">{{ trans('lang.create_city') }}</a></li>
                         </ul>
+                        {{-- end city --}}
 
-                        {{--                        end locations --------------------------------------}}
-
-                        {{--                        start clients ------------------------------------------}}
+                        {{--start clients--}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/doctors' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.clients') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/doctors' ? 'down' : 'right' }}"></i></div>
                         </a>
@@ -60,10 +70,9 @@
                             <li><a class="lan-4 {{ Route::currentRouteName()==route('clients.index') ? 'active' : '' }}" href="{{route('clients.index')}}">{{ trans('lang.view') }}</a></li>
                             <li><a class="lan-4 {{ Route::currentRouteName()==route('clients.index') ? 'active' : '' }}" href="{{route('clients.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
+                        {{-- end clients --}}
 
-                        {{--                        end clients --------------------------------------}}
-
-
+                        {{-- end centers --}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/centers' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.center') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/centers' ? 'down' : 'right' }}"></i></div>
                         </a>
@@ -71,8 +80,9 @@
                             <li><a class="lan-4 {{ Route::currentRouteName()==route('centers.index') ? 'active' : '' }}" href="{{route('centers.index')}}">{{ trans('lang.center') }}</a></li>
                             <li><a class="lan-4 {{ Route::currentRouteName()==route('centers.create') ? 'active' : '' }}" href="{{route('centers.create')}}">{{ trans('lang.create_center') }}</a></li>
                         </ul>
+                        {{-- end centers --}}
 
-{{--                        start doctors ------------------------------------------}}
+                        {{-- start doctors --}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/doctors' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.doctors') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/doctors' ? 'down' : 'right' }}"></i></div>
                         </a>
@@ -80,20 +90,9 @@
                             <li><a class="lan-4 {{ Route::currentRouteName()==route('doctors.index') ? 'active' : '' }}" href="{{route('doctors.index')}}">{{ trans('lang.view') }}</a></li>
                             <li><a class="lan-4 {{ Route::currentRouteName()==route('doctors.index') ? 'active' : '' }}" href="{{route('doctors.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
+                        {{-- end doctors --}}
 
-{{--                        end doctors --------------------------------------}}
-
-{{--                        start clincs -------------------------------------}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/doctors' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.clinics') }}</span>
-                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/doctors' ? 'down' : 'right' }}"></i></div>
-                        </a>
-                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
-                            <li><a class="lan-5 {{ Route::currentRouteName()==route('clinics.index') ? 'active' : '' }}" href="{{route('clinics.index')}}">{{ trans('lang.view') }}</a></li>
-                            <li><a class="lan-5 {{ Route::currentRouteName()==route('clinics.index') ? 'active' : '' }}" href="{{route('clinics.index')}}">{{ trans('lang.create') }}</a></li>
-                        </ul>
-{{--                        end clincs ------------------------------------------}}
-
-                        {{--start category ---}}
+                        {{-- start categories ---}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/categories' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.category') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/categories' ? 'down' : 'right' }}"></i></div>
                         </a>
@@ -101,9 +100,19 @@
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('categories.index') ? 'active' : '' }}" href="{{route('categories.index')}}">{{ trans('lang.view') }}</a></li>
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('categories.create') ? 'active' : '' }}" href="{{route('categories.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
-                        {{--end category --}}
+                        {{-- end categories --}}
 
-						{{--start devices--}}
+                        {{-- start coupon ---}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/coupons' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.coupon') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/coupons' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('coupons.index') ? 'active' : '' }}" href="{{route('coupons.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('coupons.create') ? 'active' : '' }}" href="{{route('coupons.create')}}">{{ trans('lang.create') }}</a></li>
+                        </ul>
+                        {{-- end coupon --}}
+                        
+						{{-- start devices --}}
 						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/devices' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.devices') }}</span>
 							<div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/devices' ? 'down' : 'right' }}"></i></div>
 						</a>
@@ -111,9 +120,9 @@
 							<li><a class="lan-5 {{ Route::currentRouteName()==route('devices.index') ? 'active' : '' }}" href="{{route('devices.index')}}">{{ trans('lang.view') }}</a></li>
 							<li><a class="lan-5 {{ Route::currentRouteName()==route('devices.create') ? 'active' : '' }}" href="{{route('devices.create')}}">{{ trans('lang.create') }}</a></li>
 						</ul>
-						{{--end devices--}}
+						{{-- end devices --}}
 
-                         {{--start product ---}}
+                         {{-- start product ---}}
                          <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/products' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.product') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/products' ? 'down' : 'right' }}"></i></div>
                         </a>
@@ -121,9 +130,9 @@
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('products.index') ? 'active' : '' }}" href="{{route('products.index')}}">{{ trans('lang.view') }}</a></li>
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('products.create') ? 'active' : '' }}" href="{{route('products.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
-                        {{--end product --}}
+                        {{-- end product --}}
 
-                        {{--start package ---}}
+                        {{-- start package --}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/packages' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.package') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/packages' ? 'down' : 'right' }}"></i></div>
                         </a>
@@ -132,6 +141,17 @@
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('packages.create') ? 'active' : '' }}" href="{{route('packages.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
                         {{--end package --}}
+
+                        {{--start Cancel Reason ---}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/cancelReasons' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.cancelReason') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/cancelReasons' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('cancelReasons.index') ? 'active' : '' }}" href="{{route('cancelReasons.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('cancelReasons.create') ? 'active' : '' }}" href="{{route('cancelReasons.create')}}">{{ trans('lang.create') }}</a></li>
+                        </ul>
+                        {{-- end Cancel Reason --}}
+                        
 					</li>
                 </ul>
 			</div>

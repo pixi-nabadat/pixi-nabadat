@@ -20,13 +20,13 @@ class PackagesDataTable extends DataTable
         ->addColumn('action', function(package $package){
             return view('dashboard.packages.action',compact('package'))->render();
         })
-        ->editColumn('name', function(package $package){
+        ->addColumn('name', function(package $package){
             return $package->name ;
         })
-        ->editColumn('num_nabadat', function(package $package){
+        ->addColumn('num_nabadat', function(package $package){
             return $package->num_nabadat ;
         })
-        ->editColumn('price', function(package $package){
+        ->addColumn('price', function(package $package){
             return $package->price ;
         })
         ->addColumn('is_active', function(package $package){
@@ -38,7 +38,7 @@ class PackagesDataTable extends DataTable
  
     public function query(package $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->queryGet($this->filters,$this->withRelations);
     }
 
 

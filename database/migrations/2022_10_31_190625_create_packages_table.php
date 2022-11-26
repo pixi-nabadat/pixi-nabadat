@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->integer('num_nabadat');
             $table->double('price');
             $table->boolean('is_active')->default(Package::Active)->nullable();

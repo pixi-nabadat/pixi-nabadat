@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\DataTables\packagesDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\packageRequest;
+use App\Http\Requests\PackageStoreRequest;
+use App\Http\Requests\PackageUpdateRequest;
 use App\Services\packageService;
 use Illuminate\Http\Request;
 
@@ -35,7 +36,7 @@ class PackageController extends Controller
         return view('dashboard.packages.create');
     }//end of create
 
-    public function store(packageRequest $request){
+    public function store(PackageStoreRequest $request){
         try {
             $request->validated();
             $this->packageService->store($request->all());
@@ -47,7 +48,7 @@ class PackageController extends Controller
         }
     }//end of store
 
-    public function update(packageRequest $request, $id)
+    public function update(PackageUpdateRequest $request, $id)
     {
         try {
             $request->validated();

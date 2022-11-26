@@ -30,43 +30,20 @@ if (!function_exists('getPriceAfterDiscount')) {
             return  $price - ($price * ($discountValue/100));
     }
 }
+if (!function_exists('getDateOfSpecificDay')) {
 
-
-if (!function_exists('createDir')) {
-    function createDir($fullDir)
+    function getDateOfSpecificDay($day,$date): \Carbon\Carbon
     {
-        $dir = pathinfo($fullDir, PATHINFO_DIRNAME);
-        if (is_dir($dir)) {
-            return true;
-        }else{
-            if (createDir($dir)) {
-                if (mkdir($dir, 0777, true)) {
-                    return true;
-                }
-            }
+        $dayOfWeek = $date->dayOfWeek;
+
+        if ($dayOfWeek != (int) $day)
+        {
+            $date = $date->addDay();
+            $date = getDateOfSpecificDay($day,$date);
         }
-        return false;
+        return $date ;
     }
 }
-
-
-if (!function_exists('fileDir')) {
-    function fileDir($fileType)
-    {
-        $url = url('/');
-        $dir = $url."/uploads/";
-        switch ($fileType) {
-            case 'user':
-                return $dir.="user/";
-                break;
-            default:
-                return "";
-                break;
-        }
-    }
-}
-
-
 
 
 

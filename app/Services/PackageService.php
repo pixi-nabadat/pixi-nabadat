@@ -6,6 +6,7 @@ use App\Models\package;
 use App\Models\User;
 use App\QueryFilters\packagesFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 
 class packageService extends BaseService
 {
@@ -16,9 +17,9 @@ class packageService extends BaseService
         return $packages->get();
     }
 
-    public function queryGet(array $where_condition = []): Builder
+    public function queryGet(array $where_condition = [],array $withRelation=[]): Builder
     {
-        $packages = package::query();
+        $packages = package::query()->with($withRelation);
         return $packages->filter(new packagesFilter($where_condition));
     }
 
@@ -28,9 +29,9 @@ class packageService extends BaseService
         return package::create($data);
     } //end of store
 
-    public function find($id)
+    public function find($id,$withRelation=[])
     {
-        $package = package::find($id);
+        $package = package::with($withRelation)->find($id);
         if ($package)
             return $package;
         return false;

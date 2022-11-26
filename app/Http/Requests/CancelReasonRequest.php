@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PackageRequest extends FormRequest
+class CancelReasonRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,19 +24,17 @@ class PackageRequest extends FormRequest
     public function rules()
     {
         return [
-            'name.ar' => 'required|string',
-            'name.en' => 'required|string',
-            'num_nabadat'=>'required',
-            'price'=>'required',
-            'is_active'=>'nullable|string',
+            'reason.ar' => 'required|string',
+            'reason.en' => 'required|string',
+            'is_active' => 'nullable'
         ];
     }
 
     public function messages()
     {
         return [
-            'name.*.string' => __('lang.name_should_be_string'),
-            'name.*.required' => __('lang.name__should_be_required'),
+            'reason.*.string' => __('lang.reason_should_be_string'),
+            'reason.*.required' => __('lang.reason__should_be_required'),
         ];
     }
 }

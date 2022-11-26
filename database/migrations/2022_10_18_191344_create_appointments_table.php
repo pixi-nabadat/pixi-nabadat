@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->dateTime('from');
-            $table->dateTime('to');
-            $table->string('day');//day in arabic and english
-            $table->string('time_periob');
+            $table->string('day_of_week');
+            $table->string('day_text');
+            $table->boolean('is_active')->default(true);
+            $table->unique(['day_of_week','center_id']);
             $table->timestamps();
         });
     }

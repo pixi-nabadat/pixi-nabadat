@@ -15,4 +15,9 @@ class Package extends Model
     
     protected $fillable = ['name','num_nabadat','price','is_active'];
     public $translatable =['name'];
+
+    public function subscriber()
+    {
+        return $this->hasMany(UserPackage::class);
+    }
 }

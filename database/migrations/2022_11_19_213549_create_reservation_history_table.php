@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('doctors', function (Blueprint $table) {
+        Schema::create('reservation_history', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignIdFor(\App\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->text('description')->nullable();
-            $table->string('phone')->unique();
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(\App\Models\Reservation::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->enum('action', ['pending', 'confirmed', 'completed', 'expired'])->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('doctors');
+        Schema::dropIfExists('reservation_history');
     }
 };

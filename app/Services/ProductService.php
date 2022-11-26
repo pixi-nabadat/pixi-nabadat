@@ -9,9 +9,6 @@ use App\Traits\AttachmentTrait;
 
 class ProductService extends BaseService
 {
-
-    use AttachmentTrait;
-
     public function getAll(array $where_condition = [],$withRelation=[])
     {
         $products = $this->queryGet($where_condition,$withRelation);
