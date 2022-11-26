@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Filterable;
+use Spatie\Translatable\HasTranslations;
+
 class Reservation extends Model
 {
-    use HasFactory;
+    use HasFactory, Filterable, HasTranslations;
+    
 
     protected static $pending   = ['en'=>'pending',   'ar'=>'قيد الانتظار'];
     protected static $confirmed = ['en'=>'confirmed', 'ar'=>'تم التأكيد'];
