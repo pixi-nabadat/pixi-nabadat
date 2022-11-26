@@ -37,7 +37,5 @@
         'Governorates' => 'المحافظات',
         'CITIES' => 'المدن',
         'IS_Active' =>'نشط',
-
-
     ];
 

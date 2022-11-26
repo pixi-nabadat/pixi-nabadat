@@ -96,7 +96,6 @@
 		'start_date'=>'Start Date',
 		'end_date'=>'End Date',
 		'coupon'=>'Coupon',
-		'add_coupon'=>'Add Coupon'
-
+		'add_coupon'=>'Add Coupon',
     ]
 ?>
