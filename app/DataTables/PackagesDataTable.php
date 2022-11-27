@@ -13,7 +13,7 @@ use Yajra\DataTables\Services\DataTable;
 
 class PackagesDataTable extends DataTable
 {
-    
+
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
@@ -23,19 +23,13 @@ class PackagesDataTable extends DataTable
         ->addColumn('name', function(package $package){
             return $package->name ;
         })
-        ->addColumn('num_nabadat', function(package $package){
-            return $package->num_nabadat ;
-        })
-        ->addColumn('price', function(package $package){
-            return $package->price ;
-        })
         ->addColumn('is_active', function(package $package){
             return view('dashboard.components.switch-btn',['model'=>$package,'url'=>route('packages.status')])->render();
-        }) 
+        })
         ->rawColumns(['action','is_active']);
     }
 
- 
+
     public function query(package $model): QueryBuilder
     {
         return $model->queryGet($this->filters,$this->withRelations);
@@ -49,14 +43,7 @@ class PackagesDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+                    ->orderBy(1);
     }
 
     protected function getColumns(): array
@@ -70,7 +57,7 @@ class PackagesDataTable extends DataTable
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
-                  ->addClass('text-center'),     
+                  ->addClass('text-center'),
         ];
     }
 

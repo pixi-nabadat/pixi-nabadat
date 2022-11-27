@@ -12,11 +12,11 @@ class Package extends Model
     use HasFactory,Filterable,HasTranslations;
     const Active = 1 ;
     const NONActive = 0 ;
-    
+
     protected $fillable = ['name','num_nabadat','price','is_active'];
     public $translatable =['name'];
 
-    public function subscriber()
+    public function subscriber(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(UserPackage::class);
     }
