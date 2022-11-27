@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CancelReasonController;
 use App\Http\Controllers\APi\ReservationController;
 
+use App\Http\Controllers\Api\AppointmentController;
+use App\Http\Controllers\Api\ReservationHistoryController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,40 +25,41 @@ use App\Http\Controllers\APi\ReservationController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group(['prefix' => 'auth'], function () {
-    Route::post('register', [AuthController::class, 'register']);
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('phone/verify', PhoneVerifyController::class);
-    Route::post('password/forget', PhoneVerifyController::class);
-    Route::post('password/reset', RestPasswordController::class);
-    Route::get('user', [AuthController::class, 'profile'])->middleware('auth:sanctum');
-});
-
-Route::group(['middleware' => 'auth:sanctum'], function () {
-
-    Route::group(['prefix' => 'centers'], function () {
-        Route::post('store/doctor', [DoctorController::class, 'store']);
-        Route::delete('doctors/{doctorId}', [DoctorController::class, 'delete']);
-        Route::patch('doctors/{doctorId}', [DoctorController::class, 'update']);
+    Route::group(['prefix' => 'auth'], function () {
+        Route::post('register', [AuthController::class, 'register']);
+        Route::post('login', [AuthController::class, 'login']);
+        Route::post('phone/verify', PhoneVerifyController::class);
+        Route::post('password/forget', PhoneVerifyController::class);
+        Route::post('password/reset', RestPasswordController::class);
+        Route::get('user', [AuthController::class, 'profile'])->middleware('auth:sanctum');
     });
-});
 
-Route::get('categories', [CategoryController::class, 'listing']);
-Route::get('products', [ProductController::class, 'listing']);
-Route::get('products/{id}/show', [ProductController::class, 'show']);
+    Route::group(['middleware' => 'auth:sanctum'], function () {
 
-Route::get('locations/governorates', [LocationController::class, 'getAllGovernorates']);
-Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);
+        Route::group(['prefix' => 'centers'], function () {
+            Route::post('store/doctor', [DoctorController::class, 'store']);
+            Route::delete('doctors/{doctorId}', [DoctorController::class, 'delete']);
+            Route::patch('doctors/{doctorId}', [DoctorController::class, 'update']);
+            Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
+            Route::apiResource('appointments',AppointmentController::class);
+        });
+    });
 
-Route::get('centers', [CenterController::class, 'listing']);
-Route::get('doctor/{id}', [DoctorController::class, 'find']);
+    Route::get('categories', [CategoryController::class, 'listing']);
+    Route::get('products', [ProductController::class, 'listing']);
+    Route::get('products/{id}/show', [ProductController::class, 'show']);
+
+    Route::get('locations/governorates', [LocationController::class, 'getAllGovernorates']);
+    Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);
+
+    Route::get('centers', [CenterController::class, 'listing']);
+    Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
 Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
-Route::resource('reservations', ReservationController::class)->except('update');
-Route::post('reservations/{id}/confirm',  [ReservationController::class, 'confirm']);
-Route::post('reservations/{id}/attend',   [ReservationController::class, 'attend']);
-Route::post('reservations/{id}/cancel',   [ReservationController::class, 'cancel']);
-Route::post('reservations/{id}/complete', [ReservationController::class, 'complete']);
+Route::get('reservations', [ReservationController::class, 'listing']);
+Route::post('reservations/store',    [ReservationController::class, 'store']);
+Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
+Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);
 });
