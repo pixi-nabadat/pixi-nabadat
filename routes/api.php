@@ -10,7 +10,11 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RestPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CancelReasonController;
+use App\Http\Controllers\APi\ReservationController;
+
 use App\Http\Controllers\Api\AppointmentController;
+use App\Http\Controllers\Api\ReservationHistoryController;
+
 use App\Http\Controllers\Api\PackageController;
 
 /*
@@ -56,7 +60,11 @@ use App\Http\Controllers\Api\PackageController;
 
     Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
-
+    Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
+    Route::get('reservations', [ReservationController::class, 'listing']);
+    Route::post('reservations/store',    [ReservationController::class, 'store']);
+    Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
+    Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);
 });

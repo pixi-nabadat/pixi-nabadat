@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('reservation_history', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(\App\Models\User::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(\App\Models\Reservation::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->enum('action', ['pending', 'confirmed', 'completed', 'expired'])->nullable();
+            $table->string('action_en');
+            $table->string('action_ar');
             $table->timestamps();
         });
     }
