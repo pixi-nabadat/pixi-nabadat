@@ -14,6 +14,14 @@ class nabadatHistoryResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'user'         => $this->user_id,
+            'center'       => $this->center_id,
+            'device'       => $this->whenLoaded('device') ? new DeviceResource($this->device):[],
+            'num_nabadat'  => $this->num_nabadat,
+            'nabada_price' => $this->nabada_price,
+            'total_price'  => $this->total_price,
+            'created_at'   => $this->created_at
+        ];
     }
 }
