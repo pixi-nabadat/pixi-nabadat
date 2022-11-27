@@ -15,6 +15,8 @@ use App\Http\Controllers\APi\ReservationController;
 use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 
+use App\Http\Controllers\Api\PackageController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -53,6 +55,9 @@ use App\Http\Controllers\Api\ReservationHistoryController;
     Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);
 
     Route::get('centers', [CenterController::class, 'listing']);
+
+    Route::get('packages', [PackageController::class, 'listing']);
+
     Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
     Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
