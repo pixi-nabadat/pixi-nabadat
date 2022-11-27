@@ -30,6 +30,20 @@ if (!function_exists('getPriceAfterDiscount')) {
             return  $price - ($price * ($discountValue/100));
     }
 }
+if (!function_exists('getDateOfSpecificDay')) {
+
+    function getDateOfSpecificDay($day,$date): \Carbon\Carbon
+    {
+        $dayOfWeek = $date->dayOfWeek;
+
+        if ($dayOfWeek != (int) $day)
+        {
+            $date = $date->addDay();
+            $date = getDateOfSpecificDay($day,$date);
+        }
+        return $date ;
+    }
+}
 
 
 
