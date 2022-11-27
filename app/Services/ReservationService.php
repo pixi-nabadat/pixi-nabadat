@@ -29,17 +29,18 @@ class ReservationService extends BaseService
     {
         $data['qr_code']     = uniqid();
         $reservation = Reservation::create($data);
+
         $reservation->history()->create([
-            'action_en'=>Reservation::getStatus('pending','en'),
-            'action_ar'=>Reservation::getStatus('pending', 'ar')
+            'action_en' =>Reservation::getStatus('pending','en'),
+            'action_ar' =>Reservation::getStatus('pending', 'ar')
         ]);
+
         $reservation->refresh();
         if (!$reservation)
             return false;
-
         return $reservation;
     }
-    
+
     public function update(int $reservationId, array $reservationData): bool
     {
         $reservation = $this->find($reservationId);

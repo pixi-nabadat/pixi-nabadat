@@ -55,11 +55,11 @@ use App\Http\Controllers\Api\ReservationHistoryController;
     Route::get('centers', [CenterController::class, 'listing']);
     Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
-Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
-Route::get('reservations', [ReservationController::class, 'listing']);
-Route::post('reservations/store',    [ReservationController::class, 'store']);
-Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
-Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
+    Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
+    Route::get('reservations', [ReservationController::class, 'listing']);
+    Route::post('reservations/store',    [ReservationController::class, 'store']);
+    Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
+    Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);
 });

@@ -10,7 +10,7 @@ use Spatie\Translatable\HasTranslations;
 class Reservation extends Model
 {
     use HasFactory, Filterable;
-    
+
 
     protected static $pending   = ['en'=>'pending',   'ar'=>'قيد الانتظار'];
     protected static $confirmed = ['en'=>'confirmed', 'ar'=>'تم التأكيد'];
@@ -29,20 +29,15 @@ class Reservation extends Model
     ];
 
     public static function getStatus(string $status, string $lang){
-        if($status == 'pending')
-            return Reservation::$pending[$lang];
-        else if($status == 'confirm')
-            return Reservation::$confirmed[$lang];
-        else if($status == 'attend')
-            return Reservation::$attend[$lang];
-        else if($status == 'completed')
-            return Reservation::$completed[$lang];
-        else if($status == 'expired')
-            return Reservation::$expired[$lang];
-        else if($status == 'canceled')
-            return Reservation::$canceled[$lang];
+        return match ($status) {
+            'confirm' => self::$confirmed[$lang],
+            'attend' => self::$attend[$lang],
+            'completed' => self::$completed[$lang],
+            'canceled' => self::$canceled[$lang],
+            default => self::$pending[$lang],
+        };
     }
-    
+
     public function history()
     {
         return $this->hasMany(ReservationHistory::class,'reservation_id');

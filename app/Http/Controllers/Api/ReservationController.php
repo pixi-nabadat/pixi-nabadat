@@ -33,40 +33,28 @@ class ReservationController extends Controller
     public function listing(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-//            
             $filters = $request->all();
-
             $withRelations = ['history','nabadatHistory','user', 'center'];
             $reservations = $this->reservationService->listing(filters: $filters,withRelation: $withRelations);
             return ReservationsResource::collection($reservations);
         } catch (\Exception $e) {
-            return apiResponse($e->getMessage(), 'Unauthorized',$e->getCode());
+            return apiResponse(message: $e->getMessage(), code: 422);
         }
     }
 
     /////////////////////////
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Requests\ReservationStoreRequest  $ReservationStoreRequest
-     * @return \Illuminate\Http\Response
+     * @param ReservationStoreRequest $reservationStoreRequest
+     * @return ReservationsResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function store(ReservationStoreRequest $reservationStoreRequest)
     {
         try{
-            $reservationStoreRequest = $reservationStoreRequest->validated();
-            $reservationData = [
-                'customer_id' => $reservationStoreRequest['customer_id'],
-                'center_id'   => $reservationStoreRequest['center_id'],
-                'check_date'  => $reservationStoreRequest['check_date'],
-            ];
-            $reservation = $this->reservationService->store($reservationData);
-            $reservation = new ReservationsResource($reservation);
-            if($reservation)
-                return apiResponse($reservation, 'done', 200);
+            $reservation = $this->reservationService->store($reservationStoreRequest->validated());
+            return new ReservationsResource($reservation);
         }catch(Exception $e){
-            return apiResponse($e->getMessage(), 'Unauthorized',$e->getCode());
+            return apiResponse(message: $e->getMessage(), code: 422);
         }
     }
 
@@ -76,19 +64,16 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function find($id)
+    public function find(int $id)
     {
         try{
-            $reservation = Reservation::find($id);
-            if($reservation){
-                $reservation = $this->reservationService->find($reservation);
-                $reservation = ReservationsResource::collection($reservation);
-                return apiResponse($reservation, 'Done', 200);
-            }
-        
+            $withRelations = ['history','nabadatHistory','user', 'center'];
+            $reservation = $this->reservationService->find($id,$withRelations);
+            $reservation = ReservationsResource::collection($reservation);
+            return apiResponse($reservation, 'Done', 200);
         }catch(Exception $e){
-            return apiResponse(null, $e->getMessage(), $e->getCode());
+            return apiResponse(message:  $e->getMessage(), code: 422);
         }
     }
-    
+
 }

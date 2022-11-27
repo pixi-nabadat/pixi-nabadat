@@ -22,10 +22,10 @@ class ReservationsResource extends JsonResource
             'payment_type'    => $this->payment_type,
             'payment_status'  => $this->payment_status,
             'qr_code'         => $this->qr_code,
-            'customer'        => $this->whenLoaded('user') ? new AuthUserResource($this->user):[],
-            'center'          => $this->whenLoaded('center') ? new CentersResource($this->center):[],
-            'status'          => $this->whenLoaded('history') ? new ReservationHistoryResource($this->history->last()):[],
-            'nabadat_history' => $this->whenLoaded('nabadatHistory') ? nabadatHistoryResource::collection($this->nabadatHistory):[],
+            'customer'        => $this->relationLoaded('user') ? new AuthUserResource($this->user):null,
+            'center'          => $this->relationLoaded('center') ? new CentersResource($this->center):null,
+            'status'          => $this->relationLoaded('history') ? new ReservationHistoryResource($this->history->last()):null,
+            'nabadat_history' => $this->relationLoaded('nabadatHistory') ? NabadatHistoryResource::collection($this->nabadatHistory):null,
         ];
     }
 }
