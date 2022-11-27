@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\RestPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CancelReasonController;
 use App\Http\Controllers\Api\AppointmentController;
+use App\Http\Controllers\Api\PackageController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -49,6 +51,9 @@ use App\Http\Controllers\Api\AppointmentController;
     Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);
 
     Route::get('centers', [CenterController::class, 'listing']);
+
+    Route::get('packages', [PackageController::class, 'listing']);
+
     Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
 
