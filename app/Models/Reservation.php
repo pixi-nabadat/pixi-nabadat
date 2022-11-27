@@ -9,7 +9,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Reservation extends Model
 {
-    use HasFactory, Filterable, HasTranslations;
+    use HasFactory, Filterable;
     
 
     protected static $pending   = ['en'=>'pending',   'ar'=>'قيد الانتظار'];
@@ -22,32 +22,27 @@ class Reservation extends Model
     protected $fillable  = [
         'customer_id',
         'center_id',
-        'confirm_date',
         'check_date',
         'payment_type',
         'payment_status',
         'qr_code',
     ];
 
-    public static function pending(string $lang){
-        return Reservation::$pending[$lang];
+    public static function getStatus(string $status, string $lang){
+        if($status == 'pending')
+            return Reservation::$pending[$lang];
+        else if($status == 'confirm')
+            return Reservation::$confirmed[$lang];
+        else if($status == 'attend')
+            return Reservation::$attend[$lang];
+        else if($status == 'completed')
+            return Reservation::$completed[$lang];
+        else if($status == 'expired')
+            return Reservation::$expired[$lang];
+        else if($status == 'canceled')
+            return Reservation::$canceled[$lang];
     }
-    public static function confirm(string $lang){
-        return Reservation::$confirmed[$lang];
-    }
-    public static function attend(string $lang){
-        return Reservation::$attend[$lang];
-    }
-    public static function completed(string $lang){
-        return Reservation::$completed[$lang];
-    }
-    public static function expired(string $lang){
-        return Reservation::$expired[$lang];
-    }
-    public static function canceled(string $lang){
-        return Reservation::$canceled[$lang];
-    }
-
+    
     public function history()
     {
         return $this->hasMany(ReservationHistory::class,'reservation_id');
