@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\CancelReasonController;
 use App\Http\Controllers\APi\ReservationController;
 
 use App\Http\Controllers\Api\AppointmentController;
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 
 use App\Http\Controllers\Api\PackageController;
@@ -65,6 +66,10 @@ use App\Http\Controllers\Api\PackageController;
     Route::post('reservations/store',    [ReservationController::class, 'store']);
     Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
     Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
+    
+    //start cart
+    Route::post('carts',  [CartController::class, 'store']);//create new cart
+    //end cart
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);
 });
