@@ -22,6 +22,8 @@ return new class extends Migration
             $table->double('discount');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->integer('coupon_limit');
+            $table->enum('coupon_type', ['product', 'reservaion']);
             $table->double('min_buy')->nullable();
             $table->timestamps();
         });
