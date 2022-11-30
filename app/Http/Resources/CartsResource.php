@@ -15,7 +15,6 @@ class CartsResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'user'          => $this->relationLoaded('user') ? new AuthUserResource($this->user) :null,
             'discount'      => $this->discount,
             'sub_total'     => $this->sub_total,
             'net_total'     => $this->net_total,
@@ -23,7 +22,9 @@ class CartsResource extends JsonResource
             'tax'           => $this->tax,
             'shipping_cost' => $this->shipping_cost,
             'temp_user_id'  => $this->temp_user_id,
-            'address'       => $this->address_id
+            'address'       => $this->address_id,
+            'user'          => $this->relationLoaded('user') ? new AuthUserResource($this->user) :null,
+            'items'         => $this->relationLoaded('items') ? new AuthUserResource($this->items) :null,
         ];
     }
 }

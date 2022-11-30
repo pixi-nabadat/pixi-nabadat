@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 
 use App\Http\Controllers\Api\PackageController;
+use App\Http\Controllers\CartItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +47,18 @@ use App\Http\Controllers\Api\PackageController;
             Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
             Route::apiResource('appointments',AppointmentController::class);
         });
+
+        Route::get('reservations', [ReservationController::class, 'listing']);
+        Route::post('reservations/store',    [ReservationController::class, 'store']);
+        Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
+        Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
+        
+        //start cart
+        Route::post('carts',  [CartController::class, 'store']);//create new cart
+        //end cart
+    
     });
+    Route::post('cart/items',  [CartItemController::class, 'store']);//create new cart
 
     Route::get('categories', [CategoryController::class, 'listing']);
     Route::get('products', [ProductController::class, 'listing']);
@@ -62,14 +74,6 @@ use App\Http\Controllers\Api\PackageController;
     Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
     Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
-    Route::get('reservations', [ReservationController::class, 'listing']);
-    Route::post('reservations/store',    [ReservationController::class, 'store']);
-    Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
-    Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
-    
-    //start cart
-    Route::post('carts',  [CartController::class, 'store']);//create new cart
-    //end cart
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);
 });
