@@ -96,7 +96,11 @@
 		'start_date'=>'Start Date',
 		'end_date'=>'End Date',
 		'coupon'=>'Coupon',
-		'add_coupon'=>'Add Coupon'
-
+		'add_coupon'=>'Add Coupon',
+		'packages'=>'Packages',
+		'package'=>'Package',
+		'add_package'=>'Add Package',
+		'num_nabadat'=>'Number of Nabadat',
+		'price'=>'Price',
     ]
 ?>

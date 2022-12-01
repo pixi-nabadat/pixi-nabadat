@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('reservation_history', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->string('day_of_week');
-            $table->string('day_text');
-            $table->boolean('is_active')->default(true);
-            $table->unique(['day_of_week','center_id']);
+            $table->foreignIdFor(\App\Models\User::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(\App\Models\Reservation::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->string('action_en');
+            $table->string('action_ar');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('reservation_history');
     }
 };

@@ -19,17 +19,18 @@ class CentersResource extends JsonResource
             'center_id'      => $this->id,
             'center_name'    => $this->name,
             'center_phone'   => $this->phone,
-            'location_title'       => $this->location->title,
-            'location_id'       => $this->location_id,
+            'location_title' => $this->location->title,
+            'location_id'    => $this->location_id,
             'description'    => $this->description,
             'address'        => $this->address,
             'lat'            => $this->lat ,
             'lng'            => $this->lng,
             'google_map_url' => $this->google_map_url,
             'is_active'      => ($this->is_active == 1),
-            "doctors"        => $this->whenLoaded('doctors') ? DoctorsResource::collection($this->doctors):[],
+            "doctors"        => $this->relationLoaded('doctors') ? DoctorsResource::collection($this->doctors) : null,
+            'appointments'   => $this->relationLoaded('appointments') ? AppointmentsResource::collection($this->appointments) : null,
             'is_support_auto_service' => ($this->is_support_auto_service == 1),
-            'images'         => $this->whenLoaded('attachments') ? AttachmentsResource::collection($this->attachments) : []
+            'images'         => $this->relationLoaded('attachments') ? AttachmentsResource::collection($this->attachments) : null
         ];
     }
 }

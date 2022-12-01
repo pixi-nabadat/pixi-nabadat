@@ -13,10 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('center_doctor', function (Blueprint $table) {
+        Schema::create('reservations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('customer_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(\App\Models\Center::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignIdFor(\App\Models\Doctor::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->date('check_date');
+            $table->enum('payment_type', ['cash', 'card'])->nullable();
+            $table->boolean('payment_status')->default(false);
+            $table->string('qr_code')->unique();
+
+
             $table->timestamps();
         });
     }
@@ -28,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('center_devices');
+        Schema::dropIfExists('reservations');
     }
 };
