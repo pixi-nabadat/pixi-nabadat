@@ -30,6 +30,8 @@ class CouponStoreRequest extends BaseRequest
             'start_date'=>'required|date',
             'end_date'=>'required|date',
             'min_buy'=>'required|numeric',
+            'allowed_usage'=>'required|numeric',
+            'coupon_for'=>'required',
             'added_by'=>'required|exists:users,id'
         ];
     }

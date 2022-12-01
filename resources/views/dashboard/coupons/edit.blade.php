@@ -25,7 +25,6 @@
                             @csrf
                             @method('put')
                             <div class="row g-3">
-
                                 {{-- code --}}
                                 <div class="col-md-6">
                                     <label class="form-label" for="code">{{ trans('lang.code') }}</label>
@@ -43,6 +42,24 @@
                                     @error('min_buy')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
+                                </div>
+                                {{-- allowed_usage --}}
+                                <div class="col-md-6">
+                                    <label class="form-label" for="allowed_usage">{{ trans('lang.allowed_usage') }}</label>
+                                    <input name="allowed_usage" class="form-control @error('allowed_usage') is-invalid @enderror"
+                                        id="allowed_usage" type="number" value={{ $coupon->allowed_usage }} required>
+                                    @error('allowed_usage')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                {{-- coupon_for --}}
+                                <div class="col-md-6  my-3">
+                                    <div class="col-form-label  col-3">{{ __('lang.coupon_for') }}</div>
+                                    <select id="select_coupon_for" name="coupon_for"
+                                        class="col form-control">
+                                        <option  {{ $coupon->discount_type == 'store' ? 'selected' : '' }} value = 'store'>{{trans('lang.store')}}</option>
+                                        <option  {{ $coupon->discount_type == 'reservation' ? 'selected' : '' }} value = 'reservation'>{{trans('lang.reservation')}}</option>
+                                    </select>
                                 </div>
                                 {{-- discount_type --}}
                                 <div class="col-md-6  my-3">
@@ -84,10 +101,8 @@
                                         <div class="input-group-text" data-target="#dt-end_date" data-toggle="datetimepicker"><i class="fa fa-calendar"> </i></div>
                                     </div>
                                 </div>
-                
                             </div>
                             <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
-
                         </form>
                     </div>
                 </div>

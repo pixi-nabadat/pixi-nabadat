@@ -23,6 +23,8 @@ return new class extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->double('min_buy')->nullable();
+            $table->enum('coupon_for',['store','reservation'])->default('store');
+            $table->unsignedInteger('allowed_usage')->default(1);
             $table->timestamps();
         });
     }

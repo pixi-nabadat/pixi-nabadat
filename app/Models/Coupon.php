@@ -10,7 +10,7 @@ class Coupon extends Model
     use HasFactory;
     const DISCOUNT_PERCENTAGE = 'percent';
     const DISCOUNT_FLAT = 'flat';
-    protected $fillable = ['added_by','code','discount','discount_type','start_date','end_date','min_buy'];
+    protected $fillable = ['added_by','code','discount','discount_type','start_date','end_date','min_buy','allowed_usage','coupon_for'];
 
     protected $dates = [
       'start_date',

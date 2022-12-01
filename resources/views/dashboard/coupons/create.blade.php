@@ -43,6 +43,24 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                {{-- allowed_usage --}}
+                                <div class="col-md-6">
+                                    <label class="form-label" for="allowed_usage">{{ trans('lang.allowed_usage') }}</label>
+                                    <input name="allowed_usage" class="form-control @error('allowed_usage') is-invalid @enderror"
+                                        id="allowed_usage" type="number" required>
+                                    @error('allowed_usage')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                {{-- coupon_for --}}
+                                <div class="col-md-6  my-3">
+                                    <div class="col-form-label  col-3">{{ __('lang.coupon_for') }}</div>
+                                    <select id="select_coupon_for" name="coupon_for"
+                                        class="col form-control">
+                                        <option  value = 'store'>   {{trans('lang.store')}}</option>
+                                        <option  value = 'reservation' selected>{{trans('lang.reservation')}}</option>
+                                    </select>
+                                </div>
                                 {{-- discount_type --}}
                                 <div class="col-md-6  my-3">
                                     <div class="col-form-label  col-3">{{ __('lang.discount_type') }}</div>
