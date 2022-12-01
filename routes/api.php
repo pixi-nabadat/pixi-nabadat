@@ -14,6 +14,8 @@ use App\Http\Controllers\APi\ReservationController;
 
 use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\CouponController;
+use App\Http\Controllers\Api\CouponUsageController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 
 use App\Http\Controllers\Api\PackageController;
@@ -55,6 +57,9 @@ use App\Http\Controllers\CartItemController;
         
         //start cart
         Route::post('carts',  [CartController::class, 'store']);//create new cart
+        
+        Route::post('user/coupons',       [CouponUsageController::class, 'store']);//create new coupon
+        Route::post('coupon/simulation',  [CouponUsageController::class, 'simulation']);//create new coupon
         //end cart
     
     });

@@ -73,4 +73,8 @@ class User extends Authenticatable
         return $this->hasOne(Cart::class);
     }
 
+    public function coupons(): \Illuminate\Database\Eloquent\Relations\belongsToMany
+    {
+        return $this->belongsToMany(Coupon::class, 'coupon_usages','user_id','coupon_id');
+    }
 }
