@@ -46,4 +46,14 @@ class CartItemService extends BaseService
 
     } //end of store
     
+    public function destroy($id)
+    {
+        $cartItem = CartItem::find($id);
+        if ($cartItem != null) {
+            $cartItem->delete();
+            return true;
+        }else{
+            return false;
+        }
+    } //end of delete
 }

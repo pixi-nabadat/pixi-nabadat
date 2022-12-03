@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CartItemStoreRequest;
@@ -28,4 +28,17 @@ class CartItemController extends Controller
             return apiResponse(data: null, message: $e->getMessage(), code: 422);
         }
     }//end of store
+
+    
+    public function destroy($id){
+        try{
+            $status = $this->cartItemService->destroy($id);
+            if($status)
+                return apiResponse(data: null, message: 'Item Deleted', code: 200);
+            else
+                return apiResponse(data: null, message: 'Something went rong', code: 422);
+        }catch(Exception $e){
+            return apiResponse(data: null, message: $e->getMessage(), code: 422);
+        }
+    }
 }

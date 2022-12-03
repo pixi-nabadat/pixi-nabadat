@@ -19,7 +19,7 @@ use App\Http\Controllers\Api\CouponUsageController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 
 use App\Http\Controllers\Api\PackageController;
-use App\Http\Controllers\CartItemController;
+use App\Http\Controllers\Api\CartItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +60,7 @@ use App\Http\Controllers\CartItemController;
         
         Route::post('user/coupons',       [CouponUsageController::class, 'store']);//create new coupon
         Route::post('coupon/simulation',  [CouponUsageController::class, 'simulation']);//create new coupon
+        Route::delete('cart/items/{id}',  [CartItemController::class, 'destroy']);//delete an item from cart items
         //end cart
     
     });
