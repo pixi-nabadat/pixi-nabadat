@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\CancelReasonController;
 use App\Http\Controllers\APi\ReservationController;
 
 use App\Http\Controllers\Api\AppointmentController;
+use App\Http\Controllers\Api\NabadatHistoryController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 
 use App\Http\Controllers\Api\PackageController;
@@ -45,6 +46,7 @@ use App\Http\Controllers\Api\PackageController;
             Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
             Route::apiResource('appointments',AppointmentController::class);
         });
+        Route::post('reservation/devices', [NabadatHistoryController::class, 'store']);
     });
 
     Route::get('categories', [CategoryController::class, 'listing']);
