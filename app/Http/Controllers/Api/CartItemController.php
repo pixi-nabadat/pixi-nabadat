@@ -32,7 +32,8 @@ class CartItemController extends Controller
     
     public function destroy($id){
         try{
-            $status = $this->cartItemService->destroy($id);
+            $relations = ['user', 'items'];
+            $status = $this->cartItemService->destroy($id, $relations);
             if($status)
                 return apiResponse(data: null, message: 'Item Deleted', code: 200);
             else

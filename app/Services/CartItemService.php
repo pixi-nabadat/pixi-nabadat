@@ -46,12 +46,15 @@ class CartItemService extends BaseService
 
     } //end of store
     
-    public function destroy($id)
+    public function destroy($id, array $with =[])
     {
         $cartItem = CartItem::find($id);
         if ($cartItem != null) {
+            $cart = Cart::find($cartItem->cart_id);
             $cartItem->delete();
-            return true;
+            $refreshStatus = Cart::refreshCart($cart,2,4);
+            if($refreshStatus)
+                return $cart->with($with)->get();
         }else{
             return false;
         }
