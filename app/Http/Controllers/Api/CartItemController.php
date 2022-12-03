@@ -33,10 +33,11 @@ class CartItemController extends Controller
     public function destroy($id){
         try{
             $relations = ['user', 'items'];
-            $status = $this->cartItemService->destroy($id, $relations);
-            if($status)
-                return apiResponse(data: null, message: 'Item Deleted', code: 200);
-            else
+            $cart = $this->cartItemService->destroy($id, $relations);
+            if($cart){
+                $cart = new CartsResource($cart);
+                return apiResponse(data: $cart, message: 'Item Deleted', code: 200);
+            }else
                 return apiResponse(data: null, message: 'Something went rong', code: 422);
         }catch(Exception $e){
             return apiResponse(data: null, message: $e->getMessage(), code: 422);
