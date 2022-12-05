@@ -20,17 +20,17 @@ class NabadatHistoryService extends BaseService
     {
         $reservation = Reservation::find($data['reservation_id']);
         if($reservation != null){
-            // $device = Device::find($data['device_id']);
-            // if($device)
-            //     $nabadaPrice = $device->value('price');
+            $device = Device::find($data['device_id']);
+            if($device)
+                $nabadaPrice = $device->value('price');
             $centerId = $reservation->center()->value('id');
             $reservation->nabadatHistory()->create([
                 'user_id'      => Auth::user()->id,
                 'device_id'    => $data['device_id'],
                 'center_id'    => $centerId,
                 'num_nabadat'  => $data['num_nabadat'],
-                'nabada_price' => $data['num_nabadat'] * 50, //50 is a test value because price dos'nt exit in the device table
-                'total_price'  => $data['num_nabadat'] * 50 //50 is a test value
+                'nabada_price' => $nabadaPrice,
+                'total_price'  => $data['num_nabadat'] * $nabadaPrice
             ]);
             $reservation->refresh();
             return $reservation;
