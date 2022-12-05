@@ -14,9 +14,13 @@ use App\Http\Controllers\APi\ReservationController;
 
 use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\NabadatHistoryController;
+use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\CouponController;
+use App\Http\Controllers\Api\CouponUsageController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 
 use App\Http\Controllers\Api\PackageController;
+use App\Http\Controllers\Api\CartItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +51,22 @@ use App\Http\Controllers\Api\PackageController;
             Route::apiResource('appointments',AppointmentController::class);
         });
         Route::post('reservation/devices', [NabadatHistoryController::class, 'store']);
+
+        Route::get('reservations', [ReservationController::class, 'listing']);
+        Route::post('reservations',    [ReservationController::class, 'store']);
+        Route::get('reservations/{id}', [ReservationController::class, 'find']);
+        Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
+        
+        //start cart
+        Route::post('carts',  [CartController::class, 'store']);//create new cart
+        
+        Route::post('user/coupons',       [CouponUsageController::class, 'store']);//create new coupon
+        Route::post('coupon/simulation',  [CouponUsageController::class, 'simulation']);//create new coupon
+        Route::delete('cart/items/{id}',  [CartItemController::class, 'destroy']);//delete an item from cart items
+        //end cart
+    
     });
+    Route::post('cart/items',  [CartItemController::class, 'store']);//create new cart
 
     Route::get('categories', [CategoryController::class, 'listing']);
     Route::get('products', [ProductController::class, 'listing']);
@@ -63,10 +82,6 @@ use App\Http\Controllers\Api\PackageController;
     Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
     Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
-    Route::get('reservations', [ReservationController::class, 'listing']);
-    Route::post('reservations/store',    [ReservationController::class, 'store']);
-    Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
-    Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);
 });
