@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->boolean('is_active')->default(\App\Models\Category::ACTIVE);
+            $table->double('price');
             $table->timestamps();
         });
     }
