@@ -69,8 +69,12 @@ class ReservationController extends Controller
         try{
             $withRelations = ['history','nabadatHistory','user', 'center'];
             $reservation = $this->reservationService->find($id,$withRelations);
-            $reservation = ReservationsResource::collection($reservation);
-            return apiResponse($reservation, 'Done', 200);
+            if($reservation){
+                $reservation = ReservationsResource::collection($reservation);
+                return apiResponse($reservation, 'Done', 200);
+            }else
+                return apiResponse(data: null, message: 'Something went rong', code: 422);
+
         }catch(Exception $e){
             return apiResponse(message:  $e->getMessage(), code: 422);
         }
