@@ -54,18 +54,20 @@ use App\Http\Controllers\Api\CartItemController;
         Route::post('reservations/store',    [ReservationController::class, 'store']);
         Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
         Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
-        
-        //start cart
-        Route::post('carts',  [CartController::class, 'store']);//create new cart
-        
+
         Route::post('user/coupons',       [CouponUsageController::class, 'store']);//create new coupon
         Route::post('coupon/simulation',  [CouponUsageController::class, 'simulation']);//create new coupon
-        Route::delete('cart/items/{id}',  [CartItemController::class, 'destroy']);//delete an item from cart items
-        //end cart
-    
-    });
-    Route::post('cart/items',  [CartItemController::class, 'store']);//create new cart
 
+    });
+
+//start cart
+    Route::group(['prefix'=>'cart'],function (){
+        Route::get('/', [CartController::class, 'index']);
+        Route::post('/',  [CartController::class, 'store']);//create new cart
+        Route::post('empty', [CartController::class, 'emptyCart']);
+        Route::delete('cart/items/{id}',  [CartController::class, 'deleteCartItem']);//delete an item from cart items
+    });
+//end cart
     Route::get('categories', [CategoryController::class, 'listing']);
     Route::get('products', [ProductController::class, 'listing']);
     Route::get('products/{id}/show', [ProductController::class, 'show']);

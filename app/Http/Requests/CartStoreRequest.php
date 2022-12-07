@@ -24,15 +24,9 @@ class CartStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id'       => 'nullable|exists:users,id',
-            'discount'      => 'nullable|numeric',
-            'sub_total'     => 'nullable|numeric',
-            'net_total'     => 'nullable|numeric',
-            'grand_total'   => 'nullable|numeric',
-            'tax'           => 'nullable|numeric',
-            'shipping_cost' => 'required|numeric',
-            'temp_user_id'  => 'required|string',
-            'address_id'    => 'nullable|string',
+            'product_id'=>'required|exists:products,id',
+            'quantity'=>'required|numeric',
+            'temp_user_id' => !(auth('sanctum')->check()) ? 'required' : '',
         ];
     }
 }

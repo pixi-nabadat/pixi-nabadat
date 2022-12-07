@@ -26,7 +26,7 @@ if (!function_exists('getPriceAfterDiscount')) {
     {
         if ($discountType == 0) // refer to flat value
             return $price - $discountValue ;
-        if ($discountType==1)
+        if ($discountType == 1)
             return  $price - ($price * ($discountValue/100));
     }
 }

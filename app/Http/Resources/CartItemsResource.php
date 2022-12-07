@@ -15,9 +15,13 @@ class CartItemsResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'product'  => $this->product_id,
-            'quqntity' => $this->quantity,
-            'price'    => $this->price
+            'id'    => $this->id,
+            'product'   => $this->product_id,
+            'name'      => $this->product->name,
+            'quantity'  => $this->quantity,
+            'price_before'     => $this->price,
+            'price_after'     => getPriceAfterDiscount($this->price,$this->product->discount,$this->product->discount_type),
+            'discount'  => $this->product->discount . $this->product->discount_type == 0 ?' L.E':' %',
         ];
     }
 }
