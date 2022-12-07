@@ -16,9 +16,8 @@ class AddressesResource extends JsonResource
     {
         return  [
             'address_id' => $this->id,
-            'user_id' => $this->user_id,
             'address' => $this->address,
-            'country_id' => $this->country_id,
+            'country' => $this->relationLoaded('location') ? new LocationsResource($this->country_id):null,
             'governerate_id' => $this->governerate_id,
             'city_id' => $this->city_id,
             'phone' => $this->phone,

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressRequest;
 use App\Services\AddressService;
 use App\Http\Resources\AddressesResource;
-
+use Illuminate\Support\Facades\Auth;
 class AddressController extends Controller
 {
     public function __construct(private AddressService $addressService)
@@ -16,7 +16,9 @@ class AddressController extends Controller
     public function index()
     {
         try {
-            $addresses = $this->addressService->getAll();
+            $filters = ['user_id'=>Auth::user()->id];
+            $relations = ['location'];
+            $addresses = $this->addressService->getAll($filters, $relations);
             return AddressesResource::collection($addresses);
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);

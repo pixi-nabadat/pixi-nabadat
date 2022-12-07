@@ -54,9 +54,9 @@ Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
 
 Route::get ('addresses',[AddressController::class,'index']);
 Route::get('addresses/{address}',[AddressController::class,'find']);
-Route::post('addresses/store',[AddressController::class,'store']);
-Route::post('addresses/update/{address}',[AddressController::class,'update']);
-Route::post('addresses/destroy/{address}',[AddressController::class,'destroy']);
+Route::post('addresses',[AddressController::class,'store']);
+Route::put('addresses/{address}',[AddressController::class,'update']);
+Route::delete('addresses/{address}',[AddressController::class,'destroy']);
 
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);

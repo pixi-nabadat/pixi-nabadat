@@ -5,29 +5,30 @@ namespace App\Services;
 use App\Models\Address;
 use App\QueryFilters\AddressesFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\Relationship;
 
 class AddressService extends BaseService
 {
 
-    public function getAll(array $where_condition = [])
+    public function getAll(array $where_condition = [], array $relations = [])
     {
-        $addresses = $this->queryGet($where_condition);
+        $addresses = $this->queryGet($where_condition, $relations);
         return $addresses->get();
     }
 
-    public function queryGet(array $where_condition = []): Builder
+    public function queryGet(array $where_condition = [], array $with = []): Builder
     {
-        $addresses = Address::query();
+        $addresses = Address::query()->with($with);
         return $addresses->filter(new AddressesFilter($where_condition));
     }
 
-    public function store($data)
+    public function store(array $data)
     {
         return Address::create($data);
 
     } //end of store
 
-    public function find($id)
+    public function find(int $id)
     {
 
         $address = Address::find($id);
@@ -37,7 +38,7 @@ class AddressService extends BaseService
 
     } //end of find
 
-    public function delete($id)
+    public function delete(int $id)
     {
         $address = Address::find($id);
         if ($address) {
@@ -46,7 +47,7 @@ class AddressService extends BaseService
         return false;
     } //end of delete
 
-    public function update($id, $data)
+    public function update(int $id, array $data)
     {
         $address = Address::find($id);
         if ($address) {
