@@ -53,4 +53,9 @@ class Center extends Model
         return $this->hasMany(Appointment::class,'center_id');
     }
 
+    public function devices()
+    {
+        return $this->belongsToMany(Device::class, 'center_devices', 'center_id', 'device_id');
+    }
+
 }

@@ -25,13 +25,13 @@ class NabadatHistoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Requests\ReservationStoreRequest  $ReservationStoreRequest
+     * @param  \Illuminate\Http\Requests\ReservationStoreRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(NabadatHistoryStoreRequest $nabadatHistoryStoreRequest)
+    public function store(NabadatHistoryStoreRequest $request)
     {
         try{
-            $request = $nabadatHistoryStoreRequest->validated();
+            $request = $request->validated();
             $data = $this->nabadatHistoryService->store($request);
             $data = new ReservationsResource($data);
             if($data)
