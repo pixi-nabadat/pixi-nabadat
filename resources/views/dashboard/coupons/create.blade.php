@@ -43,6 +43,24 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                {{-- allowed_usage --}}
+                                <div class="col-md-6">
+                                    <label class="form-label" for="allowed_usage">{{ trans('lang.allowed_usage') }}</label>
+                                    <input name="allowed_usage" class="form-control @error('allowed_usage') is-invalid @enderror"
+                                        id="allowed_usage" type="number" required>
+                                    @error('allowed_usage')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                {{-- coupon_for --}}
+                                <div class="col-md-6  my-3">
+                                    <div class="col-form-label  col-3">{{ __('lang.coupon_for') }}</div>
+                                    <select id="select_coupon_for" name="coupon_for"
+                                        class="col form-control">
+                                        <option  value = 'store'>   {{trans('lang.store')}}</option>
+                                        <option  value = 'reservation' selected>{{trans('lang.reservation')}}</option>
+                                    </select>
+                                </div>
                                 {{-- discount_type --}}
                                 <div class="col-md-6  my-3">
                                     <div class="col-form-label  col-3">{{ __('lang.discount_type') }}</div>
@@ -64,21 +82,26 @@
                                 {{-- start_date --}}
                                 <div class="col-md-6  my-3">
                                     <label class="form-label" for="start_date">@lang('lang.start_date')</label>
-                                    <input type="date" name="start_date"
-                                        class="form-control  @error('end_date') is-invalid @enderror">
-                                    @error('start_date')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div class="input-group date" id="dt-start_date" data-target-input="nearest">
+                                        <input name="start_date" class="form-control datetimepicker-input digits" type="text" data-target="#dt-start_date" @error('start_date') is-invalid @enderror" data-bs-original-title="" title="">
+                                        @error('start_date')
+                                            <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        @enderror
+                                        <div class="input-group-text" data-target="#dt-start_date" data-toggle="datetimepicker"><i class="fa fa-calendar"> </i></div>
+                                    </div>
                                 </div>
                                 {{-- end_date --}}
                                 <div class="col-md-6 ">
                                     <label class="form-label  col-3" for="end_date">@lang('lang.end_date')</label>
-                                    <input type="date" name="end_date"
-                                        class="form-control @error('end_date') is-invalid @enderror">
-                                    @error('end_date')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div class="input-group date" id="dt-end_date" data-target-input="nearest">
+                                        <input name="end_date" class="form-control datetimepicker-input digits" type="text" data-target="#dt-end_date" @error('end_date') is-invalid @enderror" data-bs-original-title="" title="">
+                                        @error('end_date')
+                                            <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        @enderror
+                                        <div class="input-group-text" data-target="#dt-end_date" data-toggle="datetimepicker"><i class="fa fa-calendar"> </i></div>
+                                    </div>
                                 </div>
+                                
                             </div>
                             <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
 

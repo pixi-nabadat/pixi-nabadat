@@ -12,10 +12,14 @@
 <!-- Plugins JS start-->
 <script id="menu" src="{{asset('assets/js/sidebar-menu.js')}}"></script>
 <script src="{{asset('assets/js/toastr.min.js')}}"></script>
-{{--date picker --}}
+{{--time picker --}}
 <script src="{{asset('assets/js/datepicker/date-picker/datepicker.js')}}"></script>
 <script src="{{asset('assets/js/datepicker/date-picker/datepicker.en.js')}}"></script>
 <script src="{{asset('assets/js/datepicker/date-picker/datepicker.custom.js')}}"></script>
+{{--date picker --}}
+<script src="{{asset('assets/js/datepicker/date-time-picker/datetimepicker.custom.js')}}"></script>
+<script src="{{asset('assets/js/datepicker/date-time-picker/moment.min.js')}}"></script>
+<script src="{{asset('assets/js/datepicker/date-time-picker/tempusdominus-bootstrap-4.min.js')}}"></script>
 {{--end picker--}}
 <script src="{{asset('assets/js/sweet-alert/sweetalert.min.js')}}"></script>
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>

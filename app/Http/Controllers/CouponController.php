@@ -41,7 +41,6 @@ class CouponController extends Controller
     public function store(CouponStoreRequest $request): \Illuminate\Http\RedirectResponse
     {
         try {
-
             $this->couponService->store($request->validated());
             $toast = ['type' => 'success', 'title' => trans('lang.success'), 'message' => trans('lang.success_operation')];
             return redirect()->route('coupons.index')->with('toast', $toast);
@@ -58,7 +57,7 @@ class CouponController extends Controller
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect(route('coupons.index'))->with('toast', $toast);
         } catch (\Exception $ex) {
-
+            
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
             return back()->with('toast', $toast);
         }
