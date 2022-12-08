@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\Center::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(\App\Models\Device::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->float('unit_price');
-            $table->float('unit_price_with_auto_service')->nullable()->default(0);//not used this column for future
-         
+            $table->float('regular_price');
+            $table->float('nabadat_app_price');
+            $table->float('auto_service_price')->nullable()->default(0);
             $table->integer('number_of_devices');
             $table->timestamps();
         });

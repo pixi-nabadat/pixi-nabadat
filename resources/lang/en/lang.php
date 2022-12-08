@@ -108,5 +108,10 @@
 		'reservation'=>'Reservation',
 		'flat'=>'Flat',
 		'percent'=>'Percent',
+		'center_devices'=>'Center Devices',
+		'number_of_devices'=>'Number of Devices',
+		'regular_price'=>'Regular Price',
+		'nabadat_app_price'=>'Aabadat App Price',
+		'auto_service_price'=>'Auto Service Price',
     ]
 ?>
