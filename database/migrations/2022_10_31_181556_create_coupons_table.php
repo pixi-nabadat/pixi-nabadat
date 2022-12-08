@@ -15,13 +15,16 @@ return new class extends Migration
     {
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('added_by');
+            $table->unsignedBigInteger('added_by');
+            $table->foreign('added_by')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('code')->unique();
+            $table->enum('discount_type',['flat','percent'])->default('percent');
             $table->double('discount');
-            $table->tinyInteger('discount_type');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->string('min_buy');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
+            $table->double('min_buy')->nullable();
+            $table->enum('coupon_for',['store','reservation'])->default('store');
+            $table->unsignedInteger('allowed_usage')->default(1);
             $table->timestamps();
         });
     }

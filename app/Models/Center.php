@@ -33,19 +33,24 @@ class Center extends Model
     public $translatable = ['name','description','address'];
 
 
-    public function location()
+    public function location(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Location::class);
     }
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(User::class,'center_id');
     }
 
-    public function doctors()
+    public function doctors(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Doctor::class,'center_id');
+    }
+
+    public function appointments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Appointment::class,'center_id');
     }
 
 }

@@ -14,9 +14,11 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LocationController;
-
 use App\Http\Controllers\CancelReasonController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CouponController;
+use App\Http\Controllers\PackageController;
+
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
     if (!in_array($locale, ['en', 'ar'])) {
@@ -51,8 +53,6 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::get('doctors/changeStatus/{doctor}',[DoctorController::class,'changeStatus'])->name('doctors.changeStatus');
     Route::get('doctors/getAllCities/{doctor}',[DoctorController::class,'getAllCities'])->name('doctors.getAllCities');
 
-
-
     Route::resource('governorate',GovernorateController::class);
     Route::resource('country',CountryController::class);
     Route::resource('city',CityController::class);
@@ -63,6 +63,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     #attachment routes
     Route::resource('doctors',DoctorController::class);
+
     Route::resource('devices',DeviceController::class);
     Route::post('devices/changeStatus',[DeviceController::class,'changeStatus'])->name('devices.changeStatus');
 
@@ -72,13 +73,21 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     Route::resource('categories',CategoryController::class);
     Route::post('categories/changeStatus',[CategoryController::class,'changeStatus'])->name('categories.changeStatus');
+  
+    Route::resource('coupons',CouponController::class);
+    Route::post('coupons/status',[CategoryController::class,'status'])->name('coupons.status');
 
     Route::resource('products',ProductController::class);
     Route::post('products/featured',[ProductController::class,'featured'])->name('products.featured');
     Route::post('products/status',[ProductController::class,'status'])->name('products.status');
 
+    Route::resource('packages',PackageController::class);
+    Route::post('packages/status',[PackageController::class,'status'])->name('packages.status');
+
     Route::resource('cancelReasons',CancelReasonController::class);
     Route::post('cancelReasons/changeStatus',[CancelReasonController::class,'changeStatus'])->name('cancelReasons.changeStatus');
+
+    Route::get('gevernorate/all', [App\Http\Controllers\GovernorateController::class, 'getAllGovernorates'])->name('allGovernorates');
 });
 
 Route::get('/clear-cache', function() {
