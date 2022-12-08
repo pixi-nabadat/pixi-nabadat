@@ -76,6 +76,15 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                {{--  stock  --}}
+                                <div class="col-md-12 d-flex my-3">
+                                    <label class="form-label col-3" for="stock">@lang('lang.stock')</label>
+                                    <input type="number" name="stock" step="1"
+                                        class="form-control @error('stock') is-invalid @enderror">
+                                    @error('stock')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                         </div>
                     </div>
 
