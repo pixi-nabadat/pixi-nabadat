@@ -11,4 +11,9 @@ class AddressesFilter extends QueryFilter
     {
         parent::__construct($params);
     }
+
+    public function user_id($term)
+    {
+        return $this->builder->where('user_id',$term);
+    }
 }

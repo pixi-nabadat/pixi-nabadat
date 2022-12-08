@@ -38,6 +38,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::delete('doctors/{doctorId}', [DoctorController::class, 'delete']);
         Route::patch('doctors/{doctorId}', [DoctorController::class, 'update']);
     });
+
+    Route::get ('addresses',[AddressController::class,'index']);
+    Route::get('addresses/{address}',[AddressController::class,'find']);
+    Route::post('addresses',[AddressController::class,'store']);
+    Route::patch('addresses/{address}',[AddressController::class,'update']);
+    Route::delete('addresses/{address}',[AddressController::class,'destroy']);
 });
 
 Route::get('categories', [CategoryController::class, 'listing']);
@@ -51,12 +57,6 @@ Route::get('centers', [CenterController::class, 'listing']);
 Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
 Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
-
-Route::get ('addresses',[AddressController::class,'index']);
-Route::get('addresses/{address}',[AddressController::class,'find']);
-Route::post('addresses',[AddressController::class,'store']);
-Route::put('addresses/{address}',[AddressController::class,'update']);
-Route::delete('addresses/{address}',[AddressController::class,'destroy']);
 
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);

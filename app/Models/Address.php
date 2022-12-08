@@ -14,8 +14,13 @@ class Address extends Model
     'user_id','address', 'country_id', 'governerate_id', 'phone', 'city_id',
     'postal_code','is_default','lat','lng'];
 
-    public function location()
+    public function city(): BelongsTo
     {
-        return $this->belongsTo(Location::class);
+        return $this->belongsTo(Location::class,'city_id');
+    }
+
+    public function governorate(): BelongsTo
+    {
+        return $this->belongsTo(Location::class,'governerate_id');
     }
 }

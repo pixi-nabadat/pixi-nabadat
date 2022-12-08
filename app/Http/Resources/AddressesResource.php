@@ -17,9 +17,10 @@ class AddressesResource extends JsonResource
         return  [
             'address_id' => $this->id,
             'address' => $this->address,
-            'country' => $this->relationLoaded('location') ? new LocationsResource($this->country_id):null,
             'governerate_id' => $this->governerate_id,
+            'governorate_title' => $this->relationLoaded('governorate') ? $this->governorate->title:null,
             'city_id' => $this->city_id,
+            'city_title' => $this->relationLoaded('city') ? $this->city->title:null,
             'phone' => $this->phone,
             'postal_code' => $this->postal_code,
             'is_default' => $this->is_default,

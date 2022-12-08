@@ -16,8 +16,8 @@ class AddressController extends Controller
     public function index()
     {
         try {
-            $filters = ['user_id'=>Auth::user()->id];
-            $relations = ['location'];
+            $filters = ['user_id'=>auth()->id()];
+            $relations = ['city','governorate'];
             $addresses = $this->addressService->getAll($filters, $relations);
             return AddressesResource::collection($addresses);
         } catch (\Exception $exception) {
@@ -26,9 +26,8 @@ class AddressController extends Controller
     } //end of index
 
 
-    public function store(AddressRequest $request)
+    public function store(AddressRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-
         try {
             $addresses = $this->addressService->store($request->validated());
             return apiResponse(data: $addresses, message: trans('lang.address_updated_successfully'));
@@ -37,7 +36,7 @@ class AddressController extends Controller
         }
     } //end of store
 
-    public function update(AddressRequest $request, $id)
+    public function update(AddressRequest $request, $id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
 
         try {

@@ -36,4 +36,9 @@ class AddressRequest extends FormRequest
             'phone' => 'string|required',
         ];
     }
+
+    public function validationData(): array
+    {
+        return array_merge($this->all(), ['user_id' => auth()->id()]);
+    }
 }
