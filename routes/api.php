@@ -45,7 +45,8 @@ use App\Http\Controllers\Api\AddressController;
             Route::delete('doctors/{doctorId}', [DoctorController::class, 'delete']);
             Route::patch('doctors/{doctorId}', [DoctorController::class, 'update']);
             Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
-            Route::apiResource('appointments',AppointmentController::class);});
+            Route::apiResource('appointments',AppointmentController::class);
+        });
 
     Route::get ('addresses',[AddressController::class,'index']);
     Route::get('addresses/{address}',[AddressController::class,'find']);
