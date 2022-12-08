@@ -44,7 +44,6 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         try {
-
             $request->validated();
             $request->merge(['added_by' => auth()->id()]);
             $this->productService->store($request->all());

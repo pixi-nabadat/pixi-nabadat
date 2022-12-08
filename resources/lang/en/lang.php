@@ -108,5 +108,6 @@
 		'reservation'=>'Reservation',
 		'flat'=>'Flat',
 		'percent'=>'Percent',
+		'stock'=>'stock',
     ]
 ?>
