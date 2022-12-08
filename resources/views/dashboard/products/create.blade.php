@@ -139,16 +139,6 @@
                         </div>
                         <div class="card-body">
                             <div class="col-md-12 row">
-
-                                {{-- discount_type --}}
-                                <div class="col-md-12  d-flex my-3">
-                                    <div class="col-form-label  col-3">{{ __('lang.discount_type') }}</div>
-                                    <select id="select_discount_type" name="discount_type"
-                                        class="col form-control">
-                                        <option  value = 'flat'>   {{trans('lang.flat')}}</option>
-                                        <option  value = 'percent'>{{trans('lang.percent')}}</option>
-                                    </select>
-                                </div>
                                 {{-- discount --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <label class="form-label  col-3" for="discount">@lang('lang.discount')</label>
@@ -199,13 +189,6 @@
                                     @error('tax')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>
-
-                                <div class="col-md-6">
-                                    <select id="tax_type" name="tax_type" class="form-control col-sm-12">
-                                        <option  value = 'flat'>   {{trans('lang.flat')}}</option>
-                                        <option  value = 'percent'>{{trans('lang.percent')}}</option>
-                                    </select>
                                 </div>
                             </div>
                         </div>

@@ -17,16 +17,13 @@ class CartItem extends Model
         return $this->belongsTo(Product::class,'product_id');
     }
 
+    /**
+     * @return float|int|mixed
+     */
     public function getPriceAfterDiscountAttribute()
     {
-       if (!$this->relationLoaded('product'))
-           return null ;
-        $currentDate  = Carbon::now();
-        $discountEndDate   = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::parse($this->product->discount_end_date));
-        $discountStartDate = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::parse($this->product->discount_start_date));
-
-        if($currentDate->gte($discountStartDate) && $currentDate->lt($discountEndDate))
-            return $this->product->unit_price - $this->product->discount;
-        return $this->product->unit_price;
+        return $this->relationLoaded('product')
+            ? getPriceAfterDiscount($this->product->unit_price,$this->product->product_discount)
+            : $this->price;
     }
 }

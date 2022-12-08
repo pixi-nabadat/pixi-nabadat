@@ -23,7 +23,7 @@ class ProductResource extends JsonResource
             'discount'=>$this->discount,
             'discount_type'=>$this->discount_type,
             'description'=>$this->description,
-            'price_after_discount'=>getPriceAfterDiscount($this->unit_price,$this->discount,$this->getRawOriginal('discount_type')),
+            'price_after_discount'=>getPriceAfterDiscount($this->unit_price,$this->product_discount),
             'image'=> $this->whenLoaded('attachments') ? AttachmentsResource::collection($this->attachments) : [],
         ];
     }

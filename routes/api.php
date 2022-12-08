@@ -63,9 +63,9 @@ use App\Http\Controllers\Api\CartItemController;
 //start cart
     Route::group(['prefix'=>'cart'],function (){
         Route::get('/', [CartController::class, 'index']);
-        Route::post('/',  [CartController::class, 'store']);//create new cart
+        Route::post('item',  [CartController::class, 'store']);//create new cart
         Route::post('empty', [CartController::class, 'emptyCart']);
-        Route::delete('cart/items/{id}',  [CartController::class, 'deleteCartItem']);//delete an item from cart items
+        Route::delete('items/{id}',  [CartController::class, 'deleteCartItem']);//delete an item from cart items
     });
 //end cart
     Route::get('categories', [CategoryController::class, 'listing']);

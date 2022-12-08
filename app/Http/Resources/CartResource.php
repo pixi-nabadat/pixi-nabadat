@@ -15,13 +15,16 @@ class CartResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'discount'      => $this->discount,
-            'sub_total'     => $this->sub_total,
-            'net_total'     => $this->net_total,
-            'grand_total'   => $this->grand_total,
-            'tax'           => $this->tax,
-            'shipping_cost' => $this->shipping_cost,
-            'items'         => $this->relationLoaded('items') ? new CartItemsResource($this->items) :null,
+            'id'            => $this->id,
+            'discount'      => $this->discount_percentage,
+            'sub_total'     => (double)$this->sub_total,
+            'net_total'     => (double)$this->net_total,
+            'grand_total'   => (double)$this->grand_total,
+            'address_id'    => $this->address_id,
+            'address_info'  => $this->relationLoaded('address') ? $this->address_id : null,
+            'tax'           => (double)$this->tax,
+            'shipping_cost' => (double)$this->shipping_cost,
+            'items'         => $this->relationLoaded('items') ? CartItemsResource::collection($this->items) : [],
         ];
     }
 }

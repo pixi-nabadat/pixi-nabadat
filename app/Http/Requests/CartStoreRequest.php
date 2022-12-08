@@ -26,7 +26,7 @@ class CartStoreRequest extends FormRequest
         return [
             'product_id'=>'required|exists:products,id',
             'quantity'=>'required|numeric',
-            'temp_user_id' => !(auth('sanctum')->check()) ? 'required' : '',
+            'temp_user_id' => 'required',
         ];
     }
 }

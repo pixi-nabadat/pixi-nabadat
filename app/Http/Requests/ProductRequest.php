@@ -31,11 +31,9 @@ class ProductRequest extends BaseRequest
             'images' => 'nullable|array',
             'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'discount'=>'required',
-            'discount_type'=>'required',
             'discount_start_date'=>'required',
             'discount_end_date'=>'required',
-            'tax'=>'required',
-            'tax_type'=>'required',
+            'tax'=>'nullable',
             'featured'=>'nullable|string',
             'is_active'=>'nullable|string',
             'category_id'=>'required|exists:categories,id'
