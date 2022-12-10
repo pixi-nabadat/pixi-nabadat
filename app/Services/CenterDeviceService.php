@@ -17,7 +17,7 @@ class CenterDeviceService extends BaseService
 
     public function queryGet(array $where_condition = [], $withRelation = []): Builder
     {
-        $centerDevices = CenterDevice::query($withRelation);
+        $centerDevices = CenterDevice::query()->with($withRelation);
         return $centerDevices->filter(new CenterDevicesFilter($where_condition));
     }
 

@@ -27,7 +27,6 @@ class CenterDeviceUpdateRequest extends BaseRequest
             'regular_price'=>'required|numeric',
             'nabadat_app_price'=>'required|numeric',
             'auto_service_price'=>'required|numeric',
-            'number_of_devices'=>'required|numeric',
         ];
     }
 

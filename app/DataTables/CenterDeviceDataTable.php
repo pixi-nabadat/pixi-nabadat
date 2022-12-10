@@ -26,24 +26,12 @@ class CenterDeviceDataTable extends DataTable
                 return view('dashboard.centerDevices.action', compact('centerDevice'))->render();
             })
             ->editColumn('center', function (CenterDevice $centerDevice) {
-                return $centerDevice->center_id;
+                return $centerDevice->center->name;
             })
-            ->editColumn('device_id', function (CenterDevice $centerDevice) {
-                return $centerDevice->device_id;
-            })
-            ->editColumn('number_of_devices', function (CenterDevice $centerDevice) {
-                return $centerDevice->number_of_devices;
-            })
-            ->editColumn('regular_price', function (CenterDevice $centerDevice) {
-                return $centerDevice->regular_price . " L.E";
-            })
-            ->editColumn('nabadat_app_price', function (CenterDevice $centerDevice) {
-                return $centerDevice->nabadat_app_price . " L.E";
-            })
-            ->editColumn('auto_service_price', function (CenterDevice $centerDevice) {
-                return $centerDevice->auto_service_price . " L.E";
-            })
-            ;
+            ->editColumn('device', function (CenterDevice $centerDevice) {
+                return $centerDevice->device->name;
+            });
+
     }
 
     /**
@@ -52,8 +40,6 @@ class CenterDeviceDataTable extends DataTable
      */
     public function query(CenterDeviceService $centerDeviceService): QueryBuilder
     {
-        $this->filters=[];
-        $this->withRelations=[];
         return $centerDeviceService->queryGet($this->filters, $this->withRelations);
     }
 
@@ -88,11 +74,11 @@ class CenterDeviceDataTable extends DataTable
     {
         return [
             Column::make('center'),
-            Column::make('device_id'),
+            Column::make('device'),
             Column::make('number_of_devices'),
             Column::make('regular_price'),
             Column::make('nabadat_app_price'),
-            Column::make('auto_service_price'),    
+            Column::make('auto_service_price'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

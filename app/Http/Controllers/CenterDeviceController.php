@@ -19,10 +19,10 @@ class CenterDeviceController extends Controller
 
     }
 
-    public function index(CenterDeviceDataTable $dataTable)
+    public function index(CenterDeviceDataTable $dataTable,Request $request)
     {
-
-        return $dataTable->render('dashboard.centerDevices.index');
+        $loadRelation = ['center','device'];
+        return $dataTable->with(['filters' => $request->all(), 'withRelations' => $loadRelation])->render('dashboard.centerDevices.index');
 
     }//end of index
 
@@ -44,7 +44,7 @@ class CenterDeviceController extends Controller
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect(route('centerDevices.index'))->with('toast', $toast);
         } catch (\Exception $ex) {
-            
+
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
             return back()->with('toast', $toast);
         }
