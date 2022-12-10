@@ -36,6 +36,9 @@ class ProductsDataTable extends DataTable
         ->editColumn('description', function(Product $product){
             return  $product-> description;
         })
+        ->editColumn('stock', function(Product $product){
+            return  $product-> stock;
+        })
         ->editColumn('added_by', function(Product $product){
             return  $product->user->name ;
         })
@@ -90,6 +93,7 @@ class ProductsDataTable extends DataTable
             Column::make('description'),
             Column::make('unit_price'),
             Column::make('purchase_price'),
+            Column::make('stock'),
             Column::make('discount'),
             Column::make('featured'),
             Column::make('is_active'),

@@ -25,6 +25,7 @@ class ProductRequest extends BaseRequest
     {
         return [
             'name.*' => 'required|string',
+            'stock'=>'required',
             'description.*'=>'required|string',
             'unit_price'=>'required',
             'purchase_price'=>'required',

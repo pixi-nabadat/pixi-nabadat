@@ -53,6 +53,11 @@
                                 <label class="form-label col-3" for="unit_price">@lang('lang.unit_price')</label>
                                 <p class="form-control">{{ $product->unit_price }}</p>
                             </div>
+                            {{--  stock  --}}
+                            <div class="col-md-12 d-flex my-3">
+                                <label class="form-label col-3" for="stock">@lang('lang.stock')</label>
+                                <p class="form-control">{{ $product->stock }}</p>
+                            </div>
                         </div>
                     </div>
 
