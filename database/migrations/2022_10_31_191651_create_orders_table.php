@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->integer('payment_status')->default(1); 
-            $table->integer('payment_type')->default(1); 
-            $table->string('shipping_address');
+            $table->integer('payment_status')->default(1);
+            $table->integer('payment_type')->default(1);
+            $table->string('address_info');
+            $table->foreignIdFor(\App\Models\Address::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->double('shipping_fees');
             $table->double('sub_total');
             $table->double('grand_total');
