@@ -18,6 +18,7 @@ use App\Http\Controllers\CancelReasonController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\PackageController;
+use App\Http\Controllers\CenterDeviceController;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -88,6 +89,8 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::post('cancelReasons/changeStatus',[CancelReasonController::class,'changeStatus'])->name('cancelReasons.changeStatus');
 
     Route::get('gevernorate/all', [App\Http\Controllers\GovernorateController::class, 'getAllGovernorates'])->name('allGovernorates');
+
+    Route::resource('centerDevices',CenterDeviceController::class);
 });
 
 Route::get('/clear-cache', function() {

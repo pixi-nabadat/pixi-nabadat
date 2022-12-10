@@ -48,6 +48,11 @@ class Center extends Model
         return $this->hasMany(Doctor::class,'center_id');
     }
 
+    public function device()
+    {
+        return $this->hasMany(Device::class,'center_id');
+    }
+
     public function appointments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Appointment::class,'center_id');
