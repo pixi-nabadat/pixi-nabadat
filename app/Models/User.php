@@ -68,4 +68,19 @@ class User extends Authenticatable
         return $this->belongsToMany(Center::class, CenterDoctor::class, 'doctor_id','center_id');
     }
 
+    public function addresses(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(addresse::class, 'user_id');
+    }
+
+    public function orders(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
+
+    public function cart(): \Illuminate\Database\Eloquent\Relations\hasOne
+    {
+        return $this->hasOne(Cart::class, 'user_id');
+    }
+
 }

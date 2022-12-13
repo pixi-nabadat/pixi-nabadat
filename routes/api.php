@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\ReservationHistoryController;
 use App\Http\Controllers\Api\PackageController;
 
 use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\OrderDeliveryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,11 @@ use App\Http\Controllers\Api\AddressController;
     Route::post('addresses',[AddressController::class,'store']);
     Route::patch('addresses/{address}',[AddressController::class,'update']);
     Route::delete('addresses/{address}',[AddressController::class,'destroy']);
+
+    //start order delivery
+    Route::post('order/paycash',   [OrderDeliveryController::class, 'payCash']);
+    Route::post('order/paycredit', [OrderDeliveryController::class, 'payCredit']);
+    //end order delivery
 });
 
     Route::get('categories', [CategoryController::class, 'listing']);

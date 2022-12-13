@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->integer('payment_status')->default(1); 
-            $table->integer('payment_type')->default(1); 
-            $table->string('shipping_address');
+            $table->string('payment_type'); 
+            $table->json('shipping_address');
             $table->double('shipping_fees');
             $table->double('sub_total');
             $table->double('grand_total');

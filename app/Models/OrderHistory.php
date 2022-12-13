@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class OrderHistory extends Model
 {
     use HasFactory;
+    protected $fillable = ['status','comment','notify_user',];
 }

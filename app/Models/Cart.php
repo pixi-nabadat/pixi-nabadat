@@ -9,4 +9,9 @@ class Cart extends Model
 {
     use HasFactory;
     protected $fillable = ['coupon_code','discount','sub_total','net_total','grand_total','tax','user_id','address_id'];
+
+    public function items(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CartItems::class, 'cart_id');
+    }
 }
