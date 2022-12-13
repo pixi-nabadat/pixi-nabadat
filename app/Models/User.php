@@ -77,4 +77,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Coupon::class, 'coupon_usages','user_id','coupon_id');
     }
+
+    public function nabadatWallet(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(NabadatWallet::class,'user_id');
+    }
 }

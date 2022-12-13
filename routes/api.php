@@ -53,9 +53,9 @@ use App\Http\Controllers\Api\AddressController;
         });
 
         Route::get('reservations', [ReservationController::class, 'listing']);
-        Route::post('reservations/store',    [ReservationController::class, 'store']);
-        Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
-        Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
+        Route::post('reservations',    [ReservationController::class, 'store']);
+        Route::get('reservations/{id}', [ReservationController::class, 'find']);
+        Route::post('reservations/{id}/history',  [ReservationHistoryController::class, 'store']);
 
         Route::post('user/coupons',       [CouponUsageController::class, 'store']);//create new coupon
         Route::post('coupon/simulation',  [CouponUsageController::class, 'simulation']);//create new coupon
@@ -67,7 +67,6 @@ use App\Http\Controllers\Api\AddressController;
     Route::post('addresses',[AddressController::class,'store']);
     Route::patch('addresses/{address}',[AddressController::class,'update']);
     Route::delete('addresses/{address}',[AddressController::class,'destroy']);
-});
 
 //start cart
     Route::group(['prefix'=>'cart'],function (){

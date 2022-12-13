@@ -32,9 +32,9 @@ class UserService extends BaseService
 
     } //end of create
 
-    public function find($id)
+    public function find($id , $withRelations = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|Builder|bool|array
     {
-        $user = User::find($id);
+        $user = User::with($withRelations)->find($id);
         if ($user)
             return $user;
         return false;
@@ -42,14 +42,14 @@ class UserService extends BaseService
 
     public function changeStatus($id)
     {
-        $user = User::find($id);
+        $user = $this->find($id);
         $user->is_active = !$user->is_active;
         $user->save();
     }//end of changeStatus
 
     public function delete($id)
     {
-        $user=User::find($id);
+        $user=$this->find($id);
         if ($user)
             return $user->delete();
         return false;
@@ -68,4 +68,15 @@ class UserService extends BaseService
         return false;
     }//end of update
 
+    public function updateOrCreateNabadatWallet(int $user_id ,$package): bool
+    {
+        $withRelation = ['nabadatWallet'];
+        $user = $this->find($user_id,$withRelation);
+        if (!$user)
+            return false ;
+        $old_pulses = $user->nabadatWallet->total_pulses?? 0 ;
+        $total_pulses = $old_pulses+$package->num_nabadat ;
+        $user->nabadatWallet()->updateOrCreate(['total_pulses'=>$total_pulses]);
+        return true ;
+    }
 }
