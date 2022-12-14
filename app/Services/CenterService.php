@@ -26,7 +26,9 @@ class CenterService extends BaseService
     public function store(array $data = [])
     {
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-        $data['is_support_auto_service'] = isset($data['is_active']) ? 1 : 0;
+        $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ? 1 : 0;
+        $data['featured'] = isset($data['featured']) ? 1 : 0;
+
         $center = Center::create($data);
         if (!$center)
             return false;
@@ -101,5 +103,13 @@ class CenterService extends BaseService
             return $center->delete();
         }
         return false;
+    }
+
+    public function featured($id): bool
+    {
+        $center = $this->find($id);
+        $center->featured = !$center->featured;
+        return $center->save();
+
     }
 }

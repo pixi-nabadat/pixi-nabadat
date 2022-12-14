@@ -60,6 +60,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     Route::resource('centers', CenterController::class);
     Route::post('centers/changeStatus',[CenterController::class,'changeStatus'])->name('centers.changeStatus');
+    Route::post('centers/featured',[CenterController::class,'featured'])->name('centers.featured');
     Route::post('centers/support-service/changeStatus',[CenterController::class,'changeStatusOfSupportAutoService'])->name('centers.support-auto-service.changeStatus');
 
     #attachment routes
@@ -74,7 +75,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     Route::resource('categories',CategoryController::class);
     Route::post('categories/changeStatus',[CategoryController::class,'changeStatus'])->name('categories.changeStatus');
-  
+
     Route::resource('coupons',CouponController::class);
     Route::post('coupons/status',[CategoryController::class,'status'])->name('coupons.status');
 

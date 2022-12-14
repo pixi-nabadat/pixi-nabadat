@@ -30,7 +30,9 @@ class StoreAppointmentRequest extends BaseRequest
                 Rule::unique('appointments','day_of_week')->where(function ($query){
                 return $query->where('center_id', $this->center_id);
             })],
-            'center_id'=>'required|exists:users,id'
+            'center_id'=>'required|exists:users,id',
+            'to'=>'required',
+            'from'=>'required',
         ];
     }
 

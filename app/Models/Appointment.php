@@ -21,10 +21,9 @@ class Appointment extends Model
         ['day_of_week'=>6,'en'=>'Saturday',      'ar'=>'السبت'],
     ];
 
-    protected $fillable = ['day_of_week','day_text','center_id','is_active'];
+    protected $fillable = ['day_of_week','day_text','center_id','is_active','to','from'];
 
     public $translatable =['day_text'];
-
 
     public function center(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

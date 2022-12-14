@@ -69,4 +69,14 @@ class AddressController extends Controller
         }
     } //end of find
 
+    public function setDefualt($id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        try {
+            $this->addressService->setDefualt($id);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $ex) {
+            return apiResponse(message: $ex->getMessage(), code: 422);
+        }
+    }
+
 }
