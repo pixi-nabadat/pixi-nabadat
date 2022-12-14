@@ -20,7 +20,6 @@ return new class extends Migration
             $table->double('sub_total')->default(0.0);
             $table->double('net_total')->default(0.0);
             $table->double('grand_total')->default(0.0);
-            $table->double('tax')->default(0.0);
             $table->double('shipping_cost')->default(0.0);
             $table->string('temp_user_id')->unique();
             $table->foreignIdFor(\App\Models\Address::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');

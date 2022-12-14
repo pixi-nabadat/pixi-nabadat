@@ -60,14 +60,13 @@ use App\Http\Controllers\Api\AddressController;
         Route::post('user/coupons',       [CouponUsageController::class, 'store']);//create new coupon
         Route::post('coupon/simulation',  [CouponUsageController::class, 'simulation']);//create new coupon
 
+        
+        Route::get ('addresses',[AddressController::class,'index']);
+        Route::get('addresses/{address}',[AddressController::class,'find']);
+        Route::post('addresses',[AddressController::class,'store']);
+        Route::patch('addresses/{address}',[AddressController::class,'update']);
+        Route::delete('addresses/{address}',[AddressController::class,'destroy']);
     });
-
-    Route::get ('addresses',[AddressController::class,'index']);
-    Route::get('addresses/{address}',[AddressController::class,'find']);
-    Route::post('addresses',[AddressController::class,'store']);
-    Route::patch('addresses/{address}',[AddressController::class,'update']);
-    Route::delete('addresses/{address}',[AddressController::class,'destroy']);
-});
 
 //start cart
     Route::group(['prefix'=>'cart'],function (){

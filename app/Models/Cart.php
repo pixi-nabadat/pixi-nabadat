@@ -9,7 +9,7 @@ class Cart extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['discount','sub_total','shipping_cost' ,'address_id', 'net_total','grand_total','tax','user_id','temp_user_id'];
+    protected $fillable = ['discount','sub_total','shipping_cost' ,'address_id', 'net_total','grand_total','user_id','temp_user_id'];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
