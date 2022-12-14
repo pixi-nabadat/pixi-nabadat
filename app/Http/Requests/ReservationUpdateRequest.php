@@ -24,7 +24,9 @@ class ReservationUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|exists:users,id',
+            'user_id'      => 'required|exists:users,id',
+            'from'         => 'nullable|time',
+            'to'           => 'nullable|time',
         ];
     }
 }

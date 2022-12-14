@@ -23,6 +23,8 @@ class Reservation extends Model
         'customer_id',
         'center_id',
         'check_date',
+        'from',
+        'to',
         'payment_type',
         'payment_status',
         'qr_code',
