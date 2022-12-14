@@ -56,4 +56,16 @@ class AddressService extends BaseService
         }
         return false;
     } //end of update
+
+    public function setDefualt(int $id)
+    {
+        
+        $newDefualt= Address::find($id);
+
+        $oldDefualt = $this->queryGet(['is_default'=> 1,'user_id' => $newDefualt->user_id]) ;
+        $oldDefualt->update(['is_default' => 0]);
+
+        $newDefualt->update(['is_default' => 1]);
+
+    }//end of  setDefualt
 }

@@ -69,4 +69,14 @@ class AddressController extends Controller
         }
     } //end of find
 
+    public function setDefualt($id)
+    {
+        try {
+            $address = $this->addressService->setDefualt($id);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $ex) {
+            return apiResponse(message: $ex->getMessage(), code: 422);
+        }
+    }
+
 }

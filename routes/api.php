@@ -65,9 +65,11 @@ use App\Http\Controllers\Api\AddressController;
     Route::get ('addresses',[AddressController::class,'index']);
     Route::get('addresses/{address}',[AddressController::class,'find']);
     Route::post('addresses',[AddressController::class,'store']);
+    Route::post('addresses/setDefualt/{address}',[AddressController::class,'setDefualt']);
     Route::patch('addresses/{address}',[AddressController::class,'update']);
     Route::delete('addresses/{address}',[AddressController::class,'destroy']);
-});
+    
+// });
 
 //start cart
     Route::group(['prefix'=>'cart'],function (){
