@@ -18,7 +18,7 @@ class Product extends Model
 
     protected $fillable = [
         'name','added_by','category_id','description','unit_price','purchase_price','discount',
-        'discount_type','discount_start_date','discount_end_date','tax','tax_type','featured','is_active','stock'];
+        'discount_type','discount_start_date','discount_end_date','tax','tax_type', 'estimation','featured','is_active','stock'];
 
     public $translatable = ['name','description'];
 
@@ -40,5 +40,10 @@ class Product extends Model
     public function getDiscountTypeAttribute($value)
     {
         return $value == 0 ? trans('lang.flat') : trans('lang.percent');
+    }
+
+    public function estimations(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ProductEstimation::class,'product_id');
     }
 }

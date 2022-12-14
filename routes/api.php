@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\ReservationHistoryController;
 use App\Http\Controllers\Api\PackageController;
 
 use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\ProductEstimationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,12 +49,19 @@ use App\Http\Controllers\Api\AddressController;
             Route::apiResource('appointments',AppointmentController::class);
         });
 
-    Route::get ('addresses',[AddressController::class,'index']);
-    Route::get('addresses/{address}',[AddressController::class,'find']);
-    Route::post('addresses',[AddressController::class,'store']);
-    Route::patch('addresses/{address}',[AddressController::class,'update']);
-    Route::delete('addresses/{address}',[AddressController::class,'destroy']);
-});
+        Route::get ('addresses',[AddressController::class,'index']);
+        Route::get('addresses/{address}',[AddressController::class,'find']);
+        Route::post('addresses',[AddressController::class,'store']);
+        Route::patch('addresses/{address}',[AddressController::class,'update']);
+        Route::delete('addresses/{address}',[AddressController::class,'destroy']);
+
+        // start product estimation
+        Route::group(['prefix'=>'product'], function(){
+
+            Route::post('estimation', [ProductEstimationController::class, 'store']);
+        });
+        // end product estimation
+    });
 
     Route::get('categories', [CategoryController::class, 'listing']);
     Route::get('products', [ProductController::class, 'listing']);

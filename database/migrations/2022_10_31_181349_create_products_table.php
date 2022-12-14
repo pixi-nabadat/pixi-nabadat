@@ -28,6 +28,7 @@ return new class extends Migration
             $table->date('discount_end_date')->nullable();
             $table->enum('tax_type',['flat','percent']);
             $table->double('tax')->default(0);
+            $table->double('estimation')->default(0.0);
             $table->tinyInteger('featured')->default(0)->nullable();
             $table->boolean('is_active')->default(1)->nullable();
             $table->timestamps();
