@@ -63,9 +63,8 @@ class OrderDeliveryService extends BaseService
     private function orderHistory(Order $order)
     {
         $order->history()->create([
-            'status'      => 1,//OrderDeliveryService::$pending[0],
-            'comment'     => 'coming from where',
-            'notify_user' => $order->user_id
+            'status_en' => OrderDeliveryService::$pending[0],
+            'status_ar' => OrderDeliveryService::$pending[1],
         ]);
         return true;
     }

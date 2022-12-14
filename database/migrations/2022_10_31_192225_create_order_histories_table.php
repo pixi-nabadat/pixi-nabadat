@@ -16,9 +16,8 @@ return new class extends Migration
         Schema::create('order_histories', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\Order::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->integer('status')->default(1); 
-            $table->string('comment');
-            $table->boolean('notify_user')->default(1); 
+            $table->string('status_en'); 
+            $table->string('status_ar'); 
             $table->timestamps();
         });
     }
