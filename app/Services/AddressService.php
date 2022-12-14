@@ -40,7 +40,7 @@ class AddressService extends BaseService
 
     public function delete(int $id)
     {
-        $address = Address::find($id);
+        $address = $this->find($id);
         if ($address) {
             return $address->delete();
         }
@@ -49,7 +49,7 @@ class AddressService extends BaseService
 
     public function update(int $id, array $data)
     {
-        $address = Address::find($id);
+        $address = $this->find($id);
         if ($address) {
              $address->update($data);
              return  $address;
@@ -59,13 +59,11 @@ class AddressService extends BaseService
 
     public function setDefualt(int $id)
     {
-        
-        $newDefualt= Address::find($id);
 
-        $oldDefualt = $this->queryGet(['is_default'=> 1,'user_id' => $newDefualt->user_id]) ;
-        $oldDefualt->update(['is_default' => 0]);
-
-        $newDefualt->update(['is_default' => 1]);
+        $address = $this->find($id);
+        Address::where('user_id',$address->user_id)->update(['is_default'=>0]);
+        $address->update(['is_default'=>1]);
+        return true ;
 
     }//end of  setDefualt
 }

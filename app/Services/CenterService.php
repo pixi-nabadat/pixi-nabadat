@@ -104,4 +104,12 @@ class CenterService extends BaseService
         }
         return false;
     }
+
+    public function featured($id): bool
+    {
+        $center = $this->find($id);
+        $center->featured = !$center->featured;
+        return $center->save();
+
+    }
 }
