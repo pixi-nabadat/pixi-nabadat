@@ -4,15 +4,29 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
 
 class Settings extends Model
 {
-    use HasFactory , HasTranslations;
-    protected $fillable = ['name','value'];
+    use HasFactory;
+
     public $timestamps = false;
+    public array $predefined_pages = [
+        'general',
+        'sms',
+        'terms_of_condition',
+        'app_notifications',
+        'region_and_location'
+    ];
+    protected $fillable = ['name', 'value'];
 
-    public $translatable = ['value'];
+    public function setValueAttribute($value): bool|string
+    {
+        return json_encode($value);
+    }
 
+    public function getValueAttribute($value): bool|string
+    {
+        return json_decode($value, true);
+    }
 
 }
