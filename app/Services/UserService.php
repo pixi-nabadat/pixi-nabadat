@@ -74,9 +74,16 @@ class UserService extends BaseService
         $user = $this->find($user_id,$withRelation);
         if (!$user)
             return false ;
-        $old_pulses = $user->nabadatWallet->total_pulses?? 0 ;
+        $old_pulses = $user->nabadatWallet->total_pulses ?? 0 ;
         $total_pulses = $old_pulses+$package->num_nabadat ;
         $user->nabadatWallet()->updateOrCreate(['total_pulses'=>$total_pulses]);
         return true ;
+    }
+
+    public function userPackage(int $user_id , array $date = [])
+    {
+        $user = $this->find($user_id) ;
+        return $user->package()->create($date);
+
     }
 }

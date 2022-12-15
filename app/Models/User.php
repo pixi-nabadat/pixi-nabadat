@@ -82,4 +82,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(NabadatWallet::class,'user_id');
     }
+
+    public function package(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Package::class,'user_id');
+    }
 }
