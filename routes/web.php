@@ -98,3 +98,4 @@ Route::get('/clear-cache', function() {
     Artisan::call('route:clear');
     return "Cache is cleared";
 })->name('clear.cache');
+Route::get('order/paycredit', [App\Http\Controllers\Api\OrderDeliveryController::class, 'payCredit']);

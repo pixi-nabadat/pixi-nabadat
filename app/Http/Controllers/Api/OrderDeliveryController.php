@@ -36,4 +36,9 @@ class OrderDeliveryController extends Controller
             return apiResponse(message: $e->getMessage(), code: 422);
         }
     }
+
+    public function payCredit()
+    {
+        return $this->orderDeliveryService->payPaymob();
+    }
 }

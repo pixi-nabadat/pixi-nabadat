@@ -57,7 +57,7 @@ use App\Http\Controllers\Api\OrderDeliveryController;
 
     //start order delivery
     Route::post('order/paycash',   [OrderDeliveryController::class, 'payCash']);
-    Route::post('order/paycredit', [OrderDeliveryController::class, 'payCredit']);
+    Route::get('order/paycredit', [OrderDeliveryController::class, 'payCredit']);
     //end order delivery
 });
 
