@@ -99,3 +99,7 @@ Route::get('/clear-cache', function() {
     return "Cache is cleared";
 })->name('clear.cache');
 Route::get('order/paycredit', [App\Http\Controllers\Api\OrderDeliveryController::class, 'payCredit']);
+Route::get('callback', function(){
+    $request = $this->request->all();
+    dd($request);
+});

@@ -39,6 +39,6 @@ class OrderDeliveryController extends Controller
 
     public function payCredit()
     {
-        return $this->orderDeliveryService->payPaymob();
+        return $this->orderDeliveryService->payCredit();
     }
 }
