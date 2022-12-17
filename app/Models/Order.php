@@ -8,11 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    protected $fillable = ['payment_status','payment_type','shipping_address','shipping_fees','sub_total','grand_total','coupon_discount'];
+    const PENDING = 'pending',
+          DELIVERED = 'delivered',
+          CONFIRMED = 'confirmed',
+          CANCELED = 'canceled',
+          SHIPPED = 'shipped';
 
-    public function details(): \Illuminate\Database\Eloquent\Relations\HasMany
+    const PAYMENTCASH = 'cash';
+    const PAYMENTCREDIT = 'CREDIT';
+
+
+    protected $fillable = ['payment_status','payment_type','shipping_address','shipping_fees','sub_total','grand_total','coupon_discount','order_history_id'];
+
+    public function orderItem(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(OrderDatails::class, 'order_id');
+        return $this->hasMany(OrderItem::class, 'order_id');
     }
 
     public function history(): \Illuminate\Database\Eloquent\Relations\HasMany

@@ -22,7 +22,7 @@ use App\Http\Controllers\Api\PackageController;
 use App\Http\Controllers\Api\CartItemController;
 
 use App\Http\Controllers\Api\AddressController;
-use App\Http\Controllers\Api\OrderDeliveryController;
+use App\Http\Controllers\Api\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,8 +71,8 @@ use App\Http\Controllers\Api\OrderDeliveryController;
             Route::delete('{address}',[AddressController::class,'destroy']);
 
     //start order delivery
-    Route::post('order/paycash',   [OrderDeliveryController::class, 'payCash']);
-    Route::get('order/paycredit', [OrderDeliveryController::class, 'payCredit']);
+    Route::post('order/paycash',   [OrderController::class, 'payCash']);
+    Route::get('order/paycredit', [OrderController::class, 'payCredit']);
     //end order delivery
         });
 

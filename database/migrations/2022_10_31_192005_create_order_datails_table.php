@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('order_datails', function (Blueprint $table) {
+        Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\Order::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignIdFor(\App\Models\Product::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->double('price');
             $table->integer('quantity');
+            $table->float('discount');
             $table->timestamps();
         });
     }

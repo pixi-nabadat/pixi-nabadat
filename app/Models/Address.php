@@ -23,4 +23,9 @@ class Address extends Model
     {
         return $this->belongsTo(Location::class,'governerate_id');
     }
+
+    public function getShippingCostAttribute()
+    {
+        return $this->relationLoaded('city') ? $this->city->shipping_cost : 0 ;
+    }
 }

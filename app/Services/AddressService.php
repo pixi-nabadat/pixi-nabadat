@@ -28,10 +28,9 @@ class AddressService extends BaseService
 
     } //end of store
 
-    public function find(int $id)
+    public function find(int $id , array $withRelations = [])
     {
-
-        $address = Address::find($id);
+        $address = Address::with($withRelations)->find($id);
         if ($address)
             return $address;
         return false;
