@@ -25,12 +25,15 @@ class CentresDataTable extends DataTable
             ->addcolumn('location', function (Center $center) {
                 return $center->location->title;
             })
+            ->addColumn('featured', function(Center $center){
+                return view('dashboard.components.switch-featured-btn',['model'=>$center,'url'=>route('centers.featured')])->render();
+            })
             ->addcolumn('is_active', function (Center $center) {
                 return  view('dashboard.components.switch-btn',['model'=>$center,'url'=>route('centers.changeStatus')]);
             })
             ->addcolumn('is_support_auto_service', function (Center $center) {
                 return  view('dashboard.components.switch-support-auto-service-btn',['model'=>$center,'url'=>route('centers.support-auto-service.changeStatus')]);
-            })->rawColumns(['action','is_active','is_support_auto_service']);
+            })->rawColumns(['action','is_active','featured','is_support_auto_service']);
     }
 
     /**
@@ -75,6 +78,7 @@ class CentresDataTable extends DataTable
             Column::make('address'),
             Column::make('phone'),
             Column::make('location'),
+            Column::make('featured'),
             Column::make('is_support_auto_service'),
             Column::make('is_active'),
             Column::computed('action')

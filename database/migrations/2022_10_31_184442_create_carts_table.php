@@ -15,14 +15,13 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->string('coupon_code');
-            $table->double('discount');
-            $table->double('sub_total');
-            $table->double('net_total');
-            $table->double('grand_total');
-            $table->double('tax');
-            $table->double('shipping_cost');
+            $table->foreignIdFor(\App\Models\User::class)->nullable()->unique()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->double('discount')->default(0.0);
+            $table->double('sub_total')->default(0.0);
+            $table->double('net_total')->default(0.0);
+            $table->double('grand_total')->default(0.0);
+            $table->double('shipping_cost')->default(0.0);
+            $table->string('temp_user_id')->unique();
             $table->foreignIdFor(\App\Models\Address::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
         });

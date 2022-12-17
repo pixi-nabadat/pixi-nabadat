@@ -2,99 +2,107 @@
 @section('title', 'Product Page')
 
 @section('css')
-<link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/owlcarousel.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/rating.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/owlcarousel.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/rating.css') }}">
 @endsection
 
 @section('style')
 @endsection
 
 @section('breadcrumb-title')
-<h3>Product Page</h3>
+    <h3>Product Page</h3>
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item">Country</li>
-<li class="breadcrumb-item active">Coiuntry Details</li>
+    <li class="breadcrumb-item">Country</li>
+    <li class="breadcrumb-item active">Coiuntry Details</li>
 @endsection
 
 @section('content')
     <!-- Container-fluid starts-->
     <div class="container-fluid">
         <div>
-          <div class="row product-page-main p-0">
-            <div class="col-xl-4 xl-cs-65 box-col-12">
-              <div class="card">
-                <div class="card-body">
-                  <div class="product-slider owl-carousel owl-theme" id="sync1">
-                    @if($center->attachments->count())
-                        @foreach($center->attachments as $attachment)
-                            <div class="item"><img src="{{asset($attachment->path.'/'.$attachment->filename)}}" alt=""></div>
-                        @endforeach
-                    @endif
-                  </div>
-                  <div class="owl-carousel owl-theme" id="sync2">
-                    @if($center->attachments->count())
-                        @foreach($center->attachments as $attachment)
-                            <div class="item"><img src="{{asset($attachment->path.'/'.$attachment->filename)}}" alt=""></div>
-                        @endforeach
-                    @endif
-                  </div>
+            <div class="row product-page-main p-0">
+                <div class="col-xl-4 xl-cs-65 box-col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="product-slider owl-carousel owl-theme" id="sync1">
+                                @if ($center->attachments->count())
+                                    @foreach ($center->attachments as $attachment)
+                                        <div class="item"><img
+                                                src="{{ asset($attachment->path . '/' . $attachment->filename) }}"
+                                                alt=""></div>
+                                    @endforeach
+                                @endif
+                            </div>
+                            <div class="owl-carousel owl-theme" id="sync2">
+                                @if ($center->attachments->count())
+                                    @foreach ($center->attachments as $attachment)
+                                        <div class="item"><img
+                                                src="{{ asset($attachment->path . '/' . $attachment->filename) }}"
+                                                alt=""></div>
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-xl-5 xl-100 box-col-6">
-              <div class="card">
-                <div class="card-body">
-                  <div class="product-page-details">
-                    <h3>{{$center->name}}</h3>
-                  </div>
-                  <div class="product-price">
-                  </div>
-                  <ul class="product-color">
-                    <li class="bg-primary"></li>
-                    <li class="bg-secondary"></li>
-                    <li class="bg-success"></li>
-                    <li class="bg-info"></li>
-                    <li class="bg-warning"></li>
-                  </ul>
-                  <hr>
-                  <p>{{$center->description}}</p>
-                  <hr>
-                  <div>
-                    <table class="product-page-width">
-                      <tbody>
-                        <tr>
-                          <td> <b>Doctor &nbsp;&nbsp;&nbsp;:</b></td>
-                          <td>ali</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <h6 class="product-title">share it</h6>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="product-icon">
-                        <ul class="product-social">
-                          <li class="d-inline-block"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                          <li class="d-inline-block"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                          <li class="d-inline-block"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                          <li class="d-inline-block"><a href="#"><i class="fa fa-instagram"></i></a></li>
-                          <li class="d-inline-block"><a href="#"><i class="fa fa-rss"></i></a></li>
-                        </ul>
-                        <form class="d-inline-block f-right"></form>
-                      </div>
-                    </div>
-                  </div>
-                  <hr>
-                  {{-- <div class="row"> --}}
-                    {{-- <div class="col-md-6">
+                <div class="col-xl-5 xl-100 box-col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="product-page-details">
+                                <h3>{{ $center->name }}</h3>
+                            </div>
+                            <div class="product-price">
+                            </div>
+                            <ul class="product-color">
+                                <li class="bg-primary"></li>
+                                <li class="bg-secondary"></li>
+                                <li class="bg-success"></li>
+                                <li class="bg-info"></li>
+                                <li class="bg-warning"></li>
+                            </ul>
+                            <hr>
+                            <p>{{ $center->description }}</p>
+                            <hr>
+                            <div>
+                                <table class="product-page-width">
+                                    <tbody>
+                                        <tr>
+                                            <td> <b>Doctor &nbsp;&nbsp;&nbsp;:</b></td>
+                                            <td>ali</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6 class="product-title">share it</h6>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="product-icon">
+                                        <ul class="product-social">
+                                            <li class="d-inline-block"><a href="#"><i class="fa fa-facebook"></i></a>
+                                            </li>
+                                            <li class="d-inline-block"><a href="#"><i
+                                                        class="fa fa-google-plus"></i></a></li>
+                                            <li class="d-inline-block"><a href="#"><i class="fa fa-twitter"></i></a>
+                                            </li>
+                                            <li class="d-inline-block"><a href="#"><i class="fa fa-instagram"></i></a>
+                                            </li>
+                                            <li class="d-inline-block"><a href="#"><i class="fa fa-rss"></i></a></li>
+                                        </ul>
+                                        <form class="d-inline-block f-right"></form>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            {{-- <div class="row"> --}}
+                            {{-- <div class="col-md-6">
                       <h6 class="product-title">Rate Now</h6>
                     </div> --}}
-                    {{-- <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                       <div class="d-flex">
                         <select id="u-rating-fontawesome" name="rating" autocomplete="off">
                           <option value="1">1</option>
@@ -105,56 +113,56 @@
                         </select><span>(250 review)</span>
                       </div>
                     </div> --}}
-                  {{-- </div> --}}
-                  {{-- <hr> --}}
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 xl-cs-35 box-col-6">
-              <div class="card">
-                <div class="card-body">
-                  <!-- side-bar colleps block stat-->
-                  <div class="filter-block">
-                    <h4>Center Phones</h4>
-                    <ul>
-                        @if(count($center->phone) > 0)
-                            @foreach($center->phone as $phone)
-                                <tr>
-                                    <li>{{$phone}}</li>
-                                </tr>
-                            @endforeach
-                        @endif
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-body">
-                  <div class="collection-filter-block">
-                    <ul class="pro-services">
-                      <li>
-                        <div class="media"><i data-feather="truck"></i>
-                          <div class="media-body">
-                            <h5>Packages                                   </h5>
-                            <p>center Package</p>
-                          </div>
+                            {{-- </div> --}}
+                            {{-- <hr> --}}
                         </div>
-                      </li>
-                      <li>
-                        <div class="media"><i data-feather="credit-card"></i>
-                          <div class="media-body">
-                            <h5>Online Payment                                  </h5>
-                            <p>Contrary To Popular Belief.                                   </p>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
+                    </div>
                 </div>
-                <!-- silde-bar colleps block end here-->
-              </div>
+                <div class="col-xl-3 xl-cs-35 box-col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- side-bar colleps block stat-->
+                            <div class="filter-block">
+                                <h4>Center Phones</h4>
+                                <ul>
+                                    @if (count($center->phone) > 0)
+                                        @foreach ($center->phone as $phone)
+                                            <tr>
+                                                <li>{{ $phone }}</li>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="collection-filter-block">
+                                <ul class="pro-services">
+                                    <li>
+                                        <div class="media"><i data-feather="truck"></i>
+                                            <div class="media-body">
+                                                <h5>Packages </h5>
+                                                <p>center Package</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media"><i data-feather="credit-card"></i>
+                                            <div class="media-body">
+                                                <h5>Online Payment </h5>
+                                                <p>Contrary To Popular Belief. </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- silde-bar colleps block end here-->
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
         {{-- <div class="card">
           <div class="row product-page-main">
@@ -191,14 +199,14 @@
             </div>
           </div>
         </div> --}}
-      </div>
-      <!-- Container-fluid Ends-->
+    </div>
+    <!-- Container-fluid Ends-->
 @endsection
 
 @section('script')
-<script src="{{asset('assets/js/sidebar-menu.js')}}"></script>
-<script src="{{asset('assets/js/rating/jquery.barrating.js')}}"></script>
-<script src="{{asset('assets/js/rating/rating-script.js')}}"></script>
-<script src="{{asset('assets/js/owlcarousel/owl.carousel.js')}}"></script>
-<script src="{{asset('assets/js/ecommerce.js')}}"></script>
+    <script src="{{ asset('assets/js/sidebar-menu.js') }}"></script>
+    <script src="{{ asset('assets/js/rating/jquery.barrating.js') }}"></script>
+    <script src="{{ asset('assets/js/rating/rating-script.js') }}"></script>
+    <script src="{{ asset('assets/js/owlcarousel/owl.carousel.js') }}"></script>
+    <script src="{{ asset('assets/js/ecommerce.js') }}"></script>
 @endsection

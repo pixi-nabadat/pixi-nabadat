@@ -37,6 +37,8 @@ class StoreCenterRequest extends BaseRequest
             'email'=>'required|email|unique:users,email',
             'is_active' => 'string|nullable',
             'is_support_auto_service' => 'string|nullable',
+            'avg_wating_time'=>'required',
+            'featured'=>'nullable',
         ];
     }
 

@@ -58,16 +58,25 @@ class User extends Authenticatable
         return $this->id;
     }
 
-    public function location()
+    public function location(): \Illuminate\Database\Eloquent\Relations\belongsTo
     {
         return $this->belongsTo(Location::class);
     }
 
-    public function center()
+    public function center(): \Illuminate\Database\Eloquent\Relations\belongsToMany
     {
         return $this->belongsToMany(Center::class, CenterDoctor::class, 'doctor_id','center_id');
     }
 
+    public function cart(): \Illuminate\Database\Eloquent\Relations\hasOne
+    {
+        return $this->hasOne(Cart::class);
+    }
+
+    public function coupons(): \Illuminate\Database\Eloquent\Relations\belongsToMany
+    {
+        return $this->belongsToMany(Coupon::class, 'coupon_usages','user_id','coupon_id');
+    }
     public function addresses(): \Illuminate\Database\Eloquent\Relations\hasMany
     {
         return $this->hasMany(addresse::class, 'user_id');
@@ -76,11 +85,6 @@ class User extends Authenticatable
     public function orders(): \Illuminate\Database\Eloquent\Relations\hasMany
     {
         return $this->hasMany(Order::class, 'user_id');
-    }
-
-    public function cart(): \Illuminate\Database\Eloquent\Relations\hasOne
-    {
-        return $this->hasOne(Cart::class, 'user_id');
     }
 
 }
