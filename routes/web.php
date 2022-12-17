@@ -18,7 +18,9 @@ use App\Http\Controllers\CancelReasonController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\PackageController;
-
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
     if (!in_array($locale, ['en', 'ar'])) {
@@ -100,40 +102,29 @@ Route::get('/clear-cache', function() {
 })->name('clear.cache');
 
 
-use Laravel\Socialite\Facades\Socialite;
  
 Route::get('/auth/redirect', function () {
     return Socialite::driver('facebook')->redirect();
 });
  
 Route::get('/auth/callback', function () {
-    $user = Socialite::driver('facebook')->user();
-    // return $user->token();
-    // $user = App\Models\User::updateOrCreate([
-    //     'facebook_id' => $user->id,
-    // ], [
-    //     'name' => $user->getName(),
-    //     'email' => $user->getEmail(),
-    //     'facebook_token' => $user->token,
-    //     'facebook_refresh_token' => $user->refreshToken,
-    // ]);
- 
-    // Auth::login($user);
- 
-    // // OAuth 2.0 providers...
-    // $token = $user->token;
-    // $refreshToken = $user->refreshToken;
-    // $expiresIn = $user->expiresIn;
+    $socialUser = Socialite::driver('facebook')->user();
+    $user = App\Models\User::firstOrCreate([
+        'email' => $socialUser->email,
+    ], [
+        'name' => $socialUser->getName(),
+        'email' => $socialUser->getEmail(),
+        'username' => $socialUser->getName(),
+        'password' => bcrypt($socialUser->getEmail()),
+        'phone'=>$socialUser->getId(),
+        'type'=> 1,
+        'is_active'=>true,
 
-    // // OAuth 1.0 providers...
-    // $token = $user->token;
-    // $tokenSecret = $user->tokenSecret;
-
-    // // All providers...
-    return $user->getId();
-    // $user->getNickname();
-    // $user->getName();
-    // $user->getEmail();
-    // $user->getAvatar();
-    // $user->token
+    ]);
+    Auth::login($user);
+    return $data = [
+        'token'=>$user->getToken(),
+        'token_type'=>'Bearer',
+        'user'=>$user
+    ];
 });
