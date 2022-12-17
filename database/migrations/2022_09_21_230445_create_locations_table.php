@@ -18,6 +18,7 @@ return new class extends Migration
                 $table->id();
                 $table->string('slug', 191)->nullable();
                 $table->text('title');
+                $table->integer('shipping_cost')->default(0);
                 $table->foreignIdFor(\App\Models\Currency::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
                 $table->tinyInteger('is_active')->default(1);
                 $table->timestamps();
