@@ -98,3 +98,42 @@ Route::get('/clear-cache', function() {
     Artisan::call('route:clear');
     return "Cache is cleared";
 })->name('clear.cache');
+
+
+use Laravel\Socialite\Facades\Socialite;
+ 
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('facebook')->redirect();
+});
+ 
+Route::get('/auth/callback', function () {
+    $user = Socialite::driver('facebook')->user();
+    // return $user->token();
+    // $user = App\Models\User::updateOrCreate([
+    //     'facebook_id' => $user->id,
+    // ], [
+    //     'name' => $user->getName(),
+    //     'email' => $user->getEmail(),
+    //     'facebook_token' => $user->token,
+    //     'facebook_refresh_token' => $user->refreshToken,
+    // ]);
+ 
+    // Auth::login($user);
+ 
+    // // OAuth 2.0 providers...
+    // $token = $user->token;
+    // $refreshToken = $user->refreshToken;
+    // $expiresIn = $user->expiresIn;
+
+    // // OAuth 1.0 providers...
+    // $token = $user->token;
+    // $tokenSecret = $user->tokenSecret;
+
+    // // All providers...
+    return $user->getId();
+    // $user->getNickname();
+    // $user->getName();
+    // $user->getEmail();
+    // $user->getAvatar();
+    // $user->token
+});
