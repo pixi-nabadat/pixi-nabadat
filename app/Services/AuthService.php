@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 class AuthService extends BaseService
 {
 
@@ -37,7 +38,7 @@ class AuthService extends BaseService
         ], [
             'name'      => $socialUser->getName(),
             'email'     => $socialUser->getEmail(),
-            'username'  => $socialUser->getName(),
+            'user_name'  => Str::lower(Str::beforeLast($socialUser->getEmail(), '@')),
             'password'  => bcrypt($socialUser->getEmail()),
             'phone'     => $socialUser->getId(),
             'type'      => $type,
