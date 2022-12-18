@@ -13,9 +13,13 @@ use App\Http\Controllers\Api\CancelReasonController;
 use App\Http\Controllers\APi\ReservationController;
 
 use App\Http\Controllers\Api\AppointmentController;
+use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\CouponController;
+use App\Http\Controllers\Api\CouponUsageController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 
 use App\Http\Controllers\Api\PackageController;
+use App\Http\Controllers\Api\CartItemController;
 
 use App\Http\Controllers\Api\AddressController;
 use Illuminate\Support\Facades\Auth;
@@ -48,13 +52,35 @@ use Illuminate\Support\Facades\Auth;
             Route::apiResource('appointments',AppointmentController::class);
         });
 
-    Route::get ('addresses',[AddressController::class,'index']);
-    Route::get('addresses/{address}',[AddressController::class,'find']);
-    Route::post('addresses',[AddressController::class,'store']);
-    Route::patch('addresses/{address}',[AddressController::class,'update']);
-    Route::delete('addresses/{address}',[AddressController::class,'destroy']);
-});
+        Route::get('reservations', [ReservationController::class, 'listing']);
+        Route::post('reservations/store',    [ReservationController::class, 'store']);
+        Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
+        Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
 
+        Route::post('user/coupons',       [CouponUsageController::class, 'store']);//create new coupon
+        Route::post('coupon/simulation',  [CouponUsageController::class, 'simulation']);//create new coupon
+
+
+        Route::group(['prefix'=>'addresses'],function(){
+            Route::get ('/',[AddressController::class,'index']);
+            Route::get('{address}',[AddressController::class,'find']);
+            Route::post('/',[AddressController::class,'store']);
+            Route::post('setDefualt/{address}',[AddressController::class,'setDefualt']);
+            Route::patch('{address}',[AddressController::class,'update']);
+            Route::delete('{address}',[AddressController::class,'destroy']);
+
+        });
+
+ });
+
+//start cart
+    Route::group(['prefix'=>'cart'],function (){
+        Route::get('/', [CartController::class, 'index']);
+        Route::post('item',  [CartController::class, 'store']);//create new cart
+        Route::post('empty', [CartController::class, 'emptyCart']);
+        Route::delete('items/{id}',  [CartController::class, 'deleteCartItem']);//delete an item from cart items
+    });
+//end cart
     Route::get('categories', [CategoryController::class, 'listing']);
     Route::get('products', [ProductController::class, 'listing']);
     Route::get('products/{id}/show', [ProductController::class, 'show']);
@@ -69,10 +95,6 @@ use Illuminate\Support\Facades\Auth;
     Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
     Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
-    Route::get('reservations', [ReservationController::class, 'listing']);
-    Route::post('reservations/store',    [ReservationController::class, 'store']);
-    Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
-    Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);
 });

@@ -39,9 +39,6 @@ class ProductsDataTable extends DataTable
         ->editColumn('stock', function(Product $product){
             return  $product-> stock;
         })
-        ->editColumn('discount_type', function(Product $product){
-            return  $product-> discount_type==0?trans('lang.flat'):trans('lang.percent');
-        })
         ->editColumn('added_by', function(Product $product){
             return  $product->user->name ;
         })
@@ -98,7 +95,6 @@ class ProductsDataTable extends DataTable
             Column::make('purchase_price'),
             Column::make('stock'),
             Column::make('discount'),
-            Column::make('discount_type'),
             Column::make('featured'),
             Column::make('is_active'),
             Column::computed('action')
