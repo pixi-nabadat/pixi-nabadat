@@ -24,7 +24,6 @@ class BuyOfferController extends Controller
                 return apiResponse(message: trans('lang.resource_not_found'), code: 422);
             //create user package log
             $userPackageData = ['package_id'=>$package->id,'num_pulses'=>$package->num_nabadat,'price'=>$package->price];
-            $this->userService->userPackage(user_id: $request->user_id,date: $userPackageData);
             $updatedWallet = $this->userService->updateOrCreateNabadatWallet(user_id: $request->user_id, package: $package);
             if (!$updatedWallet)
                 return apiResponse(message: trans('lang.user_not_found'), code: 422);
