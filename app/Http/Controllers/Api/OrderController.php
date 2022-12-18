@@ -30,9 +30,9 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-        $filters = array_merge($request->all(),['user_id'=>auth('auth:sanctum')->id()]);
+        $filters = array_merge($request->all(), ['user_id' => auth('auth:sanctum')->id()]);
         $relations = ['history'];
-        $order = $this->orderService->getAll($filters,$relations);
+        $order = $this->orderService->getAll($filters, $relations);
         return OrderResource::collection($order);
     }
 
@@ -59,13 +59,15 @@ class OrderController extends Controller
 //            check availability stocks of products
             foreach ($orderData->items as $item) {
                 if ($item->quantity > $item->product->stock)
-                    return apiResponse(message: trans('lang.quantity_is_more_than_stock for :product',$item->product->name));
+                    return apiResponse(message: trans('lang.quantity_is_more_than_stock for :product', $item->product->name));
             }
-            $order = $this->orderService->store(user:$user,order_data: $orderData,shipping_address: $userAddress);
-            if ($request->payment_type == Order::PAYMENTCREDIT){
-                $result  = $this->payCredit($order,$userAddress);
-                DB::commit();
-                return $result ;
+            $payment_type = $request->payment_type == Order::PAYMENTCREDIT ? Order::PAYMENTCREDIT : Order::PAYMENTCASH;
+            $order = $this->orderService->store(user: $user, order_data: $orderData, shipping_address: $userAddress, payment_type: $payment_type);
+            if ($request->payment_type == Order::PAYMENTCREDIT) {
+                $result = $this->payCredit($order, $userAddress);
+                if ($result['status']) // check if status true commit transaction and store order in database else order not stored in db
+                    DB::commit();
+                return apiResponse(data: $result['data']);
             }
             DB::commit();
             return new OrderResource($order);
@@ -76,18 +78,18 @@ class OrderController extends Controller
         }
     }
 
-    public function payCredit($order,$userAddress): Response|\Illuminate\Http\JsonResponse|Application|ResponseFactory
+    public function payCredit($order, $userAddress): array
     {
-        $items =[];
-        $total_amount_in_cents = $order->grand_total*100 ;
+        $items = [];
+        $total_amount_in_cents = $order->grand_total * 100;
 //        payment process to return iframe for billing ;
         $token = $this->paymobService->getAuthToken();
         foreach ($order->items as $item) {
-            $items[]=[
-                "name"=> $item->product->name,
-                "amount_cents"=> $item->price*100,
-                "description"=>"NA",
-                "quantity"=> $item['quantity']
+            $items[] = [
+                "name" => $item->product->name,
+                "amount_cents" => $item->price * 100,
+                "description" => $item->product->description,
+                "quantity" => $item['quantity']
             ];
         }
         $itemsData = [
@@ -100,22 +102,21 @@ class OrderController extends Controller
         $this->paymobService->createOrder($itemsData);
         $response = $this->paymobService->getPaymentToken($order->id, $token, $total_amount_in_cents, $userAddress);
         if (!$response->successful())
-            return apiResponse(data:['error' => collect($response->object())->toArray()],code: 422 );
+            return ['status' => false, 'data' => collect($response->object())->toArray()];
         if ($response->successful())
-            $paymentToken =  $response->object()->token;
-        return apiResponse(data: ['url' => config('services.paymob.iframe_url')."?payment_token={$paymentToken}"]);
+            $paymentToken = $response->object()->token;
+        return ['status' => true, "data" => config('services.paymob.iframe_url') . "?payment_token={$paymentToken}"];
     }
 
     public function checkPaymobPaymentStatus(): Response|Application|ResponseFactory
     {
-        $result =  $this->paymobService->paymentCallback();
-        if ($result!=false)
-        {
+        $result = $this->paymobService->paymentCallback();
+        if ($result != false) {
             $order = $this->orderService->find($result['id']);
-            $order->update(['payment_status'=>'paid','payment_type'=>Order::PAYMENTCREDIT]);
+            $order->update(['payment_status' => 'paid', 'payment_type' => Order::PAYMENTCREDIT, 'paymob_transaction_id' => 1]);
             return apiResponse(message: trans('lang.payment_accepted'));
         }
-        return apiResponse(message: trans('lang.payment_accepted'),code: 422);
+        return apiResponse(message: trans('lang.payment_accepted'), code: 422);
 
     }
 }

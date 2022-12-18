@@ -20,11 +20,12 @@ return new class extends Migration
             $table->string('payment_type')->nullable();
             $table->json('address_info');
             $table->foreignIdFor(\App\Models\Address::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->double('shipping_fees');
+            $table->double('shipping_fees')->default(0);
             $table->double('sub_total');
             $table->double('grand_total');
             $table->double('coupon_discount');
             $table->foreignIdFor(\App\Models\OrderHistory::class)->nullable()->constrained();
+            $table->double('paymob_transaction_id')->nullable();
             $table->timestamps();
         });
     }

@@ -26,7 +26,7 @@ class OrderStoreRequest extends FormRequest
         return [
             'user_id'    => 'required|integer|exists:users,id',
             'address_id' => 'required|integer|exists:addresses,id',
-            'include_points' => 'required|bool',
+            'include_points' => 'nullable|bool',
             'serial_number' => 'required',
         ];
     }

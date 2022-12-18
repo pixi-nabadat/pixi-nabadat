@@ -15,7 +15,7 @@ class Order extends Model
           SHIPPED = 'shipped';
 
     const PAYMENTCASH = 'cash';
-    const PAYMENTCREDIT = 'CREDIT';
+    const PAYMENTCREDIT = 'credit';
 
 
     protected $fillable = ['payment_status','payment_type','shipping_address','shipping_fees','sub_total','grand_total','coupon_discount','order_history_id'];
