@@ -21,7 +21,7 @@ class Center extends Model
 
     protected $fillable = [
         'name', 'phone', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
-        'google_map_url'
+        'google_map_url','avg_wating_time','featured'
     ];
 
     protected $casts = [
@@ -46,6 +46,11 @@ class Center extends Model
     public function doctors(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Doctor::class,'center_id');
+    }
+
+    public function device()
+    {
+        return $this->hasMany(Device::class,'center_id');
     }
 
     public function appointments(): \Illuminate\Database\Eloquent\Relations\HasMany

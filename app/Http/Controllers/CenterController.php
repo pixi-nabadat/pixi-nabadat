@@ -146,4 +146,16 @@ class CenterController extends Controller
         $location = $this->locationService->getLocationAncestors($center->location_id);
         return view('dashboard.centers.show', ['center' => $center, 'location' => $location]);
     }
+
+    public function featured(Request $request)
+    {
+        try {
+            $result =  $this->centerService->featured($request->id);
+            if (!$result)
+                return apiResponse(message: trans('lang.not_found'), code: 404);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+    }
 }

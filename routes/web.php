@@ -21,6 +21,8 @@ use App\Http\Controllers\PackageController;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Http\Controllers\CenterDeviceController;
+
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
     if (!in_array($locale, ['en', 'ar'])) {
@@ -61,6 +63,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     Route::resource('centers', CenterController::class);
     Route::post('centers/changeStatus',[CenterController::class,'changeStatus'])->name('centers.changeStatus');
+    Route::post('centers/featured',[CenterController::class,'featured'])->name('centers.featured');
     Route::post('centers/support-service/changeStatus',[CenterController::class,'changeStatusOfSupportAutoService'])->name('centers.support-auto-service.changeStatus');
 
     #attachment routes
@@ -75,7 +78,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     Route::resource('categories',CategoryController::class);
     Route::post('categories/changeStatus',[CategoryController::class,'changeStatus'])->name('categories.changeStatus');
-  
+
     Route::resource('coupons',CouponController::class);
     Route::post('coupons/status',[CategoryController::class,'status'])->name('coupons.status');
 
@@ -90,6 +93,8 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::post('cancelReasons/changeStatus',[CancelReasonController::class,'changeStatus'])->name('cancelReasons.changeStatus');
 
     Route::get('gevernorate/all', [App\Http\Controllers\GovernorateController::class, 'getAllGovernorates'])->name('allGovernorates');
+
+    Route::resource('centerDevices',CenterDeviceController::class);
 });
 
 Route::get('/clear-cache', function() {

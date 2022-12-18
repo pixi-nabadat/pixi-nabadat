@@ -16,5 +16,9 @@ class Device extends Model
     public $translatable =['name','description'];
     protected $fillable  =['name','description','is_active'];
 
+    public function center()
+    {
+        return $this->belongsToMany(Center::class);
+    }
 
 }

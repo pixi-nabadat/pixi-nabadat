@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->string('day_of_week');
             $table->string('day_text');
+            $table->time('from');
+            $table->time('to');
             $table->boolean('is_active')->default(true);
             $table->unique(['day_of_week','center_id']);
             $table->timestamps();
