@@ -6,10 +6,12 @@ use App\Exceptions\UserNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\SocialLoginRequest;
 use App\Http\Resources\AuthUserResource;
 use App\Models\User;
 use App\Services\AuthService;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -34,7 +36,26 @@ class AuthController extends Controller
         }
 
     }
+    /**
+     * @param \App\Http\Requests\SocialLoginRequest $request
+     * @param string $provider
+     */
+    public function socialLogin(SocialLoginRequest $request, string $provider)
+    {
 
+        try {
+            $user = $this->authService->socialLogin(data: $request->Validated(), provider: $provider);
+            $data = [
+                'token'=>$user->getToken(),
+                'token_type'=>'Bearer',
+                'user'=>$user
+            ];
+            return apiResponse($data,__('lang.login success'));
+        }catch (Exception $e) {
+            return apiResponse($e->getMessage(), 'Unauthorized',$e->getCode());
+        }
+
+    }
     public function register(RegisterRequest $request)
     {
         $data = $request->validated();
