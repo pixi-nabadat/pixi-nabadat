@@ -129,7 +129,9 @@ Route::get('/auth/callback', function () {
 });
 
 // start rates
-
-    Route::post('estimation', [RatesController::class, 'store']);
+Route::group(['prefix'=>'rate'], function(){
+    Route::post('store',     [RatesController::class, 'store']);
+    Route::delete('destroy/{id}', [RatesController::class, 'destroy']);
+});
 
 // end rates

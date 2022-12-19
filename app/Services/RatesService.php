@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Traits\AttachmentTrait;
 use App\Models\Product;
 use Illuminate\Support\Str;
+use App\Models\Rate;
 class RatesService extends BaseService
 {
 
@@ -45,6 +46,17 @@ class RatesService extends BaseService
             'rate' => $finalRate
         ]);
 
+        return true;
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function destroy(int $id): bool
+    {
+        $rate = Rate::find($id);
+        $rate->delete();
         return true;
     }
 }

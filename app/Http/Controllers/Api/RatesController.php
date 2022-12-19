@@ -21,11 +21,25 @@ class RatesController extends Controller
             $status = $this->ratesService->store(data: $data);
             if($status)
                 return apiResponse(message: "item Estimated successfully", code: 200);
-            else
+                else
                 return apiResponse(message: "Something went wrong", code: 422);
-
-        }catch(Exception $e){
-            return apiResponse(message: "Something went wrong", code: 422);
+                
+            }catch(Exception $e){
+                return apiResponse(message: "Something went wrong", code: 422);
+            }
         }
+        
+        public function destroy($id)
+        {
+            try{
+                $status = $this->ratesService->destroy($id);
+                if($status)
+                    return apiResponse(message: "Rate Deleted successfully", code: 200);
+                else
+                    return apiResponse(message: "Something went wrong", code: 422);
+                
+            }catch(Exception $e){
+                return apiResponse(message: "Something went wrong", code: 422);
+            }
     }
 }
