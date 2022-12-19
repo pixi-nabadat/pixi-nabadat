@@ -53,10 +53,12 @@ use App\Http\Controllers\Api\OrderController;
             Route::apiResource('appointments',AppointmentController::class);
         });
 
-        Route::get('reservations', [ReservationController::class, 'listing']);
-        Route::post('reservations/store',    [ReservationController::class, 'store']);
-        Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
-        Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
+        Route::group(['prefix'=>'reservations'],function (){
+            Route::get('/', [ReservationController::class, 'listing']);
+            Route::post('/',    [ReservationController::class, 'store']);
+            Route::get('{id}', [ReservationController::class, 'find']);
+            Route::post('{id}/status',  [ReservationHistoryController::class, 'store']);
+        });
 
         Route::post('user/coupons',       [CouponUsageController::class, 'store']);//create new coupon
         Route::post('coupon/simulation',  [CouponUsageController::class, 'simulation']);//create new coupon
@@ -66,15 +68,16 @@ use App\Http\Controllers\Api\OrderController;
             Route::get ('/',[AddressController::class,'index']);
             Route::get('{address}',[AddressController::class,'find']);
             Route::post('/',[AddressController::class,'store']);
-            Route::post('setDefualt/{address}',[AddressController::class,'setDefualt']);
+            Route::post('set-default/{address}',[AddressController::class,'setDefault']);
             Route::patch('{address}',[AddressController::class,'update']);
             Route::delete('{address}',[AddressController::class,'destroy']);
-
-    //start order delivery
-    Route::post('order/paycash',   [OrderController::class, 'payCash']);
-    Route::get('order/paycredit', [OrderController::class, 'payCredit']);
-    //end order delivery
         });
+        //start order delivery
+        Route::group(['prefix'=>'orders'],function (){
+            Route::post('/',[OrderController::class, 'store']);
+            Route::post('paymob/payment/done', [OrderController::class,'checkPaymobPaymentStatus']);
+        });
+        //end order delivery
 
  });
 

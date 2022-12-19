@@ -2,30 +2,39 @@
 
 namespace App\Models;
 
+use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Address extends Model
 {
-    use HasFactory,Filterable;
+    use HasFactory, Filterable;
+
     protected $fillable = [
-    'user_id','address', 'country_id', 'governerate_id', 'phone', 'city_id',
-    'postal_code','is_default','lat','lng'];
+        'user_id', 'address', 'country_id', 'governerate_id', 'phone', 'city_id',
+        'postal_code', 'is_default', 'lat', 'lng'];
 
     public function city(): BelongsTo
     {
-        return $this->belongsTo(Location::class,'city_id');
+        return $this->belongsTo(Location::class, 'city_id');
     }
 
     public function governorate(): BelongsTo
     {
-        return $this->belongsTo(Location::class,'governerate_id');
+        return $this->belongsTo(Location::class, 'governerate_id');
     }
 
-    public function getShippingCostAttribute()
+    public function user(): BelongsTo
     {
-        return $this->relationLoaded('city') ? $this->city->shipping_cost : 0 ;
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * @return int
+     */
+    public function getShippingCostAttribute(): int
+    {
+        return $this->relationLoaded('city') ? $this->city->shipping_cost : 0;
     }
 }

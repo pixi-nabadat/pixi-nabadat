@@ -14,13 +14,13 @@ class Order extends Model
           CANCELED = 'canceled',
           SHIPPED = 'shipped';
 
-    const PAYMENTCASH = 'cash';
-    const PAYMENTCREDIT = 'credit';
+    const PAYMENTCASH = 1;
+    const PAYMENTCREDIT = 0;
 
 
-    protected $fillable = ['payment_status','payment_type','shipping_address','shipping_fees','sub_total','grand_total','coupon_discount','order_history_id'];
+    protected $fillable = ['payment_status','payment_type','address_info','shipping_fees','sub_total','grand_total','coupon_discount','order_history_id'];
 
-    public function orderItem(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function items(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(OrderItem::class, 'order_id');
     }

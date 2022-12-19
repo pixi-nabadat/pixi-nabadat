@@ -56,7 +56,7 @@ class AddressService extends BaseService
         return false;
     } //end of update
 
-    public function setDefualt(int $id)
+    public function setDefault(int $id): bool
     {
 
         $address = $this->find($id);

@@ -47,15 +47,15 @@ class OrderController extends Controller
      * @param OrderStoreRequest $request
      * @return Response|OrderResource|Application|ResponseFactory
      */
-    public function store(OrderStoreRequest $request)
+    public function store(Request $request)
     {
         try {
             DB::beginTransaction();
-            $user = auth('auth:sanctum')->user();
+            $user = auth('sanctum')->user();
             //1- get cart data for user
             $orderData = $this->cartService->getCart($request->serial_number);
             //2-get address info
-            $userAddress = $this->addressService->find(id: $orderData->addrress_id, withRelations: ['city']);
+            $userAddress = $this->addressService->find(id: $request->address_id, withRelations: ['city','user']);
 //            check availability stocks of products
             foreach ($orderData->items as $item) {
                 if ($item->quantity > $item->product->stock)

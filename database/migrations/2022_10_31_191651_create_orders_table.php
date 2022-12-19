@@ -24,7 +24,6 @@ return new class extends Migration
             $table->double('sub_total');
             $table->double('grand_total');
             $table->double('coupon_discount');
-            $table->foreignIdFor(\App\Models\OrderHistory::class)->nullable()->constrained();
             $table->double('paymob_transaction_id')->nullable();
             $table->timestamps();
         });

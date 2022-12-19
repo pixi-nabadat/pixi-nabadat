@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Product::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->double('price');
             $table->integer('quantity');
-            $table->float('discount');
+            $table->float('discount')->default(0);
             $table->timestamps();
         });
     }

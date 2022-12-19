@@ -17,7 +17,7 @@ class OrderHistoryObserver
     public function created(OrderHistory $orderHistory)
     {
         //when order history create update order_history_id in orders table
-        Order::where('id',$orderHistory->order_id)->update(['order_history_id',$orderHistory->id]);
+        Order::where('id',$orderHistory->order_id)->update(['order_history_id'=>$orderHistory->id]);
     }
 
     /**

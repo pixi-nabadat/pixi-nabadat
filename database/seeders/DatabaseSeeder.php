@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
          $this->call('Database\Seeders\LocationsTableSeeder');
         $this->call('Database\Seeders\UsersTableSeeder');
+        $this->call(ProductTableSeeder::class);
         // $this->call('Database\Seeders\CurrenciesTableDataSeeder');
         // \App\Models\User::factory(10)->create();
     }

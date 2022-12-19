@@ -16,6 +16,7 @@ class CartResource extends JsonResource
     {
         return [
             'id'            => $this->id,
+            'items_count'   => $this->items_count,
             'discount'      => $this->discount_percentage,
             'sub_total'     => (double)$this->sub_total,
             'net_total'     => (double)$this->net_total,

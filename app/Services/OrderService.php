@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\OrderHistory;
 use App\Payments\PaymobProvider;
 use App\QueryFilters\OrdersFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -43,8 +44,8 @@ class OrderService extends BaseService
             'user_id'           => $user->id,
             'payment_status'    => $payment_status,
             'payment_type'      => $payment_type,
-            'shipping_address'  => $shipping_address->toJson(),
-            'shipping_fees'     => $shipping_address->shipping_cost,
+            'address_info'      => $shipping_address->toJson(),
+            'shipping_fees'     => $shipping_address->shipping_cost ?? 0,
             'sub_total'         => $order_data->sub_total,
             'grand_total'       => $order_data->grand_total,
             'coupon_discount'   => $order_data->discount,
@@ -52,13 +53,13 @@ class OrderService extends BaseService
 
           $this->setOrderItems($order, $order_data);
           $this->createOrderHistory($order);
-          return $order->load('details', 'history');
+          return $order->load('items.product','history');
     }
 
     private function setOrderItems(Order $order,$order_items): void
     {
-        $order_items = $order_items->toArray();
-        $order->orderItem()->createMany($order_items);
+        $order_items = $order_items->items->toArray();
+        $order->items()->createMany($order_items);
     }
 
     private function createOrderHistory(Order $order): void
