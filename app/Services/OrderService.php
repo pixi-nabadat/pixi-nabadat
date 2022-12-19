@@ -38,7 +38,7 @@ class OrderService extends BaseService
      * @param string $payment_type
      * @return mixed
      */
-    public function store($user , $order_data,$shipping_address,$payment_status = 'unpaid' , $payment_type =Order::PAYMENTCASH )
+    public function store($user , $order_data,$shipping_address,$payment_status = Order::UNPAID , $payment_type =Order::PAYMENTCASH )
     {
         $order = Order::create([
             'user_id'           => $user->id,

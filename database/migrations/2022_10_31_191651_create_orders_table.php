@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->enum('payment_status',['paid','unpaid'])->default('unpaid');
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->boolean('payment_status')->default(\App\Models\Order::UNPAID);
             $table->string('payment_type')->nullable();
             $table->json('address_info');
             $table->foreignIdFor(\App\Models\Address::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');

@@ -34,7 +34,7 @@ return [
         'api_key' => env('PAYMOB_API_KEY'),
         'hmac' => env('PAYMOB_HMAC_KEY'),
         'integration_id' => env('PAYMOB_INTEGRATION_ID'),
-        'iframe_url' => 'https://accept.paymob.com/api/acceptance/iframes/337530'
+        'iframe_url' => env('IFRAME_URL')
     ],
 
     'facebook' => [

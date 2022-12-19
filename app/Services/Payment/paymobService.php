@@ -28,10 +28,9 @@ class paymobService
          so that you can pay for it later using a transaction.Order ID will be the identifier
          that you will use to link the transaction(s) performed to your system, as one order can have more than one transaction.
      */
-    public function createOrder($items=[]): object|array
+    public function createOrder($items=[])
     {
-        $response = Http::post($this->baseUrl.'/ecommerce/orders',$items);
-        return $response->object();
+        return Http::post($this->baseUrl.'/ecommerce/orders',$items);
     }
 
 
@@ -55,10 +54,10 @@ class paymobService
             "phone_number"=> $shippingAddress->phone,
             "shipping_method"=> "NA",
             "postal_code"=>$shippingAddress->postal_code,
-            "city"=> $shippingAddress->city->name,
+            "city"=> $shippingAddress->city->title,
             "country"=> "NA",
             "last_name"=> $shippingAddress->user->name ,
-            "state"=> $shippingAddress->governorate->name
+            "state"=> $shippingAddress->governorate->title
         ];
         $data=[
             "auth_token"=>$token,
@@ -72,9 +71,9 @@ class paymobService
         return Http::post($this->baseUrl.'/acceptance/payment_keys',$data);
     }
 
-    public function paymentCallback(): bool|array
+    public function paymentCallback(Request $request): bool|array
     {
-        $data = request()->all();
+        $data = $request->all();
         ksort($data);
         $hmac = $data['hmac'];
         $arrayKeys = [
@@ -91,12 +90,12 @@ class paymobService
             'is_refunded',
             'is_standalone_payment',
             'is_voided',
-            'order.id',
+            'order',
             'owner',
             'pending',
-            'source_data.pan',
-            'source_data.sub_type',
-            'source_data.type',
+            'source_data_pan',
+            'source_data_sub_type',
+            'source_data_type',
             'success'
         ];
         $concatenatedString = '';
@@ -108,7 +107,7 @@ class paymobService
 
         $hmacSecret = config('services.paymob.hmac');
         $hashedHmac = hash_hmac('SHA512',$concatenatedString,$hmacSecret);
-        if ($hashedHmac==$hmac && $data['success'])
+        if ($hashedHmac == $hmac && $data['success'])
             return $data;
         return false;
     }

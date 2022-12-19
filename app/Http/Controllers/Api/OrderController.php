@@ -30,15 +30,15 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-        $filters = array_merge($request->all(), ['user_id' => auth('auth:sanctum')->id()]);
-        $relations = ['history'];
+        $filters = array_merge($request->all(), ['user_id' => auth('sanctum')->id()]);
+        $relations = ['history', 'items'];
         $order = $this->orderService->getAll($filters, $relations);
         return OrderResource::collection($order);
     }
 
     public function find(int $id): OrderResource
     {
-        $withRelations = ['details', 'history'];
+        $withRelations = ['items', 'history'];
         $order = $this->orderService->find($id, $withRelations);
         return new OrderResource($order);
     }
@@ -55,7 +55,10 @@ class OrderController extends Controller
             //1- get cart data for user
             $orderData = $this->cartService->getCart($request->serial_number);
             //2-get address info
-            $userAddress = $this->addressService->find(id: $request->address_id, withRelations: ['city','user']);
+            $userAddress = $this->addressService->find(id: $request->address_id, withRelations: ['city:id,title', 'user:id,name,phone,email']);
+            if (!$userAddress)
+                return apiResponse(message: trans('lang.no_address'));
+
 //            check availability stocks of products
             foreach ($orderData->items as $item) {
                 if ($item->quantity > $item->product->stock)
@@ -65,13 +68,17 @@ class OrderController extends Controller
             $order = $this->orderService->store(user: $user, order_data: $orderData, shipping_address: $userAddress, payment_type: $payment_type);
             if ($request->payment_type == Order::PAYMENTCREDIT) {
                 $result = $this->payCredit($order, $userAddress);
-                if ($result['status']) // check if status true commit transaction and store order in database else order not stored in db
+                $status_code = 422;
+                $message = trans('lang.there_is_an_error');
+                if ($result['status']) {
+                    $status_code = 200;
+                    $message = null;
                     DB::commit();
-                return apiResponse(data: $result['data']);
+                }// check if status true commit transaction and store order in database else order not stored in db
+                return apiResponse(data: $result['data'], message: $message, code: $status_code);
             }
             DB::commit();
             return new OrderResource($order);
-
         } catch (Exception $e) {
             DB::rollBack();
             return apiResponse(message: $e->getMessage(), code: 422);
@@ -97,10 +104,14 @@ class OrderController extends Controller
             "delivery_needed" => "false",
             "amount_cents" => $total_amount_in_cents,
             "currency" => "EGP",
+            'merchant_order_id' => $order->id,
             "items" => $items
         ];
-        $this->paymobService->createOrder($itemsData);
-        $response = $this->paymobService->getPaymentToken($order->id, $token, $total_amount_in_cents, $userAddress);
+        $paymob_order = $this->paymobService->createOrder($itemsData);
+        if (!$paymob_order->successful())
+            return ['status' => false, 'data' => collect($paymob_order->object())->toArray()];
+        $paymob_order = $paymob_order->object();
+        $response = $this->paymobService->getPaymentToken($paymob_order->id, $token, $total_amount_in_cents, $userAddress);
         if (!$response->successful())
             return ['status' => false, 'data' => collect($response->object())->toArray()];
         if ($response->successful())
@@ -108,15 +119,14 @@ class OrderController extends Controller
         return ['status' => true, "data" => config('services.paymob.iframe_url') . "?payment_token={$paymentToken}"];
     }
 
-    public function checkPaymobPaymentStatus(): Response|Application|ResponseFactory
+    public function checkPaymobPaymentStatus(Request $request): Response|Application|ResponseFactory
     {
-        $result = $this->paymobService->paymentCallback();
+        $result = $this->paymobService->paymentCallback($request);
         if ($result != false) {
-            $order = $this->orderService->find($result['id']);
-            $order->update(['payment_status' => 'paid', 'payment_type' => Order::PAYMENTCREDIT, 'paymob_transaction_id' => 1]);
+            $order = $this->orderService->find($result['merchant_order_id']);
+            $order->update(['payment_status' => Order::PAID, 'payment_type' => Order::PAYMENTCREDIT, 'paymob_transaction_id' => $result['id']]);
             return apiResponse(message: trans('lang.payment_accepted'));
         }
         return apiResponse(message: trans('lang.payment_accepted'), code: 422);
-
     }
 }

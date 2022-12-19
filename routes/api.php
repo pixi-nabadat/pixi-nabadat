@@ -75,13 +75,16 @@ use Illuminate\Support\Facades\Auth;
         });
         //start order delivery
         Route::group(['prefix'=>'orders'],function (){
+            Route::get('/',[OrderController::class, 'index']);
+            Route::get('{id}',[OrderController::class, 'find']);
             Route::post('/',[OrderController::class, 'store']);
-            Route::post('paymob/payment/done', [OrderController::class,'checkPaymobPaymentStatus']);
         });
         //end order delivery
 
  });
 
+    //callback form paymob getaway
+    Route::any('orders/paymob/payment/done', [OrderController::class,'checkPaymobPaymentStatus']);
 //start cart
     Route::group(['prefix'=>'cart'],function (){
         Route::get('/', [CartController::class, 'index']);

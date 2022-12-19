@@ -31,9 +31,9 @@ class Address extends Model
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getShippingCostAttribute(): int
+    public function getShippingCostAttribute(): int|null
     {
         return $this->relationLoaded('city') ? $this->city->shipping_cost : 0;
     }
