@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Rate extends Model
 {
     use HasFactory;
-    protected $fillable = ['status','comment','rate_number','ratable_id','reatable_type'];
+    protected $fillable = ['user_id','status','comment','rate_number','ratable_id','reatable_type'];
+
+
+    public function ratable()
+    {
+        return $this->morphTo();
+    }
 }

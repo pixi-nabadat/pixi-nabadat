@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\PackageController;
 use App\Http\Controllers\Api\CartItemController;
 
 use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\api\RatesController;
 use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
@@ -126,3 +127,9 @@ Route::get('/auth/callback', function () {
         'user'=>$user
     ];
 });
+
+// start rates
+
+    Route::post('estimation', [RatesController::class, 'store']);
+
+// end rates
