@@ -18,6 +18,9 @@ use App\Http\Controllers\CancelReasonController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\PackageController;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Http\Controllers\CenterDeviceController;
 
 //Language Change
@@ -102,10 +105,31 @@ Route::get('/clear-cache', function() {
     Artisan::call('route:clear');
     return "Cache is cleared";
 })->name('clear.cache');
-Route::get('order/paycredit', [App\Http\Controllers\Api\OrderController::class, 'payCredit']);
-Route::post('/callback', function(){
-    return "<h1>faild</h1>";
+
+
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('facebook')->redirect();
 });
-Route::get('/callback', function(){
-    return "<h1>success</h1>";
+
+Route::get('/auth/callback', function () {
+    $socialUser = Socialite::driver('facebook')->user();
+    $user = App\Models\User::firstOrCreate([
+        'email' => $socialUser->email,
+    ], [
+        'name' => $socialUser->getName(),
+        'email' => $socialUser->getEmail(),
+        'username' => $socialUser->getName(),
+        'password' => bcrypt($socialUser->getEmail()),
+        'phone'=>$socialUser->getId(),
+        'type'=> 1,
+        'is_active'=>true,
+
+    ]);
+    Auth::login($user);
+    return $data = [
+        'token'=>$user->getToken(),
+        'token_type'=>'Bearer',
+        'user'=>$user
+    ];
 });

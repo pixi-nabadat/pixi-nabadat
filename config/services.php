@@ -36,4 +36,11 @@ return [
         'integration_id' => env('PAYMOB_INTEGRATION_ID'),
         'iframe_url' => 'https://accept.paymob.com/api/acceptance/iframes/337530'
     ],
+
+    'facebook' => [
+        'client_id'     => '808117876949033',
+        'client_secret' => '631763e2437b9f793d23071570f6b92e',
+        'redirect'      => 'http://localhost:8000/auth/callback',
+    ],
+
 ];

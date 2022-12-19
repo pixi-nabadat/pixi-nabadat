@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\CartItemController;
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\OrderController;
 
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -105,4 +106,32 @@ use App\Http\Controllers\Api\OrderController;
     Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);
+});
+
+use Laravel\Socialite\Facades\Socialite;
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('facebook')->stateless()->redirect();
+});
+
+Route::get('/auth/callback', function () {
+    $socialUser = Socialite::driver('facebook')->stateless()->user();
+    $user = App\Models\User::firstOrCreate([
+        'email' => $socialUser->email,
+    ], [
+        'name' => $socialUser->getName(),
+        'email' => $socialUser->getEmail(),
+        'username' => $socialUser->getName(),
+        'password' => bcrypt($socialUser->getEmail()),
+        'phone'=>$socialUser->getId(),
+        'type'=> 1,
+        'is_active'=>true,
+
+    ]);
+    Auth::login($user);
+    return $data = [
+        'token'=>$user->getToken(),
+        'token_type'=>'Bearer',
+        'user'=>$user
+    ];
 });
