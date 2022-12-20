@@ -25,11 +25,11 @@ class RatesStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id'   => 'required|integer|exists:users,id',
-            'ratable_type' => 'required|string|in:'.Rate::RATABLE_TAYPES,
+            'user_id'      => 'required|integer|exists:users,id',
+            'ratable_type' => 'required|integer|in:'.collect(Rate::RATABLE_TAYPES)->implode(','),
             'ratable_id'   => 'required|integer',
-            'comment'   => 'nullable|string',
-            'rate_number'      => 'required|numeric',
+            'comment'      => 'nullable|string',
+            'rate_number'  => 'required|numeric',
         ];
     }
 

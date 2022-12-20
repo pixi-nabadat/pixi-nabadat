@@ -21,7 +21,7 @@ class Center extends Model
 
     protected $fillable = [
         'name', 'phone', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
-        'google_map_url','avg_wating_time','featured'
+        'google_map_url','avg_wating_time','featured', 'rate'
     ];
 
     protected $casts = [
@@ -58,4 +58,8 @@ class Center extends Model
         return $this->hasMany(Appointment::class,'center_id');
     }
 
+    public function rates(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Rate::class, 'ratable');
+    }
 }

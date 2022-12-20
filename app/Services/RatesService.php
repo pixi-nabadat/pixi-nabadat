@@ -17,28 +17,29 @@ class RatesService extends BaseService
      */
     public function store(array $data)
     {
-        $model = match ($data['ratable_type']) {
+        $model = match ((int)$data['ratable_type']) {
             Rate::PRODUCT => Product::find($data['ratable_id']),
-            Rate::DEVICE => Device::find($data['ratable_id']),
-            Rate::CENTER => Center::find($data['ratable_id']),
+            Rate::DEVICE  => Device::find($data['ratable_id']),
+            Rate::CENTER  => Center::find($data['ratable_id']),
         };
         if (isset($model))
             $model->rates()->create([
-                'user_id' => $data['user_id'],
+                'user_id'     => $data['user_id'],
                 'rate_number' => $data['rate_number'],
-                'comment' => $data['comment']
+                'comment'     => $data['comment'],
+                'status'      => 1
             ]);
-        $model->load('rates');
+        return $model->load('rates');
         return $this->refreshItemRate($model);
 
     }
 
-    private function refreshItemRate(Product|Device $model): bool
+    private function refreshItemRate(Product|Device|Center $model): bool
     {
 
         $totalItemRate = $model->rates->sum('rate_number');
-        $ratesCount = $model->rates->count();
-        $finalRate = round(($totalItemRate / $ratesCount), 1, PHP_ROUND_HALF_EVEN);
+        $ratesCount    = $model->rates->count();
+        $finalRate     = round(($totalItemRate / $ratesCount), 1, PHP_ROUND_HALF_EVEN);
         $model->update([
             'rate' => $finalRate
         ]);
@@ -49,11 +50,12 @@ class RatesService extends BaseService
      * @param int $id
      * @return bool
      */
-    public function destroy(int $id): bool
+    public function destroy(int $id)//: bool
     {
-        $rate = Rate::with('ratable')->find($id);
-        //TODO refresh rate  of ratable model after delete
+        $rate        = Rate::find($id);
+        $ratableType = $rate->ratable_type;
+        $model       = $ratableType::find($rate->ratable_id);
         $rate->delete();
-        return true;
+        return $this->refreshItemRate($model);
     }
 }
