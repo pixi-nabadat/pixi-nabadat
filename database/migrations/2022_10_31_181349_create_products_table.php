@@ -25,6 +25,7 @@ return new class extends Migration
             $table->double('discount');
             $table->date('discount_start_date')->nullable();
             $table->date('discount_end_date')->nullable();
+            $table->double('rate')->default(0.0);
             $table->double('tax')->default(0);
             $table->tinyInteger('featured')->default(0)->nullable();
             $table->boolean('is_active')->default(1)->nullable();

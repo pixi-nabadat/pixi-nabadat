@@ -22,6 +22,8 @@ use App\Http\Controllers\Api\PackageController;
 use App\Http\Controllers\Api\CartItemController;
 
 use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\api\RatesController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +53,13 @@ use App\Http\Controllers\Api\AddressController;
             Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
             Route::apiResource('appointments',AppointmentController::class);
         });
+
+        // start rates
+        Route::group(['prefix'=>'rate'], function(){
+            Route::post('/',     [RatesController::class, 'store']);
+            Route::delete('{id}', [RatesController::class, 'destroy']);
+        });
+// end rates
 
         Route::get('reservations', [ReservationController::class, 'listing']);
         Route::post('reservations/store',    [ReservationController::class, 'store']);
