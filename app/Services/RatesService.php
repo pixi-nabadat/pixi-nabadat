@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Center;
 use Intervention\Image\Facades\Image;
 use App\Models\Device;
 use App\QueryFilters\DevicesFilter;
@@ -13,39 +14,38 @@ use App\Models\Rate;
 class RatesService extends BaseService
 {
 
-   
+
     /**
      * @param array $data
      * @return bool
      */
-    public function store(array $data)//: bool
+    public function store(array $data)
     {
-        if(Str::title(Str::remove(" ", $data['item_type']))== "Product")
-        {
-            $item = Product::find($data['item_id']);
-            
-        }else if(Str::title(Str::remove(" ", $data['item_type']))== "Device"){
-            $item = Device::find($data['item_id']);
-            
-        }
-        $item->rates()->create([
-            'user_id'=>$data['user_id'],
-            'rate_number'=>$data['rate_number'],
-            'comment'=>$data['comment']
-        ]);
-        return $this->refreshItemRate($item);
-        
+        $model = match ($data['ratable_type']) {
+            Rate::PRODUCT => Product::find($data['ratable_id']),
+            Rate::DEVICE => Device::find($data['ratable_id']),
+            Rate::CENTER => Center::find($data['ratable_id']),
+        };
+        if (isset($model))
+            $model ->rates()->create([
+                'user_id'=>$data['user_id'],
+                'rate_number'=>$data['rate_number'],
+                'comment'=>$data['comment']
+            ]);
+        $model->load('rates');
+        return $this->refreshItemRate($model);
+
     }
 
-    private function refreshItemRate(Product|Device $item): bool
+    private function refreshItemRate(Product|Device $model): bool
     {
-        $totalItemRate = $item->rates->sum('rate_number');
-        $ratesCount = $item->rates->count();
+
+        $totalItemRate = $model->rates->sum('rate_number');
+        $ratesCount = $model->rates->count();
         $finalRate = round(($totalItemRate / $ratesCount), 1, PHP_ROUND_HALF_EVEN);
-        $item->update([
+        $model->update([
             'rate' => $finalRate
         ]);
-
         return true;
     }
 
@@ -55,7 +55,8 @@ class RatesService extends BaseService
      */
     public function destroy(int $id): bool
     {
-        $rate = Rate::find($id);
+        $rate = Rate::with('ratable')->find($id);
+        //TODO refresh rate  of ratable model after delete
         $rate->delete();
         return true;
     }
