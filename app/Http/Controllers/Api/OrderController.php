@@ -67,13 +67,14 @@ class OrderController extends Controller
             $payment_type = $request->payment_type == Order::PAYMENTCREDIT ? Order::PAYMENTCREDIT : Order::PAYMENTCASH;
             $order = $this->orderService->store(user: $user, order_data: $orderData, shipping_address: $userAddress, payment_type: $payment_type);
             if ($request->payment_type == Order::PAYMENTCREDIT) {
-                $result = $this->payCredit($order, $userAddress);
+                $result = $this->paymobService->payCredit(order_id: $order->id,items: $order->items,userAddress:  $userAddress,total_amount_cents: $order->grand_total*100);
                 $status_code = 422;
                 $message = trans('lang.there_is_an_error');
                 if ($result['status']) {
                     $status_code = 200;
                     $message = null;
                     DB::commit();
+                    $user->cart()->delete();
                 }// check if status true commit transaction and store order in database else order not stored in db
                 return apiResponse(data: $result['data'], message: $message, code: $status_code);
             }
@@ -81,42 +82,8 @@ class OrderController extends Controller
             return new OrderResource($order);
         } catch (Exception $e) {
             DB::rollBack();
-            return apiResponse(message: $e->getMessage(), code: 422);
+            return apiResponse(message: $e, code: 422);
         }
-    }
-
-    public function payCredit($order, $userAddress): array
-    {
-        $items = [];
-        $total_amount_in_cents = $order->grand_total * 100;
-//        payment process to return iframe for billing ;
-        $token = $this->paymobService->getAuthToken();
-        foreach ($order->items as $item) {
-            $items[] = [
-                "name" => $item->product->name,
-                "amount_cents" => $item->price * 100,
-                "description" => $item->product->description,
-                "quantity" => $item['quantity']
-            ];
-        }
-        $itemsData = [
-            "auth_token" => $token,
-            "delivery_needed" => "false",
-            "amount_cents" => $total_amount_in_cents,
-            "currency" => "EGP",
-            'merchant_order_id' => $order->id,
-            "items" => $items
-        ];
-        $paymob_order = $this->paymobService->createOrder($itemsData);
-        if (!$paymob_order->successful())
-            return ['status' => false, 'data' => collect($paymob_order->object())->toArray()];
-        $paymob_order = $paymob_order->object();
-        $response = $this->paymobService->getPaymentToken($paymob_order->id, $token, $total_amount_in_cents, $userAddress);
-        if (!$response->successful())
-            return ['status' => false, 'data' => collect($response->object())->toArray()];
-        if ($response->successful())
-            $paymentToken = $response->object()->token;
-        return ['status' => true, "data" => config('services.paymob.iframe_url') . "?payment_token={$paymentToken}"];
     }
 
     public function checkPaymobPaymentStatus(Request $request): Response|Application|ResponseFactory

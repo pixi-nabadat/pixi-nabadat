@@ -111,4 +111,40 @@ class paymobService
             return $data;
         return false;
     }
+
+    public function payCredit($order_id , $items, $userAddress,$total_amount_cents): array
+    {
+        $order_items = [];
+//        payment process to return iframe for billing ;
+        if (count($items)){
+            foreach ($items as $item) {
+                $order_items[] = [
+                    "name" => $item->product->name,
+                    "amount_cents" => $item->price * 100,
+                    "description" => $item->product->description,
+                    "quantity" => $item['quantity']
+                ];
+            }
+        }
+
+        $token = $this->getAuthToken();
+        $itemsData = [
+            "auth_token" => $token,
+            "delivery_needed" => "false",
+            "amount_cents" => $total_amount_cents,
+            "currency" => "EGP",
+            'merchant_order_id' => $order_id,
+            "items" => $order_items
+        ];
+        $paymob_order = $this->createOrder($itemsData);
+        if (!$paymob_order->successful())
+            return ['status' => false, 'data' => collect($paymob_order->object())->toArray()];
+        $paymob_order = $paymob_order->object();
+        $response = $this->getPaymentToken($paymob_order->id, $token, $total_amount_cents, $userAddress);
+        if (!$response->successful())
+            return ['status' => false, 'data' => collect($response->object())->toArray()];
+        if ($response->successful())
+            $paymentToken = $response->object()->token;
+        return ['status' => true, "data" => config('services.paymob.iframe_url') . "?payment_token={$paymentToken}"];
+    }
 }
