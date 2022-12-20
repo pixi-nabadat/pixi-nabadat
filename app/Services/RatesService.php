@@ -3,14 +3,10 @@
 namespace App\Services;
 
 use App\Models\Center;
-use Intervention\Image\Facades\Image;
 use App\Models\Device;
-use App\QueryFilters\DevicesFilter;
-use Illuminate\Database\Eloquent\Builder;
-use App\Traits\AttachmentTrait;
 use App\Models\Product;
-use Illuminate\Support\Str;
 use App\Models\Rate;
+
 class RatesService extends BaseService
 {
 
@@ -27,10 +23,10 @@ class RatesService extends BaseService
             Rate::CENTER => Center::find($data['ratable_id']),
         };
         if (isset($model))
-            $model ->rates()->create([
-                'user_id'=>$data['user_id'],
-                'rate_number'=>$data['rate_number'],
-                'comment'=>$data['comment']
+            $model->rates()->create([
+                'user_id' => $data['user_id'],
+                'rate_number' => $data['rate_number'],
+                'comment' => $data['comment']
             ]);
         $model->load('rates');
         return $this->refreshItemRate($model);

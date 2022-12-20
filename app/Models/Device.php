@@ -16,12 +16,12 @@ class Device extends Model
     public $translatable =['name','description'];
     protected $fillable  =['name','description','is_active', 'rate'];
 
-    public function center()
+    public function center(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Center::class);
     }
 
-    public function rates()
+    public function rates(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
         return $this->morphMany(Rate::class, 'ratable');
     }
