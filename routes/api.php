@@ -53,6 +53,13 @@ use Illuminate\Support\Facades\Auth;
             Route::apiResource('appointments',AppointmentController::class);
         });
 
+        // start rates
+        Route::group(['prefix'=>'rate'], function(){
+            Route::post('/',     [RatesController::class, 'store']);
+            Route::delete('{id}', [RatesController::class, 'destroy']);
+        });
+// end rates
+
         Route::get('reservations', [ReservationController::class, 'listing']);
         Route::post('reservations/store',    [ReservationController::class, 'store']);
         Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
@@ -101,7 +108,7 @@ Route::fallback(function () {
 });
 
 use Laravel\Socialite\Facades\Socialite;
- 
+
 Route::get('/auth/redirect', function () {
     return Socialite::driver('facebook')->stateless()->redirect();
 });
@@ -127,11 +134,3 @@ Route::get('/auth/callback', function () {
         'user'=>$user
     ];
 });
-
-// start rates
-Route::group(['prefix'=>'rate'], function(){
-    Route::post('store',     [RatesController::class, 'store']);
-    Route::delete('destroy/{id}', [RatesController::class, 'destroy']);
-});
-
-// end rates
