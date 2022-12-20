@@ -29,6 +29,9 @@ class CitiesDataTable extends DataTable
             })
             ->addcolumn('title', function(Location $location){
                 return $location->title ;
+            })
+            ->editColumn('shipping_cost', function(Location $location){
+                return $location->shipping_cost . " L.E" ;
             });
     }
 
@@ -88,6 +91,11 @@ class CitiesDataTable extends DataTable
                 'name'=>'title',
                 'data'=>'title',
                 'title'=> 'title',
+            ],
+            [
+                'name'=>'shipping_cost',
+                'data'=>'shipping_cost',
+                'title'=> 'shipping_cost',
             ],
             [
                 'name'=>'action',
