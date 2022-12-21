@@ -27,6 +27,8 @@ return new class extends Migration
             $table->double('avg_wating_time')->nullable();
             $table->boolean('is_support_auto_service')->default(\App\Models\Center::NON_SUPPORT_AUTO_SERVICE);
             $table->string('google_map_url')->nullable();
+            $table->string('points')->default(0);
+            $table->string('points_expire_date')->nullable();
             $table->timestamps();
         });
     }
