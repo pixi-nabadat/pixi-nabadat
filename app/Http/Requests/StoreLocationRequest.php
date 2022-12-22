@@ -24,6 +24,7 @@ class StoreLocationRequest extends BaseRequest
         $rules =   [
             'title.ar' => 'required|string',
             'title.en' => 'required|string',
+            'shipping_cost'=>'nullable'
         ];
 
         if (isset($this->parent_id)) {

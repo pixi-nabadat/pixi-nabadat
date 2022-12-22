@@ -109,5 +109,9 @@
 		'flat'=>'Flat',
 		'percent'=>'Percent',
 		'stock'=>'stock',
+		'shipping_cost'=>'Shipping Cost',
+		'city'=>'City',
+		'title_ar'=>'Arabic Titel',
+		'title_en'=>'English Titel',
     ]
 ?>
