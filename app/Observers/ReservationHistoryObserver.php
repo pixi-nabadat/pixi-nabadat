@@ -18,16 +18,16 @@ class ReservationHistoryObserver
     public function created(ReservationHistory $reservationHistory)
     {
         if($reservationHistory->action_en == Reservation::getStatus('completed','en')){
-            $newPoints     = 10;
-            $reservation = Reservation::find($reservationHistory->reservation_id);
-            $user = User::find($reservation->customer_id);
+            $newPoints     = 10;//this value will come from settings
+            $reservation = $reservationHistory->reservation;
+            $user = $reservationHistory->user;
             $user->update([
                 'points'=> $user->points + $newPoints,
-                'points_expire_date'=> Carbon::parse(Carbon::now()->addMonths(3))->toDateString()
+                'points_expire_date'=> Carbon::parse(Carbon::now()->addMonths(3))->toDateString()//these months will come from settings
             ]);
             $reservation->center()->update([
                 'points'=> $reservation->center->points + $newPoints,
-                'points_expire_date'=> Carbon::parse(Carbon::now()->addMonths(3))->toDateString()
+                'points_expire_date'=> Carbon::parse(Carbon::now()->addMonths(3))->toDateString()// these months will com from settings
             ]);    
         }
     }

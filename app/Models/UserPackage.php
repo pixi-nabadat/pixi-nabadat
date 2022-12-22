@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class UserPackage extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'package_id',
+        'user_id',
+        'num_nabadat',
+        'price'
+    ];
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\ReservationHistory;
+use App\Models\UserPackage;
 use App\Observers\ReservationHistoryObserver;
+use App\Observers\UserPackageObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -30,6 +32,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         ReservationHistory::observe(ReservationHistoryObserver::class);
+        UserPackage::observe(UserPackageObserver::class);
     }
 
     /**
