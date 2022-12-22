@@ -18,9 +18,6 @@ use App\Http\Controllers\CancelReasonController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\PackageController;
-use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use App\Http\Controllers\CenterDeviceController;
 
 //Language Change

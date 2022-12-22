@@ -22,9 +22,11 @@ use App\Http\Controllers\Api\PackageController;
 use App\Http\Controllers\Api\CartItemController;
 
 use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\api\RatesController;
 use App\Http\Controllers\Api\OrderController;
 
 use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -60,7 +62,12 @@ use Illuminate\Support\Facades\Auth;
             Route::get('{id}', [ReservationController::class, 'find']);
             Route::post('{id}/status',  [ReservationHistoryController::class, 'store']);
         });
-
+        // start rates
+        Route::group(['prefix'=>'rate'], function(){
+            Route::post('/',     [RatesController::class, 'store']);
+            Route::delete('{id}', [RatesController::class, 'destroy']);
+        });
+// end rates
         Route::post('user/coupons',       [CouponUsageController::class, 'store']);//create new coupon
         Route::post('coupon/simulation',  [CouponUsageController::class, 'simulation']);//create new coupon
 
@@ -109,32 +116,4 @@ use Illuminate\Support\Facades\Auth;
     Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);
-});
-
-use Laravel\Socialite\Facades\Socialite;
-
-Route::get('/auth/redirect', function () {
-    return Socialite::driver('facebook')->stateless()->redirect();
-});
-
-Route::get('/auth/callback', function () {
-    $socialUser = Socialite::driver('facebook')->stateless()->user();
-    $user = App\Models\User::firstOrCreate([
-        'email' => $socialUser->email,
-    ], [
-        'name' => $socialUser->getName(),
-        'email' => $socialUser->getEmail(),
-        'username' => $socialUser->getName(),
-        'password' => bcrypt($socialUser->getEmail()),
-        'phone'=>$socialUser->getId(),
-        'type'=> 1,
-        'is_active'=>true,
-
-    ]);
-    Auth::login($user);
-    return $data = [
-        'token'=>$user->getToken(),
-        'token_type'=>'Bearer',
-        'user'=>$user
-    ];
 });

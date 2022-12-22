@@ -37,10 +37,4 @@ return [
         'iframe_url' => env('IFRAME_URL')
     ],
 
-    'facebook' => [
-        'client_id'     => '808117876949033',
-        'client_secret' => '631763e2437b9f793d23071570f6b92e',
-        'redirect'      => 'http://localhost:8000/auth/callback',
-    ],
-
 ];
