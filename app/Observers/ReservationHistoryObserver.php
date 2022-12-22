@@ -18,8 +18,9 @@ class ReservationHistoryObserver
     public function created(ReservationHistory $reservationHistory)
     {
         if($reservationHistory->action_en == Reservation::getStatus('completed','en')){
-            $newPoints     = 10;//this value will come from settings
+            $pointPerPound     = 1;//this value will come from settings
             $reservation = $reservationHistory->reservation;
+            $newPoints   = $reservation->nabadatHistory->sum('total_price') * $pointPerPound;
             $user = $reservationHistory->user;
             $user->update([
                 'points'=> $user->points + $newPoints,

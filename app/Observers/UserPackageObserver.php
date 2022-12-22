@@ -16,8 +16,9 @@ class UserPackageObserver
      */
     public function created(UserPackage $userPackage)
     {
-        $newPoints     = 5;// this valuue will come from settings
+        $pointPerPound     = 2;// this valuue will come from settings
         $user = $userPackage->user;
+        $newPoints = $userPackage->price * $pointPerPound;
         $user->update([
             'points'=> $user->points + $newPoints,
             'points_expire_date'=> Carbon::parse(Carbon::now()->addMonths(3))->toDateString()//these months addded will come from settings
