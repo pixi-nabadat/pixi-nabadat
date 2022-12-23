@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('google_map_url')->nullable();
             $table->string('points')->default(0);
             $table->string('points_expire_date')->nullable();
+            $table->double('rate')->default(0.0);
             $table->timestamps();
         });
     }

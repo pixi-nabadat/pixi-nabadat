@@ -32,14 +32,13 @@ class CityController extends Controller
     public function store(StoreLocationRequest $request)
     {
         try {
-            return $this->locationService->store($request->all());
+            $this->locationService->store($request->all());
+            $toast=['type'=>'success','title'=>trans('lang.title'),'message'=> trans('lang.city_saved_Successfully')];
+            return redirect(route('city.index'))->with('toast',$toast);
+
         }catch (\Exception $exception)
         {
-            $toast=[
-                'type'=>'error',
-                'title'=>trans('lang.error'),
-                'message'=>$exception->getMessage()
-            ];
+            $toast=['type'=>'error','title'=>trans('lang.error'),'message'=>$exception->getMessage()];
             return back()->with('toast',$toast);
         }
     }
