@@ -68,12 +68,12 @@ class OrderController extends Controller
                     $status_code = 200;
                     $message = null;
                     DB::commit();
-                    $user->cart()->delete();
+                    $this->cartService->emptyCart($request->serial_number);
                 }// check if status true commit transaction and store order in database else order not stored in db
                 $result_data = $result['data'] ?? null;
                 return apiResponse(data: $result_data, message: $message, code: $status_code);
             }
-            $user->cart()->delete();
+            $this->cartService->emptyCart($request->serial_number);
             DB::commit();
             return new OrderResource($order);
         } catch (Exception $e) {
