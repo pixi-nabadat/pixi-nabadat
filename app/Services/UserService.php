@@ -68,10 +68,8 @@ class UserService extends BaseService
         return false;
     }//end of update
 
-    public function updateOrCreateNabadatWallet(int $user_id, $package): bool
+    public function updateOrCreateNabadatWallet(User $user, $package): bool
     {
-        $withRelation = ['nabadatWallet'];
-        $user = $this->find($user_id, $withRelation);
         if (!$user)
             return false;
         $old_pulses = $user->nabadatWallet->total_pulses ?? 0;

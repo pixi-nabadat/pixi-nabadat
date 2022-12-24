@@ -26,12 +26,6 @@ class BuyOfferRequest extends BaseRequest
         return [
             'package_id'        => 'required|integer',
             'payment_method'    => 'integer|required',
-            'user_id'           => 'required'
         ];
-    }
-
-    public function validationData(): array
-    {
-        return array_merge($this->all(), ['user_id' => auth('auth:sanctum')->id()]);
     }
 }

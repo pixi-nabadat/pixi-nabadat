@@ -91,7 +91,7 @@ use Illuminate\Support\Facades\Auth;
  });
 
     //callback form paymob getaway
-    Route::any('orders/paymob/payment/done', [OrderController::class,'checkPaymobPaymentStatus']);
+    Route::any('paymob/payment/done', [OrderController::class,'checkPaymobPaymentStatus']);
 //start cart
     Route::group(['prefix'=>'cart'],function (){
         Route::get('/', [CartController::class, 'index']);

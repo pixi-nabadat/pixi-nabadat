@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('nabadat_wallets', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->float('total_pulses')->default(0);
+            $table->float('used_amount')->default(0);
             $table->timestamps();
         });
     }

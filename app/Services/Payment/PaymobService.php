@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 
-class paymobService
+class PaymobService
 {
     public $baseUrl = 'https://accept.paymob.com/api';
     /*
@@ -114,19 +114,6 @@ class paymobService
 
     public function payCredit($order_id , $items, $userAddress,$total_amount_cents): array
     {
-        $order_items = [];
-//        payment process to return iframe for billing ;
-        if (count($items)){
-            foreach ($items as $item) {
-                $order_items[] = [
-                    "name" => $item->product->name,
-                    "amount_cents" => $item->price * 100,
-                    "description" => $item->product->description,
-                    "quantity" => $item['quantity']
-                ];
-            }
-        }
-
         $token = $this->getAuthToken();
         $itemsData = [
             "auth_token" => $token,
@@ -134,7 +121,7 @@ class paymobService
             "amount_cents" => $total_amount_cents,
             "currency" => "EGP",
             'merchant_order_id' => $order_id,
-            "items" => $order_items
+            "items" => $items
         ];
         $paymob_order = $this->createOrder($itemsData);
         if (!$paymob_order->successful())

@@ -23,8 +23,10 @@ return new class extends Migration
             $table->double('shipping_fees')->default(0);
             $table->double('sub_total');
             $table->double('grand_total');
-            $table->double('coupon_discount');
+            $table->double('coupon_discount')->default(0);
             $table->double('paymob_transaction_id')->nullable();
+            $table->nullableMorphs('relatable');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

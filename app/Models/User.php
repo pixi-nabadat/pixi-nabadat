@@ -17,7 +17,6 @@ class User extends Authenticatable
     const SUPERADMINTYPE = 1;
     const CUSTOMERTYPE = 2;
     const CENTERADMIN = 4;
-    const CENTEREMPLOYEE = 5;
 
     const ACTIVE = 1;
     const NONACTIVE = 0;
@@ -79,7 +78,12 @@ class User extends Authenticatable
     }
     public function addresses(): \Illuminate\Database\Eloquent\Relations\hasMany
     {
-        return $this->hasMany(addresse::class, 'user_id');
+        return $this->hasMany(Address::class, 'user_id');
+    }
+
+    public function defaultAddress(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->addresses()->where('is_default',true);
     }
 
     public function orders(): \Illuminate\Database\Eloquent\Relations\hasMany
@@ -95,6 +99,6 @@ class User extends Authenticatable
 
     public function package(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Package::class,'user_id');
+        return $this->hasMany(UserPackage::class,'user_id');
     }
 }
