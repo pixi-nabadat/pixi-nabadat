@@ -24,8 +24,7 @@ class BuyOfferRequest extends BaseRequest
     public function rules()
     {
         return [
-            'package_id'        => 'required|integer',
-            'payment_method'    => 'integer|required',
+            'offer_id'        => 'required|integer',
         ];
     }
 }

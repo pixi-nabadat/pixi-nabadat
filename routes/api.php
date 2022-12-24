@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\CartItemController;
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\api\RatesController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\BuyOfferController;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -67,7 +68,7 @@ use Illuminate\Support\Facades\Auth;
             Route::post('/',     [RatesController::class, 'store']);
             Route::delete('{id}', [RatesController::class, 'destroy']);
         });
-// end rates
+        // end rates
         Route::post('user/coupons',       [CouponUsageController::class, 'store']);//create new coupon
         Route::post('coupon/simulation',  [CouponUsageController::class, 'simulation']);//create new coupon
 
@@ -87,6 +88,12 @@ use Illuminate\Support\Facades\Auth;
             Route::post('/',[OrderController::class, 'store']);
         });
         //end order delivery
+//start buy pulsses from nabdat app
+        Route::group(['prefix'=>'offers'],function (){
+            Route::get('/',[BuyOfferController::class, 'index']);
+            Route::post('/buy',[BuyOfferController::class, 'buyOffer']);
+        });
+        //start buy pulsses from nabdat app
 
  });
 

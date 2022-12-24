@@ -33,16 +33,17 @@ class BuyOfferController extends Controller
             DB::beginTransaction();
             $user = auth('sanctum')->user();
             $user =  $user->load('defaultAddress');
-            $package = $this->packageService->find($request->package_id);
+            $userAddress = $user->defaultAddress->first();
+            $package = $this->packageService->find($request->offer_id);
             if (!$package)
                 return apiResponse(message: trans('lang.resource_not_found'), code: 422);
             //create user package log
             $order_data = $this->prepareOrderData($user , $package);
             $order_item_data = $this->prepareOrderItemsData($package);
             $paymob_order_items = $this->preparePaymobOrderItems($package);
-            $order = $this->setUserPackageAsOrder($user,$order_data,$order_item_data);
+            $order = $this->setUserOfferAsOrder($user,$order_data,$order_item_data);
             $total_order_amount_in_cents = $package->price * 100 ;
-            $result = $this->paymobService->payCredit(order_id: $order->id, items: $paymob_order_items, userAddress: $user->defaultAddress, total_amount_cents: $total_order_amount_in_cents);
+            $result = $this->paymobService->payCredit(order_id: $order->id, items: $paymob_order_items, userAddress:$userAddress, total_amount_cents: $total_order_amount_in_cents);
             $status_code = 422;
             $message = trans('lang.there_is_an_error');
             if ($result['status']) {
@@ -53,7 +54,7 @@ class BuyOfferController extends Controller
             $result_data = $result['data'] ?? null;
             return apiResponse(data:$result_data,message: $message,code: $status_code);
         } catch (\Exception $exception) {
-            return apiResponse(message: $exception->getMessage(), code: 422);
+            return apiResponse(message: $exception, code: 422);
         }
     } //end of index
 

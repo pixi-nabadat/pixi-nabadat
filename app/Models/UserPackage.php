@@ -10,7 +10,7 @@ class UserPackage extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'package_id', 'num_pulses', 'price'];
+    protected $fillable = ['user_id', 'package_id', 'num_nabadat', 'price'];
 
     public function user(): BelongsTo
     {

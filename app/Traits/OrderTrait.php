@@ -35,7 +35,7 @@ trait OrderTrait
         ];
     }
 
-    public function setUserPackageAsOrder(User $user, array $order_data, array $items)
+    public function setUserOfferAsOrder(User $user, array $order_data, array $items)
     {
         $order = $user->orders()->create($order_data);
         $order->items()->create($items);

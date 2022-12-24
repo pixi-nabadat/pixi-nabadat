@@ -76,11 +76,12 @@ class UserService extends BaseService
         $total_pulses = $old_pulses + $package->num_nabadat;
         $user_package_data = [
             'package_id' => $package->id,
-            'num_pulses' => $package->num_nabadat,
+            'num_nabadat' => $package->num_nabadat,
             'price' => $package->price
         ];
+        logger('inside user service');
         $user->package()->create($user_package_data);
-        $user->nabadatWallet()->updateOrCreate(['total_pulses' => $total_pulses]);
+        $user->nabadatWallet()->updateOrCreate(['user_id'=>$user->id],['total_pulses' => $total_pulses]);
         return true;
     }
 }
