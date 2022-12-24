@@ -17,7 +17,6 @@ class User extends Authenticatable
     const SUPERADMINTYPE = 1;
     const CUSTOMERTYPE = 2;
     const CENTERADMIN = 4;
-    const CENTEREMPLOYEE = 5;
 
     const ACTIVE = 1;
     const NONACTIVE = 0;
@@ -30,7 +29,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password', 'phone', 'type','description','user_name',
-        'last_login', 'date_of_birth', 'is_active','location_id'
+        'last_login', 'date_of_birth', 'is_active','location_id', 'points', 'points_expire_date'
     ];
 
     /**
@@ -76,5 +75,30 @@ class User extends Authenticatable
     public function coupons(): \Illuminate\Database\Eloquent\Relations\belongsToMany
     {
         return $this->belongsToMany(Coupon::class, 'coupon_usages','user_id','coupon_id');
+    }
+    public function addresses(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(Address::class, 'user_id');
+    }
+
+    public function defaultAddress(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->addresses()->where('is_default',true);
+    }
+
+    public function orders(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
+
+
+    public function nabadatWallet(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(NabadatWallet::class,'user_id');
+    }
+
+    public function package(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(UserPackage::class,'user_id');
     }
 }

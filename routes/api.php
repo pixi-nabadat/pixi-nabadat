@@ -23,6 +23,9 @@ use App\Http\Controllers\Api\CartItemController;
 
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\api\RatesController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\BuyOfferController;
+
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -54,18 +57,18 @@ use Illuminate\Support\Facades\Auth;
             Route::apiResource('appointments',AppointmentController::class);
         });
 
+        Route::group(['prefix'=>'reservations'],function (){
+            Route::get('/', [ReservationController::class, 'listing']);
+            Route::post('/',    [ReservationController::class, 'store']);
+            Route::get('{id}', [ReservationController::class, 'find']);
+            Route::post('{id}/status',  [ReservationHistoryController::class, 'store']);
+        });
         // start rates
         Route::group(['prefix'=>'rate'], function(){
             Route::post('/',     [RatesController::class, 'store']);
             Route::delete('{id}', [RatesController::class, 'destroy']);
         });
-// end rates
-
-        Route::get('reservations', [ReservationController::class, 'listing']);
-        Route::post('reservations/store',    [ReservationController::class, 'store']);
-        Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
-        Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
-
+        // end rates
         Route::post('user/coupons',       [CouponUsageController::class, 'store']);//create new coupon
         Route::post('coupon/simulation',  [CouponUsageController::class, 'simulation']);//create new coupon
 
@@ -74,14 +77,28 @@ use Illuminate\Support\Facades\Auth;
             Route::get ('/',[AddressController::class,'index']);
             Route::get('{address}',[AddressController::class,'find']);
             Route::post('/',[AddressController::class,'store']);
-            Route::post('setDefualt/{address}',[AddressController::class,'setDefualt']);
+            Route::post('set-default/{address}',[AddressController::class,'setDefault']);
             Route::patch('{address}',[AddressController::class,'update']);
             Route::delete('{address}',[AddressController::class,'destroy']);
-
         });
+        //start order delivery
+        Route::group(['prefix'=>'orders'],function (){
+            Route::get('/',[OrderController::class, 'index']);
+            Route::get('{id}',[OrderController::class, 'find']);
+            Route::post('/',[OrderController::class, 'store']);
+        });
+        //end order delivery
+//start buy pulsses from nabdat app
+        Route::group(['prefix'=>'offers'],function (){
+            Route::get('/',[BuyOfferController::class, 'index']);
+            Route::post('/buy',[BuyOfferController::class, 'buyOffer']);
+        });
+        //start buy pulsses from nabdat app
 
  });
 
+    //callback form paymob getaway
+    Route::any('paymob/payment/done', [OrderController::class,'checkPaymobPaymentStatus']);
 //start cart
     Route::group(['prefix'=>'cart'],function (){
         Route::get('/', [CartController::class, 'index']);

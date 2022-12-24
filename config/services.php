@@ -30,5 +30,11 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'paymob' => [
+        'api_key' => env('PAYMOB_API_KEY'),
+        'hmac' => env('PAYMOB_HMAC_KEY'),
+        'integration_id' => env('PAYMOB_INTEGRATION_ID'),
+        'iframe_url' => env('IFRAME_URL')
+    ],
 
 ];

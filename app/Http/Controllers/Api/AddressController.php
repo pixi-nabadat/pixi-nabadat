@@ -47,7 +47,7 @@ class AddressController extends Controller
         }
     } //end of update
 
-    public function destroy($id)
+    public function destroy($id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             $result = $this->addressService->delete($id);
@@ -59,7 +59,7 @@ class AddressController extends Controller
         }
     } //end of destroy
 
-    public function find($id)
+    public function find($id): \Illuminate\Http\Response|AddressesResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             $address = $this->addressService->find($id);
@@ -69,10 +69,10 @@ class AddressController extends Controller
         }
     } //end of find
 
-    public function setDefualt($id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function setDefault($id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $this->addressService->setDefualt($id);
+            $this->addressService->setDefault($id);
             return apiResponse(message: trans('lang.success'));
         } catch (\Exception $ex) {
             return apiResponse(message: $ex->getMessage(), code: 422);

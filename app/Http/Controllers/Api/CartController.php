@@ -64,6 +64,9 @@ class CartController extends Controller
             if ($request->quantity < 1)
                 return apiResponse(message: trans('lang.quantity_is_more_than_stock_available'). $product->stock);
 
+            if ($request->quantity > $product->stock)
+                return apiResponse(message: trans('lang.quantity_is_more_than_stock_available'). $product->stock);
+
             $cart = $this->cartService->addItem(product_id: $request->product_id,quantity: $request->quantity, temp_user_id: $request->temp_user_id);
             DB::commit();
             return new CartResource($cart);

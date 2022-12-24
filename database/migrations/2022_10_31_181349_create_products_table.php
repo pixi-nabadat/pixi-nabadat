@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('stock');
             $table->double('unit_price');
             $table->double('purchase_price');
-            $table->double('discount');
+            $table->double('discount')->default(0);
             $table->date('discount_start_date')->nullable();
             $table->date('discount_end_date')->nullable();
             $table->double('rate')->default(0.0);

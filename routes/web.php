@@ -102,3 +102,31 @@ Route::get('/clear-cache', function() {
     Artisan::call('route:clear');
     return "Cache is cleared";
 })->name('clear.cache');
+
+
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('facebook')->redirect();
+});
+
+Route::get('/auth/callback', function () {
+    $socialUser = Socialite::driver('facebook')->user();
+    $user = App\Models\User::firstOrCreate([
+        'email' => $socialUser->email,
+    ], [
+        'name' => $socialUser->getName(),
+        'email' => $socialUser->getEmail(),
+        'username' => $socialUser->getName(),
+        'password' => bcrypt($socialUser->getEmail()),
+        'phone'=>$socialUser->getId(),
+        'type'=> 1,
+        'is_active'=>true,
+
+    ]);
+    Auth::login($user);
+    return $data = [
+        'token'=>$user->getToken(),
+        'token_type'=>'Bearer',
+        'user'=>$user
+    ];
+});

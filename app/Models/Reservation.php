@@ -12,6 +12,10 @@ class Reservation extends Model
     use HasFactory, Filterable;
 
 
+    //todo make one value and make translation for it in translation files
+    /*
+     * protected static $pending = 'Pending';
+     * */
     protected static $pending   = ['en'=>'pending',   'ar'=>'قيد الانتظار'];
     protected static $confirmed = ['en'=>'confirmed', 'ar'=>'تم التأكيد'];
     protected static $attend    = ['en'=>'attend',    'ar'=>'تم الحضور'];
