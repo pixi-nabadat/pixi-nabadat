@@ -27,6 +27,8 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Location::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->date('date_of_birth')->nullable();
             $table->string('description')->nullable();
+            $table->integer('points')->default(0);
+            $table->date('points_expire_date')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->timestamps();
         });
