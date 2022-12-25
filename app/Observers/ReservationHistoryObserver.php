@@ -17,7 +17,7 @@ class ReservationHistoryObserver
      */
     public function created(ReservationHistory $reservationHistory)
     {
-        if($reservationHistory->action_en == Reservation::getStatus('completed','en')){
+        if($reservationHistory->status == Reservation::COMPLETED){
             $pointPerPound     = 1;//this value will come from settings
             $reservation = $reservationHistory->reservation;
             $newPoints   = $reservation->nabadatHistory->sum('total_price') * $pointPerPound;
@@ -29,7 +29,7 @@ class ReservationHistoryObserver
             $reservation->center()->update([
                 'points'=> $reservation->center->points + $newPoints,
                 'points_expire_date'=> Carbon::parse(Carbon::now()->addMonths(3))->toDateString()// these months will com from settings
-            ]);    
+            ]);
         }
     }
 

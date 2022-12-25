@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\UserPackageObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,5 +21,10 @@ class UserPackage extends Model
     public function package(): BelongsTo
     {
         return $this->belongsTo(Package::class, 'package_id');
+    }
+    protected static function boot()
+    {
+        parent::boot();
+        static::observe(UserPackageObserver::class);
     }
 }

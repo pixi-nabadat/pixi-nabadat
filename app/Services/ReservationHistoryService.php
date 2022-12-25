@@ -5,42 +5,39 @@ namespace App\Services;
 use App\Exceptions\StatusNotEquelException;
 use App\Models\Reservation;
 use App\Models\User;
-use App\Models\Center;
-use App\QueryFilters\ReservationsFilter;
-use Exception;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Arr;
 class ReservationHistoryService extends BaseService
 {
-    private function setStatus(Reservation $reservation,string $status,User $user = null): bool
+    /**
+     * @throws StatusNotEquelException
+     */
+    public function store(User $user, Reservation $reservation, string $status)
+    {
+        $lastStatus = $reservation->history->last()->status;
+
+        $reservationDevicesCount = $reservation->nabadatHistory->count();
+
+        switch ($status) {
+            case $status == Reservation::ATTEND && ($lastStatus == Reservation::CONFIRMED):
+            case $status == Reservation::COMPLETED && ($lastStatus == Reservation::PENDING):
+            case $status == Reservation::COMPLETED && ($lastStatus == Reservation::ATTEND && $reservationDevicesCount > 0):
+            case $status == Reservation::CANCELED && ($lastStatus != Reservation::COMPLETED
+                    && $lastStatus != Reservation::CANCELED
+                    && $lastStatus != Reservation::Expired):
+                return $this->setStatus(reservation: $reservation, status: $status, user: $user);
+            default:
+                throw new StatusNotEquelException(trans('lang.the status is:') . $lastStatus);
+        }
+
+    }
+
+    private function setStatus(Reservation $reservation, int $status, User $user = null): bool
     {
         $reservation->history()->create([
-            'user_id'   =>$user->id,
-            'action_en' =>Reservation::getStatus($status,'en'),
-            'action_ar' =>Reservation::getStatus($status, 'ar')
+            'user_id' => $user->id,
+            'status' => $status,
         ]);
         $reservation->refresh();
         return true;
     }
-
-    public function store(User $user, Reservation $reservation, string $status)
-    {
-        $lastStatus = $reservation->history->last()->action_en;
-
-        $reservationDevicesCount = $reservation->nabadatHistory->count();
-
-        if($status== 'confirm' && ($lastStatus == Reservation::getStatus('pending','en')))//confirm status
-            return $this->setStatus(reservation: $reservation, status: $status, user: $user);
-        else if($status== 'attend' && ($lastStatus == Reservation::getStatus('confirm','en')))//attend status
-            return $this->setStatus(reservation: $reservation, status: $status, user: $user);
-        else if($status== 'completed' && ($lastStatus == Reservation::getStatus('attend','en') && $reservationDevicesCount > 0))//complete status
-            return $this->setStatus(reservation: $reservation, status: $status, user: $user);
-        else if($status== 'canceled' && ($lastStatus != Reservation::getStatus('completed','en') && $lastStatus != Reservation::getStatus('canceled','en') && $lastStatus != Reservation::getStatus('expired','en')))//cancel status
-            return $this->setStatus(reservation: $reservation, status: $status, user: $user);
-        else
-            throw new StatusNotEquelException('the status is: '.$lastStatus );
-    }
-
-
 }
