@@ -24,16 +24,11 @@ class ReservationHistoryController extends Controller
         try{
             $reservation = Reservation::find($id);
             if($reservation){
-                $user = User::find($request->user_id);
-                if($user){
-                    $status = $request->status;
-                    $response = $this->reservationHistoryService->store($user, $reservation, $status);
-                    if($response){
-                        $reservation = new ReservationsResource($reservation);
-                        return apiResponse($reservation, 'Done', 200);
-                    }
-                }else{
-                    return apiResponse(null,'User Not Found', 404);
+                $reservationHistoryData = $request->validated();
+                $response = $this->reservationHistoryService->store($reservation, $reservationHistoryData);
+                if($response){
+                    $reservation = new ReservationsResource($reservation);
+                    return apiResponse($reservation, 'Done', 200);
                 }
             }else{
                 return apiResponse(null,'Reservation Not Found', 404);
@@ -41,5 +36,5 @@ class ReservationHistoryController extends Controller
         }catch(StatusNotEquelException $e){
             return apiResponse(null,$e->getMessage(), $e->getCode());
         }
-    } 
+    }
 }

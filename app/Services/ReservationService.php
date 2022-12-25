@@ -37,7 +37,7 @@ class ReservationService extends BaseService
         $reservation->refresh();
         if (!$reservation)
             return false;
-        return $reservation;
+        return $reservation->load('center','user','history');
     }
 
     public function update(int $reservationId, array $reservationData): bool

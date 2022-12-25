@@ -21,23 +21,16 @@ class NabadatHistoryController extends Controller
     {
 
     }
-    
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Requests\ReservationStoreRequest  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(NabadatHistoryStoreRequest $request)
     {
         try{
             $request = $request->validated();
             $data = $this->nabadatHistoryService->store($request);
-            $data = new ReservationsResource($data);
             if($data)
-                return apiResponse(data: $data, message: 'done', code: 200);
+                return apiResponse(data: new ReservationsResource($data),message: trans('lang.operation_success'));
             else
-                return apiResponse(data: null, message: 'Something went rong.', code: 422);
+                return apiResponse( message: trans('lang.something_went_wrong.'), code: 422);
         }catch(Exception $e){
             return apiResponse(data: null, message: $e->getMessage(), code: 300);
         }

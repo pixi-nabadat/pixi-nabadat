@@ -15,34 +15,26 @@ use Illuminate\Support\Arr;
 class NabadatHistoryService extends BaseService
 {
 
-    
+
     public function store(array $data = [])
     {
-        $reservation = Reservation::find($data['reservation_id']);
-        if($reservation != null){
-            $centerId = $reservation->center_id;
-            $center = Center::find($centerId);
-            $centerDevice = $center->devices()->withPivot(['unit_price_with_auto_service','unit_price'])->where('device_id', $data['device_id'])->first();
-            if($centerDevice){
-                if($data['auto_service'])
-                    $nabadaPrice = $centerDevice->pivot->unit_price_with_auto_service;
-                else
-                    $nabadaPrice = $centerDevice->pivot->unit_price;
-            }
-            $reservation->nabadatHistory()->create([
-                'user_id'      => $reservation->user()->id,
-                'device_id'    => $data['device_id'],
-                'center_id'    => $centerId,
-                'num_nabadat'  => $data['num_nabadat'],
-                'nabada_price' => $nabadaPrice,
-                'total_price'  => $data['num_nabadat'] * $nabadaPrice
-            ]);
-            $reservation->refresh();
-            return $reservation;
-        }else{
-            return false;
-        }
-        
-        
+        $reservation = Reservation::with('center')->find($data['reservation_id']);
+        $data['auto_service'] = isset($data['auto_service']);
+        if (!$reservation)
+            return false ;
+        $centerDevice = $reservation->center->devices()->where('device_id', $data['device_id'])->first();
+        if (!$centerDevice)
+            return false ;
+        $nabadaPrice = $data['auto_service'] ? $centerDevice->pivot->auto_service_price : $centerDevice->pivot->nabadat_app_price;
+        $reservation->nabadatHistory()->create([
+            'user_id'      => $reservation->customer_id,
+            'device_id'    => $data['device_id'],
+            'center_id'    => $reservation->center_id,
+            'num_nabadat'  => $data['num_nabadat'],
+            'nabada_price' => $nabadaPrice,
+            'total_price'  => $data['num_nabadat'] * $nabadaPrice
+        ]);
+        $reservation->refresh();
+        return $reservation->load(['center','user','history']);
     }
 }

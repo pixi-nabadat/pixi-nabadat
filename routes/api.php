@@ -57,13 +57,15 @@ use Illuminate\Support\Facades\Auth;
             Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
             Route::apiResource('appointments',AppointmentController::class);
         });
-        Route::post('reservation/devices', [NabadatHistoryController::class, 'store']);
 
         Route::group(['prefix'=>'reservations'],function (){
-            Route::get('/', [ReservationController::class, 'listing']);
+            Route::get('/', [ReservationController::class, 'listing']); // all reservations for center
+            Route::get('/patient', [ReservationController::class, 'patientReservations']); // all reservations for patient
             Route::post('/',    [ReservationController::class, 'store']);
             Route::get('{id}', [ReservationController::class, 'find']);
             Route::post('{id}/status',  [ReservationHistoryController::class, 'store']);
+            Route::post('devices', [NabadatHistoryController::class, 'store']);
+
         });
         // start rates
         Route::group(['prefix'=>'rate'], function(){

@@ -30,4 +30,9 @@ class ReservationStoreRequest extends BaseRequest
             'payment_type' => 'required|in:cash,palses',
         ];
     }
+
+    public function validationData()
+    {
+        return array_merge($this->all(),['customer_id'=>auth('sanctum')->id()]);
+    }
 }

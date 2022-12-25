@@ -64,7 +64,8 @@ class Center extends Model
     }
     public function devices()
     {
-        return $this->belongsToMany(Device::class, 'center_devices', 'center_id', 'device_id');
+        return $this->belongsToMany(Device::class, 'center_devices', 'center_id', 'device_id')
+            ->withPivot(['id', 'regular_price', 'nabadat_app_price','auto_service_price','number_of_devices'])->withTimestamps();
     }
 
 }
