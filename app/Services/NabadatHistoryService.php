@@ -30,7 +30,7 @@ class NabadatHistoryService extends BaseService
                     $nabadaPrice = $centerDevice->pivot->unit_price;
             }
             $reservation->nabadatHistory()->create([
-                'user_id'      => Auth::user()->id,
+                'user_id'      => $reservation->user()->id,
                 'device_id'    => $data['device_id'],
                 'center_id'    => $centerId,
                 'num_nabadat'  => $data['num_nabadat'],
