@@ -102,5 +102,16 @@
 		'add_package'=>'Add Package',
 		'num_nabadat'=>'Number of Nabadat',
 		'price'=>'Price',
+		'coupon_for'=>'Coupon For',
+		'allowed_usage'=>'Allowed Usage',
+		'store'=>'Store',
+		'reservation'=>'Reservation',
+		'flat'=>'Flat',
+		'percent'=>'Percent',
+		'stock'=>'stock',
+		'shipping_cost'=>'Shipping Cost',
+		'city'=>'City',
+		'title_ar'=>'Arabic Titel',
+		'title_en'=>'English Titel',
     ]
 ?>

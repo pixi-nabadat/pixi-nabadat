@@ -11,13 +11,12 @@ class Reservation extends Model
 {
     use HasFactory, Filterable;
 
-
-    protected static $pending   = ['en'=>'pending',   'ar'=>'قيد الانتظار'];
-    protected static $confirmed = ['en'=>'confirmed', 'ar'=>'تم التأكيد'];
-    protected static $attend    = ['en'=>'attend',    'ar'=>'تم الحضور'];
-    protected static $completed = ['en'=>'completed', 'ar'=>'مكتمل'];
-    protected static $canceled  = ['en'=>'canceled',  'ar'=>'تم الإلغاء'];
-    protected static $expired   = ['en'=>'expired',   'ar'=>'تالف'];
+    const PENDING   = 1;
+    const CONFIRMED = 2;
+    const ATTEND    = 3;
+    const COMPLETED = 4;
+    const CANCELED  = 5;
+    const Expired   = 6;
 
     protected $fillable  = [
         'customer_id',
@@ -29,16 +28,6 @@ class Reservation extends Model
         'payment_status',
         'qr_code',
     ];
-
-    public static function getStatus(string $status, string $lang){
-        return match ($status) {
-            'confirm' => self::$confirmed[$lang],
-            'attend' => self::$attend[$lang],
-            'completed' => self::$completed[$lang],
-            'canceled' => self::$canceled[$lang],
-            default => self::$pending[$lang],
-        };
-    }
 
     public function history()
     {

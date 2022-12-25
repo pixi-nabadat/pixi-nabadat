@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('order_datails', function (Blueprint $table) {
+        Schema::create('nabadat_wallets', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Order::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignIdFor(\App\Models\Product::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->double('price');
-            $table->integer('quantity');
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->float('total_pulses')->default(0);
+            $table->float('used_amount')->default(0);
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_datails');
+        Schema::dropIfExists('nabadat_wallets');
     }
 };

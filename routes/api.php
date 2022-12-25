@@ -14,9 +14,20 @@ use App\Http\Controllers\APi\ReservationController;
 
 use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\NabadatHistoryController;
+use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\CouponController;
+use App\Http\Controllers\Api\CouponUsageController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 
 use App\Http\Controllers\Api\PackageController;
+use App\Http\Controllers\Api\CartItemController;
+
+use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\api\RatesController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\BuyOfferController;
+
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,8 +58,57 @@ use App\Http\Controllers\Api\PackageController;
             Route::apiResource('appointments',AppointmentController::class);
         });
         Route::post('reservation/devices', [NabadatHistoryController::class, 'store']);
-    });
 
+        Route::group(['prefix'=>'reservations'],function (){
+            Route::get('/', [ReservationController::class, 'listing']);
+            Route::post('/',    [ReservationController::class, 'store']);
+            Route::get('{id}', [ReservationController::class, 'find']);
+            Route::post('{id}/status',  [ReservationHistoryController::class, 'store']);
+        });
+        // start rates
+        Route::group(['prefix'=>'rate'], function(){
+            Route::post('/',     [RatesController::class, 'store']);
+            Route::delete('{id}', [RatesController::class, 'destroy']);
+        });
+        // end rates
+        Route::post('user/coupons',       [CouponUsageController::class, 'store']);//create new coupon
+        Route::post('coupon/simulation',  [CouponUsageController::class, 'simulation']);//create new coupon
+
+
+        Route::group(['prefix'=>'addresses'],function(){
+            Route::get ('/',[AddressController::class,'index']);
+            Route::get('{address}',[AddressController::class,'find']);
+            Route::post('/',[AddressController::class,'store']);
+            Route::post('set-default/{address}',[AddressController::class,'setDefault']);
+            Route::patch('{address}',[AddressController::class,'update']);
+            Route::delete('{address}',[AddressController::class,'destroy']);
+        });
+        //start order delivery
+        Route::group(['prefix'=>'orders'],function (){
+            Route::get('/',[OrderController::class, 'index']);
+            Route::get('{id}',[OrderController::class, 'find']);
+            Route::post('/',[OrderController::class, 'store']);
+        });
+        //end order delivery
+//start buy pulsses from nabdat app
+        Route::group(['prefix'=>'offers'],function (){
+            Route::get('/',[BuyOfferController::class, 'index']);
+            Route::post('/buy',[BuyOfferController::class, 'buyOffer']);
+        });
+        //start buy pulsses from nabdat app
+
+ });
+
+    //callback form paymob getaway
+    Route::any('paymob/payment/done', [OrderController::class,'checkPaymobPaymentStatus']);
+//start cart
+    Route::group(['prefix'=>'cart'],function (){
+        Route::get('/', [CartController::class, 'index']);
+        Route::post('item',  [CartController::class, 'store']);//create new cart
+        Route::post('empty', [CartController::class, 'emptyCart']);
+        Route::delete('items/{id}',  [CartController::class, 'deleteCartItem']);//delete an item from cart items
+    });
+//end cart
     Route::get('categories', [CategoryController::class, 'listing']);
     Route::get('products', [ProductController::class, 'listing']);
     Route::get('products/{id}/show', [ProductController::class, 'show']);
@@ -63,10 +123,6 @@ use App\Http\Controllers\Api\PackageController;
     Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
     Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
-    Route::get('reservations', [ReservationController::class, 'listing']);
-    Route::post('reservations/store',    [ReservationController::class, 'store']);
-    Route::get('reservations/{id}/find', [ReservationController::class, 'find']);
-    Route::post('reservations/{id}/status',  [ReservationHistoryController::class, 'store']);
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);
 });

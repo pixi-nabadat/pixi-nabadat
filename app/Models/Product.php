@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\EscapeUnicodeJson;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
@@ -18,7 +19,7 @@ class Product extends Model
 
     protected $fillable = [
         'name','added_by','category_id','description','unit_price','purchase_price','discount',
-        'discount_type','discount_start_date','discount_end_date','tax','tax_type','featured','is_active'];
+        'discount_start_date','discount_end_date','tax','tax_type','featured','rate','is_active','stock'];
 
     public $translatable = ['name','description'];
 
@@ -37,8 +38,19 @@ class Product extends Model
         return $builder->where('is_active',Product::Active);
     }
 
-    public function getDiscountTypeAttribute($value)
+    public function getProductDiscountAttribute()
     {
-        return $value == 0 ? trans('lang.flat') : trans('lang.percent');
+        $discount = 0 ;
+        $currentDate  = Carbon::now();
+        $discountEndDate   = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::parse($this->discount_end_date));
+        $discountStartDate = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::parse($this->discount_start_date));
+        if($currentDate->gte($discountStartDate) && $currentDate->lt($discountEndDate))
+            $discount =  $this->discount;
+        return $discount;
+    }
+
+    public function rates()
+    {
+        return $this->morphMany(Rate::class, 'ratable');
     }
 }

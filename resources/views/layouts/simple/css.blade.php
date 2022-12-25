@@ -16,7 +16,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/toastr.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/select2.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/datatables.css')}}">
-
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/date-time-picker.css')}}">
 
 @yield('css')
 <!-- App css-->
