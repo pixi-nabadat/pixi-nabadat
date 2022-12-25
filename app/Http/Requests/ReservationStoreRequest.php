@@ -27,6 +27,12 @@ class ReservationStoreRequest extends BaseRequest
             'customer_id' => 'required|exists:users,id',
             'center_id'   => 'required|exists:centers,id',
             'check_date'  => 'required|date',
+            'payment_type' => 'required|in:cash,palses',
         ];
+    }
+
+    public function validationData()
+    {
+        return array_merge($this->all(),['customer_id'=>auth('sanctum')->id()]);
     }
 }

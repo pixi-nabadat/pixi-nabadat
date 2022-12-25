@@ -13,7 +13,6 @@ class ReservationHistory extends Model
     protected $table = "reservation_history";
 
     protected $fillable = [
-        'user_id',
         'reservation_id',
         'status',
     ];

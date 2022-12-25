@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '0b765b53491b45f9c2c586b3d5c06db57b1edab7',
+        'reference' => 'bb8c1d7c2c7fa3b83f617474e74701e16257389b',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -17,6 +17,15 @@
             'install_path' => __DIR__ . '/../apility/laravel-fcm',
             'aliases' => array(),
             'reference' => '23b8feab8372b53d620edf7b94794b8e28ed0271',
+            'dev_requirement' => false,
+        ),
+        'awobaz/compoships' => array(
+            'pretty_version' => '2.1.4',
+            'version' => '2.1.4.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../awobaz/compoships',
+            'aliases' => array(),
+            'reference' => 'ba86741d9b439d1179a6432dded92b0ecc89a63a',
             'dev_requirement' => false,
         ),
         'brick/math' => array(
@@ -403,7 +412,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '0b765b53491b45f9c2c586b3d5c06db57b1edab7',
+            'reference' => 'bb8c1d7c2c7fa3b83f617474e74701e16257389b',
             'dev_requirement' => false,
         ),
         'laravel/pint' => array(

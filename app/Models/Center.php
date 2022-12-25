@@ -62,4 +62,10 @@ class Center extends Model
     {
         return $this->morphMany(Rate::class, 'ratable');
     }
+    public function devices()
+    {
+        return $this->belongsToMany(Device::class, 'center_devices', 'center_id', 'device_id')
+            ->withPivot(['id', 'regular_price', 'nabadat_app_price','auto_service_price','number_of_devices'])->withTimestamps();
+    }
+
 }

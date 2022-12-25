@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReservationUpdateRequest extends BaseRequest
+class NabadatHistoryStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,10 @@ class ReservationUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'user_id'      => 'required|exists:users,id',
-            'from'         => 'nullable|time',
-            'to'           => 'nullable|time',
+            'reservation_id' => 'required|exists:reservations,id',
+            'device_id'      => 'required|exists:devices,id',
+            'num_nabadat'    => 'required|numeric',
+            'auto_service'   => 'null|boolean'
         ];
     }
 }

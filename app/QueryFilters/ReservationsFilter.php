@@ -28,5 +28,10 @@ class ReservationsFilter extends QueryFilter
         return $this->builder->where('name',$term);
     }
 
+    public function user_id($term)
+    {
+        return $this->builder->where('customer_id',$term);
+    }
+
 
 }

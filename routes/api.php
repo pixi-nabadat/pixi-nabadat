@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\CancelReasonController;
 use App\Http\Controllers\APi\ReservationController;
 
 use App\Http\Controllers\Api\AppointmentController;
+use App\Http\Controllers\Api\NabadatHistoryController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\CouponUsageController;
@@ -58,10 +59,13 @@ use Illuminate\Support\Facades\Auth;
         });
 
         Route::group(['prefix'=>'reservations'],function (){
-            Route::get('/', [ReservationController::class, 'listing']);
+            Route::get('/', [ReservationController::class, 'listing']); // all reservations for center
+            Route::get('/patient', [ReservationController::class, 'patientReservations']); // all reservations for patient
             Route::post('/',    [ReservationController::class, 'store']);
             Route::get('{id}', [ReservationController::class, 'find']);
             Route::post('{id}/status',  [ReservationHistoryController::class, 'store']);
+            Route::post('devices', [NabadatHistoryController::class, 'store']);
+
         });
         // start rates
         Route::group(['prefix'=>'rate'], function(){

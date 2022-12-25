@@ -18,6 +18,8 @@ class ReservationResource extends JsonResource
     {
         return [
             'check_date'     => $this->check_date,
+            'from'           => $this->from,
+            'to'             => $this->to,
             'check_day'      => Carbon::parse($this->check_date)->dayName,
             'payment_type'   => $this->payment_type,
             'payment_status' => $this->payment_status,
