@@ -22,6 +22,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Http\Controllers\CenterDeviceController;
+use App\Http\Controllers\SettingController;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -49,6 +50,11 @@ Route::prefix('authentication')->group(function () {
 Route::get('/',HomeController::class)->name('/')->middleware('auth');
 Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
+    // Start Settings
+    Route::get('/settings', [SettingController::class,'index'])->name('settings');
+    Route::post('/settings', [SettingController::class,'store'])->name('settings.store');
+    // End Settings
+    
     Route::group(['prefix'=>'ajax'],function (){
         Route::get('locations/{parent_id}',[LocationController::class,'getLocationByParentId']);
     });
