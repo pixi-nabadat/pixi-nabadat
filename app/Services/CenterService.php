@@ -53,7 +53,7 @@ class CenterService extends BaseService
             'email' => Arr::get($data, 'email'),
             'phone' => Arr::first(Arr::get($data, 'phone')),
             'user_name' => Arr::get($data, 'user_name'),
-            'password' => Arr::get($data, 'password'),
+            'password' => bcrypt(Arr::get($data, 'password')),
             'type' => User::CENTERADMIN,
             'is_active' => Arr::get($data, 'is_active') ?? 0,
             'location_id' => Arr::get($data, 'location_id'),

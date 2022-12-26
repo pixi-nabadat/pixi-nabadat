@@ -11,7 +11,7 @@ class PhoneVerifyRequest extends BaseRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -36,7 +36,8 @@ class PhoneVerifyRequest extends BaseRequest
         return [
             'phone' => request()->phone,
             'code' => mt_rand(100000, 999999),
-            'created_at' => now()
+            'created_at' => now(),
+            'updated_at' => now()
         ];
     }
 }
