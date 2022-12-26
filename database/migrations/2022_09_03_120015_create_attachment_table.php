@@ -20,6 +20,8 @@ class CreateAttachmentTable extends Migration
             $table->string('path');
             $table->string('extention');
             $table->string('size');
+            $table->string('filed_name');
+            $table->string('caption')->nullable();
             $table->morphs('attachmentable');
             $table->timestamps();
         });

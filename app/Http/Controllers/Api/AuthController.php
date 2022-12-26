@@ -43,11 +43,13 @@ class AuthController extends Controller
           'en'=>$data['name'],
           'ar'=>$data['name'],
         ];
+        $data['password'] = bcrypt($data['password']);
         $result = $this->authService->register(data: $data);
         if ($result)
             return apiResponse($result,__('lang.success'),200);
         return apiResponse(message: __('lang.error_message'),code: 422);
     }
+
 
 
     public function profile()

@@ -27,7 +27,7 @@ class RegisterRequest extends BaseRequest
             'phone'=>'required|string',
             'password'=>'required|string|confirmed|min:6',
             'date_of_birth'=>'nullable|date',
-            'location_id'=>'required|integer|exists:locations,id'
+            'location_id'=>'nullable|integer|exists:locations,id',
         ];
     }
 
