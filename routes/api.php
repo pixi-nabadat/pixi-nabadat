@@ -45,11 +45,10 @@ use Illuminate\Support\Facades\Auth;
         Route::post('phone/verify', PhoneVerifyController::class);
         Route::post('password/forget', PhoneVerifyController::class);
         Route::post('password/reset', RestPasswordController::class);
-        Route::get('user', [AuthController::class, 'profile'])->middleware('sanctum');
     });
 
     Route::group(['middleware' => 'auth:sanctum'], function () {
-
+        Route::get('auth/user', [AuthController::class, 'profile']);
         Route::group(['prefix' => 'centers'], function () {
             Route::post('store/doctor', [DoctorController::class, 'store']);
             Route::delete('doctors/{doctorId}', [DoctorController::class, 'delete']);
