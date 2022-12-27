@@ -15,19 +15,19 @@ use Illuminate\Support\Facades\Auth;
 class OrderService extends BaseService
 {
 
-    public function getAll(array $where_condition = [],array $withRelations = [])
+    public function getAll(array $where_condition = [], array $withRelations = [])
     {
-        $orders = $this->queryGet($where_condition,$withRelations);
+        $orders = $this->queryGet($where_condition, $withRelations);
         return $orders->get();
     }
 
-    public function queryGet(array $where_condition = [],array $withRelations = []): Builder
+    public function queryGet(array $where_condition = [], array $withRelations = []): Builder
     {
         $orders = Order::activeOrder()->with($withRelations);
         return $orders->filter(new OrdersFilter($where_condition));
     }
 
-    public function find(int $id,$with_relation=[])
+    public function find(int $id, $with_relation = [])
     {
         return Order::activeOrder()->with($with_relation)->find($id);
     }
@@ -39,7 +39,7 @@ class OrderService extends BaseService
      * @param string $payment_type
      * @return mixed
      */
-    public function store($user , $order_data,$shipping_address,$payment_status = Order::UNPAID , $payment_type =Order::PAYMENTCASH ,$deleted_at = null,$relatable_id=null,$relatable_type=null)
+    public function store($user, $order_data, $shipping_address, $payment_status = Order::UNPAID, $payment_type = Order::PAYMENTCASH, $deleted_at = null, $relatable_id = null, $relatable_type = null)
     {
         if (isset($deleted_at))
             $deleted_at = Carbon::now();
@@ -53,15 +53,15 @@ class OrderService extends BaseService
             'sub_total'         => $order_data->sub_total,
             'grand_total'       => $order_data->grand_total,
             'coupon_discount'   => $order_data->discount,
-            'deleted_at'        =>$deleted_at
+            'deleted_at'        => $deleted_at
         ]);
 
-          $this->setOrderItems($order, $order_data);
-          $this->createOrderHistory($order);
-          return $order->load('items.product','history');
+        $this->setOrderItems($order, $order_data);
+        $this->createOrderHistory($order);
+        return $order->load('items.product', 'history');
     }
 
-    private function setOrderItems(Order $order,$order_items): void
+    private function setOrderItems(Order $order, $order_items): void
     {
         $order_items = $order_items->items->toArray();
         $order->items()->createMany($order_items);
@@ -72,6 +72,21 @@ class OrderService extends BaseService
         $order_history = $order->history()->create([
             'status' => Order::PENDING,
         ]);
-        $order->update(['order_history_id'=>$order_history->id]);
+        $order->update(['order_history_id' => $order_history->id]);
+    }
+
+    public function updatePaymentStatus($data)
+    {
+        $order = $this->find($data->id);
+        $order->payment_status = $data->value;
+        return $order->save();
+    }
+
+    public function updateOrderHistory($data)
+    {
+        $order = $this->find($data->id);
+        $order->history()->update([
+            'status' => $data->value,
+        ]);
     }
 }
