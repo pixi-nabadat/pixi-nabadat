@@ -183,7 +183,6 @@ class ComposerStaticInit93d699fc337f9a91944907d8f91440cb
         ),
         'A' => 
         array (
-            'Awobaz\\Compoships\\' => 18,
             'App\\' => 4,
         ),
     );
@@ -542,10 +541,6 @@ class ComposerStaticInit93d699fc337f9a91944907d8f91440cb
         array (
             0 => __DIR__ . '/..' . '/brick/math/src',
         ),
-        'Awobaz\\Compoships\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/awobaz/compoships/src',
-        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
@@ -792,15 +787,6 @@ class ComposerStaticInit93d699fc337f9a91944907d8f91440cb
         'App\\Traits\\NotifyFcm' => __DIR__ . '/../..' . '/app/Traits/NotifyFcm.php',
         'App\\Traits\\OrderTrait' => __DIR__ . '/../..' . '/app/Traits/OrderTrait.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
-        'Awobaz\\Compoships\\Compoships' => __DIR__ . '/..' . '/awobaz/compoships/src/Compoships.php',
-        'Awobaz\\Compoships\\Database\\Eloquent\\Concerns\\HasRelationships' => __DIR__ . '/..' . '/awobaz/compoships/src/Database/Eloquent/Concerns/HasRelationships.php',
-        'Awobaz\\Compoships\\Database\\Eloquent\\Model' => __DIR__ . '/..' . '/awobaz/compoships/src/Database/Eloquent/Model.php',
-        'Awobaz\\Compoships\\Database\\Eloquent\\Relations\\BelongsTo' => __DIR__ . '/..' . '/awobaz/compoships/src/Database/Eloquent/Relations/BelongsTo.php',
-        'Awobaz\\Compoships\\Database\\Eloquent\\Relations\\HasMany' => __DIR__ . '/..' . '/awobaz/compoships/src/Database/Eloquent/Relations/HasMany.php',
-        'Awobaz\\Compoships\\Database\\Eloquent\\Relations\\HasOne' => __DIR__ . '/..' . '/awobaz/compoships/src/Database/Eloquent/Relations/HasOne.php',
-        'Awobaz\\Compoships\\Database\\Eloquent\\Relations\\HasOneOrMany' => __DIR__ . '/..' . '/awobaz/compoships/src/Database/Eloquent/Relations/HasOneOrMany.php',
-        'Awobaz\\Compoships\\Database\\Query\\Builder' => __DIR__ . '/..' . '/awobaz/compoships/src/Database/Query/Builder.php',
-        'Awobaz\\Compoships\\Exceptions\\InvalidUsageException' => __DIR__ . '/..' . '/awobaz/compoships/src/Exceptions/InvalidUsageException.php',
         'Brick\\Math\\BigDecimal' => __DIR__ . '/..' . '/brick/math/src/BigDecimal.php',
         'Brick\\Math\\BigInteger' => __DIR__ . '/..' . '/brick/math/src/BigInteger.php',
         'Brick\\Math\\BigNumber' => __DIR__ . '/..' . '/brick/math/src/BigNumber.php',
