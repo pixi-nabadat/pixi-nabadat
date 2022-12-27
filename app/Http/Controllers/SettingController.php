@@ -13,16 +13,27 @@ class SettingController extends Controller
         return view('setting.index');
     }
 
+    public function appSettingsIndex()
+    {
+        return view('setting.app');
+    }
+
+    public function pointsSettingsIndex()
+    {
+        return view('setting.points');
+    }
+
     public function store(Request $request)
     {
-        $rules = Setting::getValidationRules();
+        $parent = "points"; // may be app, points ....
+        $rules = Setting::getValidationRules($parent);
         $data = $this->validate($request, $rules);
 
         $validSettings = array_keys($rules);
 
         foreach ($data as $key => $val) {
             if (in_array($key, $validSettings)) {
-                Setting::add($key, $val, Setting::getDataType($key));
+                Setting::add($key, $val, Setting::getDataType($parent, $key));
             }
         }
 

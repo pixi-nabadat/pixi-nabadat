@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Setting extends Model
 {
@@ -38,14 +39,14 @@ class Setting extends Model
      * @param null $default
      * @return bool|int|mixed
      */
-    public static function get($key, $default = null)
+    public static function get($parent, $key, $default = null)
     {
         if ( self::has($key) ) {
             $setting = self::getAllSettings()->where('name', $key)->first();
             return self::castValue($setting->val, $setting->type);
         }
 
-        return self::getDefaultValue($key, $default);
+        return self::getDefaultValue($parent, $key, $default);
     }
 
     /**
@@ -99,9 +100,9 @@ class Setting extends Model
      *
      * @return array
      */
-    public static function getValidationRules()
+    public static function getValidationRules(string $parent)
     {
-        return self::getDefinedSettingFields()->pluck('rules', 'name')
+        return self::getDefinedSettingFields($parent)->pluck('rules', 'name')
             ->reject(function ($val) {
             return is_null($val);
         })->toArray();
@@ -113,9 +114,9 @@ class Setting extends Model
      * @param $field
      * @return mixed
      */
-    public static function getDataType($field)
+    public static function getDataType($parent, $field)
     {
-        $type  = self::getDefinedSettingFields()
+        $type  = self::getDefinedSettingFields($parent)
                 ->pluck('data', 'name')
                 ->get($field);
 
@@ -128,9 +129,9 @@ class Setting extends Model
      * @param $field
      * @return mixed
      */
-    public static function getDefaultValueForField($field)
+    public static function getDefaultValueForField($parent, $field)
     {
-        return self::getDefinedSettingFields()
+        return self::getDefinedSettingFields($parent)
                 ->pluck('value', 'name')
                 ->get($field);
     }
@@ -142,9 +143,9 @@ class Setting extends Model
      * @param $default
      * @return mixed
      */
-    private static function getDefaultValue($key, $default)
+    private static function getDefaultValue($parent, $key, $default)
     {
-        return is_null($default) ? self::getDefaultValueForField($key) : $default;
+        return is_null($default) ? self::getDefaultValueForField($parent, $key) : $default;
     }
 
     /**
@@ -152,9 +153,10 @@ class Setting extends Model
      *
      * @return Collection
      */
-    private static function getDefinedSettingFields()
+    private static function getDefinedSettingFields(string $parent)
     {
-        return collect(config('setting_fields'))->pluck('elements')->flatten(1);
+        return collect(config('setting_fields.'.$parent)['elements']);
+        
     }
 
     /**
@@ -189,6 +191,34 @@ class Setting extends Model
      */
     public static function getAllSettings()
     {
-        return self::all();
+        return Cache::rememberForever('settings.all', function() {
+            return self::all();
+        });
+    }
+
+    /**
+     * Flush the cache
+     */
+    public static function flushCache()
+    {
+        Cache::forget('settings.all');
+    }
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updated(function () {
+            self::flushCache();
+        });
+
+        static::created(function() {
+            self::flushCache();
+        });
     }
 }

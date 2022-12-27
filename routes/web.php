@@ -51,8 +51,10 @@ Route::get('/',HomeController::class)->name('/')->middleware('auth');
 Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     // Start Settings
-    Route::get('/settings', [SettingController::class,'index'])->name('settings');
-    Route::post('/settings', [SettingController::class,'store'])->name('settings.store');
+    Route::get('/settings',        [SettingController::class,'index'])->name('settings');
+    Route::get('/settings/app',    [SettingController::class,'appSettingsIndex'])->name('app.settings');
+    Route::get('/settings/points', [SettingController::class,'pointsSettingsIndex'])->name('points.settings');
+    Route::post('/settings',       [SettingController::class,'store'])->name('settings.store');
     // End Settings
     
     Route::group(['prefix'=>'ajax'],function (){
