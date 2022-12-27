@@ -34,7 +34,8 @@
     },
     "require-dev": {
         "mockery/mockery": "^1.4",
-        "orchestra/testbench": "^7.0"
+        "orchestra/testbench": "^7.0",
+        "pestphp/pest": "^1.20"
     },
     "autoload": {
         "psr-4": {
@@ -48,9 +49,12 @@
     },
     "scripts": {
         "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
-        "test": "vendor/bin/phpunit"
+        "test": "vendor/bin/pest"
     },
     "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
         "sort-packages": true
     },
     "extra": {

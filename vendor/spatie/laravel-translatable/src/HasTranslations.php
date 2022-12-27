@@ -3,6 +3,7 @@
 namespace Spatie\Translatable;
 
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Str;
 use Spatie\Translatable\Events\TranslationHasBeenSetEvent;
@@ -303,5 +304,28 @@ trait HasTranslations
             parent::getCasts(),
             array_fill_keys($this->getTranslatableAttributes(), 'array'),
         );
+    }
+
+    public function locales(): array
+    {
+        return array_unique(
+            array_reduce($this->getTranslatableAttributes(), function ($result, $item) {
+                return array_merge($result, $this->getTranslatedLocales($item));
+            }, [])
+        );
+    }
+
+    public static function whereLocale(string $column, string $locale): Builder
+    {
+        return static::query()->whereNotNull("{$column}->{$locale}");
+    }
+
+    public static function whereLocales(string $column, array $locales): Builder
+    {
+        return static::query()->where(function (Builder $query) use ($column, $locales) {
+            foreach ($locales as $locale) {
+                $query->orWhereNotNull("{$column}->{$locale}");
+            }
+        });
     }
 }
