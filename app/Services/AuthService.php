@@ -34,6 +34,6 @@ class AuthService extends BaseService
 
     public function getAuthUser(): ?\Illuminate\Contracts\Auth\Authenticatable
     {
-        return auth()->user();
+        return auth('sanctum')->user();
     }
 }
