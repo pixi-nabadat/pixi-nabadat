@@ -5,20 +5,11 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '37fe68b1199a4ef538821554138e43ea228921ca',
+        'reference' => '0afc3a256df1a41944ac8e6f4be63f4d8b5dfd56',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
     'versions' => array(
-        'apility/laravel-fcm' => array(
-            'pretty_version' => 'v1.5.0',
-            'version' => '1.5.0.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../apility/laravel-fcm',
-            'aliases' => array(),
-            'reference' => '23b8feab8372b53d620edf7b94794b8e28ed0271',
-            'dev_requirement' => false,
-        ),
         'awobaz/compoships' => array(
             'pretty_version' => '2.1.4',
             'version' => '2.1.4.0',
@@ -36,12 +27,6 @@
             'aliases' => array(),
             'reference' => '459f2781e1a08d52ee56b0b1444086e038561e3f',
             'dev_requirement' => false,
-        ),
-        'brozot/laravel-fcm' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
         ),
         'cordoval/hamcrest-php' => array(
             'dev_requirement' => true,
@@ -412,7 +397,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '37fe68b1199a4ef538821554138e43ea228921ca',
+            'reference' => '0afc3a256df1a41944ac8e6f4be63f4d8b5dfd56',
             'dev_requirement' => false,
         ),
         'laravel/pint' => array(
