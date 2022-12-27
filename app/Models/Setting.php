@@ -39,7 +39,7 @@ class Setting extends Model
      * @param null $default
      * @return bool|int|mixed
      */
-    public static function get($parent, $key, $default = null)
+    public static function get(string $parent, $key, $default = null)
     {
         if ( self::has($key) ) {
             $setting = self::getAllSettings()->where('name', $key)->first();
@@ -114,7 +114,7 @@ class Setting extends Model
      * @param $field
      * @return mixed
      */
-    public static function getDataType($parent, $field)
+    public static function getDataType(string $parent, $field)
     {
         $type  = self::getDefinedSettingFields($parent)
                 ->pluck('data', 'name')
@@ -129,7 +129,7 @@ class Setting extends Model
      * @param $field
      * @return mixed
      */
-    public static function getDefaultValueForField($parent, $field)
+    public static function getDefaultValueForField(string $parent, $field)
     {
         return self::getDefinedSettingFields($parent)
                 ->pluck('value', 'name')
@@ -143,7 +143,7 @@ class Setting extends Model
      * @param $default
      * @return mixed
      */
-    private static function getDefaultValue($parent, $key, $default)
+    private static function getDefaultValue(string $parent, $key, $default)
     {
         return is_null($default) ? self::getDefaultValueForField($parent, $key) : $default;
     }
