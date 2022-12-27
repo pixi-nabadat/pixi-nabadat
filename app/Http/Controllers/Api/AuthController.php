@@ -9,7 +9,6 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\AuthUserResource;
 use App\Models\User;
 use App\Services\AuthService;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -24,13 +23,13 @@ class AuthController extends Controller
         try {
             $user = $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password);
             $data = [
-                'token'=>$user->getToken(),
-                'token_type'=>'Bearer',
-                'user'=>$user
+                'token' => $user->getToken(),
+                'token_type' => 'Bearer',
+                'user' => $user
             ];
-            return apiResponse($data,__('lang.login success'));
-        }catch (UserNotFoundException $e) {
-            return apiResponse($e->getMessage(), 'Unauthorized',$e->getCode());
+            return apiResponse($data, __('lang.login success'));
+        } catch (UserNotFoundException $e) {
+            return apiResponse($e->getMessage(), 'Unauthorized', $e->getCode());
         }
 
     }
@@ -38,28 +37,27 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $data = $request->validated();
-        $data = array_merge($data,['type'=>User::CUSTOMERTYPE , 'email'=>$data['user_name']."@gmail.com",'last_login_at'=>now()]);
+        $data = array_merge($data, ['type' => User::CUSTOMERTYPE, 'email' => $data['user_name'] . "@gmail.com", 'last_login_at' => now()]);
         $data['name'] = [
-          'en'=>$data['name'],
-          'ar'=>$data['name'],
+            'en' => $data['name'],
+            'ar' => $data['name'],
         ];
         $data['password'] = bcrypt($data['password']);
         $result = $this->authService->register(data: $data);
         if ($result)
-            return apiResponse($result,__('lang.success'),200);
-        return apiResponse(message: __('lang.error_message'),code: 422);
+            return apiResponse($result, __('lang.success'), 200);
+        return apiResponse(message: __('lang.error_message'), code: 422);
     }
-
 
 
     public function profile()
     {
         try {
-            $user = $this->authService->getAuthUser();
-            return new AuthUserResource($user);
-        }catch (\Exception $exception)
-        {
-            return apiResponse(message: $exception->getMessage() ,code: 422);
+            $user = auth('sanctum')->user();
+            return apiResponse(data: new AuthUserResource($user));
+        } catch (\Exception $exception) {
+            logger('auth user exception');
+            return apiResponse(message: $exception->getMessage(), code: 422);
         }
     }
 
