@@ -95,11 +95,11 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 });
 
 Route::get('/clear-cache', function() {
-    Artisan::call('config:cache');
-    Artisan::call('cache:clear');
-    Artisan::call('config:clear');
-    Artisan::call('view:clear');
-    Artisan::call('route:clear');
+    \Illuminate\Support\Facades\Artisan::call('config:cache');
+    \Illuminate\Support\Facades\Artisan::call('cache:clear');
+    \Illuminate\Support\Facades\Artisan::call('config:clear');
+    \Illuminate\Support\Facades\Artisan::call('view:clear');
+    \Illuminate\Support\Facades\Artisan::call('route:clear');
     return "Cache is cleared";
 })->name('clear.cache');
 
