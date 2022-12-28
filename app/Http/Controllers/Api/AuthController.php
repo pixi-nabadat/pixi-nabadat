@@ -53,7 +53,8 @@ class AuthController extends Controller
     public function profile()
     {
         try {
-            $user = auth('sanctum')->user();
+            $user = Auth::user();
+            dd($user);
             return apiResponse(data: new AuthUserResource($user));
         } catch (\Exception $exception) {
             logger('auth user exception');
