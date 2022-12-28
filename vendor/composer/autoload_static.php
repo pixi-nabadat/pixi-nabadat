@@ -604,6 +604,7 @@ class ComposerStaticInit93d699fc337f9a91944907d8f91440cb
         'App\\Http\\Controllers\\Api\\PackageController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PackageController.php',
         'App\\Http\\Controllers\\Api\\PhoneVerifyController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PhoneVerifyController.php',
         'App\\Http\\Controllers\\Api\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ProductController.php',
+        'App\\Http\\Controllers\\Api\\RatesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/RatesController.php',
         'App\\Http\\Controllers\\Api\\ReservationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ReservationController.php',
         'App\\Http\\Controllers\\Api\\ReservationHistoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ReservationHistoryController.php',
         'App\\Http\\Controllers\\Api\\RestPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/RestPasswordController.php',
