@@ -51,6 +51,7 @@ return array(
     'App\\Http\\Controllers\\Api\\PackageController' => $baseDir . '/app/Http/Controllers/Api/PackageController.php',
     'App\\Http\\Controllers\\Api\\PhoneVerifyController' => $baseDir . '/app/Http/Controllers/Api/PhoneVerifyController.php',
     'App\\Http\\Controllers\\Api\\ProductController' => $baseDir . '/app/Http/Controllers/Api/ProductController.php',
+    'App\\Http\\Controllers\\Api\\RatesController' => $baseDir . '/app/Http/Controllers/Api/RatesController.php',
     'App\\Http\\Controllers\\Api\\ReservationController' => $baseDir . '/app/Http/Controllers/Api/ReservationController.php',
     'App\\Http\\Controllers\\Api\\ReservationHistoryController' => $baseDir . '/app/Http/Controllers/Api/ReservationHistoryController.php',
     'App\\Http\\Controllers\\Api\\RestPasswordController' => $baseDir . '/app/Http/Controllers/Api/RestPasswordController.php',
