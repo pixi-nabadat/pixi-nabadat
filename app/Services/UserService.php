@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\Center;
+use App\Models\Order;
 use App\Models\User;
 use App\QueryFilters\UsersFilter;
 use Carbon\Carbon;
@@ -72,7 +74,7 @@ class UserService extends BaseService
     {
         if (!$user)
             return false;
-        $old_pulses = $user->nabadatWallet->total_pulses ?? 0;
+        $old_pulses = optional($user->nabadatWallet)->total_pulses ?? 0;
         $total_pulses = $old_pulses + $package->num_nabadat;
         $user_package_data = [
             'package_id' => $package->id,
@@ -81,7 +83,63 @@ class UserService extends BaseService
         ];
         logger('inside user service');
         $user->package()->create($user_package_data);
-        $user->nabadatWallet()->updateOrCreate(['user_id'=>$user->id],['total_pulses' => $total_pulses]);
+        $user->nabadatWallet()->updateOrCreate(['user_id' => $user->id], ['total_pulses' => $total_pulses]);
         return true;
+    }
+
+
+    public function updateOrCreateUserCenterNabadatWallet(User $user, $package, $payment_type = Order::PAYMENTCASH, $payment_status = Order::UNPAID): bool
+    {
+        if (!$user || !$package)
+            return false;
+        $centerNabadatWallet = $user->centerNabadatWallet()->where('center_id', $package->center_id)->first();
+        $old_pulses = optional($centerNabadatWallet)->total_pulses ?? 0;
+        $total_pulses = $old_pulses + $package->num_nabadat;
+        $user_package_data = [
+            'package_id' => $package->id,
+            'num_nabadat' => $package->num_nabadat,
+            'price' => $package->price
+        ];
+        $user->package()->create($user_package_data);
+        $user->centerNabadatWallet()->updateOrCreate(['user_id' => $user->id], ['total_pulses' => $total_pulses, 'payment_type' => $payment_type, 'payment_status' => $payment_status]);
+        return true;
+    }
+
+    function updateUsedPulses($num_decrement_pulses, User $user,$center_id =null)
+    {
+        if ($center_id == null) //pulses will minus from nambadat wallet if not pulses will minus from spacefic center
+        {
+            $total_pulses = optional($user->nabadatWallet)->total_pulses ?? 0;
+            $used_pulses = optional($user->nabadatWallet)->used_pulses ?? 0 ;
+            $user_balance_pulses = $total_pulses - $used_pulses ;
+            if ($num_decrement_pulses > $user_balance_pulses){
+                $total_used_pulses = $used_pulses+$user_balance_pulses ;
+                $remain_pulses = abs($user_balance_pulses - $num_decrement_pulses) ;
+            }
+
+
+        }
+        if ($center_id != null)
+        {
+
+        }
+    }
+
+
+    private function updateUserCenterNabadatWallet($num_decrement_pulses , $user , $center_id)
+    {
+        $centerNabadatWallet = $user->centerNabadatWallet()->where('center_id', $center_id)->first();
+        $total_pulses = optional($centerNabadatWallet)->total_pulses ?? 0;
+        $used_pulses = optional($centerNabadatWallet)->used_pulses ?? 0 ;
+        $user_balance_pulses = $total_pulses - $used_pulses ;
+        if ($num_decrement_pulses  > $user_balance_pulses){
+            $remain_pulses = $num_decrement_pulses - $user_balance_pulses;
+            $total_used_pulses = $used_pulses + $user_balance_pulses ;
+            $centerNabadatWallet->update(['used_pulses'=>$total_used_pulses]);
+            return $remain_pulses ;
+        }
+        $total_used_pulses = $used_pulses+$num_decrement_pulses ;
+        return $centerNabadatWallet->update(['used_pulses'=>$total_used_pulses]);
+
     }
 }

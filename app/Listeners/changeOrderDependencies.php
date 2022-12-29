@@ -32,7 +32,6 @@ class changeOrderDependencies
     {
 
         $order_id = $event->merchant_order_id;
-        logger('inside event change Order Dependencies : ' . $order_id);
         if (is_null($order_id))
             throw new NotFoundException('merchant_order_id_not_found');
         $order = Order::withTrashed()->find($order_id);
@@ -41,7 +40,10 @@ class changeOrderDependencies
             throw new NotFoundException('merchant_order_id_not_found');
         if (!is_null($order->relatable_id) && !is_null($order->relatable_type)) {
             $package = Package::find($order->relatable_id);
-            $this->userService->updateOrCreateNabadatWallet($user, $package);
+            if ($package && isset($package->center_id))
+                $this->userService->updateOrCreateUserCenterNabadatWallet(user: $user,package: $package,payment_type: Order::PAYMENTCREDIT,payment_status: Order::PAID);
+            if ($package && is_null($package->center_id))
+                $this->userService->updateOrCreateNabadatWallet(user: $user,package:  $package);
         }
         $order->update(['deleted_at' => null, 'payment_status' => Order::PAID]);
     }

@@ -38,7 +38,17 @@ class BuyOfferController extends Controller
             if (!$package)
                 return apiResponse(message: trans('lang.resource_not_found'), code: 422);
             //create user package log
-            $order_data = $this->prepareOrderData($user , $package);
+
+            if ($package && is_null($package->center_id) && $request->payment_type=='cash')
+                return apiResponse(message: trans('lang.you_can_pay_cash_please_pay_online'), code: 422);
+
+            if ($package && isset($package->center_id) && $request->payment_type == 'cash')
+            {
+                $this->userService->updateOrCreateUserCenterNabadatWallet($user,$package);
+                return apiResponse(message: trans('lang.added_to_your_wallet_successfully'));
+            }
+            $payment_type = $request->payment_type == 'credit' ? Order::PAYMENTCREDIT:Order::PAYMENTCASH ;
+            $order_data = $this->prepareOrderData(user: $user ,package:  $package,payment_type: $payment_type);
             $order_item_data = $this->prepareOrderItemsData($package);
             $paymob_order_items = $this->preparePaymobOrderItems($package);
             $order = $this->setUserOfferAsOrder($user,$order_data,$order_item_data);
@@ -67,11 +77,11 @@ class BuyOfferController extends Controller
             'discount'=>0
         ];
     }
-    private function prepareOrderData($user ,Package $package): array
+    private function prepareOrderData($user ,Package $package,$payment_type = Order::PAYMENTCREDIT): array
     {
         return [
             'payment_status'    => Order::UNPAID,
-            'payment_type'      => Order::PAYMENTCREDIT,
+            'payment_type'      => $payment_type,
             'address_info'      => $user->defaultAddress->toJson(),
             'shipping_fees'     =>  0,
             'sub_total'         => $package->price,

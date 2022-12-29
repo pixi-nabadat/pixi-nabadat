@@ -25,6 +25,7 @@ class BuyOfferRequest extends BaseRequest
     {
         return [
             'offer_id'        => 'required|integer',
+            'payment_type'    =>'required|in:cash,credit'
         ];
     }
 }

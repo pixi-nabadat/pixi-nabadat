@@ -49,7 +49,7 @@ class User extends Authenticatable
      */
     public function getToken(): string
     {
-        return $this->createToken(config('app.name'))->plainTextToken;
+        return $this->createToken('auth-token')->plainTextToken;
     }
 
     public function getId()
@@ -95,6 +95,11 @@ class User extends Authenticatable
     public function nabadatWallet(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(NabadatWallet::class,'user_id');
+    }
+
+    public function centerNabadatWallet(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(UserCenterNabadatWallet::class,'user_id');
     }
 
     public function package(): \Illuminate\Database\Eloquent\Relations\HasMany
