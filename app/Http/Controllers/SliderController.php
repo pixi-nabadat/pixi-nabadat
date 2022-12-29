@@ -2,61 +2,61 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\packagesDataTable;
+use App\DataTables\SlidersDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PackageStoreRequest;
-use App\Http\Requests\PackageUpdateRequest;
-use App\Services\packageService;
+use App\Http\Requests\SliderStoreRequest;
+use App\Http\Requests\SliderUpdateRequest;
+use App\Services\SliderService;
 use Illuminate\Http\Request;
 
-class PackageController extends Controller
+class SliderController extends Controller
 {
-    public function __construct(private packageService $packageService)
+    public function __construct(private SliderService $sliderService)
     {
         
     }
     
-    public function index(packagesDataTable $dataTable, Request $request){
+    public function index(SlidersDataTable $dataTable, Request $request){
 
         $filters = $request->all();
-        $withRelations = [];
-        return $dataTable->with(['filters'=>$filters, 'withRelations'=>$withRelations])->render('dashboard.packages.index');
+        $withRelations = ['package'];
+        return $dataTable->with(['filters'=>$filters, 'withRelations'=>$withRelations])->render('dashboard.sliders.index');
 
     }//end of index
 
     public function edit($id){
-        $package = $this->packageService->find($id);
-        if (!$package)
+        $slider = $this->sliderService->find($id);
+        if (!$slider)
         {
-            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.package_not_found')];
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.slider_not_found')];
             return back()->with('toast', $toast);
         }
-        return view('dashboard.packages.edit', compact('package'));
+        return view('dashboard.sliders.edit', compact('slider'));
     }//end of edit 
 
     public function create(){
-        return view('dashboard.packages.create');
+        return view('dashboard.sliders.create');
     }//end of create
 
-    public function store(PackageStoreRequest $request){
+    public function store(SliderStoreRequest $request){
         try {
             $request->validated();
-            $this->packageService->store($request->all());
-            $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'package Saved Successfully'];
-            return redirect()->route('packages.index')->with('toast', $toast);
+            $this->sliderService->store($request->all());
+            $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'slider Saved Successfully'];
+            return redirect()->route('sliders.index')->with('toast', $toast);
         } catch (\Exception $ex) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
             return redirect()->back()->with('toast', $toast);
         }
     }//end of store
 
-    public function update(PackageUpdateRequest $request, $id)
+    public function update(SliderUpdateRequest $request, $id)
     {
         try {
             $request->validated();
-            $this->packageService->update($id, $request->all());
+            $this->sliderService->update($id, $request->all());
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
-            return redirect(route('packages.index'))->with('toast', $toast);
+            return redirect(route('sliders.index'))->with('toast', $toast);
         } catch (\Exception $ex) {
 
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
@@ -67,7 +67,7 @@ class PackageController extends Controller
     public function destroy($id)
     {
         try {
-            $result = $this->packageService->delete($id);
+            $result = $this->sliderService->delete($id);
             if (!$result)
                 return apiResponse(message: trans('lang.not_found'), code: 404);
             return apiResponse(message: trans('lang.success'));
@@ -78,18 +78,18 @@ class PackageController extends Controller
 
     public function show($id)
     {
-        $package = $this->packageService->find($id);
-        if (!$package){
-            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.package_not_found')];
+        $slider = $this->sliderService->find($id);
+        if (!$slider){
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.slider_not_found')];
             return back()->with('toast', $toast);
         }
-       return view('dashboard.packages.show', compact('package'));
+       return view('dashboard.sliders.show', compact('slider'));
     } //end of show   
 
     public function status(Request $request)
     {
         try {
-            $result =  $this->packageService->status($request->id);
+            $result =  $this->sliderService->status($request->id);
             if (!$result)
                 return apiResponse(message: trans('lang.not_found'), code: 404);
             return apiResponse(message: trans('lang.success'));

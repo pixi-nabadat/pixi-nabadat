@@ -2,36 +2,37 @@
 
 namespace App\DataTables;
 
-use App\Models\package;
-use App\Services\PackageService;
+use App\Models\Slider;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use App\Services\SliderService;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Services\DataTable;
 
-class PackagesDataTable extends DataTable
+class SlidersDataTable extends DataTable
 {
 
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-        ->addColumn('action', function(package $package){
-            return view('dashboard.packages.action',compact('package'))->render();
+        ->addColumn('action', function(Slider $slider){
+            return view('dashboard.sliders.action',compact('slider'))->render();
         })
-        ->addColumn('name', function(package $package){
-            return $package->name ;
+        ->editColumn('package_name', function(Slider $slider){
+            return $slider->package->name ;
         })
-        ->addColumn('is_active', function(package $package){
-            return view('dashboard.components.switch-btn',['model'=>$package,'url'=>route('packages.status')])->render();
+        
+        ->addColumn('is_active', function(Slider $slider){
+            return view('dashboard.components.switch-btn',['model'=>$slider,'url'=>route('sliders.status')])->render();
         })
         ->rawColumns(['action','is_active']);
     }
 
 
-    public function query(PackageService $model): QueryBuilder
+    public function query(SliderService $model): QueryBuilder
     {
         return $model->queryGet($this->filters,$this->withRelations);
     }
@@ -40,7 +41,7 @@ class PackagesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('packagesdatatable-table')
+                    ->setTableId('slidersdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -50,9 +51,11 @@ class PackagesDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::make('name'),
-            Column::make('num_nabadat'),
-            Column::make('price'),
+            Column::make('order'),
+            ['title'=>'package name', 'data'=>'package_name', 'name'=>'package_id'],
+            Column::make('duration'),
+            Column::make('start_date'),
+            Column::make('end_date'),
             Column::make('is_active'),
             Column::computed('action')
                   ->exportable(false)
@@ -69,7 +72,7 @@ class PackagesDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Packages_' . date('YmdHis');
+        return 'Sliders_' . date('YmdHis');
     }
 
 }

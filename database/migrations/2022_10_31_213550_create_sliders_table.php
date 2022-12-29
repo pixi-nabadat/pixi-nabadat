@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
             $table->integer('order');
-            $table->foreignIdFor(\App\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignIdFor(\App\Models\Package::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->time('duration');
             $table->date('start_date');
             $table->date('end_date');
+            $table->boolean('is_active');
             $table->timestamps();
         });
     }

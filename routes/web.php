@@ -22,6 +22,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Http\Controllers\CenterDeviceController;
+use App\Http\Controllers\SliderController;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -88,6 +89,9 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     Route::resource('packages',PackageController::class);
     Route::post('packages/status',[PackageController::class,'status'])->name('packages.status');
+    
+    Route::resource('sliders',SliderController::class);
+    Route::post('sliders/status',[SliderController::class,'status'])->name('sliders.status');
 
     Route::resource('cancelReasons',CancelReasonController::class);
     Route::post('cancelReasons/changeStatus',[CancelReasonController::class,'changeStatus'])->name('cancelReasons.changeStatus');
