@@ -1,6 +1,6 @@
 <?php
 return [
-    'app' => [
+    'general' => [
         'title' => 'General',
         'desc' => 'All the general settings for application.',
         'icon' => 'glyphicon glyphicon-sunglasses',

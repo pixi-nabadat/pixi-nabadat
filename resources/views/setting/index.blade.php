@@ -15,9 +15,6 @@
 
         <div class="container-fluid">
 
-            <form class="needs-validation" novalidate="" method="post" enctype="multipart/form-data"
-                action="{{ route('settings.store') }}">
-                @csrf
                 <div class="row ">
 
                     <div class="col-md-12 col-lg-12 col-sm-12">
@@ -30,7 +27,7 @@
                             <div class="card-body">
                                 <div class="media static-top-widget">
                                 <div class="media-body">
-                                    <h6 class="font-roboto"><a href="{{ route('app.settings') }}">App Settings</a></h6>
+                                    <h6 class="font-roboto"><a href="{{ route('general.settings') }}">General Settings</a></h6>
                                 </div>
                                 <svg class="fill-secondary" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M22.5938 14.1562V17.2278C20.9604 17.8102 19.7812 19.3566 19.7812 21.1875C19.7812 23.5138 21.6737 25.4062 24 25.4062C24.7759 25.4062 25.4062 26.0366 25.4062 26.8125C25.4062 27.5884 24.7759 28.2188 24 28.2188C23.2241 28.2188 22.5938 27.5884 22.5938 26.8125H19.7812C19.7812 28.6434 20.9604 30.1898 22.5938 30.7722V33.8438H25.4062V30.7722C27.0396 30.1898 28.2188 28.6434 28.2188 26.8125C28.2188 24.4862 26.3263 22.5938 24 22.5938C23.2241 22.5938 22.5938 21.9634 22.5938 21.1875C22.5938 20.4116 23.2241 19.7812 24 19.7812C24.7759 19.7812 25.4062 20.4116 25.4062 21.1875H28.2188C28.2188 19.3566 27.0396 17.8102 25.4062 17.2278V14.1562H22.5938Z"></path>
@@ -123,7 +120,6 @@
 
                     
                 </div>
-            </form>
         </div>
     </div>
 @endsection

@@ -15,7 +15,7 @@ class SettingController extends Controller
 
     public function appSettingsIndex()
     {
-        return view('setting.app');
+        return view('setting.general');
     }
 
     public function pointsSettingsIndex()
@@ -25,7 +25,7 @@ class SettingController extends Controller
 
     public function store(Request $request)
     {
-        $parent = "points"; // may be app, points ....
+        $parent = $request->segment(3);
         $rules = Setting::getValidationRules($parent);
         $data = $this->validate($request, $rules);
 

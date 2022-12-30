@@ -16,7 +16,7 @@
         <div class="container-fluid">
 
             <form class="needs-validation" novalidate="" method="post" enctype="multipart/form-data"
-                action="{{ route('settings.store') }}">
+                action="{{ route('settings.store.general') }}">
                 @csrf
                 <div class="row ">
 
@@ -29,11 +29,11 @@
                             {{-- center information --}}
                             <div class="card  col-md-12">
                                 <div class="card-header py-4">
-                                    <h6 class="card-titel">{{config('setting_fields.app.title') }}</h6>
+                                    <h6 class="card-titel">{{config('setting_fields.general.title') }}</h6>
                                 </div>
                                 <div class="card-body row">
 
-                                    @foreach(config('setting_fields.app.elements') as $field)
+                                    @foreach(config('setting_fields.general.elements') as $field)
                                         {{-- name_ar  --}}
                                         <div class="col-md-12 d-flex my-3">
                                             <label class="form-label col-3 " for="{{ $field['name'] }}">{{ $field['label'] }}</label>

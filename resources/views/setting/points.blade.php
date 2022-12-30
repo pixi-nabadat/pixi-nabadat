@@ -16,7 +16,7 @@
         <div class="container-fluid">
 
             <form class="needs-validation" novalidate="" method="post" enctype="multipart/form-data"
-                action="{{ route('settings.store') }}">
+                action="{{ route('settings.store.points') }}">
                 @csrf
                 <div class="row ">
 
