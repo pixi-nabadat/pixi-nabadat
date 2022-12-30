@@ -27,7 +27,7 @@
                                 {{--center  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
-                                    <select style="color:#0000" id="center_id" name="center_id" class="js-example-basic-single col-sm-12">
+                                    <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12">
                                         <option selected>...</option>
                                         @foreach ($centers as $center)
                                             <option value="{{ $center->id }}">{{ $center->name }}</option>
