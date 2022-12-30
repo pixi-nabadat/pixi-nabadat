@@ -16,9 +16,11 @@ return new class extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Center::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('name')->unique();
             $table->integer('num_nabadat');
             $table->double('price');
+            $table->double('percentage');
             $table->boolean('is_active')->default(Package::Active)->nullable();
             $table->timestamps();
         });

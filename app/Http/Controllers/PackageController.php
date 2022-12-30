@@ -6,12 +6,13 @@ use App\DataTables\packagesDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PackageStoreRequest;
 use App\Http\Requests\PackageUpdateRequest;
+use App\Services\CenterService;
 use App\Services\packageService;
 use Illuminate\Http\Request;
 
 class PackageController extends Controller
 {
-    public function __construct(private packageService $packageService)
+    public function __construct(private packageService $packageService, private CenterService $centerService)
     {
         
     }
@@ -33,7 +34,8 @@ class PackageController extends Controller
     }//end of edit 
 
     public function create(){
-        return view('dashboard.packages.create');
+        $centers = $this->centerService->getAll();
+        return view('dashboard.packages.create', compact('centers'));
     }//end of create
 
     public function store(PackageStoreRequest $request){

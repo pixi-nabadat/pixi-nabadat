@@ -24,6 +24,16 @@
                             action="{{ route('packages.store') }}">
                             @csrf
                             <div class="row g-3">
+                                {{--center  --}}
+                                <div class="col-md-12 d-flex my-3">
+                                    <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
+                                    <select style="color:#0000" id="center_id" name="center_id" class="js-example-basic-single col-sm-12">
+                                        <option selected>...</option>
+                                        @foreach ($centers as $center)
+                                            <option value="{{ $center->id }}">{{ $center->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 {{-- English Name --}}
                                 <div class="col-md-12">
                                     <label class="form-label" for="name_en">{{ trans('lang.name_en') }}</label>
@@ -57,6 +67,15 @@
                                     <input type="number" name="price" step="0.01"
                                         class="form-control @error('price') is-invalid @enderror">
                                     @error('price')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                {{--  percentage  --}}
+                                <div class="col-md-12">
+                                    <label class="form-label" for="percentage">@lang('lang.percentage')</label>
+                                    <input type="number" name="percentage" step="0.01"
+                                        class="form-control @error('percentage') is-invalid @enderror">
+                                    @error('percentage')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
