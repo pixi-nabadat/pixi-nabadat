@@ -114,7 +114,7 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-
+                                
                                 {{-- avg_wating_time --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <label class="form-label  col-3" for="avg_wating_time">@lang('lang.avg_wating_time')</label>
@@ -143,6 +143,24 @@
                                             <div class="invalid-feedback text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                </div>
+                                {{-- support payments credit --}}
+                                <div class="col-md-12 d-flex my-3">
+                                    <input name="support_payments[]" @error('support_payments') is-invalid @enderror"
+                                    id="support_payments_credit" type="checkbox">
+                                    <label class="form-label col-3 " for="support_payments_credit">{{ trans('lang.support_payments_credit[]') }}</label>
+                                    @error('support_payments')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                {{-- support payments cash--}}
+                                <div class="col-md-12 d-flex my-3">
+                                    <input name="support_payments[]"  @error('support_payments') is-invalid @enderror"
+                                    id="support_payments_cash" type="checkbox">
+                                    <label class="form-label col-3 " for="support_payments_cash">{{ trans('lang.support_payments_cash') }}</label>
+                                    @error('support_payments')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

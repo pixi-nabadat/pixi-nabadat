@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('points')->default(0);
             $table->string('points_expire_date')->nullable();
             $table->double('rate')->default(0.0);
+            $table->string('support_payments');
             $table->timestamps();
         });
     }
