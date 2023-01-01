@@ -54,7 +54,6 @@ class AuthController extends Controller
     {
         try {
             $user = Auth::user();
-            dd($user);
             return apiResponse(data: new AuthUserResource($user));
         } catch (\Exception $exception) {
             logger('auth user exception');
