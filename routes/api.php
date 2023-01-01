@@ -48,7 +48,9 @@ use Illuminate\Support\Facades\Auth;
     });
 
     Route::group(['middleware' => 'auth:sanctum'], function () {
-        Route::get('auth/user', [AuthController::class, 'profile']);
+        Route::get('auth/user', function (){
+            return Auth::user();
+        });
         Route::group(['prefix' => 'centers'], function () {
             Route::post('store/doctor', [DoctorController::class, 'store']);
             Route::delete('doctors/{doctorId}', [DoctorController::class, 'delete']);
