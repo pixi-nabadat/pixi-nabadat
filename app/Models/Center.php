@@ -21,11 +21,11 @@ class Center extends Model
 
     protected $fillable = [
         'name', 'phone', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
-        'google_map_url','avg_wating_time','featured', 'rate'
+        'google_map_url','avg_wating_time','featured', 'rate', 'support_payments'
     ];
 
     protected $casts = [
-        'phone' => 'array',
+        'phone' => 'array', 'support_payments' => 'array',
     ];
 
     protected $table = 'centers';

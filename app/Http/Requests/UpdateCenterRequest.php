@@ -40,6 +40,8 @@ class UpdateCenterRequest extends BaseRequest
             'is_support_auto_service' => 'between:0,1',
             'avg_wating_time'=>'required',
             'featured'=>'nullable',
+            'support_payments'=> 'array|min:1',
+            'support_payments.*'=> 'required|string|in:credit,cash'
         ];
     }
 
