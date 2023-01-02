@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 
-class orderController extends Controller
+class OrderController extends Controller
 {
     public function __construct(private OrderService $orderService)
     {
@@ -15,14 +15,14 @@ class orderController extends Controller
 
     public function index(OrdersDataTable $dataTable, Request $request)
     {
-        $loadRelation = [];
+        $loadRelation = ['orderStatus','user:id,name,phone'];
         return $dataTable->with(['filters' => $request->all(), 'withRelations' => $loadRelation])->render('dashboard.orders.index');
 
     } //end of index
 
     public function changePaymentStatus(Request $request)
     {
-        
+
         $this->orderService->updatePaymentStatus($request);
         $this->orderService->updateOrderHistory($request);
 

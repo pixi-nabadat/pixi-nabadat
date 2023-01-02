@@ -84,7 +84,8 @@
                                         {{-- address_info --}}
                                         <div class="col-md-12  my-3">
                                             <label class="form-label" for="address_info">@lang('lang.address_info')</label>
-                                            <p class="form-control" id="address_info">{{ $order->address_info }}</p>
+{{--                                            you can access address info as object access important key from object like--}}
+                                            <p class="form-control" id="address_info">{{ $order->address_info->id }}</p>
                                         </div>
                                     </div>
                                 </div>
