@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->integer('num_nabadat');
             $table->double('price');
-            $table->double('percentage');
+            $table->double('discount_percentage');
             $table->boolean('is_active')->default(Package::Active)->nullable();
             $table->timestamps();
         });

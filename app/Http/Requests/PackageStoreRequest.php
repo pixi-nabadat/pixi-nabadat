@@ -27,7 +27,7 @@ class PackageStoreRequest extends BaseRequest
             'name.*'      => 'required|string|unique:packages,name',
             'num_nabadat' => 'required|integer',
             'price'       => 'required|numeric',
-            'percentage'  => 'required|numeric',
+            'discount_percentage'  => 'required|numeric',
             'is_active'   => 'nullable|string',
         ];
     }

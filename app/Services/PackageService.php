@@ -24,7 +24,12 @@ class PackageService extends BaseService
     public function store($data)
     {
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-        return package::create($data);
+        $package = package::create($data);
+        if (isset($data['image'])){
+            $fileData = FileService::saveImage(file: $data['image'],path: 'uploads\packages');
+            $package->storeAttachment($fileData);
+        }
+            
     } //end of store
 
     public function delete($id)
@@ -50,6 +55,11 @@ class PackageService extends BaseService
         $package = $this->find($id);
         if (!$package)
             return false;
+        if (isset($data['image'])){
+
+            $fileData = FileService::saveImage(file: $data['image'],path: 'uploads\packages');
+            $package->storeAttachment($fileData);
+        }
         return $package->update($data);
     } //end of update
 

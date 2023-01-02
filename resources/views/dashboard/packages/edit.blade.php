@@ -73,12 +73,12 @@
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            {{--  percentage  --}}
+                            {{--  discount percentage  --}}
                             <div class="col-md-12">
-                                <label class="form-label" for="percentage">@lang('lang.percentage')</label>
-                                <input type="number" name="percentage" step="0.01"
-                                    class="form-control @error('percentage') is-invalid @enderror">
-                                @error('percentage')
+                                <label class="form-label" for="discount_percentage">@lang('lang.discount_percentage')</label>
+                                <input type="number" name="discount_percentage" step="0.01"
+                                    class="form-control @error('discount_percentage') is-invalid @enderror">
+                                @error('discount_percentage')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
