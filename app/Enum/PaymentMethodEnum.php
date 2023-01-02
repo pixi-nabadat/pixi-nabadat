@@ -2,8 +2,8 @@
 
 namespace App\Enum;
 
-class PaymentMethod
+class PaymentMethodEnum
 {
     const CASH          = 1 ;
-    const CREDIT_CARD   = 2;
+    const CREDIT   = 0;
 }

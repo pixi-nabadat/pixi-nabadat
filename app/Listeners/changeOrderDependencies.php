@@ -2,6 +2,8 @@
 
 namespace App\Listeners;
 
+use App\Enum\PaymentMethodEnum;
+use App\Enum\PaymentStatusEnum;
 use App\Events\OrderCreated;
 use App\Exceptions\NotFoundException;
 use App\Models\Order;
@@ -41,7 +43,9 @@ class changeOrderDependencies
             throw new NotFoundException('merchant_order_id_not_found');
         if (!is_null($order->relatable_id) && !is_null($order->relatable_type)) {
             $package = Package::find($order->relatable_id);
-            $this->userService->updateOrCreateNabadatWallet($user, $package);
+            $this->userService->updateOrCreateNabadatWallet($user, $package, PaymentMethodEnum::CREDIT, PaymentStatusEnum::PAID);
+            $order->update(['payment_status' => PaymentStatusEnum::PAID]);
+            return;
         }
         $order->update(['deleted_at' => null, 'payment_status' => Order::PAID]);
     }
