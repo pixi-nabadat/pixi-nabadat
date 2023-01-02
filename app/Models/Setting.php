@@ -32,9 +32,12 @@ class Setting extends Model
         }
         
         if ( self::has($key) ) {
+            if ($key == 'company_logo'){
+                $company_logo = self::get('general', 'company_logo');
+                FileService::remove(public_path('uploads/settings/'.$company_logo));
+            }
             return self::set($key, $val, $type);
         }
-
         return self::create(['name' => $key, 'val' => $val, 'type' => $type]) ? $val : false;
     }
 

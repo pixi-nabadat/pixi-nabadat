@@ -47,7 +47,7 @@ class FileService
     protected static function getFileName(UploadedFile $file)
     {
         $filename = $file->getClientOriginalName();
-        $filename = date('Ymd_His') . '_' . strtolower(pathinfo($filename, PATHINFO_FILENAME)) . '.' . pathinfo($filename, PATHINFO_EXTENSION);
+        $filename = date('Ymd') . '_' . time() . '.' . pathinfo($filename, PATHINFO_EXTENSION);
         return $filename;
     }
 
@@ -106,5 +106,13 @@ class FileService
             File::makeDirectory($destinationPath, 0777, true, true);
         }
         $file->save($destinationPath ."/". $fileName);
+    }
+
+    public static function remove(string $path)
+    {
+        if(File::exists($path)){
+            File::delete($path);
+        }
+        File::delete($path);
     }
 }
