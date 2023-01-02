@@ -72,8 +72,8 @@
                             <div class="card-body">
                                 <div class="media static-top-widget">
                                 <div class="media-body">
-                                    <h6 class="font-roboto">Messages</h6>
-                                    <h4 class="mb-0 counter">893</h4>
+                                    <h6 class="font-roboto">Social Media</h6>
+                                    <h6 class="font-roboto"><a href="{{ route('social_media.settings') }}">Social Media Settings</a></h6>
                                 </div>
                                 <svg class="fill-primary" width="44" height="46" viewBox="0 0 44 46" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M9.73709 35.2337C6.17884 31.58 4.00316 26.8452 3.49802 21.7377C1.60687 24.237 0.581465 27.3024 0.586192 30.5195C0.589372 32.612 1.03986 34.692 1.89348 36.5729L0.1333 41.9282C-0.169286 42.8488 0.0517454 43.8484 0.7102 44.5369C1.17358 45.0213 1.78451 45.2794 2.4128 45.2794C2.67714 45.2794 2.94458 45.2337 3.2054 45.14L8.32806 43.2997C10.1272 44.1922 12.1167 44.6631 14.1182 44.6665C17.2557 44.6709 20.2418 43.558 22.657 41.5068C17.8005 41.0474 13.2702 38.8615 9.73709 35.2337Z"></path>
@@ -93,8 +93,8 @@
                             <div class="card-body">
                                 <div class="media static-top-widget">
                                 <div class="media-body">
-                                    <h6 class="font-roboto">New User</h6>
-                                    <h4 class="mb-0 counter">45631</h4>
+                                    <h6 class="font-roboto">Terms And Conditions</h6>
+                                    <h6 class="font-roboto"><a href="{{ route('terms_and_conditions.settings') }}">Terms And Conditions Settings</a></h6>
                                 </div>
                                 <svg class="fill-danger" width="41" height="46" viewBox="0 0 41 46" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M17.5245 23.3155C24.0019 23.3152 26.3325 16.8296 26.9426 11.5022C27.6941 4.93936 24.5906 0 17.5245 0C10.4593 0 7.35423 4.93899 8.10639 11.5022C8.71709 16.8296 11.047 23.316 17.5245 23.3155Z"></path>

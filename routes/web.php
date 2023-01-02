@@ -53,9 +53,14 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     // Start Settings
     Route::get('/settings',          [SettingController::class,'index'])->name('settings');
     Route::get('/settings/general',      [SettingController::class,'appSettingsIndex'])->name('general.settings');
-    Route::get('/settings/points',   [SettingController::class,'pointsSettingsIndex'])->name('points.settings');
     Route::post('/settings/general', [SettingController::class,'store'])->name('settings.store.general');
+    Route::get('/settings/points',   [SettingController::class,'pointsSettingsIndex'])->name('points.settings');
     Route::post('/settings/points',  [SettingController::class,'store'])->name('settings.store.points');
+    Route::get('/settings/social_media',   [SettingController::class,'socialMediaSettingsIndex'])->name('social_media.settings');
+    Route::post('/settings/social_media',  [SettingController::class,'store'])->name('settings.store.social_media');
+    Route::get('/settings/terms_and_conditions',   [SettingController::class,'termsAndConditionsSettingsIndex'])->name('terms_and_conditions.settings');
+    Route::post('/settings/terms_and_conditions',  [SettingController::class,'store'])->name('settings.store.terms_and_conditions');
+
     // End Settings
     
     Route::group(['prefix'=>'ajax'],function (){

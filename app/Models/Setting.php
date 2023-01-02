@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\FileService;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
@@ -25,6 +26,11 @@ class Setting extends Model
      */
     public static function add($key, $val, $type = 'string')
     {
+        if ($key == 'company_logo'){
+            $fileData = FileService::saveImage(file: $val,path: 'uploads\settings');
+            $val = $fileData['filename'];
+        }
+        
         if ( self::has($key) ) {
             return self::set($key, $val, $type);
         }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Location;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 
@@ -15,12 +16,23 @@ class SettingController extends Controller
 
     public function appSettingsIndex()
     {
-        return view('setting.general');
+        $locations = Location::all();
+        return view('setting.general', compact('locations'));
     }
 
     public function pointsSettingsIndex()
     {
         return view('setting.points');
+    }
+
+    public function socialMediaSettingsIndex()
+    {
+        return view('setting.social_media');
+    }
+
+    public function termsAndConditionsSettingsIndex()
+    {
+        return view('setting.terms_and_conditions');
     }
 
     public function store(Request $request)
