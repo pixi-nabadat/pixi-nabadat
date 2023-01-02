@@ -79,6 +79,27 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                {{-- package image --}}
+                                <div class="card  col-md-12">
+                                    <div class="card-header py-4">
+                                        <h6>{{ __('lang.package_image') }}</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-md-12 d-flex">
+                                            <label class="form-label col-3" for="image">{{ trans('lang.image') }}</label>
+                                                <input name="image" class="form-control image @error('image') is-invalid @enderror"
+                                                    id="image" type="file">
+                                                @error('image')
+                                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                                @enderror
+                                        </div>
+
+                                        <div class="form-group mt-3">
+                                            <img src="{{ asset('/uploads/packages/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                                        </div>
+                                    </div>
+                                </div>
+
                                 {{--  is_active  --}}
                                 <div class="media mb-2">
                                     <label class="col-form-label m-r-10">{{ __('lang.is_active') }}</label>
