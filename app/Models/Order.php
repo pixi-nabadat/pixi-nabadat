@@ -57,16 +57,6 @@ class Order extends Model
         $builder->whereNull(['relatable_id', 'relatable_type']);
     }
 
-    public function getPaymentTypeAttribute($value)
-    {
-        switch ($value) {
-            case self::PAYMENTCREDIT :
-                return trans('lang.credit');
-            case self::PAYMENTCASH :
-                return trans('lang.cash');
-        }
-    }
-
     public function getPaymentStatusAttribute($value)
     {
         switch ($value) {

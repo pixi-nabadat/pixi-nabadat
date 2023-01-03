@@ -27,8 +27,8 @@ class OrdersDataTable extends DataTable
             ->addColumn('user_phone', function (Order $order) {
                 return $order->user->phone;
             })
-            ->editColumn('payment_type', function (Order $order) {
-                return $order->payment_type;
+            ->editColumn('payment_method', function (Order $order) {
+                return trans('lang.'.$order->payment_method);
             })
             ->addColumn('shipping_fees', function (Order $order) {
                 return $order->shipping_fees;
@@ -82,7 +82,7 @@ class OrdersDataTable extends DataTable
             Column::make('sub_total'),
             Column::make('grand_total'),
             Column::make('coupon_discount'),
-            Column::make('payment_type'),
+            Column::make('payment_method'),
             Column::make('payment_status'),
             Column::computed('action')
                 ->exportable(false)
