@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Enum\PaymentMethod;
 use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
 use App\Http\Controllers\Controller;
@@ -76,7 +75,7 @@ class BuyOfferController extends Controller
     {
         return [
             'payment_status' => PaymentStatusEnum::UNPAID,
-            'payment_type' => PaymentMethodEnum::CREDIT,
+            'payment_method' => PaymentMethodEnum::CREDIT,
             'address_info' => $user->defaultAddress->toJson(),
             'shipping_fees' => 0,
             'sub_total' => $package->price,
