@@ -26,7 +26,7 @@ use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\api\RatesController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\BuyOfferController;
-
+use App\Http\Controllers\Api\UserPackageController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -121,6 +121,14 @@ use Illuminate\Support\Facades\Auth;
 
     Route::get('packages', [PackageController::class, 'listing']);
 
+
+    //start user packages
+    Route::get('userPackages',                  [UserPackageController::class,'listing']);
+    Route::get('userPackages/{userPackage}',    [UserPackageController::class,'find']);
+    Route::post('userPackages',                 [UserPackageController::class,'store']);
+    Route::put('userPackages/{userPackage}',    [UserPackageController::class,'update']);
+    Route::delete('userPackages/{userPackage}', [UserPackageController::class,'destroy']);
+    //end user packages
     Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
     Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
