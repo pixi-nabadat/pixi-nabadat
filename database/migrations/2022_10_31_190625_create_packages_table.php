@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->integer('num_nabadat');
             $table->double('price');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->double('discount_percentage');
             $table->boolean('is_active')->default(Package::Active)->nullable();
             $table->timestamps();
