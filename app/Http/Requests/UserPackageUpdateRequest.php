@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserPackageRequest extends FormRequest
+class UserPackageUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,10 @@ class UserPackageRequest extends FormRequest
     public function rules()
     {
         return [
-            'num_nabadat' => 'required',
-            'price'=>'required',
-            'package_id'=>'required|integer',
-            'user_id'=>'required|integer'
+            'payment_status'      => 'required|integer', 
+            'usage_status'        => 'required|integer',//this is the first status for new user packages
+            'used'                => 'required|integer',
+            'remaining'           => 'reqiured|nteger'
         ];
     }
 

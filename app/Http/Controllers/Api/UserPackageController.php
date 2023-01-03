@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserPackageRequest;
+use App\Http\Requests\UserPackageStoreRequest;
+use App\Http\Requests\UserPackageUpdateRequest;
 use App\Services\UserPackageService;
 use App\Http\Resources\UserPackagesResource;
 
@@ -25,7 +27,7 @@ class UserPackageController extends Controller
     }//end of index
 
 
-    public function store(UserPackageRequest $request){
+    public function store(UserPackageStoreRequest $request){
         try {
             $userPackages=$this->userPackageService->store($request->validated());
             return apiResponse(data: $userPackages,message: trans('lang.userPackage_saved_successfully'));
@@ -34,7 +36,7 @@ class UserPackageController extends Controller
         }
     }//end of store
 
-    public function update(UserPackageRequest $request, $id)
+    public function update(UserPackageUpdateRequest $request, $id)
     {
         try {
             $userPackages=$this->userPackageService->update($id, $request->validated());

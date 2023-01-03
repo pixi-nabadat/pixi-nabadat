@@ -51,11 +51,11 @@ Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
 Route::get('cancel-reasons',[CancelReasonController::class,'listing']);
 
-Route::get ('userPackages',[UserPackageController::class,'index']);
-Route::get ('userPackages/{userPackage}',[UserPackageController::class,'find']);
-Route::post('userPackages/store',[UserPackageController::class,'store']);
-Route::post('userPackages/update/{userPackage}',[UserPackageController::class,'update']);
-Route::post('userPackages/destroy/{userPackage}',[UserPackageController::class,'destroy']);
+Route::get('userPackages',                  [UserPackageController::class,'index']);
+Route::get('userPackages/{userPackage}',    [UserPackageController::class,'find']);
+Route::post('userPackages',                 [UserPackageController::class,'store']);
+Route::put('userPackages/{userPackage}',    [UserPackageController::class,'update']);
+Route::delete('userPackages/{userPackage}', [UserPackageController::class,'destroy']);
 
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);
