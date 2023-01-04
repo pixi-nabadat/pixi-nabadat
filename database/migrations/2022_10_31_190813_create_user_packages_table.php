@@ -20,12 +20,12 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\User::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->integer('num_nabadat');
             $table->double('price');
-            $table->double('discount_percentage');
-            $table->integer('payment_method');
-            $table->integer('payment_status');
+            $table->double('discount_percentage')->default(0);
+            $table->enum('payment_method',['cash','credit']);
+            $table->enum('payment_status',['paid','unpaid']);
             $table->integer('usage_status');
-            $table->integer('used');
-            $table->integer('remaining');
+            $table->integer('used')->default(0);
+            $table->integer('remaining')->default();
             $table->timestamps();
         });
     }
