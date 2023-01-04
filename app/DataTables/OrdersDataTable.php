@@ -45,6 +45,9 @@ class OrdersDataTable extends DataTable
             ->addColumn('payment_status', function (Order $order) {
                 return $order->payment_status;
             })
+            ->addColumn('order_status', function (Order $order) {
+                return $order->getOrderStatusTextAttribute();
+            })
             ->rawColumns(['action', 'status']);
     }
 
@@ -84,6 +87,7 @@ class OrdersDataTable extends DataTable
             Column::make('coupon_discount'),
             Column::make('payment_type'),
             Column::make('payment_status'),
+            Column::make('order_status'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

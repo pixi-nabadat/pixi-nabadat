@@ -107,3 +107,12 @@ if (this.files && this.files[0]) {
 }
 });
 </script>
+
+
+<script>
+   
+
+   $(document).ready(function() {
+    $(".dropdown-toggle").dropdown();
+});
+</script>

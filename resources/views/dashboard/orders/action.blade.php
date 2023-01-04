@@ -1,36 +1,30 @@
 <div class="d-flex justify-content-center">
 
-
     @php
-        $status = ['Pending' => 1, 'Confirmed' => 2, 'Shipped' => 3, 'Delivered' => 4, 'Canceled' => 5];
+        $status = ['pending' => 1, 'confirmed' => 2, 'shipped' => 3, 'delivered' => 4, 'canceled' => 5];
     @endphp
 
     <div class="btn-group">
-        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">status</button>
+        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+            aria-expanded="false">{{ __('lang.status') }} </button>
 
-        <div class="dropdown-menu">
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
             @foreach ($status as $key => $value)
-                <form action={{ route('orders.updatePaymentStatus') }} method="POST">
+                <form action={{ route('orders.updateOrderStatus') }} method="POST">
                     @csrf
                     <input type="hidden" name="id" value={{ $order->id }}>
                     <input type="hidden" name="value" value={{ $value }}>
-                    @if ($order->payment_status < $value)
-                        <button class="btn btn-success col-12 my-1" type="submit">{{ $key }}</button>
-                    @endif
+                    <li><button class="btn text-dark bg-witht col-12 my-1 dropdown-item" type="submit">
+                            {{ __('lang' . '.' . $key) }}</button></li>
                 </form>
             @endforeach
 
-        </div>
+        </ul>
     </div>
 
     <a href="{{ route('orders.show', $order) }}" class="btn-sm btn-primary me-1">
-        <i class="fa fa-eye  my-2"></i>
+        <i class="fa fa-eye my-2"></i>
     </a>
 
 </div>
-
-<script>
-    $('.dropdown-toggle').dropdown('')
-</script>

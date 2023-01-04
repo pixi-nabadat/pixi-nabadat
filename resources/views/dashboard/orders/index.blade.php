@@ -20,7 +20,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        {{-- <h5><a role="button" class="btn btn-success " href={{ route('orders.create')}}><i class="fa fa-plus-circle"></i>{{trans('lang.add_order')}}</a></h5> --}}
+                        {{ trans('lang.orders') }}
                     </div>
                     <div class="card-body">
                         <div class="table">

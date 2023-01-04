@@ -95,7 +95,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     Route::resource('centerDevices',CenterDeviceController::class);
 
-    Route::post('orders/updatePaymentStatus',[OrderController::class,'updatePaymentStatus'])->name('orders.updatePaymentStatus');
+    Route::post('orders/updateOrderStatus',[OrderController::class,'updateOrderStatus'])->name('orders.updateOrderStatus');
     Route::resource('orders',OrderController::class);
 
 

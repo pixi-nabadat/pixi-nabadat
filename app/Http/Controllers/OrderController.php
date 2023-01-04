@@ -15,31 +15,36 @@ class OrderController extends Controller
 
     public function index(OrdersDataTable $dataTable, Request $request)
     {
-        $loadRelation = ['orderStatus','user:id,name,phone'];
-        return $dataTable->with(['filters' => $request->all(), 'withRelations' => $loadRelation])->render('dashboard.orders.index');
-
+        try {
+            $loadRelation = ['orderStatus', 'user:id,name,phone'];
+            return $dataTable->with(['filters' => $request->all(), 'withRelations' => $loadRelation])->render('dashboard.orders.index');
+        } catch (\Exception $exception) {
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => $exception->getMessage()];
+            return back()->with('toast', $toast);
+        }
     } //end of index
 
-    public function changePaymentStatus(Request $request)
+    public function updateOrderStatus(Request $request)
     {
-
-        $this->orderService->updatePaymentStatus($request);
-        $this->orderService->updateOrderHistory($request);
-
-        $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
-        return redirect(route('orders.index'))->with('toast', $toast);
-
-    } //end of changePaymentStatus
+        try {
+            $this->orderService->updateOrderStatus($request);
+            $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
+            return redirect(route('orders.index'))->with('toast', $toast);
+        } catch (\Exception $exception) {
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => $exception->getMessage()];
+            return back()->with('toast', $toast);
+        }
+    } //end of update order Status 
 
     public function show($id)
     {
+        $loadRelation = ['user:id , name , phone'];
         $order = $this->orderService->find($id);
-        if (!$order)
-        {
+        if (!$order) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.order_not_found')];
             return back()->with('toast', $toast);
         }
-       return view('dashboard.orders.show', compact('order'));
+        return view('dashboard.orders.show', compact('order'))->with(['withRelations' => $loadRelation]);
     } //end of show
 
 }

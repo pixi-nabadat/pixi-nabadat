@@ -75,14 +75,7 @@ class OrderService extends BaseService
         $order->update(['order_history_id' => $order_history->id]);
     }
 
-    public function updatePaymentStatus($data)
-    {
-        $order = $this->find($data->id);
-        $order->payment_status = $data->value;
-        return $order->save();
-    }
-
-    public function updateOrderHistory($data)
+    public function updateOrderStatus($data)
     {
         $order = $this->find($data->id);
         $order->history()->update([
