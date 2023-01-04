@@ -2,18 +2,11 @@
 
 namespace App\Services;
 
-use App\Exceptions\StatusNotEquelException;
-use App\Models\Reservation;
-use App\Models\User;
-use App\Models\Center;
 use App\Models\Package;
 use App\Models\UserPackage;
-use App\QueryFilters\ReservationsFilter;
 use App\QueryFilters\UserPackagesFilter;
-use Exception;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Arr;
 class UserPackageService extends BaseService
 {
 
@@ -75,7 +68,7 @@ class UserPackageService extends BaseService
              $userPackage->update($data);
              $userPackage->update([
                 'payment_status' => $data['payment_status'], 
-                'usage_status'   => '1',//this is the first status for new user packages
+                'usage_status'   => $data['usage_status'],//this is the first status for new user packages
                 'used'           => $data['used'],
                 'remaining'      => $data['remaining']
             ]);
