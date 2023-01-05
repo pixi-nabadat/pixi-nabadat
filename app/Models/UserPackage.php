@@ -11,17 +11,24 @@ class UserPackage extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'package_id', 'num_nabadat', 'price'];
+
+    protected $fillable = ['user_id', 'package_id', 'num_nabadat', 'price','percentage','center_id','payment-status','payment_type','status','used_amount','remain'];
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function package(): BelongsTo
     {
-        return $this->belongsTo(Package::class, 'package_id');
+        return $this->belongsTo(Package::class);
     }
+
+    public function center(): BelongsTo
+    {
+        return $this->belongsTo(Center::class);
+    }
+
     protected static function boot()
     {
         parent::boot();

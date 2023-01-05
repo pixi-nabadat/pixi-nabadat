@@ -19,7 +19,7 @@ use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\CouponUsageController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 
-use App\Http\Controllers\Api\PackageController;
+use App\Http\Controllers\Api\CenterPackageController;
 use App\Http\Controllers\Api\CartItemController;
 
 use App\Http\Controllers\Api\AddressController;
@@ -119,7 +119,7 @@ use Illuminate\Support\Facades\Auth;
 
     Route::get('centers', [CenterController::class, 'listing']);
 
-    Route::get('packages', [PackageController::class, 'listing']);
+    Route::get('center-offers', [CenterPackageController::class, 'listing']);
 
     Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
