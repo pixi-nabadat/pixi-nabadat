@@ -25,7 +25,7 @@ return new class extends Migration
             $table->enum('payment_status',['paid','unpaid']);
             $table->integer('usage_status');
             $table->integer('used')->default(0);
-            $table->integer('remaining')->default();
+            $table->integer('remaining')->default(0);
             $table->timestamps();
         });
     }
