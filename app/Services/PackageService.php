@@ -21,6 +21,11 @@ class PackageService extends BaseService
         return $packages->filter(new packagesFilter($where_condition));
     }
 
+    public function listing(array $where_condition = [],$withRelation=[],$perPage=10)
+    {
+        return $this->queryGet($where_condition,$withRelation)->cursorPaginate($perPage);
+    }
+
     public function store($data)
     {
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
@@ -29,6 +34,8 @@ class PackageService extends BaseService
             $fileData = FileService::saveImage(file: $data['image'],path: 'uploads\packages');
             $package->storeAttachment($fileData);
         }
+
+        return $package;
             
     } //end of store
 
@@ -60,7 +67,8 @@ class PackageService extends BaseService
             $fileData = FileService::saveImage(file: $data['image'],path: 'uploads\packages');
             $package->storeAttachment($fileData);
         }
-        return $package->update($data);
+        $package->update($data);
+        return $package;
     } //end of update
 
     public function status($id): bool

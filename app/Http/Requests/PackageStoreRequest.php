@@ -30,6 +30,7 @@ class PackageStoreRequest extends BaseRequest
             'start_date'           => 'required|date',
             'end_date'             => 'required|date',
             'discount_percentage'  => 'required|numeric',
+            'image'                => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'is_active'            => 'nullable|string',
         ];
     }

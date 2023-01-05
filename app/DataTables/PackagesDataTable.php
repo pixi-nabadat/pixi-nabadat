@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\package;
+use App\Services\PackageService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -30,9 +31,9 @@ class PackagesDataTable extends DataTable
     }
 
 
-    public function query(package $model): QueryBuilder
+    public function query(PackageService $model): QueryBuilder
     {
-        return $model->queryGet($this->filters,$this->withRelations);
+        return $model->queryGet([],[]);
     }
 
 
@@ -52,6 +53,9 @@ class PackagesDataTable extends DataTable
             Column::make('name'),
             Column::make('num_nabadat'),
             Column::make('price'),
+            Column::make('start_date'),
+            Column::make('end_date'),
+            Column::make('discount_percentage'),
             Column::make('is_active'),
             Column::computed('action')
                   ->exportable(false)
