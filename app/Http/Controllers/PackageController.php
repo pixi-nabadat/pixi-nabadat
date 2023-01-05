@@ -6,6 +6,7 @@ use App\DataTables\packagesDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PackageStoreRequest;
 use App\Http\Requests\PackageUpdateRequest;
+use App\Models\Center;
 use App\Services\CenterService;
 use App\Services\packageService;
 use Illuminate\Http\Request;
@@ -30,7 +31,8 @@ class PackageController extends Controller
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.package_not_found')];
             return back()->with('toast', $toast);
         }
-        return view('dashboard.packages.edit', compact('package'));
+        $centers = Center::all();
+        return view('dashboard.packages.edit', compact('package', 'centers'));
     }//end of edit 
 
     public function create(){

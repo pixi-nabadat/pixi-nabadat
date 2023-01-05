@@ -82,6 +82,24 @@
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                            {{--  start date  --}}
+                            <div class="col-md-12">
+                                <label class="form-label" for="start_date">@lang('lang.start_date')</label>
+                                <input type="date" name="start_date" step="1"
+                                    class="form-control @error('start_date') is-invalid @enderror">
+                                @error('start_date')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            {{--  end date  --}}
+                            <div class="col-md-12">
+                                <label class="form-label" for="end_date">@lang('lang.end_date')</label>
+                                <input type="date" name="end_date" step="1"
+                                    class="form-control @error('end_date') is-invalid @enderror">
+                                @error('end_date')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                             {{-- package image --}}
                             <div class="card  col-md-12">
                                 <div class="card-header py-4">

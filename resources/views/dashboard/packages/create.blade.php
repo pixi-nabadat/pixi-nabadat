@@ -27,12 +27,15 @@
                                 {{--center  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
-                                    <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12">
+                                    <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12 @error('price') is-invalid @enderror">
                                         <option selected>...</option>
                                         @foreach ($centers as $center)
                                             <option value="{{ $center->id }}">{{ $center->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('center_id')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 {{-- English Name --}}
                                 <div class="col-md-12">
@@ -76,6 +79,24 @@
                                     <input type="number" name="discount_percentage" step="0.01"
                                         class="form-control @error('discount_percentage') is-invalid @enderror">
                                     @error('discount_percentage')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                {{--  start date  --}}
+                                <div class="col-md-12">
+                                    <label class="form-label" for="start_date">@lang('lang.start_date')</label>
+                                    <input type="date" name="start_date" step="1"
+                                        class="form-control @error('start_date') is-invalid @enderror">
+                                    @error('start_date')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                {{--  end date  --}}
+                                <div class="col-md-12">
+                                    <label class="form-label" for="end_date">@lang('lang.end_date')</label>
+                                    <input type="date" name="end_date" step="1"
+                                        class="form-control @error('end_date') is-invalid @enderror">
+                                    @error('end_date')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

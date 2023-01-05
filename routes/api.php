@@ -53,7 +53,7 @@ use App\Http\Controllers\Api\PackageController;
     Route::get('centers', [CenterController::class, 'listing']);
 
     Route::get('packages', [PackageController::class, 'listing']);
-
+    Route::resource('packages',PackageController::class);
     Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
 
