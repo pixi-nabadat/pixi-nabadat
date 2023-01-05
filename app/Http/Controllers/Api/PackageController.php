@@ -22,7 +22,8 @@ class PackageController extends Controller
         try {
             $filters = ['is_active' => 1];
             $allPackages = $this->packageService->getAll(where_condition: $filters);
-            return PackagesResource::collection($allPackages);
+            $data = PackagesResource::collection($allPackages);
+            return apiResponse(data: $data, message: trans('lang.success_operation'), code: 200);
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
