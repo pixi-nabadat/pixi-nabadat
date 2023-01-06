@@ -24,6 +24,12 @@
                             action="{{ route('packages.update', $package) }}" method="post">
                             @csrf
                             @method('put')
+                            {{--center  --}}
+                            <div class="col-md-12">
+                                <label class="form-label mt-3" for="price">@lang('lang.center')</label>
+                                <p class="form-control">{{$package->center->name}}</p>
+
+                            </div>
                             {{-- English Name --}}
                             <div class="col-md-12">
                                 <label class="form-label mt-3" for="name_en">{{ trans('lang.name_en') }}</label>
@@ -63,6 +69,63 @@
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                            {{--  discount percentage  --}}
+                            <div class="col-md-12">
+                                <label class="form-label" for="discount_percentage">@lang('lang.discount_percentage')</label>
+                                <input type="number"  name="discount_percentage" value={{ $package->discount_percentage }} step="0.01"
+                                    class="form-control @error('discount_percentage') is-invalid @enderror">
+                                @error('discount_percentage')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            {{--  start date  --}}
+                            <div class="col-md-12">
+                                <label class="form-label" for="start_date">@lang('lang.start_date')</label>
+                                <input type="date" name="start_date" value="{{$package->start_date}}" class="form-control @error('start_date') is-invalid @enderror">
+                                @error('start_date')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            {{--  end date  --}}
+                            <div class="col-md-12">
+                                <label class="form-label" for="end_date">@lang('lang.end_date')</label>
+                                <input type="date" name="end_date" value="{{$package->end_date}}" class="form-control @error('end_date') is-invalid @enderror">
+                                @error('end_date')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            {{--status  --}}
+                            <div class="col-md-12 d-flex my-3">
+                                <div class="col-form-label col-3">{{ __('lang.status') }}</div>
+                                <select id="status" name="center_id" class="form-select form-control-sm digits @error('price') is-invalid @enderror">
+                                    <option value="{{\App\Enum\PackageStatusEnum::APPROVED}}" {{$package->status == \App\Enum\PackageStatusEnum::APPROVED ? 'selected' : ''}}>{{ __('lang.approved') }}</option>
+                                    <option value="{{\App\Enum\PackageStatusEnum::REJECTED}}" {{$package->status == \App\Enum\PackageStatusEnum::REJECTED ? 'selected' : ''}}>{{ __('lang.cancel') }}</option>
+                                </select>
+                                @error('status')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            {{-- package image --}}
+                            <div class="card  col-md-12">
+                                <div class="card-header py-4">
+                                    <h6>{{ __('lang.package_image') }}</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-md-12 d-flex">
+                                        <label class="form-label col-3" for="image">{{ trans('lang.image') }}</label>
+                                            <input name="image" class="form-control image @error('image') is-invalid @enderror"
+                                                id="image" type="file">
+                                            @error('image')
+                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                            @enderror
+                                    </div>
+
+                                    <div class="form-group mt-3">
+                                        <img src="{{$package->attachments->first() !== null ? asset($package->attachments->first()->path."\\".$package->attachments->first()->filename) : asset('/uploads/packages/default.png')}}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                                    </div>
+                                </div>
+                            </div>
+
                             {{-- is_active --}}
                             <div class="media my-2">
                                 <label class="col-form-label m-r-10">{{ __('lang.status') }}</label>

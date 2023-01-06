@@ -16,10 +16,15 @@ return new class extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Center::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('name')->unique();
             $table->integer('num_nabadat');
             $table->double('price');
-            $table->boolean('is_active')->default(Package::Active)->nullable();
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->double('discount_percentage');
+            $table->integer('status')->default(\App\Enum\PackageStatusEnum::UNDERACHIEVING);
+            $table->boolean('is_active')->default(\App\Enum\ActivationStatusEnum::ACTIVE);
             $table->timestamps();
         });
     }

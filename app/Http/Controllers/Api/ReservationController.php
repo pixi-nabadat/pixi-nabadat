@@ -32,6 +32,7 @@ class ReservationController extends Controller
 
     public function listing(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
+        return  auth()->user();
         try {
             $filters = $request->all();
             if (auth('sanctum')->user()->center_id == null)

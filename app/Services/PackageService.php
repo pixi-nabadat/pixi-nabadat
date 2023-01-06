@@ -17,14 +17,26 @@ class PackageService extends BaseService
 
     public function queryGet(array $where_condition = [], array $withRelation = []): Builder
     {
-        $packages = package::query()->with($withRelation);
+        $packages = package::query()->orderBy('status')->orderBy('id')->with($withRelation);
         return $packages->filter(new packagesFilter($where_condition));
+    }
+
+    public function listing(array $where_condition = [],$withRelation=[],$perPage=10)
+    {
+        return $this->queryGet($where_condition,$withRelation)->cursorPaginate($perPage);
     }
 
     public function store($data)
     {
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-        return package::create($data);
+        $package = package::create($data);
+        if (isset($data['image'])){
+            $fileData = FileService::saveImage(file: $data['image'],path: 'uploads\packages');
+            $package->storeAttachment($fileData);
+        }
+
+        return $package;
+
     } //end of store
 
     public function delete($id)
@@ -50,7 +62,12 @@ class PackageService extends BaseService
         $package = $this->find($id);
         if (!$package)
             return false;
-        return $package->update($data);
+        if (isset($data['image'])){
+            $fileData = FileService::saveImage(file: $data['image'],path: 'uploads\packages',field_name: 'image');
+            $package->updateAttachment($fileData);
+        }
+        $package->update($data);
+        return true;
     } //end of update
 
     public function status($id): bool

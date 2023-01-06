@@ -24,6 +24,12 @@ class CenterService extends BaseService
         return $centers->filter(new CentersFilter($where_condition));
     }
 
+    public function getAll(array $where_condition = [], array $withRelations = [])
+    {
+        $centers = $this->queryGet($where_condition, $withRelations);
+        return $centers->get();
+    }
+
     public function store(array $data = [])
     {
         DB::beginTransaction();
