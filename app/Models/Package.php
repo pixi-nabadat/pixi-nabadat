@@ -20,4 +20,9 @@ class Package extends Model
     {
         return $this->hasMany(UserPackage::class);
     }
+
+    public function getUserPriceAttribute(): float
+    {
+        return $this->price*((100 - $this->discount_percentage)/100);
+    }
 }
