@@ -1,5 +1,6 @@
 <?php
 
+use App\Enum\PaymentMethodEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -30,7 +31,7 @@ return new class extends Migration
             $table->string('points')->default(0);
             $table->string('points_expire_date')->nullable();
             $table->double('rate')->default(0.0);
-            $table->string('support_payments')->default(\App\Models\Center::CASH);
+            $table->string('support_payments')->default(PaymentMethodEnum::CASH);
             $table->double('app_discount');
             $table->timestamps();
         });

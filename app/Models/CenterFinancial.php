@@ -11,7 +11,7 @@ class CenterFinancial extends Model
     use HasFactory;
 
     protected $fillable = [
-        'center_id','app_discount','cash_wallet','credit_wallet','cleared_cash_amount','cleared_credit_amount','cash_clearing','credit_clearing',
+        'center_id','num_nabadat','package_id','center_dues','app_dues','status','date','regular_price','discount',
     ];
 
     public function center():BelongsTo
