@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('points_expire_date')->nullable();
             $table->double('rate')->default(0.0);
             $table->string('support_payments')->default(\App\Models\Center::CASH);
+            $table->double('app_discount');
             $table->timestamps();
         });
     }

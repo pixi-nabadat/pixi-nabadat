@@ -40,7 +40,8 @@ class StoreCenterRequest extends BaseRequest
             'avg_wating_time'         => 'required',
             'featured'                => 'nullable',
             'support_payments'        => 'array|min:1',
-            'support_payments.*'      => 'required|string|in:credit,cash'
+            'support_payments.*'      => 'required|string|in:credit,cash',
+            'app_discount'            => 'required|numeric',
         ];
     }
 

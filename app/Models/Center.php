@@ -7,6 +7,8 @@ use App\Traits\Filterable;
 use App\Traits\HasAttachment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Translatable\HasTranslations;
 
 class Center extends Model
@@ -24,7 +26,7 @@ class Center extends Model
 
     protected $fillable = [
         'name', 'phone', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
-        'google_map_url','avg_waiting_time','featured', 'rate', 'support_payments'
+        'google_map_url','avg_waiting_time','featured', 'rate', 'support_payments','app_discount',
     ];
 
     protected $casts = [
@@ -72,4 +74,8 @@ class Center extends Model
             ->withPivot(['id', 'regular_price', 'nabadat_app_price','auto_service_price','number_of_devices'])->withTimestamps();
     }
 
+    public function centerFinancial(): BelongsToMany
+    {
+        return $this->belongsToMany(CenterFinance::class, 'center_id');
+    }
 }
