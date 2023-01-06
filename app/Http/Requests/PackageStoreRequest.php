@@ -23,10 +23,16 @@ class PackageStoreRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name.*' => 'required|string|unique:packages,name',
-            'num_nabadat'=>'required',
-            'price'=>'required',
-            'is_active'=>'nullable|string',
+            'center_id'            => 'required|exists:centers,id',
+            'name.*'               => 'required|string|unique:packages,name',
+            'num_nabadat'          => 'required|integer',
+            'price'                => 'required|numeric',
+            'start_date'           => 'required|date',
+            'end_date'             => 'required|date',
+            'discount_percentage'  => 'required|numeric',
+            'image'                => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'status'               => 'nullable|integer',
+            'is_active'            => 'nullable|string',
         ];
     }
 

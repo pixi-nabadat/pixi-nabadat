@@ -9,7 +9,6 @@ class HomeController extends Controller
 
     public function __invoke()
     {
-        return auth()->user();
        return view('dashboard.index');
     }
 }

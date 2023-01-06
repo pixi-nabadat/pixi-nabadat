@@ -120,7 +120,7 @@ use Illuminate\Support\Facades\Auth;
     Route::get('centers', [CenterController::class, 'listing']);
 
     Route::get('center-offers', [CenterPackageController::class, 'listing']);
-
+    Route::resource('packages',PackageController::class);
     Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
     Route::get('cancel-reasons',[CancelReasonController::class,'listing']);

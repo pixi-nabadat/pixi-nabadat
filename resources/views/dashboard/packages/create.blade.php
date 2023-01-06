@@ -24,6 +24,19 @@
                             action="{{ route('packages.store') }}">
                             @csrf
                             <div class="row g-3">
+                                {{--center  --}}
+                                <div class="col-md-12 d-flex my-3">
+                                    <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
+                                    <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12 @error('price') is-invalid @enderror">
+                                        <option selected>...</option>
+                                        @foreach ($centers as $center)
+                                            <option value="{{ $center->id }}">{{ $center->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('center_id')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                                 {{-- English Name --}}
                                 <div class="col-md-12">
                                     <label class="form-label" for="name_en">{{ trans('lang.name_en') }}</label>
@@ -60,6 +73,65 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                {{--  discount percentage  --}}
+                                <div class="col-md-12">
+                                    <label class="form-label" for="discount_percentage">@lang('lang.discount_percentage')</label>
+                                    <input type="number" name="discount_percentage" step="0.01"
+                                        class="form-control @error('discount_percentage') is-invalid @enderror">
+                                    @error('discount_percentage')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                {{--  start date  --}}
+                                <div class="col-md-12">
+                                    <label class="form-label" for="start_date">@lang('lang.start_date')</label>
+                                    <input type="date" name="start_date" step="1"
+                                        class="form-control @error('start_date') is-invalid @enderror">
+                                    @error('start_date')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                {{--  end date  --}}
+                                <div class="col-md-12">
+                                    <label class="form-label" for="end_date">@lang('lang.end_date')</label>
+                                    <input type="date" name="end_date" step="1"
+                                        class="form-control @error('end_date') is-invalid @enderror">
+                                    @error('end_date')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                {{--status  --}}
+                                <div class="col-md-12 d-flex my-3">
+                                    <div class="col-form-label col-3">{{ __('lang.status') }}</div>
+                                    <select id="status" name="center_id" class="js-example-basic-single col-sm-12 @error('price') is-invalid @enderror">
+                                        <option value="1">{{ __('lang.approved') }}</option>
+                                        <option value="0">{{ __('lang.cancel') }}</option>
+                                    </select>
+                                    @error('status')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                {{-- package image --}}
+                                <div class="card  col-md-12">
+                                    <div class="card-header py-4">
+                                        <h6>{{ __('lang.package_image') }}</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-md-12 d-flex">
+                                            <label class="form-label col-3" for="image">{{ trans('lang.image') }}</label>
+                                                <input name="image" class="form-control image @error('image') is-invalid @enderror"
+                                                    id="image" type="file">
+                                                @error('image')
+                                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                                @enderror
+                                        </div>
+
+                                        <div class="form-group mt-3">
+                                            <img src="{{ asset('/uploads/packages/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                                        </div>
+                                    </div>
+                                </div>
+
                                 {{--  is_active  --}}
                                 <div class="media mb-2">
                                     <label class="col-form-label m-r-10">{{ __('lang.is_active') }}</label>

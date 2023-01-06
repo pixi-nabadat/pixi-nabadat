@@ -27,7 +27,6 @@
 					</li>
 					<li class="sidebar-list">
                         {{-- start country --}}
-                        {{dd(request()->route()->getPrefix())}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/country' ? 'active' : '' }}" href="#"><i class="fa fa-map-marker p-r-5"></i><span class="lan-6">{{ trans('lang.country') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == 'country' ? 'down' : 'right' }}"></i></div>
                         </a>
