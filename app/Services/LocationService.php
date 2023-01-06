@@ -33,8 +33,9 @@ class LocationService extends BaseService
      */
     public function store(array $locationData = []): mixed
     {
+        $locationData['is_active'] = isset($locationData['is_active'])  ?  1 :  0;
         return Location::create($locationData);
-    }
+    }   
 
     /**
      * @param int $id
@@ -44,6 +45,8 @@ class LocationService extends BaseService
     public function update(int $id,array $locationData): bool
     {
         $location = Location::find($id);
+        $data['is_active'] = isset($locationData['is_active'])  ?  1 :  0;
+
         if ($location)
             return $location->update($locationData);
         return false;

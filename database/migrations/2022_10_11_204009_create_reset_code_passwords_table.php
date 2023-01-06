@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('phone')->index();
             $table->string('code');
-            $table->timestamp('created_at')->nullable();
+            $table->timestamps();
         });
     }
 

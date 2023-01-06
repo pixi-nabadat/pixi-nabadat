@@ -20,7 +20,7 @@
 					<form class="needs-validation" novalidate="" method="post" action="{{route('city.store')}}" >
                         @csrf
 						<div class="row">
-							<div class="col-md-6 mb-3">
+							<div class="col-md-12 mb-3">
 								<label for="validationCustom01">Slug</label>
 								<input name="slug" class="form-control @error('slug') is-invalid @enderror" id="validationCustom01" type="text" placeholder="Slug" required="">
                                 @error('slug')
@@ -50,10 +50,18 @@
                                     @endforeach
                                 </select>
                                 @error('parent_id')
-                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-
+                            {{-- shipping_cost --}}
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="shipping_cost">{{ trans('lang.shipping_cost') }}</label>
+                                <input name="shipping_cost" class="form-control @error('shipping_cost') is-invalid @enderror"
+                                    id="shipping_cost" type="number" required>
+                                @error('shipping_cost')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="mb-3">
                                 <div class="media mb-2">
                                     <label class="col-form-label m-r-10">{{trans('lang.is_active')}}</label>

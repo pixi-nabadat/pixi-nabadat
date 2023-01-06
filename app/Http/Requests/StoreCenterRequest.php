@@ -22,21 +22,25 @@ class StoreCenterRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name.*' => 'required|string',
-            'phone' => 'array|min:1',
-            'phone.*' => 'required|string|unique:users,phone',
-            'location_id' => 'required|integer',
-            'lat' => 'nullable|string',
-            'lng' => 'nullable|string',
-            'address.*' => 'string|required',
-            'description.*' => 'string|nullable',
-            'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg',
-            'user_name'=>'required|unique:users,user_name',
-            'password'=>'required|string',
-            'email'=>'required|email|unique:users,email',
-            'is_active' => 'string|nullable',
+            'name.*'                  => 'required|string',
+            'phone'                   => 'array|min:1',
+            'phone.*'                 => 'required|string|unique:users,phone',
+            'location_id'             => 'required|integer',
+            'lat'                     => 'nullable|string',
+            'lng'                     => 'nullable|string',
+            'address.*'               => 'string|required',
+            'description.*'           => 'string|nullable',
+            'images'                  => 'nullable|array',
+            'images.*'                => 'image|mimes:jpg,png,jpeg,gif,svg',
+            'user_name'               => 'required|unique:users,user_name',
+            'password'                => 'required|string',
+            'email'                   => 'required|email|unique:users,email',
+            'is_active'               => 'string|nullable',
             'is_support_auto_service' => 'string|nullable',
+            'avg_wating_time'         => 'required',
+            'featured'                => 'nullable',
+            'support_payments'        => 'array|min:1',
+            'support_payments.*'      => 'required|string|in:credit,cash'
         ];
     }
 

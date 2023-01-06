@@ -26,6 +26,8 @@ class UpdateAppointmentRequest extends BaseRequest
         return [
             'day' => 'required',
             'is_active' => 'nullable',
+            'to'=>'required',
+            'from'=>'required',
         ];
     }
 }

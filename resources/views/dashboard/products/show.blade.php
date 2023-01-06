@@ -53,6 +53,11 @@
                                 <label class="form-label col-3" for="unit_price">@lang('lang.unit_price')</label>
                                 <p class="form-control">{{ $product->unit_price }}</p>
                             </div>
+                            {{--  stock  --}}
+                            <div class="col-md-12 d-flex my-3">
+                                <label class="form-label col-3" for="stock">@lang('lang.stock')</label>
+                                <p class="form-control">{{ $product->stock }}</p>
+                            </div>
                         </div>
                     </div>
 
@@ -112,15 +117,6 @@
                         </div>
                         <div class="card-body">
                             <div class="col-md-12 row">
-                                {{-- discount_type --}}
-                                <div class="col-md-12  d-flex my-3">
-                                    <div class="col-form-label  col-3">{{ __('lang.discount_type') }}</div>
-                                    @if ($product->discount_type == 'percent')
-                                        <p class="form-control">{{ trans('lang.percent') }}</p>
-                                    @else
-                                        <p class="form-control">{{ trans('lang.flat') }}</p>
-                                    @endif
-                                </div>
                                 {{-- discount --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <label class="form-label  col-3" for="discount">@lang('lang.discount')</label>
@@ -153,14 +149,6 @@
                                 <label class="form-label  " for="tax">@lang('lang.tax')</label>
                                 <div class="col-md-6 ">
                                     <p class="form-control">{{ $product->tax }}</p>
-                                </div>
-
-                                <div class="col-md-6">
-                                    @if ($product->tax_type == 'percent')
-                                        <p class="form-control">{{ trans('lang.percent') }}</p>
-                                    @else
-                                        <p class="form-control">{{ trans('lang.flat') }}</p>
-                                    @endif
                                 </div>
                             </div>
                         </div>

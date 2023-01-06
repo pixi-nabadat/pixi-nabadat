@@ -57,19 +57,17 @@
 		'create'=>'Create',
 		'edit'=>'Edit',
 		'show'=>'show',
-
+////////////////////////////////////////
 		'add_device'=>'Add Device',
 		'device'=>'Device',
 		'devices'=>'Devices',
-		'description_ar'=>'Arabic Descriptiom',
-		'description_en'=>'English Descriptiom',
 		'image'=>'Image',
 		'categories'=>'Categories',
 		'name_ar'=>'Arabic Name',
 		'name_en'=>'English Name',
 		'category'=>'Category',
 		'add_category'=>'Add Category',
-
+/////////////////////////////////////////////////
 		'description_ar'=>'Arabic Description',
 		'description_en'=>'English Description',
 		'purchase_price'=>'Purchase Price',
@@ -102,5 +100,17 @@
 		'add_package'=>'Add Package',
 		'num_nabadat'=>'Number of Nabadat',
 		'price'=>'Price',
+		'coupon_for'=>'Coupon For',
+		'allowed_usage'=>'Allowed Usage',
+		'store'=>'Store',
+		'reservation'=>'Reservation',
+		'flat'=>'Flat',
+		'percent'=>'Percent',
+		'stock'=>'stock',
+		'shipping_cost'=>'Shipping Cost',
+		'city'=>'City',
+		'title_ar'=>'Arabic Title',
+		'title_en'=>'English Title',
+		'pending'=>'Pending',
     ]
 ?>

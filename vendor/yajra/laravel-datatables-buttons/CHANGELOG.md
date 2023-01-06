@@ -1,5 +1,14 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v9.1.3 - 2022-11-15
+
+- Fixes some issues and confusion of datatable generator command #165
+
+## v9.1.2 - 2022-10-29
+
+- fix: Change for correct $action and $actionMethod #162
+- chore: update stubs #161
+
 ## v9.1.1 - 2022-10-06
 
 - fix(phpstan) Downgrade to 2.1.12 #158

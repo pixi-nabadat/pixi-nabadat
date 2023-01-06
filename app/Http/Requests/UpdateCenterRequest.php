@@ -38,6 +38,10 @@ class UpdateCenterRequest extends BaseRequest
             // 'date_of_birth' => 'nullable|date',
             'is_active' => 'between:0,1',
             'is_support_auto_service' => 'between:0,1',
+            'avg_wating_time'=>'required',
+            'featured'=>'nullable',
+            'support_payments'=> 'array|min:1',
+            'support_payments.*'=> 'required|string|in:credit,cash'
         ];
     }
 

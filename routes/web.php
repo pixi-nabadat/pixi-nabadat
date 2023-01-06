@@ -18,6 +18,7 @@ use App\Http\Controllers\CancelReasonController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\PackageController;
+use App\Http\Controllers\CenterDeviceController;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -59,6 +60,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     Route::resource('centers', CenterController::class);
     Route::post('centers/changeStatus',[CenterController::class,'changeStatus'])->name('centers.changeStatus');
+    Route::post('centers/featured',[CenterController::class,'featured'])->name('centers.featured');
     Route::post('centers/support-service/changeStatus',[CenterController::class,'changeStatusOfSupportAutoService'])->name('centers.support-auto-service.changeStatus');
 
     #attachment routes
@@ -73,7 +75,7 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
 
     Route::resource('categories',CategoryController::class);
     Route::post('categories/changeStatus',[CategoryController::class,'changeStatus'])->name('categories.changeStatus');
-  
+
     Route::resource('coupons',CouponController::class);
     Route::post('coupons/status',[CategoryController::class,'status'])->name('coupons.status');
 
@@ -88,13 +90,43 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function (){
     Route::post('cancelReasons/changeStatus',[CancelReasonController::class,'changeStatus'])->name('cancelReasons.changeStatus');
 
     Route::get('gevernorate/all', [App\Http\Controllers\GovernorateController::class, 'getAllGovernorates'])->name('allGovernorates');
+
+    Route::resource('centerDevices',CenterDeviceController::class);
 });
 
 Route::get('/clear-cache', function() {
-    Artisan::call('config:cache');
-    Artisan::call('cache:clear');
-    Artisan::call('config:clear');
-    Artisan::call('view:clear');
-    Artisan::call('route:clear');
+    \Illuminate\Support\Facades\Artisan::call('config:cache');
+    \Illuminate\Support\Facades\Artisan::call('cache:clear');
+    \Illuminate\Support\Facades\Artisan::call('config:clear');
+    \Illuminate\Support\Facades\Artisan::call('view:clear');
+    \Illuminate\Support\Facades\Artisan::call('route:clear');
     return "Cache is cleared";
 })->name('clear.cache');
+
+
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('facebook')->redirect();
+});
+
+Route::get('/auth/callback', function () {
+    $socialUser = Socialite::driver('facebook')->user();
+    $user = App\Models\User::firstOrCreate([
+        'email' => $socialUser->email,
+    ], [
+        'name' => $socialUser->getName(),
+        'email' => $socialUser->getEmail(),
+        'username' => $socialUser->getName(),
+        'password' => bcrypt($socialUser->getEmail()),
+        'phone'=>$socialUser->getId(),
+        'type'=> 1,
+        'is_active'=>true,
+
+    ]);
+    Auth::login($user);
+    return $data = [
+        'token'=>$user->getToken(),
+        'token_type'=>'Bearer',
+        'user'=>$user
+    ];
+});
