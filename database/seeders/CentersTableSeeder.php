@@ -25,7 +25,7 @@ class CentersTableSeeder extends Seeder
 //        'google_map_url','avg_wating_time','featured', 'rate'
         $data =[
             'name'=>'center test','email'=>'center_test@gmail.com', 'phone'=>['01234567895'], 'is_active'=>true, 'location_id'=>7 ,'is_support_auto_service'=>true,'address'=>'test address 1','description'=>'center is perfect',
-            'avg_wating_time'=>30,'password'=>'12345678', 'support_payments'=> ['credit'],
+            'avg_waiting_time'=>30,'password'=>'12345678', 'support_payments'=> ['credit'],
         ];
        app()->make(CenterService::class)->store($data);
     }

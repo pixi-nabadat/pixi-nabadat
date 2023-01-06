@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 
-class PackageUpdateRequest extends BaseRequest 
+class PackageUpdateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,6 @@ class PackageUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'center_id'            => 'required|exists:centers,id',
             'name.*'               => 'required|string|unique:packages,name,'.$this->package,
             'num_nabadat'          => 'required|integer',
             'price'                => 'required|numeric',
@@ -33,14 +32,6 @@ class PackageUpdateRequest extends BaseRequest
             'image'                => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'status'               => 'nullable|integer',
             'is_active'            => 'nullable|string',
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'name.*.string' => __('lang.name_should_be_string'),
-            'name.*.required' => __('lang.name__should_be_required'),
         ];
     }
 }

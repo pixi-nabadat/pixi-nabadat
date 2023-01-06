@@ -25,14 +25,10 @@
                             @csrf
                             @method('put')
                             {{--center  --}}
-                            <div class="col-md-12 d-flex my-3">
-                                <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
-                                <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12">
-                                    <option selected>...</option>
-                                    @foreach ($centers as $center)
-                                        <option value="{{ $center->id }}">{{ $center->name }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-md-12">
+                                <label class="form-label mt-3" for="price">@lang('lang.center')</label>
+                                <p class="form-control">{{$package->center->name}}</p>
+
                             </div>
                             {{-- English Name --}}
                             <div class="col-md-12">
@@ -76,7 +72,7 @@
                             {{--  discount percentage  --}}
                             <div class="col-md-12">
                                 <label class="form-label" for="discount_percentage">@lang('lang.discount_percentage')</label>
-                                <input type="number" name="discount_percentage" step="0.01"
+                                <input type="number"  name="discount_percentage" value={{ $package->discount_percentage }} step="0.01"
                                     class="form-control @error('discount_percentage') is-invalid @enderror">
                                 @error('discount_percentage')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -85,8 +81,7 @@
                             {{--  start date  --}}
                             <div class="col-md-12">
                                 <label class="form-label" for="start_date">@lang('lang.start_date')</label>
-                                <input type="date" name="start_date" step="1"
-                                    class="form-control @error('start_date') is-invalid @enderror">
+                                <input type="date" name="start_date" value="{{$package->start_date}}" class="form-control @error('start_date') is-invalid @enderror">
                                 @error('start_date')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
@@ -94,8 +89,7 @@
                             {{--  end date  --}}
                             <div class="col-md-12">
                                 <label class="form-label" for="end_date">@lang('lang.end_date')</label>
-                                <input type="date" name="end_date" step="1"
-                                    class="form-control @error('end_date') is-invalid @enderror">
+                                <input type="date" name="end_date" value="{{$package->end_date}}" class="form-control @error('end_date') is-invalid @enderror">
                                 @error('end_date')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
@@ -103,9 +97,9 @@
                             {{--status  --}}
                             <div class="col-md-12 d-flex my-3">
                                 <div class="col-form-label col-3">{{ __('lang.status') }}</div>
-                                <select id="status" name="center_id" class="js-example-basic-single col-sm-12 @error('price') is-invalid @enderror">
-                                    <option value="1">{{ __('lang.approved') }}</option>
-                                    <option value="0">{{ __('lang.cancel') }}</option>
+                                <select id="status" name="center_id" class="form-select form-control-sm digits @error('price') is-invalid @enderror">
+                                    <option value="{{\App\Enum\PackageStatusEnum::APPROVED}}" {{$package->status == \App\Enum\PackageStatusEnum::APPROVED ? 'selected' : ''}}>{{ __('lang.approved') }}</option>
+                                    <option value="{{\App\Enum\PackageStatusEnum::REJECTED}}" {{$package->status == \App\Enum\PackageStatusEnum::REJECTED ? 'selected' : ''}}>{{ __('lang.cancel') }}</option>
                                 </select>
                                 @error('status')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -127,7 +121,7 @@
                                     </div>
 
                                     <div class="form-group mt-3">
-                                        <img src="{{ asset('/uploads/packages/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                                        <img src="{{$package->attachments->first() !== null ? asset($package->attachments->first()->path."\\".$package->attachments->first()->filename) : asset('/uploads/packages/default.png')}}" style="width: 500px" class="img-thumbnail image-preview " alt="">
                                     </div>
                                 </div>
                             </div>

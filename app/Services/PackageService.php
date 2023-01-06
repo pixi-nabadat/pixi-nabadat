@@ -17,7 +17,7 @@ class PackageService extends BaseService
 
     public function queryGet(array $where_condition = [], array $withRelation = []): Builder
     {
-        $packages = package::query()->with($withRelation);
+        $packages = package::query()->orderBy('status')->orderBy('id')->with($withRelation);
         return $packages->filter(new packagesFilter($where_condition));
     }
 
@@ -36,7 +36,7 @@ class PackageService extends BaseService
         }
 
         return $package;
-            
+
     } //end of store
 
     public function delete($id)
@@ -63,12 +63,11 @@ class PackageService extends BaseService
         if (!$package)
             return false;
         if (isset($data['image'])){
-
-            $fileData = FileService::saveImage(file: $data['image'],path: 'uploads\packages');
-            $package->storeAttachment($fileData);
+            $fileData = FileService::saveImage(file: $data['image'],path: 'uploads\packages',field_name: 'image');
+            $package->updateAttachment($fileData);
         }
         $package->update($data);
-        return $package;
+        return true;
     } //end of update
 
     public function status($id): bool

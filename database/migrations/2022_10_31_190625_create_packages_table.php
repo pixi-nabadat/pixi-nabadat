@@ -23,8 +23,8 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->double('discount_percentage');
-            $table->integer('status')->nullable();
-            $table->boolean('is_active')->default(Package::Active)->nullable();
+            $table->integer('status')->default(\App\Enum\PackageStatusEnum::UNDERACHIEVING);
+            $table->boolean('is_active')->default(\App\Enum\ActivationStatusEnum::ACTIVE);
             $table->timestamps();
         });
     }
