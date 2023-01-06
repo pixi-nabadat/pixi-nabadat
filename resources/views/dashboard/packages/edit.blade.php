@@ -100,6 +100,17 @@
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                            {{--status  --}}
+                            <div class="col-md-12 d-flex my-3">
+                                <div class="col-form-label col-3">{{ __('lang.status') }}</div>
+                                <select id="status" name="center_id" class="js-example-basic-single col-sm-12 @error('price') is-invalid @enderror">
+                                    <option value="1">{{ __('lang.approved') }}</option>
+                                    <option value="0">{{ __('lang.cancel') }}</option>
+                                </select>
+                                @error('status')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                             {{-- package image --}}
                             <div class="card  col-md-12">
                                 <div class="card-header py-4">
