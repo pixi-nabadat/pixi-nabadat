@@ -8,6 +8,7 @@ use App\Traits\HasAttachment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Translatable\HasTranslations;
 
@@ -74,8 +75,8 @@ class Center extends Model
             ->withPivot(['id', 'regular_price', 'nabadat_app_price','auto_service_price','number_of_devices'])->withTimestamps();
     }
 
-    public function centerFinancial(): BelongsToMany
+    public function centerFinancial(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsToMany(CenterFinance::class, 'center_id');
+        return $this->hasMany(CenterFinance::class, 'center_id');
     }
 }
