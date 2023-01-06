@@ -56,6 +56,7 @@ class PackagesDataTable extends DataTable
             Column::make('start_date'),
             Column::make('end_date'),
             Column::make('discount_percentage'),
+            Column::make('status'),
             Column::make('is_active'),
             Column::computed('action')
                   ->exportable(false)

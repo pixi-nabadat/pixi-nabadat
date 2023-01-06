@@ -15,7 +15,7 @@ class Package extends Model
     const Active = 1 ;
     const NONActive = 0 ;
 
-    protected $fillable = ['center_id','name','num_nabadat','price','start_date','end_date','discount_percentage','is_active'];
+    protected $fillable = ['center_id','name','num_nabadat','price','start_date','end_date','discount_percentage','status','is_active'];
     public $translatable =['name'];
 
     public function subscriber(): \Illuminate\Database\Eloquent\Relations\HasMany

@@ -31,6 +31,7 @@ class PackageUpdateRequest extends BaseRequest
             'end_date'             => 'required|date',
             'discount_percentage'  => 'required|numeric',
             'image'                => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'status'               => 'nullable|integer',
             'is_active'            => 'nullable|string',
         ];
     }
