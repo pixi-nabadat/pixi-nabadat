@@ -191,9 +191,9 @@ return [
             [
                 'type' => 'number', // input fields type
                 'data' => 'integer', // data type, string, int, boolean
-                'name' => 'point_pound', // unique name for field
+                'name' => 'points_per_pound', // unique name for field
                 'label' => 'Point Per Pound', // you know what label it is
-                'rules' => 'required|min:2|max:50', // validation rule of laravel
+                'rules' => 'required|numeric', // validation rule of laravel
                 'class' => 'form-control', // any class for input
                 'value' => '0' // default value if you want
             ],
