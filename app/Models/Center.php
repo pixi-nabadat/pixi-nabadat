@@ -24,7 +24,7 @@ class Center extends Model
 
     protected $fillable = [
         'name', 'phone', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
-        'google_map_url','avg_waiting_time','featured', 'rate', 'support_payments'
+        'google_map_url','avg_waiting_time','featured', 'rate', 'support_payments','app_discount',
     ];
 
     protected $casts = [
@@ -72,4 +72,8 @@ class Center extends Model
             ->withPivot(['id', 'regular_price', 'nabadat_app_price','auto_service_price','number_of_devices'])->withTimestamps();
     }
 
+    public function centerFinancial(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CenterFinance::class, 'center_id');
+    }
 }
