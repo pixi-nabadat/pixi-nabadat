@@ -19,6 +19,8 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\OrderController;
+
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -92,6 +94,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::get('gevernorate/all', [App\Http\Controllers\GovernorateController::class, 'getAllGovernorates'])->name('allGovernorates');
 
     Route::resource('centerDevices', CenterDeviceController::class);
+
+    Route::post('orders/updateOrderStatus',[OrderController::class,'updateOrderStatus'])->name('orders.updateOrderStatus');
+    Route::resource('orders',OrderController::class);
+
+
 });
 
 Route::get('/clear-cache', function () {

@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Enum\PaymentMethodEnum;
 use App\Models\Order;
 use App\Models\User;
 use App\Services\AddressService;
@@ -25,8 +26,8 @@ trait OrderTrait
             if ($item->quantity > $item->product->stock)
                 return (object)['data' => null, 'message' => trans('lang.quantity_is_more_stock :product', ['product' => $item->product->name]), 'status_code' => 422];
         }
-        $payment_type = $request->payment_type == Order::PAYMENTCREDIT ? Order::PAYMENTCREDIT : Order::PAYMENTCASH;
-        $deleted_at = $payment_type == Order::PAYMENTCREDIT ? true : null;
+        $payment_type = $request->payment_type == PaymentMethodEnum::CREDIT ?PaymentMethodEnum::CREDIT : PaymentMethodEnum::CASH;
+        $deleted_at = $payment_type == PaymentMethodEnum::CREDIT ? true : null;
         $order = app()->make(OrderService::class)->store(user: $user, order_data: $orderData, shipping_address: $userAddress, payment_type: $payment_type, deleted_at: $deleted_at);
         return (object)[
             'order' => $order,
