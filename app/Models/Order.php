@@ -40,9 +40,9 @@ class Order extends Model
         return $this->hasMany(OrderHistory::class, 'order_id');
     }
 
-    public function orderStatus(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function orderStatus(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasOne(OrderHistory::class)->latest();
+        return $this->belongsTo(OrderHistory::class,'order_history_id');
     }
 
     public function scopeActiveOrder(Builder $builder)
