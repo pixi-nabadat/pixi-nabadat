@@ -19,7 +19,7 @@ use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\CouponUsageController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 
-use App\Http\Controllers\Api\PackageController;
+use App\Http\Controllers\Api\CenterPackageController;
 use App\Http\Controllers\Api\CartItemController;
 
 use App\Http\Controllers\Api\AddressController;
@@ -129,6 +129,8 @@ use Illuminate\Support\Facades\Auth;
     Route::put('userPackages/{userPackage}',    [UserPackageController::class,'update']);
     Route::delete('userPackages/{userPackage}', [UserPackageController::class,'destroy']);
     //end user packages
+    Route::get('center-offers', [CenterPackageController::class, 'listing']);
+    Route::resource('packages',PackageController::class);
     Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
     Route::get('cancel-reasons',[CancelReasonController::class,'listing']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enum\PaymentMethodEnum;
 use App\Events\OrderCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderStoreRequest;
@@ -58,7 +59,7 @@ class OrderController extends Controller
             $order = $this->storeOrder($request, $user); // method store order in trait for multiple usage
             if (isset($order->status_code) && $order->status_code != 200)
                 return apiResponse(message: $order->message, code: $order->status_code);
-            if ($request->payment_type == Order::PAYMENTCREDIT) {
+            if ($request->payment_method == PaymentMethodEnum::CREDIT) {
                 $paymob_order_items = $this->prepareOrderItemsForPaymobOrder($order->order->items);
                 $total_order_amount_in_cents = $order->order->grand_total * 100;
                 $status_code = 422;

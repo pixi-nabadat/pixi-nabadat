@@ -2,22 +2,40 @@
 
 namespace App\Models;
 
+use App\Enum\PackageStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use App\Traits\Filterable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Traits\HasAttachment;
 
 class Package extends Model
 {
-    use HasFactory,Filterable,HasTranslations;
-    const Active = 1 ;
-    const NONActive = 0 ;
+    use HasFactory,Filterable,HasTranslations,HasAttachment;
 
-    protected $fillable = ['name','num_nabadat','price','is_active'];
+    protected $fillable = ['center_id','name','num_nabadat','price','start_date','end_date','discount_percentage','status','is_active'];
     public $translatable =['name'];
 
     public function subscriber(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(UserPackage::class);
+    }
+
+    public function center(): BelongsTo
+    {
+        return $this->belongsTo(Center::class);
+    }
+
+    public function getStatusAttribute($value)
+    {
+        switch ($value){
+            case PackageStatusEnum::UNDERACHIEVING:
+                return trans('lang.under_reviewing') ;
+            case PackageStatusEnum::APPROVED:
+                return trans('lang.approved') ;
+            case PackageStatusEnum::REJECTED:
+                return trans('lang.rejected') ;
+        }
     }
 }

@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Enum\PaymentMethodEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
-class BuyOfferRequest extends BaseRequest
+class OrderStatusChangeRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +24,9 @@ class BuyOfferRequest extends BaseRequest
     public function rules()
     {
         return [
-            'offer_id'        => 'required|integer',
-            'payment_method'  => 'required|in:'.PaymentMethodEnum::CREDIT.','.PaymentMethodEnum::CASH
+            'id' => 'required|integer',
+            'status' => 'required',
+
         ];
     }
 }

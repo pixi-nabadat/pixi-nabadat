@@ -28,18 +28,19 @@ class UserPackage extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function package(): BelongsTo
     {
-        return $this->belongsTo(Package::class, 'package_id');
+        return $this->belongsTo(Package::class);
     }
 
     public function center(): BelongsTo
     {
-        return $this->belongsTo(Center::class, 'center_id');
+        return $this->belongsTo(Center::class);
     }
+
     protected static function boot()
     {
         parent::boot();

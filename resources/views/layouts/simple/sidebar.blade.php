@@ -27,7 +27,6 @@
 					</li>
 					<li class="sidebar-list">
                         {{-- start country --}}
-                        {{dd(request()->route()->getPrefix())}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/country' ? 'active' : '' }}" href="#"><i class="fa fa-map-marker p-r-5"></i><span class="lan-6">{{ trans('lang.country') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == 'country' ? 'down' : 'right' }}"></i></div>
                         </a>
@@ -155,6 +154,15 @@
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('centerDevices.index') ? 'active' : '' }}" href="{{route('centerDevices.index')}}">{{ trans('lang.view') }}</a></li>
                         </ul>
                         {{-- end Center Devices --}}
+
+                        {{--start orders ---}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/orders' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.orders') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/orders' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('orders.index') ? 'active' : '' }}" href="{{route('orders.index')}}">{{ trans('lang.view') }}</a></li>
+                        </ul>
+                        {{-- end orders --}}
 
 					</li>
                 </ul>

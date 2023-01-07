@@ -1,14 +1,14 @@
 @extends('layouts.simple.master')
 
-@section('title', trans('lang.packages'))
+@section('title', trans('lang.orders'))
 
 @section('breadcrumb-title')
-    <h3>{{ trans('lang.packages') }}</h3>
+    <h3>{{ trans('lang.orders') }}</h3>
 @endsection
 
 @section('breadcrumb-items')
-    <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ trans('lang.dashboard') }}</a></li>
-    <li class="breadcrumb-item active">{{ trans('lang.packages') }}</li>
+    <li class="breadcrumb-item"><a href="{{route('home')}}">{{ trans('lang.dashboard') }}</a></li>
+    <li class="breadcrumb-item active">{{ trans('lang.orders') }}</li>
 @endsection
 
 @section('content')
@@ -19,10 +19,9 @@
             <!-- Zero Configuration  Starts-->
             <div class="col-sm-12">
                 <div class="card">
-{{--                    <div class="card-header">--}}
-{{--                        <h5><a role="button" class="btn btn-success " href={{ route('packages.create') }}><i--}}
-{{--                                    class="fa fa-plus-circle"></i>{{ trans('lang.add_package') }}</a></h5>--}}
-{{--                    </div>--}}
+                    <div class="card-header">
+                        {{ trans('lang.orders') }}
+                    </div>
                     <div class="card-body">
                         <div class="table">
                             {!! $dataTable->table() !!}
@@ -38,5 +37,5 @@
 @endsection
 
 @section('script')
-    {!! $dataTable->scripts() !!}
+{!! $dataTable->scripts() !!}
 @endsection
