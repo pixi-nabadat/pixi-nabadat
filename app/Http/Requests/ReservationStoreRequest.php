@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enum\PaymentMethodEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ReservationStoreRequest extends BaseRequest
@@ -27,7 +28,7 @@ class ReservationStoreRequest extends BaseRequest
             'customer_id' => 'required|exists:users,id',
             'center_id'   => 'required|exists:centers,id',
             'check_date'  => 'required|date',
-            'payment_type' => 'required|in:cash,palses',
+            'payment_type' => 'required|in:'.PaymentMethodEnum::CASH.','.PaymentMethodEnum::CREDIT.','.PaymentMethodEnum::POINTS,
         ];
     }
 

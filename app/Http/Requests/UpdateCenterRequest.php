@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Enum\PaymentMethodEnum;
+
 class UpdateCenterRequest extends BaseRequest
 {
     /**
@@ -41,7 +43,7 @@ class UpdateCenterRequest extends BaseRequest
             'avg_wating_time'=>'required',
             'featured'=>'nullable',
             'support_payments'=> 'array|min:1',
-            'support_payments.*'=> 'required|string|in:credit,cash'
+            'support_payments.*'=> 'required|string|in:'.PaymentMethodEnum::CASH.','.PaymentMethodEnum::CREDIT,
         ];
     }
 
