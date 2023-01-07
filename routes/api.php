@@ -123,11 +123,9 @@ use Illuminate\Support\Facades\Auth;
 
 
     //start user packages
-    Route::get('userPackages',                  [UserPackageController::class,'listing']);
-    Route::get('userPackages/{userPackage}',    [UserPackageController::class,'find']);
-    Route::post('userPackages',                 [UserPackageController::class,'store']);
-    Route::put('userPackages/{userPackage}',    [UserPackageController::class,'update']);
-    Route::delete('userPackages/{userPackage}', [UserPackageController::class,'destroy']);
+    Route::get('userPackages/listing',   [UserPackageController::class,'userPackagesListing']);
+    Route::get('centerPackages/listing', [UserPackageController::class,'centerPackagesListing']);
+    Route::resource('userPackages', CenterController::class)->except(['index', 'store']);
     //end user packages
     Route::get('center-offers', [CenterPackageController::class, 'listing']);
     Route::resource('packages',PackageController::class);

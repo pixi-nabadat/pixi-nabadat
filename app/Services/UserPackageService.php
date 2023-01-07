@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enum\PaymentStatusEnum;
 use App\Models\Package;
 use App\Models\UserPackage;
 use App\QueryFilters\UserPackagesFilter;
@@ -21,44 +22,6 @@ class UserPackageService extends BaseService
         $userPackages = UserPackage::query()->with($withRelation);
         return $userPackages->filter(new UserPackagesFilter($where_condition));
     }
-    public function store(array $data = [])
-    {
-        $package = Package::find($data['package_id']);
-        if($data['payment_method'] == '1')//1 equal to cash status you can change it for the correct value
-        {
-            return UserPackage::create([
-                'user_id'             => $data['user_id'],
-                'package_id'          => $data['package_id'],
-                'center_id'           => 1,//$package->center,
-                'num_nabadat'         => $package->num_nabadat,
-                'price'               => $package->price,
-                'discount_percentage' => 15,//$package->discount_percentage,
-                'payment_method'      => $data['payment_method'],
-                'payment_status'      => 1, // this is the status of cash
-                'usage_status'        => 1,//this is the first status for new user packages
-                'used'                => 0,
-                'remaining'           => $package->num_nabadat
-            ]);
-        }else
-        {
-            // pay using credit and then create user package
-            $paymentStatus = 1;//$paymentStatus = payments::paycredit();
-            return UserPackage::create([
-                'user_id'             => $data['user_id'],
-                'package_id'          => $data['package_id'],
-                'center_id'           => $package->center,
-                'num_nabadat'         => $package->num_nabadat,
-                'price'               => $package->price,
-                'discount_percentage' => $package->discount_percentage,
-                'payment_method'      => $data['payment_method'],
-                'payment_status'      => $paymentStatus, 
-                'usage_status'        => '1',//this is the first status for new user packages
-                'used'                => 0,
-                'remaining'           => $package->num_nabadat
-            ]);    
-        }
-
-    }
 
     public function update(int $id, array $data)
     {
@@ -68,9 +31,6 @@ class UserPackageService extends BaseService
              $userPackage->update($data);
              $userPackage->update([
                 'payment_status' => $data['payment_status'], 
-                'usage_status'   => $data['usage_status'],//this is the first status for new user packages
-                'used'           => $data['used'],
-                'remaining'      => $data['remaining']
             ]);
              return  $userPackage;
         }
@@ -88,9 +48,12 @@ class UserPackageService extends BaseService
     {
         $userPackage = UserPackage::find($id);
         if ($userPackage) {
+            $paymentStatus = $userPackage->payment_status;
+            if($paymentStatus != PaymentStatusEnum::UNPAID)
+                return ['status'=>false, 'message'=> trans('lang.operation_success')];
             return $userPackage->delete();
         }
-        return false;
+        return ['status'=>false, 'message'=> trans('lang.not_found')];
     } //end of delete
 
 }

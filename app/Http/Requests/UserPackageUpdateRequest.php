@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enum\PaymentStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserPackageUpdateRequest extends FormRequest
@@ -24,10 +25,7 @@ class UserPackageUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'payment_status' => 'required|integer', 
-            'usage_status'   => 'required|integer',//this is the first status for new user packages
-            'used'           => 'required|integer',
-            'remaining'      => 'required|integer',
+            'payment_status' => 'required|integer|in:'.PaymentStatusEnum::PAID.','.PaymentStatusEnum::UNPAID, 
         ];
     }
 
