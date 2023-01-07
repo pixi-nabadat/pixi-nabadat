@@ -26,7 +26,7 @@ class BuyOfferRequest extends BaseRequest
     {
         return [
             'offer_id'        => 'required|integer',
-            'payment_method'  => 'required|in:'.PaymentMethodEnum::CREDIT.','.PaymentMethodEnum::CASH
+            'payment_method'  => 'required|in:'.PaymentMethodEnum::CREDIT.','.PaymentMethodEnum::CASH.','.PaymentMethodEnum::POINTS,
         ];
     }
 }
