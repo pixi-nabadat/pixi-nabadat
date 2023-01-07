@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Enum\PaymentMethodEnum;
+use App\Enum\PaymentStatusEnum;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Order;
@@ -39,7 +41,7 @@ class OrderService extends BaseService
      * @param string $payment_type
      * @return mixed
      */
-    public function store($user , $order_data,$shipping_address,$payment_status = Order::UNPAID , $payment_type =Order::PAYMENTCASH ,$deleted_at = null,$relatable_id=null,$relatable_type=null)
+    public function store($user , $order_data,$shipping_address,$payment_status = PaymentStatusEnum::UNPAID, $payment_type =PaymentMethodEnum::CASH,$deleted_at = null,$relatable_id=null,$relatable_type=null)
     {
         if (isset($deleted_at))
             $deleted_at = Carbon::now();
