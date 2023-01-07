@@ -23,7 +23,7 @@ class UserPackage extends Model
         'payment_status',
         'usage_status',
         'used',
-        'remaining',
+        'remain',
     ];
 
     public function user(): BelongsTo
