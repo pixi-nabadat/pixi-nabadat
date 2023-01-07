@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\ordersDataTable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OrderStatusChangeRequest;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 
@@ -24,27 +25,26 @@ class OrderController extends Controller
         }
     } //end of index
 
-    public function updateOrderStatus(Request $request)
+    public function updateOrderStatus(OrderStatusChangeRequest $request)
     {
         try {
-            $this->orderService->updateOrderStatus($request);
-            $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
-            return redirect(route('orders.index'))->with('toast', $toast);
+            $data=$request->validated();
+            $this->orderService->updateOrderStatus($data);
+           return apiResponse(message: trans('lang.success_operation'));
         } catch (\Exception $exception) {
-            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => $exception->getMessage()];
-            return back()->with('toast', $toast);
+           return apiResponse(message: $exception->getMessage(),code: 422);
         }
-    } //end of update order Status 
+    } //end of update order Status
 
     public function show($id)
     {
-        $loadRelation = ['user:id , name , phone'];
-        $order = $this->orderService->find($id);
+        $loadRelation = ['user:id,name,phone' , 'items','orderStatus'];
+        $order = $this->orderService->find($id,$loadRelation);
         if (!$order) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.order_not_found')];
             return back()->with('toast', $toast);
         }
-        return view('dashboard.orders.show', compact('order'))->with(['withRelations' => $loadRelation]);
+        return view('dashboard.orders.show', compact('order'));
     } //end of show
 
 }

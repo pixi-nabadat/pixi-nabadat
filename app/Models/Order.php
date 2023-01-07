@@ -19,7 +19,7 @@ class Order extends Model
         DELIVERED   = 4,
         CANCELED    = 5;
 
-    protected $fillable = ['user_id','payment_status','payment_type','address_info','address_id','shipping_fees','sub_total','grand_total','coupon_discount','order_history_id','paymob_transaction_id','relatable_id','relatable_type','deleted_at'];
+    protected $fillable = ['user_id','payment_status','payment_method','address_info','address_id','shipping_fees','sub_total','grand_total','coupon_discount','order_history_id','paymob_transaction_id','relatable_id','relatable_type','deleted_at'];
 
     protected $casts = [
         'address_info' => 'object'
@@ -42,7 +42,7 @@ class Order extends Model
 
     public function orderStatus(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasOne(OrderHistory::class);
+        return $this->hasOne(OrderHistory::class)->latest();
     }
 
     public function scopeActiveOrder(Builder $builder)
@@ -51,24 +51,14 @@ class Order extends Model
         $builder->whereNull(['relatable_id', 'relatable_type']);
     }
 
-    public function getPaymentTypeAttribute($value)
+    public function getPaymentMethodAttribute($value)
     {
-        switch ($value) {
-            case self::PAYMENTCREDIT :
-                return trans('lang.credit');
-            case self::PAYMENTCASH :
-                return trans('lang.cash');
-        }
+        return trans('lang.'.$value) ;
     }
 
     public function getPaymentStatusAttribute($value)
     {
-        switch ($value) {
-            case self::PAID :
-                return trans('lang.paid');
-            case self::UNPAID :
-                return trans('lang.unpaid');
-        }
+        return trans('lang.'.$value) ;
     }
 
     public function getOrderStatusTextAttribute()

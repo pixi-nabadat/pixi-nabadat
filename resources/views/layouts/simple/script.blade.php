@@ -25,7 +25,6 @@
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
 <script src="{{asset('assets/js/select2/select2-custom.js')}}"></script>
 <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
-@yield('script')
 
 @if(Route::current()->getName() != 'popover')
 	<script src="{{asset('assets/js/tooltip-init.js')}}"></script>
@@ -90,6 +89,7 @@
             }
         });
     }
+
 </script>
 
  {{-- image preview --}}
@@ -110,9 +110,9 @@ if (this.files && this.files[0]) {
 
 
 <script>
-   
-
    $(document).ready(function() {
     $(".dropdown-toggle").dropdown();
 });
 </script>
+
+@yield('script')

@@ -46,7 +46,7 @@ class OrderService extends BaseService
         $order = Order::create([
             'user_id'           => $user->id,
             'payment_status'    => $payment_status,
-            'payment_type'      => $payment_type,
+            'payment_method'    => $payment_type,
             'address_id'        => $shipping_address->id,
             'address_info'      => $shipping_address->toJson(),
             'shipping_fees'     => $shipping_address->shipping_cost ?? 0,
@@ -75,11 +75,14 @@ class OrderService extends BaseService
         $order->update(['order_history_id' => $order_history->id]);
     }
 
-    public function updateOrderStatus($data)
+    public function updateOrderStatus($data): void
     {
-        $order = $this->find($data->id);
-        $order->history()->update([
-            'status' => $data->value,
+        $order = $this->find($data['id']);
+        $order_history = $order->history()->create([
+            'status' => $data['status'],
         ]);
+        $order->order_history_id = $order_history->id ;
+        $order->save();
+        $order->refresh();
     }
 }
