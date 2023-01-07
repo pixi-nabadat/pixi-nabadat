@@ -38,4 +38,9 @@ class Package extends Model
                 return trans('lang.rejected') ;
         }
     }
+
+    public function getUserPriceAttribute(): float
+    {
+        return $this->price*((100 - $this->discount_percentage)/100);
+    }
 }
