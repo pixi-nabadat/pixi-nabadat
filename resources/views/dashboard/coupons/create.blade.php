@@ -66,8 +66,8 @@
                                     <div class="col-form-label  col-3">{{ __('lang.discount_type') }}</div>
                                     <select id="select_discount_type" name="discount_type"
                                         class="col form-control">
-                                        <option  value = 'flat'>   {{trans('lang.flat')}}</option>
-                                        <option  value = 'percent' selected>{{trans('lang.percent')}}</option>
+                                        <option  value = "{{\App\Models\Coupon::DISCOUNT_FLAT}}">   {{trans('lang.flat')}}</option>
+                                        <option  value = "{{\App\Models\Coupon::DISCOUNT_PERCENTAGE}}" selected>{{trans('lang.percent')}}</option>
                                     </select>
                                 </div>
                                 {{-- discount --}}
@@ -83,25 +83,25 @@
                                 <div class="col-md-6  my-3">
                                     <label class="form-label" for="start_date">@lang('lang.start_date')</label>
                                     <div class="input-group date" id="dt-start_date" data-target-input="nearest">
-                                        <input name="start_date" class="form-control datetimepicker-input digits" type="text" data-target="#dt-start_date" @error('start_date') is-invalid @enderror" data-bs-original-title="" title="">
+                                        <input name="start_date" class="datepicker-here form-control digits  @error('start_date') is-invalid @enderror" type="text" data-language="en" data-target="#dt-start_date" data-bs-original-title title>
                                         @error('start_date')
                                             <div class="invalid-feedback text-danger">{{ $message }}</div>
                                         @enderror
-                                        <div class="input-group-text" data-target="#dt-start_date" data-toggle="datetimepicker"><i class="fa fa-calendar"> </i></div>
+                                        <div class="input-group-text" data-target="#dt-start_date" data-toggle="datepicker"><i class="fa fa-calendar"> </i></div>
                                     </div>
                                 </div>
                                 {{-- end_date --}}
                                 <div class="col-md-6 ">
                                     <label class="form-label  col-3" for="end_date">@lang('lang.end_date')</label>
                                     <div class="input-group date" id="dt-end_date" data-target-input="nearest">
-                                        <input name="end_date" class="form-control datetimepicker-input digits" type="text" data-target="#dt-end_date" @error('end_date') is-invalid @enderror" data-bs-original-title="" title="">
+                                        <input name="end_date" class="datepicker-here form-control digits @error('end_date') is-invalid @enderror" type="text" data-language="en" data-target="#dt-end_date" data-bs-original-title="" title="">
                                         @error('end_date')
                                             <div class="invalid-feedback text-danger">{{ $message }}</div>
                                         @enderror
-                                        <div class="input-group-text" data-target="#dt-end_date" data-toggle="datetimepicker"><i class="fa fa-calendar"> </i></div>
+                                        <div class="input-group-text" data-target="#dt-end_date" data-toggle="datepicker"><i class="fa fa-calendar"> </i></div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
 

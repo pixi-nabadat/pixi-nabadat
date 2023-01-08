@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,32 +10,7 @@ class Cart extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['coupon_discount','coupon_code','sub_total','shipping_cost' ,'address_id', 'net_total','grand_total','user_id','temp_user_id'];
-
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function couponUsage(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(CouponUsage::class,'coupon_code');
-    }
-
-    public function items(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(CartItem::class, 'cart_id');
-    }
-
-    public function itemsWithProduct(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->items()->with('product');
-    }
-
-    public function address(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Address::class,'address_id');
-    }
+    protected $fillable = ['coupon_id', 'sub_total', 'shipping_cost', 'address_id', 'net_total', 'grand_total', 'user_id', 'temp_user_id'];
 
     protected static function boot()
     {
@@ -44,13 +20,85 @@ class Cart extends Model
         });
     }
 
-    public function getGrandTotalAfterDiscountAttribute($value): float|int
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->sub_total - ($this->sub_total*($this->coupon_discount/100));
+        return $this->belongsTo(User::class);
+    }
+
+    public function coupon(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Coupon::class);
+    }
+
+    public function itemsWithProduct(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->items()->with('product');
+    }
+
+    public function items(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CartItem::class, 'cart_id');
+    }
+
+    public function address(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Address::class, 'address_id');
+    }
+
+    public function getGrandTotalAfterDiscountAttribute()
+    {
+        $value = $this->grand_total;
+        if (!$this->relationLoaded('coupon'))
+            return $value;
+        if (
+            Carbon::parse(optional($this->coupon)->start_date)->gte(Carbon::now()->format('y-m-d')) &&
+            Carbon::now()->lte(Carbon::parse(optional($this->coupon)->end_date)->format('y-m-d')) &&
+            optional($this->coupon)->coupon_for == Coupon::STORECOUPON && optional($this->coupon)->min_buy < $value
+        ) {
+            if (optional($this->coupon)->discount_type == Coupon::DISCOUNT_PERCENTAGE)
+                $value = $value - ($value * (optional($this->coupon)->discount / 100));
+            if (optional($this->coupon)->discount_type == Coupon::DISCOUNT_FLAT)
+                $value = $value - optional($this->coupon)->discount;
+        }
+        return $value;
+
+    }
+
+    public function getDiscountAttribute(): int
+    {
+        $discount = 0;
+        if (!$this->relationLoaded('coupon'))
+            return $discount;
+        $checkIfCouponValied = $this->checkIfCouponAvaliable();
+        if ($checkIfCouponValied)
+            $discount = $this->coupon->discount;
+        return $discount;
+
+    }
+
+    private function checkIfCouponAvaliable()
+    {
+        if (Carbon::parse(optional($this->coupon)->start_date)->gte(Carbon::now()->format('y-m-d')) && Carbon::now()->lte(Carbon::parse(optional($this->coupon)->end_date)->format('y-m-d')) && optional($this->coupon)->coupon_for == Coupon::STORECOUPON && optional($this->coupon)->min_buy < $this->grand_total)
+            return true;
+        else
+            return false;
     }
 
     public function getSavedAmountAttribute(): float|int
     {
-        return $this->sub_total !=0 ? (($this->sub_total - $this->grand_total)/$this->sub_total) * 100 : 0 ;
+        return $this->sub_total  - $this->grand_total_after_discount;
     }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function getShippingCostAttribute($value)
+    {
+        if (!$this->relationLoaded('address'))
+            return $value ;
+        return isset($this->address->city) ? $this->address->city->shipping_cost : $value;
+    }
+
+
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ApplyCouponRequest;
 use App\Http\Requests\CartStoreRequest;
 use App\Http\Requests\StoreLocationRequest;
+use App\Http\Requests\UpdateCartAddressRequest;
 use App\Http\Resources\CartResource;
 use App\Http\Resources\CartsResource;
 use App\Services\CartService;
@@ -27,14 +28,14 @@ class CartController extends Controller
     {
         try {
             $cart =  $this->cartService->getCart($request->temp_user_id);
-            return new CartResource($cart) ;
+            return apiResponse(data: new CartResource($cart)) ;
         }catch (Exception $exception)
         {
-            return apiResponse(message: $exception->getMessage());
+            return apiResponse(message: $exception->getMessage(),code: 422);
         }
     }
 
-    public function empty()
+    public function empty(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             if ($this->cartService->emptyCart(request()->temp_user_id))
@@ -50,13 +51,13 @@ class CartController extends Controller
     {
         try {
             $cart = $this->cartService->removeItem($id, request()->temp_user_id);
-            return new CartResource($cart);
+            return apiResponse(data: new CartResource($cart));
         } catch (Exception $ex) {
-            return apiResponse(message: $ex->getMessage());
+            return apiResponse(message: $ex->getMessage(),code: 422);
         }
     }
 
-    public function store(CartStoreRequest $request,ProductService $productService)
+    public function store(CartStoreRequest $request,ProductService $productService): \Illuminate\Http\Response|CartResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             DB::beginTransaction();
@@ -78,14 +79,35 @@ class CartController extends Controller
         }
     }
 
-
-    public function applyCoupon(ApplyCouponRequest $request)
+    public function applyCoupon(ApplyCouponRequest $request): \Illuminate\Http\Response|CartResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        $data = $request->all();
-        $cart = $this->cartService->updateCartCouponData($data);
-        if (!$cart)
-            return apiResponse(message:trans('lang.coupon_not_available'));
-        return new CartResource($cart);
+        try {
+            DB::beginTransaction();
+            $data = $request->all();
+            $cart = $this->cartService->applyCouponOnCart($data);
+            if (!$cart)
+                return apiResponse(message:trans('lang.coupon_not_available'));
+            $cart = $this->cartService->getCart($data['temp_user_id']);
+            DB::commit();
+            return apiResponse(data: new CartResource($cart) , message: trans('lang.coupon_applied_successfully'));
+        }catch (Exception $exception)
+        {
+            return  apiResponse(message: $exception->getMessage());
+        }
+    }
 
+    public function updateCartAddress(UpdateCartAddressRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        try {
+            $user_id = auth()->id();
+            $data = $request->validated();
+            $data['user_id'] = $user_id ;
+            $this->cartService->updateCartAddress($data);
+            $cart = $this->cartService->getCart($data['temp_user_id']) ;
+            return  apiResponse(data:new CartResource($cart) , message: trans('lang.address_set_successfully'));
+        }catch (Exception $exception)
+        {
+            return apiResponse(message: $exception->getMessage());
+        }
     }
 }
