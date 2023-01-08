@@ -38,7 +38,16 @@
                                 <label class="form-label col-3" for="name_en">{{ trans('lang.name_en') }}</label>
                                 <p class="form-control" id="name_en">{{ $product->getTranslation('name', 'en') }}</p>
                             </div>
-                            {{-- categories  --}}
+                            {{-- type --}}
+                            <div class="col-md-12  d-flex my-3">
+                                <div class="col-form-label  col-3">{{ __('lang.type') }}</div>
+                                @if (  $product->type == 'doctor' || $product->type == 'Doctor')
+                                    <p class="form-control">{{trans('lang.doctor')}}</p>
+                                @else    
+                                    <p class="form-control">{{trans('lang.patient')}}</p>
+                                @endif
+                            </div>
+                            {{-- categories --}}
                             <div class="col-md-12 d-flex my-3">
                                 <div class="col-form-label col-3">{{ __('lang.categories') }}</div>
                                <p id="select_category" class="form-control">{{ $product->category->name }}</p>

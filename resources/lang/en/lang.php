@@ -112,5 +112,8 @@
 		'title_ar'=>'Arabic Title',
 		'title_en'=>'English Title',
 		'pending'=>'Pending',
+		'doctor'=>'Doctor',
+		'patient'=>'Patient',
+		'type'=>'Type',
     ]
 ?>

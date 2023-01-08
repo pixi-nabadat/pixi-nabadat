@@ -27,6 +27,7 @@ class ProductRequest extends BaseRequest
             'name.*' => 'required|string',
             'stock'=>'required',
             'description.*'=>'required|string',
+            'type'=>'required|string',
             'unit_price'=>'required',
             'purchase_price'=>'required',
             'images' => 'nullable|array',

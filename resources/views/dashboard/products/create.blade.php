@@ -48,6 +48,15 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                {{-- type --}}
+                                <div class="col-md-12  d-flex my-3">
+                                    <div class="col-form-label  col-3">{{ __('lang.type') }}</div>
+                                    <select id="select_type" name="type"
+                                        class="col form-control">
+                                        <option  value = 'doctor'> {{trans('lang.doctor')}}</option>
+                                        <option  value = 'patient'>{{trans('lang.patient')}}</option>
+                                    </select>
+                                </div>
                                 {{--categories  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.categories') }}</div>

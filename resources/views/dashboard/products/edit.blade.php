@@ -52,6 +52,14 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                {{-- type --}}
+                                <div class="col-md-12  d-flex my-3">
+                                    <div class="col-form-label  col-3">{{ __('lang.type') }}</div>
+                                    <select id="select_type" name="type" class="form-control">
+                                        <option {{ $product->type == 'doctor' ? 'selected' : '' }} value='doctor'>{{trans('lang.doctor')}}</option>
+                                        <option {{ $product->type == 'patient' ? 'selected' : '' }} value='patient'>{{trans('lang.patient')}}</option>
+                                    </select>
+                                </div>
                                 {{--categories  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.categories') }}</div>
@@ -66,7 +74,6 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-
                                 {{--  purchase_price  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <label class="form-label col-3" for="purchase_price">@lang('lang.purchase_price')</label>

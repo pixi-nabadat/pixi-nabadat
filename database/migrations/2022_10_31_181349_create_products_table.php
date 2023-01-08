@@ -27,6 +27,7 @@ return new class extends Migration
             $table->date('discount_end_date')->nullable();
             $table->double('rate')->default(0.0);
             $table->double('tax')->default(0);
+            $table->enum('type',[\App\Enum\ProductTypeEnum::PATIENT,\App\Enum\ProductTypeEnum::DOCTOR])->default('patient');
             $table->tinyInteger('featured')->default(0)->nullable();
             $table->boolean('is_active')->default(1)->nullable();
             $table->timestamps();
