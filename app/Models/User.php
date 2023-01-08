@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -100,5 +101,18 @@ class User extends Authenticatable
     public function package(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(UserPackage::class,'user_id');
+    }
+
+    /**
+     * @param float $amount
+     */
+    public static function setPoints(User $user, float $amount): bool
+    {
+        $pointsPerPound = Settings::get('points', 'points_per__pound');
+        $pointsExpireDaysCount = Settings::get('points', 'points_expire_days_count');
+        $user->points += $pointsPerPound * $amount;
+        $user->points_expire_date = Carbon::now()->addDay($pointsExpireDaysCount);
+        $user->save(); 
+        return true;
     }
 }

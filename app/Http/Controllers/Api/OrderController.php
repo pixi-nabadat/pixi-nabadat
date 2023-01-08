@@ -8,18 +8,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderStoreRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use App\Models\User;
 use App\Services\CartService;
 use App\Services\OrderService;
 use App\Services\Payment\PaymobService;
 use App\Traits\OrderTrait;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-
 class OrderController extends Controller
 {
     use OrderTrait;
@@ -67,11 +66,7 @@ class OrderController extends Controller
                 $message = trans('lang.there_is_an_error');
                 $result = $this->paymobService->payCredit(order_id: $order->order->id, items: $paymob_order_items, userAddress: $order->userAddress, total_amount_cents: $total_order_amount_in_cents);
                 if ($result['status']) {
-                    $pointsPerPound = Settings::get('points', 'points_per__pound');
-                    $pointsExpireDaysCount = Settings::get('points', 'points_expire_days_count');
-                    $user->points += $pointsPerPound * $order->order->grand_total;//this will be modified to the user price not package price
-                    $user->points_expire_date = Carbon::now()->addDay($pointsExpireDaysCount);
-                    $user->save(); 
+                    User::setPoints(user: $user, amount: (float)$order->order->grand_total);//this will be the user price not package price
                     $status_code = 200;
                     $message = null;
                     DB::commit();

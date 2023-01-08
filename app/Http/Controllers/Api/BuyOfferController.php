@@ -7,6 +7,7 @@ use App\Enum\PaymentStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BuyOfferRequest;
 use App\Models\Package;
+use App\Models\User;
 use App\Services\PackageService;
 use App\Services\Payment\PaymobService;
 use App\Services\UserService;
@@ -49,11 +50,7 @@ class BuyOfferController extends Controller
                 $status_code = 422;
                 $message = trans('lang.there_is_an_error');
                 if ($result['status']) {
-                    $pointsPerPound = Settings::get('points', 'points_per__pound');
-                    $pointsExpireDaysCount = Settings::get('points', 'points_expire_days_count');
-                    $user->points += $pointsPerPound * $package->price;//this will be modified to the user price not package price
-                    $user->points_expire_date = Carbon::now()->addDay($pointsExpireDaysCount);
-                    $user->save(); 
+                    User::setPoints(user: $user, amount: (float)$package->price);//this will be the user price not package price
                     $status_code = 200;
                     $message = null;
                 }
