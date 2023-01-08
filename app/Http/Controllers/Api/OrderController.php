@@ -12,6 +12,7 @@ use App\Services\CartService;
 use App\Services\OrderService;
 use App\Services\Payment\PaymobService;
 use App\Traits\OrderTrait;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -66,6 +67,11 @@ class OrderController extends Controller
                 $message = trans('lang.there_is_an_error');
                 $result = $this->paymobService->payCredit(order_id: $order->order->id, items: $paymob_order_items, userAddress: $order->userAddress, total_amount_cents: $total_order_amount_in_cents);
                 if ($result['status']) {
+                    $pointsPerPound = Settings::get('points', 'points_per__pound');
+                    $pointsExpireDaysCount = Settings::get('points', 'points_expire_days_count');
+                    $user->points += $pointsPerPound * $order->order->grand_total;//this will be modified to the user price not package price
+                    $user->points_expire_date = Carbon::now()->addDay($pointsExpireDaysCount);
+                    $user->save(); 
                     $status_code = 200;
                     $message = null;
                     DB::commit();
