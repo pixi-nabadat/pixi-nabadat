@@ -44,11 +44,16 @@ class BuyOfferController extends Controller
                 $order_item_data = $this->prepareOrderItemsData($package);
                 $paymob_order_items = $this->preparePaymobOrderItems($package);
                 $order = $this->setUserOfferAsOrder($user, $order_data, $order_item_data);
-                $total_order_amount_in_cents = $package->price * 100;
+                $total_order_amount_in_cents = $package->price * 100;//this will be modifyied to the user price not package price
                 $result = $this->paymobService->payCredit(order_id: $order->id, items: $paymob_order_items, userAddress: $userAddress, total_amount_cents: $total_order_amount_in_cents);
                 $status_code = 422;
                 $message = trans('lang.there_is_an_error');
                 if ($result['status']) {
+                    $pointsPerPound = Settings::get('points', 'points_per__pound');
+                    $pointsExpireDaysCount = Settings::get('points', 'points_expire_days_count');
+                    $user->points += $pointsPerPound * $package->price;//this will be modified to the user price not package price
+                    $user->points_expire_date = Carbon::now()->addDay($pointsExpireDaysCount);
+                    $user->save(); 
                     $status_code = 200;
                     $message = null;
                 }
