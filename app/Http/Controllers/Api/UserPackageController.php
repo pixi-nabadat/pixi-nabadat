@@ -39,7 +39,8 @@ class UserPackageController extends Controller
     {
         try {
             $filters = $request->all();
-            $filters['user_id'] = Auth::user()->id;
+            $filters['user_type'] = User::CUSTOMERTYPE;
+            $filters['user_id']   = Auth::user()->id;
             $withRelations = [];
             $userPackages = $this->userPackageService->listing(filters: $filters,withRelation: $withRelations);
             return UserPackagesResource::collection($userPackages);
@@ -52,6 +53,7 @@ class UserPackageController extends Controller
     {
         try {
             $filters = $request->all();
+            $filters['user_type'] = 'center';
             $filters['center_id'] = Auth::user()->center_id;
             $withRelations = [];
             $userPackages = $this->userPackageService->listing(filters: $filters,withRelation: $withRelations);
