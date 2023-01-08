@@ -9,11 +9,16 @@ class Cart extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['discount','sub_total','shipping_cost' ,'address_id', 'net_total','grand_total','user_id','temp_user_id'];
+    protected $fillable = ['coupon_discount','coupon_code','sub_total','shipping_cost' ,'address_id', 'net_total','grand_total','user_id','temp_user_id'];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function couponUsage(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(CouponUsage::class,'coupon_code');
     }
 
     public function items(): \Illuminate\Database\Eloquent\Relations\HasMany
@@ -39,7 +44,12 @@ class Cart extends Model
         });
     }
 
-    public function getDiscountPercentageAttribute(): float|int
+    public function getGrandTotalAfterDiscountAttribute($value): float|int
+    {
+        return $this->sub_total - ($this->sub_total*($this->coupon_discount/100));
+    }
+
+    public function getSavedAmountAttribute(): float|int
     {
         return $this->sub_total !=0 ? (($this->sub_total - $this->grand_total)/$this->sub_total) * 100 : 0 ;
     }

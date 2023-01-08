@@ -17,10 +17,11 @@ class CartResource extends JsonResource
         return [
             'id'            => $this->id,
             'items_count'   => $this->items_count,
-            'discount'      => $this->discount_percentage,
+            'saved'         => $this->saved_amount,
+            'discount'      => $this->coupon_discount,
             'sub_total'     => (double)$this->sub_total,
             'net_total'     => (double)$this->net_total,
-            'grand_total'   => (double)$this->grand_total,
+            'grand_total'   => (double)$this->grand_total, // after applying all discounts
             'address_id'    => $this->address_id,
             'address_info'  => $this->relationLoaded('address') ? $this->address_id : null,
             'tax'           => (double)$this->tax,

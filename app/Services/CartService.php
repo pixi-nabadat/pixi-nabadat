@@ -4,7 +4,9 @@ namespace App\Services;
 
 
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Product;
+use Carbon\Carbon;
 
 class CartService extends BaseService
 {
@@ -75,11 +77,28 @@ class CartService extends BaseService
             return $item->quantity * $item->product->unit_price;
         });
 
+        $grand_total = $grand_total - ($grand_total*($cart->coupon_discount/100)) + $cart->shipping_cost;
         $cart->update([
             "sub_total" => $sub_total,
             "net_total" => $grand_total,
             "grand_total" => $grand_total,
         ]);
+    }
+
+    public function updateCartCouponData(array $data = []){
+        $cart = $this->getCartByUser($data['temp_user_id']);
+        $coupon = Coupon::where('code',$data['coupon_code'])->where->first();
+        //check if coupon code exsists and is valied
+        $coupon_is_valid = false;
+        if (Carbon::parse($coupon->start_date)->gte(Carbon::now()->format('y-m-d')) && Carbon::parse($coupon->end_date)->lte(Carbon::now()->format('y-m-d')))
+            $coupon_is_valid = true ;
+        if (!$coupon_is_valid)
+            return false ;
+        $cart->coupon_code = $coupon->code ;
+        $cart->coupon_discount = $coupon->discount;
+        $cart->save();
+        $cart->refresh();
+        return $this->getCart($data['temp_user_id']);
     }
 
 }

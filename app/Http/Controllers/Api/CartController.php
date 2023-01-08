@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ApplyCouponRequest;
 use App\Http\Requests\CartStoreRequest;
 use App\Http\Requests\StoreLocationRequest;
 use App\Http\Resources\CartResource;
 use App\Http\Resources\CartsResource;
 use App\Services\CartService;
+use App\Services\CouponService;
 use App\Services\ProductService;
 use Exception;
 use Illuminate\Http\Request;
@@ -17,7 +19,7 @@ class CartController extends Controller
 {
 
 
-    public function __construct(protected CartService $cartService)
+    public function __construct(protected CartService $cartService,protected CouponService $couponService)
     {
     }
 
@@ -74,5 +76,16 @@ class CartController extends Controller
             DB::rollBack();
             return apiResponse(message: $ex->getMessage());
         }
+    }
+
+
+    public function applyCoupon(ApplyCouponRequest $request)
+    {
+        $data = $request->all();
+        $cart = $this->cartService->updateCartCouponData($data);
+        if (!$cart)
+            return apiResponse(message:trans('lang.coupon_not_available'));
+        return new CartResource($cart);
+
     }
 }

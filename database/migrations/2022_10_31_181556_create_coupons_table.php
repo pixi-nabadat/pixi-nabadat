@@ -20,12 +20,11 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->enum('discount_type',['flat','percent'])->default('percent');
             $table->double('discount');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->integer('coupon_limit');
-            $table->enum('coupon_type', ['product', 'reservaion']);
+            $table->enum('coupon_type', ['product', 'reservation'])->default('store');
             $table->double('min_buy')->nullable();
-            $table->enum('coupon_for',['store','reservation'])->default('store');
             $table->unsignedInteger('allowed_usage')->default(1);
             $table->timestamps();
         });
