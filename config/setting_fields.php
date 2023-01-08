@@ -197,6 +197,15 @@ return [
                 'class' => 'form-control', // any class for input
                 'value' => '0' // default value if you want
             ],
+            [
+                'type' => 'number', // input fields type
+                'data' => 'integer', // data type, string, int, boolean
+                'name' => 'points_expire_days_count', // unique name for field
+                'label' => 'Points Expire Days Count', // you know what label it is
+                'rules' => 'required|numeric', // validation rule of laravel
+                'class' => 'form-control', // any class for input
+                'value' => '0' // default value if you want
+            ],
             
         ]
     ],
