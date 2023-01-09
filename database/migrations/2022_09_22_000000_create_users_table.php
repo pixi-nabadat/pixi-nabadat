@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->integer('points')->default(0);
             $table->date('points_expire_date')->nullable();
+            $table->string('referal_code')->unique();
             $table->timestamp('last_login')->nullable();
             $table->timestamps();
         });

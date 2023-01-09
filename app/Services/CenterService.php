@@ -47,6 +47,7 @@ class CenterService extends BaseService
                 $center->storeAttachment($fileData);
             }
         $userData = $this->prepareUserData($data);
+        $userData['referal_code'] = uniqid();
         $center->user()->create($userData);
         DB::commit();
         return $center;

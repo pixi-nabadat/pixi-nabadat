@@ -20,7 +20,7 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\OrderController;
-
+use App\Http\Controllers\ReferalController;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -100,6 +100,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
 
 });
+
+//start referal
+Route::get('/referal/{referalCode}', [ReferalController::class, 'getInvitationView']);
+//end referal
 
 Route::get('/clear-cache', function () {
     \Illuminate\Support\Facades\Artisan::call('config:cache');
