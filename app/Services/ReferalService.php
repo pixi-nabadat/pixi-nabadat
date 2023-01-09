@@ -20,7 +20,7 @@ class ReferalService extends BaseService
     public function setReferalPoints(array $data): bool
     {
         $user = User::where('referal_code', $data['referal_code'])->first();
-        return User::setPoints(user: $user, amount: 30, amountType: 'points');//30 is the points add I should get it from settings
+        return User::setPoints(user: $user, amount: (float)config('global.referal_points'), amountType: 'points');//30 is the points add I should get it from settings
     }
 
 }
