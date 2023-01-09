@@ -109,8 +109,8 @@ class User extends Authenticatable
     public static function setPoints(User $user, float $amount, string $amountType): bool
     {
         
-        $pointsPerPound = Settings::get('points', 'points_per_pound');
-        $pointsExpireDaysCount = Settings::get('points', 'points_expire_days_count');
+        $pointsPerPound = config('global.points_per_pound');
+        $pointsExpireDaysCount = config('global.points_expire_days_count');
         if($amountType == 'points')
             $user->points += $amount;
         else
