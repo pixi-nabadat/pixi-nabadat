@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedInteger('added_by');
-            $table->foreignIdFor(\App\Models\Category::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignIdFor(\App\Models\Category::class)->nullable()->constrained()->onUpdate('cascade')->nullOnDelete();
             $table->string('description')->nullable();
             $table->integer('stock');
             $table->double('unit_price');

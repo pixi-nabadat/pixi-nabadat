@@ -24,6 +24,8 @@ class AddressService extends BaseService
 
     public function store(array $data)
     {
+        if (isset($data['is_default']) && $data['is_default'])
+            Address::where('user_id',$data['user_id'])->update(['is_default'=>0]);
         return Address::create($data);
 
     } //end of store

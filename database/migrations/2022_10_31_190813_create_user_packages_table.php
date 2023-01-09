@@ -1,5 +1,7 @@
 <?php
 
+use App\Enum\PaymentMethodEnum;
+use App\Enum\PaymentStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,11 +23,11 @@ return new class extends Migration
             $table->integer('num_nabadat');
             $table->double('price');
             $table->double('discount_percentage')->default(0);
-            $table->enum('payment_method',['cash','credit']);
-            $table->enum('payment_status',['paid','unpaid']);
+            $table->enum('payment_method',[PaymentMethodEnum::CASH,PaymentMethodEnum::CREDIT]);
+            $table->enum('payment_status',[PaymentStatusEnum::PAID,PaymentStatusEnum::UNPAID]);
             $table->integer('usage_status');
             $table->integer('used')->default(0);
-            $table->integer('remaining')->default();
+            $table->integer('remain')->default(0);
             $table->timestamps();
         });
     }

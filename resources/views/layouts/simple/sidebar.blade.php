@@ -155,6 +155,24 @@
                         </ul>
                         {{-- end Center Devices --}}
 
+                        {{--start orders ---}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/orders' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.orders') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/orders' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('orders.index') ? 'active' : '' }}" href="{{route('orders.index')}}">{{ trans('lang.view') }}</a></li>
+                        </ul>
+                        {{-- end orders --}}
+
+                        {{--start Settings ---}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/settings' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.settings') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/settings' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('settings') ? 'active' : '' }}" href="{{route('settings')}}">{{ trans('lang.view') }}</a></li>
+                        </ul>
+                        {{-- end Settings --}}
+
 					</li>
                 </ul>
 			</div>

@@ -28,7 +28,7 @@ class CouponStoreRequest extends BaseRequest
             'discount_type'=>'required',
             'discount'=>'required|numeric',
             'start_date'=>'required|date',
-            'end_date'=>'required|date',
+            'end_date'=>'required|after_or_equal:start_date',
             'min_buy'=>'required|numeric',
             'allowed_usage'=>'required|numeric',
             'coupon_for'=>'required',
