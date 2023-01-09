@@ -79,7 +79,7 @@ class BuyOfferController extends Controller
             'address_info' => $user->defaultAddress->toJson(),
             'shipping_fees' => 0,
             'sub_total' => $package->price,
-            'grand_total' => $package->price-($package->price * ($package->center->app_discount/100)),
+            'grand_total' => $package->price_after_discount,
             'coupon_discount' => 0,
             'deleted_at' => Carbon::now(),
             'relatable_id' => $package->id,
@@ -91,7 +91,7 @@ class BuyOfferController extends Controller
     {
         return [
             'quantity' => 1,
-            'price' => $package->price - ($package->price * ($package->center->app_discount/100)),
+            'price' => $package->price_after_discount,
             'discount' => 0
         ];
     }
@@ -100,7 +100,7 @@ class BuyOfferController extends Controller
     {
         $order_items[] = [
             "name" => $package->name,
-            "amount_cents" => $package->price-($package->price * ($package->center->app_discount/100)) * 100,
+            "amount_cents" => $package->price_after_discount * 100,
             "description" => 'offers number of pulses from nabadata app',
             "quantity" => 1
         ];

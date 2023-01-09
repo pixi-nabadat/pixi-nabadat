@@ -49,15 +49,18 @@ Route::get('/', HomeController::class)->name('/')->middleware('auth');
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     // Start Settings
-    Route::get('/settings', [SettingController::class, 'index'])->name('settings');
-    Route::get('/settings/general', [SettingController::class, 'appSettingsIndex'])->name('general.settings');
-    Route::post('/settings/general', [SettingController::class, 'store'])->name('settings.store.general');
-    Route::get('/settings/points', [SettingController::class, 'pointsSettingsIndex'])->name('points.settings');
-    Route::post('/settings/points', [SettingController::class, 'store'])->name('settings.store.points');
-    Route::get('/settings/social_media', [SettingController::class, 'socialMediaSettingsIndex'])->name('social_media.settings');
-    Route::post('/settings/social_media', [SettingController::class, 'store'])->name('settings.store.social_media');
-    Route::get('/settings/terms_and_conditions', [SettingController::class, 'termsAndConditionsSettingsIndex'])->name('terms_and_conditions.settings');
-    Route::post('/settings/terms_and_conditions', [SettingController::class, 'store'])->name('settings.store.terms_and_conditions');
+    Route::group(['prefix'=>'settings'],function (){
+        Route::get('/', [SettingController::class, 'index'])->name('settings');
+        Route::get('general', [SettingController::class, 'appSettingsIndex'])->name('general.settings');
+        Route::post('general', [SettingController::class, 'store'])->name('settings.store.general');
+        Route::get('points', [SettingController::class, 'pointsSettingsIndex'])->name('points.settings');
+        Route::post('points', [SettingController::class, 'store'])->name('settings.store.points');
+        Route::get('social_media', [SettingController::class, 'socialMediaSettingsIndex'])->name('social_media.settings');
+        Route::post('social_media', [SettingController::class, 'store'])->name('settings.store.social_media');
+        Route::get('terms_and_conditions', [SettingController::class, 'termsAndConditionsSettingsIndex'])->name('terms_and_conditions.settings');
+        Route::post('terms_and_conditions', [SettingController::class, 'store'])->name('settings.store.terms_and_conditions');
+
+    });
 
     // End Settings
 

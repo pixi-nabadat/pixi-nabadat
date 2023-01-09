@@ -30,7 +30,7 @@ class CartService extends BaseService
         return Cart::query()->firstOrCreate(['temp_user_id' => $temp_user_id]);
     }
 
-    public function getCart($temp_user_id)
+    public function getCart($temp_user_id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
     {
         $cart = Cart::query()->with(['address', 'items.product', 'coupon','address.city'])->withCount('items')->firstOrCreate(['temp_user_id' => $temp_user_id]);
         $this->refresh($cart);

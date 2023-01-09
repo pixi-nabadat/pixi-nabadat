@@ -51,7 +51,7 @@ class OrderController extends Controller
      * @param OrderStoreRequest $request
      * @return Response|OrderResource|Application|ResponseFactory
      */
-    public function store(Request $request)
+    public function store(OrderStoreRequest $request)
     {
         try {
             DB::beginTransaction();

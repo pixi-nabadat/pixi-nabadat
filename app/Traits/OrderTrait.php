@@ -17,9 +17,9 @@ trait OrderTrait
     public function storeOrder(Request $request, User $user)
     {
         //1- get cart data for user
-        $orderData = app()->make(CartService::class)->getCart($request->serial_number);
+        $orderData = app()->make(CartService::class)->getCart($request->temp_user_id);
         //2-get address info
-        $userAddress = app()->make(AddressService::class)->find(id: $request->address_id, withRelations: ['city:id,title', 'user:id,name,phone,email']);
+        $userAddress = app()->make(AddressService::class)->find(id: $request->address_id, withRelations: ['city:id,title,shipping_cost', 'user:id,name,phone,email']);
         if (!$userAddress)
             throw new NotFoundException(trans('lang.address_not_found'));
 //    check availability stocks of products
@@ -37,7 +37,7 @@ trait OrderTrait
         ];
     }
 
-    public function setUserOfferAsOrder(User $user, array $order_data, array $items)
+    public function setUserOfferAsOrder(User $user, array $order_data, array $items): \Illuminate\Database\Eloquent\Model
     {
         $order = $user->orders()->create($order_data);
         $order->items()->create($items);
