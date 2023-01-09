@@ -21,11 +21,11 @@ return new class extends Migration
             $table->integer('num_nabadat');
             $table->double('price');
             $table->double('discount_percentage')->default(0);
-            $table->enum('payment_method',['cash','credit']);
-            $table->enum('payment_status',['paid','unpaid']);
+            $table->enum('payment_method',[\App\Enum\PaymentMethodEnum::CASH,\App\Enum\PaymentMethodEnum::CREDIT]);
+            $table->enum('payment_status',[\App\Enum\PaymentStatusEnum::PAID,\App\Enum\PaymentStatusEnum::UNPAID]);
             $table->integer('usage_status');
             $table->integer('used')->default(0);
-            $table->integer('remaining')->default();
+            $table->integer('remain')->default(0);
             $table->timestamps();
         });
     }
