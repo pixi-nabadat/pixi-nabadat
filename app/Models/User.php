@@ -13,7 +13,7 @@ use Spatie\Translatable\HasTranslations;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,Filterable,HasTranslations,EscapeUnicodeJson;
+    use HasApiTokens, HasFactory, Notifiable, Filterable, HasTranslations, EscapeUnicodeJson;
 
     const SUPERADMINTYPE = 1;
     const CUSTOMERTYPE = 2;
@@ -22,15 +22,15 @@ class User extends Authenticatable
     const ACTIVE = 1;
     const NONACTIVE = 0;
 
-    public $translatable = ['name','description'];
+    public $translatable = ['name', 'description'];
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'type','description','user_name',
-        'last_login', 'date_of_birth', 'is_active','location_id', 'points', 'points_expire_date'
+        'name', 'email', 'password', 'phone', 'type', 'description', 'user_name',
+        'last_login', 'date_of_birth', 'is_active', 'location_id', 'points', 'points_expire_date'
     ];
 
     /**
@@ -42,6 +42,23 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * @param float $amount
+     */
+    public static function setPoints(User $user, float $amount, string $amountType): bool
+    {
+
+        $pointsPerPound = config('global.points_per_pound') !== null ? config('global.points_per_pound') : Setting::get('points', 'points_per_pound');
+        $pointsExpireDaysCount = config('global.points_expire_days_count') !== null ? config('global.points_expire_days_count') : Setting::get('points', 'points_expire_days_count');
+        if ($amountType == 'points')
+            $user->points += $amount;
+        else
+            $user->points += $pointsPerPound * $amount;
+        $user->points_expire_date = Carbon::now()->addDay($pointsExpireDaysCount);
+        $user->save();
+        return true;
+    }
 
     /**
      * Get the user's first name.
@@ -65,7 +82,7 @@ class User extends Authenticatable
 
     public function center(): \Illuminate\Database\Eloquent\Relations\belongsToMany
     {
-        return $this->belongsToMany(Center::class, CenterDoctor::class, 'doctor_id','center_id');
+        return $this->belongsToMany(Center::class, CenterDoctor::class, 'doctor_id', 'center_id');
     }
 
     public function cart(): \Illuminate\Database\Eloquent\Relations\hasOne
@@ -75,16 +92,17 @@ class User extends Authenticatable
 
     public function coupons(): \Illuminate\Database\Eloquent\Relations\belongsToMany
     {
-        return $this->belongsToMany(Coupon::class, 'coupon_usages','user_id','coupon_id');
-    }
-    public function addresses(): \Illuminate\Database\Eloquent\Relations\hasMany
-    {
-        return $this->hasMany(Address::class, 'user_id');
+        return $this->belongsToMany(Coupon::class, 'coupon_usages', 'user_id', 'coupon_id');
     }
 
     public function defaultAddress(): \Illuminate\Database\Eloquent\Relations\hasMany
     {
-        return $this->addresses()->where('is_default',true);
+        return $this->addresses()->where('is_default', true);
+    }
+
+    public function addresses(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(Address::class, 'user_id');
     }
 
     public function orders(): \Illuminate\Database\Eloquent\Relations\hasMany
@@ -92,31 +110,13 @@ class User extends Authenticatable
         return $this->hasMany(Order::class, 'user_id');
     }
 
-
     public function nabadatWallet(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasOne(NabadatWallet::class,'user_id');
+        return $this->hasOne(NabadatWallet::class, 'user_id');
     }
 
     public function package(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(UserPackage::class,'user_id');
-    }
-
-    /**
-     * @param float $amount
-     */
-    public static function setPoints(User $user, float $amount, string $amountType): bool
-    {
-        
-        $pointsPerPound = config('global.points_per_pound') !== null ? config('global.points_per_pound') : Settings::get('points', 'points_per_pound');
-        $pointsExpireDaysCount = config('global.points_expire_days_count') !== null ? config('global.points_expire_days_count') : Settings::get('points', 'points_expire_days_count');
-        if($amountType == 'points')
-            $user->points += $amount;
-        else
-            $user->points += $pointsPerPound * $amount;
-        $user->points_expire_date = Carbon::now()->addDay($pointsExpireDaysCount);
-        $user->save(); 
-        return true;
+        return $this->hasMany(UserPackage::class, 'user_id');
     }
 }
