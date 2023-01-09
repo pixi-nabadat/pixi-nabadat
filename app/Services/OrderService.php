@@ -88,6 +88,6 @@ class OrderService extends BaseService
 
         //set user points
         if($data['status'] == Order::DELIVERED)
-            User::setPoints(user: $order->user(), amount: (float)$order->grand_total);
+            User::setPoints(user: $order->user(), amount: (float)$order->grand_total, amountType: 'cash');
     }
 }
