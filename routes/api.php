@@ -1,28 +1,21 @@
 <?php
 
 use App\Http\Controllers\Api\AddressController;
-use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BuyOfferController;
-use App\Http\Controllers\Api\BuyOfferController;
 use App\Http\Controllers\Api\CancelReasonController;
 use App\Http\Controllers\Api\CartController;
-use App\Http\Controllers\Api\CartItemController;
-use App\Http\Controllers\Api\CartItemController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CenterController;
-use App\Http\Controllers\Api\CenterPackageController;
 use App\Http\Controllers\Api\CenterPackageController;
 use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\NabadatHistoryController;
 use App\Http\Controllers\Api\OrderController;
-use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PhoneVerifyController;
 use App\Http\Controllers\Api\ProductController;
-use App\Http\Controllers\api\RatesController;
 use App\Http\Controllers\api\RatesController;
 use App\Http\Controllers\APi\ReservationController;
 use App\Http\Controllers\Api\ReservationHistoryController;
