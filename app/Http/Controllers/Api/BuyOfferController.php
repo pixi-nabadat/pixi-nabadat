@@ -7,6 +7,7 @@ use App\Enum\PaymentStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BuyOfferRequest;
 use App\Models\Package;
+use App\Models\User;
 use App\Services\PackageService;
 use App\Services\Payment\PaymobService;
 use App\Services\UserService;
@@ -44,7 +45,7 @@ class BuyOfferController extends Controller
                 $order_item_data = $this->prepareOrderItemsData($package);
                 $paymob_order_items = $this->preparePaymobOrderItems($package);
                 $order = $this->setUserOfferAsOrder($user, $order_data, $order_item_data);
-                $total_order_amount_in_cents = $package->price-($package->price * ($package->center->app_discount/100)) * 100;
+                $total_order_amount_in_cents = $package->price_after_discount * 100;
                 $result = $this->paymobService->payCredit(order_id: $order->id, items: $paymob_order_items, userAddress: $userAddress, total_amount_cents: $total_order_amount_in_cents);
                 $status_code = 422;
                 $message = trans('lang.there_is_an_error');

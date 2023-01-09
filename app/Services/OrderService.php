@@ -8,6 +8,7 @@ use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderHistory;
+use App\Models\User;
 use App\Payments\PaymobProvider;
 use App\QueryFilters\OrdersFilter;
 use Carbon\Carbon;
@@ -89,5 +90,9 @@ class OrderService extends BaseService
         $order->order_history_id = $order_history->id ;
         $order->save();
         $order->refresh();
+
+        //set user points
+        if($data['status'] == Order::DELIVERED)
+            User::setPoints(user: $order->user(), amount: (float)$order->grand_total, amountType: 'cash');
     }
 }
