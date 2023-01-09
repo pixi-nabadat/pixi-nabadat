@@ -20,7 +20,7 @@ class ProductController extends Controller
     public function index(ProductsDataTable $dataTable, Request $request)
     {
         $loadRelation = ['user'];
-        return $dataTable->with(['filters' => $request->all(), 'withRelations' => $loadRelation])->render('dashboard.Products.index');
+        return $dataTable->with(['filters' => $request->all(), 'withRelations' => $loadRelation])->render('dashboard.products.index');
     } //end of index
 
     public function edit($id)
@@ -60,11 +60,11 @@ class ProductController extends Controller
         try {
             $request->validated();
             $this->productService->update($id, $request->all());
-            $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
+            $toast = ['title' => trans('lang.success'), 'message' => trans('lang.success_operation')];
             return redirect(route('products.index'))->with('toast', $toast);
         } catch (\Exception $ex) {
 
-            $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => $ex->getMessage(),];
             return redirect()->back()->with('toast', $toast);
         }
     } //end of update

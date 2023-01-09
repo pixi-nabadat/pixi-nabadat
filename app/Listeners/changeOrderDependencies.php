@@ -47,6 +47,6 @@ class changeOrderDependencies
             $order->update(['payment_status' => PaymentStatusEnum::PAID]);
             return;
         }
-        $order->update(['deleted_at' => null, 'payment_status' => Order::PAID]);
+        $order->update(['deleted_at' => null, 'payment_status' => PaymentStatusEnum::PAID]);
     }
 }

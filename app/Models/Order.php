@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,10 +11,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
-    use HasFactory, Filterable;
+    use HasFactory, Filterable,EscapeUnicodeJson;
     use SoftDeletes;
 
-    const PENDING   = 1,
+    const
+        PENDING     = 1,
         CONFIRMED   = 2,
         SHIPPED     = 3,
         DELIVERED   = 4,
@@ -30,7 +32,7 @@ class Order extends Model
         return $this->hasMany(OrderItem::class, 'order_id');
     }
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -51,7 +53,7 @@ class Order extends Model
         $builder->whereNull(['relatable_id', 'relatable_type']);
     }
 
-    public function getPaymentMethodAttribute($value)
+    public function getPaymentMethodAttribute($value): array|string|\Illuminate\Contracts\Translation\Translator|\Illuminate\Contracts\Foundation\Application|null
     {
         return trans('lang.'.$value) ;
     }

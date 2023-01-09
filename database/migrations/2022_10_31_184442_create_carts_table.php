@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->nullable()->unique()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->double('discount')->default(0.0);
+            $table->unsignedBigInteger('coupon_id')->nullable();
+            $table->foreign('coupon_id')->on('coupons')->references('id')->onDelete('set null')->onUpdate('cascade');
             $table->double('sub_total')->default(0.0);
             $table->double('net_total')->default(0.0);
             $table->double('grand_total')->default(0.0);
