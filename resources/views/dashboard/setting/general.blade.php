@@ -51,7 +51,7 @@
                                                 <input name="{{ $field['name'] }}" class="{{ $field['class'] }}"
                                                     id="validationCustom01" type="{{ $field['type'] }}" placeholder="{{ $field['label'] }}"
                                                     required=""
-                                                    value="{{ config('global.'.$field['name']) }}">
+                                                    value="{{ config('global.'.$field['name']) !== null ?  config('global.'.$field['name']) : $field['val']}}">
                                                 @error($field['name'])
                                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                                 @enderror
