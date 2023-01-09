@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Enum\PaymentMethodEnum;
+use App\Exceptions\NotFoundException;
 use App\Models\Order;
 use App\Models\User;
 use App\Services\AddressService;
@@ -16,15 +17,15 @@ trait OrderTrait
     public function storeOrder(Request $request, User $user)
     {
         //1- get cart data for user
-        $orderData = app()->make(CartService::class)->getCart($request->serial_number);
+        $orderData = app()->make(CartService::class)->getCart($request->temp_user_id);
         //2-get address info
-        $userAddress = app()->make(AddressService::class)->find(id: $request->address_id, withRelations: ['city:id,title', 'user:id,name,phone,email']);
+        $userAddress = app()->make(AddressService::class)->find(id: $request->address_id, withRelations: ['city:id,title,shipping_cost', 'user:id,name,phone,email']);
         if (!$userAddress)
-            return (object)['data' => null, 'message' => trans('lang.no_address'), 'status_code' => 422];
+            throw new NotFoundException(trans('lang.address_not_found'));
 //    check availability stocks of products
         foreach ($orderData->items as $item) {
             if ($item->quantity > $item->product->stock)
-                return (object)['data' => null, 'message' => trans('lang.quantity_is_more_stock :product', ['product' => $item->product->name]), 'status_code' => 422];
+               throw new NotFoundException(trans('lang.quantity_is_more_stock :product', ['product' => $item->product->name]));
         }
         $payment_type = $request->payment_type == PaymentMethodEnum::CREDIT ?PaymentMethodEnum::CREDIT : PaymentMethodEnum::CASH;
         $deleted_at = $payment_type == PaymentMethodEnum::CREDIT ? true : null;
@@ -36,7 +37,7 @@ trait OrderTrait
         ];
     }
 
-    public function setUserOfferAsOrder(User $user, array $order_data, array $items)
+    public function setUserOfferAsOrder(User $user, array $order_data, array $items): \Illuminate\Database\Eloquent\Model
     {
         $order = $user->orders()->create($order_data);
         $order->items()->create($items);

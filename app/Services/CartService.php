@@ -3,27 +3,16 @@
 namespace App\Services;
 
 
+use App\Exceptions\NotFoundException;
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Product;
+use Carbon\Carbon;
 
 class CartService extends BaseService
 {
 
-    public function getCart($temp_user_id)
-    {
-        $cart = Cart::query()->with(['address','items.product'])->withCount('items')->firstOrCreate(['temp_user_id' => $temp_user_id]);
-        $this->refresh($cart);
-        return $cart;
-    }
-
-
-    public function getCartByUser($temp_user_id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
-    {
-        return Cart::query()->firstOrCreate(['temp_user_id' => $temp_user_id]);
-    }
-
-
-    public function addItem($product_id,$quantity,$temp_user_id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
+    public function addItem($product_id, $quantity, $temp_user_id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
     {
         $cart = $this->getCartByUser($temp_user_id);
         $product = Product::find($product_id);
@@ -31,9 +20,48 @@ class CartService extends BaseService
             ->items()
             ->updateOrCreate(
                 ['product_id' => $product_id],
-                ['price'      =>$product->unit_price, 'quantity' =>$quantity]
+                ['price' => $product->unit_price, 'quantity' => $quantity]
             );
-        return $this->getCart($temp_user_id) ;
+        return $this->getCart($temp_user_id);
+    }
+
+    public function getCartByUser($temp_user_id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
+    {
+        return Cart::query()->firstOrCreate(['temp_user_id' => $temp_user_id]);
+    }
+
+    public function getCart($temp_user_id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
+    {
+        $cart = Cart::query()->with(['address', 'items.product', 'coupon','address.city'])->withCount('items')->firstOrCreate(['temp_user_id' => $temp_user_id]);
+        $this->refresh($cart);
+        return $cart;
+    }
+
+    /**
+     * @param Cart $cart
+     * @return void
+     */
+    private function refresh(Cart $cart): void
+    {
+        $items = $cart->itemsWithProduct()->get();
+        if ($items->isEmpty()) {
+            $cart->delete();
+            return;
+        }
+
+        $grand_total = $items->sum(function ($item) {
+            return $item->quantity * ($item->product->unit_price - ($item->product->unit_price * $item->product->product_discount / 100));
+        });
+
+        $sub_total = $items->sum(function ($item) {
+            return $item->quantity * $item->product->unit_price;
+        });
+
+        $cart->update([
+            "sub_total" => $sub_total,
+            "net_total" => $grand_total,
+            "grand_total" => $grand_total,
+        ]);
     }
 
     public function removeItem(int $item_id, $temp_user_id)
@@ -55,31 +83,40 @@ class CartService extends BaseService
         return $cart ? $cart->delete() : false;
     }
 
-    /**
-     * @param Cart $cart
-     * @return void
-     */
-    private function refresh(Cart $cart): void
+    public function applyCouponOnCart(array $data = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder|bool
     {
-        $items = $cart->itemsWithProduct()->get();
-        if ($items->isEmpty()) {
-            $cart->delete();
-            return;
-        }
+        $cart = $this->getCartByUser($data['temp_user_id']);
+        $coupon = Coupon::where('code', $data['coupon_code'])->first();
+        if (!$coupon)
+            throw new NotFoundException(trans('lang.coupon_not_available'));
 
-        $grand_total = $items->sum(function ($item) {
-            return $item->quantity * ($item->product->unit_price - ($item->product->unit_price * $item->product->product_discount/100));
-        });
+        //check if coupon code exsists and is valied
+        if (
+            !(Carbon::parse($coupon->start_date)->gte(Carbon::now()->format('y-m-d')) &&
+                Carbon::now()->lte(Carbon::parse($coupon->end_date)->format('y-m-d')) &&
+                $coupon->coupon_for == Coupon::STORECOUPON)
+        )
+            throw new NotFoundException(trans('lang.coupon_not_available'));
 
-        $sub_total = $items->sum(function ($item) {
-            return $item->quantity * $item->product->unit_price;
-        });
+        if (!($coupon->min_buy < $cart->grand_total))
+            throw new NotFoundException(trans('lang.you_should_exceed_minimum_limitation_to_use_coupon : ') . $coupon->min_buy);
+        $cart->coupon_id = $coupon->id;
+        $cart->save();
+        $cart->refresh();
+        return true;
+    }
 
-        $cart->update([
-            "sub_total" => $sub_total,
-            "net_total" => $grand_total,
-            "grand_total" => $grand_total,
-        ]);
+    public function updateCartAddress(array $data =[]): bool
+    {
+        $cart = $this->getCartByUser($data['temp_user_id']);
+        $address = app()->make(AddressService::class)->find($data['address_id'],['city']);
+        if (!$address)
+            throw new NotFoundException(trans('lang.address_not_found'));
+        $cart->address_id = $address->id;
+        $cart->user_id = $data['user_id'];
+        $cart->shipping_cost = $address->city->shipping_cost;
+        $cart->save();
+        return true ;
     }
 
 }

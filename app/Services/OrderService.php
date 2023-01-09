@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Enum\PaymentMethodEnum;
+use App\Enum\PaymentStatusEnum;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Order;
@@ -40,20 +42,23 @@ class OrderService extends BaseService
      * @param string $payment_type
      * @return mixed
      */
-    public function store($user, $order_data, $shipping_address, $payment_status = Order::UNPAID, $payment_type = Order::PAYMENTCASH, $deleted_at = null, $relatable_id = null, $relatable_type = null)
+    public function store($user, $order_data, $shipping_address, $payment_status = PaymentStatusEnum::UNPAID, $payment_type = PaymentMethodEnum::CASH, $deleted_at = null, $relatable_id = null, $relatable_type = null)
     {
         if (isset($deleted_at))
             $deleted_at = Carbon::now();
+
+//        check if coupon is valid
+        $grand_total = $order_data->grand_total_after_discount;
         $order = Order::create([
             'user_id'           => $user->id,
             'payment_status'    => $payment_status,
             'payment_method'    => $payment_type,
             'address_id'        => $shipping_address->id,
             'address_info'      => $shipping_address->toJson(),
-            'shipping_fees'     => $shipping_address->shipping_cost ?? 0,
+            'shipping_fees'     => $shipping_address->city->shipping_cost ?? 0,
             'sub_total'         => $order_data->sub_total,
-            'grand_total'       => $order_data->grand_total,
-            'coupon_discount'   => $order_data->discount,
+            'grand_total'       => $grand_total,
+            'coupon_discount'   => optional($order_data->coupon)->discount ?? 0,
             'deleted_at'        => $deleted_at
         ]);
 

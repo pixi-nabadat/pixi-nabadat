@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enum\PaymentMethodEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OrderStoreRequest extends BaseRequest
@@ -27,7 +28,8 @@ class OrderStoreRequest extends BaseRequest
             'user_id'    => 'required|exists:users,id',
             'address_id' => 'required|exists:addresses,id',
             'include_points' => 'nullable|bool',
-            'serial_number' => 'required',
+            'temp_user_id' => 'required',
+            'payment_method' => 'required|in:'.PaymentMethodEnum::CREDIT.','.PaymentMethodEnum::CASH,
         ];
     }
 

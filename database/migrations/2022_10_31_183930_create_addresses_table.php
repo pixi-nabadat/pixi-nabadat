@@ -22,9 +22,9 @@ return new class extends Migration
             $table->unsignedInteger('city_id');
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
-            $table->string('phone')->unique();
-            $table->integer('postal_code');
-            $table->boolean('is_default')->default(1); 
+            $table->string('phone');
+            $table->string('postal_code');
+            $table->boolean('is_default')->default(1);
             $table->timestamps();
         });
     }

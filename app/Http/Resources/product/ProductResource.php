@@ -17,14 +17,14 @@ class ProductResource extends JsonResource
     {
 
         return [
-            'id'=>$this->id,
-            'name'=>$this->name,
-            'price'=>$this->unit_price,
-            'discount'=>$this->discount,
-            'discount_type'=>$this->discount_type,
-            'description'=>$this->description,
-            'price_after_discount'=>getPriceAfterDiscount($this->unit_price,$this->product_discount),
-            'image'=> $this->whenLoaded('attachments') ? AttachmentsResource::collection($this->attachments) : [],
+            'id'                        =>$this->id,
+            'name'                      =>$this->name,
+            'price'                     =>$this->unit_price,
+            'discount'                  =>$this->discount,
+            'description'               =>$this->description,
+            'rate'                      =>$this->whenLoaded('rates',$this->rates),
+            'price_after_discount'      =>getPriceAfterDiscount($this->unit_price,$this->product_discount),
+            'image'=> $this->whenLoaded('attachments',AttachmentsResource::collection($this->attachments)),
         ];
     }
 }

@@ -36,7 +36,7 @@ class BuyOfferController extends Controller
             $user = auth('sanctum')->user();
             $user = $user->load('defaultAddress');
             $userAddress = $user->defaultAddress->first();
-            $package = $this->packageService->find($request->offer_id);
+            $package = $this->packageService->find($request->offer_id,['center']);
             if (!$package)
                 return apiResponse(message: trans('lang.offer_not_exits'), code: 422);
             //create user package log
@@ -45,7 +45,7 @@ class BuyOfferController extends Controller
                 $order_item_data = $this->prepareOrderItemsData($package);
                 $paymob_order_items = $this->preparePaymobOrderItems($package);
                 $order = $this->setUserOfferAsOrder($user, $order_data, $order_item_data);
-                $total_order_amount_in_cents = $package->price * 100;//this will be modifyied to the user price not package price
+                $total_order_amount_in_cents = $package->price_after_discount * 100;
                 $result = $this->paymobService->payCredit(order_id: $order->id, items: $paymob_order_items, userAddress: $userAddress, total_amount_cents: $total_order_amount_in_cents);
                 $status_code = 422;
                 $message = trans('lang.there_is_an_error');
@@ -80,7 +80,7 @@ class BuyOfferController extends Controller
             'address_info' => $user->defaultAddress->toJson(),
             'shipping_fees' => 0,
             'sub_total' => $package->price,
-            'grand_total' => $package->price,
+            'grand_total' => $package->price_after_discount,
             'coupon_discount' => 0,
             'deleted_at' => Carbon::now(),
             'relatable_id' => $package->id,
@@ -92,7 +92,7 @@ class BuyOfferController extends Controller
     {
         return [
             'quantity' => 1,
-            'price' => $package->price,
+            'price' => $package->price_after_discount,
             'discount' => 0
         ];
     }
@@ -101,7 +101,7 @@ class BuyOfferController extends Controller
     {
         $order_items[] = [
             "name" => $package->name,
-            "amount_cents" => $package->price * 100,
+            "amount_cents" => $package->price_after_discount * 100,
             "description" => 'offers number of pulses from nabadata app',
             "quantity" => 1
         ];
