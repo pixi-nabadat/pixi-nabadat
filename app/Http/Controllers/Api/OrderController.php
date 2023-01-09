@@ -66,7 +66,6 @@ class OrderController extends Controller
                 $message = trans('lang.there_is_an_error');
                 $result = $this->paymobService->payCredit(order_id: $order->order->id, items: $paymob_order_items, userAddress: $order->userAddress, total_amount_cents: $total_order_amount_in_cents);
                 if ($result['status']) {
-                    User::setPoints(user: $user, amount: (float)$order->order->grand_total);//this will be the user price not package price
                     $status_code = 200;
                     $message = null;
                     DB::commit();

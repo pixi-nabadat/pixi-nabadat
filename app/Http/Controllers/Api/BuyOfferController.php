@@ -50,7 +50,6 @@ class BuyOfferController extends Controller
                 $status_code = 422;
                 $message = trans('lang.there_is_an_error');
                 if ($result['status']) {
-                    User::setPoints(user: $user, amount: (float)$package->price);//this will be the user price not package price
                     $status_code = 200;
                     $message = null;
                 }
