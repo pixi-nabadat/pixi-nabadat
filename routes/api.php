@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BuyOfferController;
 use App\Http\Controllers\Api\CancelReasonController;
 use App\Http\Controllers\Api\CartController;
-use App\Http\Controllers\Api\CartItemController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CenterController;
 use App\Http\Controllers\Api\CenterPackageController;
@@ -21,6 +20,7 @@ use App\Http\Controllers\api\RatesController;
 use App\Http\Controllers\APi\ReservationController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 use App\Http\Controllers\Api\RestPasswordController;
+use App\Http\Controllers\Api\UserPackageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,12 +66,14 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::delete('{id}', [RatesController::class, 'destroy']);
     });
     // end rates
+    // end rates
 
     Route::group(['prefix' => 'addresses'], function () {
         Route::get('/', [AddressController::class, 'index']);
         Route::get('{address}', [AddressController::class, 'find']);
         Route::post('/', [AddressController::class, 'store']);
         Route::post('{address}', [AddressController::class, 'update']);
+        Route::post('set-default/{address}', [AddressController::class, 'setDefault']);
         Route::post('set-default/{address}', [AddressController::class, 'setDefault']);
         Route::delete('{address}', [AddressController::class, 'destroy']);
     });
@@ -102,8 +104,8 @@ Route::group(['prefix' => 'cart'], function () {
     Route::delete('items/{id}', [CartController::class, 'deleteCartItem']);//delete an item from cart items
 });
 
-Route::group(['prefix'=>'coupon'],function (){
-    Route::post('apply',[CartController::class, 'applyCoupon']);//create new coupon
+Route::group(['prefix' => 'coupon'], function () {
+    Route::post('apply', [CartController::class, 'applyCoupon']);//create new coupon
 });
 //end cart
 Route::get('categories', [CategoryController::class, 'listing']);
@@ -115,6 +117,14 @@ Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByPa
 
 Route::get('centers', [CenterController::class, 'listing']);
 
+Route::get('packages', [PackageController::class, 'listing']);
+
+
+//start user packages
+Route::get('userPackages/listing', [UserPackageController::class, 'userPackagesListing']);
+Route::get('centerPackages/listing', [UserPackageController::class, 'centerPackagesListing']);
+Route::resource('userPackages', CenterController::class)->except(['index', 'store']);
+//end user packages
 Route::get('center-offers', [CenterPackageController::class, 'listing']);
 Route::resource('packages', CenterPackageController::class);
 Route::get('doctor/{id}', [DoctorController::class, 'find']);

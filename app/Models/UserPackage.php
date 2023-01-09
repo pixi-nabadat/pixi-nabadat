@@ -3,16 +3,28 @@
 namespace App\Models;
 
 use App\Observers\UserPackageObserver;
+use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserPackage extends Model
 {
-    use HasFactory;
+    use HasFactory,Filterable;
 
-
-    protected $fillable = ['user_id', 'package_id', 'num_nabadat', 'price','percentage','center_id','payment-status','payment_type','status','used_amount','remain'];
+    protected $fillable = [
+        'num_nabadat',
+        'price',
+        'center_id',
+        'user_id',
+        'package_id',
+        'discount_percentage',
+        'payment_method',
+        'payment_status',
+        'usage_status',
+        'used',
+        'remain',
+    ];
 
     public function user(): BelongsTo
     {

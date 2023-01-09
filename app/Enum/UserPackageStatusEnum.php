@@ -4,7 +4,8 @@ namespace App\Enum;
 
 class UserPackageStatusEnum
 {
-    const ONGOING          = 1 ;
-    const PENDING          = 2;
-    const COMPLETED        = 3;
+    const PENDING     = 1;
+    const READYFORUSE = 2;
+    const ONGOING     = 3;
+    const COMPLETED   = 4;
 }
