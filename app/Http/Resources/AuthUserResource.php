@@ -16,11 +16,12 @@ class AuthUserResource extends JsonResource
     {
 
        return [
-           'id'=>$this->id,
-           'name'=>$this->name,
-           'user_name'=>$this->user_name,
-           'phone'=>$this->phone,
-           'date_of_birth'=>$this->date_of_birth,
+           'id'            => $this->id,
+           'name'          => $this->name,
+           'user_name'     => $this->user_name,
+           'phone'         => $this->phone,
+           'date_of_birth' => $this->date_of_birth,
+           'referal_code'  => $this->referal_code,
        ];
     }
 }

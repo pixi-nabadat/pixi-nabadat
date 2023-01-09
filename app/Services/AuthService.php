@@ -29,6 +29,7 @@ class AuthService extends BaseService
      */
     public function register(array $data=[]): mixed
     {
+        $data['referal_code'] = uniqid();
         return User::create($data);
     }
 
