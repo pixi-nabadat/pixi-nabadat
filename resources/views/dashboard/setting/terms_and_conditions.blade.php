@@ -38,7 +38,7 @@
                                             <label class="form-label col-3 " for="{{ $field['name'] }}">{{ $field['label'] }}</label>
                                             <textarea name="{{ $field['name'] }}" class="{{ $field['class'] }}"
                                                 id="validationCustom01" type="{{ $field['type'] }}" placeholder="{{ $field['label'] }}"
-                                                required="" value="{{ isset(config('global.'.$field['name'])) }}" rows="5" cols="5"></textarea>
+                                                required="" value="{{ config('global.'.$field['name']) }}" rows="5" cols="5"></textarea>
                                             @error($field['name'])
                                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
                                             @enderror
