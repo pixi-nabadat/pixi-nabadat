@@ -15,12 +15,12 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\GovernorateController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\OrderController;
-
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -47,6 +47,19 @@ Route::prefix('authentication')->group(function () {
 
 Route::get('/', HomeController::class)->name('/')->middleware('auth');
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
+
+    // Start Settings
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings');
+    Route::get('/settings/general', [SettingController::class, 'appSettingsIndex'])->name('general.settings');
+    Route::post('/settings/general', [SettingController::class, 'store'])->name('settings.store.general');
+    Route::get('/settings/points', [SettingController::class, 'pointsSettingsIndex'])->name('points.settings');
+    Route::post('/settings/points', [SettingController::class, 'store'])->name('settings.store.points');
+    Route::get('/settings/social_media', [SettingController::class, 'socialMediaSettingsIndex'])->name('social_media.settings');
+    Route::post('/settings/social_media', [SettingController::class, 'store'])->name('settings.store.social_media');
+    Route::get('/settings/terms_and_conditions', [SettingController::class, 'termsAndConditionsSettingsIndex'])->name('terms_and_conditions.settings');
+    Route::post('/settings/terms_and_conditions', [SettingController::class, 'store'])->name('settings.store.terms_and_conditions');
+
+    // End Settings
 
     Route::group(['prefix' => 'ajax'], function () {
         Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);
@@ -95,8 +108,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     Route::resource('centerDevices', CenterDeviceController::class);
 
-    Route::post('orders/updateOrderStatus',[OrderController::class,'updateOrderStatus'])->name('orders.updateOrderStatus');
-    Route::resource('orders',OrderController::class);
+    Route::post('orders/updateOrderStatus', [OrderController::class, 'updateOrderStatus'])->name('orders.updateOrderStatus');
+    Route::resource('orders', OrderController::class);
 
 
 });
