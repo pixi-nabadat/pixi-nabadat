@@ -206,6 +206,15 @@ return [
                 'class' => 'form-control', // any class for input
                 'value' => '0' // default value if you want
             ],
+            [
+                'type' => 'number', // input fields type
+                'data' => 'integer', // data type, string, int, boolean
+                'name' => 'referal_points', // unique name for field
+                'label' => 'Referal Points', // you know what label it is
+                'rules' => 'required|integer', // validation rule of laravel
+                'class' => 'form-control', // any class for input
+                'value' => '0' // default value if you want
+            ],
             
         ]
     ],
