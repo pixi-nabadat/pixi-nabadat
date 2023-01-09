@@ -49,7 +49,7 @@ class Product extends Model
         return $discount;
     }
 
-    public function rates()
+    public function rates(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
         return $this->morphMany(Rate::class, 'ratable');
     }

@@ -29,12 +29,12 @@ class RatesService extends BaseService
                 'comment'     => $data['comment'],
                 'status'      => 1
             ]);
-        return $model->load('rates');
-        return $this->refreshItemRate($model);
+        $this->refreshItemRate($model);
+        return $model->load(['rates'=>fn($rates)=>$rates->orderBy('id','desc')]);
 
     }
 
-    private function refreshItemRate(Product|Device|Center $model): bool
+    private function refreshItemRate(Product|Device|Center $model): void
     {
 
         $totalItemRate = $model->rates->sum('rate_number');
@@ -43,19 +43,18 @@ class RatesService extends BaseService
         $model->update([
             'rate' => $finalRate
         ]);
-        return true;
     }
 
     /**
      * @param int $id
-     * @return bool
+     * @return void
      */
-    public function destroy(int $id)//: bool
+    public function destroy(int $id)
     {
         $rate        = Rate::find($id);
         $ratableType = $rate->ratable_type;
         $model       = $ratableType::find($rate->ratable_id);
         $rate->delete();
-        return $this->refreshItemRate($model);
+        $this->refreshItemRate($model);
     }
 }

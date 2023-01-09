@@ -14,10 +14,15 @@ class Rate extends Model
     const RATABLE_TAYPES = [
         self::PRODUCT,self::DEVICE,self::CENTER
     ];
-    protected $fillable = ['user_id','status','comment','rate_number','ratable_id','reatable_type'];
+    protected $fillable = ['user_id','status','comment','rate_number','ratable_id','ratable_type'];
 
-    public function ratable()
+    public function ratable(): \Illuminate\Database\Eloquent\Relations\MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class,'user_id');
     }
 }
