@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
-    use HasFactory, Filterable;
+    use HasFactory, Filterable,EscapeUnicodeJson;
     use SoftDeletes;
 
     const
