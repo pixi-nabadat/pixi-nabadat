@@ -15,15 +15,18 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->integer('payment_status')->default(1);
-            $table->integer('payment_type')->default(1);
-            $table->string('address_info');
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->enum('payment_status',[\App\Enum\PaymentStatusEnum::PAID,\App\Enum\PaymentStatusEnum::UNPAID])->default(\App\Enum\PaymentStatusEnum::UNPAID);
+            $table->enum('payment_method',[\App\Enum\PaymentMethodEnum::CASH,\App\Enum\PaymentMethodEnum::CREDIT])->nullable();
+            $table->json('address_info');
             $table->foreignIdFor(\App\Models\Address::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->double('shipping_fees');
+            $table->double('shipping_fees')->default(0);
             $table->double('sub_total');
             $table->double('grand_total');
-            $table->double('coupon_discount');
+            $table->double('coupon_discount')->default(0);
+            $table->double('paymob_transaction_id')->nullable();
+            $table->nullableMorphs('relatable');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

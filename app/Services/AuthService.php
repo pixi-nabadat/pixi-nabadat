@@ -32,8 +32,9 @@ class AuthService extends BaseService
         return User::create($data);
     }
 
-    public function getAuthUser(): ?\Illuminate\Contracts\Auth\Authenticatable
+    public function getAuthUser()
     {
-        return auth()->user();
+        logger('auth user service');
+        return auth('sanctum')->user();
     }
 }

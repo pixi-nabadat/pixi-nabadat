@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCenterRequest;
 use App\Http\Resources\CentersResource;
 use Illuminate\Http\Request;
 use App\Services\CenterService;
@@ -33,12 +34,16 @@ class CenterController extends Controller
                 $filters['location_id'] = $request->location_id;
             $filters = array_merge($filters,$request->except('location_id'));
 
-
             $withRelations = ['doctors','location','attachments','appointments'];
             $centers = $this->centerService->listing(filters: $filters,withRelation: $withRelations);
             return CentersResource::collection($centers);
         } catch (\Exception $e) {
             return apiResponse($e->getMessage(), 'Unauthorized',$e->getCode());
         }
+    }
+
+    public function store(StoreCenterRequest $request)
+    {
+
     }
 }

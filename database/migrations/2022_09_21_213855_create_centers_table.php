@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use App\Enum\PaymentMethodEnum;
 return new class extends Migration
 {
     /**
@@ -24,9 +24,14 @@ return new class extends Migration
             $table->string('lng')->nullable();
             $table->boolean('is_active')->default(\App\Models\Center::ACTIVE);
             $table->tinyInteger('featured')->default(0)->nullable();
-            $table->double('avg_wating_time')->nullable();
+            $table->double('avg_waiting_time')->nullable();
             $table->boolean('is_support_auto_service')->default(\App\Models\Center::NON_SUPPORT_AUTO_SERVICE);
             $table->string('google_map_url')->nullable();
+            $table->string('points')->default(0);
+            $table->string('points_expire_date')->nullable();
+            $table->double('rate')->default(0.0);
+            $table->double('app_discount');
+            $table->string('support_payments')->default(PaymentMethodEnum::CASH);
             $table->timestamps();
         });
     }

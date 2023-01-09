@@ -7,6 +7,7 @@ use App\Models\User;
 use App\QueryFilters\CentersFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class CenterService extends BaseService
 {
@@ -23,13 +24,21 @@ class CenterService extends BaseService
         return $centers->filter(new CentersFilter($where_condition));
     }
 
+    public function getAll(array $where_condition = [], array $withRelations = [])
+    {
+        $centers = $this->queryGet($where_condition, $withRelations);
+        return $centers->get();
+    }
+
     public function store(array $data = [])
     {
+        DB::beginTransaction();
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
         $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ? 1 : 0;
         $data['featured'] = isset($data['featured']) ? 1 : 0;
 
-        $center = Center::create($data);
+        $center_data = Arr::except($data,['password','email']);
+        $center = Center::create($center_data);
         if (!$center)
             return false;
         if (isset($data['images']) && is_array($data['images']))
@@ -37,9 +46,9 @@ class CenterService extends BaseService
                 $fileData = FileService::saveImage(file: $image, path: 'uploads/centers');
                 $center->storeAttachment($fileData);
             }
-
         $userData = $this->prepareUserData($data);
         $center->user()->create($userData);
+        DB::commit();
         return $center;
     }
 
@@ -50,7 +59,7 @@ class CenterService extends BaseService
             'email' => Arr::get($data, 'email'),
             'phone' => Arr::first(Arr::get($data, 'phone')),
             'user_name' => Arr::get($data, 'user_name'),
-            'password' => Arr::get($data, 'password'),
+            'password' => bcrypt(Arr::get($data, 'password')),
             'type' => User::CENTERADMIN,
             'is_active' => Arr::get($data, 'is_active') ?? 0,
             'location_id' => Arr::get($data, 'location_id'),

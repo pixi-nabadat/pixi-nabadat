@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('rates', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->morphs('ratable');
-            $table->integer('status')->default(1); 
-            $table->string('comment');
-            $table->integer('rate_number');
+            $table->integer('status')->default(1);
+            $table->string('comment')->nullable();
+            $table->double('rate_number');
             $table->timestamps();
         });
     }

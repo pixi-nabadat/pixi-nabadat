@@ -19,13 +19,17 @@ class Center extends Model
         SUPPORT_AUTO_SERVICE = 1,
         NON_SUPPORT_AUTO_SERVICE = 0;
 
+    const CASH = 'cash';
+    const CREDIT = 'credit';
+
     protected $fillable = [
         'name', 'phone', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
-        'google_map_url','avg_wating_time','featured'
+        'google_map_url','avg_waiting_time','featured', 'rate', 'support_payments','app_discount',
     ];
 
     protected $casts = [
         'phone' => 'array',
+        'support_payments' => 'array',
     ];
 
     protected $table = 'centers';
@@ -58,4 +62,18 @@ class Center extends Model
         return $this->hasMany(Appointment::class,'center_id');
     }
 
+    public function rates(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Rate::class, 'ratable');
+    }
+    public function devices()
+    {
+        return $this->belongsToMany(Device::class, 'center_devices', 'center_id', 'device_id')
+            ->withPivot(['id', 'regular_price', 'nabadat_app_price','auto_service_price','number_of_devices'])->withTimestamps();
+    }
+
+    public function centerFinancial(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CenterFinance::class, 'center_id');
+    }
 }

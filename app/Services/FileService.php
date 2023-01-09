@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileService
 {
-    
+
     /**
      * Save the uploaded image.
      *
@@ -19,7 +19,7 @@ class FileService
      *
      * @return array File name.
      */
-    public static function saveImage(UploadedFile $file, int $maxWidth = 576, string $path = null)
+    public static function saveImage(UploadedFile $file, int $maxWidth = 576, string $path = null,$field_name = null)
     {
 
         $fileName = self::getFileName($file);
@@ -30,6 +30,7 @@ class FileService
         self::uploadImage($img, $fileName, $path);
 
         return [
+            'filed_name'=>$field_name,
             'filename'=>$fileName,
             'extention'=>$fileExt,
             'size'=>$fileSize,

@@ -32,8 +32,24 @@ class ReservationController extends Controller
 
     public function listing(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
+        return  auth()->user();
         try {
             $filters = $request->all();
+            if (auth('sanctum')->user()->center_id == null)
+                throw new NotFoundException('route not found');
+            $withRelations = ['history','nabadatHistory','user', 'center'];
+            $reservations = $this->reservationService->listing(filters: $filters,withRelation: $withRelations);
+            return ReservationsResource::collection($reservations);
+        } catch (\Exception $e) {
+            return apiResponse(message: $e->getMessage(), code: 422);
+        }
+    }
+
+    public function patientReservations(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        try {
+            $filters = $request->all();
+            $filters['user_id'] = auth('sanctum')->id();
             $withRelations = ['history','nabadatHistory','user', 'center'];
             $reservations = $this->reservationService->listing(filters: $filters,withRelation: $withRelations);
             return ReservationsResource::collection($reservations);
@@ -69,8 +85,12 @@ class ReservationController extends Controller
         try{
             $withRelations = ['history','nabadatHistory','user', 'center'];
             $reservation = $this->reservationService->find($id,$withRelations);
-            $reservation = ReservationsResource::collection($reservation);
-            return apiResponse($reservation, 'Done', 200);
+            if($reservation){
+                $reservation = new ReservationsResource($reservation);
+                return apiResponse($reservation, trans('lang.operation_success'), 200);
+            }else
+                return apiResponse(data: null, message: trans('lang.error_has_occurred'), code: 422);
+
         }catch(Exception $e){
             return apiResponse(message:  $e->getMessage(), code: 422);
         }

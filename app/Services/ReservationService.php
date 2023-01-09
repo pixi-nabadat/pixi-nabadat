@@ -31,14 +31,13 @@ class ReservationService extends BaseService
         $reservation = Reservation::create($data);
 
         $reservation->history()->create([
-            'action_en' =>Reservation::getStatus('pending','en'),
-            'action_ar' =>Reservation::getStatus('pending', 'ar')
+            'status' =>Reservation::PENDING,
         ]);
 
         $reservation->refresh();
         if (!$reservation)
             return false;
-        return $reservation;
+        return $reservation->load('center','user','history');
     }
 
     public function update(int $reservationId, array $reservationData): bool

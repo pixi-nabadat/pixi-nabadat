@@ -28,5 +28,17 @@ class UsersTableSeeder extends Seeder
             'is_active'=>User::ACTIVE,
             'location_id'=>2
         ]);
+        \App\Models\User::create([
+            'name'=>'customer',
+            'user_name'=>'customer',
+            'email'=>'customer@gmail.com',
+            'password'=>bcrypt('123456'),
+            'phone'=>'01022843293',
+            'type'=>User::CUSTOMERTYPE,
+            'last_login'=>now(),
+            'date_of_birth'=>Carbon::now()->format('Y-m-d'),
+            'is_active'=>User::ACTIVE,
+            'location_id'=>2
+        ]);
   }
 }

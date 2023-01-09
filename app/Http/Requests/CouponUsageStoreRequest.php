@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CouponUsageStoreRequest extends FormRequest
+class CouponUsageStoreRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class CouponUsageStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'code'   => 'required|string', 
+            'code'   => 'required|string',
             'serial' => 'required|string',
         ];
     }
