@@ -37,14 +37,14 @@ class OrderController extends Controller
         $filters = array_merge($request->all(), ['user_id' => auth('sanctum')->id()]);
         $relations = ['history', 'items'];
         $order = $this->orderService->getAll($filters, $relations);
-        return OrderResource::collection($order);
+        return apiResponse(data: OrderResource::collection($order));
     }
 
-    public function find(int $id): OrderResource
+    public function find(int $id): Application|ResponseFactory|Response
     {
         $withRelations = ['items', 'history'];
         $order = $this->orderService->find($id, $withRelations);
-        return new OrderResource($order);
+        return apiResponse(data: new OrderResource($order));
     }
 
     /**
@@ -57,8 +57,6 @@ class OrderController extends Controller
             DB::beginTransaction();
             $user = auth('sanctum')->user();
             $order = $this->storeOrder($request, $user); // method store order in trait for multiple usage
-            if (isset($order->status_code) && $order->status_code != 200)
-                return apiResponse(message: $order->message, code: $order->status_code);
             if ($request->payment_method == PaymentMethodEnum::CREDIT) {
                 $paymob_order_items = $this->prepareOrderItemsForPaymobOrder($order->order->items);
                 $total_order_amount_in_cents = $order->order->grand_total * 100;
@@ -76,7 +74,7 @@ class OrderController extends Controller
             }
             $this->cartService->emptyCart($request->serial_number);
             DB::commit();
-            return new OrderResource($order);
+            return apiResponse(data: new OrderResource($order));
         } catch (Exception $e) {
             DB::rollBack();
             return apiResponse(message: $e, code: 422);

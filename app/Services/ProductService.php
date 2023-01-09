@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enum\ActivationStatusEnum;
 use App\Models\Product;
 use App\QueryFilters\ProductsFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -43,9 +44,8 @@ class ProductService extends BaseService
 
     } //end of store
 
-    public function find($id,$withRelation=[])
+    public function find($id,$withRelation=[]): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
-
         $product = Product::with($withRelation)->find($id);
         if ($product)
             return $product;
