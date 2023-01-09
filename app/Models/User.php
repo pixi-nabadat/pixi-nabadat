@@ -108,7 +108,7 @@ class User extends Authenticatable
      */
     public static function setPoints(User $user, float $amount): bool
     {
-        $pointsPerPound = Settings::get('points', 'points_per__pound');
+        $pointsPerPound = Settings::get('points', 'points_per_pound');
         $pointsExpireDaysCount = Settings::get('points', 'points_expire_days_count');
         $user->points += $pointsPerPound * $amount;
         $user->points_expire_date = Carbon::now()->addDay($pointsExpireDaysCount);
