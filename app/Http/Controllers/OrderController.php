@@ -25,7 +25,7 @@ class OrderController extends Controller
         }
     } //end of index
 
-    public function updateOrderStatus(OrderStatusChangeRequest $request)
+    public function updateOrderStatus(OrderStatusChangeRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             $data=$request->validated();
