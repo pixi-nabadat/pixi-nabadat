@@ -14,23 +14,23 @@ class SettingController extends Controller
         return view('dashboard.setting.index');
     }
 
-    public function appSettingsIndex()
+    public function appSettingsIndex(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $locations = Location::all();
         return view('dashboard.setting.general', compact('locations'));
     }
 
-    public function pointsSettingsIndex()
+    public function pointsSettingsIndex(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('dashboard.setting.points');
     }
 
-    public function socialMediaSettingsIndex()
+    public function socialMediaSettingsIndex(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('dashboard.setting.social_media');
     }
 
-    public function termsAndConditionsSettingsIndex()
+    public function termsAndConditionsSettingsIndex(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('dashboard.setting.terms_and_conditions');
     }
