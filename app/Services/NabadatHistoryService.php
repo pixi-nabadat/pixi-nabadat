@@ -26,7 +26,7 @@ class NabadatHistoryService extends BaseService
         if (!$centerDevice)
             return false ;
         $nabadaPrice = $data['auto_service'] ? $centerDevice->pivot->auto_service_price : $centerDevice->pivot->nabadat_app_price;
-        $reservation->nabadatHistory()->create([
+        $reservation->nabadatHistory()->updateOrCreate([
             'user_id'      => $reservation->customer_id,
             'device_id'    => $data['device_id'],
             'center_id'    => $reservation->center_id,

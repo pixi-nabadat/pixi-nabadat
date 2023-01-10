@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Enum\UserPackageStatusEnum;
 use App\Models\Reservation;
 use App\Models\ReservationHistory;
 use App\Models\User;
@@ -18,18 +19,21 @@ class ReservationHistoryObserver
     public function created(ReservationHistory $reservationHistory)
     {
         if($reservationHistory->status == Reservation::COMPLETED){
-            $pointPerPound     = 1;//this value will come from settings
             $reservation = $reservationHistory->reservation;
-            $newPoints   = $reservation->nabadatHistory->sum('total_price') * $pointPerPound;
-            $user = $reservationHistory->user;
-            $user->update([
-                'points'=> $user->points + $newPoints,
-                'points_expire_date'=> Carbon::parse(Carbon::now()->addMonths(3))->toDateString()//these months will come from settings
-            ]);
-            $reservation->center()->update([
-                'points'=> $reservation->center->points + $newPoints,
-                'points_expire_date'=> Carbon::parse(Carbon::now()->addMonths(3))->toDateString()// these months will com from settings
-            ]);
+            $usedTotalNabadat   = $reservation->nabadatHistory->sum('num_nabadat');
+            $user = $reservation->user;
+            $onGoingPackage = $user->package()->where('usage_status', UserPackageStatusEnum::ONGOING)->first();
+            if($onGoingPackage)
+            {
+                $packageNabadat = $onGoingPackage->num_nabadat;
+                if(($packageNabadat - $usedTotalNabadat) < 0)
+                    return false;// this will be modified and get the next payed package
+                else
+                {
+                    $onGoingPackage->used += $usedTotalNabadat;
+                    $onGoingPackage->save();
+                }
+            }
         }
     }
 

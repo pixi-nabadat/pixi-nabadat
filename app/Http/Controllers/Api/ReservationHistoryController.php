@@ -22,13 +22,13 @@ class ReservationHistoryController extends Controller
     public function store(ReservationHistoryStoreRequest $request, $id)
     {
         try{
-            $reservation = Reservation::find($id);
+            $reservation = Reservation::with(['center','user','history'])->find($id);
             if($reservation){
                 $reservationHistoryData = $request->validated();
                 $response = $this->reservationHistoryService->store($reservation, $reservationHistoryData);
                 if($response){
                     $reservation = new ReservationsResource($reservation);
-                    return apiResponse($reservation, 'Done', 200);
+                    return apiResponse(data: $reservation, message: 'Done');
                 }
             }else{
                 return apiResponse(null,'Reservation Not Found', 404);

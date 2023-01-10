@@ -32,14 +32,14 @@ class ReservationController extends Controller
 
     public function listing(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        return  auth()->user();
         try {
             $filters = $request->all();
             if (auth('sanctum')->user()->center_id == null)
                 throw new NotFoundException('route not found');
             $withRelations = ['history','nabadatHistory','user', 'center'];
             $reservations = $this->reservationService->listing(filters: $filters,withRelation: $withRelations);
-            return ReservationsResource::collection($reservations);
+            $reservations = ReservationsResource::collection($reservations);
+            return apiResponse(data: $reservations, message: trans('lang.operation_success'));
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
@@ -52,7 +52,8 @@ class ReservationController extends Controller
             $filters['user_id'] = auth('sanctum')->id();
             $withRelations = ['history','nabadatHistory','user', 'center'];
             $reservations = $this->reservationService->listing(filters: $filters,withRelation: $withRelations);
-            return ReservationsResource::collection($reservations);
+            $reservations = ReservationsResource::collection($reservations);
+            return apiResponse(data: $reservations, message: trans('lang.operation_success'));
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
@@ -68,7 +69,8 @@ class ReservationController extends Controller
     {
         try{
             $reservation = $this->reservationService->store($reservationStoreRequest->validated());
-            return new ReservationsResource($reservation);
+            $reservation = new ReservationsResource($reservation);
+            return apiResponse(data: $reservation, message: trans('lang.operation_success'));
         }catch(Exception $e){
             return apiResponse(message: $e->getMessage(), code: 422);
         }
