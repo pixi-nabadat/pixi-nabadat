@@ -20,7 +20,7 @@ class OrderItemResource extends JsonResource
             'quantity'=>$this->quantity,
             'price'=>$this->price,
             'total_price'=>$this->quantity*$this->price,
-            'total_price_after_discount' => $this->quantity* getPriceAfterDiscount($this->price,$this->discount)
+            'total_price_after_discount' => $this->quantity * getPriceAfterDiscount($this->price,$this->discount)
         ];
     }
 }

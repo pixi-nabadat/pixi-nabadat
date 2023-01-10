@@ -14,6 +14,10 @@ use Illuminate\Http\Request;
 trait OrderTrait
 {
 
+    /**
+     * @throws NotFoundException
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
     public function storeOrder(Request $request, User $user)
     {
         //1- get cart data for user

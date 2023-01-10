@@ -18,7 +18,7 @@ class OrderResource extends JsonResource
             'id'=>$this->id,
             'sub_total'=>$this->sub_total,
             'grand_total'=>$this->grand_total,
-            'discount'=>$this->id,
+            'discount'=>$this->coupon_discount,
             'items'=>$this->whenLoaded('items',OrderItemResource::collection($this->items))
 
         ];

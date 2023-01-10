@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 class PackageService extends BaseService
 {
 
-    public function getAll(array $where_condition = [], array $withRelations = [])
+    public function getAll(array $where_condition = [], array $withRelations = []): \Illuminate\Database\Eloquent\Collection|array
     {
         $packages = $this->queryGet($where_condition, $withRelations);
         return $packages->get();
@@ -21,7 +21,7 @@ class PackageService extends BaseService
         return $packages->filter(new PackagesFilter($where_condition));
     }
 
-    public function listing(array $where_condition = [],$withRelation=[],$perPage=10)
+    public function listing(array $where_condition = [],$withRelation=[],$perPage=10): \Illuminate\Contracts\Pagination\CursorPaginator
     {
         return $this->queryGet($where_condition,$withRelation)->cursorPaginate($perPage);
     }
@@ -48,7 +48,7 @@ class PackageService extends BaseService
 
     } //end of find
 
-    public function find($id, $withRelation = [])
+    public function find($id, $withRelation = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
         $package = Package::with($withRelation)->find($id);
         if ($package)
