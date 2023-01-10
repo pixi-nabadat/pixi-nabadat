@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Request;
 
 class CenterPackageController extends Controller
 {
-    public function __construct(private packageService $packageService)
+    public function __construct(private PackageService $packageService)
     {
     }
 
@@ -32,7 +32,7 @@ class CenterPackageController extends Controller
     public function store(PackageStoreRequest $request){
         try {
             $data = $request->validated();
-            $package = $this->packageService->store($request->all());
+            $package = $this->packageService->store($data);
             $data = new PackagesResource($package);
             return apiResponse(data: $data, message: trans('lang.success_operation'), code: 200);
         } catch (\Exception $ex) {
@@ -43,15 +43,14 @@ class CenterPackageController extends Controller
     public function update(PackageUpdateRequest $request, $id)
     {
         try {
-            $request->validated();
-            $package = $this->packageService->update($id, $request->all());
+            $package = $this->packageService->update($id, $request->validated());
             $data = new PackagesResource($package);
             return apiResponse(data: $data, message: trans('lang.success_operation'), code: 200);
         } catch (\Exception $ex) {
             return apiResponse(message: $ex->getMessage(), code: 422);
         }
     } //end of update
-    
+
     public function destroy($id)
     {
         try {
@@ -77,6 +76,6 @@ class CenterPackageController extends Controller
         {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
-    } //end of show   
+    } //end of show
 
 }

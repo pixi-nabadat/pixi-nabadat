@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\package;
-use App\QueryFilters\packagesFilter;
+use App\Models\Package;
+use App\QueryFilters\PackagesFilter;
 use Illuminate\Database\Eloquent\Builder;
 
 class PackageService extends BaseService
