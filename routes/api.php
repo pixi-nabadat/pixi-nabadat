@@ -94,6 +94,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 //start buy pulsses from nabdat app
 
+    Route::group(['prefix' => 'coupon'], function () {
+        Route::post('apply', [CartController::class, 'applyCoupon']);//create new coupon
+    });
 });
 
 //callback form paymob getaway
@@ -105,10 +108,6 @@ Route::group(['prefix' => 'cart'], function () {
     Route::post('set-address', [CartController::class, 'updateCartAddress'])->middleware('auth:sanctum');
     Route::delete('empty', [CartController::class, 'empty']);
     Route::delete('items/{id}', [CartController::class, 'deleteCartItem']);//delete an item from cart items
-});
-
-Route::group(['prefix' => 'coupon'], function () {
-    Route::post('apply', [CartController::class, 'applyCoupon']);//create new coupon
 });
 //end cart
 Route::get('categories', [CategoryController::class, 'listing']);

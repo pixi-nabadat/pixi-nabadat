@@ -39,13 +39,19 @@ class Cart extends Model
 
     public function getGrandTotalAfterDiscountAttribute()
     {
+        $coupon_usage_count = 0 ;
+        $user = auth('sanctum')->check() ? auth()->user() : null ;
+        if ($user){
+            $coupon_usage = $user->coupons()->where('coupon_id',$this->coupon->id)->first();
+            $coupon_usage_count = $coupon_usage->number_of_usage ?? 0 ;
+        }
         $value = $this->grand_total;
         if (!$this->relationLoaded('coupon'))
             return $value;
         if (
             Carbon::parse(optional($this->coupon)->start_date)->gte(Carbon::now()->format('y-m-d')) &&
             Carbon::now()->lte(Carbon::parse(optional($this->coupon)->end_date)->format('y-m-d')) &&
-            optional($this->coupon)->coupon_for == Coupon::STORECOUPON && optional($this->coupon)->min_buy < $value
+            optional($this->coupon)->coupon_for == Coupon::STORECOUPON && optional($this->coupon)->min_buy < $value && $this->coupon->allowed_usage >= $coupon_usage_count
         ) {
             if (optional($this->coupon)->discount_type == Coupon::DISCOUNT_PERCENTAGE)
                 $value = $value - ($value * (optional($this->coupon)->discount / 100));

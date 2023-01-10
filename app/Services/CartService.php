@@ -6,6 +6,7 @@ namespace App\Services;
 use App\Exceptions\NotFoundException;
 use App\Models\Cart;
 use App\Models\Coupon;
+use App\Models\CouponUsage;
 use App\Models\Product;
 use Carbon\Carbon;
 
@@ -90,22 +91,32 @@ class CartService extends BaseService
         if (!$coupon)
             throw new NotFoundException(trans('lang.coupon_not_available'));
 
-        //check if coupon code exsists and is valied
+        $coupon_usage =CouponUsage::where('user_id',$data['user_id'])->where('coupon_id',$coupon->id)->first();
+        //check if coupon code exists and is valid
         if (
-            !(Carbon::parse($coupon->start_date)->gte(Carbon::now()->format('y-m-d')) &&
+            !(
+                Carbon::parse($coupon->start_date)->gte(Carbon::now()->format('y-m-d')) &&
                 Carbon::now()->lte(Carbon::parse($coupon->end_date)->format('y-m-d')) &&
-                $coupon->coupon_for == Coupon::STORECOUPON)
+                $coupon->coupon_for == Coupon::STORECOUPON
+            )
         )
             throw new NotFoundException(trans('lang.coupon_not_available'));
 
-        if (!($coupon->min_buy < $cart->grand_total))
+        if ( $coupon->allowed_usage <= optional($coupon_usage)->number_of_usage)
+            throw new NotFoundException(trans('lang.you_used_this_coupon_before'));
+        if ($cart->grand_total < $coupon->min_buy)
             throw new NotFoundException(trans('lang.you_should_exceed_minimum_limitation_to_use_coupon : ') . $coupon->min_buy);
         $cart->coupon_id = $coupon->id;
+        $cart->user_id = $data['user_id'];
         $cart->save();
         $cart->refresh();
         return true;
     }
 
+    /**
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws NotFoundException
+     */
     public function updateCartAddress(array $data =[]): bool
     {
         $cart = $this->getCartByUser($data['temp_user_id']);

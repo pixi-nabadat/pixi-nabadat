@@ -6,6 +6,7 @@ use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
 use App\Models\Address;
 use App\Models\Cart;
+use App\Models\CouponUsage;
 use App\Models\Order;
 use App\Models\OrderHistory;
 use App\Models\User;
@@ -46,7 +47,6 @@ class OrderService extends BaseService
     {
         if (isset($deleted_at))
             $deleted_at = Carbon::now();
-
 //        check if coupon is valid
         $grand_total = $order_data->grand_total_after_discount;
         $order = Order::create([
@@ -64,6 +64,7 @@ class OrderService extends BaseService
 
         $this->setOrderItems($order, $order_data);
         $this->createOrderHistory($order);
+        $this->updateCouponUsage($user->id,$order_data->coupon->id);
         return $order->load('items.product', 'history');
     }
 
@@ -94,5 +95,17 @@ class OrderService extends BaseService
         //set user points
         if($data['status'] == Order::DELIVERED)
             User::setPoints(user: $order->user(), amount: (float)$order->grand_total, amountType: 'cash');
+    }
+
+    private function updateCouponUsage($user_id , $coupon_id)
+    {
+        $coupon_usage = CouponUsage::query()->where('user_id',$user_id)->where('coupon_id',$coupon_id)->first();
+        $old_usage = optional($coupon_usage)->number_of_usage ?? 0 ;
+        CouponUsage::query()->updateOrCreate([
+            'user_id'=>$user_id,
+            'coupon_id'=>$coupon_id
+        ],[
+            'number_of_usage'=>$old_usage + 1
+        ]);
     }
 }

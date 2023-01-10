@@ -72,9 +72,9 @@ class OrderController extends Controller
                 $result_data = $result['data'] ?? null;
                 return apiResponse(data: $result_data, message: $message, code: $status_code);
             }
-            $this->cartService->emptyCart($request->serial_number);
+            $this->cartService->emptyCart($request->temp_user_id);
             DB::commit();
-            return apiResponse(data: new OrderResource($order));
+            return apiResponse(data: new OrderResource($order->order));
         } catch (Exception $e) {
             DB::rollBack();
             return apiResponse(message: $e, code: 422);

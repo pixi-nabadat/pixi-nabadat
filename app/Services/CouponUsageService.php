@@ -10,11 +10,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 class CouponUsageService extends BaseService
 {
-
-    
     public function store(array $data = [])
     {
-
         $user   = Auth::user();
         //get coupon to check exists
         $coupon = Coupon::firstWhere('code', $data['code']);
@@ -34,20 +31,20 @@ class CouponUsageService extends BaseService
         }
         else
             return $response;
-        
+
     }
     public function simulation(array $data = []): array
     {
         $user   = Auth::user();
         //get coupon to check exists
         $coupon = Coupon::firstWhere('code', $data['code']);
-        
+
         //get usage count of coupon
         $usage  = $user->coupons()->where('coupon_id', $coupon->id)->count();
-        
+
         //get coupon limit to check times of usages this coupon
         $couponLimit = $coupon->coupon_limit;
-        
+
         //get the cart net_total to check with coupon min_buy
         $netTotal = $user->cart->net_total;
 
@@ -57,7 +54,7 @@ class CouponUsageService extends BaseService
         $currentDate       = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::today());
         $discountStartDate = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::parse($coupon->start_date));
         $discountEndDate   = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::parse($coupon->end_date));
-        
+
         if($coupon == null)
             return ['status'=>false, 'message'=> 'Coupon Not Found'];
         else if($usage >= $couponLimit)
@@ -84,7 +81,7 @@ class CouponUsageService extends BaseService
         /**
          * end check if the coupon valid or not
          */
-        
+
     } //end of store
 
 }
