@@ -55,7 +55,7 @@ class User extends Authenticatable
             $user->points += $amount;
         else
             $user->points += $pointsPerPound * $amount;
-        $user->points_expire_date = Carbon::now()->addDay($pointsExpireDaysCount);
+        $user->points_expire_date = Carbon::now()->addDays($pointsExpireDaysCount);
         $user->save();
         return true;
     }
