@@ -4,17 +4,12 @@ namespace App\Services;
 
 use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
-use App\Models\Address;
-use App\Models\Cart;
 use App\Models\CouponUsage;
 use App\Models\Order;
-use App\Models\OrderHistory;
 use App\Models\User;
-use App\Payments\PaymobProvider;
 use App\QueryFilters\OrdersFilter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Auth;
 
 class OrderService extends BaseService
 {
@@ -31,9 +26,29 @@ class OrderService extends BaseService
         return $orders->filter(new OrdersFilter($where_condition));
     }
 
-    public function find(int $id, $with_relation = [])
+    public function store($user, $order_data, $shipping_address, $payment_status = PaymentStatusEnum::UNPAID, $payment_type = PaymentMethodEnum::CASH, $deleted_at = null, $relatable_id = null, $relatable_type = null)
     {
-        return Order::activeOrder()->with($with_relation)->find($id);
+        if (isset($deleted_at))
+            $deleted_at = Carbon::now();
+//        check if coupon is valid
+        $grand_total = $order_data->grand_total_after_discount;
+        $order = Order::create([
+            'user_id' => $user->id,
+            'payment_status' => $payment_status,
+            'payment_method' => $payment_type,
+            'address_id' => $shipping_address->id,
+            'address_info' => $shipping_address->toJson(),
+            'shipping_fees' => $shipping_address->city->shipping_cost ?? 0,
+            'sub_total' => $order_data->sub_total,
+            'grand_total' => $grand_total,
+            'coupon_discount' => optional($order_data->coupon)->discount ?? 0,
+            'deleted_at' => $deleted_at
+        ]);
+
+        $this->setOrderItems($order, $order_data);
+        $this->createOrderHistory($order);
+        $this->updateCouponUsage($user->id, $order_data->coupon->id);
+        return $order->load('items.product', 'history');
     }
 
     /*
@@ -43,30 +58,6 @@ class OrderService extends BaseService
      * @param string $payment_type
      * @return mixed
      */
-    public function store($user, $order_data, $shipping_address, $payment_status = PaymentStatusEnum::UNPAID, $payment_type = PaymentMethodEnum::CASH, $deleted_at = null, $relatable_id = null, $relatable_type = null)
-    {
-        if (isset($deleted_at))
-            $deleted_at = Carbon::now();
-//        check if coupon is valid
-        $grand_total = $order_data->grand_total_after_discount;
-        $order = Order::create([
-            'user_id'           => $user->id,
-            'payment_status'    => $payment_status,
-            'payment_method'    => $payment_type,
-            'address_id'        => $shipping_address->id,
-            'address_info'      => $shipping_address->toJson(),
-            'shipping_fees'     => $shipping_address->city->shipping_cost ?? 0,
-            'sub_total'         => $order_data->sub_total,
-            'grand_total'       => $grand_total,
-            'coupon_discount'   => optional($order_data->coupon)->discount ?? 0,
-            'deleted_at'        => $deleted_at
-        ]);
-
-        $this->setOrderItems($order, $order_data);
-        $this->createOrderHistory($order);
-        $this->updateCouponUsage($user->id,$order_data->coupon->id);
-        return $order->load('items.product', 'history');
-    }
 
     private function setOrderItems(Order $order, $order_items): void
     {
@@ -82,30 +73,35 @@ class OrderService extends BaseService
         $order->update(['order_history_id' => $order_history->id]);
     }
 
+    private function updateCouponUsage($user_id, $coupon_id)
+    {
+        $coupon_usage = CouponUsage::query()->where('user_id', $user_id)->where('coupon_id', $coupon_id)->first();
+        $old_usage = optional($coupon_usage)->number_of_usage ?? 0;
+        CouponUsage::query()->updateOrCreate([
+            'user_id' => $user_id,
+            'coupon_id' => $coupon_id
+        ], [
+            'number_of_usage' => $old_usage + 1
+        ]);
+    }
+
     public function updateOrderStatus($data): void
     {
         $order = $this->find($data['id']);
         $order_history = $order->history()->create([
             'status' => $data['status'],
         ]);
-        $order->order_history_id = $order_history->id ;
+        $order->order_history_id = $order_history->id;
         $order->save();
         $order->refresh();
 
         //set user points
-        if($data['status'] == Order::DELIVERED)
+        if ($data['status'] == Order::DELIVERED)
             User::setPoints(user: $order->user(), amount: (float)$order->grand_total, amountType: 'cash');
     }
 
-    private function updateCouponUsage($user_id , $coupon_id)
+    public function find(int $id, $with_relation = [])
     {
-        $coupon_usage = CouponUsage::query()->where('user_id',$user_id)->where('coupon_id',$coupon_id)->first();
-        $old_usage = optional($coupon_usage)->number_of_usage ?? 0 ;
-        CouponUsage::query()->updateOrCreate([
-            'user_id'=>$user_id,
-            'coupon_id'=>$coupon_id
-        ],[
-            'number_of_usage'=>$old_usage + 1
-        ]);
+        return Order::activeOrder()->with($with_relation)->find($id);
     }
 }

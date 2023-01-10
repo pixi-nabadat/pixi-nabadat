@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\order;
+use App\Models\Order;
 use App\Services\OrderService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
