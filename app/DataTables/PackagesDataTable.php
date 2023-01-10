@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\package;
+use App\Models\Package;
 use App\Services\PackageService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -16,22 +16,22 @@ class PackagesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function (package $package) {
+            ->addColumn('action', function (Package $package) {
                 return view('dashboard.packages.action', compact('package'))->render();
             })
-            ->editColumn('name', function (package $package) {
+            ->editColumn('name', function (Package $package) {
                 return $package->name;
             })
-            ->addColumn('center_id', function (package $package) {
+            ->addColumn('center_id', function (Package $package) {
                 return $package->center->name;
             })
-            ->addColumn('center_phone', function (package $package) {
+            ->addColumn('center_phone', function (Package $package) {
                 return $package->center->phone;
             })
-            ->editColumn('status', function (package $package) {
+            ->editColumn('status', function (Package $package) {
                 return $package->status;
             })
-            ->addColumn('is_active', function (package $package) {
+            ->addColumn('is_active', function (Package $package) {
                 return view('dashboard.components.switch-btn', ['model' => $package, 'url' => route('packages.status')])->render();
             })
             ->rawColumns(['action', 'is_active']);
