@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\packagesDataTable;
-use App\Http\Requests\PackageRequestStatus;
+use App\DataTables\PackagesDataTable;
 use App\Http\Requests\PackageStoreRequest;
 use App\Http\Requests\PackageUpdateRequest;
-use App\Models\Center;
 use App\Services\CenterService;
-use App\Services\packageService;
+use App\Services\PackageService;
 use Illuminate\Http\Request;
 
 class PackageController extends Controller
 {
-    public function __construct(private packageService $packageService, private CenterService $centerService)
+    public function __construct(private PackageService $packageService, private CenterService $centerService)
     {
 
     }
 
-    public function index(packagesDataTable $dataTable, Request $request)
+    public function index(PackagesDataTable $dataTable, Request $request)
     {
         $filters = $request->all();
         $withRelations = ['center'] ;
