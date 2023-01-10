@@ -29,10 +29,10 @@ class CentersResource extends JsonResource
             'avg_waiting_time'              => $this->avg_waiting_time,
             'google_map_url'                => $this->google_map_url,
             'is_active'                     => ($this->is_active == 1),
-            "doctors"                       => $this->relationLoaded('doctors') ? DoctorsResource::collection($this->doctors) : null,
-            'appointments'                  => $this->relationLoaded('appointments') ? AppointmentsResource::collection($this->appointments) : null,
+            "doctors"                       => $this->whenLoaded('doctors',DoctorsResource::collection($this->doctors)),
+            'appointments'                  => $this->whenLoaded('appointments',AppointmentsResource::collection($this->appointments)),
             'is_support_auto_service'       => ($this->is_support_auto_service == 1),
-            'images'                        => $this->relationLoaded('attachments') ? AttachmentsResource::collection($this->attachments) : null
+            'images'                        => $this->whenLoaded('attachments',AttachmentsResource::collection($this->attachments))
         ];
     }
 }

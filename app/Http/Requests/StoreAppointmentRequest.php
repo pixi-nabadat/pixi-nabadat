@@ -25,19 +25,18 @@ class StoreAppointmentRequest extends BaseRequest
     public function rules()
     {
         return [
-            'days' => 'required|array|min:1',
-            'days.*' => [
-                Rule::unique('appointments','day_of_week')->where(function ($query){
+            'day' => [
+                'required','integer','max:6',Rule::unique('appointments','day_of_week')->where(function ($query){
                 return $query->where('center_id', $this->center_id);
             })],
             'center_id'=>'required|exists:users,id',
-            'to'=>'required',
-            'from'=>'required',
+            'to'=>'required|date_format:H:i',
+            'from'=>'required|date_format:H:i',
         ];
     }
 
     public function validationData(): array
     {
-        return array_merge($this->all(), ['center_id' => optional(auth()->user())->center_id]);
+        return array_merge($this->all(), ['center_id' => auth()->user()->center_id]);
     }
 }

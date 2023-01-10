@@ -21,7 +21,7 @@ class Order extends Model
         DELIVERED   = 4,
         CANCELED    = 5;
 
-    protected $fillable = ['user_id','payment_status','payment_method','address_info','address_id','shipping_fees','sub_total','grand_total','coupon_discount','order_history_id','paymob_transaction_id','relatable_id','relatable_type','deleted_at'];
+    protected $fillable = ['user_id','payment_status','payment_method','address_info','address_id','shipping_fees','sub_total','grand_total','coupon_id','coupon_discount','order_history_id','paymob_transaction_id','relatable_id','relatable_type','deleted_at'];
 
     protected $casts = [
         'address_info' => 'object'

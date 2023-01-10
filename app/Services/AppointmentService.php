@@ -3,6 +3,7 @@
 namespace App\Services;
 
 
+use App\Exceptions\NotFoundException;
 use App\Models\Appointment;
 use App\Models\User;
 use App\QueryFilters\AppointmentsFilter;
@@ -45,6 +46,9 @@ class AppointmentService extends BaseService
 
     public function delete(int $id)
     {
-        return Appointment::where('id',$id)->delete();
+        $appointment = Appointment::find($id);
+        if (!$appointment)
+            throw new NotFoundException(trans('lang.appointment_not_found'));
+        return $appointment->delete();
     }
 }
