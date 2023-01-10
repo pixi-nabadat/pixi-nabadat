@@ -39,7 +39,9 @@ class RatesService extends BaseService
 
         $totalItemRate = $model->rates->sum('rate_number');
         $ratesCount    = $model->rates->count();
-        $finalRate     = round(($totalItemRate / $ratesCount), 1, PHP_ROUND_HALF_EVEN);
+        $finalRate = 0;
+        if($ratesCount > 0)
+            $finalRate = round(($totalItemRate / $ratesCount), 1, PHP_ROUND_HALF_EVEN);
         $model->update([
             'rate' => $finalRate
         ]);
@@ -49,12 +51,15 @@ class RatesService extends BaseService
      * @param int $id
      * @return void
      */
-    public function destroy(int $id)
+    public function destroy(int $id): bool
     {
         $rate        = Rate::find($id);
+        if(!$rate)
+            return false;
         $ratableType = $rate->ratable_type;
         $model       = $ratableType::find($rate->ratable_id);
         $rate->delete();
         $this->refreshItemRate($model);
+        return true;
     }
 }
