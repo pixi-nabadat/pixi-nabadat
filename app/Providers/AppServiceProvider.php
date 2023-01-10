@@ -28,13 +28,13 @@ class AppServiceProvider extends ServiceProvider
 //        $setting = Cache::remember('dashboard_settings', 60 * 60 * 24, function () {
 //            return Setting::all(['name', 'val']);
 //        });
-//
-//        config(['global' => $setting
-//            ->keyBy('name') // key every setting by its name
-//            ->transform(function ($setting) {
-//                return $setting->val; // return only the value
-//            })
-//            ->toArray() // make it an array
-//        ]);//
+
+        config(['global' => Setting::all(['name', 'val'])
+            ->keyBy('name') // key every setting by its name
+            ->transform(function ($setting) {
+                return $setting->val; // return only the value
+            })
+            ->toArray() // make it an array
+        ]);//
     }
 }
