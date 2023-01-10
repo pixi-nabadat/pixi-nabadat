@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\NotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
 use App\Http\Resources\WeekDaysResource;
 use App\Models\Appointment;
 use App\Services\AppointmentService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
 class AppointmentController extends Controller
@@ -17,26 +17,29 @@ class AppointmentController extends Controller
     {
     }
 
-
-    public function index(): array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+    public function index(): \Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response|array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        return WeekDaysResource::collection(collect(Appointment::WEEKDAYS));
+        if (!isset(auth()->user()->center_id))
+            return apiResponse(message: trans('lang.center_not_found'));
+        $filters = ['center_id'=>auth()->user()->center_id];
+        $center_appointments= $this->appointmentService->getAll($filters);
+        return  apiResponse(data: $center_appointments);
     }
 
     public function store(StoreAppointmentRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            foreach ($request->days as $day) {
-                $inserted_data = [
-                    'day_of_week'   => $day,
-                    'day_text'      => Arr::except((Appointment::WEEKDAYS)[$day], 'day_of_week'),
-                    'is_active'     => true,
-                    'center_id'     => $request->center_id,
-                    'to'            => $request->to,
-                    'from'          => $request->from,
-                ];
-                $this->appointmentService->create($inserted_data);
-            }
+
+            $data = $request->validated();
+            $inserted_data = [
+                'day_of_week' => $data['day'],
+                'day_text' => Arr::except((Appointment::WEEKDAYS)[$data['day']], 'day_of_week'),
+                'is_active' => true,
+                'center_id' => $data['center_id'],
+                'from' => $data['from'],
+                'to' => $data['to'],
+            ];
+            $this->appointmentService->create($inserted_data);
             return apiResponse(message: trans('lang.created_successfully'));
         } catch (\Exception $exception) {
             $message = trans('there is an error');
@@ -51,9 +54,9 @@ class AppointmentController extends Controller
         try {
             $is_active = $request->is_active ?? 0;
             $updated_data = [
-                'is_active'     => $is_active,
-                'to'            => $request->to,
-                'from'          => $request->from,
+                'is_active' => $is_active,
+                'to' => $request->to,
+                'from' => $request->from,
             ];
             $this->appointmentService->update($id, $updated_data);
             return apiResponse(message: trans('lang.updated_successfully'));
@@ -62,13 +65,21 @@ class AppointmentController extends Controller
         }
     } //end of update
 
-    public function destroy($id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function destroy(int $id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             $this->appointmentService->delete($id);
             return apiResponse(message: trans('lang.deleted_successfully'));
-        } catch (\Exception $exception) {
+        }catch (NotFoundException $exception){
+            return apiResponse(message: $exception->getMessage());
+        }
+        catch (\Exception $exception) {
             return apiResponse(message: trans('there is an error'));
         }
+    }
+
+    public function getWeekDays(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    {
+        return WeekDaysResource::collection(collect(Appointment::WEEKDAYS));
     }
 }

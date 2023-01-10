@@ -16,11 +16,9 @@ class WeekDaysResource extends JsonResource
      */
     public function toArray($request)
     {
-        $date = Carbon::now()->timezone('Africa/Cairo');
        return [
            'id'=>$this->resource['day_of_week'],
            'day_text'=>Arr::except($this->resource, ['day_of_week']),
-//           'date' => getDateOfSpecificDay($this->resource['day_of_week'],$date)
        ];
     }
 }

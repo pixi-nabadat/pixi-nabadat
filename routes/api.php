@@ -39,10 +39,13 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('phone/verify', PhoneVerifyController::class);
     Route::post('password/forget', PhoneVerifyController::class);
     Route::post('password/reset', RestPasswordController::class);
+    Route::get('user', [AuthController::class, 'profile'])->middleware( 'auth:sanctum');
+
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('auth/user', [AuthController::class, 'profile']);
+
+    Route::get('week-days', [AppointmentController::class, 'getWeekDays']); // all reservations for center
     Route::group(['prefix' => 'centers'], function () {
         Route::post('store/doctor', [DoctorController::class, 'store']);
         Route::delete('doctors/{doctorId}', [DoctorController::class, 'delete']);

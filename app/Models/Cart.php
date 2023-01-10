@@ -12,14 +12,6 @@ class Cart extends Model
 
     protected $fillable = ['coupon_id', 'sub_total', 'shipping_cost', 'address_id', 'net_total', 'grand_total', 'user_id', 'temp_user_id'];
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::deleting(function ($model) {
-            $model->items()->delete();
-        });
-    }
-
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -78,7 +70,10 @@ class Cart extends Model
 
     private function checkIfCouponAvaliable()
     {
-        if (Carbon::parse(optional($this->coupon)->start_date)->gte(Carbon::now()->format('y-m-d')) && Carbon::now()->lte(Carbon::parse(optional($this->coupon)->end_date)->format('y-m-d')) && optional($this->coupon)->coupon_for == Coupon::STORECOUPON && optional($this->coupon)->min_buy < $this->grand_total)
+        if (Carbon::parse(optional($this->coupon)->start_date)->gte(Carbon::now()->format('y-m-d'))
+            && Carbon::now()->lte(Carbon::parse(optional($this->coupon)->end_date)->format('y-m-d'))
+            && optional($this->coupon)->coupon_for == Coupon::STORECOUPON
+            && optional($this->coupon)->min_buy < $this->grand_total)
             return true;
         else
             return false;
@@ -100,5 +95,11 @@ class Cart extends Model
         return isset($this->address->city) ? $this->address->city->shipping_cost : $value;
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($model) {
+            $model->items()->delete();
+        });
+    }
 }
