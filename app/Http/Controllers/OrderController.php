@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\ordersDataTable;
+use App\DataTables\OrdersDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderStatusChangeRequest;
 use App\Services\OrderService;
