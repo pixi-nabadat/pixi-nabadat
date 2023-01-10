@@ -17,8 +17,8 @@ class PackageService extends BaseService
 
     public function queryGet(array $where_condition = [], array $withRelation = []): Builder
     {
-        $packages = package::query()->orderBy('status')->orderBy('id')->with($withRelation);
-        return $packages->filter(new packagesFilter($where_condition));
+        $packages = Package::query()->orderBy('status')->orderBy('id')->with($withRelation);
+        return $packages->filter(new PackagesFilter($where_condition));
     }
 
     public function listing(array $where_condition = [],$withRelation=[],$perPage=10)
@@ -29,7 +29,7 @@ class PackageService extends BaseService
     public function store($data)
     {
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-        $package = package::create($data);
+        $package = Package::create($data);
         if (isset($data['image'])){
             $fileData = FileService::saveImage(file: $data['image'],path: 'uploads\packages');
             $package->storeAttachment($fileData);
@@ -50,7 +50,7 @@ class PackageService extends BaseService
 
     public function find($id, $withRelation = [])
     {
-        $package = package::with($withRelation)->find($id);
+        $package = Package::with($withRelation)->find($id);
         if ($package)
             return $package;
         return false;
