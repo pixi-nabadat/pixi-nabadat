@@ -12,7 +12,7 @@ class ReservationHistoryService extends BaseService
     /**
      * @throws StatusNotEquelException
      */
-    public function store(Reservation $reservation, array $reservation_data = [])
+    public function store(Reservation $reservation, array $reservation_data = []): bool
     {
         $lastStatus = $reservation->history->last()->status;
 
