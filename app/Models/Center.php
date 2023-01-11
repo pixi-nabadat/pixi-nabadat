@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
 use App\Traits\HasAttachment;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
@@ -75,5 +76,23 @@ class Center extends Model
     public function centerFinancial(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CenterFinance::class, 'center_id');
+    }
+    /**
+     * @param Center $center
+     * @param float $amount
+     * @param string $amountType
+     */
+    public static function setPoints(Center $center, float $amount, string $amountType): bool
+    {
+
+        $pointsPerPound = config('global.center_points_per_pound') !== null ? config('global.center_points_per_pound') : Setting::get('points', 'center_points_per_pound');
+        $pointsExpireDaysCount = config('global.center_points_expire_days_count') !== null ? config('global.center_points_expire_days_count') : Setting::get('points', 'center_points_expire_days_count');
+        if ($amountType == 'points')
+            $center->points += $amount;
+        else
+            $center->points += $pointsPerPound * $amount;
+        $center->points_expire_date = Carbon::now()->addDays($pointsExpireDaysCount);
+        $center->save();
+        return true;
     }
 }
