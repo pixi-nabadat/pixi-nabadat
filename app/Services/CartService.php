@@ -96,7 +96,7 @@ class CartService extends BaseService
         //check if coupon code exists and is valid
         if (
             !(
-                Carbon::parse($coupon->start_date)->gte(Carbon::now()->format('y-m-d')) &&
+                Carbon::now()->gte(Carbon::parse($coupon->start_date)->format('y-m-d')) &&
                 Carbon::now()->lte(Carbon::parse($coupon->end_date)->format('y-m-d')) &&
                 $coupon->coupon_for == Coupon::STORECOUPON
             )
