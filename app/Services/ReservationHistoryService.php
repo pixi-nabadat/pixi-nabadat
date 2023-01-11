@@ -22,15 +22,15 @@ class ReservationHistoryService extends BaseService
         $status = $reservation_data['status'] ;
         
         if($lastStatus == Reservation::CANCELED || $lastStatus == Reservation::Expired)
-            throw new StatusNotEquelException(trans('lang.the current status is:') . Reservation::getStatusText($lastStatus));
+            throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));
         if ($status == Reservation::CONFIRMED && $lastStatus != Reservation::PENDING)
-            throw new StatusNotEquelException(trans('lang.the current status is:') . Reservation::getStatusText($lastStatus));
+            throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));
         elseif ($status == Reservation::ATTEND && $lastStatus != Reservation::CONFIRMED)
-            throw new StatusNotEquelException(trans('lang.the current status is:') . Reservation::getStatusText($lastStatus));
+            throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));
         elseif($status == Reservation::COMPLETED && ($lastStatus != Reservation::ATTEND || $reservationDevicesCount == 0))
-            throw new StatusNotEquelException(trans('lang.the current status is:') . Reservation::getStatusText($lastStatus).' '.trans('lang.and_devices_count_is: ') .$reservationDevicesCount);
+            throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus).' '.trans('lang.and_devices_count_is: ') .$reservationDevicesCount);
         elseif ($status ==Reservation::CANCELED && $lastStatus == Reservation::COMPLETED)
-            throw new StatusNotEquelException(trans('lang.the current status is:') . Reservation::getStatusText($lastStatus));
+            throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));
         else
             return $this->setStatusAndUpdateReservationTime(reservation: $reservation, reservation_data: $reservation_data);
     }
