@@ -40,7 +40,9 @@ class NabadatHistory extends Model
     {
         if ($number_of_pulses == 0)
             return true ;
-        $activeUserPackage = UserPackage::where('status','!=',UserPackageStatusEnum::COMPLETED)->where('payment_status',PaymentStatusEnum::PAID)->where('remain','!=',0)->first();
+        $activeUserPackage = UserPackage::where('status','!=',UserPackageStatusEnum::COMPLETED)
+            ->where('payment_status',PaymentStatusEnum::PAID)
+            ->where('remain','!=',0)->first();
         if ($activeUserPackage)
         {
             if ($number_of_pulses > $activeUserPackage->remain)

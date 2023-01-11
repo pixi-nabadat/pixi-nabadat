@@ -17,7 +17,7 @@ class AuthController extends Controller
     {
     }
 
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
 
         try {
@@ -34,7 +34,7 @@ class AuthController extends Controller
 
     }
 
-    public function register(RegisterRequest $request)
+    public function register(RegisterRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $data = $request->validated();
         $data = array_merge($data, ['type' => User::CUSTOMERTYPE, 'email' => $data['user_name'] . "@gmail.com", 'last_login_at' => now()]);
@@ -45,12 +45,12 @@ class AuthController extends Controller
         $data['password'] = bcrypt($data['password']);
         $result = $this->authService->register(data: $data);
         if ($result)
-            return apiResponse($result, __('lang.success'), 200);
+            return apiResponse($result, __('lang.success'));
         return apiResponse(message: __('lang.error_message'), code: 422);
     }
 
 
-    public function profile()
+    public function profile(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             $user = Auth::user();
