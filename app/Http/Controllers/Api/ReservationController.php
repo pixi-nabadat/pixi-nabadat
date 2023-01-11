@@ -67,7 +67,7 @@ class ReservationController extends Controller
     {
         try{
             $reservation = $this->reservationService->store($reservationStoreRequest->validated());
-            return new ReservationsResource($reservation);
+            return apiResponse(data: new ReservationsResource($reservation));
         }catch(Exception $e){
             return apiResponse(message: $e->getMessage(), code: 422);
         }
@@ -88,7 +88,7 @@ class ReservationController extends Controller
                 $reservation = new ReservationsResource($reservation);
                 return apiResponse($reservation, trans('lang.operation_success'), 200);
             }else
-                return apiResponse(data: null, message: trans('lang.error_has_occurred'), code: 422);
+                return apiResponse(message: trans('lang.error_has_occurred'), code: 422);
 
         }catch(Exception $e){
             return apiResponse(message:  $e->getMessage(), code: 422);

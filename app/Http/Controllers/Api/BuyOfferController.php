@@ -36,7 +36,8 @@ class BuyOfferController extends Controller
             $user = auth('sanctum')->user();
             $user = $user->load('defaultAddress');
             $userAddress = $user->defaultAddress->first();
-            $package = $this->packageService->find($request->offer_id,['center']);
+            $withRelation = ['center'] ;
+            $package = $this->packageService->find($request->offer_id,$withRelation);
             if (!$package)
                 return apiResponse(message: trans('lang.offer_not_exits'), code: 422);
             //create user package log
@@ -93,7 +94,7 @@ class BuyOfferController extends Controller
         return [
             'quantity' => 1,
             'price' => $package->price_after_discount,
-            'discount' => 0
+            'discount' => $package->center->app_discount
         ];
     }
 
