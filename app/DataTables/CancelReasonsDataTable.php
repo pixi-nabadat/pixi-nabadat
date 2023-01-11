@@ -2,14 +2,12 @@
 
 namespace App\DataTables;
 
-use App\Models\cancelReason;
+use App\Models\CancelReason;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class CancelReasonsDataTable extends DataTable
@@ -23,25 +21,25 @@ class CancelReasonsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function(CancelReason $cancelReason){
-                return view('dashboard.cancelReasons.action',compact('cancelReason'))->render();
+            ->addColumn('action', function (CancelReason $cancelReason) {
+                return view('dashboard.cancelReasons.action', compact('cancelReason'))->render();
             })
-            ->addcolumn('reason', function(CancelReason $cancelReason){
-                return $cancelReason->reason ;
+            ->addcolumn('reason', function (CancelReason $cancelReason) {
+                return $cancelReason->reason;
             })
-            ->editColumn('created_at', function(CancelReason $cancelReason){
-                return $cancelReason->created_at->format('Y-m-d h:i a') ;
+            ->editColumn('created_at', function (CancelReason $cancelReason) {
+                return $cancelReason->created_at->format('Y-m-d h:i a');
             })
-            ->addcolumn('is_active', function(CancelReason $cancelReason){
-                return  view('dashboard.components.switch-btn',['model'=>$cancelReason,'url'=>route('cancelReasons.changeStatus')]);
-            })->rawColumns(['action','is_active']);;
+            ->addcolumn('is_active', function (CancelReason $cancelReason) {
+                return view('dashboard.components.switch-btn', ['model' => $cancelReason, 'url' => route('cancelReasons.changeStatus')]);
+            })->rawColumns(['action', 'is_active']);
     }
 
     /**
-     * @param cancelReason $model
+     * @param CancelReason $model
      * @return QueryBuilder
      */
-    public function query(cancelReason $model): QueryBuilder
+    public function query(CancelReason $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -54,14 +52,14 @@ class CancelReasonsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('cancelReasonsdatatable-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+            ->setTableId('cancelReasonsdatatable-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->orderBy(1)
+            ->buttons(
+                Button::make('reset'),
+                Button::make('reload')
+            );
     }
 
     /**
@@ -76,8 +74,8 @@ class CancelReasonsDataTable extends DataTable
             Column::make('created_at'),
             Column::computed('is_active'),
             Column::computed('action')
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
