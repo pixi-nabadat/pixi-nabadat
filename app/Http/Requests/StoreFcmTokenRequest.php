@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
-class LoginRequest extends BaseRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreFcmTokenRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +24,7 @@ class LoginRequest extends BaseRequest
     public function rules()
     {
         return [
-            'identifier'=>'required|string',
-            'password'=>'required',
-            'fcm_token'=>'nullable|string',
+            'fcm_token' => 'required|string',
         ];
     }
 }
