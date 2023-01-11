@@ -18,8 +18,6 @@ class AuthService extends BaseService
         if (!auth()->attempt($credential))
             return throw new UserNotFoundException(__('lang.login failed'));
         return User::where($identifierField, $identifier)->first();
-
-
     }
 
 
@@ -34,7 +32,12 @@ class AuthService extends BaseService
 
     public function getAuthUser()
     {
-        logger('auth user service');
         return auth('sanctum')->user();
+    }
+
+    public function setUserFcmToken(User $user , $fcm_token)
+    {
+        if (isset($fcm_token))
+            $user->fcmToken()->updateOrCreate(['user_id'=>$user->id],['fcm_token'=>$fcm_token]);
     }
 }

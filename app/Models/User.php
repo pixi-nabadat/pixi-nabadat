@@ -119,4 +119,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserPackage::class, 'user_id');
     }
+
+    public function fcmToken(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(UserDeviceTokens::class,'user_id');
+    }
 }

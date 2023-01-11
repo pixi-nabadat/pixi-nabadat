@@ -39,6 +39,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('phone/verify', PhoneVerifyController::class);
     Route::post('password/forget', PhoneVerifyController::class);
     Route::post('password/reset', RestPasswordController::class);
+    Route::post('user/set-fcm-token', [AuthController::class, 'setFcmToken'])->middleware( 'auth:sanctum');
     Route::get('user', [AuthController::class, 'profile'])->middleware( 'auth:sanctum');
 
 });
