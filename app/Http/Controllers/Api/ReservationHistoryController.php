@@ -33,7 +33,7 @@ class ReservationHistoryController extends Controller
             }else{
                 return apiResponse(null,'Reservation Not Found', 404);
             }
-        }catch(StatusNotEquelException $e){
+        }catch(Exception|StatusNotEquelException $e){
             return apiResponse(null,$e->getMessage(), $e->getCode());
         }
     }
