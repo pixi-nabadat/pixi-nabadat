@@ -76,7 +76,8 @@ class Cart extends Model
 
     private function checkIfCouponAvaliable()
     {
-        if (Carbon::parse(optional($this->coupon)->start_date)->gte(Carbon::now()->format('y-m-d'))
+        if (
+            Carbon::now()->gte(Carbon::parse(optional($this->coupon)->start_date)->format('y-m-d'))
             && Carbon::now()->lte(Carbon::parse(optional($this->coupon)->end_date)->format('y-m-d'))
             && optional($this->coupon)->coupon_for == Coupon::STORECOUPON
             && optional($this->coupon)->min_buy < $this->grand_total)
