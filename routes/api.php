@@ -55,7 +55,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/', [ReservationController::class, 'listing']); // all reservations for center
         Route::get('/patient', [ReservationController::class, 'patientReservations']); // all reservations for patient
         Route::post('/', [ReservationController::class, 'store']);
-        Route::get('{id}', [ReservationController::class, 'find']);
+        Route::get('{qrCode}', [ReservationController::class, 'find']);
         Route::post('{id}/status', [ReservationHistoryController::class, 'store']);
         Route::post('devices', [NabadatHistoryController::class, 'store']);
 

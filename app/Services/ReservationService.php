@@ -48,9 +48,9 @@ class ReservationService extends BaseService
         }
         return false;
     }
-    public function find($id, $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
+    public function find($qrCode, $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
-        $reservation = Reservation::with($with)->find($id);
+        $reservation = Reservation::with($with)->where('qr_code', $qrCode)->first();
         if ($reservation)
             return $reservation;
         return false;

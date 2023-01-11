@@ -82,11 +82,13 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function find(int $id)
+    public function find(string $qrCode)
     {
         try{
+            if (auth('sanctum')->user()->center_id == null)
+                throw new NotFoundException('route not found');
             $withRelations = ['history','nabadatHistory','user', 'center'];
-            $reservation = $this->reservationService->find($id,$withRelations);
+            $reservation = $this->reservationService->find($qrCode,$withRelations);
             if($reservation){
                 $reservation = new ReservationsResource($reservation);
                 return apiResponse($reservation, trans('lang.operation_success'), 200);
