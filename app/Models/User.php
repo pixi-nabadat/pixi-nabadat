@@ -44,13 +44,15 @@ class User extends Authenticatable
     ];
 
     /**
+     * @param User $user
      * @param float $amount
+     * @param string $amountType
      */
     public static function setPoints(User $user, float $amount, string $amountType): bool
     {
 
-        $pointsPerPound = config('global.points_per_pound') !== null ? config('global.points_per_pound') : Setting::get('points', 'points_per_pound');
-        $pointsExpireDaysCount = config('global.points_expire_days_count') !== null ? config('global.points_expire_days_count') : Setting::get('points', 'points_expire_days_count');
+        $pointsPerPound = config('global.patient_points_per_pound') !== null ? config('global.patient_points_per_pound') : Setting::get('points', 'patient_points_per_pound');
+        $pointsExpireDaysCount = config('global.patient_points_expire_days_count') !== null ? config('global.patient_points_expire_days_count') : Setting::get('points', 'patient_points_expire_days_count');
         if ($amountType == 'points')
             $user->points += $amount;
         else

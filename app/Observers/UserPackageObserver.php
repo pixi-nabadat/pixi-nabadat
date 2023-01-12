@@ -3,8 +3,9 @@
 namespace App\Observers;
 
 use App\Enum\PaymentStatusEnum;
+use App\Models\Center;
+use App\Models\User;
 use App\Models\UserPackage;
-use Carbon\Carbon;
 
 class UserPackageObserver
 {
@@ -16,16 +17,13 @@ class UserPackageObserver
      */
     public function created(UserPackage $userPackage)
     {
-//        user after paid for package earn point
+        //user after paid for package earn point
         if ($userPackage->payment_status == PaymentStatusEnum::PAID) {
-            $pointPerPound = 2;// this value will come from settings
-            $user = $userPackage->user;
-            $newPoints = $userPackage->price * $pointPerPound;
-            $totalPoints = $user->points + $newPoints;
-            $user->update([
-                'points' => $totalPoints,
-                'points_expire_date' => Carbon::parse(Carbon::now()->addMonths(3))->toDateString()//these months addded will come from settings
-            ]);
+            $user   = $userPackage->user;
+            $center = $userPackage->center;
+            $amount_after_discount = $userPackage->price - ($userPackage->price * ($center->app_discount / 100));
+            User::setPoints(user: $user, amount: $amount_after_discount, amountType: 'cash');
+            Center::setPoints(center: $center, amount: $amount_after_discount, amountType: 'cash');
         }
     }
 
