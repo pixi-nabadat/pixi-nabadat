@@ -19,6 +19,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -61,8 +62,13 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
         Route::post('terms_and_conditions', [SettingController::class, 'store'])->name('settings.store.terms_and_conditions');
 
     });
-
     // End Settings
+
+    //start reservations
+    Route::group(['prefix'=>'reservations'],function (){
+        Route::get('/',[ReservationController::class,'index'])->name('reservations.index');
+    });
+    //end reservations
 
     Route::group(['prefix' => 'ajax'], function () {
         Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);

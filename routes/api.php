@@ -60,6 +60,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/patient', [ReservationController::class, 'patientReservations']); // all reservations for patient
         Route::post('/', [ReservationController::class, 'store']);
         Route::get('{id}', [ReservationController::class, 'find']);
+        Route::get('{qrcode}', [ReservationController::class, 'findByQrCode']);
         Route::post('{id}/status', [ReservationHistoryController::class, 'store']);
         Route::post('devices', [NabadatHistoryController::class, 'store']);
 
