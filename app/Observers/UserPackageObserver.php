@@ -6,7 +6,6 @@ use App\Enum\PaymentStatusEnum;
 use App\Models\Center;
 use App\Models\User;
 use App\Models\UserPackage;
-use Carbon\Carbon;
 
 class UserPackageObserver
 {
@@ -22,8 +21,9 @@ class UserPackageObserver
         if ($userPackage->payment_status == PaymentStatusEnum::PAID) {
             $user   = $userPackage->user;
             $center = $userPackage->center;
-            User::setPoints(user: $user, amount: $userPackage->price, amountType: 'cash');
-            Center::setPoints(center: $center, amount: $userPackage->price, amountType: 'cash');
+            $amount_after_discount = $userPackage->price - ($userPackage->price * ($center->app_discount / 100));
+            User::setPoints(user: $user, amount: $amount_after_discount, amountType: 'cash');
+            Center::setPoints(center: $center, amount: $amount_after_discount, amountType: 'cash');
         }
     }
 
