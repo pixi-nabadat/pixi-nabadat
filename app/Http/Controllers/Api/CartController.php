@@ -86,7 +86,7 @@ class CartController extends Controller
             $data = $request->validated();
             $cart = $this->cartService->applyCouponOnCart($data);
             if (!$cart)
-                return apiResponse(message:trans('lang.coupon_not_available'));
+                return apiResponse(message:trans('lang.coupon_not_available'),code: 422);
             $cart = $this->cartService->getCart($data['temp_user_id']);
             DB::commit();
             return apiResponse(data: new CartResource($cart) , message: trans('lang.coupon_applied_successfully'));
