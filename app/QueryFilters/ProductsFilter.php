@@ -31,4 +31,9 @@ class ProductsFilter extends QueryFilter
     {
         return $this->builder->where('category_id',$term);
     }
+
+    public function type($term)
+    {
+        return $this->builder->where('type',$term);
+    }
 }

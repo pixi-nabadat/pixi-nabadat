@@ -66,7 +66,19 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-
+                                {{--type  --}}
+                                <div class="col-md-12 d-flex my-3">
+                                    <div class="col-form-label col-3">{{ __('lang.product_type') }}</div>
+                                    <select id="type" name="type" class="js-example-basic-single col-sm-12">
+                                        @if ($product->type == 1)
+                                        <option value="{{ $product->type }}" selected>{{ __('lang.'.$product->getTypeName($product->type)) }}</option>
+                                        <option value="2">{{ __('lang.'.$product->getTypeName(2)) }}</option>
+                                        @else
+                                        <option value="1">{{ __('lang.'.$product->getTypeName(1)) }}</option>
+                                        <option value="{{ $product->type }}" selected>{{ __('lang.'.$product->getTypeName($product->type)) }}</option>
+                                        @endif
+                                    </select>
+                                </div>
                                 {{--  purchase_price  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <label class="form-label col-3" for="purchase_price">@lang('lang.purchase_price')</label>

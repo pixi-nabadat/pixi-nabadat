@@ -37,7 +37,8 @@ class ProductRequest extends BaseRequest
             'tax'=>'nullable',
             'featured'=>'nullable|string',
             'is_active'=>'nullable|string',
-            'category_id'=>'required|exists:categories,id'
+            'category_id'=>'required|exists:categories,id',
+            'type'=>'required|integer',
         ];
     }
 
