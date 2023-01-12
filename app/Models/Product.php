@@ -54,13 +54,8 @@ class Product extends Model
         return $this->morphMany(Rate::class, 'ratable');
     }
 
-    public function getTypeName(int $type): string|bool
+    public function getTypeAttribute($value)
     {
-        if($type == 1)
-            return 'center';
-        else if($type == 2)
-            return 'user';
-        else
-            return false;
+        return $value == 1 ? trans('lang.center') : trans('lang.user');
     }
 }

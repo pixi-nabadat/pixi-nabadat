@@ -43,7 +43,7 @@ class ProductsDataTable extends DataTable
             return  $product->user->name ;
         })
         ->editColumn('type', function(Product $product){
-            return  'lang.'.$product->getTypeName($product->type);
+            return  $product->type;
         })
         ->addColumn('featured', function(Product $product){
             return view('dashboard.components.switch-featured-btn',['model'=>$product,'url'=>route('products.featured')])->render();
