@@ -5,11 +5,20 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'c13f55195bae8298ae93948615b2f9463cf86007',
+        'reference' => '014278022e59a5fc7904e495a9306f0061db5029',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
     'versions' => array(
+        'apility/laravel-fcm' => array(
+            'pretty_version' => 'v1.5.0',
+            'version' => '1.5.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../apility/laravel-fcm',
+            'aliases' => array(),
+            'reference' => '23b8feab8372b53d620edf7b94794b8e28ed0271',
+            'dev_requirement' => false,
+        ),
         'brick/math' => array(
             'pretty_version' => '0.10.2',
             'version' => '0.10.2.0',
@@ -18,6 +27,12 @@
             'aliases' => array(),
             'reference' => '459f2781e1a08d52ee56b0b1444086e038561e3f',
             'dev_requirement' => false,
+        ),
+        'brozot/laravel-fcm' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
         ),
         'cordoval/hamcrest-php' => array(
             'dev_requirement' => true,
@@ -388,7 +403,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'c13f55195bae8298ae93948615b2f9463cf86007',
+            'reference' => '014278022e59a5fc7904e495a9306f0061db5029',
             'dev_requirement' => false,
         ),
         'laravel/pint' => array(
@@ -425,6 +440,15 @@
             'install_path' => __DIR__ . '/../laravel/serializable-closure',
             'aliases' => array(),
             'reference' => '47afb7fae28ed29057fdca37e16a84f90cc62fae',
+            'dev_requirement' => false,
+        ),
+        'laravel/socialite' => array(
+            'pretty_version' => 'v5.5.8',
+            'version' => '5.5.8.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravel/socialite',
+            'aliases' => array(),
+            'reference' => '6cf5b7ba151e2a12aadb2ae190c785263af7f160',
             'dev_requirement' => false,
         ),
         'laravel/tinker' => array(
@@ -488,6 +512,15 @@
             'install_path' => __DIR__ . '/../league/mime-type-detection',
             'aliases' => array(),
             'reference' => 'ff6248ea87a9f116e78edd6002e39e5128a0d4dd',
+            'dev_requirement' => false,
+        ),
+        'league/oauth1-client' => array(
+            'pretty_version' => 'v1.10.1',
+            'version' => '1.10.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../league/oauth1-client',
+            'aliases' => array(),
+            'reference' => 'd6365b901b5c287dd41f143033315e2f777e1167',
             'dev_requirement' => false,
         ),
         'mockery/mockery' => array(
