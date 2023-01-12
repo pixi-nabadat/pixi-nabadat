@@ -70,13 +70,8 @@
                                 <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.product_type') }}</div>
                                     <select id="type" name="type" class="js-example-basic-single col-sm-12">
-                                        @if ($product->getRawOriginal('type') == 1)
-                                        <option value="{{ $product->getRawOriginal('type') }}" selected>{{ $product->type }}</option>
-                                        <option value="2">{{ trans('lang.user') }}</option>
-                                        @else
-                                        <option value="1">{{ trans('lang.center') }}</option>
-                                        <option value="{{ $product->getRawOriginal('type') }}" selected>{{ $product->type }}</option>
-                                        @endif
+                                        <option value="1" @if($product->getRawOriginal('type')==1) selected @endif>{{ trans('lang.center') }}</option>
+                                        <option value="2" @if($product->getRawOriginal('type')==2) selected @endif>{{ trans('lang.user') }}</option>
                                     </select>
                                 </div>
                                 {{--  purchase_price  --}}
