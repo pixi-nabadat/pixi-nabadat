@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\NotFoundException;
 use App\Exceptions\StatusNotEquelException;
 use App\Models\Reservation;
 use App\Models\User;
@@ -35,24 +36,40 @@ class ReservationService extends BaseService
         ]);
 
         $reservation->refresh();
-        if (!$reservation)
-            return false;
         return $reservation->load('center','user','history');
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function update(int $reservationId, array $reservationData): bool
     {
-        $reservation = $this->find($reservationId);
-        if ($reservation) {
-            $reservation->update($reservationData);
-        }
-        return false;
+        $reservation = $this->findById($reservationId);
+        if (!$reservation)
+            throw new NotFoundException(trans('lang.reservation_not_found'));
+        return $reservation->update($reservationData);
     }
-    public function find($id, $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
+
+    /**
+     * @throws NotFoundException
+     */
+    public function findById($id, $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
         $reservation = Reservation::with($with)->find($id);
-        if ($reservation)
-            return $reservation;
-        return false;
+        if (!$reservation)
+            throw new NotFoundException(trans('lang.reservation_not_found'));
+        return $reservation;
+    }
+
+
+    /**
+     * @throws NotFoundException
+     */
+    public function findByQr($qr_code, $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
+    {
+        $reservation = Reservation::query()->where('qr_code',$qr_code)->with($with)->first();
+        if (!$reservation)
+            throw new NotFoundException(trans('lang.reservation_not_found'));
+        return $reservation;
     }
 }

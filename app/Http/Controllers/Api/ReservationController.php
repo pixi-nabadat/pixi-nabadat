@@ -30,6 +30,7 @@ class ReservationController extends Controller
 
     }
 
+    // listing all reservations for logged in center
     public function listing(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
@@ -63,7 +64,7 @@ class ReservationController extends Controller
      * @param ReservationStoreRequest $reservationStoreRequest
      * @return ReservationsResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function store(ReservationStoreRequest $reservationStoreRequest)
+    public function store(ReservationStoreRequest $reservationStoreRequest): \Illuminate\Http\Response|ReservationsResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try{
             $reservation = $this->reservationService->store($reservationStoreRequest->validated());
@@ -73,26 +74,28 @@ class ReservationController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function find(int $id)
     {
         try{
             $withRelations = ['history','nabadatHistory','user', 'center'];
-            $reservation = $this->reservationService->find($id,$withRelations);
-            if($reservation){
-                $reservation = new ReservationsResource($reservation);
-                return apiResponse($reservation, trans('lang.operation_success'), 200);
-            }else
-                return apiResponse(message: trans('lang.error_has_occurred'), code: 422);
-
+            $reservation = $this->reservationService->findById($id,$withRelations);
+            if($reservation)
+                return apiResponse(new ReservationsResource($reservation), trans('lang.operation_success'));
         }catch(Exception $e){
             return apiResponse(message:  $e->getMessage(), code: 422);
         }
     }
 
+
+    public function findByQrCode($qr_code)
+    {
+        try{
+            $withRelations = ['history','nabadatHistory','user', 'center'];
+            $reservation = $this->reservationService->findByQr($qr_code,$withRelations);
+            if($reservation)
+                return apiResponse(new ReservationsResource($reservation), trans('lang.operation_success'));
+        }catch(Exception $e){
+            return apiResponse(message:  $e->getMessage(), code: 422);
+        }
+    }
 }

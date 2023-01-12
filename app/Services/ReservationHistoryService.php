@@ -19,16 +19,19 @@ class ReservationHistoryService extends BaseService
         $reservationDevicesCount = $reservation->nabadatHistory->count();
 
         $status = $reservation_data['status'] ;
-        if ($status == Reservation::CONFIRMED && $lastStatus == Reservation::PENDING)
-            return $this->setStatusAndUpdateReservationTime(reservation: $reservation, reservation_data: $reservation_data);
-        elseif ($status ==Reservation::ATTEND && $lastStatus == Reservation::CONFIRMED)
-            return $this->setStatusAndUpdateReservationTime(reservation: $reservation, reservation_data: $reservation_data);
-        elseif($status == Reservation::COMPLETED && $lastStatus == Reservation::ATTEND && $reservationDevicesCount > 0)
-            return $this->setStatusAndUpdateReservationTime(reservation: $reservation, reservation_data: $reservation_data);
-        elseif ($status ==Reservation::CANCELED && $lastStatus != Reservation::COMPLETED && $lastStatus != Reservation::CANCELED && $lastStatus != Reservation::Expired)
-            return $this->setStatusAndUpdateReservationTime(reservation: $reservation, reservation_data: $reservation_data);
+
+        if($lastStatus == Reservation::CANCELED || $lastStatus == Reservation::Expired)
+            throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));
+        if ($status == Reservation::CONFIRMED && $lastStatus != Reservation::PENDING)
+            throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));
+        elseif ($status == Reservation::ATTEND && $lastStatus != Reservation::CONFIRMED)
+            throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));
+        elseif($status == Reservation::COMPLETED && ($lastStatus != Reservation::ATTEND || $reservationDevicesCount == 0))
+            throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus).' '.trans('lang.and_devices_count_is: ') .$reservationDevicesCount);
+        elseif ($status ==Reservation::CANCELED && $lastStatus == Reservation::COMPLETED)
+            throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));
         else
-            throw new StatusNotEquelException(trans('lang.the current status is:') . Reservation::getStatusText($lastStatus) . " new status must be ". Reservation::getStatusText($lastStatus+1));
+            return $this->setStatusAndUpdateReservationTime(reservation: $reservation, reservation_data: $reservation_data);
     }
 
     private function setStatusAndUpdateReservationTime(Reservation $reservation, array $reservation_data): bool
