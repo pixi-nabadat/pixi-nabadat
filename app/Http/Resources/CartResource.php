@@ -21,7 +21,7 @@ class CartResource extends JsonResource
             'discount' => $this->when((double)$this->discount > 0, (double)$this->discount),
             'sub_total' => (double)$this->sub_total,
             'net_total' => (double)$this->net_total, //before add shipping cost and decrease discount percentage
-            'grand_total' => (double)$this->grand_total_after_discount, // after applying all discounts
+            'grand_total' => (double)$this->grand_total_after_discount + $this->shipping_cost, // after applying all discounts
             'address_id' => $this->address_id,
             'tax' => (double)$this->tax,
             'shipping_cost' => (double)$this->shipping_cost,

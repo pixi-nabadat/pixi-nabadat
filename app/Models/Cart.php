@@ -89,7 +89,7 @@ class Cart extends Model
 
     public function getSavedAmountAttribute(): float|int
     {
-        return $this->sub_total  - $this->grand_total_after_discount;
+        return $this->sub_total  - ($this->grand_total_after_discount + $this->shipping_cost);
     }
 
     /**
