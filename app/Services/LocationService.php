@@ -35,7 +35,7 @@ class LocationService extends BaseService
     {
         $locationData['is_active'] = isset($locationData['is_active'])  ?  1 :  0;
         return Location::create($locationData);
-    }   
+    }
 
     /**
      * @param int $id
@@ -67,7 +67,11 @@ class LocationService extends BaseService
 
     public function getLocationAncestors($id)
     {
-        // $location = $this->getLocationById($id);
         return Location::defaultOrder()->ancestorsAndSelf($id);
+    }
+
+    public function getLocationDescendants($location_id)
+    {
+        return Location::defaultOrder()->descendantsOf($location_id) ;
     }
 }
