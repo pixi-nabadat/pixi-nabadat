@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Address;
+use App\Models\Location;
 use App\QueryFilters\AddressesFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\Relationship;
@@ -24,6 +25,7 @@ class AddressService extends BaseService
 
     public function store(array $data)
     {
+        $data['country_id'] = Location::query()->whereNull('parent_id')->first()->id;
         if (isset($data['is_default']) && $data['is_default'])
             Address::where('user_id',$data['user_id'])->update(['is_default'=>0]);
         return Address::create($data);

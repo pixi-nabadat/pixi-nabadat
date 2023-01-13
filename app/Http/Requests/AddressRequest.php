@@ -26,7 +26,6 @@ class AddressRequest extends BaseRequest
         return [
             'user_id' => 'required|integer',
             'address' => 'string|required',
-            'country_id' => 'required|integer',
             'governerate_id' => 'required|integer',
             'city_id' => 'required|integer',
             'postal_code' => 'required|string',
