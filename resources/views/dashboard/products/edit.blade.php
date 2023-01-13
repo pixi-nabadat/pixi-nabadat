@@ -66,7 +66,14 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-
+                                {{--type  --}}
+                                <div class="col-md-12 d-flex my-3">
+                                    <div class="col-form-label col-3">{{ __('lang.product_type') }}</div>
+                                    <select id="type" name="type" class="js-example-basic-single col-sm-12">
+                                        <option value="{{\App\Models\Product::PRODUCTCENTER}}" @if($product->getRawOriginal('type')==\App\Models\Product::PRODUCTCENTER) selected @endif>{{ trans('lang.center') }}</option>
+                                        <option value="{{\App\Models\Product::PRODUCTUSER}}" @if($product->getRawOriginal('type')==\App\Models\Product::PRODUCTUSER) selected @endif>{{ trans('lang.user') }}</option>
+                                    </select>
+                                </div>
                                 {{--  purchase_price  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <label class="form-label col-3" for="purchase_price">@lang('lang.purchase_price')</label>

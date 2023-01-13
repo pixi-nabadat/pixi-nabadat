@@ -42,6 +42,9 @@ class ProductsDataTable extends DataTable
         ->editColumn('added_by', function(Product $product){
             return  $product->user->name ;
         })
+        ->editColumn('type', function(Product $product){
+            return  $product->type;
+        })
         ->addColumn('featured', function(Product $product){
             return view('dashboard.components.switch-featured-btn',['model'=>$product,'url'=>route('products.featured')])->render();
         })
@@ -90,6 +93,7 @@ class ProductsDataTable extends DataTable
         return [
             Column::make('name'),
             Column::make('added_by'),
+            Column::make('type'),
             Column::make('description'),
             Column::make('unit_price'),
             Column::make('purchase_price'),
