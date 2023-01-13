@@ -29,7 +29,7 @@ return new class extends Migration
             $table->double('tax')->default(0);
             $table->tinyInteger('featured')->default(0)->nullable();
             $table->boolean('is_active')->default(1)->nullable();
-            $table->integer('type');
+            $table->integer('type')->default(\App\Models\Product::PRODUCTUSER);
             $table->timestamps();
         });
     }

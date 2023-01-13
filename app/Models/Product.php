@@ -17,6 +17,9 @@ class Product extends Model
     const Active = 1 ;
     const NONActive = 0 ;
 
+    const PRODUCTCENTER = 1 ;
+    const PRODUCTUSER = 2 ;
+
     protected $fillable = [
         'name','added_by','category_id','description','unit_price','purchase_price','discount',
         'discount_start_date','discount_end_date','tax','tax_type','featured','rate','is_active','stock','type'];
