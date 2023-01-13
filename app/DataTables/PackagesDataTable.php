@@ -69,11 +69,17 @@ class PackagesDataTable extends DataTable
             ],
             Column::make('num_nabadat'),
             Column::make('price'),
-            Column::make('start_date'),
-            Column::make('end_date'),
+            Column::make('start_date')
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('end_date')
+                ->searchable(false)
+                ->orderable(false),
             Column::make('discount_percentage'),
             Column::make('status'),
-            Column::make('is_active'),
+            Column::make('is_active')
+                ->searchable(false)
+                ->orderable(false),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
