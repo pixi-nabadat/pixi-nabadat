@@ -49,9 +49,10 @@ class Cart extends Model
         if (!$this->relationLoaded('coupon'))
             return $value;
         if (
-            Carbon::now()->gte(Carbon::parse(optional($this->coupon)->start_date)->format('y-m-d')) &&
-            Carbon::now()->lte(Carbon::parse(optional($this->coupon)->end_date)->format('y-m-d')) &&
-            optional($this->coupon)->coupon_for == Coupon::STORECOUPON && optional($this->coupon)->min_buy < $value && $this->coupon->allowed_usage >= $coupon_usage_count
+            Carbon::now(config('app.africa_timezone'))->gte(optional($this->coupon)->start_date) &&
+            Carbon::now(config('app.africa_timezone'))->lte(optional($this->coupon)->end_date) &&
+            optional($this->coupon)->coupon_for == Coupon::STORECOUPON && optional($this->coupon)->min_buy < $value &&
+            $this->coupon->allowed_usage >= $coupon_usage_count
         ) {
             if (optional($this->coupon)->discount_type == Coupon::DISCOUNT_PERCENTAGE)
                 $value = $value - ($value * (optional($this->coupon)->discount / 100));
@@ -77,8 +78,8 @@ class Cart extends Model
     private function checkIfCouponAvaliable()
     {
         if (
-            Carbon::now()->gte(Carbon::parse(optional($this->coupon)->start_date)->format('y-m-d'))
-            && Carbon::now()->lte(Carbon::parse(optional($this->coupon)->end_date)->format('y-m-d'))
+            Carbon::now(config('app.africa_timezone'))->gte(optional($this->coupon)->start_date)
+            && Carbon::now(config('app.africa_timezone'))->lte(optional($this->coupon)->end_date)
             && optional($this->coupon)->coupon_for == Coupon::STORECOUPON
             && optional($this->coupon)->min_buy < $this->grand_total)
             return true;

@@ -86,11 +86,23 @@ class CouponsDataTable extends DataTable
             Column::make('code'),
             Column::make('added_by'),
             Column::make('discount'),
-            Column::make('min_buy'),
-            Column::make('allowed_usage'),
-            Column::make('coupon_for'),
-            Column::make('start_date'),
-            Column::make('end_date'),
+            Column::make('min_buy')
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('allowed_usage')
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('coupon_for')
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('start_date')
+                ->title(trans('lang.start_date'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('end_date')
+                ->title(trans('lang.end_date'))
+                ->searchable(false)
+                ->orderable(false),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

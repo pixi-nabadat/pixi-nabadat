@@ -78,9 +78,17 @@ class CentresDataTable extends DataTable
             Column::make('address'),
             Column::make('phone'),
             Column::make('location'),
-            Column::make('featured'),
-            Column::make('is_support_auto_service'),
-            Column::make('is_active'),
+            Column::make('featured')
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('is_support_auto_service')
+                ->title(trans('lang.auto_service_status'))
+                ->searchable(true)
+                ->orderable(true),
+            Column::make('is_active')
+                ->title(trans('lang.status'))
+                ->searchable(false)
+                ->orderable(false),
             Column::computed('action')
                 ->width(60)
                 ->addClass('text-center'),
