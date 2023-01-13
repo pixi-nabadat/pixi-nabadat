@@ -65,17 +65,15 @@ class CartService extends BaseService
         ]);
     }
 
-    public function removeItem(int $item_id, $temp_user_id)
+    public function removeItem(int $item_id, string $temp_user_id): \Illuminate\Database\Eloquent\Model
     {
-        $cart = $this->getCart($temp_user_id);
+        $cart = $this->getCartByUser($temp_user_id);
         if ($cart) {
             $cartItem = $cart->items()->find($item_id);
-            if ($cartItem) {
-                $cartItem->delete();
-                $this->refresh($cart);
-            }
+            $cartItem?->delete();
+            $this->refresh($cart);
         }
-        return $cart->refresh();
+        return $this->getCart($temp_user_id);
     }
 
     public function emptyCart($temp_user_id)

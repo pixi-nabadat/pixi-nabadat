@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ProductsDataTable;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
-use App\Models\Category;
 use App\Services\CategoryService;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis;
 
 class ProductController extends Controller
 {
@@ -20,7 +17,8 @@ class ProductController extends Controller
     public function index(ProductsDataTable $dataTable, Request $request)
     {
         $loadRelation = ['user'];
-        return $dataTable->with(['filters' => $request->all(), 'withRelations' => $loadRelation])->render('dashboard.products.index');
+        $filters = $request->filters ?? [];
+        return $dataTable->with(['filters' => $filters, 'withRelations' => $loadRelation])->render('dashboard.products.index');
     } //end of index
 
     public function edit($id)
@@ -84,9 +82,8 @@ class ProductController extends Controller
     public function show($id)
     {
         $withRelation = ['category:id,name'];
-        $product = $this->productService->find(id: $id,withRelation:$withRelation );
-        if (!$product)
-        {
+        $product = $this->productService->find(id: $id, withRelation: $withRelation);
+        if (!$product) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.Product_not_found')];
             return back()->with('toast', $toast);
         }
@@ -97,7 +94,7 @@ class ProductController extends Controller
     public function featured(Request $request)
     {
         try {
-            $result =  $this->productService->featured($request->id);
+            $result = $this->productService->featured($request->id);
             if (!$result)
                 return apiResponse(message: trans('lang.not_found'), code: 404);
             return apiResponse(message: trans('lang.success'));
@@ -109,7 +106,7 @@ class ProductController extends Controller
     public function status(Request $request)
     {
         try {
-            $result =  $this->productService->status($request->id);
+            $result = $this->productService->status($request->id);
             if (!$result)
                 return apiResponse(message: trans('lang.not_found'), code: 404);
             return apiResponse(message: trans('lang.success'));
