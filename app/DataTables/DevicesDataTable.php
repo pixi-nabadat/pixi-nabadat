@@ -24,7 +24,7 @@ class DevicesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
         ->addColumn('action', function(Device $device){
-            return view('dashboard.Devices.action',compact('device'))->render();
+            return view('dashboard.devices.action',compact('device'))->render();
         })
         ->addcolumn('name', function(Device $device){
             return $device->name ;
