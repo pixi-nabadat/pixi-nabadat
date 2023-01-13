@@ -92,7 +92,7 @@ class CartController extends Controller
             return apiResponse(data: new CartResource($cart) , message: trans('lang.coupon_applied_successfully'));
         }catch (Exception $exception)
         {
-            return  apiResponse(message: $exception->getMessage());
+            return  apiResponse(message: $exception->getMessage(),code: 422);
         }
     }
 

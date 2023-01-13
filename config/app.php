@@ -73,6 +73,8 @@ return [
 
     'timezone' => 'UTC',
 
+    'africa_timezone' => 'UTC',
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration

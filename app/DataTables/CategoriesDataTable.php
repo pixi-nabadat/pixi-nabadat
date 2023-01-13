@@ -75,8 +75,16 @@ class CategoriesDataTable extends DataTable
     {
         return [
             Column::make('name'),
-            Column::make('created_at'),
-            Column::computed('is_active'),
+
+            Column::make('created_at')
+                ->searchable(false)
+                ->orderable(false),
+
+            Column::computed('is_active')
+                ->title(trans('lang.status'))
+                ->searchable(false)
+                ->orderable(false),
+
             Column::computed('action')
                   ->width(60)
                   ->addClass('text-center'),

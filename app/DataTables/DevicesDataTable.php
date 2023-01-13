@@ -72,8 +72,13 @@ class DevicesDataTable extends DataTable
         return [
             Column::make('name'),
             Column::make('description'),
-            Column::make('is_active'),
-            Column::make('created_at'),
+            Column::make('is_active')
+                ->title(trans('status'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('created_at')
+                ->searchable(false)
+                ->orderable(false),
             Column::computed('action')
                   ->width(60)
                   ->addClass('text-center'),

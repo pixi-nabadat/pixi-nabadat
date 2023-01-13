@@ -65,7 +65,7 @@ class ReservationDataTable extends DataTable
         return [
             [
               'name'  =>'id',
-              'title' => 'id'
+              'title' => '#'
             ],
             [
               'name'=>'user_id',
