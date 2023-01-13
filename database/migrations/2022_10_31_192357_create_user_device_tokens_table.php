@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('user_device_tokens', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class)->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('fcm_token');
             $table->timestamps();
         });
