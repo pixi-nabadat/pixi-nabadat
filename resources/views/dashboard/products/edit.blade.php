@@ -70,8 +70,8 @@
                                 <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.product_type') }}</div>
                                     <select id="type" name="type" class="js-example-basic-single col-sm-12">
-                                        <option value="1" @if($product->getRawOriginal('type')==1) selected @endif>{{ trans('lang.center') }}</option>
-                                        <option value="2" @if($product->getRawOriginal('type')==2) selected @endif>{{ trans('lang.user') }}</option>
+                                        <option value="{{\App\Models\Product::PRODUCTCENTER}}" @if($product->getRawOriginal('type')==\App\Models\Product::PRODUCTCENTER) selected @endif>{{ trans('lang.center') }}</option>
+                                        <option value="{{\App\Models\Product::PRODUCTUSER}}" @if($product->getRawOriginal('type')==\App\Models\Product::PRODUCTUSER) selected @endif>{{ trans('lang.user') }}</option>
                                     </select>
                                 </div>
                                 {{--  purchase_price  --}}

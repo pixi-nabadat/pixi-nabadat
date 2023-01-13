@@ -62,8 +62,8 @@
                                  <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.product_type') }}</div>
                                     <select id="type" name="type" class="js-example-basic-single col-sm-12">
-                                        <option value="1">{{ __('lang.center') }}</option>
-                                        <option value="2">{{ __('lang.user') }}</option>
+                                        <option value="{{\App\Models\Product::PRODUCTCENTER}}">{{ __('lang.center') }}</option>
+                                        <option value="{{\App\Models\Product::PRODUCTUSER}}">{{ __('lang.user') }}</option>
                                     </select>
                                 </div>
                                 {{--  purchase_price  --}}
