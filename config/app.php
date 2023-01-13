@@ -73,7 +73,7 @@ return [
 
     'timezone' => 'UTC',
 
-    'africa_timezone' => 'UTC',
+    'africa_timezone' => 'Africa/cairo',
 
     /*
     |--------------------------------------------------------------------------
