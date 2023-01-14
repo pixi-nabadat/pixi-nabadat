@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
+use App\Traits\HasAttachment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,7 +14,7 @@ use Spatie\Translatable\HasTranslations;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, Filterable, HasTranslations, EscapeUnicodeJson;
+    use HasApiTokens, HasFactory,HasAttachment, Notifiable, Filterable, HasTranslations, EscapeUnicodeJson;
 
     const SUPERADMINTYPE = 1;
     const CUSTOMERTYPE = 2;
@@ -80,6 +81,12 @@ class User extends Authenticatable
     public function location(): \Illuminate\Database\Eloquent\Relations\belongsTo
     {
         return $this->belongsTo(Location::class);
+    }
+
+//    ovveried attchments relation in user model
+    public function attachments(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    {
+        return $this->morphOne(Attachment::class,'attachmentable');
     }
 
     public function center(): \Illuminate\Database\Eloquent\Relations\belongsToMany

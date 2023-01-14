@@ -35,13 +35,15 @@ class ProductController extends Controller
         try {
             $withRelation = [
                 'attachments',
-                'rates' =>fn($rates)=>$rates->where('status',ActivationStatusEnum::ACTIVE)->limit(8)
+                'rates' =>fn($rates)=>$rates->where('status',ActivationStatusEnum::ACTIVE)->limit(8),
+                'rates.user.attachments',
             ];
             $product = $this->productService->find($id,$withRelation);
             if ($product)
                 return apiResponse(data: new ProductResource($product) , message: trans('lang.success_operation'));
             return apiResponse(message: trans('lang.product_not_found'),code: 404);
         } catch (\Exception $e) {
+            dd($e);
             return apiResponse(message: $e->getMessage(), code: $e->getCode());
         }
     }

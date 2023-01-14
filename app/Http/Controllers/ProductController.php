@@ -42,10 +42,10 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         try {
-            $request->validated();
+            $data = $request->validated();
             $request->merge(['added_by' => auth()->id()]);
-            $this->productService->store($request->all());
-            $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'Product Saved Successfully'];
+            $this->productService->store($data);
+            $toast = ['type' => 'success', 'title' => trans('lang.success'), 'message' => trans('lang.Product Saved Successfully')];
             return redirect()->route('products.index')->with('toast', $toast);
         } catch (\Exception $ex) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];

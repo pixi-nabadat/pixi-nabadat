@@ -23,7 +23,7 @@ class RatesService extends BaseService
             Rate::CENTER  => Center::find($data['ratable_id']),
         };
         if (isset($model))
-            $model->rates()->create([
+            $model->rates()->updateOrCreate(['user_id'     => $data['user_id']],[
                 'user_id'     => $data['user_id'],
                 'rate_number' => $data['rate_number'],
                 'comment'     => $data['comment'],
