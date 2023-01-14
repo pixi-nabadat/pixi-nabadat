@@ -23,7 +23,7 @@ class Center extends Model
     const CASH = 'cash';
     const CREDIT = 'credit';
 
-    const SEARCHFLAG = 'centers' ;
+    const SEARCHFLAG = 2 ;
 
     protected $fillable = [
         'name', 'phone', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
@@ -98,8 +98,12 @@ class Center extends Model
         return true;
     }
 
-    public function getSearchFlagAttribute(): string
+    public function getSearchFlagTextAttribute(): string
     {
-        return trans('lang.'.self::SEARCHFLAG) ;
+        return trans('lang.centers') ;
+    }
+    public function getSearchFlagAttribute(): int
+    {
+        return self::SEARCHFLAG;
     }
 }

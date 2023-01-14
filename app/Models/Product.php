@@ -20,7 +20,7 @@ class Product extends Model
     const PRODUCTCENTER = 1 ;
     const PRODUCTUSER = 2 ;
 
-    const SEARCHFLAG = 'products' ;
+    const SEARCHFLAG = 1 ;
 
     protected $fillable = [
         'name','added_by','category_id','description','unit_price','purchase_price','discount',
@@ -64,8 +64,12 @@ class Product extends Model
         return $value == 1 ? trans('lang.center') : trans('lang.user');
     }
 
-    public function getSearchFlagAttribute(): string
+    public function getSearchFlagTextAttribute(): string
     {
-        return trans('lang.'.self::SEARCHFLAG) ;
+        return trans('lang.products') ;
+    }
+    public function getSearchFlagAttribute(): int
+    {
+        return self::SEARCHFLAG;
     }
 }

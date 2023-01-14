@@ -13,7 +13,7 @@ class Device extends Model
 {
     use HasFactory,HasTranslations,Filterable,HasAttachment,EscapeUnicodeJson;
 
-    const SEARCHFLAG = 'devices' ;
+    const SEARCHFLAG = 3 ;
 
     public $translatable =['name','description'];
     protected $fillable  =['name','description','is_active', 'rate'];
@@ -28,9 +28,13 @@ class Device extends Model
         return $this->morphMany(Rate::class, 'ratable');
     }
 
-    public function getSearchFlagAttribute(): string
+    public function getSearchFlagTextAttribute(): string
     {
-        return trans('lang.'.self::SEARCHFLAG) ;
+        return trans('lang.devices') ;
+    }
+    public function getSearchFlagAttribute(): int
+    {
+        return self::SEARCHFLAG;
     }
 
 }
