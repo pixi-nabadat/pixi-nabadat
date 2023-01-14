@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\centerDevice;
+use App\Models\CenterDevice;
 use App\Services\CenterDeviceService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -53,7 +53,7 @@ class CenterDeviceDataTable extends DataTable
     {
 
             return $this->builder()
-            ->setTableId('centerDevicesdatatable-table')
+            ->setTableId('center_devices_datatable_table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
@@ -74,54 +74,23 @@ class CenterDeviceDataTable extends DataTable
     {
         return [
             Column::make('id')
-                ->title('Id')
-                ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}')
-                ->footer('Id')
-                ->exportable(true)
-                ->printable(true),
+                ->title('Id'),
             Column::make('center_id')
-                ->title('Center')
-                ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}')
-                ->footer('Center')
-                ->exportable(true)
-                ->printable(true),
+                ->title(trans('lang.center')),
             Column::make('device_id')
-                ->title('Device')
-                ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}')
-                ->footer('Device')
-                ->exportable(true)
-                ->printable(true),
+                ->title(trans('lang.device')),
             Column::make('regular_price')
-                ->title('Regular Price')
-                ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}')
-                ->footer('Regular Price')
-                ->exportable(true)
-                ->printable(true),
+                ->title(trans('lang.regular_price'))
+                ->searchable(false)
+                ->orderable(false),
             Column::make('auto_service_price')
-                ->title('Auto Service Price')
-                ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}')
-                ->footer('Auto Service Price')
-                ->exportable(true)
-                ->printable(true),
+                ->title(trans('lang.auto_service'))
+                ->searchable(false)
+                ->orderable(false),
             Column::make('number_of_devices')
-                ->title('Number Of Devices')
-                ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}')
-                ->footer('Number Of Devices')
-                ->exportable(true)
-                ->printable(true),
-                
+                ->title(trans('lang.num_devices'))
+                ->searchable(false)
+                ->orderable(false),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
