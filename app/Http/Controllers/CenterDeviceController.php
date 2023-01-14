@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\centerDeviceDataTable;
-use App\Http\Controllers\Controller;
+use App\DataTables\CenterDeviceDataTable;
 use App\Http\Requests\CenterDeviceUpdateRequest;
-use App\Http\Requests\CenterDeviceStoreRequest;
-use App\Models\Center;
 use App\Services\CenterDeviceService;
 use App\Services\CenterService;
 use App\Services\DeviceService;
@@ -14,14 +11,14 @@ use Illuminate\Http\Request;
 
 class CenterDeviceController extends Controller
 {
-    public function __construct(private CenterDeviceService $centerDeviceService ,private CenterService $centerService,private DeviceService $deviceService)
+    public function __construct(private CenterDeviceService $centerDeviceService, protected CenterService $centerService, protected DeviceService $deviceService)
     {
 
     }
 
-    public function index(CenterDeviceDataTable $dataTable,Request $request)
+    public function index(CenterDeviceDataTable $dataTable, Request $request)
     {
-        $loadRelation = ['center','device'];
+        $loadRelation = ['center', 'device'];
         return $dataTable->with(['filters' => $request->all(), 'withRelations' => $loadRelation])->render('dashboard.centerDevices.index');
 
     }//end of index
@@ -29,8 +26,7 @@ class CenterDeviceController extends Controller
     public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
         $centerDevice = $this->centerDeviceService->find($id);
-        if (!$centerDevice)
-        {
+        if (!$centerDevice) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.centerDevice_not_found')];
             return back()->with('toast', $toast);
         }
@@ -40,7 +36,7 @@ class CenterDeviceController extends Controller
     public function update(CenterDeviceUpdateRequest $request, $id): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
         try {
-            $this->centerDeviceService->update($id,  $request->validated());
+            $this->centerDeviceService->update($id, $request->validated());
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect(route('centerDevices.index'))->with('toast', $toast);
         } catch (\Exception $ex) {
