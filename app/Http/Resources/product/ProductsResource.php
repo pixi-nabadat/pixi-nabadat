@@ -16,15 +16,15 @@ class ProductsResource extends JsonResource
     {
         $attachment = $this->whenLoaded('attachments') ? $this->attachments->first() : null;
         return [
-            'id'=>$this->id,
-            'name'=>$this->name,
-            'price'=>$this->unit_price,
-            'discount'=>$this->discount,
-            'discount_type'=>$this->discount_type,
-            'description'=>$this->description,
-            'rate'=>$this->rate,
-            'price_after_discount'=>getPriceAfterDiscount($this->unit_price,$this->product_discount),
-            'images'=>isset($attachment) ? (object) url($attachment->path."\\".$attachment->filename):null,
+            'id'                    =>$this->id,
+            'name'                  =>$this->name,
+            'price'                 =>$this->unit_price,
+            'discount'              =>$this->discount,
+            'discount_type'         =>$this->discount_type,
+            'description'           =>$this->description,
+            'rate'                  =>$this->rate,
+            'price_after_discount'  =>getPriceAfterDiscount($this->unit_price,$this->product_discount),
+            'images'                =>isset($attachment) ? (object) url($attachment->path."\\".$attachment->filename):null,
         ];
     }
 }
