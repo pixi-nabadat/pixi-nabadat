@@ -74,83 +74,43 @@ class ReservationDataTable extends DataTable
             Column::make('id')
                 ->title('Id')
                 ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}'),
-                ->footer('Id')
-                ->exportable(true)
-                ->printable(true),
+                ->orderable(true),
             Column::make('customer_id')
-                ->title('User')
+                ->title(trans('user'))
                 ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}'),
-                ->footer('User')
-                ->exportable(true)
-                ->printable(true),
+                ->orderable(true),
             Column::make('center_id')
-                ->title('Center')
+                ->title(trans('lang.center'))
                 ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}'),
-                ->footer('Center')
-                ->exportable(true)
-                ->printable(true),
+                ->orderable(true),
             Column::make('check_date')
-                ->title('Check Date')
+                ->title(trans('check_date'))
                 ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}'),
-                ->footer('Check Date')
-                ->exportable(true)
-                ->printable(true),
+                ->orderable(true),
             Column::make('from')
-                ->title('From')
-                ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}'),
-                ->footer('From')
-                ->exportable(true)
-                ->printable(true),
+                ->title(trans('lang.from'))
+                ->searchable(false)
+                ->orderable(false),
             Column::make('to')
-                ->title('To')
+                ->title(trans('lang.to'))
                 ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}'),
-                ->footer('To')
-                ->exportable(true)
-                ->printable(true),
+                ->orderable(true),
             Column::make('payment_type')
-                ->title('Payment Type')
-                ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}'),
-                ->footer('Payment Type')
-                ->exportable(true)
-                ->printable(true),
+                ->title(trans('lang.payment_type'))
+                ->searchable(false)
+                ->orderable(false),
             Column::make('payment_status')
-                ->title('Payment Status')
-                ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}'),
-                ->footer('Payment Status')
-                ->exportable(true)
-                ->printable(true),
+                ->title(trans('lang.payment_status'))
+                ->searchable(false)
+                ->orderable(false),
             Column::make('qr_code')
-                ->title('QR Code')
+                ->title(trans('lang.qr_code'))
                 ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}'),
-                ->footer('QR Code')
-                ->exportable(true)
-                ->printable(true),
+                ->orderable(true),
             Column::make('status')
-                ->title('Status')
-                ->searchable(true)
-                ->orderable(true)
-                // ->render('function(){}'),
-                ->footer('Status')
-                ->exportable(true)
-                ->printable(true),
+                ->title(trans('lang.status'))
+                ->searchable(false)
+                ->orderable(false),
             // Column::computed('action')
             //     ->width(60)
             //     ->addClass('text-center'),

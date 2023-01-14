@@ -67,8 +67,8 @@ class Reservation extends Model
         return $this->belongsTo(Center::class);
     }
 
-    public function getPaymentStatusAttribute($value)
+    public function getPaymentStatusAttribute($value): string
     {
-        return $value == true ? PaymentStatusEnum::PAID:PaymentStatusEnum::UNPAID;
+        return trans('lang.'.$value);
     }
 }
