@@ -70,6 +70,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     });
     //end reservations
 
+    //start users 
+    Route::resource('users', App\Http\Controllers\UserController::class);
+    Route::post('users/status', [PackageController::class, 'status'])->name('users.status');
+    //end users
     Route::group(['prefix' => 'ajax'], function () {
         Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);
     });
@@ -107,7 +111,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::post('products/featured', [ProductController::class, 'featured'])->name('products.featured');
     Route::post('products/status', [ProductController::class, 'status'])->name('products.status');
 
-    Route::resource('packages', PackageController::class);
+    Route::resource('packages', PackageController::class)->only(['index', 'destroy']);
     Route::post('packages/status', [PackageController::class, 'status'])->name('packages.status');
 
     Route::resource('cancelReasons', CancelReasonController::class);

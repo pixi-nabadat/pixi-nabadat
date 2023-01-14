@@ -25,9 +25,26 @@ class UsersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'users.action')
-            ->setRowId('id');
-    }
+        ->editColumn('name', function (User $user) {
+            return $user->name;
+        })
+        ->editColumn('description', function (User $user) {
+            return $user->description;
+        })
+        ->editColumn('center_id', function (User $user) {
+            return $user->center_id == null ? null:$user->center->name;
+        })
+        ->editColumn('location_id', function (User $user) {
+            return $user->location->title;
+        })
+        ->addColumn('action', function (User $user) {
+            return view('dashboard.users.action', compact('user'))->render();
+        })
+        ->addColumn('is_active', function (User $user) {
+            return view('dashboard.components.switch-btn', ['model' => $user, 'url' => route('users.status')])->render();
+        })
+        ->rawColumns(['action', 'is_active']);
+}
 
     /**
      * Get query source of dataTable.
@@ -67,14 +84,115 @@ class UsersDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
+            Column::make('id')
+                ->title('Id')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Id')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('name')
+                ->title('Name')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Name')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('email')
+                ->title('Email')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Email')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('user_name')
+                ->title('User Name')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('User Name')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('phone')
+                ->title('Phone')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Phone')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('type')
+                ->title('Type')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Type')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('center_id')
+                ->title('Center')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Center')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('is_active')
+                ->title('Is Active')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Is Active')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('location_id')
+                ->title('Location')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Location')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('date_of_birth')
+                ->title('Date OF Birth')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Date OF Birth')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('description')
+                ->title('Description')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Description')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('points')
+                ->title('Points')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Points')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('points_expire_date')
+                ->title('Points Expire Date')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Points Expire Date')
+                ->exportable(true)
+                ->printable(true),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 

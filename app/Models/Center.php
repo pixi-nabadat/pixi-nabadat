@@ -43,9 +43,9 @@ class Center extends Model
         return $this->belongsTo(Location::class);
     }
 
-    public function user(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function user(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasMany(User::class,'center_id');
+        return $this->hasOne(User::class);
     }
 
     public function doctors(): \Illuminate\Database\Eloquent\Relations\HasMany

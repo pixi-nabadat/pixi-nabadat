@@ -134,7 +134,15 @@
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('packages.index') ? 'active' : '' }}" href="{{route('packages.index')}}">{{ trans('lang.view') }}</a></li>
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('packages.create') ? 'active' : '' }}" href="{{route('packages.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
-                        {{--end package --}}
+                        {{--end user --}}
+                        {{-- start user --}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/users' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.user') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/users' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('users.index') ? 'active' : '' }}" href="{{route('users.index')}}">{{ trans('lang.view') }}</a></li>
+                        </ul>
+                        {{--end user --}}
 
                         {{-- start reservations --}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/reservations' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.reservations') }}</span>

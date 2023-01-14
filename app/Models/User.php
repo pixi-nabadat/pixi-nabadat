@@ -82,9 +82,9 @@ class User extends Authenticatable
         return $this->belongsTo(Location::class);
     }
 
-    public function center(): \Illuminate\Database\Eloquent\Relations\belongsToMany
+    public function center(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsToMany(Center::class, CenterDoctor::class, 'doctor_id', 'center_id');
+        return $this->belongsTo(Center::class);
     }
 
     public function cart(): \Illuminate\Database\Eloquent\Relations\hasOne
@@ -125,5 +125,22 @@ class User extends Authenticatable
     public function fcmToken(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(UserDeviceTokens::class,'user_id');
+    }
+
+    public function getTypeAttribute($value)
+    {
+        switch($value){
+            case 1:
+                return trans('lang.super_admin_type');
+                break;
+            case 2:
+                return trans('lang.customer_type');
+                break;
+            case 4:
+                return trans('lang.center_admin');
+                break;
+            default:
+                return $value;
+        }
     }
 }

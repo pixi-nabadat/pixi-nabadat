@@ -96,4 +96,12 @@ class UserService extends BaseService
             $user->nabadatWallet()->updateOrCreate(['user_id'=>$user->id],['total_pulses' => $total_pulses]);
         return true;
     }
+
+    public function status($id): bool
+    {
+        $user = $this->find($id);
+        $user->is_active = !$user->is_active;
+        return $user->save();
+
+    }//end of status
 }
