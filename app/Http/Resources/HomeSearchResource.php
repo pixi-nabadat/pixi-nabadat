@@ -17,7 +17,8 @@ class HomeSearchResource extends JsonResource
        return [
            'id'    =>$this->id,
            'title' =>$this->name,
-           'type'  => $this->search_flag
+           'type'  => $this->search_flag,
+           'type_text'  => $this->search_flag_text,
        ];
     }
 }
