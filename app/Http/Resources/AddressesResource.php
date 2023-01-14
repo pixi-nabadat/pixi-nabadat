@@ -17,7 +17,7 @@ class AddressesResource extends JsonResource
         return  [
             'id' => $this->id,
             'address' => $this->address,
-            'governorate_id' => $this->governerate_id,
+            'governorate_id' => $this->governorate_id,
             'governorate_title' => $this->whenLoaded('governorate',$this->governorate->title),
             'city_id' => $this->city_id,
             'city_title' => $this->whenLoaded('city',$this->city->title),

@@ -24,7 +24,7 @@ class ProductsResource extends JsonResource
             'description'=>$this->description,
             'rate'=>$this->rate,
             'price_after_discount'=>getPriceAfterDiscount($this->unit_price,$this->product_discount),
-            'image'=>isset($attachment) ? url($attachment->path."\\".$attachment->filename):null,
+            'images'=>isset($attachment) ? (object) url($attachment->path."\\".$attachment->filename):null,
         ];
     }
 }
