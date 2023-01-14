@@ -13,6 +13,8 @@ class Device extends Model
 {
     use HasFactory,HasTranslations,Filterable,HasAttachment,EscapeUnicodeJson;
 
+    const SEARCHFLAG = 'devices' ;
+
     public $translatable =['name','description'];
     protected $fillable  =['name','description','is_active', 'rate'];
 
@@ -24,6 +26,11 @@ class Device extends Model
     public function rates(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
         return $this->morphMany(Rate::class, 'ratable');
+    }
+
+    public function getSearchFlagAttribute(): string
+    {
+        return trans('lang.'.self::SEARCHFLAG) ;
     }
 
 }

@@ -9,7 +9,6 @@ use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CenterController;
 use App\Http\Controllers\Api\CenterPackageController;
-use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\NabadatHistoryController;
@@ -21,6 +20,7 @@ use App\Http\Controllers\APi\ReservationController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 use App\Http\Controllers\Api\RestPasswordController;
 use App\Http\Controllers\Api\UserPackageController;
+use App\Http\Controllers\Api\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -101,6 +101,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 });
 
+Route::get('home',[HomeController::class,'index']);
+Route::get('home/search',[HomeController::class,'search']);
 //callback form paymob getaway
 Route::any('paymob/payment/done', [OrderController::class, 'checkPaymobPaymentStatus']);
 //start cart
