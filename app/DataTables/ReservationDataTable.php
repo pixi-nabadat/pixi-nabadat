@@ -2,7 +2,6 @@
 
 namespace App\DataTables;
 
-use App\Models\CancelReason;
 use App\Models\Reservation;
 use App\Services\ReservationService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
@@ -23,13 +22,22 @@ class ReservationDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->addColumn('customer_id', function (Reservation $reservation) {
+                return $reservation->user->name;
+            })
+            ->addColumn('center_id', function (Reservation $reservation) {
+                return $reservation->center->name;
+            })
+            ->addColumn('status', function (Reservation $reservation) {
+                return $reservation->history->last()->status;
+            })
             ->addColumn('action', function (Reservation $reservation) {
                 return view('dashboard.reservations.action', compact('reservation'))->render();
             })->rawColumns(['action', 'is_active']);
     }
 
     /**
-     * @param CancelReason $model
+     * @param ReservationService $model
      * @return QueryBuilder
      */
     public function query(ReservationService $model): QueryBuilder
@@ -63,21 +71,89 @@ class ReservationDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            [
-              'name'  =>'id',
-              'title' => '#'
-            ],
-            [
-              'name'=>'user_id',
-              'title'=>'user_id',
-            ],
-            [
-                'name'=>'center_id',
-                'title'=>'center_id',
-            ],
-            Column::computed('action')
-                ->width(60)
-                ->addClass('text-center'),
+            Column::make('id')
+                ->title('Id')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}'),
+                ->footer('Id')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('customer_id')
+                ->title('User')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}'),
+                ->footer('User')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('center_id')
+                ->title('Center')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}'),
+                ->footer('Center')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('check_date')
+                ->title('Check Date')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}'),
+                ->footer('Check Date')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('from')
+                ->title('From')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}'),
+                ->footer('From')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('to')
+                ->title('To')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}'),
+                ->footer('To')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('payment_type')
+                ->title('Payment Type')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}'),
+                ->footer('Payment Type')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('payment_status')
+                ->title('Payment Status')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}'),
+                ->footer('Payment Status')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('qr_code')
+                ->title('QR Code')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}'),
+                ->footer('QR Code')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('status')
+                ->title('Status')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}'),
+                ->footer('Status')
+                ->exportable(true)
+                ->printable(true),
+            // Column::computed('action')
+            //     ->width(60)
+            //     ->addClass('text-center'),
         ];
     }
 

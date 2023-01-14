@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\PaymentStatusEnum;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -64,5 +65,10 @@ class Reservation extends Model
     public function center(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Center::class);
+    }
+
+    public function getPaymentStatusAttribute($value)
+    {
+        return $value == true ? PaymentStatusEnum::PAID:PaymentStatusEnum::UNPAID;
     }
 }
