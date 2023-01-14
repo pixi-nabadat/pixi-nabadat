@@ -12,7 +12,7 @@ class Address extends Model
     use HasFactory, Filterable;
 
     protected $fillable = [
-        'user_id', 'address', 'country_id', 'governerate_id', 'phone', 'city_id',
+        'user_id', 'address', 'country_id', 'governorate_id', 'phone', 'city_id',
         'postal_code', 'is_default', 'lat', 'lng'];
 
     public function city(): BelongsTo
@@ -22,7 +22,7 @@ class Address extends Model
 
     public function governorate(): BelongsTo
     {
-        return $this->belongsTo(Location::class, 'governerate_id');
+        return $this->belongsTo(Location::class, 'governorate_id');
     }
 
     public function user(): BelongsTo

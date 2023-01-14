@@ -50,10 +50,10 @@
                                 @enderror
 							</div>
                             <div class="col-md-6 mb-3">
-                                <div class="col-form-label">Choose Governorate</div>
-                                <select name="parent_id"  class="js-example-placeholder-multiple col-sm-12" multiple="multiple">
-                                    @foreach ($governorates as $governate)
-                                    <option value="{{$governate->id}}">{{$governate->title}}</option>
+                                <div class="col-form-label">{{trans('select_governorate')}}</div>
+                                <select name="parent_id"  class="js-example-basic-single col-sm-12">
+                                    @foreach ($governorates as $governorate)
+                                    <option value="{{$governorate->id}}" @if($governorate->id == $city->parent_id) selected @endif>{{$governorate->title}}</option>
                                     @endforeach
                                 </select>
                             </div>

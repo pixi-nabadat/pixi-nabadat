@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\User::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->string('address');
             $table->unsignedInteger('country_id');
-            $table->unsignedInteger('governerate_id');
+            $table->unsignedInteger('governorate_id');
             $table->unsignedInteger('city_id');
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();

@@ -22,7 +22,7 @@ class AddressTableSeeder extends Seeder
             'address'=>'test address',
             'user_id'=>User::where('type',User::CUSTOMERTYPE)->first()->id,
             'country_id'=>1 ,
-            'governerate_id'=>2 ,
+            'governorate_id'=>2 ,
             'city_id'=>4 ,
             'phone'=>'01113622098' ,
             'postal_code'=>122323 ,

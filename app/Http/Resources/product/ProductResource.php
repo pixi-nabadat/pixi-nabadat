@@ -24,7 +24,7 @@ class ProductResource extends JsonResource
             'description'               =>$this->description,
             'rate'                      =>$this->whenLoaded('rates',$this->rates),
             'price_after_discount'      =>getPriceAfterDiscount($this->unit_price,$this->product_discount),
-            'image'=> $this->whenLoaded('attachments',AttachmentsResource::collection($this->attachments)),
+            'images'=> $this->whenLoaded('attachments',AttachmentsResource::collection($this->attachments)),
         ];
     }
 }
