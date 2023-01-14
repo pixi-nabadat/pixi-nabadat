@@ -25,10 +25,10 @@ class CenterDeviceDataTable extends DataTable
             ->addColumn('action', function (CenterDevice $centerDevice) {
                 return view('dashboard.centerDevices.action', compact('centerDevice'))->render();
             })
-            ->editColumn('center', function (CenterDevice $centerDevice) {
+            ->editColumn('center_id', function (CenterDevice $centerDevice) {
                 return $centerDevice->center->name;
             })
-            ->editColumn('device', function (CenterDevice $centerDevice) {
+            ->addColumn('device_id', function (CenterDevice $centerDevice) {
                 return $centerDevice->device->name;
             });
 
@@ -73,12 +73,55 @@ class CenterDeviceDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::make('center'),
-            Column::make('device'),
-            Column::make('number_of_devices'),
-            Column::make('regular_price'),
-            Column::make('nabadat_app_price'),
-            Column::make('auto_service_price'),
+            Column::make('id')
+                ->title('Id')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Id')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('center_id')
+                ->title('Center')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Center')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('device_id')
+                ->title('Device')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Device')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('regular_price')
+                ->title('Regular Price')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Regular Price')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('auto_service_price')
+                ->title('Auto Service Price')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Auto Service Price')
+                ->exportable(true)
+                ->printable(true),
+            Column::make('number_of_devices')
+                ->title('Number Of Devices')
+                ->searchable(true)
+                ->orderable(true)
+                // ->render('function(){}')
+                ->footer('Number Of Devices')
+                ->exportable(true)
+                ->printable(true),
+                
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
