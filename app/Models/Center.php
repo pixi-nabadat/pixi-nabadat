@@ -23,6 +23,8 @@ class Center extends Model
     const CASH = 'cash';
     const CREDIT = 'credit';
 
+    const SEARCHFLAG = 'centers' ;
+
     protected $fillable = [
         'name', 'phone', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
         'google_map_url','avg_waiting_time','featured', 'rate', 'support_payments','app_discount',
@@ -94,5 +96,10 @@ class Center extends Model
         $center->points_expire_date = Carbon::now()->addDays($pointsExpireDaysCount);
         $center->save();
         return true;
+    }
+
+    public function getSearchFlagAttribute(): string
+    {
+        return trans('lang.'.self::SEARCHFLAG) ;
     }
 }
