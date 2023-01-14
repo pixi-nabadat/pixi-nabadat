@@ -3,6 +3,7 @@
 namespace App\Http\Resources\product;
 
 use App\Http\Resources\AttachmentsResource;
+use App\Http\Resources\RatesResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
@@ -22,7 +23,7 @@ class ProductResource extends JsonResource
             'price'                     =>$this->unit_price,
             'discount'                  =>$this->discount,
             'description'               =>$this->description,
-            'rate'                      =>$this->whenLoaded('rates',$this->rates),
+            'rate'                      =>$this->whenLoaded('rates',RatesResource::collection($this->rates)),
             'price_after_discount'      =>getPriceAfterDiscount($this->unit_price,$this->product_discount),
             'images'=> $this->whenLoaded('attachments',AttachmentsResource::collection($this->attachments)),
         ];
