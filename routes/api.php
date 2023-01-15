@@ -91,7 +91,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     //end order delivery
 //start buy pulsses from nabdat app
     Route::group(['prefix' => 'offers'], function () {
-        Route::get('/', [BuyOfferController::class, 'index']);
         Route::post('/buy', [BuyOfferController::class, 'buyOffer']);
     });
 //start buy pulsses from nabdat app
@@ -122,9 +121,6 @@ Route::get('locations/governorates', [LocationController::class, 'getAllGovernor
 Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);
 
 Route::get('centers', [CenterController::class, 'listing']);
-
-Route::get('packages', [PackageController::class, 'listing']);
-
 
 //start user packages
 Route::get('userPackages/listing', [UserPackageController::class, 'userPackagesListing']);

@@ -4,10 +4,13 @@ namespace App\Services;
 
 use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
+use App\Exceptions\NotFoundException;
+use App\Models\CenterFinancial;
 use App\Models\Package;
 use App\Models\UserPackage;
 use App\QueryFilters\UserPackagesFilter;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 class UserPackageService extends BaseService
 {
@@ -24,18 +27,20 @@ class UserPackageService extends BaseService
         return $userPackages->filter(new UserPackagesFilter($where_condition));
     }
 
-    public function update(int $id, array $data)
+    /**
+     * @throws NotFoundException
+     */
+    public function update(int $id, array $data): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|Builder|array
     {
-        $userPackage = UserPackage::find($id);
-        $package = Package::find($userPackage->package_id);
-        if ($userPackage) {
-             $userPackage->update($data);
-             $userPackage->update([
-                'payment_status' => $data['payment_status'], 
-            ]);
-             return  $userPackage;
-        }
-        return false;
+        $userPackage = UserPackage::with('center')->find($id);
+        if (!$userPackage)
+            throw new NotFoundException(trans('lang.offers_not_found'));
+       $is_updated =  $userPackage->update([
+            'payment_status' => $data['payment_status'],
+        ]);
+       if ($is_updated)
+            CenterFinancial::createFinancial($userPackage);
+     return  $userPackage;
     }
     public function find(int $id, array $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {

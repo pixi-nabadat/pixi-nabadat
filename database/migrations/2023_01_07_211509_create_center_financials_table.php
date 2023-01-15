@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('center_financials', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Center::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignIdFor(\App\Models\Package::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('num_palses');
+            $table->foreignIdFor(\App\Models\User::class)->constrained();
+            $table->foreignIdFor(\App\Models\Center::class)->constrained();
+            $table->foreignIdFor(\App\Models\Package::class)->constrained();
+            $table->integer('num_pulses');
             $table->double('center_dues');
             $table->double('app_dues');
             $table->double('regular_price');
