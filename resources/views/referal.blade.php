@@ -12,9 +12,9 @@
 <div class="page-wrapper compact-wrapper" id="pageWrapper">
   <!-- error-404 start-->
   <div class="error-wrapper">
-    <div class="container"><img class="img-100" src="{{asset('assets/images/other-images/sad.png')}}" alt="">
+    <div class="container"><img class="img-200" src="{{asset('assets/images/referal-images/cons.png')}}" alt="">
       <div class="">
-        <h3 class="headline font-danger">{{ $referalCode }}</h3>
+        <h3 class="headline font-danger">{{ trans('lang.user_invitation_code') }}: {{ $referalCode }}</h3>
       </div>
       <div class="col-md-8 offset-md-2">
         <p class="sub-content">Download the app and get more points you can use in purchasing products and more</p>
