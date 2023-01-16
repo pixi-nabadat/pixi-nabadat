@@ -16,11 +16,11 @@ class CentersResource extends JsonResource
     {
 
         return [
-            'center_id'                     => $this->id,
-            'center_name'                   => $this->name,
-            'center_phone'                  => $this->phone,
-            'location_title'                => $this->location->title,
-            'location_id'                   => $this->location_id,
+            'id'                            => $this->id,
+            'name'                          => $this->whenLoaded('user',$this->user->name),
+            'phones'                        => $this->phones,
+            'location_title'                => $this->whenLoaded('user',$this->user->location->title),
+            'location_id'                   => $this->whenLoaded('user',$this->user->location_id),
             'description'                   => $this->description,
             'address'                       => $this->address,
             'lat'                           => $this->lat ,
@@ -28,7 +28,7 @@ class CentersResource extends JsonResource
             'support_payments'              => $this->support_payments,
             'avg_waiting_time'              => $this->avg_waiting_time,
             'google_map_url'                => $this->google_map_url,
-            'is_active'                     => ($this->is_active == 1),
+            'is_active'                     => $this->whenLoaded('user',($this->user->is_active == 1)) ,
             "doctors"                       => $this->whenLoaded('doctors',DoctorsResource::collection($this->doctors)),
             'appointments'                  => $this->whenLoaded('appointments',AppointmentsResource::collection($this->appointments)),
             'is_support_auto_service'       => ($this->is_support_auto_service == 1),

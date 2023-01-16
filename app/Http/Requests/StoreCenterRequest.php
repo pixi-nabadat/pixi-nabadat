@@ -25,8 +25,8 @@ class StoreCenterRequest extends BaseRequest
     {
         return [
             'name.*'                  => 'required|string',
-            'phone'                   => 'array|min:1',
-            'phone.*'                 => 'required|string|unique:users,phone',
+            'phone'                   => 'string|required|unique:users,phone',
+            'phones.*'                 => 'nullable|array',
             'location_id'             => 'required|integer',
             'lat'                     => 'nullable|string',
             'lng'                     => 'nullable|string',
@@ -39,11 +39,12 @@ class StoreCenterRequest extends BaseRequest
             'email'                   => 'required|email|unique:users,email',
             'is_active'               => 'string|nullable',
             'is_support_auto_service' => 'string|nullable',
-            'avg_wating_time'         => 'required',
+            'avg_waiting_time'         => 'required',
             'featured'                => 'nullable',
             'support_payments'        => 'array|min:1',
             'support_payments.*'      => 'required|string|in:'.PaymentMethodEnum::CREDIT.','.PaymentMethodEnum::CASH,
             'app_discount'            => 'required|numeric',
+            'google_map_url'            => 'string|nullable',
         ];
     }
 

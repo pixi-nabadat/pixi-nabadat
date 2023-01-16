@@ -67,7 +67,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-body">           
+                    <div class="card-body">
                         <form class="needs-validation" novalidate="" enctype="multipart/form-data"  action="{{ route('categories.update',$category) }}" method="post" >
                             @csrf
                             @method('put')
@@ -90,6 +90,14 @@
                                     @enderror
                                 </div>
 
+                            {{--type  --}}
+                            <div class="col-md-12 d-flex my-3">
+                                <div class="col-form-label col-3">{{ __('lang.product_type') }}</div>
+                                <select id="type" name="type" class="js-example-basic-single col-sm-12">
+                                    <option value="{{\App\Models\Category::USERTYPE}}"   @if($category->getRawOriginal('type') == \App\Models\Category::USERTYPE)selected@endif>{{ __('lang.user') }}</option>
+                                    <option value="{{\App\Models\Category::CENTERTYPT}}" @if($category->getRawOriginal('type') == \App\Models\Category::CENTERTYPT)selected@endif>{{ __('lang.center') }}</option>
+                                </select>
+                            </div>
 
                                 <div class="col-md-12">
                                     <label class="form-label mt-3" for="image">{{ trans('lang.image') }}</label>
@@ -133,7 +141,7 @@
                                 </div>
 
                             <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
-                            
+
                         </form>
                     </div>
                 </div>

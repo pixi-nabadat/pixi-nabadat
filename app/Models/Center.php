@@ -26,18 +26,18 @@ class Center extends Model
     const SEARCHFLAG = 2 ;
 
     protected $fillable = [
-        'name', 'phone', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
+        'lat','lng','is_support_auto_service','address','description','phones',
         'google_map_url','avg_waiting_time','featured', 'rate', 'support_payments','app_discount',
     ];
 
     protected $casts = [
-        'phone' => 'array',
+        'phones' => 'array',
         'support_payments' => 'array',
     ];
 
     protected $table = 'centers';
 
-    public $translatable = ['name','description','address'];
+    public $translatable = ['description','address'];
 
 
     public function location(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -45,9 +45,9 @@ class Center extends Model
         return $this->belongsTo(Location::class);
     }
 
-    public function user(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function user(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasMany(User::class,'center_id');
+        return $this->hasOne(User::class,'center_id');
     }
 
     public function doctors(): \Illuminate\Database\Eloquent\Relations\HasMany
@@ -55,7 +55,7 @@ class Center extends Model
         return $this->hasMany(Doctor::class,'center_id');
     }
 
-    public function device()
+    public function device(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Device::class,'center_id');
     }
@@ -84,19 +84,6 @@ class Center extends Model
      * @param float $amount
      * @param string $amountType
      */
-    public static function setPoints(Center $center, float $amount, string $amountType): bool
-    {
-
-        $pointsPerPound = config('global.center_points_per_pound') !== null ? config('global.center_points_per_pound') : Setting::get('points', 'center_points_per_pound');
-        $pointsExpireDaysCount = config('global.center_points_expire_days_count') !== null ? config('global.center_points_expire_days_count') : Setting::get('points', 'center_points_expire_days_count');
-        if ($amountType == 'points')
-            $center->points += $amount;
-        else
-            $center->points += $pointsPerPound * $amount;
-        $center->points_expire_date = Carbon::now()->addDays($pointsExpireDaysCount);
-        $center->save();
-        return true;
-    }
 
     public function getSearchFlagTextAttribute(): string
     {
