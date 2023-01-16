@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\ImageTypeEnum;
 use App\Traits\EscapeUnicodeJson;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -71,5 +72,10 @@ class Product extends Model
     public function getSearchFlagAttribute(): int
     {
         return self::SEARCHFLAG;
+    }
+
+    public function defaultLogo()
+    {
+        return $this->attachments()->where('type', ImageTypeEnum::LOGO);
     }
 }
