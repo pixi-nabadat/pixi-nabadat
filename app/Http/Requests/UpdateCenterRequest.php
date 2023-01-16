@@ -34,6 +34,7 @@ class UpdateCenterRequest extends BaseRequest
             'description.*' => 'string|nullable',
             'images' => 'nullable|array',
             'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             // 'user_name'=>'required|unique:users,user_name',
             // 'password'=>'required|string',
             // 'email'=>'required|email|unique:users,email',

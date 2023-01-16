@@ -41,9 +41,16 @@ class CenterService extends BaseService
         $center = Center::create($center_data);
         if (!$center)
             return false;
+        if (isset($data['logo']))
+        {
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\centers');
+            $fileData['type'] = ImageTypeEnum::Logo;
+            $center->storeAttachment($fileData);
+        }
         if (isset($data['images']) && is_array($data['images']))
             foreach ($data['images'] as $image) {
                 $fileData = FileService::saveImage(file: $image, path: 'uploads/centers');
+                $fileData['type'] = ImageTypeEnum::GALARY;
                 $center->storeAttachment($fileData);
             }
         $userData = $this->prepareUserData($data);
@@ -72,9 +79,16 @@ class CenterService extends BaseService
     {
         $center = $this->find($centerId);
         if ($center) {
+            if (isset($data['logo']))
+            {
+                $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\centers');
+                $fileData['type'] = ImageTypeEnum::GALARY;
+                $center->storeAttachment($fileData);
+            }
             if (isset($centerData['images']) && is_array($centerData['images']))
                 foreach ($centerData['images'] as $image) {
                     $fileData = FileService::saveImage(file: $image, path: 'uploads/centers');
+                    $fileData['type'] = ImageTypeEnum::GALARY;
                     $center->storeAttachment($fileData);
                 }
             $center->update($centerData);
