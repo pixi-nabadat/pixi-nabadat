@@ -24,9 +24,9 @@ class UserPackageObserver
             $userPackage->load(['center','user']);
             $amount_after_discount = $userPackage->price - ($userPackage->price * ($userPackage->center->app_discount / 100));
 //          set user points after pay the offer
-            User::setPoints(user: $userPackage->user, amount: $amount_after_discount, amountType: 'cash');
+            User::setPoints($userPackage->user, amount: $amount_after_discount, amountType: 'cash');
 //          set center points after pay the offer
-            Center::setPoints(center: $userPackage->center, amount: $amount_after_discount, amountType: 'cash');
+            User::setPoints($userPackage->center, amount: $amount_after_discount, amountType: 'cash');
 //          set financial for center and
             CenterFinancial::createFinancial($userPackage);
         }
