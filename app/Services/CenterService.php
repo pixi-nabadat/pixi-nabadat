@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enum\ImageTypeEnum;
 use App\Models\Center;
 use App\Models\User;
 use App\QueryFilters\CentersFilter;
@@ -44,7 +45,7 @@ class CenterService extends BaseService
         if (isset($data['logo']))
         {
             $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\centers');
-            $fileData['type'] = ImageTypeEnum::Logo;
+            $fileData['type'] = ImageTypeEnum::LOGO;
             $center->storeAttachment($fileData);
         }
         if (isset($data['images']) && is_array($data['images']))
