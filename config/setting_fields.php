@@ -190,7 +190,7 @@ return [
         'elements' => [
             [
                 'type' => 'number', // input fields type
-                'data' => 'integer', // data type, string, int, boolean
+                'data' => 'double', // data type, string, int, boolean
                 'name' => 'patient_points_per_pound', // unique name for field
                 'label' => 'Patient Point Per Pound', // you know what label it is
                 'rules' => 'required|numeric', // validation rule of laravel
@@ -202,13 +202,13 @@ return [
                 'data' => 'integer', // data type, string, int, boolean
                 'name' => 'patient_points_expire_days_count', // unique name for field
                 'label' => 'Patient Points Expire Days Count', // you know what label it is
-                'rules' => 'required|numeric', // validation rule of laravel
+                'rules' => 'required|integer', // validation rule of laravel
                 'class' => 'form-control', // any class for input
                 'value' => '0' // default value if you want
             ],
             [
                 'type' => 'number', // input fields type
-                'data' => 'integer', // data type, string, int, boolean
+                'data' => 'double', // data type, string, int, boolean
                 'name' => 'center_points_per_pound', // unique name for field
                 'label' => 'Center Point Per Pound', // you know what label it is
                 'rules' => 'required|numeric', // validation rule of laravel
@@ -220,16 +220,16 @@ return [
                 'data' => 'integer', // data type, string, int, boolean
                 'name' => 'center_points_expire_days_count', // unique name for field
                 'label' => 'Center Points Expire Days Count', // you know what label it is
-                'rules' => 'required|numeric', // validation rule of laravel
+                'rules' => 'required|integer', // validation rule of laravel
                 'class' => 'form-control', // any class for input
                 'value' => '0' // default value if you want
             ],
             [
                 'type' => 'number', // input fields type
-                'data' => 'integer', // data type, string, int, boolean
+                'data' => 'double', // data type, string, int, boolean
                 'name' => 'referal_points', // unique name for field
                 'label' => 'Referal Points', // you know what label it is
-                'rules' => 'required|integer', // validation rule of laravel
+                'rules' => 'required|numeric', // validation rule of laravel
                 'class' => 'form-control', // any class for input
                 'value' => '0' // default value if you want
             ],
