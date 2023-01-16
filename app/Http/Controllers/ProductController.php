@@ -43,7 +43,7 @@ class ProductController extends Controller
     {
         try {
             $data = $request->validated();
-            $request->merge(['added_by' => auth()->id()]);
+            $data['added_by'] = auth()->id();
             $this->productService->store($data);
             $toast = ['type' => 'success', 'title' => trans('lang.success'), 'message' => trans('lang.Product Saved Successfully')];
             return redirect()->route('products.index')->with('toast', $toast);
