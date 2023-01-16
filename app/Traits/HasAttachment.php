@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 use App\Models\Attachment;
-
+use App\Enum\ImageTypeEnum;
 trait HasAttachment
 {
 
@@ -27,6 +27,15 @@ trait HasAttachment
     {
 
         $this->attachments()->each(function ($attachment){
+            unlink(public_path($attachment->path."/".$attachment->filename));
+           $attachment->delete();
+        });
+    }
+
+    public function deleteAttachmentsLogo()
+    {
+
+        $this->attachments()->where('type', ImageTypeEnum::LOGO)->each(function ($attachment){
             unlink(public_path($attachment->path."/".$attachment->filename));
            $attachment->delete();
         });
