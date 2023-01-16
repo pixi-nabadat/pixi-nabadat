@@ -87,6 +87,7 @@ class ProductService extends BaseService
             foreach ($data['images'] as $image)
             {
                 $fileData = FileService::saveImage(file: $image,path: 'uploads\products');
+                $fileData['type'] = ImageTypeEnum::GALARY;
                 $product->storeAttachment($fileData);
             }
             $product->update($data);
