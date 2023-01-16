@@ -31,6 +31,7 @@ class ProductRequest extends BaseRequest
             'purchase_price'=>'required',
             'images' => 'nullable|array',
             'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'discount'=>'required',
             'discount_start_date'=>'required',
             'discount_end_date'=>'required',

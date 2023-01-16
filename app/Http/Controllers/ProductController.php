@@ -21,16 +21,18 @@ class ProductController extends Controller
         return $dataTable->with(['filters' => $filters, 'withRelations' => $loadRelation])->render('dashboard.products.index');
     } //end of index
 
-    public function edit($id)
+    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
-        $product = $this->productService->find($id);
+        $withRelation = ['attachments'];
+        $product = $this->productService->find($id,$withRelation);
         $categories = $this->categoryService->getAll();
+        if (!$product)
+        {
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.product_not_found')];
+            return back()->with('toast', $toast);
+        }
+        return view('dashboard.products.edit', compact('categories', 'product'));
 
-        if ($product)
-            return view('dashboard.products.edit', compact('categories', 'product'));
-
-        $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.product_not_found')];
-        return back()->with('toast', $toast);
     } //end of edit
 
     public function create()
@@ -43,7 +45,7 @@ class ProductController extends Controller
     {
         try {
             $data = $request->validated();
-            $request->merge(['added_by' => auth()->id()]);
+            $data['added_by'] = auth()->id();
             $this->productService->store($data);
             $toast = ['type' => 'success', 'title' => trans('lang.success'), 'message' => trans('lang.Product Saved Successfully')];
             return redirect()->route('products.index')->with('toast', $toast);
@@ -81,7 +83,7 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $withRelation = ['category:id,name'];
+        $withRelation = ['category:id,name','attachments'];
         $product = $this->productService->find(id: $id, withRelation: $withRelation);
         if (!$product) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.Product_not_found')];
