@@ -45,7 +45,7 @@ class ProductService extends BaseService
         if (isset($data['images'])&&is_array($data['images']))
             foreach ($data['images'] as $image)
             {
-                $fileData = FileService::saveImage(file: $image,path: 'uploads\products', field_name: 'galary');
+                $fileData = FileService::saveImage(file: $image,path: 'uploads\products', field_name: 'images');
                 $fileData['type'] = ImageTypeEnum::GALARY;
                 $product->storeAttachment($fileData);
             }
@@ -86,7 +86,7 @@ class ProductService extends BaseService
             if (isset($data['images'])&&is_array($data['images']))
             foreach ($data['images'] as $image)
             {
-                $fileData = FileService::saveImage(file: $image,path: 'uploads\products', field_name: 'galary');
+                $fileData = FileService::saveImage(file: $image,path: 'uploads\products', field_name: 'images');
                 $fileData['type'] = ImageTypeEnum::GALARY;
                 $product->storeAttachment($fileData);
             }
