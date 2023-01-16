@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->enum('type',[\App\Models\Category::CENTERTYPT,\App\Models\Category::USERTYPE])->default(\App\Models\Category::USERTYPE);
             $table->boolean('is_active')->default(\App\Models\Category::ACTIVE);
             $table->timestamps();
         });

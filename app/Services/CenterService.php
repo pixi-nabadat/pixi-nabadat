@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
+use App\Exceptions\NotFoundException;
 use App\Models\Center;
 use App\Models\User;
 use App\QueryFilters\CentersFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class CenterService extends BaseService
@@ -30,6 +30,9 @@ class CenterService extends BaseService
         return $centers->get();
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function store(array $data = [])
     {
         DB::beginTransaction();
@@ -37,10 +40,10 @@ class CenterService extends BaseService
         $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ? 1 : 0;
         $data['featured'] = isset($data['featured']) ? 1 : 0;
 
-        $center_data = Arr::except($data,['password','email']);
+        $center_data = $this->prepareCenterData($data);
         $center = Center::create($center_data);
         if (!$center)
-            return false;
+           throw new NotFoundException(trans('lang.center_not_created'));
         if (isset($data['images']) && is_array($data['images']))
             foreach ($data['images'] as $image) {
                 $fileData = FileService::saveImage(file: $image, path: 'uploads/centers');
@@ -52,54 +55,68 @@ class CenterService extends BaseService
         return $center;
     }
 
-    private function prepareUserData($data): array
+    private function prepareUserData($data)
     {
-        $userData = [
-            'name' => Arr::get($data, 'name'),
-            'email' => Arr::get($data, 'email'),
-            'phone' => Arr::first(Arr::get($data, 'phone')),
-            'user_name' => Arr::get($data, 'user_name'),
-            'password' => bcrypt(Arr::get($data, 'password')),
+        return [
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'user_name' => $data['user_name'],
+            'password' => bcrypt($data['password']),
             'type' => User::CENTERADMIN,
-            'is_active' => Arr::get($data, 'is_active') ?? 0,
-            'location_id' => Arr::get($data, 'location_id'),
-            'description' => Arr::get($data, 'description'),
+            'is_active' => $data['is_active'] ,
+            'location_id' => $data['location_id'],
         ];
-        return $userData;
+    }
+
+    private function prepareCenterData($data): array
+    {
+        return [
+            'is_support_auto_service'=>$data['is_support_auto_service'],
+            'phones'=>$data['phones'],
+            'address' => $data['address'],
+            'description' => $data['description'],
+            'avg_waiting_time'=>$data['avg_waiting_time'],
+            'support_payments'=> $data['support_payments'],
+            'app_discount'=>$data['app_discount'],
+            'lat'=>$data['lng'],
+            'lng'=>$data['lng'],
+            'google_map_url'=>$data['google_map_url'],
+        ];
     }
 
     public function update(int $centerId, array $centerData): bool
     {
         $center = $this->find($centerId);
-        if ($center) {
-            if (isset($centerData['images']) && is_array($centerData['images']))
-                foreach ($centerData['images'] as $image) {
-                    $fileData = FileService::saveImage(file: $image, path: 'uploads/centers');
-                    $center->storeAttachment($fileData);
-                }
-            $center->update($centerData);
-        }
-        return false;
+        if (!$center)
+            throw new NotFoundException(trans('lang.center_not_found'));
+
+        if (isset($centerData['images']) && is_array($centerData['images']))
+            foreach ($centerData['images'] as $image) {
+                $fileData = FileService::saveImage(file: $image, path: 'uploads/centers');
+                $center->storeAttachment($fileData);
+            }
+        return $center->update($centerData);
     }
 
     public function find($id, $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
         $center = Center::with($with)->find($id);
-        if ($center)
-            return $center;
-        return false;
+        if (!$center)
+            throw new NotFoundException(trans('lang.center_not_found'));
+        return $center;
     }
 
     public function changeStatus($id)
     {
-        $center = Center::find($id);
+        $center = $this->find($id);
         $center->is_active = !$center->is_active;
         return $center->save();
     }
 
     public function changeSupportAutoServiceStatus($id)
     {
-        $center = Center::find($id);
+        $center = $this->find($id);
         $center->is_support_auto_service = !$center->is_support_auto_service;
         return $center->save();
     }
@@ -107,11 +124,8 @@ class CenterService extends BaseService
     public function delete($id): bool
     {
         $center = $this->find($id);
-        if ($center) {
-            $center->deleteAttachments();
-            return $center->delete();
-        }
-        return false;
+        $center->deleteAttachments();
+        return $center->delete();
     }
 
     public function featured($id): bool
@@ -119,6 +133,5 @@ class CenterService extends BaseService
         $center = $this->find($id);
         $center->featured = !$center->featured;
         return $center->save();
-
     }
 }

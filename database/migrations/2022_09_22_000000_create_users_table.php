@@ -22,14 +22,13 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->tinyInteger('type')->default(\App\Models\User::CUSTOMERTYPE);
             $table->boolean('is_active')->default(\App\Models\User::ACTIVE);
-            $table->foreignIdFor(\app\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-
-            $table->foreignIdFor(\App\Models\Location::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignIdFor(\App\Models\Location::class)->nullable()->constrained()->onUpdate('cascade')->nullOnDelete();
+            $table->foreignIdFor(\App\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->nullOnDelete();
             $table->date('date_of_birth')->nullable();
-            $table->string('description')->nullable();
             $table->integer('points')->default(0);
             $table->date('points_expire_date')->nullable();
             $table->timestamp('last_login')->nullable();
+            $table->string('device_token')->nullable();
             $table->timestamps();
         });
     }

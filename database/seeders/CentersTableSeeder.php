@@ -22,12 +22,34 @@ class CentersTableSeeder extends Seeder
      */
     public function run()
     {
-//        'name', 'phone', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
-//        'google_map_url','avg_wating_time','featured', 'rate'
-        $data =[
-            'name'=>'center test','email'=>'center_test@gmail.com', 'phone'=>['01234567895'], 'is_active'=>true, 'location_id'=>7 ,'is_support_auto_service'=>true,'address'=>'test address 1','description'=>'center is perfect',
-            'avg_waiting_time'=>30,'password'=>'12345678', 'support_payments'=> [PaymentMethodEnum::CASH,PaymentMethodEnum::CASH],'app_discount'=>20
+
+        $center_data = [
+            'is_support_auto_service'=>true,
+            'phones'=>['01234567895'],
+            'address' => [
+                'ar'=>'test address',
+                'en'=>'test address',
+            ],
+            'description' => [
+                'ar'=>'center is perfect',
+                'en'=>'center is perfect',
+            ],
+            'avg_waiting_time'=>30,
+            'support_payments'=> [PaymentMethodEnum::CASH,PaymentMethodEnum::CASH],
+            'app_discount'=>20
         ];
-       app()->make(CenterService::class)->store($data);
+        $center = Center::create($center_data) ;
+
+        $user_data =[
+            'name'=>'center test',
+            'email'=>'center_test@gmail.com',
+            'user_name'=>"center".time(),
+            'is_active'=>true,
+            'location_id'=>7 ,
+            'password'=>bcrypt(123456),
+            'phone'=>0111362245,
+            'type'=>User::CENTERADMIN,
+        ];
+        $center->user()->create($user_data);
     }
 }

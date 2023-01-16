@@ -9,6 +9,7 @@ use App\Traits\Filterable;
 use App\Traits\HasAttachment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -25,15 +26,15 @@ class User extends Authenticatable
     const ACTIVE = 1;
     const NONACTIVE = 0;
 
-    public $translatable = ['name', 'description'];
+    public $translatable = ['name'];
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'type', 'description', 'user_name',
-        'last_login', 'date_of_birth', 'is_active', 'location_id', 'points', 'points_expire_date'
+        'name', 'email', 'password', 'phone', 'type', 'user_name','device_token','user_name',
+        'last_login', 'date_of_birth', 'is_active', 'location_id', 'points', 'points_expire_date','center_id'
     ];
 
     /**
@@ -51,17 +52,24 @@ class User extends Authenticatable
      * @param float $amount
      * @param string $amountType
      */
-    public static function setPoints(User $user, float $amount, string $amountType): bool
+    public static function setPoints(Model $model, float $amount, string $amountType): bool
     {
 
-        $pointsPerPound = config('global.patient_points_per_pound') !== null ? config('global.patient_points_per_pound') : Setting::get('points', 'patient_points_per_pound');
-        $pointsExpireDaysCount = config('global.patient_points_expire_days_count') !== null ? config('global.patient_points_expire_days_count') : Setting::get('points', 'patient_points_expire_days_count');
+        if (is_null($model->center_id))
+        {
+            $pointsPerPound = config('global.patient_points_per_pound') !== null ? config('global.patient_points_per_pound') : Setting::get('points', 'patient_points_per_pound');
+            $pointsExpireDaysCount = config('global.patient_points_expire_days_count') !== null ? config('global.patient_points_expire_days_count') : Setting::get('points', 'patient_points_expire_days_count');
+        }else
+        {
+            $pointsPerPound = config('global.center_points_per_pound') !== null ? config('global.center_points_per_pound') : Setting::get('points', 'center_points_per_pound');
+            $pointsExpireDaysCount = config('global.center_points_expire_days_count') !== null ? config('global.center_points_expire_days_count') : Setting::get('points', 'center_points_expire_days_count');
+        }
         if ($amountType == 'points')
-            $user->points += $amount;
+            $model->points += $amount;
         else
-            $user->points += $pointsPerPound * $amount;
-        $user->points_expire_date = Carbon::now()->addDays($pointsExpireDaysCount);
-        $user->save();
+            $model->points += $pointsPerPound * $amount;
+        $model->points_expire_date = Carbon::now()->addDays($pointsExpireDaysCount);
+        $model->save();
         return true;
     }
 
@@ -91,19 +99,14 @@ class User extends Authenticatable
         return $this->morphOne(Attachment::class,'attachmentable');
     }
 
-    public function center(): \Illuminate\Database\Eloquent\Relations\belongsToMany
-    {
-        return $this->belongsToMany(Center::class, CenterDoctor::class, 'doctor_id', 'center_id');
-    }
-
     public function cart(): \Illuminate\Database\Eloquent\Relations\hasOne
     {
         return $this->hasOne(Cart::class);
     }
 
-    public function coupons(): \Illuminate\Database\Eloquent\Relations\belongsToMany
+    public function coupons(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsToMany(Coupon::class, 'coupon_usages', 'user_id', 'coupon_id');
+        return $this->hasMany(CouponUsage::class,  'user_id', );
     }
 
     public function defaultAddress(): \Illuminate\Database\Eloquent\Relations\hasMany
@@ -131,10 +134,6 @@ class User extends Authenticatable
         return $this->hasMany(UserPackage::class, 'user_id');
     }
 
-    public function fcmToken(): \Illuminate\Database\Eloquent\Relations\HasOne
-    {
-        return $this->hasOne(UserDeviceTokens::class,'user_id');
-    }
 
     public static function decreaseFromOffer(User $user, $number_of_pulses)
     {

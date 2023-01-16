@@ -16,20 +16,23 @@ class CentresDataTable extends DataTable
                 'action', function (Center $center) {
                 return view('dashboard.centers.action', compact('center'))->render();
             })
-            ->addcolumn('name', function (Center $center) {
-                return $center->name;
+            ->editColumn('name', function (Center $center) {
+                return $center->user->name;
             })
-            ->addcolumn('address', function (Center $center) {
+            ->editColumn('address', function (Center $center) {
                 return $center->address;
             })
-            ->addcolumn('location', function (Center $center) {
-                return $center->location->title;
+            ->editColumn('phone', function (Center $center) {
+                return $center->user->phone;
             })
-            ->addColumn('featured', function(Center $center){
+            ->editColumn('location', function (Center $center) {
+                return $center->user->location->title;
+            })
+            ->editColumn('featured', function(Center $center){
                 return view('dashboard.components.switch-featured-btn',['model'=>$center,'url'=>route('centers.featured')])->render();
             })
-            ->addcolumn('is_active', function (Center $center) {
-                return  view('dashboard.components.switch-btn',['model'=>$center,'url'=>route('centers.changeStatus')]);
+            ->editColumn('is_active', function (Center $center) {
+                return  view('dashboard.components.switch-btn',['model'=>$center->user,'url'=>route('centers.changeStatus')]);
             })
             ->addcolumn('is_support_auto_service', function (Center $center) {
                 return  view('dashboard.components.switch-support-auto-service-btn',['model'=>$center,'url'=>route('centers.support-auto-service.changeStatus')]);
@@ -77,6 +80,10 @@ class CentresDataTable extends DataTable
             Column::make('name'),
             Column::make('address'),
             Column::make('phone'),
+            Column::make('app_discount')
+                ->title(trans('lang.center_discount'))
+                ->searchable(false)
+                ->orderable(false),
             Column::make('location'),
             Column::make('featured')
                 ->searchable(false)
