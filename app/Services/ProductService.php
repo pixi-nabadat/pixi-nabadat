@@ -38,14 +38,14 @@ class ProductService extends BaseService
             return false ;
         if (isset($data['logo']))
         {
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\products');
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\products', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $product->storeAttachment($fileData);
         }
         if (isset($data['images'])&&is_array($data['images']))
             foreach ($data['images'] as $image)
             {
-                $fileData = FileService::saveImage(file: $image,path: 'uploads\products');
+                $fileData = FileService::saveImage(file: $image,path: 'uploads\products', field_name: 'galary');
                 $fileData['type'] = ImageTypeEnum::GALARY;
                 $product->storeAttachment($fileData);
             }
@@ -79,14 +79,14 @@ class ProductService extends BaseService
         if ($product) {
             if (isset($data['logo']))
             {
-                $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\products');
+                $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\products', field_name: 'logo');
                 $fileData['type'] = ImageTypeEnum::LOGO;
                 $product->storeAttachment($fileData);
             }
             if (isset($data['images'])&&is_array($data['images']))
             foreach ($data['images'] as $image)
             {
-                $fileData = FileService::saveImage(file: $image,path: 'uploads\products');
+                $fileData = FileService::saveImage(file: $image,path: 'uploads\products', field_name: 'galary');
                 $fileData['type'] = ImageTypeEnum::GALARY;
                 $product->storeAttachment($fileData);
             }
