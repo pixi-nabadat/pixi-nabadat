@@ -20,6 +20,12 @@ class Package extends Model
     public $translatable = ['name'];
     protected $fillable = ['center_id', 'name', 'num_nabadat', 'price', 'start_date', 'end_date', 'discount_percentage', 'status', 'is_active'];
 
+    public function subscriber(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(UserPackage::class);
+    }
+
+
     public function center(): BelongsTo
     {
         return $this->belongsTo(Center::class);
