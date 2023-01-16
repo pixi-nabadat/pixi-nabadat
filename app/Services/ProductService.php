@@ -79,6 +79,7 @@ class ProductService extends BaseService
         if ($product) {
             if (isset($data['logo']))
             {
+                $product->deleteAttachmentsLogo();
                 $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\products', field_name: 'logo');
                 $fileData['type'] = ImageTypeEnum::LOGO;
                 $product->storeAttachment($fileData);
