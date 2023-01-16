@@ -28,7 +28,8 @@ class AuthController extends Controller
                 'token_type' => 'Bearer',
                 'user' => $user
             ];
-            $this->authService->setUserFcmToken($user,$request->fcm_token);
+            if (isset($request->device_token))
+                $user->update(['device_token'=>$request->device_token]);
             return apiResponse($data, __('lang.login success'));
         } catch (UserNotFoundException $e) {
             return apiResponse($e->getMessage(), 'Unauthorized', $e->getCode());
@@ -51,6 +52,22 @@ class AuthController extends Controller
         return apiResponse(message: __('lang.error_message'), code: 422);
     }
 
+    public function loginCenter(LoginRequest $request)
+    {
+        try {
+            $center = $this->authService->loginCenterWithUsernameOrPhone(identifier: $request->identifier, password: $request->password);
+            $data = [
+                'token' => $center->getToken(),
+                'token_type' => 'Bearer',
+                'user' => $center
+            ];
+            if (isset($request->device_token))
+                $center->update(['device_token'=>$request->device_token]);
+            return apiResponse($data, __('lang.login success'));
+        } catch (UserNotFoundException $e) {
+            return apiResponse($e->getMessage(), 'Unauthorized', $e->getCode());
+        }
+    }
 
     public function profile(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
@@ -71,10 +88,10 @@ class AuthController extends Controller
 
     public function setFcmToken(StoreFcmTokenRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        $user = auth()->user() ;
+        $user =Auth::user() ;
         if (!$user)
-            return apiResponse(message: trans('lang.Unauthenticated'));
-        $this->authService->setUserFcmToken($user , $request->fcm_token);
+            return apiResponse(message: trans('lang.Unauthenticated'),code: 422);
+        $user->update(['device_token'=>$request->device_token]);
         return apiResponse(message: trans('lang.success_operation'));
     }
 }

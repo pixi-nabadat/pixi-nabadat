@@ -24,7 +24,7 @@ class LoginRequest extends BaseRequest
         return [
             'identifier'=>'required|string',
             'password'=>'required',
-            'fcm_token'=>'nullable|string',
+            'device_token'=>'nullable|string',
         ];
     }
 }

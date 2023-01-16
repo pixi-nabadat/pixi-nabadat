@@ -4,8 +4,10 @@ namespace App\Services;
 
 
 use App\Exceptions\UserNotFoundException;
+use App\Models\Center;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class AuthService extends BaseService
 {
@@ -20,6 +22,16 @@ class AuthService extends BaseService
         return User::where($identifierField, $identifier)->first();
     }
 
+    public function loginCenterWithUsernameOrPhone(string $identifier, string $password) :User|Model
+    {
+
+        $identifierField = is_numeric($identifier) ? 'phone':'user_name';
+        $credential = [$identifierField=>$identifier,'password'=>$password];
+        if (!auth('center')->attempt($credential))
+            return throw new UserNotFoundException(__('lang.login failed'));
+        return Center::where($identifierField, $identifier)->first();
+    }
+
 
     /**
      * @param array $data
@@ -30,14 +42,8 @@ class AuthService extends BaseService
         return User::create($data);
     }
 
-    public function getAuthUser()
+    public function getAuthUser(): ?\Illuminate\Contracts\Auth\Authenticatable
     {
-        return auth('sanctum')->user();
-    }
-
-    public function setUserFcmToken(User $user , $fcm_token)
-    {
-        if (isset($fcm_token))
-            $user->fcmToken()->updateOrCreate(['user_id'=>$user->id],['fcm_token'=>$fcm_token]);
+        return Auth::user();
     }
 }

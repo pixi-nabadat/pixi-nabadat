@@ -16,7 +16,11 @@ return new class extends Migration
         Schema::create('centers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('phone'); //cast array accept multiple phones
+            $table->string('email')->unique();
+            $table->string('user_name')->unique();
+            $table->string('password');
+            $table->string('phone')->unique();
+            $table->string('other_phones'); //cast array accept multiple phones
             $table->foreignIdFor(\App\Models\Location::class);
             $table->text('description')->nullable();
             $table->text('address')->nullable();
@@ -32,6 +36,7 @@ return new class extends Migration
             $table->double('rate')->default(0.0);
             $table->double('app_discount');
             $table->string('support_payments')->default(PaymentMethodEnum::CASH);
+            $table->string('device_token')->nullable();
             $table->timestamps();
         });
     }

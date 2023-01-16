@@ -22,7 +22,7 @@ class CouponsTableSeeder extends Seeder
     public function run()
     {
        Coupon::create([
-           'added_by'=>User::where('type',User::SUPERADMINTYPE)->first()->id,
+           'added_by'=>User::where('type',User::EMPLOYEETYPE)->first()->id,
            'code'=>'test123',
            'discount'=>10,
            'discount_type'=>Coupon::DISCOUNT_PERCENTAGE,

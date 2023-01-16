@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
             'email'=>'admin@gmail.com',
             'password'=>bcrypt('123456'),
             'phone'=>'01113622098',
-            'type'=>User::SUPERADMINTYPE,
+            'type'=>User::EMPLOYEETYPE,
             'last_login'=>now(),
             'date_of_birth'=>Carbon::now()->format('Y-m-d'),
             'is_active'=>User::ACTIVE,

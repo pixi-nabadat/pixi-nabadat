@@ -7,12 +7,15 @@ use App\Traits\Filterable;
 use App\Traits\HasAttachment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Spatie\Translatable\HasTranslations;
+use Laravel\Sanctum\HasApiTokens;
 
-class Center extends Model
+
+class Center extends Authenticatable
 {
-    use HasTranslations, HasFactory,Filterable, HasAttachment,EscapeUnicodeJson;
+    use HasTranslations, HasApiTokens,HasFactory,Filterable, HasAttachment,EscapeUnicodeJson,Notifiable;
 
     const
         ACTIVE = 1 ,
@@ -26,28 +29,31 @@ class Center extends Model
     const SEARCHFLAG = 2 ;
 
     protected $fillable = [
-        'name', 'phone', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
+        'name','email', 'phone','other_phones','user_name','password', 'is_active', 'location_id' ,'lat','lng','is_support_auto_service','address','description',
         'google_map_url','avg_waiting_time','featured', 'rate', 'support_payments','app_discount',
     ];
 
     protected $casts = [
-        'phone' => 'array',
+        'other_phones' => 'array',
         'support_payments' => 'array',
+    ];
+    protected $hidden = [
+        'password',
     ];
 
     protected $table = 'centers';
+    protected $guarded = 'center' ;
 
     public $translatable = ['name','description','address'];
 
+    public function getToken(): string
+    {
+        return $this->createToken(config('app.name')."_center",['center'])->plainTextToken;
+    }
 
     public function location(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Location::class);
-    }
-
-    public function user(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(User::class,'center_id');
     }
 
     public function doctors(): \Illuminate\Database\Eloquent\Relations\HasMany
@@ -77,7 +83,7 @@ class Center extends Model
 
     public function centerFinancial(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(CenterFinance::class, 'center_id');
+        return $this->hasMany(CenterFinancial::class, 'center_id');
     }
     /**
      * @param Center $center

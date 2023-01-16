@@ -16,7 +16,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory,HasAttachment, Notifiable, Filterable, HasTranslations, EscapeUnicodeJson;
 
-    const SUPERADMINTYPE = 1;
+    const EMPLOYEETYPE = 1;
     const CUSTOMERTYPE = 2;
     const CENTERADMIN = 4;
 
@@ -70,7 +70,7 @@ class User extends Authenticatable
      */
     public function getToken(): string
     {
-        return $this->createToken(config('app.name'))->plainTextToken;
+        return $this->createToken(config('app.name').'_user',['user'])->plainTextToken;
     }
 
     public function getId()
@@ -127,10 +127,5 @@ class User extends Authenticatable
     public function package(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(UserPackage::class, 'user_id');
-    }
-
-    public function fcmToken(): \Illuminate\Database\Eloquent\Relations\HasOne
-    {
-        return $this->hasOne(UserDeviceTokens::class,'user_id');
     }
 }

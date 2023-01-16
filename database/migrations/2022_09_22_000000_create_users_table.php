@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('user_name')->unique()->nullable();
             $table->string('password');
             $table->string('phone')->unique();
-            $table->tinyInteger('type')->default(\App\Models\User::CUSTOMERTYPE);
+            $table->enum('type',[\App\Models\User::CUSTOMERTYPE,\App\Models\User::EMPLOYEETYPE])->default(\App\Models\User::CUSTOMERTYPE);
             $table->boolean('is_active')->default(\App\Models\User::ACTIVE);
             $table->foreignIdFor(\app\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
 
@@ -30,6 +30,7 @@ return new class extends Migration
             $table->integer('points')->default(0);
             $table->date('points_expire_date')->nullable();
             $table->timestamp('last_login')->nullable();
+            $table->string('device_token')->nullable();
             $table->timestamps();
         });
     }
