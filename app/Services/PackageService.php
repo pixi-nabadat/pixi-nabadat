@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Package;
 use App\QueryFilters\PackagesFilter;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
 class PackageService extends BaseService
@@ -17,12 +18,11 @@ class PackageService extends BaseService
 
     public function queryGet(array $where_condition = [], array $withRelation = []): Builder
     {
-        $packages = Package::query()->orderBy('status')->orderBy('id')->with($withRelation);
+        $packages = Package::orderBy('status')->with($withRelation);
         return $packages->filter(new PackagesFilter($where_condition));
     }
 
-    public function listing(array $where_condition = [],$withRelation=[],$perPage=10): \Illuminate\Contracts\Pagination\CursorPaginator
-    {
+    public function listing(array $where_condition = [],$withRelation=[],$perPage=10)    {
         return $this->queryGet($where_condition,$withRelation)->cursorPaginate($perPage);
     }
 

@@ -43,7 +43,6 @@ class ProductController extends Controller
                 return apiResponse(data: new ProductResource($product) , message: trans('lang.success_operation'));
             return apiResponse(message: trans('lang.product_not_found'),code: 404);
         } catch (\Exception $e) {
-            dd($e);
             return apiResponse(message: $e->getMessage(), code: $e->getCode());
         }
     }

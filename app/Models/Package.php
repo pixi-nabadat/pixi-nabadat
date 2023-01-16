@@ -6,6 +6,8 @@ use App\Enum\PackageStatusEnum;
 use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
 use App\Traits\HasAttachment;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,6 +24,7 @@ class Package extends Model
     {
         return $this->hasMany(UserPackage::class);
     }
+
 
     public function center(): BelongsTo
     {
@@ -48,5 +51,11 @@ class Package extends Model
     public function getPriceAfterDiscountAttribute()
     {
         return $this->price - ($this->price * ($this->center->app_discount / 100));
+    }
+
+    public function scopeActive(Builder $builder)
+    {
+
+        $builder->where('start_date' ,  '<=' , Carbon::now(config('app.africa_timezone'))->format('Y-m-d'))->where('end_date' ,  '>=' , Carbon::now(config('app.africa_timezone'))->format('Y-m-d'));
     }
 }
