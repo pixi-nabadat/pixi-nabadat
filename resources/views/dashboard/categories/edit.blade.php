@@ -94,16 +94,16 @@
                             <div class="col-md-12 d-flex my-3">
                                 <div class="col-form-label col-3">{{ __('lang.product_type') }}</div>
                                 <select id="type" name="type" class="js-example-basic-single col-sm-12">
-                                    <option value="{{\App\Models\Category::USERTYPE}}"   @if($category->getRawOriginal('type') == \App\Models\Category::USERTYPE)selected@endif>{{ __('lang.user') }}</option>
-                                    <option value="{{\App\Models\Category::CENTERTYPT}}" @if($category->getRawOriginal('type') == \App\Models\Category::CENTERTYPT)selected@endif>{{ __('lang.center') }}</option>
+                                    <option value="{{\App\Models\Category::USERTYPE}}"   @if($category->getRawOriginal('type') == \App\Models\Category::USERTYPE)selected @endif>{{ __('lang.user') }}</option>
+                                    <option value="{{\App\Models\Category::CENTERTYPT}}" @if($category->getRawOriginal('type') == \App\Models\Category::CENTERTYPT)selected @endif>{{ __('lang.center') }}</option>
                                 </select>
                             </div>
 
                                 <div class="col-md-12">
-                                    <label class="form-label mt-3" for="image">{{ trans('lang.image') }}</label>
-                                    <input name="images[]" class="form-control image @error('image') is-invalid @enderror"
-                                        id="image" type="file" multiple>
-                                    @error('image')
+                                    <label class="form-label mt-3" for="logo">{{ trans('lang.logo') }}</label>
+                                    <input name="logo" class="form-control image @error('logo') is-invalid @enderror"
+                                        id="logo" type="file">
+                                    @error('logo')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

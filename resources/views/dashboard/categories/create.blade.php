@@ -53,10 +53,10 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <label class="form-label" for="image">{{ trans('lang.image') }}</label>
-                                    <input name="images[]" class="form-control image @error('image') is-invalid @enderror"
-                                        id="image" type="file" multiple>
-                                    @error('image')
+                                    <label class="form-label" for="logo">{{ trans('lang.logo') }}</label>
+                                    <input name="logo" class="form-control image @error('logo') is-invalid @enderror"
+                                        id="logo" type="file">
+                                    @error('logo')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

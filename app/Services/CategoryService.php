@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enum\ImageTypeEnum;
 use App\Models\Category;
 use App\QueryFilters\CategoriesFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -30,10 +31,10 @@ class CategoryService extends BaseService
         if (!$category)
             return false ;
 
-        if (isset($data['images'])&&is_array($data['images']))
-        foreach ($data['images'] as $image)
+        if (isset($data['logo']))
         {
-            $fileData = FileService::saveImage(file: $image,path: 'uploads\categories');
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\categories', field_name: 'logo');
+            $fileData['type'] = ImageTypeEnum::LOGO;
             $category->storeAttachment($fileData);
         }
 
@@ -66,10 +67,11 @@ class CategoryService extends BaseService
         $category = category::find($id);
         if ($category) {
 
-            if (isset($data['images'])&&is_array($data['images']))
-            foreach ($data['images'] as $image)
+            if (isset($data['logo']))
             {
-                $fileData = FileService::saveImage(file: $image,path: 'uploads\categories');
+                $category->deleteAttachmentsLogo();
+                $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\categories', field_name: 'logo');
+                $fileData['type'] = ImageTypeEnum::LOGO;
                 $category->storeAttachment($fileData);
             }
 
