@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('center_financials', function (Blueprint $table) {
+        Schema::create('settlements', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->constrained();
             $table->foreignIdFor(\App\Models\Center::class)->constrained();
@@ -22,7 +22,8 @@ return new class extends Migration
             $table->double('center_dues');
             $table->double('app_dues');
             $table->double('regular_price');
-            $table->double('discount');
+            $table->double('center_discount');
+            $table->double('user_discount');
             $table->boolean('status')->default(false);
             $table->date('date');
             $table->timestamps();
