@@ -20,9 +20,9 @@ class UserService extends BaseService
         return $users->get();
     }
 
-    public function queryGet(array $where_condition = []): Builder
+    public function queryGet(array $where_condition = [],$withRelation=[]): Builder
     {
-        $users = User::query();
+        $users = User::query()->with($withRelation);
         return $users->filter(new UsersFilter($where_condition));
     }
 
@@ -114,4 +114,11 @@ class UserService extends BaseService
             $user->nabadatWallet()->updateOrCreate(['user_id'=>$user->id],['total_pulses' => $total_pulses]);
         return true;
     }
+
+    public function status($id)
+    {
+        $user = $this->find($id);
+        $user->is_active = !$user->is_active;
+        return $user->save();
+    }//end of status
 }
