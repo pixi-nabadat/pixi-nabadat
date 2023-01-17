@@ -108,7 +108,40 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                {{-- device_logo --}}
+                                <div class="col-md-12">
+                                    <label class="form-label mt-3" for="logo">{{ trans('lang.logo') }}</label>
+                                    <input name="logo" class="form-control image @error('logo') is-invalid @enderror"
+                                        id="logo" type="file">
+                                    @error('logo')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
+                                <div class="col-md-12">
+                                    <div class="row">
+                                    @if($device->attachments->count())
+                                        @foreach($device->attachments as $attachment)
+                                            @if ($attachment->type == App\Enum\ImageTypeEnum::LOGO)
+                                            <div class="col-md-3 col-lg-3 col-sm-12">
+                                                <div class="img-container">
+                                                    <div class="form-group my-3">
+                                                        <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
+                                                    </div>
+                                                    <div class="overlay">
+                                                        <a role="button" onclick="destroy('{{route('attachment.destroy',$attachment->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
+                                                            <i class="fa fa-trash-o"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
+                                            
+                                        @endforeach
+                                    @endif
+
+                                </div>
+                                {{-- device_image --}}
                                 <div class="col-md-12">
                                     <label class="form-label mt-3" for="image">{{ trans('lang.image') }}</label>
                                     <input name="images[]" class="form-control image @error('image') is-invalid @enderror"
@@ -122,6 +155,7 @@
                                     <div class="row">
                                     @if($device->attachments->count())
                                         @foreach($device->attachments as $attachment)
+                                            @if ($attachment->type == App\Enum\ImageTypeEnum::GALARY)
                                             <div class="col-md-3 col-lg-3 col-sm-12">
                                                 <div class="img-container">
                                                     <div class="form-group my-3">
@@ -134,6 +168,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endif
+                                            
                                         @endforeach
                                     @endif
 
