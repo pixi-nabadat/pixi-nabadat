@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class NabadatWallet extends Model
+class UserNabadatWallet extends Model
 {
     use HasFactory;
     const ONGOING = 1 ;

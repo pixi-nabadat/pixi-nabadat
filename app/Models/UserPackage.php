@@ -21,7 +21,7 @@ class UserPackage extends Model
         'discount_percentage',
         'payment_method',
         'payment_status',
-        'usage_status',
+        'status',
         'used',
         'remain',
     ];
@@ -38,7 +38,7 @@ class UserPackage extends Model
 
     public function center(): BelongsTo
     {
-        return $this->belongsTo(Center::class);
+        return $this->belongsTo(Center::class)->with('user:id,center_id,name');
     }
 
     protected static function boot()

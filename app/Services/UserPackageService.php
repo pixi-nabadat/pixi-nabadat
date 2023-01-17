@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
 use App\Exceptions\NotFoundException;
-use App\Models\CenterFinancial;
+use App\Models\Settlement;
 use App\Models\Package;
 use App\Models\UserPackage;
 use App\QueryFilters\UserPackagesFilter;
@@ -39,7 +39,7 @@ class UserPackageService extends BaseService
             'payment_status' => $data['payment_status'],
         ]);
        if ($is_updated)
-            CenterFinancial::createFinancial($userPackage);
+            Settlement::createFinancial($userPackage);
      return  $userPackage;
     }
     public function find(int $id, array $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
