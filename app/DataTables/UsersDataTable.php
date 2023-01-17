@@ -25,8 +25,20 @@ class UsersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'users.action')
-            ->setRowId('id');
+            ->addColumn('action', function(User $user){
+                return view('dashboard.users.action',compact('user'))->render();
+            })
+            ->editColumn('name', function(User $user){
+                return  $user->name ;
+            })
+            ->editColumn('location', function (User $user) {
+                return optional($user->location)->title ??"-";
+            })
+            ->addColumn('is_active', function(User $user){
+                return view('dashboard.components.switch-btn',['model'=>$user,'url'=>route('clients.status')])->render();
+            })
+            ->setRowId('id')
+            ->rawColumns(['action','is_active']);
     }
 
     /**
@@ -37,7 +49,7 @@ class UsersDataTable extends DataTable
      */
     public function query(UserService $userService): QueryBuilder
     {
-        return $userService->queryGet($this->filters)->with('location');
+        return $userService->queryGet($this->filters,$this->withRelations);
     }
 
     /**
@@ -67,14 +79,31 @@ class UsersDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
+            Column::make('id')
+            ->title('#'),
+            Column::make('name')
+                ->title(trans('lang.name')),
+            Column::make('phone')
+                ->title(trans('lang.phone')),
+            Column::make('location')
+                ->title(trans('lang.location')),
+            Column::make('points')
+                ->title(trans('lang.points'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('points_expire_date')
+                ->title(trans('lang.points_expire_date'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('is_active')
+                ->title(trans('lang.status'))
+                ->searchable(false)
+                ->orderable(false),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 
