@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enum\ImageTypeEnum;
 use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
 use App\Enum\UserPackageStatusEnum;
@@ -31,7 +32,14 @@ class UserService extends BaseService
         $data['password'] = bcrypt($data['password']);
         $data['date_of_birth'] = isset($data['date_of_birth']) ? Carbon::parse($data['date_of_birth']) : null;
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-        return User::create($data);
+        $user = User::create($data);
+        if (isset($data['logo']))
+        {
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\doctors', field_name: 'logo');
+            $fileData['type'] = ImageTypeEnum::LOGO;
+            $user->storeAttachment($fileData);
+        }
+        return $user;
 
     } //end of create
 
@@ -54,7 +62,10 @@ class UserService extends BaseService
     {
         $user = $this->find($id);
         if ($user)
+        {
+            $user->deleteAttachments();
             return $user->delete();
+        }
         return false;
     }//end of delete
 
@@ -66,9 +77,16 @@ class UserService extends BaseService
 
 
         $user = User::find($id);
-        if ($user)
-            $user->update($data);
-        return false;
+        if (!$user)
+            return false;
+        if (isset($data['logo']))
+        {
+            $user->deleteAttachmentsLogo();
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\doctors', field_name: 'logo');
+            $fileData['type'] = ImageTypeEnum::LOGO;
+            $user->storeAttachment($fileData);
+        }
+        $user->update($data);
     }//end of update
 
     public function updateOrCreateNabadatWallet(User $user, $package,$payment_method=PaymentMethodEnum::CASH,$payment_status =PaymentStatusEnum::UNPAID): bool

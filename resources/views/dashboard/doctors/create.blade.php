@@ -20,7 +20,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <form method="post" class="needs-validation" novalidate="" action="{{ route('doctors.store') }}">
+                        <form method="post" class="needs-validation"  enctype="multipart/form-data" novalidate="" action="{{ route('doctors.store') }}">
                             @csrf
                             <div class="row g-3">
 
@@ -97,11 +97,7 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-
-                            </div>
-
-                            <div class="row g-3">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="form-label my-2"
                                         for="description">{{ trans('lang.description') }}</label>
                                     <input name="description"
@@ -111,6 +107,17 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div class="col-md-6">
+                                    <label class="form-label my-2"
+                                        for="logo">{{ trans('lang.logo') }}</label>
+                                    <input name="logo"
+                                        class="form-control  @error('logo') is-invalid @enderror" id="logo"
+                                        type="file">
+                                    @error('logo')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
                             </div>
 
                             <div class="row g-3">

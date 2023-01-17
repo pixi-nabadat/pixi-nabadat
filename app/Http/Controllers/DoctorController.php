@@ -21,7 +21,7 @@ class DoctorController extends Controller
 
     public function index(DoctorsDataTable $dataTable, Request $request)
     {
-        $request = $request->merge(['type' => User::DOCTORTYPE]); //filter Doctor users
+        // $request = $request->merge(['type' => User::DOCTORTYPE]); //filter Doctor users
         return $dataTable->with(['filters' => $request->all()])->render('dashboard.Doctors.index');
     } //end of index
 
@@ -60,7 +60,7 @@ class DoctorController extends Controller
     {
         try {
             $request->validated();
-            $request->merge(['type'=>User::DOCTORTYPE]);
+            // $request->merge(['type'=>User::DOCTORTYPE]);
             $this->userService->store($request->all());
             $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'Doctor Saved Successfully'];
             return redirect()->route('doctors.index')->with('toast', $toast);
@@ -75,7 +75,7 @@ class DoctorController extends Controller
     {
         try {
             $request->validated();
-            $request['type'] = User::DOCTORTYPE;
+            // $request['type'] = User::DOCTORTYPE;
             $this->userService->update($id, $request->all());
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect(route('doctors.index'))->with('toast', $toast);

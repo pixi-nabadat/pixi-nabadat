@@ -34,8 +34,8 @@ class DoctorStoreRequest extends BaseRequest
             'password' => 'required|string|min:6|confirmed',
             'date_of_birth' => 'required|date',
             'location_id' => 'required|integer|exists:locations,id',
-            'description' => 'nullable|string'
-
+            'description' => 'nullable|string',
+            'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ];
     }
 

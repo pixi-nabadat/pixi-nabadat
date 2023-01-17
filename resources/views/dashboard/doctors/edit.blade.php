@@ -21,7 +21,7 @@
                 <div class="card">
                     <div class="card-body">
                         <form class="needs-validation" novalidate="" action="{{ route('doctors.update', $user) }}"
-                            method="post">
+                            method="post"  enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             
@@ -105,17 +105,23 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-
-                            </div>
-
-                            <div class="row g-3">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="form-label my-2"
                                         for="description">{{ trans('lang.description') }}</label>
                                     <input name="description"
                                         class="form-control  @error('description') is-invalid @enderror" id="description"
                                         value='{{ $user->description }}' type="text">
                                     @error('address')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label my-2"
+                                        for="logo">{{ trans('lang.logo') }}</label>
+                                    <input name="logo"
+                                        class="form-control  @error('logo') is-invalid @enderror" id="logo"
+                                        type="file">
+                                    @error('logo')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
