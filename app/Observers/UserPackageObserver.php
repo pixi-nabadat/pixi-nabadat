@@ -4,7 +4,7 @@ namespace App\Observers;
 
 use App\Enum\PaymentStatusEnum;
 use App\Models\Center;
-use App\Models\CenterFinancial;
+use App\Models\Settlement;
 use App\Models\User;
 use App\Models\UserPackage;
 use Carbon\Carbon;
@@ -26,9 +26,9 @@ class UserPackageObserver
 //          set user points after pay the offer
             User::setPoints($userPackage->user, amount: $amount_after_discount, amountType: 'cash');
 //          set center points after pay the offer
-            User::setPoints($userPackage->center, amount: $amount_after_discount, amountType: 'cash');
+            User::setPoints($userPackage->center->user, amount: $amount_after_discount, amountType: 'cash');
 //          set financial for center and
-            CenterFinancial::createFinancial($userPackage);
+            Settlement::createFinancial($userPackage);
         }
     }
 
