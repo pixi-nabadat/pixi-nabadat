@@ -38,7 +38,6 @@ class ComposerStaticInit93d699fc337f9a91944907d8f91440cb
         '320163ac6b93aebe3dc25b60a0533d56' => __DIR__ . '/..' . '/spatie/laravel-ignition/src/helpers.php',
         '377b22b161c09ed6e5152de788ca020a' => __DIR__ . '/..' . '/spatie/laravel-permission/src/helpers.php',
         'd21d43db5f6e840ee7b10744ec7fdf66' => __DIR__ . '/../..' . '/app/Helpers/helpers.php',
-        '737b5e887b8d94a95ae4219d499679e9' => __DIR__ . '/../..' . '/app/Utils/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -604,6 +603,7 @@ class ComposerStaticInit93d699fc337f9a91944907d8f91440cb
         'App\\DataTables\\UsersDataTable' => __DIR__ . '/../..' . '/app/DataTables/UsersDataTable.php',
         'App\\Enum\\ActivationStatusEnum' => __DIR__ . '/../..' . '/app/Enum/ActivationStatusEnum.php',
         'App\\Enum\\DiscountEnum' => __DIR__ . '/../..' . '/app/Enum/DiscountEnum.php',
+        'App\\Enum\\FcmEventsNames' => __DIR__ . '/../..' . '/app/Enum/FcmEventsNames.php',
         'App\\Enum\\ImageTypeEnum' => __DIR__ . '/../..' . '/app/Enum/ImageTypeEnum.php',
         'App\\Enum\\PackageStatusEnum' => __DIR__ . '/../..' . '/app/Enum/PackageStatusEnum.php',
         'App\\Enum\\PaymentMethodEnum' => __DIR__ . '/../..' . '/app/Enum/PaymentMethodEnum.php',
@@ -661,6 +661,7 @@ class ComposerStaticInit93d699fc337f9a91944907d8f91440cb
         'App\\Http\\Controllers\\OrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/OrderController.php',
         'App\\Http\\Controllers\\PackageController' => __DIR__ . '/../..' . '/app/Http/Controllers/PackageController.php',
         'App\\Http\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductController.php',
+        'App\\Http\\Controllers\\PushNotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/PushNotificationController.php',
         'App\\Http\\Controllers\\ReservationController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReservationController.php',
         'App\\Http\\Controllers\\SettingController' => __DIR__ . '/../..' . '/app/Http/Controllers/SettingController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
@@ -773,6 +774,7 @@ class ComposerStaticInit93d699fc337f9a91944907d8f91440cb
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\UserNabadatWallet' => __DIR__ . '/../..' . '/app/Models/UserNabadatWallet.php',
         'App\\Models\\UserPackage' => __DIR__ . '/../..' . '/app/Models/UserPackage.php',
+        'App\\Notifications\\FcmNotification' => __DIR__ . '/../..' . '/app/Notifications/FcmNotification.php',
         'App\\Observers\\OrderHistoryObserver' => __DIR__ . '/../..' . '/app/Observers/OrderHistoryObserver.php',
         'App\\Observers\\ProductObserver' => __DIR__ . '/../..' . '/app/Observers/ProductObserver.php',
         'App\\Observers\\ReservationHistoryObserver' => __DIR__ . '/../..' . '/app/Observers/ReservationHistoryObserver.php',
@@ -819,6 +821,7 @@ class ComposerStaticInit93d699fc337f9a91944907d8f91440cb
         'App\\Services\\PackageService' => __DIR__ . '/../..' . '/app/Services/PackageService.php',
         'App\\Services\\Payment\\PaymobService' => __DIR__ . '/../..' . '/app/Services/Payment/PaymobService.php',
         'App\\Services\\ProductService' => __DIR__ . '/../..' . '/app/Services/ProductService.php',
+        'App\\Services\\PushNotificationService' => __DIR__ . '/../..' . '/app/Services/PushNotificationService.php',
         'App\\Services\\RatesService' => __DIR__ . '/../..' . '/app/Services/RatesService.php',
         'App\\Services\\ReservationHistoryService' => __DIR__ . '/../..' . '/app/Services/ReservationHistoryService.php',
         'App\\Services\\ReservationService' => __DIR__ . '/../..' . '/app/Services/ReservationService.php',

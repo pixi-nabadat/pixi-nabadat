@@ -20,6 +20,7 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\PushNotificationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -121,6 +122,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::post('orders/updateOrderStatus', [OrderController::class, 'updateOrderStatus'])->name('orders.updateOrderStatus');
     Route::resource('orders', OrderController::class);
 
+//fcm routes
+    Route::group(['prefix'=>'fcm'],function (){
+        Route::get('send',[PushNotificationController::class,'create']);
+        Route::post('send',[PushNotificationController::class,'send']);
+    });
 
 });
 

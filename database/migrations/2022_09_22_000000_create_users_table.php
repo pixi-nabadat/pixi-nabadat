@@ -29,6 +29,7 @@ return new class extends Migration
             $table->date('points_expire_date')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->string('device_token')->nullable();
+            $table->boolean('allow_notification')->default(true);
             $table->timestamps();
         });
     }
