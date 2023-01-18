@@ -26,16 +26,12 @@ class DoctorStoreRequest extends BaseRequest
     {
         return [
 
-            'user_name' => 'required|string',
-            'name.ar' => 'required|string',
-            'name.en' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'phone' => 'required|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'date_of_birth' => 'required|date',
-            'location_id' => 'required|integer|exists:locations,id',
+            'name' => 'required|string',
+            'phone' => 'required|numeric|unique:doctors',
             'description' => 'nullable|string',
             'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'center_id' => 'required|exists:centers,id',
+            'age' => 'required|integer',
         ];
     }
 

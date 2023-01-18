@@ -6,16 +6,17 @@ use App\DataTables\DoctorsDataTable;
 use App\DataTables\UsersDataTable;
 use App\Http\Requests\DoctorStoreRequest;
 use App\Http\Requests\DoctorUpdateRequest;
+use App\Models\Center;
 use App\Models\Location;
 use App\Models\User;
 use App\Services\LocationService;
-use App\Services\UserService;
+use App\Services\DoctorService;
 use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
 
-    public function __construct(private UserService $userService,private LocationService $locationService)
+    public function __construct(private DoctorService $doctorService,private LocationService $locationService)
     {
     }
 
@@ -27,10 +28,8 @@ class DoctorController extends Controller
 
     public function create()
     {
-        $filters = ['governorates_filter'=>['depth' => 1],'city_filter'=>['depth' => 2]];
-        $governorates = $this->locationService->getAll($filters['governorates_filter']);
-        $cities = $this->locationService->getAll($filters['city_filter']);
-        return view('dashboard.Doctors.create', compact('governorates','cities'));
+        $centers = Center::all();
+        return view('dashboard.Doctors.create', compact('centers'));
     } //end of create
 
 
@@ -44,24 +43,22 @@ class DoctorController extends Controller
 
     public function edit($id)
     {
-        $user = $this->userService->find($id);
-        if (!$user)
+        $doctor = $this->doctorService->find($id);
+        if (!$doctor)
         {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.doctor_not_found')];
             return back()->with('toast', $toast);
         }
-        $filters = ['governorates_filter'=>['depth' => 1],'city_filter'=>['depth' => 2]];
-        $governorates = $this->locationService->getAll($filters['governorates_filter']);
-        $cities = $this->locationService->getAll($filters['city_filter']);
-        return view('dashboard.Doctors.edit', compact('user', 'governorates','cities'));
+        $filters = [];
+        $centers = Center::all();
+        return view('dashboard.Doctors.edit', compact('doctor', 'centers'));
     } //end of edit
 
     public function store(DoctorStoreRequest $request)
     {
         try {
-            $request->validated();
-            // $request->merge(['type'=>User::DOCTORTYPE]);
-            $this->userService->store($request->all());
+            $data = $request->validated();
+            $this->doctorService->store($data);
             $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'Doctor Saved Successfully'];
             return redirect()->route('doctors.index')->with('toast', $toast);
         } catch (\Exception $ex) {
@@ -74,9 +71,8 @@ class DoctorController extends Controller
     public function update(DoctorUpdateRequest $request, $id)
     {
         try {
-            $request->validated();
-            // $request['type'] = User::DOCTORTYPE;
-            $this->userService->update($id, $request->all());
+            $data = $request->validated();
+            $this->doctorService->update($id, $data);
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect(route('doctors.index'))->with('toast', $toast);
         } catch (\Exception $ex) {
@@ -89,7 +85,7 @@ class DoctorController extends Controller
     public function destroy($id)
     {
         try {
-            $result = $this->userService->delete($id);
+            $result = $this->doctorService->delete($id);
             if (!$result)
                 return apiResponse(message: trans('lang.not_found'), code: 404);
             return apiResponse(message: trans('lang.success'));
@@ -97,12 +93,5 @@ class DoctorController extends Controller
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
     } //end of destroy
-
-    public function changeStatus($id)
-    {
-        $this->userService->changeStatus($id);
-        $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
-        return redirect(route('doctors.index'))->with('toast', $toast);
-    } //end of changeStatus
 
 }

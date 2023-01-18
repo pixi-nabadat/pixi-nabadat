@@ -2,9 +2,9 @@
 
 namespace App\DataTables;
 
+use App\Models\Doctor;
 use App\Models\User;
-
-use App\Services\UserService;
+use App\Services\DoctorService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -23,11 +23,17 @@ class DoctorsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-        ->addColumn('action', function(User $doctor){
+        ->addColumn('action', function(Doctor $doctor){
             return view('dashboard.Doctors.action',compact('doctor'))->render();
         })
-        ->addcolumn('name', function(User $doctor){
+        ->addcolumn('name', function(Doctor $doctor){
             return $doctor->name ;
+        })
+        ->addcolumn('center_id', function(Doctor $doctor){
+            return $doctor->center->name ;
+        })
+        ->addcolumn('description', function(Doctor $doctor){
+            return $doctor->description ;
         });
     }
 
@@ -37,9 +43,9 @@ class DoctorsDataTable extends DataTable
      * @param User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(UserService $userService): QueryBuilder
+    public function query(DoctorService $doctorService): QueryBuilder
     {
-       return $userService->queryGet($this->filters)->with('location');
+       return $doctorService->queryGet($this->filters)->with('center');
     }
 
     /**
@@ -64,10 +70,26 @@ class DoctorsDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::make('name'),
-            Column::make('email'),
-            Column::make('phone'),
-            Column::make('date_of_birth'),
+            Column::make('center_id')
+                ->title(trans('lang.center'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('name')
+                ->title(trans('lang.name'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('phone')
+                ->title(trans('lang.phone'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('age')
+                ->title(trans('lang.age'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('description')
+                ->title(trans('lang.description'))
+                ->searchable(false)
+                ->orderable(false),
             Column::computed('action')
             ->exportable(false)
             ->printable(false)
