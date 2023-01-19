@@ -30,4 +30,10 @@ class FcmEventsNames
         'RESERVATION_NUMBER'=>'@RESERVATION_NUMBER@',
         'RESERVATION_STATUS'=>'@RESERVATION_STATUS@',
     ];
+
+    public static array $CHANNELS = [
+        'sms'=>'sms',
+        'fcm'=>'fcm',
+        'mail'=>'mail',
+    ];
 }

@@ -21,6 +21,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\PushNotificationController;
+use App\Http\Controllers\SheduleFcmController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -126,6 +127,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::group(['prefix'=>'fcm'],function (){
         Route::get('send',[PushNotificationController::class,'create']);
         Route::post('send',[PushNotificationController::class,'send']);
+        Route::resource('schedule-fcm',SheduleFcmController::class);
     });
 
 });

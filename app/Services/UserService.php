@@ -14,9 +14,9 @@ use Illuminate\Database\Eloquent\Builder;
 class UserService extends BaseService
 {
 
-    public function getAll(array $where_condition = [])
+    public function getAll(array $where_condition = [],$withRelations=[]): \Illuminate\Database\Eloquent\Collection|array
     {
-        $users = $this->queryGet($where_condition);
+        $users = $this->queryGet($where_condition,$withRelations);
         return $users->get();
     }
 

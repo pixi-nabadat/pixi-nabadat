@@ -27,7 +27,8 @@
                                 <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.users') }}</div>
                                     <select id="center_id" name="centers[]" class="js-example-basic-multiple col-sm-12 select2-hidden-accessible  @error('price') is-invalid @enderror">
-                                        <option selected disabled>...</option>
+                                        <option selected disabled>{{trans('lang.please_select_users')}}</option>
+                                        <option value="all">{{trans('lang.all_users')}}</option>
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                                         @endforeach
@@ -37,7 +38,8 @@
                                 <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
                                     <select id="center_id" name="users[]" class="js-example-basic-multiple col-sm-12 select2-hidden-accessible  @error('price') is-invalid @enderror">
-                                        <option selected disabled>...</option>
+                                        <option selected disabled>{{trans('lang.please_select_centers')}}</option>
+                                        <option value="all">{{trans('lang.all_centers')}}</option>
                                         @foreach ($centers as $center)
                                             <option value="{{ $center->center_id }}">{{ $center->name }}</option>
                                         @endforeach
@@ -45,9 +47,10 @@
                                 </div>
                                 {{--locations  --}}
                                 <div class="col-md-12 d-flex my-3">
-                                    <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
+                                    <div class="col-form-label col-3">{{ __('lang.locations') }}</div>
                                     <select id="center_id" name="locations[]" class="js-example-basic-multiple col-sm-12 select2-hidden-accessible  @error('price') is-invalid @enderror">
-                                        <option selected disabled>...</option>
+                                        <option selected disabled>{{trans('lang.please_select_locations')}}</option>
+                                        <option value="all">{{trans('lang.all_locations')}}</option>
                                         @foreach ($locations as $location)
                                             <option value="{{ $location->id }}">{{ $location->title }}</option>
                                         @endforeach
@@ -76,7 +79,7 @@
 
                                 {{-- fcm content --}}
                                 <div class="col-md-12">
-                                    <label class="form-label" for="name_ar">{{ trans('lang.content') }}</label>
+                                    <label class="form-label" for="fcm_content">{{ trans('lang.content') }}</label>
                                     <textarea name="fcm_content" class="form-control @error('fcm_content') is-invalid @enderror" id="fcm_content" type="text" required></textarea>
                                     @error('fcm_content')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
