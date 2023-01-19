@@ -121,13 +121,17 @@ class CartService extends BaseService
     public function updateCartAddress(array $data =[]): bool
     {
         $cart = $this->getCartByUser($data['temp_user_id']);
+        if (!$cart)
+            throw new NotFoundException(trans('lang.cart_not_found'));
         $address = app()->make(AddressService::class)->find($data['address_id'],['city']);
         if (!$address)
             throw new NotFoundException(trans('lang.address_not_found'));
-        $cart->address_id = $address->id;
-        $cart->user_id = $data['user_id'];
-        $cart->shipping_cost = $address->city->shipping_cost;
-        $cart->save();
+        $cart_data = [
+            'address_id'=>$address->id,
+            'user_id'=>$data['user_id'],
+            'shipping_cost'=> $address->city->shipping_cost,
+        ];
+        $cart->update($cart_data);
         return true ;
     }
 
