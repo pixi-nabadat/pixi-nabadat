@@ -26,7 +26,7 @@
                                 {{--users  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.users') }}</div>
-                                    <select id="center_id" name="centers[]" class="js-example-basic-multiple col-sm-12 select2-hidden-accessible  @error('price') is-invalid @enderror">
+                                    <select id="center_id" name="users[]" class="js-example-basic-multiple col-sm-12 select2-hidden-accessible  @error('users') is-invalid @enderror">
                                         <option selected disabled>{{trans('lang.please_select_users')}}</option>
                                         <option value="all">{{trans('lang.all_users')}}</option>
                                         @foreach ($users as $user)
@@ -37,7 +37,7 @@
                                 {{--centers  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
-                                    <select id="center_id" name="users[]" class="js-example-basic-multiple col-sm-12 select2-hidden-accessible  @error('price') is-invalid @enderror">
+                                    <select id="center_id" name="centers[]" class="js-example-basic-multiple col-sm-12 select2-hidden-accessible  @error('centers') is-invalid @enderror">
                                         <option selected disabled>{{trans('lang.please_select_centers')}}</option>
                                         <option value="all">{{trans('lang.all_centers')}}</option>
                                         @foreach ($centers as $center)
@@ -48,7 +48,7 @@
                                 {{--locations  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.locations') }}</div>
-                                    <select id="center_id" name="locations[]" class="js-example-basic-multiple col-sm-12 select2-hidden-accessible  @error('price') is-invalid @enderror">
+                                    <select id="center_id" name="locations[]" class="js-example-basic-multiple col-sm-12 select2-hidden-accessible  @error('locations') is-invalid @enderror">
                                         <option selected disabled>{{trans('lang.please_select_locations')}}</option>
                                         <option value="all">{{trans('lang.all_locations')}}</option>
                                         @foreach ($locations as $location)
@@ -66,17 +66,15 @@
                                     @enderror
                                 </div>
 
-                                <br>
-                                <div class="col-md-12 card bg-light-dark">
-                                    <div class="row">
+                                <div class="col-md-12 card">
+                                    <h4 class="form-label" for="content">{{ trans('lang.flags') }}</h4>
+                                    <div class="row bg-light-dark">
                                         @foreach($flags as $key=>$flag)
                                             <div class="col-md-3 col-lg-3" style="cursor: pointer;padding: 10px;color: black" onclick="copyToClipboard('{{$flag}}')">{{$flag}}</div>
                                         @endforeach
                                     </div>
 
                                 </div>
-                                <br>
-
                                 {{-- fcm content --}}
                                 <div class="col-md-12">
                                     <label class="form-label" for="fcm_content">{{ trans('lang.content') }}</label>
@@ -105,7 +103,7 @@
         sampleTextarea.select(); //select textarea contenrs
         document.execCommand("copy");
         document.body.removeChild(sampleTextarea);
-        toastr.success('Copy to Clipboard')
+        toastr.info('Copy to Clipboard')
     }
 </script>
 @endsection

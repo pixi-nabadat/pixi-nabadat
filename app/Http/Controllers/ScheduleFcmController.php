@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\FcmEventsNames;
 use Illuminate\Http\Request;
 
-class SheduleFcmController extends Controller
+class ScheduleFcmController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,17 +14,20 @@ class SheduleFcmController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        $flags = FcmEventsNames::$FLAGS;
+        $fcm_channels = FcmEventsNames::$CHANNELS;
+        $triggers = FcmEventsNames::$EVENTS;
+        return  view('dashboard.marketing.schedule-fcm.create',compact('flags','fcm_channels','triggers'));
     }
 
     /**
