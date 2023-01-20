@@ -29,12 +29,12 @@ class AppServiceProvider extends ServiceProvider
 //            return Setting::all(['name', 'val']);
 //        });
 
-         config(['global' => Setting::all(['name', 'val'])
-             ->keyBy('name') // key every setting by its name
-             ->transform(function ($setting) {
-                 return $setting->val; // return only the value
-             })
-             ->toArray() // make it an array
-         ]);//
+//         config(['global' => Setting::all(['name', 'val'])
+//             ->keyBy('name') // key every setting by its name
+//             ->transform(function ($setting) {
+//                 return $setting->val; // return only the value
+//             })
+//             ->toArray() // make it an array
+//         ]);//
     }
 }
