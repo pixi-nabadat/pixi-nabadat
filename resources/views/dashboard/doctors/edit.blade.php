@@ -37,7 +37,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label" for="name">{{ trans('lang.name') }}</label>
+                                    <label class="form-label" for="name">{{ trans('lang.name_en') }}</label>
                                     <input name="name[en]" value='{{ $doctor->getTranslation('name','en') }}'
                                         class="form-control  @error('name.en') is-invalid @enderror" id="name_en"
                                         type="text" required>
@@ -47,7 +47,7 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label class="form-label" for="name">{{ trans('lang.name') }}</label>
+                                    <label class="form-label" for="name">{{ trans('lang.name_ar') }}</label>
                                     <input name="name[ar]" value='{{ $doctor->getTranslation('name','ar') }}'
                                            class="form-control  @error('name.ar') is-invalid @enderror" id="name_ar"
                                            type="text" required>

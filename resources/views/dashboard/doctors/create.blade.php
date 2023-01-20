@@ -34,7 +34,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label" for="name">{{ trans('lang.name') }}</label>
+                                    <label class="form-label" for="name">{{ trans('lang.name_en') }}</label>
                                     <input name="name[en]" class="form-control @error('name.en') is-invalid @enderror"
                                         id="name" type="text" required>
                                     @error('name.en')
@@ -42,7 +42,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label" for="name">{{ trans('lang.name') }}</label>
+                                    <label class="form-label" for="name">{{ trans('lang.name_ar') }}</label>
                                     <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
                                            id="name" type="text" required>
                                     @error('name.ar')
