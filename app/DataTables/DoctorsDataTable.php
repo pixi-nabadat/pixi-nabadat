@@ -6,7 +6,6 @@ use App\Models\Doctor;
 use App\Models\User;
 use App\Services\DoctorService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Illuminate\Support\Arr;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Column;
@@ -30,7 +29,7 @@ class DoctorsDataTable extends DataTable
                 return $doctor->center->user->name;
             })
             ->editColumn('phone', function (Doctor $doctor) {
-                return Arr::first($doctor->phones);
+                return $doctor->phone;
             })
             ->addcolumn('is_active', function (Doctor $doctor) {
                 return view('dashboard.components.switch-btn', ['model' => $doctor, 'url' => route('doctors.changeStatus')]);
