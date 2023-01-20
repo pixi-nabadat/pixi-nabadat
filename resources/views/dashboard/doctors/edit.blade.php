@@ -24,7 +24,7 @@
                             method="post"  enctype="multipart/form-data">
                             @csrf
                             @method('put')
-                            
+
                             <div class="row g-3">
                                 {{--centers  --}}
                                 <div class="col-md-6">
@@ -38,11 +38,21 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="name">{{ trans('lang.name') }}</label>
-                                    <input name="name" value='{{ $doctor->name }}'
-                                        class="form-control  @error('name') is-invalid @enderror" id="name"
+                                    <input name="name[en]" value='{{ $doctor->getTranslation('name','en') }}'
+                                        class="form-control  @error('name.en') is-invalid @enderror" id="name_en"
                                         type="text" required>
-                                    @error('name')
+                                    @error('name.en')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label" for="name">{{ trans('lang.name') }}</label>
+                                    <input name="name[ar]" value='{{ $doctor->getTranslation('name','ar') }}'
+                                           class="form-control  @error('name.ar') is-invalid @enderror" id="name_ar"
+                                           type="text" required>
+                                    @error('name.ar')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -68,14 +78,27 @@
 
                                 <div class="col-md-6">
                                     <label class="form-label my-2"
-                                        for="description">{{ trans('lang.description') }}</label>
-                                    <input name="description"
-                                        class="form-control  @error('description') is-invalid @enderror" id="description"
-                                        value='{{ $doctor->description }}' type="text">
-                                    @error('address')
+                                        for="description">{{ trans('lang.description_en') }}</label>
+                                    <input name="description[en]"
+                                        class="form-control  @error('description.en') is-invalid @enderror" id="description"
+                                        value='{{ $doctor->getTranslation('description','en')}}' type="text">
+                                    @error('description.en')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label my-2"
+                                           for="description">{{ trans('lang.description_ar') }}</label>
+                                    <input name="description[ar]"
+                                           class="form-control  @error('description.ar') is-invalid @enderror" id="description"
+                                           value='{{ $doctor->getTranslation('description','ar') }}' type="text">
+                                    @error('description.ar')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+
                                 <div class="col-md-6">
                                     <label class="form-label my-2"
                                         for="logo">{{ trans('lang.logo') }}</label>
@@ -85,6 +108,16 @@
                                     @error('logo')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
+                                </div>
+                                <br>
+                                <div class="media mb-2">
+                                    <label class="col-form-label m-r-10">{{ __('lang.is_active') }}</label>
+                                    <div class="media-body  icon-state">
+                                        <label class="switch">
+                                            <input type="checkbox" name="is_active" {{ $doctor->is_active == 1 ? 'checked' : '' }}><span
+                                                class="switch-state"></span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 

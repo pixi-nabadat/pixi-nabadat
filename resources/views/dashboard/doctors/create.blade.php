@@ -27,22 +27,28 @@
                                 <div class="col-md-6">
                                     <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
                                     <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12">
-                                        <option></option>
+                                        <option disabled>{{trans('lang.please_select_center')}}</option>
                                         @foreach ($centers as $center)
-                                            <option value="{{ $center->id }}">{{ $center->name }}</option>
+                                            <option value="{{ $center->id }}">{{ $center->user->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="name">{{ trans('lang.name') }}</label>
-                                    <input name="name" class="form-control @error('name') is-invalid @enderror"
+                                    <input name="name[en]" class="form-control @error('name.en') is-invalid @enderror"
                                         id="name" type="text" required>
-                                    @error('name')
+                                    @error('name.en')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                
-
+                                <div class="col-md-6">
+                                    <label class="form-label" for="name">{{ trans('lang.name') }}</label>
+                                    <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
+                                           id="name" type="text" required>
+                                    @error('name.ar')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
                                 <div class="col-md-6">
                                     <label class="form-label" for="phone">{{ trans('lang.phone') }}</label>
@@ -56,7 +62,7 @@
                                 <div class="col-md-6">
                                     <label class="form-label" for="age">{{ trans('lang.age') }}</label>
                                     <input class="form-control  @error('age') is-invalid @enderror" name="age"
-                                        id="age" type="text" required="">
+                                        id="age" type="text">
                                     @error('age')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
@@ -64,14 +70,26 @@
 
                                 <div class="col-md-6">
                                     <label class="form-label my-2"
-                                        for="description">{{ trans('lang.description') }}</label>
-                                    <input name="description"
-                                        class="form-control  @error('description') is-invalid @enderror" id="description"
+                                        for="description_en">{{ trans('lang.description_en') }}</label>
+                                    <input name="description[en]"
+                                        class="form-control  @error('description.en') is-invalid @enderror" id="description_en"
                                         type="text">
-                                    @error('address')
+                                    @error('description.en')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label my-2"
+                                           for="description">{{ trans('lang.description_ar') }}</label>
+                                    <input name="description[ar]"
+                                           class="form-control  @error('description.ar') is-invalid @enderror" id="description_ar"
+                                           type="text">
+                                    @error('description.ar')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
                                 <div class="col-md-6">
                                     <label class="form-label my-2"
                                         for="logo">{{ trans('lang.logo') }}</label>
@@ -81,6 +99,16 @@
                                     @error('logo')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
+                                </div>
+
+                                <div class="media mb-2">
+                                    <label class="col-form-label m-r-10">{{ __('lang.is_active') }}</label>
+                                    <div class="media-body  icon-state">
+                                        <label class="switch">
+                                            <input type="checkbox" name="is_active" checked=""><span
+                                                class="switch-state"></span>
+                                        </label>
+                                    </div>
                                 </div>
 
                             </div>
@@ -96,13 +124,4 @@
 @endsection
 
 @section('script')
-<script>
-    $(document).ready(function () {
-        $("#select_city").find("option:gt(0)").hide();
-        $("#select_governorate").change(function (){
-            $("#select_city").find("option:gt(0)").hide();
-            $(".city_"+$(this).val()).show();
-        });
-    });
-</script>
 @endsection

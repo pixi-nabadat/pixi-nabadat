@@ -26,12 +26,13 @@ class DoctorStoreRequest extends BaseRequest
     {
         return [
 
-            'name' => 'required|string',
+            'name.*' => 'required|string',
             'phone' => 'required|numeric|unique:doctors',
             'description' => 'nullable|string',
             'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'center_id' => 'required|exists:centers,id',
-            'age' => 'required|integer',
+            'age' => 'nullable|integer',
+            'is_active' => 'nullable|string',
         ];
     }
 

@@ -3,33 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\DoctorsDataTable;
-use App\DataTables\UsersDataTable;
 use App\Http\Requests\DoctorStoreRequest;
-use App\Http\Requests\DoctorUpdateRequest;
-use App\Models\Center;
-use App\Models\Location;
-use App\Models\User;
-use App\Services\LocationService;
+use App\Http\Requests\DoctorStoreRequest as DoctorUpdateRequest;
+use App\Services\CenterService;
 use App\Services\DoctorService;
+use App\Services\LocationService;
 use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
 
-    public function __construct(private DoctorService $doctorService,private LocationService $locationService)
+    public function __construct(private DoctorService $doctorService, private LocationService $locationService)
     {
     }
 
     public function index(DoctorsDataTable $dataTable, Request $request)
     {
-        // $request = $request->merge(['type' => User::DOCTORTYPE]); //filter Doctor users
-        return $dataTable->with(['filters' => $request->all()])->render('dashboard.Doctors.index');
+        $loadRelation = ['center.user:id,name,center_id'];
+        $filters = $request->filters ?? [];
+        return $dataTable->with(['filters' => $filters, 'withRelations' => $loadRelation])->render('dashboard.doctors.index');
     } //end of index
 
     public function create()
     {
-        $centers = Center::all();
-        return view('dashboard.Doctors.create', compact('centers'));
+        $withRelations = ['user:id,name,center_id'];
+        $centers = app()->make(CenterService::class)->getAll(withRelations: $withRelations);
+        return view('dashboard.doctors.create', compact('centers'));
     } //end of create
 
 
@@ -44,14 +43,13 @@ class DoctorController extends Controller
     public function edit($id)
     {
         $doctor = $this->doctorService->find($id);
-        if (!$doctor)
-        {
+        if (!$doctor) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.doctor_not_found')];
             return back()->with('toast', $toast);
         }
-        $filters = [];
-        $centers = Center::all();
-        return view('dashboard.Doctors.edit', compact('doctor', 'centers'));
+        $withRelations = ['user:id,name,center_id'];
+        $centers = app()->make(CenterService::class)->getAll(withRelations: $withRelations);
+        return view('dashboard.doctors.edit', compact('doctor', 'centers'));
     } //end of edit
 
     public function store(DoctorStoreRequest $request)
@@ -62,7 +60,6 @@ class DoctorController extends Controller
             $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'Doctor Saved Successfully'];
             return redirect()->route('doctors.index')->with('toast', $toast);
         } catch (\Exception $ex) {
-
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
             return redirect()->back()->with('toast', $toast);
         }
@@ -76,7 +73,6 @@ class DoctorController extends Controller
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect(route('doctors.index'))->with('toast', $toast);
         } catch (\Exception $ex) {
-
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
             return redirect()->back()->with('toast', $toast);
         }

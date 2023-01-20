@@ -27,7 +27,7 @@ class DoctorService extends BaseService
 
     public function store(array $data = [])
     {
-
+        $data['is_active'] = isset($data['is_active'])  ? 1 :  0;
         $doctor = Doctor::create($data);
         if (!$doctor)
             return false ;
@@ -41,19 +41,20 @@ class DoctorService extends BaseService
         return $doctor;
     } //end of store
 
-    public function update(int $id, array $doctorData=[])
+    public function update(int $id, array $data=[])
     {
         $doctor = $this->find($id);
         if (!$doctor)
             return false;
-        if (isset($doctorData['logo']))
+        if (isset($data['logo']))
         {
             $doctor->deleteAttachmentsLogo();
-            $fileData = FileService::saveImage(file: $doctorData['logo'],path: 'uploads\doctors', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\doctors', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $doctor->storeAttachment($fileData);
         }
-        return $doctor->update($doctorData);
+        $data['is_active'] = isset($data['is_active'])  ? 1 :  0;
+        return $doctor->update($data);
     }
 
     public function find(int $doctorId , array $withRelations = []): Doctor|Model|bool
