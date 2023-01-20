@@ -26,8 +26,7 @@ class CategoryRequest extends BaseRequest
         return [
             'name.ar' => 'required|string',
             'name.en' => 'required|string',
-            'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg',
+            'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             'is_active' => 'nullable'
         ];
     }

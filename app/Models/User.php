@@ -126,7 +126,7 @@ class User extends Authenticatable
 
     public function nabadatWallet(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasOne(NabadatWallet::class, 'user_id');
+        return $this->hasOne(UserNabadatWallet::class, 'user_id');
     }
 
     public function package(): \Illuminate\Database\Eloquent\Relations\HasMany

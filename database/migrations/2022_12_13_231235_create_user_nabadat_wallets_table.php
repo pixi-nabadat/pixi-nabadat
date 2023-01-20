@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('nabadat_wallets', function (Blueprint $table) {
+        Schema::create('user_nabadat_wallets', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->float('total_pulses')->default(0);

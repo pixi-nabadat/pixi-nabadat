@@ -56,7 +56,7 @@ class BuyOfferController extends Controller
                 }
                 $result_data = $result['data'] ?? null;
             } else {
-                $result = $this->userService->updateOrCreateNabadatWallet($user, $package);
+                $result = $this->userService->updateOrCreateNabadatWallet($user, $package,payment_status: PaymentStatusEnum::PAID);
                 $status_code = 422;
                 $message = trans('lang.there_is_an_error');
                 $result_data = null;

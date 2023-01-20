@@ -94,6 +94,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::post('devices/changeStatus', [DeviceController::class, 'changeStatus'])->name('devices.changeStatus');
 
     Route::resource('clients', ClientController::class);
+    Route::post('clients/status', [ClientController::class, 'status'])->name('clients.status');
 
     Route::delete('attachments/{attachment}', [AttachmentController::class, 'destroy'])->name('attachment.destroy');
 

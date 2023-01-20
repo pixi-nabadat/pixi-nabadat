@@ -18,7 +18,7 @@ class NabadatHistory extends Model
         'reservation_id',
         'device_id',
         'num_nabadat',
-        'nabada_price',
+        'pulse_price',
         'total_price'
     ];
     public function device()

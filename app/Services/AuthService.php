@@ -38,6 +38,6 @@ class AuthService extends BaseService
     public function setUserFcmToken(User $user , $fcm_token)
     {
         if (isset($fcm_token))
-            $user->fcmToken()->updateOrCreate(['user_id'=>$user->id],['fcm_token'=>$fcm_token]);
+            $user->update(['device_token'=>$fcm_token]);
     }
 }
