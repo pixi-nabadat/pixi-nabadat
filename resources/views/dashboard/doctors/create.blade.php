@@ -98,6 +98,7 @@
                                         type="file">
                                     @error('logo')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
+
                                     @enderror
                                 </div>
 

@@ -74,4 +74,13 @@ class DoctorService extends BaseService
         }
         return false;
     } //end of delete
+
+    public function status($id)
+    {
+        $doctor = $this->find($id);
+        $doctor->is_active = !$doctor->is_active;
+        return $doctor->save();
+
+    }//end of status
+
 }

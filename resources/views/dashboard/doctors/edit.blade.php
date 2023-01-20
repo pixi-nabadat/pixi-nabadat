@@ -116,6 +116,7 @@
                                         <label class="switch">
                                             <input type="checkbox" name="is_active" {{ $doctor->is_active == 1 ? 'checked' : '' }}><span
                                                 class="switch-state"></span>
+
                                         </label>
                                     </div>
                                 </div>
