@@ -31,6 +31,9 @@ class DoctorsDataTable extends DataTable
             ->editColumn('phone', function (Doctor $doctor) {
                 return $doctor->phone;
             })
+            ->editColumn('description', function (Doctor $doctor) {
+                return $doctor->description;
+            })
             ->addcolumn('is_active', function (Doctor $doctor) {
                 return view('dashboard.components.switch-btn', ['model' => $doctor, 'url' => route('doctors.changeStatus')]);
             })
