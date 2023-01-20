@@ -2,13 +2,12 @@
 
 namespace App\DataTables;
 
+use App\Models\Doctor;
 use App\Models\User;
-
-use App\Services\UserService;
+use App\Services\DoctorService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
-use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
@@ -23,12 +22,22 @@ class DoctorsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-        ->addColumn('action', function(User $doctor){
-            return view('dashboard.Doctors.action',compact('doctor'))->render();
-        })
-        ->addcolumn('name', function(User $doctor){
-            return $doctor->name ;
-        });
+            ->editColumn('name', function (Doctor $doctor) {
+                return $doctor->name;
+            })
+            ->addcolumn('center_name', function (Doctor $doctor) {
+                return $doctor->center->user->name;
+            })
+            ->editColumn('phone', function (Doctor $doctor) {
+                return $doctor->phone;
+            })
+            ->addcolumn('is_active', function (Doctor $doctor) {
+                return view('dashboard.components.switch-btn', ['model' => $doctor, 'url' => route('doctors.changeStatus')]);
+            })
+            ->addColumn('action', function (Doctor $doctor) {
+                return view('dashboard.doctors.action', compact('doctor'))->render();
+            })
+            ->rawColumns(['action', 'is_active']);
     }
 
     /**
@@ -37,9 +46,9 @@ class DoctorsDataTable extends DataTable
      * @param User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(UserService $userService): QueryBuilder
+    public function query(DoctorService $doctorService): QueryBuilder
     {
-       return $userService->queryGet($this->filters)->with('location');
+        return $doctorService->queryGet($this->filters, $this->withRelations);
     }
 
     /**
@@ -64,14 +73,28 @@ class DoctorsDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::make('name'),
-            Column::make('email'),
-            Column::make('phone'),
-            Column::make('date_of_birth'),
+
+            Column::make('name')
+                ->title(trans('lang.name')),
+            Column::make('center_name')
+                ->title(trans('lang.center')),
+            Column::make('phone')
+                ->title(trans('lang.phone')),
+            Column::make('age')
+                ->title(trans('lang.age'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('description')
+                ->title(trans('lang.description'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::computed('is_active')
+                ->exportable(false)
+                ->printable(false),
             Column::computed('action')
-            ->exportable(false)
-            ->printable(false)
-            ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->addClass('text-center'),
         ];
     }
 

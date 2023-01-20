@@ -16,9 +16,11 @@ return new class extends Migration
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignIdFor(\App\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignIdFor(\App\Models\Center::class)->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->text('description')->nullable();
-            $table->string('phone');
+            $table->string('phones');
+            $table->integer('age')->nullable();
+            $table->boolean('is_active');
             $table->timestamps();
         });
     }

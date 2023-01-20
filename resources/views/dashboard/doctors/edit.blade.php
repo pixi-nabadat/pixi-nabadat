@@ -20,36 +20,26 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <form class="needs-validation" novalidate="" action="{{ route('doctors.update', $user) }}"
+                        <form class="needs-validation" novalidate="" action="{{ route('doctors.update', $doctor) }}"
                             method="post"  enctype="multipart/form-data">
                             @csrf
                             @method('put')
-                            
+
                             <div class="row g-3">
+                                {{--centers  --}}
                                 <div class="col-md-6">
-                                    <label class="form-label" for="user_name">{{ trans('lang.user_name') }}</label>
-                                    <input name="user_name" value='{{ $user->user_name }}'
-                                        class="form-control  @error('user_name') is-invalid @enderror" id="user_name"
-                                        type="text" required>
-                                    @error('user_name')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
+                                    <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12">
+                                        <option></option>
+                                        @foreach ($centers as $center)
+                                            <option value="{{ $center->id }}">{{ $center->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-
                                 <div class="col-md-6">
-                                    <label class="form-label" for="email">{{ trans('lang.email') }}</label>
-                                    <input name="email" value='{{ $user->email }}'
-                                        class="form-control  @error('email') is-invalid @enderror" id="email"
-                                        type="text" required>
-                                    @error('email')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label" for="full_name">{{ trans('lang.full_name_en') }}</label>
-                                    <input name="name[en]" value="{{ $user->getTranslation('name', 'en') }}"
-                                        class="form-control @error('name.en') is-invalid @enderror" id="name_en"
+                                    <label class="form-label" for="name">{{ trans('lang.name') }}</label>
+                                    <input name="name[en]" value='{{ $doctor->getTranslation('name','en') }}'
+                                        class="form-control  @error('name.en') is-invalid @enderror" id="name_en"
                                         type="text" required>
                                     @error('name.en')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -57,19 +47,19 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label class="form-label" for="full_name">{{ trans('lang.full_name_ar') }}</label>
-                                    <input name="name[ar]" value="{{ $user->getTranslation('name', 'ar') }}"
-                                        class="form-control @error('name.ar') is-invalid @enderror" id="name_ar"
-                                        type="text" required>
+                                    <label class="form-label" for="name">{{ trans('lang.name') }}</label>
+                                    <input name="name[ar]" value='{{ $doctor->getTranslation('name','ar') }}'
+                                           class="form-control  @error('name.ar') is-invalid @enderror" id="name_ar"
+                                           type="text" required>
                                     @error('name.ar')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <div class="col-md-6">
                                     <label class="form-label" for="phone">{{ trans('lang.phone') }}</label>
                                     <input class="form-control   @error('phone') is-invalid @enderror"
-                                        value='{{ $user->phone }}' name="phone" id="phone" type="text"
+                                        value='{{ $doctor->phone }}' name="phone" id="phone" type="text"
                                         required="">
                                     @error('phone')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -77,44 +67,38 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label class="form-label" for="date_of_birth">{{ trans('lang.data_of_birth') }}</label>
-                                    <input
-                                        class="form-control digits datepicker-here @error('date_of_birth') is-invalid @enderror"
-                                        value='{{ $user->date_of_birth }}' name="date_of_birth" id="date_of_birth"
-                                        type="text" required="">
-                                    @error('date_of_birth')
+                                    <label class="form-label" for="age">{{ trans('lang.age') }}</label>
+                                    <input class="form-control   @error('age') is-invalid @enderror"
+                                        value='{{ $doctor->age }}' name="age" id="age" type="text"
+                                        required="">
+                                    @error('age')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label class="form-label" for="password">{{ trans('lang.password') }}</label>
-                                    <input class="form-control @error('password') is-invalid @enderror" name="password"
-                                        id="password" type="password" required="">
-                                    @error('password')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label"
-                                        for="password_confirmation">{{ trans('lang.password_confirmation') }}</label>
-                                    <input class="form-control @error('password_confirmation') is-invalid @enderror"
-                                        name="password_confirmation" id="password" type="password" required="">
-                                    @error('password_confirmation')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
                                 <div class="col-md-6">
                                     <label class="form-label my-2"
-                                        for="description">{{ trans('lang.description') }}</label>
-                                    <input name="description"
-                                        class="form-control  @error('description') is-invalid @enderror" id="description"
-                                        value='{{ $user->description }}' type="text">
-                                    @error('address')
+                                        for="description">{{ trans('lang.description_en') }}</label>
+                                    <input name="description[en]"
+                                        class="form-control  @error('description.en') is-invalid @enderror" id="description"
+                                        value='{{ $doctor->getTranslation('description','en')}}' type="text">
+                                    @error('description.en')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label my-2"
+                                           for="description">{{ trans('lang.description_ar') }}</label>
+                                    <input name="description[ar]"
+                                           class="form-control  @error('description.ar') is-invalid @enderror" id="description"
+                                           value='{{ $doctor->getTranslation('description','ar') }}' type="text">
+                                    @error('description.ar')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+
                                 <div class="col-md-6">
                                     <label class="form-label my-2"
                                         for="logo">{{ trans('lang.logo') }}</label>
@@ -125,54 +109,15 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
-
-                            <div class="row g-3">
-                                <div class="col-md-6 mb-3">
-                                    <div class="form-group">
-                                        <div class="mb-2">
-                                            <div class="col-form-label">{{ __('lang.governorates') }}</div>
-                                            <select id="select_governorate" name="governorate"
-                                                class="js-example-basic-single col-sm-12">
-                                                @foreach ($governorates as $governorate)
-                                                    <option value="{{ $governorate->id }}"
-                                                        {{ $user->location->parent_id == $governorate->id ? 'selected' : '' }}>
-                                                        {{ $governorate->title }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                <br>
+                                <div class="media mb-2">
+                                    <label class="col-form-label m-r-10">{{ __('lang.is_active') }}</label>
+                                    <div class="media-body  icon-state">
+                                        <label class="switch">
+                                            <input type="checkbox" name="is_active" {{ $doctor->is_active == 1 ? 'checked' : '' }}><span
+                                                class="switch-state"></span>
+                                        </label>
                                     </div>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <div class="form-group">
-                                        <div class="mb-2">
-                                            <label class="col-form-label"
-                                                for="select_city">{{ __('lang.cities') }}</label>
-                                                <select id="select_city" name="location_id" class="form-control col-sm-12 @error('location_id') is-invalid @enderror">
-                                                    <option value="0" disabled selected>{{trans('lang.please_select...')}}</option>
-                                                    @foreach ($cities as $city)
-                                                        <option class="city_{{$city->parent_id}}" {{ $user->location_id == $city->id ? 'selected' : '' }} value="{{ $city->id }}">
-                                                            {{ $city->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                        </div>
-                                        @error('location_id')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="media mb-2">
-                                <label class="col-form-label m-r-10">{{ __('lang.is_active') }}</label>
-                                <div class="media-body  icon-state">
-                                    <label class="switch">
-                                        <input type="checkbox" name="is_active"
-                                            {{ $user->is_active == 1 ? 'checked' : '' }}><span
-                                            class="switch-state"></span>
-                                    </label>
                                 </div>
                             </div>
 
