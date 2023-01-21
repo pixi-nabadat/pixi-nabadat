@@ -20,6 +20,7 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\UserPackageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -110,6 +111,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     Route::resource('packages', PackageController::class);
     Route::post('packages/status', [PackageController::class, 'status'])->name('packages.status');
+    
+    Route::resource('userPackages', UserPackageController::class);
 
     Route::resource('cancelReasons', CancelReasonController::class);
     Route::post('cancelReasons/changeStatus', [CancelReasonController::class, 'changeStatus'])->name('cancelReasons.changeStatus');
