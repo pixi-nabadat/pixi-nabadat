@@ -22,12 +22,12 @@
                         {{-- center --}}
                         <div class="col-md-12">
                             <label class="form-label mt-3" for="center">{{ trans('lang.center') }}</label>
-                            <p class="form-control" id="center">{{ $userPackage->getTranslation('center_id', 'en') }}</p>
+                            <p class="form-control" id="center">{{ $userPackage->center->user->name }}</p>
                         </div>
                         {{-- user --}}
                         <div class="col-md-12">
                             <label class="form-label mt-3" for="user">{{ trans('lang.user') }}</label>
-                            <p class="form-control" id="user">{{ $userPackage->getTranslation('user_id', 'ar') }}</p>
+                            <p class="form-control" id="user">{{ $userPackage->user->name }}</p>
                         </div>
                         {{-- num_nabadat --}}
                         <div class="col-md-12">
@@ -59,10 +59,10 @@
                             <label class="label-control  mt-3" for="payment_status">{{ trans('lang.payment_status') }}</label>
                             <p class="form-control" id="payment_status">{{ $userPackage->payment_status }}</p>
                         </div>
-                        {{-- status --}}
+                        {{-- usage_status --}}
                         <div class="col-md-12">
-                            <label class="label-control  mt-3" for="status">{{ trans('lang.status') }}</label>
-                            <p class="form-control" id="status">{{ $userPackage->status }}</p>
+                            <label class="label-control  mt-3" for="usage_status">{{ trans('lang.usage_status') }}</label>
+                            <p class="form-control" id="usage_status">{{ $userPackage->usage_status }}</p>
                         </div>
                         {{-- used --}}
                         <div class="col-md-12">

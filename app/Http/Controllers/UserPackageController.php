@@ -43,6 +43,16 @@ class UserPackageController extends Controller
         return $dataTable->with(['filters'=>$filters , 'withRelations' => $withRelations])->render('dashboard.userPackages.index');
     }
 
+    public function show($id)
+    {
+        $userPackage = $this->userPackageService->find($id);
+        if (!$userPackage) {
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.user_package_not_found')];
+            return back()->with('toast', $toast);
+        }
+        return view('dashboard.userPackages.show', compact('userPackage'));
+    } //end of show
+
     /**
      * Display the specified resource.
      *
