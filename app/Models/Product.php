@@ -74,7 +74,7 @@ class Product extends Model
         return self::SEARCHFLAG;
     }
 
-    public function defaultLogo()
+    public function defaultLogo(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
         return $this->attachments()->where('type', ImageTypeEnum::LOGO);
     }

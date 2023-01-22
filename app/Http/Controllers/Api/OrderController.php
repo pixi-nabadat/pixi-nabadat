@@ -7,8 +7,6 @@ use App\Events\OrderCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderStoreRequest;
 use App\Http\Resources\OrderResource;
-use App\Models\Order;
-use App\Models\User;
 use App\Services\CartService;
 use App\Services\OrderService;
 use App\Services\Payment\PaymobService;
@@ -19,6 +17,7 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+
 class OrderController extends Controller
 {
     use OrderTrait;
@@ -35,14 +34,14 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $filters = array_merge($request->all(), ['user_id' => auth('sanctum')->id()]);
-        $relations = ['history', 'items'];
+        $relations = ['orderStatus', 'items'];
         $order = $this->orderService->getAll($filters, $relations);
         return apiResponse(data: OrderResource::collection($order));
     }
 
     public function find(int $id): Application|ResponseFactory|Response
     {
-        $withRelations = ['items', 'history'];
+        $withRelations = ['items', 'orderStatus'];
         $order = $this->orderService->find($id, $withRelations);
         return apiResponse(data: new OrderResource($order));
     }
@@ -101,7 +100,7 @@ class OrderController extends Controller
     {
         $result = $this->paymobService->paymentCallback($request);
         if ($result != false) {
-            logger('merchant_order_id : '.$result['merchant_order_id']);
+            logger('merchant_order_id : ' . $result['merchant_order_id']);
             event(new OrderCreated($result['merchant_order_id']));
             return apiResponse(message: trans('lang.payment_accepted'));
         }
