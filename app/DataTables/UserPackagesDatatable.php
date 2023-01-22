@@ -83,7 +83,7 @@ class UserPackagesDataTable extends DataTable
                 ->title(trans('lang.payment_status'))
                 ->searchable(true)
                 ->orderable(true),
-            Column::make('usage_status')
+            Column::make('status')
                 ->title(trans('lang.status'))
                 ->searchable(true)
                 ->orderable(true),

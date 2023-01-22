@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ReservationStoreRequest;
 use App\Http\Requests\ReservationUpdateRequest;
 use App\Http\Requests\UserPackageStoreRequest;
+use App\Http\Requests\UserPA;
 use App\Http\Requests\UserPackageUpdateRequest;
 use App\Http\Resources\CentersResource;
 use App\Http\Resources\ReservationsResource;
@@ -21,7 +22,10 @@ use App\Models\Reservation;
 use App\Services\ReservationService;
 use Illuminate\Validation\Rules\Unique;
 use App\Models\User;
+use App\Services\CenterService;
+use App\Services\PackageService;
 use App\Services\UserPackageService;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 
 class UserPackageController extends Controller
@@ -31,7 +35,7 @@ class UserPackageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(private UserPackageService $userPackageService)
+    public function __construct(private UserPackageService $userPackageService, private CenterService $centerService, private UserService $userService, private PackageService $packageService)
     {
 
     }
@@ -42,6 +46,13 @@ class UserPackageController extends Controller
         $filters = $request->all();
         return $dataTable->with(['filters'=>$filters , 'withRelations' => $withRelations])->render('dashboard.userPackages.index');
     }
+
+    public function create()
+    {
+        $users = $this->userService->getAll();
+        $centers = $this->centerService->getAll();
+        return view('dashboard.userPackages.create', compact(['centers', 'users']));
+    }//end of create
 
     public function show($id)
     {
@@ -79,6 +90,22 @@ class UserPackageController extends Controller
      * @param UserPackageUpdateRequest $userPackageUpdateRequest
      * @return UserPackagesResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
+    public function store(UserPackageStoreRequest $request)
+    {
+        try {
+            $data = $request->validated();
+            $this->userPackageService->store($data);
+            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.operation_success')];
+            return redirect()->route('userPackages.index')->with('toast', $toast);
+        } catch (\Exception $ex) {
+            $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
+            return redirect()->back()->with('toast', $toast);
+        }
+    }
+     /**
+     * @param UserPackageUpdateRequest $userPackageUpdateRequest
+     * @return UserPackagesResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function update(int $id, UserPackageUpdateRequest $userPackageUpdateRequest)
     {
         try{
@@ -88,7 +115,6 @@ class UserPackageController extends Controller
             return apiResponse(message: $e->getMessage(), code: 422);
         }
     }
-
     /**
      * distory the user package
      * @param int $id
@@ -96,12 +122,12 @@ class UserPackageController extends Controller
     public function destroy(int $id)
     {
         try {
-            $result = $this->userPackageService->delete($id);
-            if (!$result['status'])
-                return apiResponse(message: $result['message'], code: 404);
-            return apiResponse(message: trans('lang.success'));
-        } catch (\Exception $exception) {
-            return apiResponse(message: $exception->getMessage(), code: 422);
+            $this->userPackageService->delete($id);
+            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.operation_success')];
+            return redirect()->route('userPackages.index')->with('toast', $toast);
+        } catch (\Exception $ex) {
+            $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
+            return redirect()->back()->with('toast', $toast);
         }
     } //end of destroy
 }
