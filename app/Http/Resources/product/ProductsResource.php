@@ -14,7 +14,6 @@ class ProductsResource extends JsonResource
      */
     public function toArray($request)
     {
-        $attachment = $this->whenLoaded('attachments') ? $this->attachments->first() : null;
         return [
             'id'                    =>$this->id,
             'name'                  =>$this->name,
@@ -24,7 +23,7 @@ class ProductsResource extends JsonResource
             'description'           =>$this->description,
             'rate'                  =>$this->rate,
             'price_after_discount'  =>getPriceAfterDiscount($this->unit_price,$this->product_discount),
-            'images'                =>isset($attachment) ? (object) url($attachment->path."\\".$attachment->filename):null,
+            'image'                 =>$this->whenLoaded('defaultLogo',url($this->defaultLogo->path."\\".$this->defaultLogo->filename)),
         ];
     }
 }

@@ -47,7 +47,7 @@ class OrderService extends BaseService
 
         $this->setOrderItems($order, $order_data);
         $this->createOrderHistory($order);
-        $this->updateCouponUsage($user->id, $order_data->coupon->id);
+        $this->updateCouponUsage($user->id,optional( $order_data->coupon)->id);
         return $order->load('items.product', 'history');
     }
 
@@ -73,8 +73,10 @@ class OrderService extends BaseService
         $order->update(['order_history_id' => $order_history->id]);
     }
 
-    private function updateCouponUsage($user_id, $coupon_id)
+    private function updateCouponUsage($user_id, $coupon_id=null)
     {
+        if (!isset($coupon_id))
+            return ;
         $coupon_usage = CouponUsage::query()->where('user_id', $user_id)->where('coupon_id', $coupon_id)->first();
         $old_usage = optional($coupon_usage)->number_of_usage ?? 0;
         CouponUsage::query()->updateOrCreate([
@@ -97,7 +99,7 @@ class OrderService extends BaseService
 
         //set user points
         if ($data['status'] == Order::DELIVERED)
-            User::setPoints(user: $order->user(), amount: (float)$order->grand_total, amountType: 'cash');
+            User::setPoints($order->user(), amount: (float)$order->grand_total, amountType: 'cash');
     }
 
     public function find(int $id, $with_relation = [])

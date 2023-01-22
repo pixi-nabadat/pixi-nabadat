@@ -40,14 +40,16 @@ class Cart extends Model
     public function getGrandTotalAfterDiscountAttribute()
     {
         $coupon_usage_count = 0 ;
+        $value = $this->grand_total;
         $user = auth('sanctum')->check() ? auth()->user() : null ;
-        if ($user){
+        if (!$this->relationLoaded('coupon')||empty($this->coupon))
+            return $value;
+        if ($user && isset($this->coupon)){
             $coupon_usage = $user->coupons()->where('coupon_id',$this->coupon->id)->first();
             $coupon_usage_count = $coupon_usage->number_of_usage ?? 0 ;
         }
-        $value = $this->grand_total;
-        if (!$this->relationLoaded('coupon'))
-            return $value;
+
+
         if (
             Carbon::now(config('app.africa_timezone'))->gte(optional($this->coupon)->start_date) &&
             Carbon::now(config('app.africa_timezone'))->lte(optional($this->coupon)->end_date) &&

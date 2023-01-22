@@ -22,7 +22,7 @@ class ProductController extends Controller
         try {
             $filters = $request->all();
             $filters ['is_active'] = 1;
-            $withRelation = ['attachments'];
+            $withRelation = ['defaultLogo'];
             $products = $this->productService->listing($filters,$withRelation);
             return ProductsResource::collection($products);
         } catch (\Exception $e) {
