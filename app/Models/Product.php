@@ -74,8 +74,8 @@ class Product extends Model
         return self::SEARCHFLAG;
     }
 
-    public function defaultLogo(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    public function defaultLogo(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
-        return $this->attachments()->where('type', ImageTypeEnum::LOGO);
+        return $this->morphOne(Attachment::class, 'attachmentable')->where('type', ImageTypeEnum::LOGO);
     }
 }

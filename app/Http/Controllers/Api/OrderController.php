@@ -35,7 +35,7 @@ class OrderController extends Controller
     {
         $filters = array_merge($request->all(), ['user_id' => auth('sanctum')->id()]);
         $relations = ['orderStatus', 'items'];
-        $order = $this->orderService->getAll($filters, $relations);
+        $order = $this->orderService->listing($filters, $relations);
         return apiResponse(data: OrderResource::collection($order));
     }
 

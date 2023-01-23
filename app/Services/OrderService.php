@@ -14,6 +14,12 @@ use Illuminate\Database\Eloquent\Builder;
 class OrderService extends BaseService
 {
 
+    public function listing($filters=[],$withRelations=[])
+    {
+        $perPage = config('app.perPage')??10;
+        return $this->queryGet($filters,$withRelations)->cursorPaginate($perPage);
+    }
+    
     public function getAll(array $where_condition = [], array $withRelations = [])
     {
         $orders = $this->queryGet($where_condition, $withRelations);
