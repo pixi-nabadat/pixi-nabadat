@@ -23,7 +23,7 @@ class ProductsResource extends JsonResource
             'description'           =>$this->description,
             'rate'                  =>$this->rate,
             'price_after_discount'  =>getPriceAfterDiscount($this->unit_price,$this->product_discount),
-            'image'                 =>$this->whenLoaded('defaultLogo',url($this->defaultLogo->path."\\".$this->defaultLogo->filename)),
+            'image'                 =>$this->whenLoaded('defaultLogo',isset($this->defaultLogo)? url($this->defaultLogo->path."\\".$this->defaultLogo->filename):null),
         ];
     }
 }
