@@ -42,7 +42,7 @@
                         {{-- package --}}
                         <div class="col-md-12">
                             <label class="label-control  mt-3" for="package">{{ trans('lang.package') }}</label>
-                            <p class="form-control" id="package">{{ $userPackage->package->name }}</p>
+                            <p class="form-control" id="package">{{ $userPackage->package_id != null ? $userPackage->package->name: '' }}</p>
                         </div>
                         {{-- discount_percentage --}}
                         <div class="col-md-12">
@@ -59,10 +59,10 @@
                             <label class="label-control  mt-3" for="payment_status">{{ trans('lang.payment_status') }}</label>
                             <p class="form-control" id="payment_status">{{ $userPackage->payment_status }}</p>
                         </div>
-                        {{-- usage_status --}}
+                        {{-- status --}}
                         <div class="col-md-12">
-                            <label class="label-control  mt-3" for="usage_status">{{ trans('lang.usage_status') }}</label>
-                            <p class="form-control" id="usage_status">{{ $userPackage->usage_status }}</p>
+                            <label class="label-control  mt-3" for="status">{{ trans('lang.status') }}</label>
+                            <p class="form-control" id="status">{{ $userPackage->status }}</p>
                         </div>
                         {{-- used --}}
                         <div class="col-md-12">

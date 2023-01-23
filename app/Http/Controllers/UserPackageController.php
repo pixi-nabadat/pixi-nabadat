@@ -64,6 +64,17 @@ class UserPackageController extends Controller
         return view('dashboard.userPackages.show', compact('userPackage'));
     } //end of show
 
+    public function edit(int $id)
+    {
+        $userPackage = $this->userPackageService->find($id);
+        if (!$userPackage) {
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.user_package_not_found')];
+            return back()->with('toast', $toast);
+        }
+        $users = $this->userService->getAll();
+        $centers = $this->centerService->getAll();
+        return view('dashboard.userPackages.edit', compact(['userPackage', 'users', 'centers']));
+    } //end of show
     /**
      * Display the specified resource.
      *
@@ -106,13 +117,16 @@ class UserPackageController extends Controller
      * @param UserPackageUpdateRequest $userPackageUpdateRequest
      * @return UserPackagesResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function update(int $id, UserPackageUpdateRequest $userPackageUpdateRequest)
+    public function update(int $id, UserPackageUpdateRequest $request)
     {
-        try{
-            $userPackage = $this->userPackageService->update($id, $userPackageUpdateRequest->validated());
-            return new UserPackagesResource($userPackage);
-        }catch(Exception $e){
-            return apiResponse(message: $e->getMessage(), code: 422);
+        try {
+            $data = $request->validated();
+            $this->userPackageService->update($id, $data);
+            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.operation_success')];
+            return redirect()->route('userPackages.index')->with('toast', $toast);
+        } catch (\Exception $ex) {
+            $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
+            return redirect()->back()->with('toast', $toast);
         }
     }
     /**

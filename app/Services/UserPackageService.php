@@ -56,9 +56,7 @@ class UserPackageService extends BaseService
         $userPackage = UserPackage::with('center')->find($id);
         if (!$userPackage)
             throw new NotFoundException(trans('lang.offers_not_found'));
-       $is_updated =  $userPackage->update([
-            'payment_status' => $data['payment_status'],
-        ]);
+       $is_updated =  $userPackage->update($data);
        if ($is_updated)
             Settlement::createFinancial($userPackage);
      return  $userPackage;
