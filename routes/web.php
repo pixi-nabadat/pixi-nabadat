@@ -60,6 +60,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
         Route::post('social_media', [SettingController::class, 'store'])->name('settings.store.social_media');
         Route::get('terms_and_conditions', [SettingController::class, 'termsAndConditionsSettingsIndex'])->name('terms_and_conditions.settings');
         Route::post('terms_and_conditions', [SettingController::class, 'store'])->name('settings.store.terms_and_conditions');
+        Route::get('schedule_fcm', [SettingController::class, 'scheduleFcmSettingsIndex'])->name('schedule_fcm.settings');
+        Route::post('schedule_fcm', [SettingController::class, 'store'])->name('settings.store.schedule_fcm');
 
     });
     // End Settings

@@ -34,6 +34,10 @@ class SettingController extends Controller
     {
         return view('dashboard.setting.terms_and_conditions');
     }
+    public function scheduleFcmSettingsIndex(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        return view('dashboard.setting.schedule_fcm');
+    }
 
     public function store(Request $request)
     {
