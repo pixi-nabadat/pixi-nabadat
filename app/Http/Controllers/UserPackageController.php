@@ -136,12 +136,12 @@ class UserPackageController extends Controller
     public function destroy(int $id)
     {
         try {
-            $this->userPackageService->delete($id);
-            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.operation_success')];
-            return redirect()->route('userPackages.index')->with('toast', $toast);
-        } catch (\Exception $ex) {
-            $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
-            return redirect()->back()->with('toast', $toast);
+            $result = $this->userPackageService->delete($id);
+            if (!$result)
+                return apiResponse(message: trans('lang.not_found'), code: 404);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
         }
     } //end of destroy
 }
