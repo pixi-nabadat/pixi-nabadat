@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ReservationStoreRequest;
 use App\Http\Requests\ReservationUpdateRequest;
 use App\Http\Requests\UserPackageStoreRequest;
+use App\Http\Requests\UserPA;
 use App\Http\Requests\UserPackageUpdateRequest;
 use App\Http\Resources\CentersResource;
 use App\Http\Resources\ReservationsResource;
@@ -21,7 +22,10 @@ use App\Models\Reservation;
 use App\Services\ReservationService;
 use Illuminate\Validation\Rules\Unique;
 use App\Models\User;
+use App\Services\CenterService;
+use App\Services\PackageService;
 use App\Services\UserPackageService;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 
 class UserPackageController extends Controller
@@ -31,7 +35,7 @@ class UserPackageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(private UserPackageService $userPackageService)
+    public function __construct(private UserPackageService $userPackageService, private CenterService $centerService, private UserService $userService, private PackageService $packageService)
     {
 
     }
@@ -43,6 +47,34 @@ class UserPackageController extends Controller
         return $dataTable->with(['filters'=>$filters , 'withRelations' => $withRelations])->render('dashboard.userPackages.index');
     }
 
+    public function create()
+    {
+        $users = $this->userService->getAll();
+        $centers = $this->centerService->getAll();
+        return view('dashboard.userPackages.create', compact(['centers', 'users']));
+    }//end of create
+
+    public function show($id)
+    {
+        $userPackage = $this->userPackageService->find($id);
+        if (!$userPackage) {
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.user_package_not_found')];
+            return back()->with('toast', $toast);
+        }
+        return view('dashboard.userPackages.show', compact('userPackage'));
+    } //end of show
+
+    public function edit(int $id)
+    {
+        $userPackage = $this->userPackageService->find($id);
+        if (!$userPackage) {
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.user_package_not_found')];
+            return back()->with('toast', $toast);
+        }
+        $users = $this->userService->getAll();
+        $centers = $this->centerService->getAll();
+        return view('dashboard.userPackages.edit', compact(['userPackage', 'users', 'centers']));
+    } //end of show
     /**
      * Display the specified resource.
      *
@@ -69,16 +101,34 @@ class UserPackageController extends Controller
      * @param UserPackageUpdateRequest $userPackageUpdateRequest
      * @return UserPackagesResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function update(int $id, UserPackageUpdateRequest $userPackageUpdateRequest)
+    public function store(UserPackageStoreRequest $request)
     {
-        try{
-            $userPackage = $this->userPackageService->update($id, $userPackageUpdateRequest->validated());
-            return new UserPackagesResource($userPackage);
-        }catch(Exception $e){
-            return apiResponse(message: $e->getMessage(), code: 422);
+        try {
+            $data = $request->validated();
+            $this->userPackageService->store($data);
+            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.operation_success')];
+            return redirect()->route('userPackages.index')->with('toast', $toast);
+        } catch (\Exception $ex) {
+            $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
+            return redirect()->back()->with('toast', $toast);
         }
     }
-
+     /**
+     * @param UserPackageUpdateRequest $userPackageUpdateRequest
+     * @return UserPackagesResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function update(int $id, UserPackageUpdateRequest $request)
+    {
+        try {
+            $data = $request->validated();
+            $this->userPackageService->update($id, $data);
+            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.operation_success')];
+            return redirect()->route('userPackages.index')->with('toast', $toast);
+        } catch (\Exception $ex) {
+            $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
+            return redirect()->back()->with('toast', $toast);
+        }
+    }
     /**
      * distory the user package
      * @param int $id
@@ -86,12 +136,12 @@ class UserPackageController extends Controller
     public function destroy(int $id)
     {
         try {
-            $result = $this->userPackageService->delete($id);
-            if (!$result['status'])
-                return apiResponse(message: $result['message'], code: 404);
-            return apiResponse(message: trans('lang.success'));
-        } catch (\Exception $exception) {
-            return apiResponse(message: $exception->getMessage(), code: 422);
+            $this->userPackageService->delete($id);
+            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.operation_success')];
+            return redirect()->route('userPackages.index')->with('toast', $toast);
+        } catch (\Exception $ex) {
+            $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
+            return redirect()->back()->with('toast', $toast);
         }
     } //end of destroy
 }

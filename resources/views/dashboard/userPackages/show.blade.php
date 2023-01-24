@@ -22,12 +22,12 @@
                         {{-- center --}}
                         <div class="col-md-12">
                             <label class="form-label mt-3" for="center">{{ trans('lang.center') }}</label>
-                            <p class="form-control" id="center">{{ $userPackage->getTranslation('center_id', 'en') }}</p>
+                            <p class="form-control" id="center">{{ $userPackage->center->user->name }}</p>
                         </div>
                         {{-- user --}}
                         <div class="col-md-12">
                             <label class="form-label mt-3" for="user">{{ trans('lang.user') }}</label>
-                            <p class="form-control" id="user">{{ $userPackage->getTranslation('user_id', 'ar') }}</p>
+                            <p class="form-control" id="user">{{ $userPackage->user->name }}</p>
                         </div>
                         {{-- num_nabadat --}}
                         <div class="col-md-12">
@@ -42,7 +42,7 @@
                         {{-- package --}}
                         <div class="col-md-12">
                             <label class="label-control  mt-3" for="package">{{ trans('lang.package') }}</label>
-                            <p class="form-control" id="package">{{ $userPackage->package->name }}</p>
+                            <p class="form-control" id="package">{{ $userPackage->package_id != null ? $userPackage->package->name: '' }}</p>
                         </div>
                         {{-- discount_percentage --}}
                         <div class="col-md-12">

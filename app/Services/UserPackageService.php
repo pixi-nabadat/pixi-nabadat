@@ -4,9 +4,11 @@ namespace App\Services;
 
 use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
+use App\Enum\UserPackageStatusEnum;
 use App\Exceptions\NotFoundException;
 use App\Models\Settlement;
 use App\Models\Package;
+use App\Models\User;
 use App\Models\UserPackage;
 use App\QueryFilters\UserPackagesFilter;
 
@@ -27,6 +29,25 @@ class UserPackageService extends BaseService
         return $userPackages->filter(new UserPackagesFilter($where_condition));
     }
 
+    public function store(array $data)
+    {
+        $user = User::find($data['user_id']);
+        if(!$user)
+            throw new NotFoundException(trans('lang.user_not_found'));
+        $userPackages = $user->package->where('usage_status', UserPackageStatusEnum::ONGOING)->first();
+        if(!$userPackages)
+            $data['status'] = UserPackageStatusEnum::ONGOING;
+        else
+            $data['status'] = UserPackageStatusEnum::READYFORUSE;
+        $data['remain'] = $data['num_nabadat'];
+        $userPackage = UserPackage::create($data);
+        /**
+         * TODO
+         * add user package financial code here
+         */
+        return  $userPackage;
+    }
+
     /**
      * @throws NotFoundException
      */
@@ -35,9 +56,7 @@ class UserPackageService extends BaseService
         $userPackage = UserPackage::with('center')->find($id);
         if (!$userPackage)
             throw new NotFoundException(trans('lang.offers_not_found'));
-       $is_updated =  $userPackage->update([
-            'payment_status' => $data['payment_status'],
-        ]);
+       $is_updated =  $userPackage->update($data);
        if ($is_updated)
             Settlement::createFinancial($userPackage);
      return  $userPackage;
@@ -53,13 +72,12 @@ class UserPackageService extends BaseService
     public function delete(int $id)
     {
         $userPackage = UserPackage::find($id);
-        if ($userPackage) {
-            $paymentStatus = $userPackage->payment_status;
-            if($paymentStatus != PaymentStatusEnum::UNPAID)
-                return ['status'=>false, 'message'=> trans('lang.operation_success')];
-            return $userPackage->delete();
-        }
-        return ['status'=>false, 'message'=> trans('lang.not_found')];
+        if(!$userPackage)
+            throw new NotFoundException(trans('lang.user_package_not_found'));
+        $paymentStatus = $userPackage->payment_status;
+        if($paymentStatus != PaymentStatusEnum::UNPAID)
+            throw new NotFoundException(trans('lang.not_allowed'));
+        return $userPackage->delete();
     } //end of delete
 
 }
