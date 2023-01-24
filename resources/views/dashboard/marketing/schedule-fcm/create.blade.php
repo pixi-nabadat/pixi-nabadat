@@ -24,7 +24,7 @@
                             action="{{ route('schedule-fcm.store') }}">
                             @csrf
                             <div class="row g-3">
-                                {{--center  --}}
+                                {{--event  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.event') }}</div>
                                     <select id="trigger_id" name="trigger" class="form-select btn-square digits">
@@ -39,13 +39,13 @@
 
                                 {{--start channel input--}}
                                 <div class="col-md-12 d-flex my-3">
-                                    <div class="col-form-label col-3">{{ __('lang.event') }}</div>
+                                    <div class="col-form-label col-3">{{ __('lang.notification_via') }}</div>
                                     <select id="notification_via" name="notification_via" class="form-select btn-square digits">
                                         @foreach ($fcm_channels as $key=>$fcm_channel)
                                             <option value="{{ $key }}">{{ trans('lang.'.$fcm_channel) }}</option>
                                         @endforeach
                                     </select>
-                                    @error('trigger')
+                                    @error('notification_via')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

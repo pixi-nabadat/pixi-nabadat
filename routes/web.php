@@ -129,7 +129,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
         Route::post('send',[PushNotificationController::class,'send']);
     });
     Route::resource('schedule-fcm',ScheduleFcmController::class);
-
+    Route::post('schedule-fcm/status', [ScheduleFcmController::class, 'status'])->name('schedule-fcm.status');
 });
 
 Route::get('/clear-cache', function () {
