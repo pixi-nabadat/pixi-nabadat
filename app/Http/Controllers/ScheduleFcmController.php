@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\DataTables\ScheduleFcmDatatable;
 use App\Enum\FcmEventsNames;
+use App\Http\Requests\ScheduleFcmStoreRequest;
+use App\Http\Requests\ScheduleFcmUpdateRequest;
 use Illuminate\Http\Request;
 use App\Services\ScheduleFcmService;
 use Carbon\Carbon;
@@ -46,10 +48,10 @@ class ScheduleFcmController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ScheduleFcmStoreRequest $request)
     {
         try {
-            $data = $request->all();
+            $data = $request->validated();
             $this->scheduleFcmService->store($data);
             $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'operation_success'];
             return redirect()->route('schedule-fcm.index')->with('toast', $toast);
@@ -97,10 +99,10 @@ class ScheduleFcmController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ScheduleFcmUpdateRequest $request, $id)
     {
         try {
-            $data = $request->all();
+            $data = $request->validated();
             $this->scheduleFcmService->update($id, $data);
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect(route('schedule-fcm.index'))->with('toast', $toast);
