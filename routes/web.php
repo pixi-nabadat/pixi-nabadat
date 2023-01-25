@@ -124,10 +124,6 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
 });
 
-Route::get('test',function (){
-    $var = 'test' ;
-    return $var ;
-});
 Route::get('/clear-cache', function () {
     \Illuminate\Support\Facades\Artisan::call('config:cache');
     \Illuminate\Support\Facades\Artisan::call('cache:clear');
