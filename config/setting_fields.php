@@ -246,51 +246,6 @@ return [
             [
                 'type' => 'number', // input fields type
                 'data' => 'integer', // data type, string, int, boolean
-                'name' => 'CREATE_NEW_ORDER', // unique name for field
-                'label' => 'Create New Order', // you know what label it is
-                'rules' => 'required|integer', // validation rule of laravel
-                'class' => 'form-control', // any class for input
-                'value' => '0' // default value if you want
-            ],
-            [
-                'type' => 'number', // input fields type
-                'data' => 'integer', // data type, string, int, boolean
-                'name' => 'CHANGE_ORDER_STATUS', // unique name for field
-                'label' => 'Change Order Status', // you know what label it is
-                'rules' => 'required|integer', // validation rule of laravel
-                'class' => 'form-control', // any class for input
-                'value' => '0' // default value if you want
-            ],
-            [
-                'type' => 'number', // input fields type
-                'data' => 'integer', // data type, string, int, boolean
-                'name' => 'CREATE_USER_RESERVATION', // unique name for field
-                'label' => 'Create User Reservation', // you know what label it is
-                'rules' => 'required|integer', // validation rule of laravel
-                'class' => 'form-control', // any class for input
-                'value' => '0' // default value if you want
-            ],
-            [
-                'type' => 'number', // input fields type
-                'data' => 'integer', // data type, string, int, boolean
-                'name' => 'CANCEL_CENTER_RESERVATION', // unique name for field
-                'label' => 'Cancel Center Reservation', // you know what label it is
-                'rules' => 'required|integer', // validation rule of laravel
-                'class' => 'form-control', // any class for input
-                'value' => '0' // default value if you want
-            ],
-            [
-                'type' => 'number', // input fields type
-                'data' => 'integer', // data type, string, int, boolean
-                'name' => 'COMPLETE_USER_RESERVATION', // unique name for field
-                'label' => 'Complete User Reservation', // you know what label it is
-                'rules' => 'required|integer', // validation rule of laravel
-                'class' => 'form-control', // any class for input
-                'value' => '0' // default value if you want
-            ],
-            [
-                'type' => 'number', // input fields type
-                'data' => 'integer', // data type, string, int, boolean
                 'name' => 'EXPIRE_POINTS_BEFORE_1', // unique name for field
                 'label' => 'Expire Points Before 1', // you know what label it is
                 'rules' => 'required|integer', // validation rule of laravel
@@ -311,33 +266,6 @@ return [
                 'data' => 'integer', // data type, string, int, boolean
                 'name' => 'EXPIRE_POINTS_BEFORE_7', // unique name for field
                 'label' => 'Expire Points Before 7', // you know what label it is
-                'rules' => 'required|integer', // validation rule of laravel
-                'class' => 'form-control', // any class for input
-                'value' => '0' // default value if you want
-            ],
-            [
-                'type' => 'number', // input fields type
-                'data' => 'integer', // data type, string, int, boolean
-                'name' => 'CENTER_CREATE_NEW_OFFER', // unique name for field
-                'label' => 'Center Create New Offer', // you know what label it is
-                'rules' => 'required|integer', // validation rule of laravel
-                'class' => 'form-control', // any class for input
-                'value' => '0' // default value if you want
-            ],
-            [
-                'type' => 'number', // input fields type
-                'data' => 'integer', // data type, string, int, boolean
-                'name' => 'DEAL_WITH_NEW_CENTER', // unique name for field
-                'label' => 'Deal With New Center', // you know what label it is
-                'rules' => 'required|integer', // validation rule of laravel
-                'class' => 'form-control', // any class for input
-                'value' => '0' // default value if you want
-            ],
-            [
-                'type' => 'number', // input fields type
-                'data' => 'integer', // data type, string, int, boolean
-                'name' => 'CREATE_NEW_COUPON_DISCOUNT', // unique name for field
-                'label' => 'Create New Coupon Discount', // you know what label it is
                 'rules' => 'required|integer', // validation rule of laravel
                 'class' => 'form-control', // any class for input
                 'value' => '0' // default value if you want

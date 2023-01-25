@@ -3,13 +3,22 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '6786f1e4d62c3f27f4f4983b109d3c8cfcbec8ac',
+        'reference' => '55809e7bed076e901b14c7425ece009bd79d8088',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'apility/laravel-fcm' => array(
+            'pretty_version' => 'v1.5.0',
+            'version' => '1.5.0.0',
+            'reference' => '23b8feab8372b53d620edf7b94794b8e28ed0271',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../apility/laravel-fcm',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'balping/json-raw-encoder' => array(
             'pretty_version' => 'v1.0.1',
             'version' => '1.0.1.0',
@@ -27,6 +36,12 @@
             'install_path' => __DIR__ . '/../brick/math',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'brozot/laravel-fcm' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
         ),
         'consoletvs/charts' => array(
             'pretty_version' => '6.5.6',
@@ -412,7 +427,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '6786f1e4d62c3f27f4f4983b109d3c8cfcbec8ac',
+            'reference' => '55809e7bed076e901b14c7425ece009bd79d8088',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -790,8 +805,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '1.0.0 || 2.0.0 || 3.0.0',
+                0 => '1.0.0 || 2.0.0 || 3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache' => array(
