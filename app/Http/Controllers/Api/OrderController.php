@@ -37,7 +37,7 @@ class OrderController extends Controller
         $filters = array_merge($request->all(), ['user_id' => auth('sanctum')->id()]);
         $relations = ['orderStatus', 'items.product.defaultLogo'];
         $order = $this->orderService->listing($filters, $relations);
-        return apiResponse(data: OrderResource::collection($order));
+        return OrderResource::collection($order);
     }
 
     public function find(int $id): Application|ResponseFactory|Response
@@ -74,7 +74,7 @@ class OrderController extends Controller
             }
             $this->cartService->emptyCart($request->temp_user_id);
             DB::commit();
-            return apiResponse(data: new OrderResource($order->order));
+            return new OrderResource($order->order);
         } catch (BadRequestHttpException $exception){
             DB::rollBack();
             return apiResponse(message: $exception->getMessage(), code: 422);
@@ -113,5 +113,5 @@ class OrderController extends Controller
     }
 }
 
-//3|ur66oj38RUSES6pQDftDQNQVur9ZhI2AOKiUcvIj
-//2|kvsGbWaVoPHcqULVeynnP69QSwWfkt0o9pHdFdq3
+//3|ur66oj38RUSES6pQDftDQNQVur9ZhI2AOKiUcvIj live
+//2|kvsGbWaVoPHcqULVeynnP69QSwWfkt0o9pHdFdq3 development
