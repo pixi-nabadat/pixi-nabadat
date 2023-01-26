@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Enum\PaymentMethodEnum;
 use App\Events\OrderCreated;
 use App\Exceptions\BadRequestHttpException;
+use App\Exceptions\NotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderStoreRequest;
 use App\Http\Resources\OrderResource;
+use App\Services\AddressService;
 use App\Services\CartService;
 use App\Services\OrderService;
 use App\Services\Payment\PaymobService;
@@ -56,13 +58,23 @@ class OrderController extends Controller
         try {
             DB::beginTransaction();
             $user = auth('sanctum')->user();
-            $order = $this->storeOrder($request, $user); // method store order in trait for multiple usage
+            //1- get cart data for user
+            $orderData = app()->make(CartService::class)->getCart($request->temp_user_id);
+            if ($orderData->items->isEmpty())
+                throw new BadRequestHttpException(trans('lang.there_is_no-items_to_create_order'),422);
+
+            //2-get address info
+            $userAddress = app()->make(AddressService::class)->find(id: $request->address_id, withRelations: ['city:id,title,shipping_cost', 'user:id,name,phone,email']);
+            if (!$userAddress)
+                throw new NotFoundException(trans('lang.address_not_found'));
+
+            $order = $this->storeOrder($orderData,$userAddress, $user,$request->payment_method); // method store order in trait for multiple usage
             if ($request->payment_method == PaymentMethodEnum::CREDIT) {
-                $paymob_order_items = $this->prepareOrderItemsForPaymobOrder($order->order->items);
-                $total_order_amount_in_cents = $order->order->grand_total * 100;
+                $paymob_order_items = $this->prepareOrderItemsForPaymobOrder($order->items);
+                $total_order_amount_in_cents = $order->grand_total * 100;
                 $status_code = 422;
                 $message = trans('lang.there_is_an_error');
-                $result = $this->paymobService->payCredit(order_id: $order->order->id, items: $paymob_order_items, userAddress: $order->userAddress, total_amount_cents: $total_order_amount_in_cents);
+                $result = $this->paymobService->payCredit(order_id: $order->id, items: $paymob_order_items, userAddress: $userAddress, total_amount_cents: $total_order_amount_in_cents);
                 if ($result['status']) {
                     $status_code = 200;
                     $message = null;
@@ -74,8 +86,9 @@ class OrderController extends Controller
             }
             $this->cartService->emptyCart($request->temp_user_id);
             DB::commit();
-            return new OrderResource($order->order);
-        } catch (BadRequestHttpException $exception){
+            return new OrderResource($order);
+        }
+        catch (BadRequestHttpException $exception){
             DB::rollBack();
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
