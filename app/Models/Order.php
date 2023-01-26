@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
-    use HasFactory, Filterable,EscapeUnicodeJson;
+    use Filterable,EscapeUnicodeJson;
     use SoftDeletes;
 
     const
