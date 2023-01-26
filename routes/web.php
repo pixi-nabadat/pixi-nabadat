@@ -20,6 +20,7 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ScheduleFcmController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -121,7 +122,13 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::post('orders/updateOrderStatus', [OrderController::class, 'updateOrderStatus'])->name('orders.updateOrderStatus');
     Route::resource('orders', OrderController::class);
 
-
+//fcm routes
+Route::group(['prefix'=>'fcm'],function (){
+    Route::get('send',[PushNotificationController::class,'create']);
+    Route::post('send',[PushNotificationController::class,'send']);
+});
+Route::resource('schedule-fcm',ScheduleFcmController::class);
+Route::post('schedule-fcm/status', [ScheduleFcmController::class, 'status'])->name('schedule-fcm.status');
 });
 
 Route::get('test',function (){
