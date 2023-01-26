@@ -35,7 +35,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $filters = array_merge($request->all(), ['user_id' => auth('sanctum')->id()]);
-        $relations = ['orderStatus', 'items'];
+        $relations = ['orderStatus', 'items.product.defaultLogo'];
         $order = $this->orderService->listing($filters, $relations);
         return apiResponse(data: OrderResource::collection($order));
     }
@@ -114,3 +114,4 @@ class OrderController extends Controller
 }
 
 //3|ur66oj38RUSES6pQDftDQNQVur9ZhI2AOKiUcvIj
+//2|kvsGbWaVoPHcqULVeynnP69QSwWfkt0o9pHdFdq3
