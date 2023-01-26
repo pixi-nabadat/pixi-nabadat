@@ -23,7 +23,7 @@ class CentresDataTable extends DataTable
                 return $center->address;
             })
             ->editColumn('phone', function (Center $center) {
-                return $center->user->phone;
+                return $center->phones;
             })
             ->editColumn('location', function (Center $center) {
                 return $center->user->location->title;

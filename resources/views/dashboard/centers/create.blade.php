@@ -117,10 +117,20 @@
                                 
                                 {{-- avg_wating_time --}}
                                 <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label  col-3" for="avg_wating_time">@lang('lang.avg_wating_time')</label>
-                                    <input type="number" name="avg_wating_time" step="0.1"
-                                        class="form-control @error('avg_wating_time') is-invalid @enderror">
-                                    @error('avg_wating_time')
+                                    <label class="form-label  col-3" for="avg_waiting_time">@lang('lang.avg_waiting_time')</label>
+                                    <input type="number" name="avg_waiting_time" step="0.1"
+                                        class="form-control @error('avg_waiting_time') is-invalid @enderror">
+                                    @error('avg_waiting_time')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                {{-- app_discount --}}
+                                <div class="col-md-12 d-flex my-3">
+                                    <label class="form-label  col-3" for="app_discount">@lang('lang.app_discount')</label>
+                                    <input type="number" name="app_discount" step="0.1"
+                                        class="form-control @error('app_discount') is-invalid @enderror">
+                                    @error('app_discount')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -128,7 +138,7 @@
                                 {{-- phones  --}}
                                 <div class="field_wrapper">
                                     <div class="col-md-12 d-flex my-3">
-                                        <label class="col-form-label col-3">{{ trans('lang.phone') }}</label>
+                                        <label class="col-form-label col-3">{{ trans('lang.phones') }}</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <a href="javascript:void(0);" class="add_button" title="Add field">
@@ -136,31 +146,50 @@
                                                 </a>
                                             </div>
                                             <input type="text"
-                                                class="form-control @error('phone') is-invalid @enderror" name="phone[]"
-                                                value="{{ old('phone[]') }}" placeholder="primary phone" />
+                                                class="form-control @error('phones') is-invalid @enderror" name="phones[]"
+                                                value="{{ old('phones[]') }}" placeholder="primary phone" />
                                         </div>
-                                        @error('phone')
+                                        @error('phones')
                                             <div class="invalid-feedback text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-                                {{-- support payments credit --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <input name="support_payments[]" @error('support_payments') is-invalid @enderror"
-                                    id="support_payments_credit" type="checkbox">
-                                    <label class="form-label col-3 " for="support_payments_credit">{{ trans('lang.support_payments_credit[]') }}</label>
-                                    @error('support_payments')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                <div class="col-md-12 d-flex">
+                                    <div class="media mb-2">
+                                        <label
+                                            class="col-form-label m-r-10" for="support_payments_credit">{{ trans('lang.support_payments_credit') }}</label>
+                                        <div class="media-body  icon-state">
+                                            <label class="switch">
+                                                <input name="support_payments[credit]"
+                                                @error('support_payments.credit') is-invalid @enderror
+                                                id="support_payments_credit"
+                                                type="checkbox" value="1"><span class="switch-state"></span>
+                                            </label>
+                                        </div>
+                                        @error('support_payments.credit')
+                                            <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-                                {{-- support payments cash--}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <input name="support_payments[]"  @error('support_payments') is-invalid @enderror"
-                                    id="support_payments_cash" type="checkbox">
-                                    <label class="form-label col-3 " for="support_payments_cash">{{ trans('lang.support_payments_cash') }}</label>
-                                    @error('support_payments')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                {{-- support payments cash --}}
+                                <div class="col-md-12 d-flex">
+                                    
+                                    <div class="media mb-2">
+                                        <label
+                                            class="col-form-label m-r-10" for="support_payments_cash">{{ trans('lang.support_payments_cash') }}</label>
+                                        <div class="media-body  icon-state">
+                                            <label class="switch">
+                                                <input name="support_payments[cash]"
+                                                @error('support_payments.cash') is-invalid @enderror
+                                                id="support_payments_cash"
+                                                type="checkbox" value="1"><span class="switch-state"></span>
+                                            </label>
+                                        </div>
+                                        @error('support_payments.cash')
+                                            <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                                                        
                                 </div>
                             </div>
                         </div>
@@ -249,6 +278,23 @@
                                     <h6>{{ __('lang.center_image') }}</h6>
                                 </div>
                                 <div class="card-body">
+                                    {{-- center logo --}}
+                                    <div class="col-md-12  d-flex">
+                                        <div class="col-md-12">
+                                            <label class="form-label" for="logo">{{ trans('lang.logo') }}</label>
+                                            <input name="logo"
+                                                class="form-control image @error('logo') is-invalid @enderror"
+                                                id="logo" type="file">
+                                            @error('logo')
+                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <img src="{{ asset('/uploads/device/default.png') }}" style="width: 500px"
+                                                class="img-thumbnail image-preview " alt="">
+                                        </div>
+                                    </div>
+                                    {{-- center logo --}}
                                     <div class="col-md-12  d-flex">
                                         <div class="col-md-12">
                                             <label class="form-label" for="image">{{ trans('lang.image') }}</label>
@@ -305,7 +351,7 @@
                                                     <label class="col-form-label m-r-10">{{ __('lang.featured') }}</label>
                                                     <div class="media-body  icon-state">
                                                         <label class="switch">
-                                                            <input type="checkbox" name="featured" checked=""><span
+                                                            <input type="checkbox" name="featured" checked><span
                                                                 class="switch-state"></span>
                                                         </label>
                                                     </div>

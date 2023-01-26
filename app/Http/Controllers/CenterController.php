@@ -52,7 +52,7 @@ class CenterController extends Controller
                 'message' => trans('lang.center_created_successfully')
             ];
             DB::commit();
-            return back()->with('toast', $toast);
+            return redirect()->route('centers.index')->with('toast', $toast);
         } catch (\Exception $exception) {
             $toast = [
                 'type' => 'error',
@@ -91,7 +91,7 @@ class CenterController extends Controller
                 'title' => trans('lang.success'),
                 'message' => trans('lang.center_updated_successfully')
             ];
-            return back()->with('toast', $toast);
+            return redirect()->route('centers.index')->with('toast', $toast);
         } catch (\Exception $exception) {
             $toast = [
                 'type' => 'error',
@@ -140,7 +140,10 @@ class CenterController extends Controller
         $withRelation = ['attachments'];
         $center = $this->centerService->find($id, $withRelation);
         $location = $this->locationService->getLocationAncestors($center->location_id);
-        return view('dashboard.centers.show', ['center' => $center, 'location' => $location]);
+
+        $filters = ['depth' => 1, 'is_active' => 1];
+        $governorates = $this->locationService->getAll($filters);
+        return view('dashboard.centers.show', ['center' => $center, 'governorates'=>$governorates,'location' => $location]);
     }
 
     public function featured(Request $request)
