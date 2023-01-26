@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\ImageTypeEnum;
 use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
 use App\Traits\HasAttachment;
@@ -68,6 +69,11 @@ class Center extends Model
     public function rates(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
         return $this->morphMany(Rate::class, 'ratable');
+    }
+
+    public function defaultLogo(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->attachments()->where('type', ImageTypeEnum::LOGO);
     }
     public function devices()
     {

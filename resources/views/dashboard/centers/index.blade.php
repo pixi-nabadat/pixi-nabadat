@@ -20,7 +20,7 @@
 					<a role="button" class="btn btn-success" href="{{ route('centers.create')}}"><i class="fa fa-plus-circle"></i> {{ trans('lang.add_center')}}</a>
 				</div>
 				<div class="card-body">
-					{!! $dataTable->table(['width' => '100%','class'=>'table table-striped table-bordered']) !!}
+					{!! $dataTable->table() !!}
 				</div>
 			</div>
 		</div>

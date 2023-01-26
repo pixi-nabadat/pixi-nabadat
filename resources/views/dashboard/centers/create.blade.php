@@ -27,118 +27,127 @@
                                 <h6 class="card-titel">{{ __('lang.centers') }}</h6>
                             </div>
                             <div class="card-body row">
-                                {{-- name_ar  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3 " for="name_ar">{{ trans('lang.name_ar') }}</label>
-                                    <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
-                                        id="name_ar" value="{{ old('name["ar"]') }}" type="text" required>
-                                    @error('name.ar')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                {{-- name_en  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3" for="name_en">{{ trans('lang.name_en') }}</label>
-                                    <input name="name[en]" value="{{ old('name["en"]') }}"
-                                        class="form-control @error('name.en') is-invalid @enderror" id="name_en"
-                                        type="text" required>
+{{--                                name english--}}
+                                <div class="col-md-6 mb-3">
+                                    <div class="col-form-label">{{ trans('lang.name_en') }}</div>
+                                    <input name="name[en]" value="{{ old('name.en') }}"
+                                           class="form-control @error('name.en') is-invalid @enderror" id="name_en"
+                                           type="text" required>
                                     @error('name.en')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+{{--                                name arabic--}}
+                                <div class="col-md-6 mb-3">
+                                    <div class="col-form-label">{{ trans('lang.name_ar') }}</div>
+                                    <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
+                                           id="name_ar" value="{{ old('name.ar') }}" type="text" required>
+                                    @error('name.ar')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
-                                {{-- username  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3 " for="user_name">{{ trans('lang.user_name') }}</label>
+{{--                                username--}}
+                                <div class="col-md-6 mb-3">
+                                    <div class="col-form-label">{{ trans('lang.user_name') }}</div>
                                     <input name="user_name" class="form-control @error('user_name') is-invalid @enderror"
-                                        id="user_name" value="{{ old('user_name') }}" type="text" required>
+                                           id="user_name" value="{{ old('user_name') }}" type="text" required>
                                     @error('user_name')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
-                                {{-- email --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3 " for="email">{{ trans('lang.email') }}</label>
+{{--                                email--}}
+                                <div class="col-md-6 mb-3">
+                                    <div class="col-form-label">{{ trans('lang.email') }}</div>
                                     <input name="email" class="form-control @error('email') is-invalid @enderror"
-                                        id="email" value="{{ old('email') }}" type="email" required>
+                                           id="email" value="{{ old('email') }}" type="email" required>
                                     @error('email')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
-                                {{-- password  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3 " for="password">{{ trans('lang.password') }}</label>
+{{--                                password--}}
+                                <div class="col-md-6 mb-3">
+                                    <div class="col-form-label">{{ trans('lang.password') }}</div>
                                     <input name="password" class="form-control @error('password') is-invalid @enderror"
-                                        id="name_ar" type="password" required>
+                                           id="name_ar" type="password" required>
                                     @error('password')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+{{--                                primary phone--}}
+                                <div class="col-md-6 mb-3">
+                                    <div class="col-form-label">{{ trans('lang.primary_phone') }}</div>
+                                    <input name="primary_phone" class="form-control @error('primary_phone') is-invalid @enderror"
+                                           id="name_ar" value="{{old('primary_phone')}}" type="text" required>
+                                    @error('primary_phone')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 {{--address_ar --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3" for="address_ar">{{ trans('lang.address_ar') }}</label>
-                                    <textarea name="address[ar]" class="form-control @error('address.ar') is-invalid @enderror">{{ old('address[ar]') }}</textarea>
+                                <div class="col-md-12 my-3">
+                                    <div class="col-form-label">{{ trans('lang.address_ar') }}</div>
+                                    <textarea name="address[ar]" class="form-control @error('address.ar') is-invalid @enderror">{{ old('address.ar') }}</textarea>
                                     @error('address.ar')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 {{--address_en --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3" for="address_ar">{{ trans('lang.address_en') }}</label>
-                                    <textarea name="address[en]" class="form-control @error('address.en') is-invalid @enderror">{{ old('address[en]') }}</textarea>
+                                <div class="col-md-12 my-3">
+                                    <div class="col-form-label">{{ trans('lang.address_en') }}</div>
+                                    <textarea name="address[en]" class="form-control @error('address.en') is-invalid @enderror">{{ old('address.en') }}</textarea>
                                     @error('address.en')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 {{--description ar --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3"
-                                        for="address_ar">{{ trans('lang.description_ar') }}</label>
-                                    <textarea name="description[ar]" class="form-control @error('description.ar') is-invalid @enderror">{{ old('description[ar]') }}</textarea>
+                                <div class="col-md-12 my-3">
+                                    <div class="col-form-label">{{ trans('lang.description_ar') }}</div>
+                                    <textarea name="description[ar]" class="form-control @error('description.ar') is-invalid @enderror">{{ old('description.ar') }}</textarea>
                                     @error('description.ar')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 {{--description_en --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3"
-                                        for="address_ar">{{ trans('lang.description_en') }}</label>
-                                    <textarea name="description[en]" class="form-control @error('description.en') is-invalid @enderror">{{ old('description[en]') }}</textarea>
+                                <div class="col-md-12 my-3">
+                                    <div class="col-form-label">{{ trans('lang.description_en') }}</div>
+                                    <textarea name="description[en]" class="form-control @error('description.en') is-invalid @enderror">{{ old('description.en') }}</textarea>
                                     @error('description.en')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 
                                 {{-- avg_wating_time --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label  col-3" for="avg_waiting_time">@lang('lang.avg_waiting_time')</label>
+                                <div class="col-md-6 mb-3">
+                                    <div class="col-form-label">{{ trans('lang.avg_waiting_time') }}</div>
                                     <input type="number" name="avg_waiting_time" step="0.1"
-                                        class="form-control @error('avg_waiting_time') is-invalid @enderror">
+                                           class="form-control @error('avg_waiting_time') is-invalid @enderror">
                                     @error('avg_waiting_time')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
+
                                 {{-- app_discount --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label  col-3" for="app_discount">@lang('lang.app_discount')</label>
+                                <div class="col-md-6 mb-3">
+                                    <div class="col-form-label">{{ trans('lang.app_discount') }}</div>
                                     <input type="number" name="app_discount" step="0.1"
-                                        class="form-control @error('app_discount') is-invalid @enderror">
+                                           class="form-control @error('app_discount') is-invalid @enderror">
                                     @error('app_discount')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 {{-- phones  --}}
                                 <div class="field_wrapper">
-                                    <div class="col-md-12 d-flex my-3">
-                                        <label class="col-form-label col-3">{{ trans('lang.phones') }}</label>
+                                    <div class="col-md-6 my-3">
+                                        <div class="col-form-label">{{ trans('lang.other_phones') }}</div>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <a href="javascript:void(0);" class="add_button" title="Add field">
@@ -146,8 +155,7 @@
                                                 </a>
                                             </div>
                                             <input type="text"
-                                                class="form-control @error('phones') is-invalid @enderror" name="phones[]"
-                                                value="{{ old('phones[]') }}" placeholder="primary phone" />
+                                                class="form-control @error('phones') is-invalid @enderror" name="phones[]"/>
                                         </div>
                                         @error('phones')
                                             <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -160,10 +168,10 @@
                                             class="col-form-label m-r-10" for="support_payments_credit">{{ trans('lang.support_payments_credit') }}</label>
                                         <div class="media-body  icon-state">
                                             <label class="switch">
-                                                <input name="support_payments[credit]"
+                                                <input name="support_payments[]"
                                                 @error('support_payments.credit') is-invalid @enderror
                                                 id="support_payments_credit"
-                                                type="checkbox" value="1"><span class="switch-state"></span>
+                                                type="checkbox" value="{{\App\Enum\PaymentMethodEnum::CREDIT}}"><span class="switch-state"></span>
                                             </label>
                                         </div>
                                         @error('support_payments.credit')
@@ -173,16 +181,15 @@
                                 </div>
                                 {{-- support payments cash --}}
                                 <div class="col-md-12 d-flex">
-                                    
                                     <div class="media mb-2">
                                         <label
                                             class="col-form-label m-r-10" for="support_payments_cash">{{ trans('lang.support_payments_cash') }}</label>
                                         <div class="media-body  icon-state">
                                             <label class="switch">
-                                                <input name="support_payments[cash]"
+                                                <input name="support_payments[]"
                                                 @error('support_payments.cash') is-invalid @enderror
                                                 id="support_payments_cash"
-                                                type="checkbox" value="1"><span class="switch-state"></span>
+                                                type="checkbox" checked value="{{\App\Enum\PaymentMethodEnum::CASH}}"><span class="switch-state"></span>
                                             </label>
                                         </div>
                                         @error('support_payments.cash')
@@ -233,7 +240,7 @@
                                     <h6 class="card-titel">{{ __('lang.cordinates') }}</h6>
                                 </div>
                                 <div class="card-body row">
-                                    {{-- name_ar  --}}
+                                    {{-- lat  --}}
                                     <div class="col-md-12 d-flex my-3">
                                         <label class="form-label col-3 " for="lat">{{ trans('lang.lat') }}</label>
                                         <input name="lat" class="form-control @error('lat') is-invalid @enderror"
@@ -243,7 +250,7 @@
                                             <div class="invalid-feedback text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    {{-- name_en  --}}
+                                    {{-- lng  --}}
                                     <div class="col-md-12 d-flex my-3">
                                         <label class="form-label col-3" for="lng">{{ trans('lang.lng') }}</label>
                                         <input name="lng" class="form-control @error('lng') is-invalid @enderror"
@@ -254,7 +261,7 @@
                                         @enderror
                                     </div>
 
-                                    {{-- name_en  --}}
+                                    {{-- google_map_url  --}}
                                     <div class="col-md-12 d-flex my-3">
                                         <label class="form-label col-3"
                                             for="google_map_url">{{ trans('lang.google_map_url') }}</label>
@@ -351,7 +358,7 @@
                                                     <label class="col-form-label m-r-10">{{ __('lang.featured') }}</label>
                                                     <div class="media-body  icon-state">
                                                         <label class="switch">
-                                                            <input type="checkbox" name="featured" checked><span
+                                                            <input type="checkbox" value="1" name="featured" checked><span
                                                                 class="switch-state"></span>
                                                         </label>
                                                     </div>
@@ -385,7 +392,7 @@
             var addButton = $('.add_button'); //Add button selector
             var wrapper = $('.field_wrapper'); //Input field wrapperr
             var fieldHTML =
-                '<div class="col-md-12 d-flex my-3 child">' +
+                '<div class="col-md-6 my-3 child">' +
                 '<label class="col-form-label col-3"></label>' +
                 '<div class="input-group">' +
                 '<div class="input-group-prepend">' +

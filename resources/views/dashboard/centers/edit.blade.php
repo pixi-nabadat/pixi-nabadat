@@ -29,7 +29,7 @@
                             </div>
                             <div class="card-body row">
                                 {{-- name_ar  --}}
-                                <div class="col-md-12 d-flex my-3">
+                                <div class="col-md-6 my-3">
                                     <label class="form-label col-3 " for="name_ar">{{ trans('lang.name_ar') }}</label>
                                     <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
                                         id="name_ar" value="{{ $center->user->getTranslation('name', 'ar') }}" type="text" required>
@@ -38,7 +38,7 @@
                                     @enderror
                                 </div>
                                 {{-- name_en  --}}
-                                <div class="col-md-12 d-flex my-3">
+                                <div class="col-md-6 my-3">
                                     <label class="form-label col-3" for="name_en">{{ trans('lang.name_en') }}</label>
                                     <input name="name[en]" value="{{ $center->user->getTranslation('name', 'en') }}"
                                         class="form-control @error('name.en') is-invalid @enderror" id="name_en"
@@ -49,7 +49,7 @@
                                 </div>
 
                                 {{-- username  --}}
-                                <div class="col-md-12 d-flex my-3">
+                                <div class="col-md-6 my-3">
                                     <label class="form-label col-3 " for="user_name">{{ trans('lang.user_name') }}</label>
                                     <input name="user_name" class="form-control @error('user_name') is-invalid @enderror"
                                         id="user_name" value="{{ $center->user->user_name }}" type="text" required>
@@ -59,7 +59,7 @@
                                 </div>
 
                                 {{-- email --}}
-                                <div class="col-md-12 d-flex my-3">
+                                <div class="col-md-6 my-3">
                                     <label class="form-label col-3 " for="email">{{ trans('lang.email') }}</label>
                                     <input name="email" class="form-control @error('email') is-invalid @enderror"
                                         id="email" value="{{ $center->user->email }}" type="email" required>
@@ -69,12 +69,20 @@
                                 </div>
 
                                 {{-- password  --}}
-                                <div class="col-md-12 d-flex my-3">
+                                <div class="col-md-6 my-3">
                                     <label class="form-label col-3 " for="password">{{ trans('lang.password') }}</label>
                                     <input name="password" class="form-control @error('password') is-invalid @enderror"
                                         id="name_ar" type="password" required>
                                     @error('password')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="col-form-label">{{ trans('lang.primary_phone') }}</div>
+                                    <input name="primary_phone" class="form-control @error('primary_phone') is-invalid @enderror"
+                                           id="name_ar" value="{{ $center->user->phone}}" type="text" required>
+                                    @error('primary_phone')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -117,7 +125,7 @@
                                 </div>
                                 
                                 {{-- avg_wating_time --}}
-                                <div class="col-md-12 d-flex my-3">
+                                <div class="col-md-6 my-3">
                                     <label class="form-label  col-3" for="avg_waiting_time">@lang('lang.avg_waiting_time')</label>
                                     <input type="number" name="avg_waiting_time" step="0.1"
                                         class="form-control @error('avg_waiting_time') is-invalid @enderror"
@@ -128,7 +136,7 @@
                                 </div>
 
                                 {{-- app_discount --}}
-                                <div class="col-md-12 d-flex my-3">
+                                <div class="col-md-6 my-3">
                                     <label class="form-label  col-3" for="app_discount">@lang('lang.app_discount')</label>
                                     <input type="number" name="app_discount" step="0.1"
                                         class="form-control @error('app_discount') is-invalid @enderror"
@@ -140,7 +148,7 @@
 
                                 {{-- phones  --}}
                                 <div class="field_wrapper">
-                                    <div class="col-md-12 d-flex my-3">
+                                    <div class="col-md-6 my-3">
                                         <label class="col-form-label col-3">{{ trans('lang.phones') }}</label>
                                         @foreach ($center->phones as $phone)
                                         <div class="input-group">
@@ -393,7 +401,7 @@
             var addButton = $('.add_button'); //Add button selector
             var wrapper = $('.field_wrapper'); //Input field wrapperr
             var fieldHTML =
-                '<div class="col-md-12 d-flex my-3 child">' +
+                '<div class="col-md-6 my-3 child">' +
                 '<label class="col-form-label col-3"></label>' +
                 '<div class="input-group">' +
                 '<div class="input-group-prepend">' +

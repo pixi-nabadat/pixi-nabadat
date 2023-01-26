@@ -22,10 +22,10 @@ class CentresDataTable extends DataTable
             ->editColumn('address', function (Center $center) {
                 return $center->address;
             })
-            ->editColumn('phone', function (Center $center) {
-                return $center->phones;
+            ->editColumn('phones', function (Center $center) {
+                return view('dashboard.centers._phones_column',compact('center'))->render();
             })
-            ->editColumn('location', function (Center $center) {
+            ->addColumn('location', function (Center $center) {
                 return $center->user->location->title;
             })
             ->editColumn('featured', function(Center $center){
@@ -34,9 +34,9 @@ class CentresDataTable extends DataTable
             ->editColumn('is_active', function (Center $center) {
                 return  view('dashboard.components.switch-btn',['model'=>$center->user,'url'=>route('centers.changeStatus')]);
             })
-            ->addcolumn('is_support_auto_service', function (Center $center) {
+            ->editColumn('is_support_auto_service', function (Center $center) {
                 return  view('dashboard.components.switch-support-auto-service-btn',['model'=>$center,'url'=>route('centers.support-auto-service.changeStatus')]);
-            })->rawColumns(['action','is_active','featured','is_support_auto_service']);
+            })->rawColumns(['action','is_active','featured','is_support_auto_service','phones']);
     }
 
     /**
@@ -64,6 +64,7 @@ class CentresDataTable extends DataTable
                 'order' => [[0, 'desc']],
                 "lengthMenu" => [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 'responsive' => true,
+                'scrollX' => true,
                 "bSort" => false
             ]);
     }
@@ -79,7 +80,9 @@ class CentresDataTable extends DataTable
             Column::make('id'),
             Column::make('name'),
             Column::make('address'),
-            Column::make('phone'),
+            Column::make('phones')
+                ->searchable(false)
+                ->orderable(false),
             Column::make('app_discount')
                 ->title(trans('lang.center_discount'))
                 ->searchable(false)
@@ -89,13 +92,9 @@ class CentresDataTable extends DataTable
                 ->searchable(false)
                 ->orderable(false),
             Column::make('is_support_auto_service')
-                ->title(trans('lang.auto_service_status'))
-                ->searchable(true)
-                ->orderable(true),
+                ->title(trans('lang.auto_service_status')),
             Column::make('is_active')
-                ->title(trans('lang.status'))
-                ->searchable(false)
-                ->orderable(false),
+                ->title(trans('lang.status')),
             Column::computed('action')
                 ->width(60)
                 ->addClass('text-center'),

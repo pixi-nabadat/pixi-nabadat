@@ -38,7 +38,6 @@ class CenterService extends BaseService
      */
     public function store(array $data = [])
     {
-        DB::beginTransaction();
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
         $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ? 1 : 0;
         $data['featured'] = isset($data['featured']) ? 1 : 0;
@@ -61,7 +60,6 @@ class CenterService extends BaseService
             }
         $userData = $this->prepareUserData($data);
         $center->user()->create($userData);
-        DB::commit();
         return $center;
     }
 
@@ -70,7 +68,7 @@ class CenterService extends BaseService
         return [
             'name' => $data['name'],
             'email' => $data['email'],
-            'phone' => json_encode($data['phones']),
+            'phone' => $data['primary_phone'],
             'user_name' => $data['user_name'],
             'password' => bcrypt($data['password']),
             'type' => User::CENTERADMIN,
@@ -84,7 +82,7 @@ class CenterService extends BaseService
         return [
             'is_support_auto_service'=>$data['is_support_auto_service'],
             'featured'=>$data['featured'],
-            'phones'=>$data['phones'],
+            'phones'=>array_filter($data['phones']),
             'address' => $data['address'],
             'description' => $data['description'],
             'avg_waiting_time'=>$data['avg_waiting_time'],

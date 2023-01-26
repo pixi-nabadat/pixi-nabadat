@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\CentresDataTable;
-use App\Exceptions\NotFoundException;
 use App\Http\Requests\StoreCenterRequest as StoreCenterRequest;
 use App\Http\Requests\UpdateCenterRequest as UpdateCenterRequest;
 use App\Services\CenterService;
@@ -66,14 +65,13 @@ class CenterController extends Controller
     public function edit($id)
     {
         try {
-            $withRelation = ['attachments'];
+            $withRelation = ['user','attachments','defaultLogo'];
             $center = $this->centerService->find($id, $withRelation);
             $location = $this->locationService->getLocationAncestors($center->location_id);
             $filters = ['depth' => 1, 'is_active' => 1];
             $governorates = $this->locationService->getAll($filters);
             return view('dashboard.centers.edit', ['center' => $center, 'governorates' => $governorates, 'location' => $location]);
-        }catch (\Exception $exception )
-        {
+        } catch (\Exception $exception) {
             $toast = [
                 'type' => 'error',
                 'title' => trans('error'),
@@ -128,7 +126,7 @@ class CenterController extends Controller
     {
 
         try {
-            $result =  $this->centerService->changeSupportAutoServiceStatus($request->id);
+            $result = $this->centerService->changeSupportAutoServiceStatus($request->id);
             return apiResponse(message: trans('lang.success'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
@@ -143,7 +141,7 @@ class CenterController extends Controller
 
         $filters = ['depth' => 1, 'is_active' => 1];
         $governorates = $this->locationService->getAll($filters);
-        return view('dashboard.centers.show', ['center' => $center, 'governorates'=>$governorates,'location' => $location]);
+        return view('dashboard.centers.show', ['center' => $center, 'governorates' => $governorates, 'location' => $location]);
     }
 
     public function featured(Request $request)
