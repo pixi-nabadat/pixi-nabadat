@@ -28,29 +28,31 @@
                                 <h6 class="card-titel">{{ __('lang.centers') }}</h6>
                             </div>
                             <div class="card-body row">
+                                {{-- name_en  --}}
+                                <div class="col-md-6 my-3">
+                                    <div class="col-form-label">{{ trans('lang.name_en') }}</div>
+                                    <input name="name[en]" value="{{ $center->user->getTranslation('name', 'en') }}"
+                                           class="form-control @error('name.en') is-invalid @enderror" id="name_en"
+                                           type="text" required>
+                                    @error('name.en')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
                                 {{-- name_ar  --}}
                                 <div class="col-md-6 my-3">
-                                    <label class="form-label col-3 " for="name_ar">{{ trans('lang.name_ar') }}</label>
+                                    <div class="col-form-label">{{ trans('lang.name_ar') }}</div>
                                     <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
                                         id="name_ar" value="{{ $center->user->getTranslation('name', 'ar') }}" type="text" required>
                                     @error('name.ar')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                {{-- name_en  --}}
-                                <div class="col-md-6 my-3">
-                                    <label class="form-label col-3" for="name_en">{{ trans('lang.name_en') }}</label>
-                                    <input name="name[en]" value="{{ $center->user->getTranslation('name', 'en') }}"
-                                        class="form-control @error('name.en') is-invalid @enderror" id="name_en"
-                                        type="text" required>
-                                    @error('name.en')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
+
 
                                 {{-- username  --}}
                                 <div class="col-md-6 my-3">
-                                    <label class="form-label col-3 " for="user_name">{{ trans('lang.user_name') }}</label>
+                                    <div class="col-form-label">{{ trans('lang.user_name') }}</div>
                                     <input name="user_name" class="form-control @error('user_name') is-invalid @enderror"
                                         id="user_name" value="{{ $center->user->user_name }}" type="text" required>
                                     @error('user_name')
@@ -60,7 +62,7 @@
 
                                 {{-- email --}}
                                 <div class="col-md-6 my-3">
-                                    <label class="form-label col-3 " for="email">{{ trans('lang.email') }}</label>
+                                    <div class="col-form-label">{{ trans('lang.email') }}</div>
                                     <input name="email" class="form-control @error('email') is-invalid @enderror"
                                         id="email" value="{{ $center->user->email }}" type="email" required>
                                     @error('email')
@@ -70,14 +72,14 @@
 
                                 {{-- password  --}}
                                 <div class="col-md-6 my-3">
-                                    <label class="form-label col-3 " for="password">{{ trans('lang.password') }}</label>
+                                    <div class="col-form-label">{{ trans('lang.password') }}</div>
                                     <input name="password" class="form-control @error('password') is-invalid @enderror"
                                         id="name_ar" type="password" required>
                                     @error('password')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-6 my-3">
                                     <div class="col-form-label">{{ trans('lang.primary_phone') }}</div>
                                     <input name="primary_phone" class="form-control @error('primary_phone') is-invalid @enderror"
                                            id="name_ar" value="{{ $center->user->phone}}" type="text" required>
@@ -87,8 +89,8 @@
                                 </div>
 
                                 {{--address_ar --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3" for="address_ar">{{ trans('lang.address_ar') }}</label>
+                                <div class="col-md-12 my-3">
+                                    <div class="col-form-label">{{ trans('lang.address_ar') }}</div>
                                     <textarea name="address[ar]" class="form-control @error('address.ar') is-invalid @enderror">{{ $center->getTranslation('address', 'ar') }}</textarea>
                                     @error('address.ar')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -96,8 +98,8 @@
                                 </div>
 
                                 {{--address_en --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3" for="address_ar">{{ trans('lang.address_en') }}</label>
+                                <div class="col-md-12 my-3">
+                                    <div class="col-form-label">{{ trans('lang.address_en') }}</div>
                                     <textarea name="address[en]" class="form-control @error('address.en') is-invalid @enderror">{{ $center->getTranslation('address', 'ar') }}</textarea>
                                     @error('address.en')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -105,9 +107,8 @@
                                 </div>
 
                                 {{--description ar --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3"
-                                        for="address_ar">{{ trans('lang.description_ar') }}</label>
+                                <div class="col-md-12 my-3">
+                                    <div class="col-form-label">{{ trans('lang.description_ar') }}</div>
                                     <textarea name="description[ar]" class="form-control @error('description.ar') is-invalid @enderror">{{ $center->getTranslation('description', 'ar') }}</textarea>
                                     @error('description.ar')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -115,9 +116,8 @@
                                 </div>
 
                                 {{--description_en --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3"
-                                        for="address_ar">{{ trans('lang.description_en') }}</label>
+                                <div class="col-md-12 my-3">
+                                    <div class="col-form-label">{{ trans('lang.description_en') }}</div>
                                     <textarea name="description[en]" class="form-control @error('description.en') is-invalid @enderror">{{ $center->getTranslation('description', 'en') }}</textarea>
                                     @error('description.en')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -126,7 +126,7 @@
                                 
                                 {{-- avg_wating_time --}}
                                 <div class="col-md-6 my-3">
-                                    <label class="form-label  col-3" for="avg_waiting_time">@lang('lang.avg_waiting_time')</label>
+                                    <div class="col-form-label">{{ trans('lang.avg_waiting_time') }}</div>
                                     <input type="number" name="avg_waiting_time" step="0.1"
                                         class="form-control @error('avg_waiting_time') is-invalid @enderror"
                                         value="{{ $center->avg_waiting_time }}">
@@ -137,7 +137,7 @@
 
                                 {{-- app_discount --}}
                                 <div class="col-md-6 my-3">
-                                    <label class="form-label  col-3" for="app_discount">@lang('lang.app_discount')</label>
+                                    <div class="col-form-label">{{ trans('lang.app_discount') }}</div>
                                     <input type="number" name="app_discount" step="0.1"
                                         class="form-control @error('app_discount') is-invalid @enderror"
                                         value="{{ $center->app_discount }}">
@@ -149,7 +149,7 @@
                                 {{-- phones  --}}
                                 <div class="field_wrapper">
                                     <div class="col-md-6 my-3">
-                                        <label class="col-form-label col-3">{{ trans('lang.phones') }}</label>
+                                        <div class="col-form-label">{{ trans('lang.other_phones') }}</div>
                                         @foreach ($center->phones as $phone)
                                         <div class="input-group">
                                             <div class="input-group-prepend">
