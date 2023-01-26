@@ -69,6 +69,6 @@ class Reservation extends Model
 
     public function getPaymentStatusAttribute($value): string
     {
-        return trans('lang.'.$value);
+        return $value == 0 ? trans('lang.'.PaymentStatusEnum::UNPAID):trans('lang.'.PaymentStatusEnum::PAID);
     }
 }

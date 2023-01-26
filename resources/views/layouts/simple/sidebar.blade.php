@@ -141,7 +141,8 @@
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/reservations' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
-                            <li><a class="lan-5 {{ Route::currentRouteName()==route('packages.index') ? 'active' : '' }}" href="{{route('reservations.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('reservations.index') ? 'active' : '' }}" href="{{route('reservations.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('reservations.create') ? 'active' : '' }}" href="{{route('reservations.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
                         {{--end reservations --}}
 

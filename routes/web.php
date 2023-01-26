@@ -67,9 +67,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     // End Settings
 
     //start reservations
-    Route::group(['prefix'=>'reservations'],function (){
-        Route::get('/',[ReservationController::class,'index'])->name('reservations.index');
-    });
+    Route::resource('reservations', ReservationController::class);
     //end reservations
 
     Route::group(['prefix' => 'ajax'], function () {

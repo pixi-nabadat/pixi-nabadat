@@ -61,7 +61,15 @@ class ReservationService extends BaseService
         return $reservation;
     }
 
-
+    public function destroy($id)
+    {
+        $reservation = Reservation::find($id);
+        if ($reservation) {
+            return $reservation->delete();
+        }
+        return false;
+    } //end of delete
+    
     /**
      * @throws NotFoundException
      */

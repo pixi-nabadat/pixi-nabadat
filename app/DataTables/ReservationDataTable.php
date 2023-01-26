@@ -111,9 +111,9 @@ class ReservationDataTable extends DataTable
                 ->title(trans('lang.status'))
                 ->searchable(false)
                 ->orderable(false),
-            // Column::computed('action')
-            //     ->width(60)
-            //     ->addClass('text-center'),
+            Column::computed('action')
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
