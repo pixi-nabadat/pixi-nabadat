@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enum\PaymentMethodEnum;
 use App\Events\OrderCreated;
+use App\Exceptions\BadRequestHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderStoreRequest;
 use App\Http\Resources\OrderResource;
@@ -34,7 +35,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $filters = array_merge($request->all(), ['user_id' => auth('sanctum')->id()]);
-        $relations = ['orderStatus', 'items'];
+        $relations = ['orderStatus', 'items.product.defaultLogo'];
         $order = $this->orderService->listing($filters, $relations);
         return apiResponse(data: OrderResource::collection($order));
     }
@@ -74,9 +75,13 @@ class OrderController extends Controller
             $this->cartService->emptyCart($request->temp_user_id);
             DB::commit();
             return apiResponse(data: new OrderResource($order->order));
-        } catch (Exception $e) {
+        } catch (BadRequestHttpException $exception){
             DB::rollBack();
-            return apiResponse(message: $e, code: 422);
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+        catch (Exception $e) {
+            DB::rollBack();
+            return apiResponse(message: trans('lang.there_is_an_error'), code: 422);
         }
     }
 
@@ -107,3 +112,6 @@ class OrderController extends Controller
         return apiResponse(message: trans('lang.there_is_an_error_try_again_later'), code: 422);
     }
 }
+
+//3|ur66oj38RUSES6pQDftDQNQVur9ZhI2AOKiUcvIj
+//2|kvsGbWaVoPHcqULVeynnP69QSwWfkt0o9pHdFdq3
