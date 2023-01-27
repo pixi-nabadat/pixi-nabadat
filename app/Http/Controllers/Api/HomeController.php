@@ -15,6 +15,7 @@ use App\Services\LocationService;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -43,12 +44,14 @@ class HomeController extends Controller
 
     public function search(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
+        $lang = app()->getLocale();
         $keyword = $request->keyword;
         $product = Product::query()->where('name', 'Like', "%$keyword%")->select(['id','name'])->limit(10)->get();
         $device = Device::query()->where('name', 'Like', "%$keyword%")->select(['id','name'])->limit(10)->get();
-        $center = Center::query()->whereHas('user',function ($query) use($keyword){
-            $query->where('name', 'Like', "%$keyword%");
-        })->select(['id','name'])->limit(10)->get();
+        $center = Center::query()->join('users',function ($query) use($keyword){
+            $query->on('centers.id','=','users.center_id');
+            $query->where('users.name','LIKE',"%$keyword%");
+        })->select(['centers.id as id',DB::raw("JSON_UNQUOTE(users.name->'$.$lang') as name")])->limit(10)->get();
         $result = $product->merge($device);
         $finalResult = $result->merge($center);
         $search_results = HomeSearchResource::collection($finalResult) ;
