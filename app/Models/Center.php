@@ -71,9 +71,9 @@ class Center extends Model
         return $this->morphMany(Rate::class, 'ratable');
     }
 
-    public function defaultLogo(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    public function defaultLogo(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
-        return $this->attachments()->where('type', ImageTypeEnum::LOGO);
+        return $this->morphOne(Attachment::class,'attachmentable')->where('type', ImageTypeEnum::LOGO);
     }
     public function devices()
     {

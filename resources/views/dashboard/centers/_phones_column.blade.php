@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center">
+<div class="justify-content-center">
     <ul>
         <li>primary:{{$center->user->phone}}</li>
         @if(count($center->phones))

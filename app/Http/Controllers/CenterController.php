@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\CentresDataTable;
-use App\Http\Requests\StoreCenterRequest as StoreCenterRequest;
-use App\Http\Requests\UpdateCenterRequest as UpdateCenterRequest;
+use App\Http\Requests\StoreCenterRequest;
+use App\Http\Requests\UpdateCenterRequest ;
+use App\Models\Location;
 use App\Services\CenterService;
 use App\Services\LocationService;
 use Illuminate\Http\Request;
@@ -67,10 +68,14 @@ class CenterController extends Controller
         try {
             $withRelation = ['user','attachments','defaultLogo'];
             $center = $this->centerService->find($id, $withRelation);
-            $location = $this->locationService->getLocationAncestors($center->location_id);
+            $locations = $this->locationService->getLocationAncestors($center->user->location_id);
+            $locations = $locations->whereNotNull('parent_id');
+            $governorate = $locations->first() ;
+            $governorate_id = $governorate->id ;
             $filters = ['depth' => 1, 'is_active' => 1];
             $governorates = $this->locationService->getAll($filters);
-            return view('dashboard.centers.edit', ['center' => $center, 'governorates' => $governorates, 'location' => $location]);
+            $cites =$governorate->descendants;
+            return view('dashboard.centers.edit', ['center' => $center, 'governorates' => $governorates,'selected_governorate'=>$governorate_id, 'cities' => $cites]);
         } catch (\Exception $exception) {
             $toast = [
                 'type' => 'error',

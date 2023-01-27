@@ -47,8 +47,9 @@ class StoreCenterRequest extends BaseRequest
             'avg_waiting_time'         => 'required',
             'featured'                => 'nullable|string',
             'support_payments'        => 'array|min:1',
+            'support_payments.*'      => 'string|in:'.PaymentMethodEnum::CREDIT.','.PaymentMethodEnum::CASH,
             'app_discount'            => 'required|numeric',
-            'google_map_url'            => 'string|nullable',
+            'google_map_url'          => 'string|nullable',
         ];
     }
 

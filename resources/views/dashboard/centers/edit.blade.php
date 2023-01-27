@@ -9,6 +9,10 @@
     <li class="breadcrumb-item"><a href="{{ route('centers.index') }}">{{ trans('lang.centers') }}</a></li>
     <li class="breadcrumb-item">{{ trans('lang.edit') }}</li>
 @endsection
+@section('style')
+    <link rel="stylesheet" href="{{asset('assets/css/image-container.css')}}"/>
+@endsection
+
 
 @section('content')
     <div class="container-fluid">
@@ -175,11 +179,11 @@
                                             class="col-form-label m-r-10" for="support_payments_credit">{{ trans('lang.support_payments_credit') }}</label>
                                         <div class="media-body  icon-state">
                                             <label class="switch">
-                                                <input name="support_payments[credit]"
+                                                <input name="support_payments[]"
                                                 @error('support_payments.credit') is-invalid @enderror
                                                 id="support_payments_credit"
-                                                type="checkbox" value="1"
-                                                {{ Arr::has($center->support_payments, App\Enum\PaymentMethodEnum::CREDIT) ? "checked":"" }}><span class="switch-state"></span>
+                                                type="checkbox" value="{{App\Enum\PaymentMethodEnum::CREDIT}}"
+                                                {{ in_array(App\Enum\PaymentMethodEnum::CREDIT,$center->support_payments) ? "checked":"" }}><span class="switch-state"></span>
                                             </label>
                                         </div>
                                         @error('support_payments.credit')
@@ -194,11 +198,11 @@
                                             class="col-form-label m-r-10" for="support_payments_cash">{{ trans('lang.support_payments_cash') }}</label>
                                         <div class="media-body  icon-state">
                                             <label class="switch">
-                                                <input name="support_payments[cash]"
+                                                <input name="support_payments[]"
                                                 @error('support_payments.cash') is-invalid @enderror
                                                 id="support_payments_cash"
-                                                type="checkbox" value="1"
-                                                {{ Arr::has($center->support_payments, App\Enum\PaymentMethodEnum::CASH) ? "checked":"" }}><span class="switch-state"></span>
+                                                type="checkbox" value="{{App\Enum\PaymentMethodEnum::CASH}}"
+                                                {{ in_array(App\Enum\PaymentMethodEnum::CASH,$center->support_payments) ? "checked":"" }}><span class="switch-state"></span>
                                             </label>
                                         </div>
                                         @error('support_payments.cash')
@@ -224,15 +228,18 @@
                                         class="form-select form-control mb-3 @error('parent_id') is-invalid @enderror">
                                         <option selected>{{ trans('lang.choose_governorates') }}</option>
                                         @foreach ($governorates as $governorate)
-                                            <option value="{{ $governorate->id }}">{{ $governorate->title }}</option>
+                                            <option value="{{ $governorate->id }}" {{$governorate->id == $selected_governorate ? 'selected':''}}>{{ $governorate->title }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="col-form-label">{{ trans('lang.city') }}</div>
-                                    <select name="location_id"
-                                        class="form-select form-control mb-3 @error('location_id') is-invalid @enderror"
-                                        id="city"></select>
+                                    <select name="location_id" class="form-select form-control mb-3 @error('location_id') is-invalid @enderror" id="city">
+                                        <option selected>{{ trans('lang.choose_governorates') }}</option>
+                                        @foreach ($cities as $city)
+                                            <option value="{{ $city->id }}" {{$city->id == $center->user->location_id ? 'selected':''}}>{{ $city->title }}</option>
+                                        @endforeach
+                                    </select>
                                     @error('location_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -305,12 +312,26 @@
                                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div class="form-group">
-                                            <img src="{{ asset('/uploads/device/default.png') }}" style="width: 500px"
-                                                class="img-thumbnail image-preview " alt="">
-                                        </div>
                                     </div>
-                                    {{-- center logo --}}
+
+                                    @if(isset($center->defaultLogo))
+                                        <div class="row">
+                                            <div class="col-md-3 col-lg-3 col-sm-12">
+                                                <div class="img-container">
+                                                    <div class="form-group my-3">
+                                                        <img src="{{asset($center->defaultLogo->path.'/'.$center->defaultLogo->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
+                                                    </div>
+                                                    <div class="overlay">
+                                                        <a role="button" onclick="destroy('{{route('attachment.destroy',$center->defaultLogo->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
+                                                            <i class="fa fa-trash-o"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    {{-- center images --}}
                                     <div class="col-md-12  d-flex">
                                         <div class="col-md-12">
                                             <label class="form-label" for="image">{{ trans('lang.image') }}</label>
@@ -325,6 +346,27 @@
                                             <img src="{{ asset('/uploads/device/default.png') }}" style="width: 500px"
                                                 class="img-thumbnail image-preview " alt="">
                                         </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        @if($center->attachments->count())
+                                            @foreach($center->attachments as $attachment)
+                                                    <div class="col-md-3 col-lg-3 col-sm-12">
+                                                        <div class="img-container">
+                                                            <div class="form-group my-3">
+                                                                <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
+                                                            </div>
+                                                            <div class="overlay">
+                                                                <a role="button" onclick="destroy('{{route('attachment.destroy',$attachment->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
+                                                                    <i class="fa fa-trash-o"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -364,10 +406,10 @@
                                             </div>
                                             <div class="mb-3">
                                                 <div class="media mb-2">
-                                                    <label class="col-form-label m-r-10">{{ __('lang.featured') }}</label>
+                                                    <label class="col-form-label m-r-10">{{ trans('lang.featured') }}</label>
                                                     <div class="media-body  icon-state">
                                                         <label class="switch">
-                                                            <input type="checkbox" name="featured" {{ $center->featured ? "checked":"" }}><span
+                                                            <input type="checkbox" value="1" name="featured" {{ $center->featured ? "checked":"" }}><span
                                                                 class="switch-state"></span>
                                                         </label>
                                                     </div>
@@ -380,7 +422,6 @@
                         </div>
 
                     </div>
-
 
                     <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group mr-2" role="group" aria-label="Third group">

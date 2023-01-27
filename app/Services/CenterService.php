@@ -107,7 +107,7 @@ class CenterService extends BaseService
         if (isset($data['logo']))
         {
             $center->deleteAttachmentsLogo();
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\centers', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/centers', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $center->storeAttachment($fileData);
         }
