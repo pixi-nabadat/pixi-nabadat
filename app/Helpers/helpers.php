@@ -108,3 +108,16 @@ if (!function_exists('sendFCMToTokens')) {
         return $response;
     }
 }
+
+if (!function_exists('replaceFlags')) {
+
+    function replaceFlags($content,$values =[])
+    {
+        foreach (\App\Enum\FcmEventsNames::$FLAGS as $FLAG)
+        {
+           if (isset($values[$FLAG]))
+                $content = str_replace($FLAG,$values[$FLAG],$content);
+        }
+        return $content;
+    }
+}

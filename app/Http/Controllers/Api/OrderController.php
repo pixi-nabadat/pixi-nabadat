@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Enum\PaymentMethodEnum;
+use App\Events\AfterOrderCreated;
 use App\Events\OrderCreated;
 use App\Exceptions\BadRequestHttpException;
 use App\Exceptions\NotFoundException;
@@ -86,6 +87,8 @@ class OrderController extends Controller
             }
             $this->cartService->emptyCart($request->temp_user_id);
             DB::commit();
+//            event to fire fcm notification message
+            event(new AfterOrderCreated($order));
             return new OrderResource($order);
         }
         catch (BadRequestHttpException $exception){

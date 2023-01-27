@@ -55,7 +55,7 @@ class OrderService extends BaseService
         $this->setOrderItems($order, $order_data);
         $this->createOrderHistory($order);
         $this->updateCouponUsage($user->id,optional($order_data->coupon)->id);
-        return $order->load('items.product.defaultLogo', 'history');
+        return $order->load('items.product.defaultLogo','user','history');
     }
 
     /*
