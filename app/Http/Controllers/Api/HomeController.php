@@ -46,7 +46,9 @@ class HomeController extends Controller
         $keyword = $request->keyword;
         $product = Product::query()->where('name', 'Like', "%$keyword%")->select(['id','name'])->limit(10)->get();
         $device = Device::query()->where('name', 'Like', "%$keyword%")->select(['id','name'])->limit(10)->get();
-        $center = Center::query()->where('name', 'Like', "%$keyword%")->select(['id','name'])->limit(10)->get();
+        $center = Center::query()->whereHas('user',function ($query) use($keyword){
+            $query->where('name', 'Like', "%$keyword%");
+        })->select(['id','name'])->limit(10)->get();
         $result = $product->merge($device);
         $finalResult = $result->merge($center);
         $search_results = HomeSearchResource::collection($finalResult) ;

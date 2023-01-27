@@ -31,7 +31,7 @@ class CenterController extends Controller
         try {
 //            handle filters from request
             $filters = ['is_active' => 1];
-            if ($request->location_id != 'all')
+            if (isset($request->location_id))
                 $filters['location_id'] = $request->location_id;
             $filters = array_merge($filters,$request->except('location_id'));
 
