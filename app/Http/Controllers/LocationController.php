@@ -15,7 +15,7 @@ class LocationController extends Controller
 
     public function getLocationByParentId($parent_id)
     {
-        $locations = $this->locationService->getAll(['parent_id' => $parent_id]);
+        $locations =  $this->locationService->getLocationDescendants(location_id: $parent_id);;
         return LocationsResource::collection($locations);
     }
 }

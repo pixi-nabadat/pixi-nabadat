@@ -17,8 +17,8 @@ class AttachmentController extends Controller
             $attachment =  Attachment::find($id);
             if(!$attachment)
                 return apiResponse(message: trans('lang.not_found'),code: 404);
+            unlink(public_path($attachment->path."/".$attachment->filename));
             $attachment->delete();
-            unlink(public_path($attachment->path."\\".$attachment->filename));
             return apiResponse(data: 'reload', message: trans('lang.success'));
         }catch (\Exception $exception)
         {

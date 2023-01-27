@@ -2,11 +2,14 @@
 
 namespace App\Services;
 
+use App\Enum\ImageTypeEnum;
+use App\Enum\PaymentMethodEnum;
 use App\Exceptions\NotFoundException;
 use App\Models\Center;
 use App\Models\User;
 use App\QueryFilters\CentersFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class CenterService extends BaseService
@@ -35,23 +38,28 @@ class CenterService extends BaseService
      */
     public function store(array $data = [])
     {
-        DB::beginTransaction();
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
         $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ? 1 : 0;
         $data['featured'] = isset($data['featured']) ? 1 : 0;
-
+        
         $center_data = $this->prepareCenterData($data);
         $center = Center::create($center_data);
         if (!$center)
            throw new NotFoundException(trans('lang.center_not_created'));
+        if (isset($data['logo']))
+        {
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\centers', field_name: 'logo');
+            $fileData['type'] = ImageTypeEnum::LOGO;
+            $center->storeAttachment($fileData);
+        }
         if (isset($data['images']) && is_array($data['images']))
             foreach ($data['images'] as $image) {
-                $fileData = FileService::saveImage(file: $image, path: 'uploads/centers');
+                $fileData = FileService::saveImage(file: $image, path: 'uploads/centers', field_name: 'images');
+                $fileData['type'] = ImageTypeEnum::GALARY;
                 $center->storeAttachment($fileData);
             }
         $userData = $this->prepareUserData($data);
         $center->user()->create($userData);
-        DB::commit();
         return $center;
     }
 
@@ -60,7 +68,7 @@ class CenterService extends BaseService
         return [
             'name' => $data['name'],
             'email' => $data['email'],
-            'phone' => $data['phone'],
+            'phone' => $data['primary_phone'],
             'user_name' => $data['user_name'],
             'password' => bcrypt($data['password']),
             'type' => User::CENTERADMIN,
@@ -73,7 +81,8 @@ class CenterService extends BaseService
     {
         return [
             'is_support_auto_service'=>$data['is_support_auto_service'],
-            'phones'=>$data['phones'],
+            'featured'=>$data['featured'],
+            'phones'=>array_filter($data['phones']),
             'address' => $data['address'],
             'description' => $data['description'],
             'avg_waiting_time'=>$data['avg_waiting_time'],
@@ -85,18 +94,37 @@ class CenterService extends BaseService
         ];
     }
 
-    public function update(int $centerId, array $centerData): bool
+    public function update(int $centerId, array $data): bool
     {
         $center = $this->find($centerId);
         if (!$center)
             throw new NotFoundException(trans('lang.center_not_found'));
 
-        if (isset($centerData['images']) && is_array($centerData['images']))
-            foreach ($centerData['images'] as $image) {
-                $fileData = FileService::saveImage(file: $image, path: 'uploads/centers');
+        $data['is_active'] = isset($data['is_active']) ? 1 : 0;
+        $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ? 1 : 0;
+        $data['featured'] = isset($data['featured']) ? 1 : 0;
+        
+        if (isset($data['logo']))
+        {
+            $center->deleteAttachmentsLogo();
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/centers', field_name: 'logo');
+            $fileData['type'] = ImageTypeEnum::LOGO;
+            $center->storeAttachment($fileData);
+        }
+        if (isset($data['images']) && is_array($data['images']))
+            foreach ($data['images'] as $image) {
+                $fileData = FileService::saveImage(file: $image, path: 'uploads/centers', field_name: 'images');
+                $fileData['type'] = ImageTypeEnum::GALARY;
                 $center->storeAttachment($fileData);
             }
-        return $center->update($centerData);
+        $centerData = $this->prepareCenterData($data);
+        $center->update($centerData);
+
+        $userData = $this->prepareUserData($data);
+        if(!isset($userData['password']))
+            $userData['password'] = $center->user->password;
+        $center->user()->update($userData);
+        return true;
     }
 
     public function find($id, $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array

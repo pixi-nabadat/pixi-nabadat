@@ -24,34 +24,39 @@ class StoreCenterRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name.*'                  => 'required|string',
-            'phone'                   => 'string|required|unique:users,phone',
-            'phones.*'                 => 'nullable|array',
-            'location_id'             => 'required|integer',
-            'lat'                     => 'nullable|string',
-            'lng'                     => 'nullable|string',
-            'address.*'               => 'string|required',
+            'name'                   => 'required|array',
+            'name.*'                 => 'required|string',
+            'phones'                 => 'nullable|array',
+            'phones.*'               => 'nullable|string',
+            'location_id'            => 'required|integer',
+            'primary_phone'          => 'required|string',
+            'lat'                    => 'nullable|string',
+            'lng'                    => 'nullable|string',
+            'address'                => 'required|array',
+            'address.*'              => 'string|required',
+            'description'            => 'required|array',
             'description.*'           => 'string|nullable',
             'images'                  => 'nullable|array',
+            'logo'                    => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             'images.*'                => 'image|mimes:jpg,png,jpeg,gif,svg',
             'user_name'               => 'required|unique:users,user_name',
             'password'                => 'required|string',
             'email'                   => 'required|email|unique:users,email',
-            'is_active'               => 'string|nullable',
+            'is_active'               => 'nullable|string',
             'is_support_auto_service' => 'string|nullable',
             'avg_waiting_time'         => 'required',
-            'featured'                => 'nullable',
+            'featured'                => 'nullable|string',
             'support_payments'        => 'array|min:1',
-            'support_payments.*'      => 'required|string|in:'.PaymentMethodEnum::CREDIT.','.PaymentMethodEnum::CASH,
+            'support_payments.*'      => 'string|in:'.PaymentMethodEnum::CREDIT.','.PaymentMethodEnum::CASH,
             'app_discount'            => 'required|numeric',
-            'google_map_url'            => 'string|nullable',
+            'google_map_url'          => 'string|nullable',
         ];
     }
 
     public function messages()
     {
         return [
-            'phone.*.string' => __('lang.phone_en_should_be_string'),
+            'phones.*.string' => __('lang.phone_en_should_be_string'),
             'name.*.required' => __('lang.title_in_ar__should_be_required'),
             'location_id.required' => __('lang.location_should_be_required'),
             'user_name.required' => __('lang.user_name_should_be_required'),
