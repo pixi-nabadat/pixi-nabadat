@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\CentresDataTable;
-use App\Exceptions\NotFoundException;
-use App\Http\Requests\StoreCenterRequest as StoreCenterRequest;
-use App\Http\Requests\UpdateCenterRequest as UpdateCenterRequest;
+use App\Http\Requests\StoreCenterRequest;
+use App\Http\Requests\UpdateCenterRequest ;
+use App\Models\Location;
 use App\Services\CenterService;
 use App\Services\LocationService;
 use Illuminate\Http\Request;
@@ -52,7 +52,7 @@ class CenterController extends Controller
                 'message' => trans('lang.center_created_successfully')
             ];
             DB::commit();
-            return back()->with('toast', $toast);
+            return redirect()->route('centers.index')->with('toast', $toast);
         } catch (\Exception $exception) {
             $toast = [
                 'type' => 'error',
@@ -66,14 +66,17 @@ class CenterController extends Controller
     public function edit($id)
     {
         try {
-            $withRelation = ['attachments'];
+            $withRelation = ['user','attachments','defaultLogo'];
             $center = $this->centerService->find($id, $withRelation);
-            $location = $this->locationService->getLocationAncestors($center->location_id);
+            $locations = $this->locationService->getLocationAncestors($center->user->location_id);
+            $locations = $locations->whereNotNull('parent_id');
+            $governorate = $locations->first() ;
+            $governorate_id = $governorate->id ;
             $filters = ['depth' => 1, 'is_active' => 1];
             $governorates = $this->locationService->getAll($filters);
-            return view('dashboard.centers.edit', ['center' => $center, 'governorates' => $governorates, 'location' => $location]);
-        }catch (\Exception $exception )
-        {
+            $cites =$governorate->descendants;
+            return view('dashboard.centers.edit', ['center' => $center, 'governorates' => $governorates,'selected_governorate'=>$governorate_id, 'cities' => $cites]);
+        } catch (\Exception $exception) {
             $toast = [
                 'type' => 'error',
                 'title' => trans('error'),
@@ -91,7 +94,7 @@ class CenterController extends Controller
                 'title' => trans('lang.success'),
                 'message' => trans('lang.center_updated_successfully')
             ];
-            return back()->with('toast', $toast);
+            return redirect()->route('centers.index')->with('toast', $toast);
         } catch (\Exception $exception) {
             $toast = [
                 'type' => 'error',
@@ -128,7 +131,7 @@ class CenterController extends Controller
     {
 
         try {
-            $result =  $this->centerService->changeSupportAutoServiceStatus($request->id);
+            $result = $this->centerService->changeSupportAutoServiceStatus($request->id);
             return apiResponse(message: trans('lang.success'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
@@ -140,7 +143,10 @@ class CenterController extends Controller
         $withRelation = ['attachments'];
         $center = $this->centerService->find($id, $withRelation);
         $location = $this->locationService->getLocationAncestors($center->location_id);
-        return view('dashboard.centers.show', ['center' => $center, 'location' => $location]);
+
+        $filters = ['depth' => 1, 'is_active' => 1];
+        $governorates = $this->locationService->getAll($filters);
+        return view('dashboard.centers.show', ['center' => $center, 'governorates' => $governorates, 'location' => $location]);
     }
 
     public function featured(Request $request)

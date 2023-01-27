@@ -120,7 +120,7 @@ Route::get('products/{id}/show', [ProductController::class, 'show']);
 Route::get('locations/governorates', [LocationController::class, 'getAllGovernorates']);
 Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);
 
-Route::get('centers', [CenterController::class, 'listing']);
+Route::resource('centers', CenterController::class);
 
 //start user packages
 Route::get('userPackages/listing', [UserPackageController::class, 'userPackagesListing']);

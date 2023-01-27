@@ -10,6 +10,7 @@ use App\Models\User;
 use App\QueryFilters\OrdersFilter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class OrderService extends BaseService
 {
@@ -36,7 +37,7 @@ class OrderService extends BaseService
     {
         if (isset($deleted_at))
             $deleted_at = Carbon::now();
-//        check if coupon is valid
+
         $grand_total = $order_data->grand_total_after_discount;
         $order = Order::create([
             'user_id' => $user->id,
@@ -53,8 +54,8 @@ class OrderService extends BaseService
 
         $this->setOrderItems($order, $order_data);
         $this->createOrderHistory($order);
-        $this->updateCouponUsage($user->id,optional( $order_data->coupon)->id);
-        return $order->load('items.product', 'history');
+        $this->updateCouponUsage($user->id,optional($order_data->coupon)->id);
+        return $order->load('items.product.defaultLogo', 'history');
     }
 
     /*

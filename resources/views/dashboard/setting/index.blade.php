@@ -74,6 +74,20 @@
                     </div>
                 </a>
             </div>
+            <div class="col-sm-6 col-xl-3 xl-50 col-lg-6 box-col-6">
+                <a href="{{route('schedule_fcm.settings')}}">
+                    <div class="card social-widget-card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="social-font"><img src="{{asset('assets/images/gear.svg')}}" width="35px" alt=""></div>
+                                <div class="media-body p-l-15">
+                                    <h4>{{trans('lang.schedule_fcm')}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
     <!-- Container-fluid Ends-->

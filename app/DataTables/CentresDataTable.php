@@ -16,27 +16,25 @@ class CentresDataTable extends DataTable
                 'action', function (Center $center) {
                 return view('dashboard.centers.action', compact('center'))->render();
             })
-            ->editColumn('name', function (Center $center) {
+            ->addColumn('name', function (Center $center) {
                 return $center->user->name;
             })
             ->editColumn('address', function (Center $center) {
                 return $center->address;
             })
-            ->editColumn('phone', function (Center $center) {
-                return $center->user->phone;
+            ->editColumn('phones', function (Center $center) {
+                return view('dashboard.centers._phones_column',compact('center'))->render();
             })
-            ->editColumn('location', function (Center $center) {
-                return $center->user->location->title;
-            })
-            ->editColumn('featured', function(Center $center){
+            ->addColumn('featured', function(Center $center){
                 return view('dashboard.components.switch-featured-btn',['model'=>$center,'url'=>route('centers.featured')])->render();
             })
             ->editColumn('is_active', function (Center $center) {
                 return  view('dashboard.components.switch-btn',['model'=>$center->user,'url'=>route('centers.changeStatus')]);
             })
-            ->addcolumn('is_support_auto_service', function (Center $center) {
+            ->editColumn('is_support_auto_service', function (Center $center) {
                 return  view('dashboard.components.switch-support-auto-service-btn',['model'=>$center,'url'=>route('centers.support-auto-service.changeStatus')]);
-            })->rawColumns(['action','is_active','featured','is_support_auto_service']);
+            })
+            ->rawColumns(['action','phones','featured','is_active','is_support_auto_service']);
     }
 
     /**
@@ -63,8 +61,8 @@ class CentresDataTable extends DataTable
                 'dom' => 'Blfrtip',
                 'order' => [[0, 'desc']],
                 "lengthMenu" => [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                'responsive' => true,
-                "bSort" => false
+                "responsive" => true,
+                "scrollX" => '100%',
             ]);
     }
 
@@ -76,29 +74,28 @@ class CentresDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::make('id'),
             Column::make('name'),
             Column::make('address'),
-            Column::make('phone'),
-            Column::make('app_discount')
-                ->title(trans('lang.center_discount'))
+            Column::make('phones')
                 ->searchable(false)
                 ->orderable(false),
-            Column::make('location'),
+            Column::make('app_discount')
+                ->title(trans('lang.discount')."%")
+                ->searchable(false)
+                ->orderable(false),
             Column::make('featured')
                 ->searchable(false)
                 ->orderable(false),
             Column::make('is_support_auto_service')
-                ->title(trans('lang.auto_service_status'))
-                ->searchable(true)
-                ->orderable(true),
+                ->title(trans('lang.auto_service'))
+                ->searchable(false)
+                ->orderable(false),
             Column::make('is_active')
                 ->title(trans('lang.status'))
                 ->searchable(false)
                 ->orderable(false),
             Column::computed('action')
-                ->width(60)
-                ->addClass('text-center'),
+                ->width(60),
         ];
     }
 

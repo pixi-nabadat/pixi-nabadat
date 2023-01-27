@@ -236,4 +236,68 @@ return [
             
         ]
     ],
+    'schedule_fcm' => [
+
+        'title' => 'Schedule Fcm',
+        'desc' => 'Manage Schedule Fcm Settings',
+        'icon' => 'glyphicon glyphicon-envelope',
+
+        'elements' => [
+            [
+                'type' => 'number', // input fields type
+                'data' => 'integer', // data type, string, int, boolean
+                'name' => 'EXPIRE_POINTS_BEFORE_1', // unique name for field
+                'label' => 'Expire Points Before 1', // you know what label it is
+                'rules' => 'required|integer', // validation rule of laravel
+                'class' => 'form-control', // any class for input
+                'value' => '0' // default value if you want
+            ],
+            [
+                'type' => 'number', // input fields type
+                'data' => 'integer', // data type, string, int, boolean
+                'name' => 'EXPIRE_POINTS_BEFORE_3', // unique name for field
+                'label' => 'Expire Points Before 3', // you know what label it is
+                'rules' => 'required|integer', // validation rule of laravel
+                'class' => 'form-control', // any class for input
+                'value' => '0' // default value if you want
+            ],
+            [
+                'type' => 'number', // input fields type
+                'data' => 'integer', // data type, string, int, boolean
+                'name' => 'EXPIRE_POINTS_BEFORE_7', // unique name for field
+                'label' => 'Expire Points Before 7', // you know what label it is
+                'rules' => 'required|integer', // validation rule of laravel
+                'class' => 'form-control', // any class for input
+                'value' => '0' // default value if you want
+            ],
+            [
+                'type' => 'number', // input fields type
+                'data' => 'integer', // data type, string, int, boolean
+                'name' => 'NABADAT_NOT_USED_FOR_3', // unique name for field
+                'label' => 'Nabadat Not Used For 3', // you know what label it is
+                'rules' => 'required|integer', // validation rule of laravel
+                'class' => 'form-control', // any class for input
+                'value' => '0' // default value if you want
+            ],
+            [
+                'type' => 'number', // input fields type
+                'data' => 'integer', // data type, string, int, boolean
+                'name' => 'NABADAT_NOT_USED_FOR_7', // unique name for field
+                'label' => 'Nabadat Not Used For 7', // you know what label it is
+                'rules' => 'required|integer', // validation rule of laravel
+                'class' => 'form-control', // any class for input
+                'value' => '0' // default value if you want
+            ],
+            [
+                'type' => 'number', // input fields type
+                'data' => 'integer', // data type, string, int, boolean
+                'name' => 'NABADAT_NOT_USED_FOR_11', // unique name for field
+                'label' => 'Nabadat Not Used For 11', // you know what label it is
+                'rules' => 'required|integer', // validation rule of laravel
+                'class' => 'form-control', // any class for input
+                'value' => '0' // default value if you want
+            ],
+                      
+        ]
+    ],
 ];
