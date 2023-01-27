@@ -9,6 +9,7 @@ use App\Http\Resources\CentersResource;
 use Illuminate\Http\Request;
 use App\Services\CenterService;
 use App\Services\LocationService;
+use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,6 +40,18 @@ class CenterController extends Controller
             return CentersResource::collection($centers);
         } catch (\Exception $e) {
             return apiResponse($e->getMessage(), 'Unauthorized',$e->getCode());
+        }
+    }
+
+    public function show(int $id)
+    {
+        try{
+            $withRelations = ['doctors','user.location','attachments','appointments'];
+            $center = $this->centerService->find($id, $withRelations);
+            return apiResponse(data: new CentersResource($center));
+
+        }catch(Exception $e){
+            return apiResponse(message: $e->getMessage(), code: 422);
         }
     }
 
