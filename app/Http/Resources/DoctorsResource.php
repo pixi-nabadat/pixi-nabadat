@@ -15,16 +15,11 @@ class DoctorsResource extends JsonResource
     public function toArray($request)
     {
        return  [
-            'id'     => $this->id,
-            'name'   => $this->name,
-            'phone'  => $this->phone,
+            'id'            => $this->id,
+            'name'          => $this->name,
+            'phone'         => $this->phone,
             'description'   => $this->description,
-            'image'         => $this->whenLoaded('defaultLogo',isset($this->defaultLogo)
-                ?[
-                    'id'=>$this->defaultLogo->id,
-                    'path'=>asset($this->defaultLogo->path."/".$this->defaultLogo->filename)
-                ]
-                :null)
+            'image'         => $this->whenLoaded('defaultLogo',isset($this->defaultLogo) ?asset($this->defaultLogo->path."/".$this->defaultLogo->filename):null)
        ];
     }
 }
