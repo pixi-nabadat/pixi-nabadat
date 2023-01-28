@@ -68,6 +68,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     //start reservations
     Route::resource('reservations', ReservationController::class);
+    Route::post('reservation/history', [ReservationController::class, 'store'])->name('reservation-history.store');
+    Route::post('reservation/devices', [ReservationController::class, 'store'])->name('reservation-devices.store');
     //end reservations
 
     Route::group(['prefix' => 'ajax'], function () {
