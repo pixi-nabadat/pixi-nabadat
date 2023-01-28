@@ -32,7 +32,7 @@
                                     <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12">
                                         <option></option>
                                         @foreach ($centers as $center)
-                                            <option value="{{ $center->id }}">{{ $center->name }}</option>
+                                            <option value="{{ $center->id }}" {{$center->id == $doctor->center_id?'selected':''}}>{{ $center->user->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

@@ -12,7 +12,7 @@ class Appointment extends Model
 {
     use HasFactory,Filterable,HasTranslations,EscapeUnicodeJson;
     public const WEEKDAYS = [
-        ['day_of_week'=>0,'en'=>'Sunday',        'ar'=>'الأحد '],
+        ['day_of_week'=>0,'en'=>'Sunday',        'ar'=>'الاحد '],
         ['day_of_week'=>1,'en'=>'Monday',        'ar'=>'الاثنين'],
         ['day_of_week'=>2,'en'=>'Tuesday',       'ar'=>'الثلاثاء'],
         ['day_of_week'=>3,'en'=>'Wednesday',     'ar'=>'الأربعاء'],

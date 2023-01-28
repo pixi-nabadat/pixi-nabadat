@@ -13,7 +13,7 @@ class Doctor extends Model
     use HasTranslations, Filterable, HasAttachment, EscapeUnicodeJson;
 
     const   ACTIVE = 1,
-        NON_ACTIVE = 0;
+            NON_ACTIVE = 0;
     public $translatable = ['name', 'description'];
     protected $fillable = ['name', 'description', 'phone', 'center_id', 'age', 'is_active'];
 
@@ -22,4 +22,8 @@ class Doctor extends Model
         return $this->belongsTo(Center::class);
     }
 
+    public function defaultLogo()
+    {
+        return $this->morphOne(Attachment::class,'attachmentable');
+    }
 }

@@ -24,7 +24,7 @@ class StoreDoctorRequest extends BaseRequest
         return [
             'center_id' => 'required|exists:centers,id',
             'name.*' => 'required|string',
-            'phone' => 'required|array|min:1',
+            'phone' => 'required|string',
             'description.*' => 'string|nullable',
             'image' => 'image|mimes:jpg,png,jpeg,gif,svg',
             'is_active' => 'nullable'

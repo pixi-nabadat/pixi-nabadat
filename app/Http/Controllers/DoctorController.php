@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\DoctorsDataTable;
 use App\Http\Requests\DoctorStoreRequest;
-use App\Http\Requests\DoctorStoreRequest as DoctorUpdateRequest;
+use App\Http\Requests\DoctorUpdateRequest;
 use App\Services\CenterService;
 use App\Services\DoctorService;
 use App\Services\LocationService;
