@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Enum\ActivationStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCenterRequest;
+use App\Http\Resources\CenterResource;
 use App\Http\Resources\CentersResource;
 use Illuminate\Http\Request;
 use App\Services\CenterService;
@@ -35,7 +37,7 @@ class CenterController extends Controller
                 $filters['location_id'] = $request->location_id;
             $filters = array_merge($filters,$request->except('location_id'));
 
-            $withRelations = ['doctors','user.location','attachments','appointments'];
+            $withRelations = ['user:id,center_id,name','defaultLogo'];
             $centers = $this->centerService->listing(filters: $filters,withRelation: $withRelations);
             return CentersResource::collection($centers);
         } catch (\Exception $e) {
@@ -46,9 +48,16 @@ class CenterController extends Controller
     public function show(int $id)
     {
         try{
-            $withRelations = ['doctors','user.location','attachments','appointments'];
+
+            $withRelations = [
+                'rates' =>fn($rates)=>$rates->where('status',ActivationStatusEnum::ACTIVE)->limit(8),
+                'rates.user.attachments',
+                'doctors.defaultLogo',
+                'user.location',
+                'attachments',
+                'appointments'];
             $center = $this->centerService->find($id, $withRelations);
-            return apiResponse(data: new CentersResource($center));
+            return apiResponse(data: new CenterResource($center));
 
         }catch(Exception $e){
             return apiResponse(message: $e->getMessage(), code: 422);

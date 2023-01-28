@@ -48,8 +48,9 @@ class DoctorService extends BaseService
             return false;
         if (isset($data['logo']))
         {
-            $doctor->deleteAttachmentsLogo();
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\doctors', field_name: 'logo');
+            if ($doctor->attachments()->count())
+                $doctor->deleteAttachments();
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/doctors', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $doctor->storeAttachment($fileData);
         }
