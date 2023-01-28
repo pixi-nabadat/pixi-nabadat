@@ -34,7 +34,9 @@
                             <h6 class="card-titel">{{ __('lang.reservation_information') }}</h6>
                         </div>
                         <div class="card-body row">
-
+                            <form method="post" class="needs-validation" novalidate="" action="{{ route('reservations.update', $reservation) }}">
+                                @csrf
+                                @method('put')
                                 {{--center  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.center') }}</div>
@@ -73,7 +75,14 @@
                                         <option value="{{ App\Enum\PaymentMethodEnum::CREDIT }}" {{ App\Enum\PaymentMethodEnum::CREDIT == $reservation->payment_type ? "selected":''}}>{{ App\Enum\PaymentMethodEnum::CREDIT }}</option>
                                     </select>
                                 </div>
-
+                                <div class="media mb-2">
+                                    <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                                        <div class="btn-group mr-2" role="group" aria-label="Third group">
+                                            <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
 
@@ -83,9 +92,11 @@
                             <h6>{{ __('lang.reservation_devices') }}</h6>
                         </div>
                         <div class="card-body">
+                        <form method="post" class="needs-validation" novalidate="" action="{{ route('reservation-devices.store') }}">
+                                @csrf
                             {{--center  --}}
                             <div class="col-md-12 d-flex my-3">
-                                <div class="col-form-label col-3">{{ __('lang.center') }}</div>
+                                <div class="col-form-label col-3">{{ __('lang.device') }}</div>
                                 <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12 @error('center_id') is-invalid @enderror">
                                     <option selected disabled>...</option>
                                     @foreach ($centerDevices as $device)
@@ -104,6 +115,25 @@
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                            {{-- is_active --}}
+                            <div class="media my-2">
+                                <label class="col-form-label m-r-10">{{ __('lang.auto_service') }}</label>
+                                <div class="media-body  icon-state">
+                                    <label class="switch">
+                                        <input type="checkbox" name="is_active"
+                                            {{ $reservation->auto_service == 1 ? 'checked' : '' }}><span
+                                            class="switch-state"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="media mb-2">
+                                <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                                    <div class="btn-group mr-2" role="group" aria-label="Third group">
+                                        <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                         </div>
                     </div>
 
@@ -130,6 +160,8 @@
                             <h6>{{ __('lang.status') }}</h6>
                         </div>
                         <div class="card-body row">
+                        <form method="post" class="needs-validation" novalidate="" action="{{ route('reservation-history.store') }}">
+                            @csrf
                             <div class="media mb-2">
                                 <label class="col-form-label m-r-10">{{ __('lang.current_status') }}</label>
                                 <div class="media-body  icon-state">
@@ -143,12 +175,25 @@
                                 </div>
                             </div>
                             <div class="media mb-2">
+                                <label class="col-form-label m-r-10">{{ __('lang.from') }}</label>
+                                <div class="media-body  icon-state">
+                                    <input name="from" type="date" class="form-control" value="confirm">    
+                                </div>
+                            </div>
+                            <div class="media mb-2">
+                                <label class="col-form-label m-r-10">{{ __('lang.to') }}</label>
+                                <div class="media-body  icon-state">
+                                    <input name="to" type="date" class="form-control">    
+                                </div>
+                            </div>
+                            <div class="media mb-2">
                                 <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
                                     <div class="btn-group mr-2" role="group" aria-label="Third group">
                                         <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
                                     </div>
                                 </div>
                             </div>
+                        </form>
                         </div>
                     </div>
                 </div>
