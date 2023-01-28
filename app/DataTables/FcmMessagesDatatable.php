@@ -2,15 +2,13 @@
 
 namespace App\DataTables;
 
-use App\Models\Location;
-use App\Services\LocationService;
+use App\Models\FcmMessage;
+use App\Services\FcmMessageService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class FcmMessagesDatatable extends DataTable
@@ -18,32 +16,28 @@ class FcmMessagesDatatable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param mixed $query Results from query() method.
-     * @return \Yajra\DataTables\DataTableAbstract
+     * @param QueryBuilder $query Results from query() method.
+     * @return \Yajra\DataTables\EloquentDataTable
      */
-    public function dataTable($query)
+    public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        return datatables($query)
-            ->addColumn('action', function(Location $location){
-                return view('dashboard.locations.city.action',compact('location'))->render();
+        return (new EloquentDataTable($query))
+            ->addColumn('action', function (FcmMessage $fcmMessage) {
+                return view('dashboard.marketing.fcm-message.action', compact('fcmMessage'))->render();
+            })->rawColumns(['action', 'is_active'])
+            ->addColumn('is_active', function (FcmMessage $fcmMessage) {
+                return view('dashboard.components.switch-btn', ['model' => $fcmMessage, 'url' => route('fcm-messages.status')])->render();
             })
-            ->addcolumn('title', function(Location $location){
-                return $location->title ;
-            })
-            ->editColumn('shipping_cost', function(Location $location){
-                return $location->shipping_cost . " L.E" ;
-            });
+            ->rawColumns(['action', 'is_active']);
     }
 
     /**
-     * Get query source of dataTable.
-     *
-     * @param LocationService $locationService
+     * @param FcmMessageService $model
+     * @return QueryBuilder
      */
-    public function query(LocationService $locationService)
+    public function query(FcmMessageService $model): QueryBuilder
     {
-       return $locationService->queryGet($this->filters);
-
+        return $model->queryGet($this->filters , $this->withRelations);
     }
 
     /**
@@ -51,22 +45,17 @@ class FcmMessagesDatatable extends DataTable
      *
      * @return \Yajra\DataTables\Html\Builder
      */
-    public function html()
+    public function html(): HtmlBuilder
     {
         return $this->builder()
+            ->setTableId('fcm-message-datatable-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->parameters([
-                'dom'     => 'Blfrtip',
-                'order'   => [[0, 'desc']],
-                "lengthMenu" => [[10, 25, 50, -1], [10, 25, 50, "All"]],
-//                 'buttons'      => ['export', 'print', 'create'],
-//                 'buttons'      => ['ADD'],
-//                 'language' => ['url' => asset('dashboard/assets/js/ar-datatable.json')],
-
-                'responsive'=>true,
-                "bSort" => false
-            ]);
+            ->orderBy(1)
+            ->buttons(
+                Button::make('reset'),
+                Button::make('reload')
+            );
     }
 
     /**
@@ -74,38 +63,32 @@ class FcmMessagesDatatable extends DataTable
      *
      * @return array
      */
-    protected function getColumns()
+    protected function getColumns(): array
     {
         return [
-            [
-                'name'=>'id',
-                'data'=>'id',
-                'title'=>'#',
-            ],
-            [
-                'name'=>'slug',
-                'data'=>'slug',
-                'title'=> 'slug',
-            ],
-            [
-                'name'=>'title',
-                'data'=>'title',
-                'title'=> 'title',
-            ],
-            [
-                'name'=>'shipping_cost',
-                'data'=>'shipping_cost',
-                'title'=> 'shipping_cost',
-            ],
-            [
-                'name'=>'action',
-                'data'=>'action',
-                'title'=> 'action ',
-                'exportable' => false,
-                'printable' => false,
-                'searchable' => false,
-                'orderable' => false,
-            ],
+            Column::make('id')
+                ->title(trans('lang.id'))
+                ->searchable(true)
+                ->orderable(true),
+            Column::make('title')
+                ->title(trans('lang.title'))
+                ->searchable(true)
+                ->orderable(true),
+            Column::make('content')
+                ->title(trans('lang.content'))
+                ->searchable(true)
+                ->orderable(true),
+            Column::make('fcm_action')
+                ->title(trans('lang.fcm_action'))
+                ->searchable(true)
+                ->orderable(true),
+            Column::make('is_active')
+                ->title(trans('lang.is_active'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::computed('action')
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
@@ -114,5 +97,9 @@ class FcmMessagesDatatable extends DataTable
      *
      * @return string
      */
+    protected function filename(): string
+    {
+        return 'fcm-message' . date('YmdHis');
+    }
 
 }

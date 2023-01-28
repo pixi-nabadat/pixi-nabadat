@@ -129,6 +129,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 //fcm routes
 Route::resource('schedule-fcm',ScheduleFcmController::class);
 Route::resource('fcm-messages',FcmMessageController::class);
+Route::post('fcm-messages/status', [FcmMessageController::class, 'status'])->name('fcm-messages.status');
 Route::post('schedule-fcm/status', [ScheduleFcmController::class, 'status'])->name('schedule-fcm.status');
 });
 

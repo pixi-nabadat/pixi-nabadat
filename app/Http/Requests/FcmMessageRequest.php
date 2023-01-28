@@ -28,7 +28,7 @@ class FcmMessageRequest extends BaseRequest
         return [
             'title' => 'required|string',
             'content' => 'required|string',
-            'is_active' => 'string|required',
+            'is_active' => 'string|nullable',
             'fcm_action' => ['required',Rule::in(array_keys(FcmEventsNames::$FCMACTIONS))],
         ];
     }

@@ -12,9 +12,16 @@ use Illuminate\Support\Facades\Auth;
 use App\Exceptions\BadRequestHttpException;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Resources\DoctorsResource;
+use App\QueryFilters\FcmMessageFilter;
 
 class FcmMessageService extends BaseService
 {
+    public function queryGet(array $where_condition = [], $withRelation = []): Builder
+    {
+        $fcmMessage = FcmMessage::query()->with($withRelation);
+        return $fcmMessage->filter(new FcmMessageFilter($where_condition));
+    }
+
     public function store(array $data = [])
     {
         $data['is_active'] = isset($data['is_active'])  ? 1 :  0;
@@ -39,10 +46,13 @@ class FcmMessageService extends BaseService
         return $fcm_message;
     }
 
-    public function delete($id)
+    /**
+     * @param int $id
+     */
+    public function delete(int $id)
     {
-        $fcm_message = $this->find($id);
-        return $fcm_message->delete();
+        $fcmMessage = $this->find(fcm_message_id: $id);
+        return $fcmMessage->delete();
     } //end of delete
 
     public function status($id)

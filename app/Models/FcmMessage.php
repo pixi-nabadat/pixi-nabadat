@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Filterable;
 
 class FcmMessage extends Model
 {
-    use HasFactory;
+    use HasFactory, Filterable;
     public const CREATE_NEW_ORDER = 'CREATE_NEW_ORDER';
     public const CHANGE_ORDER_STATUS = 'CHANGE_ORDER_STATUS';
     public const CREATE_USER_RESERVATION = 'CREATE_USER_RESERVATION';
