@@ -1,14 +1,14 @@
 @extends('layouts.simple.master')
 
-@section('title', trans('lang.schedule_fcm'))
+@section('title', trans('lang.fcm_message'))
 
 @section('breadcrumb-title')
-    <h3>{{ trans('lang.schedule_fcm') }}</h3>
+    <h3>{{ trans('lang.fcm_message') }}</h3>
 @endsection
 
 @section('breadcrumb-items')
     <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ trans('lang.dashboard') }}</a></li>
-    <li class="breadcrumb-item active">{{ trans('lang.schedule_fcm') }}</li>
+    <li class="breadcrumb-item active">{{ trans('lang.fcm_message') }}</li>
 @endsection
 
 @section('content')
@@ -20,7 +20,7 @@
             <div class="col-sm-12">
                 <div class="card">
                    <div class="card-header">
-                       <h5><a role="button" class="btn btn-success " href={{ route('schedule-fcm.create') }}>
+                       <h5><a role="button" class="btn btn-success " href={{ route('fcm-messages.create') }}>
                             <i class="fa fa-plus-circle"></i>{{ trans('lang.add_schedule_fcm') }}</a>
                         </h5>
                     </div>

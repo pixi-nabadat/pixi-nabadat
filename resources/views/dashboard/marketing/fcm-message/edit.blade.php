@@ -9,7 +9,7 @@
 @section('breadcrumb-items')
     <li class="breadcrumb-item">{{ trans('lang.dashboard') }}</li>
     <li class="breadcrumb-item active">{{ trans('lang.fcm_message') }}</li>
-    <li class="breadcrumb-item active">{{ trans('lang.add') }}</li>
+    <li class="breadcrumb-item active">{{ trans('lang.edit') }}</li>
 @endsection
 
 @section('content')
@@ -21,8 +21,9 @@
                 <div class="card">
                     <div class="card-body">
                         <form method="post" class="needs-validation" novalidate=""
-                              action="{{ route('fcm-messages.store') }}">
+                              action="{{ route('fcm-messages.update', $fcmMessage) }}">
                             @csrf
+                            @method('put')
                             <div class="row g-3">
                                 {{--event  --}}
                                 <div class="col-md-12 d-flex my-3">
@@ -50,7 +51,7 @@
                                 <div class="col-md-12">
                                     <label class="form-label" for="title">{{ trans('lang.title') }}</label>
                                     <input name="title" class="form-control @error('title') is-invalid @enderror"
-                                           id="title" type="text" required>
+                                           id="title" type="text" value="{{ $fcmMessage->title }}" required>
                                     @error('title')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
@@ -59,7 +60,7 @@
                                 <div class="col-md-12">
                                     <label class="form-label" for="content">{{ trans('lang.content') }}</label>
                                     <textarea name="content" class="form-control @error('content') is-invalid @enderror"
-                                              id="content" type="text" required></textarea>
+                                              id="content" type="text" required>{{ $fcmMessage->content }}</textarea>
                                     @error('content')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
@@ -70,7 +71,7 @@
                                     <label class="col-form-label m-r-10">{{ trans('lang.is_active') }}</label>
                                     <div class="media-body  icon-state">
                                         <label class="switch">
-                                            <input type="checkbox" name="is_active" checked=""><span
+                                            <input type="checkbox" name="is_active" {{ $fcmMessage->is_active == 1 ? "checked":"" }}><span
                                                     class="switch-state"></span>
                                         </label>
                                     </div>
