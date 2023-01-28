@@ -81,16 +81,17 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     Route::get('/', HomeController::class)->name('home');
     Route::post('doctors/changeStatus', [DoctorController::class, 'status'])->name('doctors.changeStatus');
-    Route::get('doctors/getAllCities/{doctor}', [DoctorController::class, 'getAllCities'])->name('doctors.getAllCities');
 
     Route::resource('governorate', GovernorateController::class);
     Route::resource('country', CountryController::class);
     Route::resource('city', CityController::class);
 
     Route::resource('centers', CenterController::class);
-    Route::post('centers/changeStatus', [CenterController::class, 'changeStatus'])->name('centers.changeStatus');
-    Route::post('centers/featured', [CenterController::class, 'featured'])->name('centers.featured');
-    Route::post('centers/support-service/changeStatus', [CenterController::class, 'changeStatusOfSupportAutoService'])->name('centers.support-auto-service.changeStatus');
+    Route::group(['prefix' => 'centers'],function (){
+        Route::post('changeStatus', [CenterController::class, 'changeStatus'])->name('centers.changeStatus');
+        Route::post('featured', [CenterController::class, 'featured'])->name('centers.featured');
+        Route::post('support-service/changeStatus', [CenterController::class, 'changeStatusOfSupportAutoService'])->name('centers.support-auto-service.changeStatus');
+    });
 
     #attachment routes
     Route::resource('doctors', DoctorController::class);
