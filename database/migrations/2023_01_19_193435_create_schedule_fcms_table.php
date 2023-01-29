@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('content');
-            $table->string('trigger');
+            $table->string('trigger')->unique();
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->enum('notification_via',['sms','fcm','mail'])->default('fcm');
