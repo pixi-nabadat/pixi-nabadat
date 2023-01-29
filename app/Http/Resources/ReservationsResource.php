@@ -28,7 +28,7 @@ class ReservationsResource extends JsonResource
             'to'              => $this->to,
             'customer'        => $this->relationLoaded('user') ? new AuthUserResource($this->user):null,
             'center'          => $this->relationLoaded('center') ? new CentersResource($this->center):null,
-            'status'          => $this->relationLoaded('history') ? ($this->history->last() !== null ? $this->history->last()->status:null) :null,
+            'status'          => $this->relationLoaded('history') ? new ReservationHistoryResource($this->history->last()) :null,
             'nabadat_history' => $this->relationLoaded('nabadatHistory') ? NabadatHistoryResource::collection($this->nabadatHistory):null,
         ];
     }

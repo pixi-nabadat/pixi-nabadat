@@ -66,11 +66,11 @@ class ReservationController extends Controller
         }
     }
 
-    public function find(int $id)
+    public function find(string $id)
     {
         try {
             $withRelations = ['history', 'nabadatHistory', 'user', 'center'];
-            $reservation = $this->reservationService->findById($id, $withRelations);
+            $reservation = $this->reservationService->findByQr($id, $withRelations);
             if ($reservation)
                 return apiResponse(new ReservationsResource($reservation), trans('lang.operation_success'));
         } catch (Exception $e) {
@@ -78,16 +78,4 @@ class ReservationController extends Controller
         }
     }
 
-
-    public function findByQrCode($qr_code)
-    {
-        try {
-            $withRelations = ['history', 'nabadatHistory', 'user', 'center'];
-            $reservation = $this->reservationService->findByQr($qr_code, $withRelations);
-            if ($reservation)
-                return apiResponse(new ReservationsResource($reservation), trans('lang.operation_success'));
-        } catch (Exception $e) {
-            return apiResponse(message: $e->getMessage(), code: 422);
-        }
-    }
 }
