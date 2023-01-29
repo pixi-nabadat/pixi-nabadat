@@ -128,7 +128,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::resource('orders', OrderController::class);
 
 //fcm routes
-Route::resource('schedule-fcm',ScheduleFcmController::class);
+Route::resource('schedule-fcm',ScheduleFcmController::class)->except('create');
 Route::resource('fcm-messages',FcmMessageController::class);
 Route::post('fcm-messages/status', [FcmMessageController::class, 'status'])->name('fcm-messages.status');
 Route::post('schedule-fcm/status', [ScheduleFcmController::class, 'status'])->name('schedule-fcm.status');
