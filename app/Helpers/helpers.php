@@ -113,11 +113,14 @@ if (!function_exists('replaceFlags')) {
 
     function replaceFlags($content,$values =[])
     {
-        foreach (\App\Enum\FcmEventsNames::$FLAGS as $FLAG)
-        {
-           if (isset($values[$FLAG]))
-                $content = str_replace($FLAG,$values[$FLAG],$content);
+        if (count($values)){
+            foreach (\App\Enum\FcmEventsNames::$FLAGS as $FLAG)
+            {
+                if (isset($values[$FLAG]))
+                    $content = str_replace($FLAG,$values[$FLAG],$content);
+            }
         }
         return $content;
+
     }
 }

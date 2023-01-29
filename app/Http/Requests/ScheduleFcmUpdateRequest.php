@@ -27,7 +27,7 @@ class ScheduleFcmUpdateRequest extends BaseRequest
         return [
             'title'=>'required|string',
             'content'=>'required|string',
-            'trigger' =>'required|unique:schedule_fcms,trigger',
+            'trigger' =>'required|unique:schedule_fcms,trigger,'.$this->schedule_fcm,
             'start_date'=>'required|date',
             'end_date'=>'required|date',
             'notification_via'=>'required',

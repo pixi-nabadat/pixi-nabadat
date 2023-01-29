@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\FcmMessagesDatatable;
 use App\Enum\FcmEventsNames;
-use App\Http\Requests\FcmMessageRequest;
+use App\Http\Requests\FcmMessageStoreRequest;
 use App\Http\Requests\FcmMessageUpdateRequest;
 use App\Services\FcmMessageService;
 use Illuminate\Http\Request;
@@ -47,7 +47,7 @@ class FcmMessageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(FcmMessageRequest $request)
+    public function store(FcmMessageStoreRequest $request)
     {
         try {
             $data = $request->validated();
@@ -75,7 +75,7 @@ class FcmMessageController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
@@ -99,7 +99,7 @@ class FcmMessageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(FcmMessageRequest $request, $id)
+    public function update(FcmMessageUpdateRequest $request, $id)
     {
         try {
             $data = $request->validated();

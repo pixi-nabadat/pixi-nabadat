@@ -8,9 +8,7 @@ class FcmEventsNames
         'EXPIRE_POINTS_BEFORE_1'        =>'expire points before one day',
         'EXPIRE_POINTS_BEFORE_3'        =>'expire points before three day',
         'EXPIRE_POINTS_BEFORE_7'        =>'expire points before seven day',
-        'CENTER_CREATE_NEW_OFFER'       =>'center create new offer',
-        'DEAL_WITH_NEW_CENTER'          =>'deal with new center',
-        'CREATE_NEW_COUPON_DISCOUNT'    =>'create new coupon discount',
+
         'NABADAT_NOT_USED_FOR_3'        =>'nabadat not used for 5 days',
         'NABADAT_NOT_USED_FOR_7'        =>'nabadat not used for 10 days',
         'NABADAT_NOT_USED_FOR_11'       =>'nabadat not used for 15 days',
@@ -22,6 +20,10 @@ class FcmEventsNames
         'CREATE_USER_RESERVATION'       =>'create_user_reservation',
         'CANCEL_CENTER_RESERVATION'     =>'cancel_center_reservation',
         'COMPLETE_USER_RESERVATION'     =>'complete_user_reservation',
+        'DEAL_WITH_NEW_CENTER'          =>'deal with new center',
+        'CENTER_CREATE_NEW_OFFER'       =>'center create new offer',
+        'CREATE_NEW_COUPON_DISCOUNT'    =>'create new coupon discount',
+
     ];
 
     public static array $FLAGS = [
@@ -32,6 +34,8 @@ class FcmEventsNames
         '@ORDER_STATUS@'=>'@ORDER_STATUS@',
         '@RESERVATION_NUMBER@'=>'@RESERVATION_NUMBER@',
         '@RESERVATION_STATUS@'=>'@RESERVATION_STATUS@',
+        '@CENTER_NAME@'=>'@RESERVATION_STATUS@',
+        '@COUPON_CODE@'=>'@RESERVATION_STATUS@',
     ];
 
     public static array $CHANNELS = [

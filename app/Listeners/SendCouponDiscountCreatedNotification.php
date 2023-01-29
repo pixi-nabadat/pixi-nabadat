@@ -5,11 +5,12 @@ namespace App\Listeners;
 use App\Events\PushEvent;
 use App\Models\FcmMessage;
 use App\Models\Order;
+use App\Models\User;
 use App\Services\PushNotificationService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SendOrderCreatedNotification
+class SendCouponDiscountCreatedNotification
 {
     /**
      * Create the event listener.
@@ -29,30 +30,20 @@ class SendOrderCreatedNotification
      */
     public function handle(PushEvent $event)
     {
-        if (is_null($event->type) or $event->type != FcmMessage::CREATE_NEW_ORDER)
+        if (is_null($event->type) or $event->type != FcmMessage::CREATE_NEW_COUPON_DISCOUNT)
             return ;
-        $order = $event->model ;
+        $coupon = $event->model ;
         //prepare data
-        $user_name = $order->user->name ;
-
-        $order_id = $order->id ;
-
-        $order_status = trans('lang.pending');
 //        check if there is  an active fcm message for create order action
-        $fcmMessage = FcmMessage::query()->where('is_active',true)->where('fcm_action',FcmMessage::CREATE_NEW_ORDER)->first();
+        $fcmMessage = FcmMessage::query()->where('is_active',true)->where('fcm_action',FcmMessage::CREATE_NEW_COUPON_DISCOUNT)->first();
         if (!$fcmMessage)
             return;
 
         $title = $fcmMessage->title ;
         $body = $fcmMessage->content ;
-        $replaced_values = [
-            '@USER_NAME@'   =>$user_name,
-            '@ORDER_NUMBER@'=>$order_id,
-            '@ORDER_STATUS@'=>$order_status
-        ];
+        $replaced_values = [];
         $body = replaceFlags($body,$replaced_values);
-        $token =[$order->user->device_token];
-        $data = ['order_id' => $order_id];
-        app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $token,data: $data);
+        $tokens = User::where('type',User::CUSTOMERTYPE)->pluck('device_token')->toArray();
+        app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $tokens);
     }
 }
