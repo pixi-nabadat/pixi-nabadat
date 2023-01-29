@@ -21,7 +21,7 @@
                 <div class="card">
                    <div class="card-header">
                        <h5><a role="button" class="btn btn-success " href={{ route('fcm-messages.create') }}>
-                            <i class="fa fa-plus-circle"></i>{{ trans('lang.add_schedule_fcm') }}</a>
+                            <i class="fa fa-plus-circle"></i>{{ trans('lang.fcm_message') }}</a>
                         </h5>
                     </div>
                     <div class="card-body">

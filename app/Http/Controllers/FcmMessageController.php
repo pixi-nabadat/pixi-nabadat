@@ -35,7 +35,10 @@ class FcmMessageController extends Controller
      */
     public function create()
     {
-        return view('dashboard.marketing.fcm-message.create');
+        $flags = FcmEventsNames::$FLAGS;
+        $fcm_channels = FcmEventsNames::$CHANNELS;
+        $triggers = FcmEventsNames::$EVENTS;
+        return view('dashboard.marketing.create-fcm',compact('flags','fcm_channels','triggers'));
     }
 
     /**
