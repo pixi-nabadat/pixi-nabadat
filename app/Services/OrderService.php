@@ -54,8 +54,8 @@ class OrderService extends BaseService
 
         $this->setOrderItems($order, $order_data);
         $this->createOrderHistory($order);
-        $this->updateCouponUsage($user->id,optional($order_data->coupon)->id);
-        return $order->load('items.product.defaultLogo','user','history');
+        $this->updateCouponUsage($user->id,$order_data['temp_user_id'],optional($order_data->coupon)->id);
+        return $order->load('items.product.defaultLogo', 'history');
     }
 
     /*
@@ -80,13 +80,14 @@ class OrderService extends BaseService
         $order->update(['order_history_id' => $order_history->id]);
     }
 
-    private function updateCouponUsage($user_id, $coupon_id=null)
+    private function updateCouponUsage($user_id , $temp_user_id, $coupon_id=null)
     {
         if (!isset($coupon_id))
             return ;
-        $coupon_usage = CouponUsage::query()->where('user_id', $user_id)->where('coupon_id', $coupon_id)->first();
+        $coupon_usage = CouponUsage::query()->where('temp_user_id',$temp_user_id )->where('coupon_id', $coupon_id)->first();
         $old_usage = optional($coupon_usage)->number_of_usage ?? 0;
         CouponUsage::query()->updateOrCreate([
+            'temp_user_id' => $temp_user_id,
             'user_id' => $user_id,
             'coupon_id' => $coupon_id
         ], [

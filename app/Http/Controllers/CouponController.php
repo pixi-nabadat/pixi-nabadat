@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CouponUpdateRequest;
 use App\Http\Requests\CouponStoreRequest;
 use App\Services\CouponService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CouponController extends Controller
@@ -40,8 +41,11 @@ class CouponController extends Controller
 
     public function store(CouponStoreRequest $request): \Illuminate\Http\RedirectResponse
     {
+       $data = $request->validated();
+       $data['start_date'] = Carbon::parse($data['start_date'])->format('Y-m-d');
+       $data['end_date'] = Carbon::parse($data['end_date'])->format('Y-m-d');
         try {
-            $this->couponService->store($request->validated());
+            $this->couponService->store($data);
             $toast = ['type' => 'success', 'title' => trans('lang.success'), 'message' => trans('lang.success_operation')];
             return redirect()->route('coupons.index')->with('toast', $toast);
         } catch (\Exception $ex) {

@@ -132,6 +132,6 @@ class PaymobService
             return ['status' => false, 'data' => collect($response->object())->toArray()];
         if ($response->successful())
             $paymentToken = $response->object()->token;
-        return ['status' => true, "data" => config('services.paymob.iframe_url') . "?payment_token={$paymentToken}"];
+        return ['status' => true, "data" => config('services.paymob.iframe_url') . "{$paymentToken}"];
     }
 }

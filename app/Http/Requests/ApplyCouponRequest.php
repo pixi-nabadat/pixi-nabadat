@@ -25,7 +25,6 @@ class ApplyCouponRequest extends BaseRequest
     {
         return [
             'temp_user_id' => 'required',
-            'user_id' => 'required',
             'coupon_code' => 'string|required',
         ];
     }
