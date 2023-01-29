@@ -15,11 +15,13 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\GovernorateController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\NabadatHistoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ReservationHistoryController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -68,8 +70,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     //start reservations
     Route::resource('reservations', ReservationController::class);
-    Route::post('reservation/history', [ReservationController::class, 'store'])->name('reservation-history.store');
-    Route::post('reservation/devices', [ReservationController::class, 'store'])->name('reservation-devices.store');
+    Route::post('reservation/history/{id}', [ReservationHistoryController::class, 'store'])->name('reservation-history.store');
+    Route::post('reservation/devices', [NabadatHistoryController::class, 'store'])->name('reservation-devices.store');
     //end reservations
 
     Route::group(['prefix' => 'ajax'], function () {

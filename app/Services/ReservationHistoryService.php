@@ -14,7 +14,7 @@ class ReservationHistoryService extends BaseService
      */
     public function store(Reservation $reservation, array $reservation_data = []): bool
     {
-        $lastStatus = $reservation->history->last()->status;
+        $lastStatus = $reservation->history->last()->getRawOriginal('status');
 
         $reservationDevicesCount = $reservation->nabadatHistory->count();
 

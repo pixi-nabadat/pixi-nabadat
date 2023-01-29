@@ -56,7 +56,7 @@
                                             <select id="customer_id" name="customer_id" class="js-example-basic-single col-sm-12 @error('center_id') is-invalid @enderror">
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        {{ $reservation->user_id == $user->id ? 'selected' : '' }}>
+                                                        {{ $reservation->customer_id == $user->id ? 'selected' : '' }}>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -65,13 +65,13 @@
                                             @enderror
                                         </div>
         
-                                        {{--payment_type  --}}
+                                        {{--check_date  --}}
                                         <div class="col-md-12 d-flex my-3">
-                                            <div class="col-form-label col-3">{{ __('lang.payment_type') }}</div>
-                                            <select id="payment_type" name="payment_type" class="js-example-basic-single col-sm-12">
-                                                <option value="{{ App\Enum\PaymentMethodEnum::CASH }}" {{ App\Enum\PaymentMethodEnum::CASH == $reservation->payment_type ? "selected":''}}>{{ App\Enum\PaymentMethodEnum::CASH }}</option>
-                                                <option value="{{ App\Enum\PaymentMethodEnum::CREDIT }}" {{ App\Enum\PaymentMethodEnum::CREDIT == $reservation->payment_type ? "selected":''}}>{{ App\Enum\PaymentMethodEnum::CREDIT }}</option>
-                                            </select>
+                                            <div class="col-form-label col-3">{{ __('lang.check_date') }}</div>
+                                            <input type="date" name="check_date" value="{{ $reservation->check_date }}" class="form-control">
+                                            @error('check_date')
+                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="media mb-2">
                                             <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
@@ -88,18 +88,25 @@
                         <div class="tab-pane fade" id="pills-iconprofile" role="tabpanel" aria-labelledby="pills-iconprofile-tab">
                             <div class="card  col-md-12">
                                 <div class="card-body row">
-                                    <form method="post" class="needs-validation" novalidate="" action="{{ route('reservation-devices.store') }}">
+                                <form method="post" class="needs-validation" novalidate="" action="{{ route('reservation-devices.store') }}">
                                         @csrf
-                                    {{--center  --}}
+                                        {{--  reservation  --}}
+                                    <div class="col-md-12 d-flex my-3">
+                                        <input type="number" name="reservation_id" class="form-control" value="{{ $reservation->id }}" hidden>
+                                        @error('reservation_id')
+                                            <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    {{--device  --}}
                                     <div class="col-md-12 d-flex my-3">
                                         <div class="col-form-label col-3">{{ __('lang.device') }}</div>
-                                        <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12 @error('center_id') is-invalid @enderror">
+                                        <select id="device_id" name="device_id" class="js-example-basic-single col-sm-12 @error('device_id') is-invalid @enderror">
                                             <option selected disabled>...</option>
                                             @foreach ($centerDevices as $device)
                                                 <option value="{{ $device->id }}">{{ $device->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('center_id')
+                                        @error('device_id')
                                             <div class="invalid-feedback text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>                            
@@ -111,12 +118,12 @@
                                             <div class="invalid-feedback text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    {{-- is_active --}}
+                                    {{-- auto_service --}}
                                     <div class="media my-2">
                                         <label class="col-form-label m-r-10">{{ __('lang.auto_service') }}</label>
                                         <div class="media-body  icon-state">
                                             <label class="switch">
-                                                <input type="checkbox" name="is_active"
+                                                <input type="checkbox" name="auto_service"
                                                     {{ $reservation->auto_service == 1 ? 'checked' : '' }}><span
                                                     class="switch-state"></span>
                                             </label>
@@ -137,7 +144,7 @@
                         <div class="tab-pane fade" id="reservation_status" role="tabpanel" aria-labelledby="reservation_status-tab">
                             <div class="card  col-md-12">
                                 <div class="card-body row">
-                                    <form method="post" class="needs-validation" novalidate="" action="{{ route('reservation-history.store') }}">
+                                    <form method="post" class="needs-validation" novalidate="" action="{{ route('reservation-history.store', $reservation) }}">
                                         @csrf
                                         <div class="media mb-2">
                                             <label class="col-form-label m-r-10">{{ __('lang.current_status') }}</label>
@@ -145,22 +152,30 @@
                                                 <input type="text" class="form-control" value="{{ $reservation->history->last()->status }}" @disabled(true)>    
                                             </div>
                                         </div>
+                                        {{--next_status  --}}
                                         <div class="media mb-2">
-                                            <label class="col-form-label m-r-10">{{ __('lang.next_status') }}</label>
-                                            <div class="media-body  icon-state">
-                                                <input type="text" class="form-control" value="confirm" @disabled(true)>    
-                                            </div>
-                                        </div>
+                                            <div class="col-form-label col-3">{{ __('lang.next_status') }}</div>
+                                            <select id="status" name="status" class="js-example-basic-single col-sm-12 @error('status') is-invalid @enderror">
+                                                <option selected disabled>...</option>
+                                                <option value="2">{{ trans('lang.confirmed') }}</option>
+                                                <option value="3">{{trans('lang.attend') }}</option>
+                                                <option value="4">{{ trans('lang.completed') }}</option>
+                                                <option value="5">{{ trans('lang.canceled') }}</option>
+                                            </select>
+                                            @error('status')
+                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div> 
                                         <div class="media mb-2">
                                             <label class="col-form-label m-r-10">{{ __('lang.from') }}</label>
                                             <div class="media-body  icon-state">
-                                                <input name="from" type="date" class="form-control" value="confirm">    
+                                                <input name="from" type="time" class="form-control" value="{{ $reservation->from }}">    
                                             </div>
                                         </div>
                                         <div class="media mb-2">
                                             <label class="col-form-label m-r-10">{{ __('lang.to') }}</label>
                                             <div class="media-body  icon-state">
-                                                <input name="to" type="date" class="form-control">    
+                                                <input name="to" type="time" class="form-control" value="{{ $reservation->to }}">    
                                             </div>
                                         </div>
                                         <div class="media mb-2">

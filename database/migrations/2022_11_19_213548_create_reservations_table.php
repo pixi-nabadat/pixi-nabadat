@@ -20,11 +20,7 @@ return new class extends Migration
             $table->date('check_date');
             $table->time('from')->nullable();
             $table->time('to')->nullable();
-            $table->enum('payment_type', ['cash', 'palses']);
-            $table->boolean('payment_status')->default(false);
             $table->string('qr_code')->unique();
-
-
             $table->timestamps();
         });
     }

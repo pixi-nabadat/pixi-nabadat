@@ -27,7 +27,7 @@ class NabadatHistoryStoreRequest extends FormRequest
             'reservation_id' => 'required|exists:reservations,id',
             'device_id'      => 'required|exists:devices,id',
             'num_nabadat'    => 'required|numeric',
-            'auto_service'   => 'null|boolean'
+            'auto_service'   => 'nullable'
         ];
     }
 }

@@ -26,7 +26,7 @@ class ReservationDataTable extends DataTable
                 return $reservation->user->name;
             })
             ->addColumn('center_id', function (Reservation $reservation) {
-                return $reservation->center->name;
+                return $reservation->center->user->name;
             })
             ->addColumn('status', function (Reservation $reservation) {
                 return $reservation->history->last()->status;
@@ -95,14 +95,6 @@ class ReservationDataTable extends DataTable
                 ->title(trans('lang.to'))
                 ->searchable(true)
                 ->orderable(true),
-            Column::make('payment_type')
-                ->title(trans('lang.payment_type'))
-                ->searchable(false)
-                ->orderable(false),
-            Column::make('payment_status')
-                ->title(trans('lang.payment_status'))
-                ->searchable(false)
-                ->orderable(false),
             Column::make('qr_code')
                 ->title(trans('lang.qr_code'))
                 ->searchable(true)

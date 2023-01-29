@@ -33,7 +33,7 @@ class ReservationController extends Controller
         }
         $centers = $this->centerService->getAll();
         $users = $this->userService->getAll();
-        $centerDevices = [];//center devices for this reservation center
+        $centerDevices = $reservation->center->device;
         return view('dashboard.reservations.edit', compact(['centers', 'reservation', 'users', 'centerDevices']));
 
     } //end of edit
@@ -64,7 +64,7 @@ class ReservationController extends Controller
             $data = $request->validated();
             $this->reservationService->update($id, $data);
             $toast = ['title' => trans('lang.success'), 'message' => trans('lang.success_operation')];
-            return redirect(route('reservaions.index'))->with('toast', $toast);
+            return redirect(route('reservations.index'))->with('toast', $toast);
         } catch (\Exception $ex) {
 
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => $ex->getMessage(),];
