@@ -99,9 +99,7 @@ class CartController extends Controller
     public function updateCartAddress(UpdateCartAddressRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $user_id = auth()->id();
             $data = $request->validated();
-            $data['user_id'] = $user_id ;
             $this->cartService->updateCartAddress($data);
             $cart = $this->cartService->getCart($data['temp_user_id']) ;
             return  apiResponse(data:new CartResource($cart) , message: trans('lang.address_set_successfully'));

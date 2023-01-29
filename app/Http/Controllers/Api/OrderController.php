@@ -79,10 +79,14 @@ class OrderController extends Controller
                     $status_code = 200;
                     $message = null;
                     DB::commit();
-                    $this->cartService->emptyCart($request->serial_number);
+                    $this->cartService->emptyCart($request->temp_user_id);
                 }// check if status true commit transaction and store order in database else order not stored in db
                 $result_data = $result['data'] ?? null;
-                return apiResponse(data: $result_data, message: $message, code: $status_code);
+                $result = (object)[
+                    'payment_token'  =>$result_data,
+                    'payment_method' =>PaymentMethodEnum::CREDIT
+                ];
+                return apiResponse(data: $result, message: $message, code: $status_code);
             }
             $this->cartService->emptyCart($request->temp_user_id);
             DB::commit();

@@ -8,19 +8,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCenterRequest;
 use App\Http\Resources\CenterResource;
 use App\Http\Resources\CentersResource;
-use Illuminate\Http\Request;
 use App\Services\CenterService;
-use App\Services\LocationService;
 use Exception;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 
 class CenterController extends Controller
 {
      /**
      * Display a listing of the resource.
-     *
+      *
      * @return \Illuminate\Http\Response
      */
     public function __construct(private CenterService $centerService)
