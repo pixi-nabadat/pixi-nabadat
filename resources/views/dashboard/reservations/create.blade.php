@@ -22,7 +22,7 @@
 
             <div class="row ">
 
-                <div class="col-md-8">
+                <div class="col-md-12">
 
                     {{-- reservation_information --}}
                     <div class="card  col-md-12">
@@ -50,43 +50,19 @@
                                         @endforeach
                                     </select>
                                 </div>
-
-
-                                {{--payment_type  --}}
+                                {{--  check_date  --}}
                                 <div class="col-md-12 d-flex my-3">
-                                    <div class="col-form-label col-3">{{ __('lang.payment_type') }}</div>
-                                    <select id="payment_type" name="payment_type" class="js-example-basic-single col-sm-12">
-                                        <option selected disabled>...</option>
-                                        <option value="{{ App\Enum\PaymentMethodEnum::CASH }}">{{ App\Enum\PaymentMethodEnum::CASH }}</option>
-                                        <option value="{{ App\Enum\PaymentMethodEnum::CREDIT }}">{{ App\Enum\PaymentMethodEnum::CREDIT }}</option>
-                                    </select>
+                                    <label class="form-label col-3" for="check_date">@lang('lang.check_date')</label>
+                                    <input type="date" name="check_date" step="0.01"
+                                        class="form-control @error('check_date') is-invalid @enderror">
+                                    @error('check_date')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class='col-md-4'>
-
-                    {{-- time --}}
-                    <div class="card col-12">
-                        <div class="card-header py-4">
-                            <h6>{{ __('lang.reservation_time') }}</h6>
-                        </div>
-
-                        <div class="card-body row">
-                            {{--  check_date  --}}
-                            <div class="col-md-12 d-flex my-3">
-                                <label class="form-label col-3" for="check_date">@lang('lang.check_date')</label>
-                                <input type="date" name="check_date" step="0.01"
-                                    class="form-control @error('check_date') is-invalid @enderror">
-                                @error('check_date')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
 
                         </div>
                     </div>
+
                 </div>
 
                 <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">

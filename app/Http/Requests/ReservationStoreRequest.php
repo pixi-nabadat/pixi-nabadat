@@ -27,7 +27,6 @@ class ReservationStoreRequest extends BaseRequest
             'customer_id' => 'required|exists:users,id',
             'center_id'   => 'required|exists:centers,id',
             'check_date'  => 'required|date',
-            'payment_type' => 'required|in:cash,palses',
         ];
     }
 
