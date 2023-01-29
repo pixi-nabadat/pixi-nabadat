@@ -52,10 +52,10 @@ class FcmMessagesDatatable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->orderBy(1)
-            ->buttons(
-                Button::make('reset'),
-                Button::make('reload')
-            );
+            ->parameters([
+                "responsive" => true,
+                "scrollX" => '100%',
+            ]);
     }
 
     /**
@@ -76,12 +76,12 @@ class FcmMessagesDatatable extends DataTable
                 ->orderable(true),
             Column::make('content')
                 ->title(trans('lang.content'))
-                ->searchable(true)
-                ->orderable(true),
+                ->searchable(false)
+                ->orderable(false),
             Column::make('fcm_action')
                 ->title(trans('lang.fcm_action'))
-                ->searchable(true)
-                ->orderable(true),
+                ->searchable(false)
+                ->orderable(false),
             Column::make('is_active')
                 ->title(trans('lang.is_active'))
                 ->searchable(false)

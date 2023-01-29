@@ -52,10 +52,10 @@ class ScheduleFcmDatatable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->orderBy(1)
-            ->buttons(
-                Button::make('reset'),
-                Button::make('reload')
-            );
+            ->parameters([
+                "responsive" => true,
+                "scrollX" => '100%',
+            ]);;
     }
 
     /**
@@ -67,29 +67,23 @@ class ScheduleFcmDatatable extends DataTable
     {
         return [
             Column::make('id')
-                ->title(trans('lang.id'))
-                ->searchable(true)
-                ->orderable(true),
+                ->title(trans('lang.id')),
             Column::make('title')
-                ->title(trans('lang.title'))
-                ->searchable(true)
-                ->orderable(true),
+                ->title(trans('lang.title')),
             Column::make('content')
                 ->title(trans('lang.content'))
-                ->searchable(true)
-                ->orderable(true),
+                ->searchable(false)
+                ->orderable(false),
             Column::make('trigger')
-                ->title(trans('lang.trigger'))
-                ->searchable(true)
-                ->orderable(true),
+                ->title(trans('lang.trigger')),
             Column::make('start_date')
                 ->title(trans('lang.start_date'))
                 ->searchable(false)
                 ->orderable(false),
             Column::make('end_date')
                 ->title(trans('lang.end_date'))
-                ->searchable(true)
-                ->orderable(true),
+                ->searchable(false)
+                ->orderable(false),
             Column::make('notification_via')
                 ->title(trans('lang.notification_via'))
                 ->searchable(true)
