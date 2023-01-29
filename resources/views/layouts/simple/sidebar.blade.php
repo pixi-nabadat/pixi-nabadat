@@ -173,23 +173,16 @@
                         </ul>
                         {{-- end orders --}}
                         
-                        {{--start fcm messages ---}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/fcm-messages' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.fcm_messages') }}</span>
-                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/fcm-messages' ? 'down' : 'right' }}"></i></div>
+                        {{--start fcm ---}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/fcm' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.fcm') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/fcm' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
-                            <li><a class="lan-5 {{ Route::currentRouteName()==route('fcm-messages.index') ? 'active' : '' }}" href="{{route('fcm-messages.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('fcm-messages.index') ? 'active' : '' }}" href="{{route('fcm-messages.index')}}">{{ trans('lang.fcm_messages') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('schedule-fcm.index') ? 'active' : '' }}" href="{{route('schedule-fcm.index')}}">{{ trans('lang.schedule_fcm') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('fcm-messages.create') ? 'active' : '' }}" href="{{route('fcm-messages.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
-                        {{-- end fcm messages --}}
-
-                        {{--start schedule fcm ---}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/schedule-fcm' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.schedule_fcm') }}</span>
-                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/schedule-fcm' ? 'down' : 'right' }}"></i></div>
-                        </a>
-                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
-                            <li><a class="lan-5 {{ Route::currentRouteName()==route('schedule-fcm.index') ? 'active' : '' }}" href="{{route('schedule-fcm.index')}}">{{ trans('lang.view') }}</a></li>
-                        </ul>
-                        {{-- end schedule fcm --}}
+                        {{-- end fcm --}}
 
                         {{--start Settings ---}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/settings' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.settings') }}</span>
