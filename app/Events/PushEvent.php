@@ -2,21 +2,22 @@
 
 namespace App\Events;
 
-use App\Models\Order;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class AfterOrderCreated
+class PushEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * @param $merchant_order_id
+     * @param Model $model
      * refernece to order im my database
+     * Model between (Order , Reservation)
      */
-    public function __construct(public Order $order)
+    public function __construct(public Model $model,public $type = null)
     {
         //
     }

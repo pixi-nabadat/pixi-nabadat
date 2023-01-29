@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
-use App\Events\AfterOrderCreated;
+use App\Events\PushEvent;
 use App\Events\OrderCreated;
 use App\Listeners\changeOrderDependencies;
-use App\Listeners\SendOrderNotification;
+use App\Listeners\SendChangeOrderStatusNotification;
+use App\Listeners\SendOrderCreatedNotification;
+use App\Listeners\SendReservationCreatedNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,11 +24,12 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         OrderCreated::class => [
-            SendOrderNotification::class,
             changeOrderDependencies::class
         ],
-        AfterOrderCreated::class => [
-            SendOrderNotification::class,
+        PushEvent::class => [
+            SendOrderCreatedNotification::class,
+            SendChangeOrderStatusNotification::class,
+            SendReservationCreatedNotification::class,
         ]
     ];
 
