@@ -90,7 +90,7 @@ class CartService extends BaseService
         $coupon = Coupon::where('code', $data['coupon_code'])->first();
         if (!$coupon)
             throw new NotFoundException(trans('lang.coupon_not_available'));
-        $coupon_usage =CouponUsage::where('user_id',$data['user_id'])->where('coupon_id',$coupon->id)->first();
+        $coupon_usage =CouponUsage::where('temp_user_id',$data['temp_user_id'])->where('coupon_id',$coupon->id)->first();
         //check if coupon code exists and is valid
         if (
             !(
@@ -102,13 +102,12 @@ class CartService extends BaseService
             throw new NotFoundException(trans('lang.coupon_not_available'));
 
         if ( $coupon->allowed_usage <= optional($coupon_usage)->number_of_usage)
-            throw new NotFoundException(trans('lang.you_used_this_coupon_before'));
+            throw new NotFoundException(trans('lang.you_exceed_allowed_usage_for_this_coupon'));
 
         $cart = $this->getCartByUser($data['temp_user_id']);
         if ($cart->grand_total < $coupon->min_buy)
             throw new NotFoundException(trans('lang.you_should_exceed_minimum_limitation_to_use_coupon : ') . $coupon->min_buy);
         $cart->coupon_id = $coupon->id;
-        $cart->user_id = $data['user_id'];
         $cart->save();
         $cart->refresh();
         return true;

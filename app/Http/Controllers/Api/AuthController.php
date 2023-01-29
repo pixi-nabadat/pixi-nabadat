@@ -47,7 +47,7 @@ class AuthController extends Controller
         $data['password'] = bcrypt($data['password']);
         $result = $this->authService->register(data: $data);
         if ($result)
-            return apiResponse($result, __('lang.success'));
+            return apiResponse( trans('lang.success'));
         return apiResponse(message: __('lang.error_message'), code: 422);
     }
 

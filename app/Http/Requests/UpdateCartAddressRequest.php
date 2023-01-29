@@ -26,6 +26,12 @@ class UpdateCartAddressRequest extends BaseRequest
         return [
             'temp_user_id' => 'required',
             'address_id' => 'integer|required|exists:addresses,id',
+            'user_id' => 'required|exists:users,id',
         ];
+    }
+
+    public function validationData()
+    {
+        return array_merge($this->all(),['user_id'=>auth()->id()]);
     }
 }

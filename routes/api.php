@@ -94,10 +94,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/buy', [BuyOfferController::class, 'buyOffer']);
     });
 //start buy pulsses from nabdat app
-
-    Route::group(['prefix' => 'coupon'], function () {
-        Route::post('apply', [CartController::class, 'applyCoupon']);//create new coupon
-    });
 });
 
 Route::get('home',[HomeController::class,'index']);
@@ -113,6 +109,11 @@ Route::group(['prefix' => 'cart'], function () {
     Route::delete('items/{id}', [CartController::class, 'deleteCartItem']);//delete an item from cart items
 });
 //end cart
+//start apply coupon
+Route::group(['prefix' => 'coupon'], function () {
+    Route::post('apply', [CartController::class, 'applyCoupon']);//create new coupon
+});
+//end apply coupon
 Route::get('categories', [CategoryController::class, 'listing']);
 Route::get('products', [ProductController::class, 'listing']);
 Route::get('products/{id}/show', [ProductController::class, 'show']);
