@@ -42,18 +42,7 @@
                                 <label class="form-label col-3">@lang('lang.user')</label>
                                 <input type="text" class="form-control" value="{{ $reservation->user->name }}" @disabled(true)>
                             </div>
-
-
-                            {{--  payment_type  --}}
-                            <div class="col-md-12 d-flex my-3">
-                                <label class="form-label col-3">@lang('lang.payment_type')</label>
-                                <input type="text" class="form-control" value="{{ $reservation->payment_type }}" @disabled(true)>
-                            </div>
-                            {{--  payment_status  --}}
-                            <div class="col-md-12 d-flex my-3">
-                                <label class="form-label col-3">@lang('lang.payment_status')</label>
-                                <input type="text" class="form-control" value="{{ $reservation->payment_status }}" @disabled(true)>
-                            </div>
+                            
                             {{--  status  --}}
                             <div class="col-md-12 d-flex my-3">
                                 <label class="form-label col-3">@lang('lang.status')</label>
