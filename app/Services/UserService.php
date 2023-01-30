@@ -6,6 +6,7 @@ use App\Enum\ImageTypeEnum;
 use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
 use App\Enum\UserPackageStatusEnum;
+use App\Models\Invoice;
 use App\Models\User;
 use App\QueryFilters\UsersFilter;
 use Carbon\Carbon;
@@ -110,8 +111,9 @@ class UserService extends BaseService
             'remain'                =>0
         ];
         $user_package = $user->package()->create($user_package_data);
-        if ($user_package && $user_package->payment_status == PaymentStatusEnum::PAID)
+        if ($user_package && $user_package->payment_status == PaymentStatusEnum::PAID){
             $user->nabadatWallet()->updateOrCreate(['user_id'=>$user->id],['total_pulses' => $total_pulses]);
+        }
         return true;
     }
 
