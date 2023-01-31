@@ -145,6 +145,15 @@
                         </ul>
                         {{--end reservations --}}
 
+                        {{-- start roles --}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/roles' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.roles') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/roles' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('roles.index') ? 'active' : '' }}" href="{{route('roles.index')}}">{{ trans('lang.view') }}</a></li>
+                        </ul>
+                        {{--end roles --}}
+
                         {{--start Cancel Reason ---}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/cancelReasons' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.cancelReason') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/cancelReasons' ? 'down' : 'right' }}"></i></div>
