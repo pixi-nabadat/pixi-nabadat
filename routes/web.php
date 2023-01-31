@@ -14,13 +14,14 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\GovernorateController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\SliderController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -51,7 +52,7 @@ Route::get('/', HomeController::class)->name('/')->middleware('auth');
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     // Start Settings
-    Route::group(['prefix'=>'settings'],function (){
+    Route::group(['prefix' => 'settings'], function () {
         Route::get('/', [SettingController::class, 'index'])->name('settings');
         Route::get('general', [SettingController::class, 'appSettingsIndex'])->name('general.settings');
         Route::post('general', [SettingController::class, 'store'])->name('settings.store.general');
@@ -68,8 +69,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     // End Settings
 
     //start reservations
-    Route::group(['prefix'=>'reservations'],function (){
-        Route::get('/',[ReservationController::class,'index'])->name('reservations.index');
+    Route::group(['prefix' => 'reservations'], function () {
+        Route::get('/', [ReservationController::class, 'index'])->name('reservations.index');
     });
     //end reservations
 
@@ -114,6 +115,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::resource('packages', PackageController::class);
     Route::post('packages/status', [PackageController::class, 'status'])->name('packages.status');
 
+    Route::resource('sliders', SliderController::class);
+    Route::post('sliders/status', [SliderController::class, 'status'])->name('sliders.status');
+
     Route::resource('cancelReasons', CancelReasonController::class);
     Route::post('cancelReasons/changeStatus', [CancelReasonController::class, 'changeStatus'])->name('cancelReasons.changeStatus');
 
@@ -124,10 +128,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::post('orders/updateOrderStatus', [OrderController::class, 'updateOrderStatus'])->name('orders.updateOrderStatus');
     Route::resource('orders', OrderController::class);
 
-    Route::resource('invoices',InvoiceController::class);
-    Route::post('invoices/settle',[InvoiceController::class,'settleInvoice'])->name('invoices.settle');
-    Route::get('invoices/export-pdf',[InvoiceController::class,'export'])->name('invoices.export-pdf');
-    Route::get('invoices/{id}/print',[InvoiceController::class,'print'])->name('invoices.print');
+    Route::resource('invoices', InvoiceController::class);
+    Route::post('invoices/settle', [InvoiceController::class, 'settleInvoice'])->name('invoices.settle');
+    Route::get('invoices/export-pdf', [InvoiceController::class, 'export'])->name('invoices.export-pdf');
+    Route::get('invoices/{id}/print', [InvoiceController::class, 'print'])->name('invoices.print');
 
 
 });
