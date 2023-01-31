@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddressRequest extends FormRequest
+class AddressRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,7 @@ class AddressRequest extends FormRequest
         return [
             'user_id' => 'required|integer',
             'address' => 'string|required',
-            'country_id' => 'required|integer',
-            'governerate_id' => 'required|integer',
+            'governorate_id' => 'required|integer',
             'city_id' => 'required|integer',
             'postal_code' => 'required|string',
             'is_default' => 'nullable',

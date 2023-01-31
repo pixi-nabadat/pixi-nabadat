@@ -2,22 +2,60 @@
 
 namespace App\Models;
 
+use App\Enum\PackageStatusEnum;
+use App\Traits\EscapeUnicodeJson;
+use App\Traits\Filterable;
+use App\Traits\HasAttachment;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Translatable\HasTranslations;
-use App\Traits\Filterable;
 
 class Package extends Model
 {
-    use HasFactory,Filterable,HasTranslations;
-    const Active = 1 ;
-    const NONActive = 0 ;
+    use HasFactory, Filterable, HasTranslations, HasAttachment, EscapeUnicodeJson;
 
-    protected $fillable = ['name','num_nabadat','price','is_active'];
-    public $translatable =['name'];
+    public $translatable = ['name'];
+    protected $fillable = ['center_id', 'name', 'num_nabadat', 'price', 'start_date', 'end_date', 'discount_percentage', 'status', 'is_active'];
 
     public function subscriber(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(UserPackage::class);
+    }
+
+
+    public function center(): BelongsTo
+    {
+        return $this->belongsTo(Center::class);
+    }
+
+    public function getStatusAttribute($value)
+    {
+        switch ($value) {
+            case PackageStatusEnum::UNDERACHIEVING:
+                return trans('lang.under_reviewing');
+            case PackageStatusEnum::APPROVED:
+                return trans('lang.approved');
+            case PackageStatusEnum::REJECTED:
+                return trans('lang.rejected');
+        }
+    }
+
+    public function getUserPriceAttribute(): float
+    {
+        return $this->price * ((100 - $this->discount_percentage) / 100);
+    }
+
+    public function getPriceAfterDiscountAttribute()
+    {
+        return $this->price - ($this->price * ($this->center->app_discount / 100));
+    }
+
+    public function scopeActive(Builder $builder)
+    {
+
+        $builder->where('start_date' ,  '<=' , Carbon::now(config('app.africa_timezone'))->format('Y-m-d'))->where('end_date' ,  '>=' , Carbon::now(config('app.africa_timezone'))->format('Y-m-d'));
     }
 }

@@ -20,7 +20,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        
+
                         <form method="post" class="needs-validation" enctype="multipart/form-data" novalidate="" action="{{ route('categories.store') }}">
                             @csrf
 
@@ -43,13 +43,20 @@
                                     @enderror
                                 </div>
 
+                                {{--type  --}}
+                                <div class="col-md-12 d-flex my-3">
+                                    <div class="col-form-label col-3">{{ __('lang.product_type') }}</div>
+                                    <select id="type" name="type" class="js-example-basic-single col-sm-12">
+                                        <option value="{{\App\Models\Category::USERTYPE}}">{{ __('lang.user') }}</option>
+                                        <option value="{{\App\Models\Category::CENTERTYPT}}">{{ __('lang.center') }}</option>
+                                    </select>
+                                </div>
 
-                                
                                 <div class="col-md-12">
-                                    <label class="form-label" for="image">{{ trans('lang.image') }}</label>
-                                    <input name="images[]" class="form-control image @error('image') is-invalid @enderror"
-                                        id="image" type="file" multiple>
-                                    @error('image')
+                                    <label class="form-label" for="logo">{{ trans('lang.logo') }}</label>
+                                    <input name="logo" class="form-control image @error('logo') is-invalid @enderror"
+                                        id="logo" type="file">
+                                    @error('logo')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -58,7 +65,7 @@
                                     <img src="{{ asset('/uploads/categories/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
                                 </div>
 
-                                
+
                                 <div class="media mb-2">
                                     <label class="col-form-label m-r-10">{{ __('lang.is_active') }}</label>
                                     <div class="media-body  icon-state">
@@ -68,9 +75,9 @@
                                         </label>
                                     </div>
                                 </div>
-                                
+
                             </div>
-                          
+
                             <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
 
                         </form>

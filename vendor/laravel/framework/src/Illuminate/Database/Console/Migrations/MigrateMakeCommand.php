@@ -18,7 +18,7 @@ class MigrateMakeCommand extends BaseCommand
         {--table= : The table to migrate}
         {--path= : The location where the migration file should be created}
         {--realpath : Indicate any provided migration file paths are pre-resolved absolute paths}
-        {--fullpath : Output the full path of the migration}';
+        {--fullpath : Output the full path of the migration (Deprecated)}';
 
     /**
      * The console command description.
@@ -110,11 +110,7 @@ class MigrateMakeCommand extends BaseCommand
             $name, $this->getMigrationPath(), $table, $create
         );
 
-        if (! $this->option('fullpath')) {
-            $file = pathinfo($file, PATHINFO_FILENAME);
-        }
-
-        $this->components->info(sprintf('Created migration [%s].', $file));
+        $this->components->info(sprintf('Migration [%s] created successfully.', $file));
     }
 
     /**

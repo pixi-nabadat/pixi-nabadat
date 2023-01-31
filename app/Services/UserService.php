@@ -2,6 +2,11 @@
 
 namespace App\Services;
 
+use App\Enum\ImageTypeEnum;
+use App\Enum\PaymentMethodEnum;
+use App\Enum\PaymentStatusEnum;
+use App\Enum\UserPackageStatusEnum;
+use App\Models\Invoice;
 use App\Models\User;
 use App\QueryFilters\UsersFilter;
 use Carbon\Carbon;
@@ -16,9 +21,9 @@ class UserService extends BaseService
         return $users->get();
     }
 
-    public function queryGet(array $where_condition = []): Builder
+    public function queryGet(array $where_condition = [],$withRelation=[]): Builder
     {
-        $users = User::query();
+        $users = User::query()->with($withRelation);
         return $users->filter(new UsersFilter($where_condition));
     }
 
@@ -26,46 +31,96 @@ class UserService extends BaseService
     {
 
         $data['password'] = bcrypt($data['password']);
-        $data['date_of_birth'] = isset($data['date_of_birth'])? Carbon::parse($data['date_of_birth']):null;
-        $data['is_active']  = isset($data['is_active'])  ? 1 : 0;
-        return User::create($data);
+        $data['date_of_birth'] = isset($data['date_of_birth']) ? Carbon::parse($data['date_of_birth']) : null;
+        $data['is_active'] = isset($data['is_active']) ? 1 : 0;
+        $user = User::create($data);
+        if (isset($data['logo']))
+        {
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\users', field_name: 'logo');
+            $fileData['type'] = ImageTypeEnum::LOGO;
+            $user->storeAttachment($fileData);
+        }
+        return $user;
 
     } //end of create
 
-    public function find($id)
+    public function changeStatus($id)
     {
-        $user = User::find($id);
+        $user = $this->find($id);
+        $user->is_active = !$user->is_active;
+        $user->save();
+    }
+
+    public function find($id, $withRelations = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|Builder|bool|array
+    {
+        $user = User::with($withRelations)->find($id);
         if ($user)
             return $user;
         return false;
-    }
-
-    public function changeStatus($id)
-    {
-        $user = User::find($id);
-        $user->is_active = !$user->is_active;
-        $user->save();
     }//end of changeStatus
 
     public function delete($id)
     {
-        $user=User::find($id);
+        $user = $this->find($id);
         if ($user)
+        {
+            $user->deleteAttachments();
             return $user->delete();
+        }
         return false;
     }//end of delete
 
-    public function update($id , $data)
+    public function update($id, $data)
     {
         $data['password'] = bcrypt($data['password']);
         $data['date_of_birth'] = Carbon::parse($data['date_of_birth']);
-        isset($data['is_active'])  ?   $data['is_active']=1 : $data['is_active']= 0;
+        isset($data['is_active']) ? $data['is_active'] = 1 : $data['is_active'] = 0;
 
 
-        $user=User::find($id);
-        if ($user)
-            $user->update($data);
-        return false;
+        $user = User::find($id);
+        if (!$user)
+            return false;
+        if (isset($data['logo']))
+        {
+            $user->deleteAttachmentsLogo();
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\users', field_name: 'logo');
+            $fileData['type'] = ImageTypeEnum::LOGO;
+            $user->storeAttachment($fileData);
+        }
+        $user->update($data);
     }//end of update
 
+    public function updateOrCreateNabadatWallet(User $user, $package,$payment_method=PaymentMethodEnum::CASH,$payment_status =PaymentStatusEnum::UNPAID): bool
+    {
+        if (!$user)
+            return false;
+        $old_pulses = $user->nabadatWallet->total_pulses ?? 0;
+        $total_pulses = $old_pulses + $package->num_nabadat;
+        //check if user has in progress offer
+        $active_user_package = $user->package()->where('status',UserPackageStatusEnum::ONGOING)->where('payment_status',PaymentStatusEnum::PAID)->count();
+        $user_package_data = [
+            'package_id'            => $package->id,
+            'num_nabadat'           => $package->num_nabadat,
+            'price'                 => $package->price,
+            'center_id'             => $package->center_id,
+            'discount_percentage'   => $package->discount_percentage,
+            'payment_method'        => $payment_method,
+            'payment_status'        => $payment_status,
+            'status'                => $active_user_package > 0 ? UserPackageStatusEnum::PENDING : UserPackageStatusEnum::ONGOING,
+            'used_amount'           =>0,
+            'remain'                =>0
+        ];
+        $user_package = $user->package()->create($user_package_data);
+        if ($user_package && $user_package->payment_status == PaymentStatusEnum::PAID){
+            $user->nabadatWallet()->updateOrCreate(['user_id'=>$user->id],['total_pulses' => $total_pulses]);
+        }
+        return true;
+    }
+
+    public function status($id)
+    {
+        $user = $this->find($id);
+        $user->is_active = !$user->is_active;
+        return $user->save();
+    }//end of status
 }

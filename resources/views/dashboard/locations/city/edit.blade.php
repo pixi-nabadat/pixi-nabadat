@@ -30,7 +30,7 @@
                         @csrf
                         @method('PUT')
 						<div class="row">
-							<div class="col-md-6 mb-3">
+							<div class="col-md-12 mb-3">
 								<label for="validationCustom01">{{trans('lang.Slug')}}</label>
 								<input name="slug" value="{{$city->slug}}" class="form-control" id="validationCustom01" type="text" placeholder="Slug" required="">
 								<div class="valid-feedback">Looks good!</div>
@@ -50,15 +50,26 @@
                                 @enderror
 							</div>
                             <div class="col-md-6 mb-3">
-                                <div class="col-form-label">Choose Governorate</div>
-                                <select name="parent_id"  class="js-example-placeholder-multiple col-sm-12" multiple="multiple">
-                                    @foreach ($governorates as $governate)
-                                    <option value="{{$governate->id}}">{{$governate->title}}</option>
+                                <div class="col-form-label">{{trans('select_governorate')}}</div>
+                                <select name="parent_id"  class="js-example-basic-single col-sm-12">
+                                    @foreach ($governorates as $governorate)
+                                    <option value="{{$governorate->id}}" @if($governorate->id == $city->parent_id) selected @endif>{{$governorate->title}}</option>
                                     @endforeach
                                 </select>
                             </div>
+
+							{{-- shipping_cost --}}
+							<div class="col-md-6 mb-3">
+                                <label class="form-label" for="shipping_cost">{{ trans('lang.shipping_cost') }}</label>
+                                <input name="shipping_cost" class="form-control @error('shipping_cost') is-invalid @enderror"
+                                    id="shipping_cost" value="{{$city->shipping_cost}}" type="number" required>
+                                @error('shipping_cost')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
 						</div>
-						<button class="btn btn-primary" type="submit">ADD City</button>
+						<button class="btn btn-primary" type="submit">{{trans("lang.submit")}}</button>
 					</form>
 				</div>
 			</div>

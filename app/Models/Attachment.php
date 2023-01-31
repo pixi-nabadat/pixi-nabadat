@@ -10,7 +10,7 @@ class Attachment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['filename', 'path', 'caption', 'extention','size','attachmentable_type','attachmentable_id'];
+    protected $fillable = ['filename', 'path', 'filed_name','caption', 'extention','size','attachmentable_type','attachmentable_id', 'type'];
 
     public function attachmentable()
     {

@@ -2,14 +2,15 @@
 
 namespace App\Services;
 
-use App\Models\package;
-use App\QueryFilters\packagesFilter;
+use App\Models\Package;
+use App\QueryFilters\PackagesFilter;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
 class PackageService extends BaseService
 {
 
-    public function getAll(array $where_condition = [], array $withRelations = [])
+    public function getAll(array $where_condition = [], array $withRelations = []): \Illuminate\Database\Eloquent\Collection|array
     {
         $packages = $this->queryGet($where_condition, $withRelations);
         return $packages->get();
@@ -17,14 +18,25 @@ class PackageService extends BaseService
 
     public function queryGet(array $where_condition = [], array $withRelation = []): Builder
     {
-        $packages = package::query()->with($withRelation);
-        return $packages->filter(new packagesFilter($where_condition));
+        $packages = Package::orderBy('status')->with($withRelation);
+        return $packages->filter(new PackagesFilter($where_condition));
+    }
+
+    public function listing(array $where_condition = [],$withRelation=[],$perPage=10)    {
+        return $this->queryGet($where_condition,$withRelation)->cursorPaginate($perPage);
     }
 
     public function store($data)
     {
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-        return package::create($data);
+        $package = Package::create($data);
+        if (isset($data['image'])){
+            $fileData = FileService::saveImage(file: $data['image'],path: 'uploads\packages');
+            $package->storeAttachment($fileData);
+        }
+
+        return $package;
+
     } //end of store
 
     public function delete($id)
@@ -36,9 +48,9 @@ class PackageService extends BaseService
 
     } //end of find
 
-    public function find($id, $withRelation = [])
+    public function find($id, $withRelation = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
-        $package = package::with($withRelation)->find($id);
+        $package = Package::with($withRelation)->find($id);
         if ($package)
             return $package;
         return false;
@@ -50,7 +62,12 @@ class PackageService extends BaseService
         $package = $this->find($id);
         if (!$package)
             return false;
-        return $package->update($data);
+        if (isset($data['image'])){
+            $fileData = FileService::saveImage(file: $data['image'],path: 'uploads\packages',field_name: 'image');
+            $package->updateAttachment($fileData);
+        }
+        $package->update($data);
+        return true;
     } //end of update
 
     public function status($id): bool

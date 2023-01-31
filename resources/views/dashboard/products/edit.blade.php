@@ -66,7 +66,14 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-
+                                {{--type  --}}
+                                <div class="col-md-12 d-flex my-3">
+                                    <div class="col-form-label col-3">{{ __('lang.product_type') }}</div>
+                                    <select id="type" name="type" class="js-example-basic-single col-sm-12">
+                                        <option value="{{\App\Models\Product::PRODUCTCENTER}}" @if($product->getRawOriginal('type')==\App\Models\Product::PRODUCTCENTER) selected @endif>{{ trans('lang.center') }}</option>
+                                        <option value="{{\App\Models\Product::PRODUCTUSER}}" @if($product->getRawOriginal('type')==\App\Models\Product::PRODUCTUSER) selected @endif>{{ trans('lang.user') }}</option>
+                                    </select>
+                                </div>
                                 {{--  purchase_price  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <label class="form-label col-3" for="purchase_price">@lang('lang.purchase_price')</label>
@@ -131,7 +138,47 @@
                                 </div>
                         </div>
                     </div>
+                    {{-- product_logo --}}
+                    <div class="card  col-md-12">
+                        <div class="card-header py-4">
+                            <h6>{{ __('lang.product_logo') }}</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <label class="form-label mt-3" for="logo">{{ trans('lang.logo') }}</label>
+                                <input name="logo" class="form-control image @error('logo') is-invalid @enderror"
+                                    id="logo" type="file">
+                                @error('logo')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
 
+                            <div class="col-md-12">
+                                <div class="row">
+                                    @if($product->attachments->count())
+                                        @foreach($product->attachments as $attachment)
+                                        @if ($attachment->type == App\Enum\ImageTypeEnum::LOGO)
+                                        <div class="col-md-3 col-lg-3 col-sm-12">
+                                            <div class="img-container">
+                                                <div class="form-group my-3">
+                                                    <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
+                                                </div>
+                                                <div class="overlay">
+                                                    <a role="button" onclick="destroy('{{route('attachment.destroy',$attachment->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endif
+                                            
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                     {{-- product_images --}}
                     <div class="card  col-md-12">
                         <div class="card-header py-4">
@@ -151,6 +198,7 @@
                                 <div class="row">
                                     @if($product->attachments->count())
                                         @foreach($product->attachments as $attachment)
+                                        @if ($attachment->type == App\Enum\ImageTypeEnum::GALARY)
                                             <div class="col-md-3 col-lg-3 col-sm-12">
                                                 <div class="img-container">
                                                     <div class="form-group my-3">
@@ -163,6 +211,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        @endif
+                                            
                                         @endforeach
                                     @endif
                                 </div>

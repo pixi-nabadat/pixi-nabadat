@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ProductsDataTable;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
-use App\Models\Category;
 use App\Services\CategoryService;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis;
 
 class ProductController extends Controller
 {
@@ -20,19 +17,22 @@ class ProductController extends Controller
     public function index(ProductsDataTable $dataTable, Request $request)
     {
         $loadRelation = ['user'];
-        return $dataTable->with(['filters' => $request->all(), 'withRelations' => $loadRelation])->render('dashboard.Products.index');
+        $filters = $request->filters ?? [];
+        return $dataTable->with(['filters' => $filters, 'withRelations' => $loadRelation])->render('dashboard.products.index');
     } //end of index
 
-    public function edit($id)
+    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
-        $product = $this->productService->find($id);
+        $withRelation = ['attachments'];
+        $product = $this->productService->find($id,$withRelation);
         $categories = $this->categoryService->getAll();
+        if (!$product)
+        {
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.product_not_found')];
+            return back()->with('toast', $toast);
+        }
+        return view('dashboard.products.edit', compact('categories', 'product'));
 
-        if ($product)
-            return view('dashboard.products.edit', compact('categories', 'product'));
-
-        $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.product_not_found')];
-        return back()->with('toast', $toast);
     } //end of edit
 
     public function create()
@@ -44,10 +44,10 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         try {
-            $request->validated();
-            $request->merge(['added_by' => auth()->id()]);
-            $this->productService->store($request->all());
-            $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'Product Saved Successfully'];
+            $data = $request->validated();
+            $data['added_by'] = auth()->id();
+            $this->productService->store($data);
+            $toast = ['type' => 'success', 'title' => trans('lang.success'), 'message' => trans('lang.Product Saved Successfully')];
             return redirect()->route('products.index')->with('toast', $toast);
         } catch (\Exception $ex) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
@@ -60,11 +60,11 @@ class ProductController extends Controller
         try {
             $request->validated();
             $this->productService->update($id, $request->all());
-            $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
+            $toast = ['title' => trans('lang.success'), 'message' => trans('lang.success_operation')];
             return redirect(route('products.index'))->with('toast', $toast);
         } catch (\Exception $ex) {
 
-            $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => $ex->getMessage(),];
             return redirect()->back()->with('toast', $toast);
         }
     } //end of update
@@ -83,10 +83,9 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $withRelation = ['category:id,name'];
-        $product = $this->productService->find(id: $id,withRelation:$withRelation );
-        if (!$product)
-        {
+        $withRelation = ['category:id,name','attachments'];
+        $product = $this->productService->find(id: $id, withRelation: $withRelation);
+        if (!$product) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.Product_not_found')];
             return back()->with('toast', $toast);
         }
@@ -97,7 +96,7 @@ class ProductController extends Controller
     public function featured(Request $request)
     {
         try {
-            $result =  $this->productService->featured($request->id);
+            $result = $this->productService->featured($request->id);
             if (!$result)
                 return apiResponse(message: trans('lang.not_found'), code: 404);
             return apiResponse(message: trans('lang.success'));
@@ -109,7 +108,7 @@ class ProductController extends Controller
     public function status(Request $request)
     {
         try {
-            $result =  $this->productService->status($request->id);
+            $result = $this->productService->status($request->id);
             if (!$result)
                 return apiResponse(message: trans('lang.not_found'), code: 404);
             return apiResponse(message: trans('lang.success'));

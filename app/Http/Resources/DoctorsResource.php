@@ -15,11 +15,11 @@ class DoctorsResource extends JsonResource
     public function toArray($request)
     {
        return  [
-            'doctor_id'     => $this->id,
-            'doctor_name'   => $this->name,
-            'doctor_phone'  => $this->phone,
+            'id'            => $this->id,
+            'name'          => $this->name,
+            'phone'         => $this->phone,
             'description'   => $this->description,
-            'image'         => $this->whenLoaded('attachments') ? new AttachmentsResource($this->attachments->first()) : null
+            'image'         => $this->whenLoaded('defaultLogo',isset($this->defaultLogo) ?asset($this->defaultLogo->path."/".$this->defaultLogo->filename):null)
        ];
     }
 }

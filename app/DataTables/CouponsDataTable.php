@@ -40,15 +40,11 @@ class CouponsDataTable extends DataTable
                 return $coupon->coupon_for;
             })
             ->editColumn('start_date', function (Coupon $coupon) {
-                return $coupon->start_date->format('Y-m-d h:i a');
+                return $coupon->start_date;
             })
             ->editColumn('end_date', function (Coupon $coupon) {
-                return $coupon->end_date->format('Y-m-d h:i a');
-            })
-            ->editColumn('created_at', function (Coupon $coupon) {
-                return $coupon->created_at->format('Y-m-d h:i a');
-            })
-            ;
+                return $coupon->end_date;
+            });
     }
 
     /**
@@ -90,12 +86,23 @@ class CouponsDataTable extends DataTable
             Column::make('code'),
             Column::make('added_by'),
             Column::make('discount'),
-            Column::make('min_buy'),
-            Column::make('allowed_usage'),
-            Column::make('coupon_for'),    
-            Column::make('start_date'),
-            Column::make('end_date'),
-            Column::make('created_at'),
+            Column::make('min_buy')
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('allowed_usage')
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('coupon_for')
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('start_date')
+                ->title(trans('lang.start_date'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('end_date')
+                ->title(trans('lang.end_date'))
+                ->searchable(false)
+                ->orderable(false),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

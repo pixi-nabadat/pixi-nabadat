@@ -73,6 +73,8 @@ return [
 
     'timezone' => 'UTC',
 
+    'africa_timezone' => 'Africa/cairo',
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration

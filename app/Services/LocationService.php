@@ -33,6 +33,7 @@ class LocationService extends BaseService
      */
     public function store(array $locationData = []): mixed
     {
+        $locationData['is_active'] = isset($locationData['is_active'])  ?  1 :  0;
         return Location::create($locationData);
     }
 
@@ -44,6 +45,8 @@ class LocationService extends BaseService
     public function update(int $id,array $locationData): bool
     {
         $location = Location::find($id);
+        $data['is_active'] = isset($locationData['is_active'])  ?  1 :  0;
+
         if ($location)
             return $location->update($locationData);
         return false;
@@ -64,7 +67,11 @@ class LocationService extends BaseService
 
     public function getLocationAncestors($id)
     {
-        // $location = $this->getLocationById($id);
         return Location::defaultOrder()->ancestorsAndSelf($id);
+    }
+
+    public function getLocationDescendants($location_id)
+    {
+        return Location::defaultOrder()->descendantsOf($location_id) ;
     }
 }

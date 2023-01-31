@@ -20,6 +20,12 @@ class PackagesResource extends JsonResource
         'num_nabadat'=>$this->num_nabadat,
         'price'=>$this->price,
         'is_active'=>$this->is_active,
+        'center'=>$this->whenLoaded('center',[
+            'id'=>$this->center->id,
+            'support_payments'=>$this->center->support_payments,
+            'name'=>$this->center->name,
+            'address'=>$this->center->address
+        ]),
        ];
     }
 }

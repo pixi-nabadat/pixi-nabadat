@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\centerDevice;
+use App\Models\CenterDevice;
 use App\Services\CenterDeviceService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -25,10 +25,10 @@ class CenterDeviceDataTable extends DataTable
             ->addColumn('action', function (CenterDevice $centerDevice) {
                 return view('dashboard.centerDevices.action', compact('centerDevice'))->render();
             })
-            ->editColumn('center', function (CenterDevice $centerDevice) {
+            ->editColumn('center_id', function (CenterDevice $centerDevice) {
                 return $centerDevice->center->name;
             })
-            ->editColumn('device', function (CenterDevice $centerDevice) {
+            ->addColumn('device_id', function (CenterDevice $centerDevice) {
                 return $centerDevice->device->name;
             });
 
@@ -53,7 +53,7 @@ class CenterDeviceDataTable extends DataTable
     {
 
             return $this->builder()
-            ->setTableId('centerDevicesdatatable-table')
+            ->setTableId('center_devices_datatable_table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
@@ -73,12 +73,24 @@ class CenterDeviceDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::make('center'),
-            Column::make('device'),
-            Column::make('number_of_devices'),
-            Column::make('regular_price'),
-            Column::make('nabadat_app_price'),
-            Column::make('auto_service_price'),
+            Column::make('id')
+                ->title('Id'),
+            Column::make('center_id')
+                ->title(trans('lang.center')),
+            Column::make('device_id')
+                ->title(trans('lang.device')),
+            Column::make('regular_price')
+                ->title(trans('lang.regular_price'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('auto_service_price')
+                ->title(trans('lang.auto_service'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('number_of_devices')
+                ->title(trans('lang.num_devices'))
+                ->searchable(false)
+                ->orderable(false),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

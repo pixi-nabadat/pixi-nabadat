@@ -18,8 +18,6 @@ class AuthService extends BaseService
         if (!auth()->attempt($credential))
             return throw new UserNotFoundException(__('lang.login failed'));
         return User::where($identifierField, $identifier)->first();
-
-
     }
 
 
@@ -32,8 +30,14 @@ class AuthService extends BaseService
         return User::create($data);
     }
 
-    public function getAuthUser(): ?\Illuminate\Contracts\Auth\Authenticatable
+    public function getAuthUser()
     {
-        return auth()->user();
+        return auth('sanctum')->user();
+    }
+
+    public function setUserFcmToken(User $user , $fcm_token)
+    {
+        if (isset($fcm_token))
+            $user->update(['device_token'=>$fcm_token]);
     }
 }

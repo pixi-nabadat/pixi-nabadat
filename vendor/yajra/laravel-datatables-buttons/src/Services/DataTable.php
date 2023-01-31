@@ -208,14 +208,11 @@ abstract class DataTable implements DataTableButtons
 
         /** @var string $action */
         $action = $this->request()->get('action');
+        $actionMethod = $action === 'print' ? 'printPreview' : $action;
 
-        if ($action == 'print') {
-            $action = 'printPreview';
-        }
-
-        if (in_array($action, $this->actions) && method_exists($this, $action)) {
+        if (in_array($action, $this->actions) && method_exists($this, $actionMethod)) {
             /** @var callable $callback */
-            $callback = [$this, $action];
+            $callback = [$this, $actionMethod];
 
             return app()->call($callback);
         }

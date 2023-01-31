@@ -16,8 +16,8 @@ class LocationsResource extends JsonResource
     {
 
        return [
-           'id'=>$this->id,
-           'title'=>$this->title,
+           'id'     =>$this->id,
+           'title'  =>$this->title,
        ];
     }
 }

@@ -15,12 +15,13 @@ class AddressesResource extends JsonResource
     public function toArray($request)
     {
         return  [
-            'address_id' => $this->id,
+            'id' => $this->id,
             'address' => $this->address,
-            'governerate_id' => $this->governerate_id,
-            'governorate_title' => $this->relationLoaded('governorate') ? $this->governorate->title:null,
+            'governorate_id' => $this->governorate_id,
+            'governorate_title' => $this->whenLoaded('governorate',$this->governorate->title),
             'city_id' => $this->city_id,
-            'city_title' => $this->relationLoaded('city') ? $this->city->title:null,
+            'city_title' => $this->whenLoaded('city',$this->city->title),
+            'shipping_fees' => $this->whenLoaded('city',$this->city->shipping_cost),
             'phone' => $this->phone,
             'postal_code' => $this->postal_code,
             'is_default' => $this->is_default,

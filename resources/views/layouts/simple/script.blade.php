@@ -25,7 +25,6 @@
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
 <script src="{{asset('assets/js/select2/select2-custom.js')}}"></script>
 <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
-@yield('script')
 
 @if(Route::current()->getName() != 'popover')
 	<script src="{{asset('assets/js/tooltip-init.js')}}"></script>
@@ -36,9 +35,24 @@
 <script src="{{asset('assets/js/script.js')}}"></script>
 <script src="{{asset('assets/js/theme-customizer/customizer.js')}}"></script>
 <script>
+    $(document).ready(function() {
+        $(".dropdown-toggle").dropdown();
+    });
+    {{-- image preview --}}
+    $(".image").change(function () {
+
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('.image-preview').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
     function destroy(url) {
         swal({
-            title: "{{__('lang.are_you_sure_you_want_to_delete')}}",
+            title: "{{__('lang.are_you_sure')}}",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -87,23 +101,12 @@
                 }
                 else
                     toastr.error(result.message);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                toastr.error(xhr.responseJSON.errors[0].error);
             }
         });
     }
 </script>
+@yield('script')
 
- {{-- image preview --}}
-<script>
-$(".image").change(function () {
-
-if (this.files && this.files[0]) {
-    var reader = new FileReader();
-
-    reader.onload = function (e) {
-        $('.image-preview').attr('src', e.target.result);
-    }
-
-    reader.readAsDataURL(this.files[0]);
-}
-});
-</script>

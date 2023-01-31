@@ -237,6 +237,32 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
     }
 
     /**
+     * Determine if an item exists, using strict comparison.
+     *
+     * @param  (callable(TValue): bool)|TValue|array-key  $key
+     * @param  TValue|null  $value
+     * @return bool
+     */
+    public function containsStrict($key, $value = null)
+    {
+        if (func_num_args() === 2) {
+            return $this->contains(fn ($item) => data_get($item, $key) === $value);
+        }
+
+        if ($this->useAsCallable($key)) {
+            return ! is_null($this->first($key));
+        }
+
+        foreach ($this as $item) {
+            if ($item === $key) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Determine if an item is not contained in the enumerable.
      *
      * @param  mixed  $key
@@ -266,7 +292,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
     /**
      * Count the number of items in the collection by a field or using a callback.
      *
-     * @param  (callable(TValue, TKey): mixed)|string|null  $countBy
+     * @param  (callable(TValue, TKey): array-key)|string|null  $countBy
      * @return static<array-key, int>
      */
     public function countBy($countBy = null)
@@ -798,7 +824,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
      * @template TCombineValue
      *
      * @param  \IteratorAggregate<array-key, TCombineValue>|array<array-key, TCombineValue>|(callable(): \Generator<array-key, TCombineValue>)  $values
-     * @return static<TKey, TCombineValue>
+     * @return static<TValue, TCombineValue>
      */
     public function combine($values)
     {

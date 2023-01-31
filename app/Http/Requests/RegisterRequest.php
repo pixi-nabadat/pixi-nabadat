@@ -24,10 +24,10 @@ class RegisterRequest extends BaseRequest
         return [
             'name'=>'required|string',
             'user_name'=>'required|string|unique:users,user_name',
-            'phone'=>'required|string',
+            'phone'=>'required|string|unique:users,phone',
             'password'=>'required|string|confirmed|min:6',
             'date_of_birth'=>'nullable|date',
-            'location_id'=>'required|integer|exists:locations,id'
+            'location_id'=>'nullable|integer|exists:locations,id',
         ];
     }
 

@@ -184,6 +184,26 @@ class Collection implements ArrayAccess, CanBeEscapedWhenCastToString, Enumerabl
     }
 
     /**
+     * Determine if an item exists, using strict comparison.
+     *
+     * @param  (callable(TValue): bool)|TValue|array-key  $key
+     * @param  TValue|null  $value
+     * @return bool
+     */
+    public function containsStrict($key, $value = null)
+    {
+        if (func_num_args() === 2) {
+            return $this->contains(fn ($item) => data_get($item, $key) === $value);
+        }
+
+        if ($this->useAsCallable($key)) {
+            return ! is_null($this->first($key));
+        }
+
+        return in_array($key, $this->items, true);
+    }
+
+    /**
      * Determine if an item is not contained in the collection.
      *
      * @param  mixed  $key
@@ -699,7 +719,7 @@ class Collection implements ArrayAccess, CanBeEscapedWhenCastToString, Enumerabl
      *
      * @param  string|int|array<array-key, string>  $value
      * @param  string|null  $key
-     * @return static<int, mixed>
+     * @return static<array-key, mixed>
      */
     public function pluck($value, $key = null)
     {
@@ -807,7 +827,7 @@ class Collection implements ArrayAccess, CanBeEscapedWhenCastToString, Enumerabl
      * @template TCombineValue
      *
      * @param  \Illuminate\Contracts\Support\Arrayable<array-key, TCombineValue>|iterable<array-key, TCombineValue>  $values
-     * @return static<TKey, TCombineValue>
+     * @return static<TValue, TCombineValue>
      */
     public function combine($values)
     {
@@ -1626,7 +1646,7 @@ class Collection implements ArrayAccess, CanBeEscapedWhenCastToString, Enumerabl
     /**
      * Count the number of items in the collection by a field or using a callback.
      *
-     * @param  (callable(TValue, TKey): mixed)|string|null  $countBy
+     * @param  (callable(TValue, TKey): array-key)|string|null  $countBy
      * @return static<array-key, int>
      */
     public function countBy($countBy = null)

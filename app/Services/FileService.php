@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileService
 {
-    
+
     /**
      * Save the uploaded image.
      *
@@ -19,7 +19,7 @@ class FileService
      *
      * @return array File name.
      */
-    public static function saveImage(UploadedFile $file, int $maxWidth = 576, string $path = null)
+    public static function saveImage(UploadedFile $file, int $maxWidth = 576, string $path = null,$field_name = null)
     {
 
         $fileName = self::getFileName($file);
@@ -30,6 +30,7 @@ class FileService
         self::uploadImage($img, $fileName, $path);
 
         return [
+            'filed_name'=>$field_name,
             'filename'=>$fileName,
             'extention'=>$fileExt,
             'size'=>$fileSize,
@@ -47,7 +48,7 @@ class FileService
     protected static function getFileName(UploadedFile $file)
     {
         $filename = $file->getClientOriginalName();
-        $filename = date('Ymd_His') . '_' . strtolower(pathinfo($filename, PATHINFO_FILENAME)) . '.' . pathinfo($filename, PATHINFO_EXTENSION);
+        $filename = date('Ymd') . '_' . time() . '.' . pathinfo($filename, PATHINFO_EXTENSION);
         return $filename;
     }
 
@@ -106,5 +107,13 @@ class FileService
             File::makeDirectory($destinationPath, 0777, true, true);
         }
         $file->save($destinationPath ."/". $fileName);
+    }
+
+    public static function remove(string $path)
+    {
+        if(File::exists($path)){
+            File::delete($path);
+        }
+        File::delete($path);
     }
 }

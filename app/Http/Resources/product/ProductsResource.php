@@ -14,16 +14,16 @@ class ProductsResource extends JsonResource
      */
     public function toArray($request)
     {
-        $attachment = $this->whenLoaded('attachments') ? $this->attachments->first() : null;
         return [
-            'id'=>$this->id,
-            'name'=>$this->name,
-            'price'=>$this->unit_price,
-            'discount'=>$this->discount,
-            'discount_type'=>$this->discount_type,
-            'description'=>$this->description,
-            'price_after_discount'=>getPriceAfterDiscount($this->unit_price,$this->product_discount),
-            'image'=>isset($attachment) ? url($attachment->path."\\".$attachment->filename):null,
+            'id'                    =>$this->id,
+            'name'                  =>$this->name,
+            'price'                 =>$this->unit_price,
+            'discount'              =>$this->discount,
+            'discount_type'         =>$this->discount_type,
+            'description'           =>$this->description,
+            'rate'                  =>$this->rate,
+            'price_after_discount'  =>getPriceAfterDiscount($this->unit_price,$this->product_discount),
+            'image'                 =>$this->whenLoaded('defaultLogo',isset($this->defaultLogo)? url($this->defaultLogo->path."\\".$this->defaultLogo->filename):null),
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enum\ImageTypeEnum;
 use Intervention\Image\Facades\Image;
 use App\Models\Device;
 use App\QueryFilters\DevicesFilter;
@@ -31,11 +32,17 @@ class DeviceService extends BaseService
         $device = Device::create($data);
         if (!$device)
             return false ;
-
+        if (isset($data['logo']))
+        {
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\devices', field_name: 'logo');
+            $fileData['type'] = ImageTypeEnum::LOGO;
+            $device->storeAttachment($fileData);
+        }
         if (isset($data['images'])&&is_array($data['images']))
             foreach ($data['images'] as $image)
             {
-                $fileData = FileService::saveImage(file: $image,path: 'uploads\devices');
+                $fileData = FileService::saveImage(file: $image,path: 'uploads\devices', field_name: 'images');
+                $fileData['type'] = ImageTypeEnum::GALARY;
                 $device->storeAttachment($fileData);
             }
         return $device ;
@@ -64,10 +71,18 @@ class DeviceService extends BaseService
         $device = Device::find($id);
         $data['is_active'] = isset($data['is_active'])  ?  1 :  0;
         if ($device) {
+            if (isset($data['logo']))
+            {
+                $device->deleteAttachmentsLogo();
+                $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\devices', field_name: 'logo');
+                $fileData['type'] = ImageTypeEnum::LOGO;
+                $device->storeAttachment($fileData);
+            }
             if (isset($data['images'])&&is_array($data['images']))
             foreach ($data['images'] as $image)
             {
-                $fileData = FileService::saveImage(file: $image,path: 'uploads\devices');
+                $fileData = FileService::saveImage(file: $image,path: 'uploads\devices', field_name: 'images');
+                $fileData['type'] = ImageTypeEnum::GALARY;
                 $device->storeAttachment($fileData);
             }
             $device->update($data);

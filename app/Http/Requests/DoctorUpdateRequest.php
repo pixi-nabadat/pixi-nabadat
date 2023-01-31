@@ -25,31 +25,24 @@ class DoctorUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'user_name' => 'required|string',
-            'name.*' => 'required|string',
-            'email' => 'required|email|unique:users,email,'. $this->doctor,
-            'phone' => 'required|unique:users,phone,'. $this->doctor,
-            'password' => 'sometimes|nullable|string|confirmed',
-            'date_of_birth' => 'required|date',
-            'location_id' => 'required|integer|exists:locations,id',
-            'description' => 'nullable|string'
 
+            'name' => 'required|array',
+            'name.*' => 'required|string',
+            'phone' => 'required|numeric|unique:doctors,phone,'.$this->doctor,
+            'description.*' => 'nullable|string',
+            'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'center_id' => 'required|exists:centers,id',
+            'age' => 'nullable|integer',
+            'is_active' => 'nullable|string',
         ];
     }
 
-    //    public function messages()
-    //    {
-    //       return[
-    //           'name.required'=>__(''),
-    //           'email.required'=>__(''),
-    //           'email.email'=>__(''),
-    //           'phone.required'=>__(''),
-    //           'phone.numeric'=>__(''),
-    //           'password.required'=>__(''),
-    //           'password.confirmed'=>__(''),
-    //           'password.min'=>__(''),
-    //           'date_of_birth.required'=>__(''),
-    //           'location_id.required'=>__(''),
-    //       ];
-    //    }
+    public function messages()
+    {
+        return [
+            'title.*.string' => __('lang.title_en_should_be_string'),
+            'title.*.required' => __('lang.title_in_ar__should_be_required'),
+        ];
+    }
+
 }

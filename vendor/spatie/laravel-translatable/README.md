@@ -1,3 +1,6 @@
+
+[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
+
 # A trait to make Eloquent models translatable
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-translatable.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-translatable)
@@ -22,6 +25,12 @@ $newsItem->getTranslation('name', 'nl'); // returns 'Naam in het Nederlands'
 app()->setLocale('nl');
 
 $newsItem->name; // Returns 'Naam in het Nederlands'
+
+// If you want to query records based on locales, you can use the `whereLocale` and `whereLocales` methods.
+
+NewsItem::whereLocale('name', 'en')->get(); // Returns all news items with a name in English
+
+NewsItem::whereLocales('name', ['en', 'nl'])->get(); // Returns all news items with a name in English or Dutch
 ```
 
 ## Support us
@@ -44,11 +53,11 @@ composer test
 
 ## Contributing
 
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTING.md) for details.
 
 ## Security
 
-If you discover any security related issues, please email freek@spatie.be instead of using the issue tracker.
+If you've found a bug regarding security please mail [security@spatie.be](mailto:security@spatie.be) instead of using the issue tracker.
 
 ## Postcardware
 

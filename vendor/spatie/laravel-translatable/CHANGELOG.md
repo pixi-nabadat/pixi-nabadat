@@ -2,6 +2,46 @@
 
 All notable changes to `laravel-translatable` will be documented in this file
 
+## 6.2.0 - 2022-12-23
+
+### What's Changed
+
+- Add Dependabot Automation by @patinthehat in https://github.com/spatie/laravel-translatable/pull/366
+- Add PHP 8.2 Support by @patinthehat in https://github.com/spatie/laravel-translatable/pull/367
+- Bump actions/checkout from 2 to 3 by @dependabot in https://github.com/spatie/laravel-translatable/pull/368
+- Added whereLocale and whereLocales methods by @ahmetbarut in https://github.com/spatie/laravel-translatable/pull/370
+
+### New Contributors
+
+- @dependabot made their first contribution in https://github.com/spatie/laravel-translatable/pull/368
+
+**Full Changelog**: https://github.com/spatie/laravel-translatable/compare/6.1.0...6.2.0
+
+## 6.1.0 - 2022-10-21
+
+### What's Changed
+
+- PHPUnit to Pest Converter by @freekmurze in https://github.com/spatie/laravel-translatable/pull/335
+- Fix typo in "Getting and setting translations" by @sami-cha in https://github.com/spatie/laravel-translatable/pull/346
+- Fix typo in advanced usage docs directory name by @greatislander in https://github.com/spatie/laravel-translatable/pull/347
+- Fixed example for forgetAllTranslations() method. by @odeland in https://github.com/spatie/laravel-translatable/pull/348
+- added locales method by @ahmetbarut in https://github.com/spatie/laravel-translatable/pull/361
+
+### New Contributors
+
+- @sami-cha made their first contribution in https://github.com/spatie/laravel-translatable/pull/346
+- @greatislander made their first contribution in https://github.com/spatie/laravel-translatable/pull/347
+- @odeland made their first contribution in https://github.com/spatie/laravel-translatable/pull/348
+- @ahmetbarut made their first contribution in https://github.com/spatie/laravel-translatable/pull/361
+
+**Full Changelog**: https://github.com/spatie/laravel-translatable/compare/6.0.0...6.1.0
+
+## 6.0.0 - 2022-03-07
+
+- improved fallback customisations
+- modernized code base
+- drop support for Laravel 8
+
 ## 5.2.0 - 2022-01-13
 
 - support Laravel 9

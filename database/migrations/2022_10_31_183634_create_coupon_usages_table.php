@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\Coupon::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignIdFor(\App\Models\User::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->string('temp_user_id')->index();
+            $table->string('temp_user_id')->nullable();
+            $table->integer('number_of_usage');
             $table->timestamps();
         });
     }

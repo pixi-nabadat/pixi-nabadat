@@ -3,12 +3,31 @@
 namespace App\QueryFilters;
 
 use App\Abstracts\QueryFilter;
+use App\Enum\PackageStatusEnum;
 
 class PackagesFilter extends QueryFilter
 {
 
-    public function __construct($params = array())
+    /**
+     * @param array $params
+     */
+    public function __construct(array $params = array())
     {
         parent::__construct($params);
+    }
+
+    public function in_duration()
+    {
+        return $this->builder->active();
+    }
+
+    public function is_active($term)
+    {
+        return $this->builder->where('is_active', $term);
+    }
+
+    public function status()
+    {
+        return $this->builder->where('status', PackageStatusEnum::APPROVED);
     }
 }

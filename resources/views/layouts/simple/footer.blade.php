@@ -2,7 +2,7 @@
 	  <div class="container-fluid">
 		    <div class="row">
 			      <div class="col-md-12 footer-copyright text-center">
-			        	<p class="mb-0">Copyright {{ date('Y') }} © y pixi company  </p>
+			        	<p class="mb-0">Copyright {{ date('Y') }} © pixi company  </p>
 			      </div>
 		    </div>
 	  </div>

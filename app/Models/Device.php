@@ -13,12 +13,28 @@ class Device extends Model
 {
     use HasFactory,HasTranslations,Filterable,HasAttachment,EscapeUnicodeJson;
 
-    public $translatable =['name','description'];
-    protected $fillable  =['name','description','is_active'];
+    const SEARCHFLAG = 3 ;
 
-    public function center()
+    public $translatable =['name','description'];
+    protected $fillable  =['name','description','is_active', 'rate'];
+
+    public function center(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Center::class);
+    }
+
+    public function rates(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Rate::class, 'ratable');
+    }
+
+    public function getSearchFlagTextAttribute(): string
+    {
+        return trans('lang.devices') ;
+    }
+    public function getSearchFlagAttribute(): int
+    {
+        return self::SEARCHFLAG;
     }
 
 }

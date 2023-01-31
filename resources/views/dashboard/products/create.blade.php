@@ -58,6 +58,14 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                 {{--type  --}}
+                                 <div class="col-md-12 d-flex my-3">
+                                    <div class="col-form-label col-3">{{ __('lang.product_type') }}</div>
+                                    <select id="type" name="type" class="js-example-basic-single col-sm-12">
+                                        <option value="{{\App\Models\Product::PRODUCTCENTER}}">{{ __('lang.center') }}</option>
+                                        <option value="{{\App\Models\Product::PRODUCTUSER}}">{{ __('lang.user') }}</option>
+                                    </select>
+                                </div>
                                 {{--  purchase_price  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <label class="form-label col-3" for="purchase_price">@lang('lang.purchase_price')</label>
@@ -119,7 +127,26 @@
                                 </div>
                         </div>
                     </div>
+                    {{-- product_logo --}}
+                    <div class="card  col-md-12">
+                        <div class="card-header py-4">
+                            <h6>{{ __('lang.product_logo') }}</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12 d-flex">
+                                <label class="form-label col-3" for="logo">{{ trans('lang.logo') }}</label>
+                                    <input name="logo" class="form-control image @error('logo') is-invalid @enderror"
+                                        id="logo" type="file">
+                                    @error('logo')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                            </div>
 
+                            <div class="form-group mt-3">
+                                <img src="{{ asset('/uploads/products/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                            </div>
+                        </div>
+                    </div>
                     {{-- product_images --}}
                     <div class="card  col-md-12">
                         <div class="card-header py-4">
