@@ -13,19 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('settlements', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Invoice::class)->constrained();
             $table->foreignIdFor(\App\Models\User::class)->constrained();
-            $table->foreignIdFor(\App\Models\Center::class)->constrained();
-            $table->foreignIdFor(\App\Models\Package::class)->constrained();
+            $table->foreignIdFor(\App\Models\Package::class)->nullable()->constrained();
             $table->integer('num_pulses');
             $table->double('center_dues');
-            $table->double('app_dues');
-            $table->double('regular_price');
+            $table->double('nabadat_app_dues');
+            $table->double('original_price');
             $table->double('center_discount');
             $table->double('user_discount');
-            $table->boolean('status')->default(false);
-            $table->date('date');
             $table->timestamps();
         });
     }
@@ -37,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('center_financials');
+        Schema::dropIfExists('transactions');
     }
 };

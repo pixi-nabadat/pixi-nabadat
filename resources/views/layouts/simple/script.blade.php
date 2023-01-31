@@ -101,6 +101,9 @@
                 }
                 else
                     toastr.error(result.message);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                toastr.error(xhr.responseJSON.errors[0].error);
             }
         });
     }

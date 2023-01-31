@@ -20,6 +20,7 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -122,6 +123,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     Route::post('orders/updateOrderStatus', [OrderController::class, 'updateOrderStatus'])->name('orders.updateOrderStatus');
     Route::resource('orders', OrderController::class);
+
+    Route::resource('invoices',InvoiceController::class);
+    Route::post('invoices/settle',[InvoiceController::class,'settleInvoice'])->name('invoices.settle');
+    Route::get('invoices/export-pdf',[InvoiceController::class,'export'])->name('invoices.export-pdf');
+    Route::get('invoices/{id}/print',[InvoiceController::class,'print'])->name('invoices.print');
 
 
 });
