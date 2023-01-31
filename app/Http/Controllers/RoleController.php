@@ -3,22 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\RolesDataTable;
-use App\Http\Controllers\Controller;
-use App\QueryFilters\RolesFilter;
 use Exception;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    public function index(RolesDataTable $dataTable, Request $request)
+    public function index(RolesDataTable $dataTable)
     {
-        $loadRelation = [];
-        $filters = $request->filters ?? [];
-        return $dataTable->with(['filters' => $filters, 'withRelations' => $loadRelation])->render('dashboard.roles.index');
+        return $dataTable->render('dashboard.roles.index');
     } //end of index
-    
-   
+
+
     public function create()
     {
         return view('dashboard.roles.create');
@@ -26,15 +22,15 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-        try{
+        try {
             $role = Role::create(['name' => $request->name]);
             $toast = ['type' => 'success', 'title' => trans('lang.success'), 'message' => trans('lang.role_saved_successfully')];
             return redirect()->route('roles.index')->with('toast', $toast);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $e->getMessage(),];
             return redirect()->back()->with('toast', $toast);
         }
-        
+
     }
 
     public function destroy($id)
@@ -50,11 +46,11 @@ class RoleController extends Controller
 
     public function assignPermissionsToRole(Request $request, Role $role)
     {
-        try{
+        try {
             $role->givePermissionTo($request->permission);
             $toast = ['type' => 'success', 'title' => trans('lang.success'), 'message' => trans('lang.operation_success')];
             return redirect()->route('roles.index')->with('toast', $toast);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $e->getMessage(),];
             return redirect()->back()->with('toast', $toast);
         }
@@ -62,12 +58,12 @@ class RoleController extends Controller
 
     public function removeRolePermission(Request $request, Role $role)
     {
-        
-        try{
+
+        try {
             $role->revokePermissionTo($request->permission);
             $toast = ['type' => 'success', 'title' => trans('lang.success'), 'message' => trans('lang.operation_success')];
             return redirect()->route('roles.index')->with('toast', $toast);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $e->getMessage(),];
             return redirect()->back()->with('toast', $toast);
         }

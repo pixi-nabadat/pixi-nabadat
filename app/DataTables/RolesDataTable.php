@@ -28,12 +28,12 @@ class RolesDataTable extends DataTable
     }
 
     /**
-     * @param RoleService $model
+     * @param Role $model
      * @return QueryBuilder
      */
-    public function query(RoleService $model): QueryBuilder
+    public function query(Role $model): QueryBuilder
     {
-        return $model->queryGet($this->filters , $this->withRelations);
+        return $model->newQuery();
     }
 
     /**
@@ -63,16 +63,12 @@ class RolesDataTable extends DataTable
     {
         return [
             Column::make('id')
-                ->title('Id')
-                ->searchable(true)
-                ->orderable(true),
-            // Column::make('name')
-            //     ->title(trans('lang.name'))
-            //     ->searchable(true)
-            //     ->orderable(true),
-            // Column::computed('action')
-            //     ->width(60)
-            //     ->addClass('text-center'),
+                ->title('Id'),
+             Column::make('name')
+                 ->title(trans('lang.name')),
+             Column::computed('action')
+                 ->width(60)
+                 ->addClass('text-center'),
         ];
     }
 
