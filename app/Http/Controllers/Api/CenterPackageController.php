@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PackageStoreRequest;
 use App\Http\Requests\PackageUpdateRequest;
 use App\Http\Resources\PackagesResource;
-use App\Services\packageService;
+use App\Services\PackageService;
 use Exception;
 
 class CenterPackageController extends Controller
@@ -22,8 +22,7 @@ class CenterPackageController extends Controller
             $filters = ['is_active' => 1, 'in_duration' => true , 'status'=>true];
             $withRelations = ['center'];
             $allPackages = $this->packageService->listing(where_condition: $filters, withRelation: $withRelations);
-            $data = PackagesResource::collection($allPackages);
-            return apiResponse(data: $data, message: trans('lang.success_operation'), code: 200);
+            return PackagesResource::collection($allPackages);
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
         }

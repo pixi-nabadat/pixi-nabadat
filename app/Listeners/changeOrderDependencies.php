@@ -32,7 +32,6 @@ class changeOrderDependencies
      */
     public function handle(OrderCreated $event)
     {
-
         $order_id = $event->merchant_order_id;
         logger('inside event change Order Dependencies : ' . $order_id);
         if (is_null($order_id))
@@ -48,7 +47,7 @@ class changeOrderDependencies
             return;
         }
         $order->update(['deleted_at' => null, 'payment_status' => PaymentStatusEnum::PAID]);
-        User::setPoints($user, amount: (float)$order->grand_total, amountType: 'cash');
+        User::setPoints($user, amount: (float)$order->grand_total);
 
     }
 }

@@ -96,6 +96,16 @@
                         </ul>
                         {{-- end categories --}}
 
+                        {{-- start slider --}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/sliders' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.slider') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/sliders' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('sliders.index') ? 'active' : '' }}" href="{{route('sliders.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('sliders.create') ? 'active' : '' }}" href="{{route('sliders.create')}}">{{ trans('lang.create') }}</a></li>
+                        </ul>
+                        {{--end slider --}}
+
                         {{-- start coupon ---}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/coupons' ? 'active' : '' }}" href="#"><i class="fa fa-sort-numeric-asc p-r-5"></i><span class="lan-6">{{ trans('lang.coupon') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/coupons' ? 'down' : 'right' }}"></i></div>
@@ -167,7 +177,7 @@
                          {{--start Center Devices ---}}
                          <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/centerDevices' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.centerDevices') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/centerDevices' ? 'down' : 'right' }}"></i></div>
-                        </a>
+                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('centerDevices.index') ? 'active' : '' }}" href="{{route('centerDevices.index')}}">{{ trans('lang.view') }}</a></li>
                         </ul>
@@ -190,6 +200,15 @@
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('settings') ? 'active' : '' }}" href="{{route('settings')}}">{{ trans('lang.view') }}</a></li>
                         </ul>
                         {{-- end Settings --}}
+
+                        {{--start invoices  ---}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/invoices' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.invoices') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/centerDevices' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('invoices.index') ? 'active' : '' }}" href="{{route('invoices.index')}}">{{ trans('lang.view') }}</a></li>
+                        </ul>
+                        {{-- end envoices--}}
 
 					</li>
                 </ul>

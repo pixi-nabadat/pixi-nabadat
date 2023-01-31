@@ -35,7 +35,7 @@ class CentersTableSeeder extends Seeder
                 'en'=>'center is perfect',
             ],
             'avg_waiting_time'=>30,
-            'support_payments'=> [PaymentMethodEnum::CASH,PaymentMethodEnum::CASH],
+            'support_payments'=> [PaymentMethodEnum::CASH,PaymentMethodEnum::CREDIT],
             'app_discount'=>20
         ];
         $center = Center::create($center_data) ;
