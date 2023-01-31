@@ -27,17 +27,17 @@ class InvoiceController extends Controller
     {
     }//end of edit
 
-    public function create()
+    public function create(Request $request)
     {
 
     }//end of create
 
-    public function store(CategoryRequest $request)
+    public function store()
     {
 
     }//end of store
 
-    public function update(CategoryRequest $request, $id)
+    public function update(Request $request, $id)
     {
 
     } //end of update
@@ -49,6 +49,8 @@ class InvoiceController extends Controller
 
     public function show($id)
     {
+        $invoice = $this->invoiceService->find($id,['center.user:id,center_id,name,phone','transactions.user:id,center_id,name,phone']);
+        return view('dashboard.invoices.show',compact('invoice'));
     } //end of show
 
     public function settleInvoice(SettleInvoiceRequest $request)

@@ -47,7 +47,7 @@ class changeOrderDependencies
             return;
         }
         $order->update(['deleted_at' => null, 'payment_status' => PaymentStatusEnum::PAID]);
-        User::setPoints($user, amount: (float)$order->grand_total, amountType: 'cash');
+        User::setPoints($user, amount: (float)$order->grand_total);
 
     }
 }
