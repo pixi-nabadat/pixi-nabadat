@@ -20,7 +20,6 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
 use Illuminate\Support\Facades\Route;
@@ -75,9 +74,6 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     });
     //end reservations
 
-    //start roles
-    Route::resource('roles', RoleController::class)->except(['edit', 'update', 'show']);
-    //end roles
     Route::group(['prefix' => 'ajax'], function () {
         Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);
     });
