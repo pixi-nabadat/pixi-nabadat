@@ -24,7 +24,6 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
-use Laravel\Socialite\Facades\Socialite;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
