@@ -23,6 +23,7 @@ class User extends Authenticatable
     const SUPERADMINTYPE = 1;
     const CUSTOMERTYPE = 2;
     const CENTERADMIN = 4;
+    const EMPLOYEE = 5;
 
     const ACTIVE = 1;
     const NONACTIVE = 0;

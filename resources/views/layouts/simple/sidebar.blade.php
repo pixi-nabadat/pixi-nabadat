@@ -146,6 +146,15 @@
                         </ul>
                         {{--end package --}}
 
+                        {{-- start employee --}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/employees' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.employee') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/employees' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('employees.index') ? 'active' : '' }}" href="{{route('employees.index')}}">{{ trans('lang.view') }}</a></li>
+                        </ul>
+                        {{--end employee --}}
+
                         {{-- start reservations --}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/reservations' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.reservations') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/reservations' ? 'down' : 'right' }}"></i></div>
@@ -154,15 +163,6 @@
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('packages.index') ? 'active' : '' }}" href="{{route('reservations.index')}}">{{ trans('lang.view') }}</a></li>
                         </ul>
                         {{--end reservations --}}
-
-                        {{-- start roles --}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/roles' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.roles') }}</span>
-                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/roles' ? 'down' : 'right' }}"></i></div>
-                        </a>
-                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
-                            <li><a class="lan-5 {{ Route::currentRouteName()==route('roles.index') ? 'active' : '' }}" href="{{route('roles.index')}}">{{ trans('lang.view') }}</a></li>
-                        </ul>
-                        {{--end roles --}}
 
                         {{--start Cancel Reason ---}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/cancelReasons' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.cancelReason') }}</span>
