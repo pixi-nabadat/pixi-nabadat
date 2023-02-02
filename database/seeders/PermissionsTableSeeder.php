@@ -16,6 +16,42 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
         $permissions = [
+
+            //start country permissions
+            ['name'=> 'create_country'],
+            ['name'=> 'edit_country'],
+            ['name'=> 'delete_country'],
+            ['name'=> 'view_country'],
+            //end country permissions
+
+            //start city permissions
+            ['name'=> 'create_city'],
+            ['name'=> 'edit_city'],
+            ['name'=> 'delete_city'],
+            ['name'=> 'view_city'],
+            //end city permissions
+
+            //start governorate permissions
+            ['name'=> 'create_governorate'],
+            ['name'=> 'edit_governorate'],
+            ['name'=> 'delete_governorate'],
+            ['name'=> 'view_governorate'],
+            //end governorate permissions
+
+            //start employee permissions
+            ['name'=> 'create_employee'],
+            ['name'=> 'edit_employee'],
+            ['name'=> 'delete_employee'],
+            ['name'=> 'view_employee'],
+            //end employee permissions
+
+            //start client permissions
+            ['name'=> 'create_client'],
+            ['name'=> 'edit_client'],
+            ['name'=> 'delete_client'],
+            ['name'=> 'view_client'],
+            //end client permissions
+
             //start center permissions
             ['name'=> 'create_center'],
             ['name'=> 'edit_center'],
