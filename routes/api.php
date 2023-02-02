@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\ReservationHistoryController;
 use App\Http\Controllers\Api\RestPasswordController;
 use App\Http\Controllers\Api\UserPackageController;
 use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\SliderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -128,6 +129,11 @@ Route::get('userPackages/listing', [UserPackageController::class, 'userPackagesL
 Route::get('centerPackages/listing', [UserPackageController::class, 'centerPackagesListing']);
 Route::resource('userPackages', CenterController::class)->except(['index', 'store']);
 //end user packages
+
+//start slider
+Route::get('sliders', [SliderController::class, 'listing']);
+//end slider
+
 Route::get('center-offers', [CenterPackageController::class, 'listing']);
 Route::resource('packages', CenterPackageController::class);
 Route::get('doctor/{id}', [DoctorController::class, 'find']);
