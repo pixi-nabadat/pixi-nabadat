@@ -3,32 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\SlidersDataTable;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\SliderStoreRequest;
-use App\Http\Requests\SliderUpdateRequest;
+use App\Http\Requests\SliderStoreRequest as SliderUpdateRequest;
 use App\Services\PackageService;
 use App\Services\SliderService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SliderController extends Controller
 {
-    public function __construct(private SliderService $sliderService, private PackageService $packageService)
+    public function __construct(private SliderService $sliderService, protected PackageService $packageService)
     {
-        
+
     }
-    
-    public function index(SlidersDataTable $dataTable, Request $request){
+
+    public function index(SlidersDataTable $dataTable, Request $request)
+    {
 
         $filters = $request->all();
         $withRelations = ['package'];
-        return $dataTable->with(['filters'=>$filters, 'withRelations'=>$withRelations])->render('dashboard.sliders.index');
+        return $dataTable->with(['filters' => $filters, 'withRelations' => $withRelations])->render('dashboard.sliders.index');
 
     }//end of index
 
-    public function edit($id){
+    public function edit($id)
+    {
         $slider = $this->sliderService->find($id);
-        if (!$slider)
-        {
+        if (!$slider) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.slider_not_found')];
             return back()->with('toast', $toast);
         }
@@ -36,15 +37,20 @@ class SliderController extends Controller
         return view('dashboard.sliders.edit', compact('slider', 'packages'));
     }//end of edit 
 
-    public function create(){
+    public function create()
+    {
         $packages = $this->packageService->getAll();
         return view('dashboard.sliders.create', compact('packages'));
     }//end of create
 
-    public function store(SliderStoreRequest $request){
+    public function store(SliderStoreRequest $request)
+    {
         try {
-            $request->validated();
-            $this->sliderService->store($request->all());
+            $data = $request->validated();
+            $data['start_date'] = Carbon::parse($data['start_date'])->format('Y-m-d');
+            $data['end_date'] = Carbon::parse($data['end_date'])->format('Y-m-d');
+
+            $this->sliderService->store($data);
             $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'slider Saved Successfully'];
             return redirect()->route('sliders.index')->with('toast', $toast);
         } catch (\Exception $ex) {
@@ -56,8 +62,10 @@ class SliderController extends Controller
     public function update(SliderUpdateRequest $request, $id)
     {
         try {
-            $request->validated();
-            $this->sliderService->update($id, $request->all());
+            $data = $request->validated();
+            $data['start_date'] = Carbon::parse($data['start_date'])->format('Y-m-d');
+            $data['end_date'] = Carbon::parse($data['end_date'])->format('Y-m-d');
+            $this->sliderService->update($id, $data);
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect(route('sliders.index'))->with('toast', $toast);
         } catch (\Exception $ex) {
@@ -66,7 +74,7 @@ class SliderController extends Controller
             return redirect()->back()->with('toast', $toast);
         }
     } //end of update
-    
+
     public function destroy($id)
     {
         try {
@@ -82,17 +90,17 @@ class SliderController extends Controller
     public function show($id)
     {
         $slider = $this->sliderService->find($id);
-        if (!$slider){
+        if (!$slider) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.slider_not_found')];
             return back()->with('toast', $toast);
         }
-       return view('dashboard.sliders.show', compact('slider'));
+        return view('dashboard.sliders.show', compact('slider'));
     } //end of show   
 
     public function status(Request $request)
     {
         try {
-            $result =  $this->sliderService->status($request->id);
+            $result = $this->sliderService->status($request->id);
             if (!$result)
                 return apiResponse(message: trans('lang.not_found'), code: 404);
             return apiResponse(message: trans('lang.success'));

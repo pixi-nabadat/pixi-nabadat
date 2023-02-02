@@ -45,31 +45,36 @@
                                 </select>
                             </div>
                             {{--  duration  --}}
-                            <div class="col-md-12">
-                                <label class="form-label mt-3" for="duration">@lang('lang.duration')</label>
-                                <input type="time" name="duration" step="0.01"
-                                    class="form-control @error('duration') is-invalid @enderror" value={{ $slider->duration }}>
-                                @error('duration')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+{{--                            <div class="col-md-12">--}}
+{{--                                <label class="form-label mt-3" for="duration">@lang('lang.duration')</label>--}}
+{{--                                <input type="time" name="duration" step="0.01"--}}
+{{--                                    class="form-control @error('duration') is-invalid @enderror" value={{ $slider->duration }}>--}}
+{{--                                @error('duration')--}}
+{{--                                    <div class="invalid-feedback text-danger">{{ $message }}</div>--}}
+{{--                                @enderror--}}
+{{--                            </div>--}}
                             {{--  start data  --}}
                             <div class="col-md-12">
                                 <label class="form-label mt-3" for="start_date">@lang('lang.start_date')</label>
-                                <input type="date" name="start_date" step="0.01"
-                                    class="form-control @error('start_date') is-invalid @enderror" value={{ $slider->start_date }}>
-                                @error('start_date')
+                                <div class="input-group date" id="dt-start_date" data-target-input="nearest">
+                                    <input name="start_date" value="{{ $slider->start_date }}" class="datepicker-here form-control digits  @error('start_date') is-invalid @enderror" type="text" data-language="en" data-target="#dt-start_date" data-bs-original-title title>
+                                    @error('start_date')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                @enderror
+                                    @enderror
+                                    <div class="input-group-text" data-target="#dt-start_date" data-toggle="datepicker"><i class="fa fa-calendar"> </i></div>
+                                </div>
                             </div>
                             {{--  end date  --}}
                             <div class="col-md-12">
                                 <label class="form-label mt-3" for="end_date">@lang('lang.end_date')</label>
-                                <input type="date" name="end_date" step="0.01"
-                                    class="form-control @error('end_date') is-invalid @enderror" value={{ $slider->end_date }}>
-                                @error('end_date')
+
+                                <div class="input-group date" id="dt-start_date" data-target-input="nearest">
+                                    <input name="end_date" value="{{ $slider->end_date }}" class="datepicker-here form-control digits  @error('end_date') is-invalid @enderror" type="text" data-language="en" data-target="#dt-start_date" data-bs-original-title title>
+                                    @error('end_date')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                @enderror
+                                    @enderror
+                                    <div class="input-group-text" data-target="#dt-start_date" data-toggle="datepicker"><i class="fa fa-calendar"> </i></div>
+                                </div>
                             </div>
                             {{-- is_active --}}
                             <div class="media my-2">

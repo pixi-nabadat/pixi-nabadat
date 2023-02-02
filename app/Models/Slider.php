@@ -11,14 +11,8 @@ class Slider extends Model
 {
     use HasFactory, Filterable;
 
-    protected $fillable = [
-        'order',
-        'package_id',
-        'duration',
-        'start_date',
-        'end_date',
-        'is_active',
-    ];
+    //        'duration',
+    protected $fillable = ['order', 'package_id', 'start_date', 'end_date', 'is_active',];
 
 
     public function package(): BelongsTo
