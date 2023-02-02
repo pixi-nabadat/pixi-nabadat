@@ -34,14 +34,15 @@
                                     @enderror
                                 </div>
                                 
-                                {{--  package  --}}
+                                {{--packages  --}}
                                 <div class="col-md-12">
-                                    <label class="form-label" for="package_id">@lang('lang.package_id')</label>
-                                    <input type="number" name="package_id" step="1"
-                                        class="form-control @error('package_id') is-invalid @enderror">
-                                    @error('package_id')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div class="col-form-label col-3">{{ __('lang.package') }}</div>
+                                    <select id="package_id" name="package_id" class="js-example-basic-single col-sm-12">
+                                        <option selected>...</option>
+                                        @foreach ($packages as $package)
+                                            <option value="{{ $package->id }}">{{ $package->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 {{--  duration  --}}
                                 <div class="col-md-12">

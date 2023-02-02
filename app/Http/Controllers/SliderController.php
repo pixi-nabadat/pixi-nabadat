@@ -6,12 +6,13 @@ use App\DataTables\SlidersDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SliderStoreRequest;
 use App\Http\Requests\SliderUpdateRequest;
+use App\Services\PackageService;
 use App\Services\SliderService;
 use Illuminate\Http\Request;
 
 class SliderController extends Controller
 {
-    public function __construct(private SliderService $sliderService)
+    public function __construct(private SliderService $sliderService, private PackageService $packageService)
     {
         
     }
@@ -31,11 +32,13 @@ class SliderController extends Controller
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.slider_not_found')];
             return back()->with('toast', $toast);
         }
-        return view('dashboard.sliders.edit', compact('slider'));
+        $packages = $this->packageService->getAll();
+        return view('dashboard.sliders.edit', compact('slider', 'packages'));
     }//end of edit 
 
     public function create(){
-        return view('dashboard.sliders.create');
+        $packages = $this->packageService->getAll();
+        return view('dashboard.sliders.create', compact('packages'));
     }//end of create
 
     public function store(SliderStoreRequest $request){

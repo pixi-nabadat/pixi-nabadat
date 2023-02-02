@@ -35,15 +35,14 @@
                                 @enderror
                             </div>
                             
-                            {{--  package  --}}
+                            {{--packages  --}}
                             <div class="col-md-12">
-                                <label class="form-label mt-3" for="package_id">@lang('lang.package_id')</label>
-                                <input type="number" name="package_id" step="0.01"
-                                    class="form-control @error('package_id') is-invalid @enderror"
-                                    value={{ $slider->package_id }}>
-                                @error('package_id')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                @enderror
+                                <div class="col-form-label col-3">{{ __('lang.package') }}</div>
+                                <select id="package_id" name="package_id" class="js-example-basic-single col-sm-12">
+                                    @foreach ($packages as $package)
+                                        <option value="{{ $package->id }}" {{ $package->id == $slider->package_id ? "selected":"" }}>{{ $package->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             {{--  duration  --}}
                             <div class="col-md-12">
