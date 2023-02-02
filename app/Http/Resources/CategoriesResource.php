@@ -14,11 +14,9 @@ class CategoriesResource extends JsonResource
      */
     public function toArray($request)
     {
-        $attachment = $this->whenLoaded('attachments') ? $this->attachments->first():null;
        return [
+           'id'=>$this->id,
            'name'=>$this->name,
-           'image'=>isset($attachment) ? url($attachment->path."/".$attachment->filename):null,
-
        ];
     }
 }
