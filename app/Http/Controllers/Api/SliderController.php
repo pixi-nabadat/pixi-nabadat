@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SlidersResource;
 use App\Services\SliderService;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -24,6 +25,8 @@ class SliderController extends Controller
         try {
             $filters = $request->all();
             $filters['is_active'] = 1;
+            $filters['start_date'] = Carbon::now(config('app.africa_timezone'));
+            $filters['end_date'] = Carbon::now(config('app.africa_timezone'));
             $withRelation = ['package'];
             $result = $this->sliderService->getAll($filters,$withRelation);
             $sliders =  SlidersResource::collection($result);

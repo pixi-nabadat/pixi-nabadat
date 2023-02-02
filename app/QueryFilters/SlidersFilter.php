@@ -11,4 +11,19 @@ class SlidersFilter extends QueryFilter
     {
         parent::__construct($params);
     }
+
+    public function is_active($term)
+    {
+        return $this->builder->where('is_active', $term);
+    }
+
+    public function start_date($term)
+    {
+        return $this->builder->where('start_date', '<',$term);
+    }
+
+    public function end_date($term)
+    {
+        return $this->builder->where('end_date', '>',$term);
+    }
 }
