@@ -106,6 +106,17 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
+                                {{-- password --}}
+                                <div class="col-md-12">
+                                    <label class="form-label" for="password">{{ trans('lang.password') }}</label>
+                                    <input name="password" class="form-control @error('password') is-invalid @enderror"
+                                        id="password" type="password" required>
+                                    @error('password')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
                                 {{-- device_logo --}}
                                 <div class="col-md-12">
                                     <label class="form-label" for="logo">{{ trans('lang.logo') }}</label>
@@ -193,7 +204,7 @@
                                     @foreach ($permissions as $permission)
                                         <label class="ui-checkbox">
                                             <input type="checkbox" name="permissions[]" value="{{ $permission->name }}" {{ $employee->can($permission->name) ? "checked":""}}>
-                                            <span class="input-span"></span>{{ $permission->name }}</label>
+                                            <span class="input-span"></span>{{ trans('lang.'.$permission->name) }}</label>
                                     
                                     @endforeach
                                     </div>
