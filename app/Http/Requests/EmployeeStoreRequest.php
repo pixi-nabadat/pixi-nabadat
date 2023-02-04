@@ -34,7 +34,7 @@ class EmployeeStoreRequest extends FormRequest
             'is_active' => 'nullable',
             'location_id' => 'required|integer',
             'date_of_birth' => 'nullable|date',
-            'permissions' => 'required|array',
+            'permissions' => 'required|array|min:1',
             'permissions.*' => 'string|exists:permissions,name',
         ];
     }

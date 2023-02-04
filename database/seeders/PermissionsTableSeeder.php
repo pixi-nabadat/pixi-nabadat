@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -149,9 +150,11 @@ class PermissionsTableSeeder extends Seeder
 
 
         ];
+        $user = User::find(1);
         foreach($permissions as $permission)
         {
             Permission::create($permission);
+            $user->givePermissionTo($permission);
         }
     }
 }
