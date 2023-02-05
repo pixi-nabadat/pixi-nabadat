@@ -141,23 +141,35 @@
                                     <p class="form-control" id="name_ar">{{ optional($employee->location)->title ??"-" }}</p>
                                 </div>
                             </div>
-                            {{-- permissions --}}
-                            <div class="col-md-12">
-                                <label class="form-label" for="date_of_birth">{{ trans('lang.permissions') }}</label>
-
-                                <div class="form-group">
-
-                                @foreach ($permissions as $permission)
-                                    <label class="ui-checkbox">
-                                        <input type="checkbox" {{ $employee->can($permission->name) ? "checked":""}} @disabled(true)>
-                                        <span class="input-span"></span>{{ $permission->name }}</label>
-                                
-                                @endforeach
-                                </div>
-                                
-                            </div>
+                            
                         </div>
                         
+                        <div class="row">
+                            {{-- permissions --}}
+                            @foreach($permissions as $key =>$permission)
+
+                                <div class="col-sm-4 col-xl-4 border-5">
+                                    <div class="card card-absolute">
+                                        <div class="card-header bg-primary">
+                                            <h5 class="text-white">{{trans('lang.'.$key)}}</h5>
+                                        </div>
+
+                                            <div class="card-body">
+                                                @foreach($permission as $item)
+                                                    <div class="mb-3 m-t-15">
+                                                        <div class="form-check checkbox checkbox-primary mb-0">
+                                                            <input class="form-check-input" name="permissions[]" value="{{$item->name}}" id="checkbox-primary-{{$item->id}}" type="checkbox" data-bs-original-title="" title="{{$item->name}}" {{ $employee->can($item->name) ? "checked":""}} @disabled(true)>
+                                                            <label class="form-check-label" for="checkbox-primary-{{$item->id}}">{{$item->name}}</label>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                    </div>
+                                </div>
+
+                            @endforeach
+                        </div>
                     
                        
 
