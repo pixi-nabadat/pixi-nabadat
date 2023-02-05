@@ -36,6 +36,7 @@ class EmployeeController extends Controller
         $filters = ['depth' => 1, 'is_active' => 1];
         $governorates = $this->locationService->getAll($filters);
         $permissions = Permission::all();
+        $permissions = $permissions->groupBy('category');
         return view('dashboard.employees.edit', compact('employee', 'permissions', 'governorates'));
     }//end of edit
 
@@ -98,6 +99,7 @@ class EmployeeController extends Controller
         $filters = ['depth' => 1, 'is_active' => 1];
         $governorates = $this->locationService->getAll($filters);
         $permissions = Permission::all();
+        $permissions = $permissions->groupBy('category');
         return view('dashboard.employees.show', compact('employee', 'permissions','governorates'));
     } //end of show
 
