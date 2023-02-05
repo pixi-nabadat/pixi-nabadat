@@ -165,9 +165,7 @@
                                 </div>
                                 {{-- date_of_birth --}}
                                 <div class="col-md-12">
-                                    <label class="form-label">{{ trans('lang.location') }}</label>
-
-                                    <div class="col-md-12 mb-3">
+                                   <div class="col-md-12 mb-3">
                                         <div class="col-form-label">{{ trans('lang.choose_governorates') }}</div>
                                         <select id="change_location" data-filling-name="location_id"
                                             class="form-select form-control mb-3 @error('parent_id') is-invalid @enderror">
