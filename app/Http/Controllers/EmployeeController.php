@@ -42,6 +42,7 @@ class EmployeeController extends Controller
     public function create()
     {
         $permissions = Permission::all();
+        $permissions = $permissions->groupBy('category');
         $filters = ['depth' => 1, 'is_active' => 1];
         $governorates = $this->locationService->getAll($filters);
         return view('dashboard.employees.create', compact('permissions', 'governorates'));

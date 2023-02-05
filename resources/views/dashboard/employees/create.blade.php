@@ -25,7 +25,7 @@
                             @csrf
 
                             <div class="row g-3">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-lg-6 col-sm-6">
                                     <label class="form-label" for="name_ar">{{ trans('lang.name_ar') }}</label>
                                     <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
                                         id="name_ar" type="text" required>
@@ -34,7 +34,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-lg-6 col-sm-6">
                                     <label class="form-label" for="name_en">{{ trans('lang.name_en') }}</label>
                                     <input name="name[en]" class="form-control @error('name.en') is-invalid @enderror"
                                         id="name_en" type="text" required>
@@ -71,7 +71,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <img src="{{ asset('/uploads/users/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                                    <img src="{{ asset('/uploads/users/default.png') }}" class="img-thumbnail image-preview " alt="">
                                 </div>
                                 {{-- user_name --}}
                                 <div class="col-md-12">
@@ -84,16 +84,6 @@
                                 </div>
                                 {{-- date_of_birth --}}
                                 <div class="col-md-12">
-                                    <label class="form-label" for="date_of_birth">{{ trans('lang.date_of_birth') }}</label>
-                                    <input name="date_of_birth" class="form-control @error('date_of_birth') is-invalid @enderror"
-                                        id="date_of_birth" type="date" required>
-                                    @error('date_of_birth')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-12">
-                                    <label class="form-label">{{ trans('lang.location') }}</label>
-
                                     <div class="col-md-12 mb-3">
                                         <div class="col-form-label">{{ trans('lang.choose_governorates') }}</div>
                                         <select id="change_location" data-filling-name="location_id"
@@ -114,21 +104,32 @@
                                         @enderror
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 {{-- permissions --}}
-                                <div class="col-md-12">
-                                    <label class="form-label" for="date_of_birth">{{ trans('lang.permissions') }}</label>
+                                @foreach($permissions as $key =>$permission)
 
-                                    <div class="form-group">
+                                    <div class="col-sm-4 col-xl-4 border-5">
+                                        <div class="card card-absolute">
+                                            <div class="card-header bg-primary">
+                                                <h5 class="text-white">{{trans('lang.'.$key)}}</h5>
+                                            </div>
 
-                                    @foreach ($permissions as $permission)
-                                        <label class="ui-checkbox">
-                                            <input type="checkbox" name="permissions[]" value="{{ $permission->name }}">
-                                            <span class="input-span"></span>{{ $permission->name }}</label>
-                                    
-                                    @endforeach
+                                                <div class="card-body">
+                                                    @foreach($permission as $item)
+                                                        <div class="mb-3 m-t-15">
+                                                            <div class="form-check checkbox checkbox-primary mb-0">
+                                                                <input class="form-check-input" name="permissions[]" value="{{$item->name}}" id="checkbox-primary-{{$item->id}}" type="checkbox" data-bs-original-title="" title="{{$item->name}}">
+                                                                <label class="form-check-label" for="checkbox-primary-{{$item->id}}">{{$item->name}}</label>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+
+                                        </div>
                                     </div>
-                                    
-                                </div>
+
+                                @endforeach
                             </div>
                             
                         
@@ -155,8 +156,6 @@
 @endsection
 
 @section('script')
-
     <script src="{{ asset('assets/js/location.js') }}"></script>
-
 @endsection
 
