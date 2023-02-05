@@ -52,6 +52,7 @@ Route::prefix('authentication')->group(function () {
 Route::get('/', HomeController::class)->name('/')->middleware('auth');
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
+    Route::get('logout',[AuthController::class,'logout'])->name('auth.logout');
     // Start Settings
     Route::group(['prefix' => 'settings'], function () {
         Route::get('/', [SettingController::class, 'index'])->name('settings');
