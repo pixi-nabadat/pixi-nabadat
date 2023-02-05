@@ -17,7 +17,10 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         \App\Models\User::create([
-            'name'=>'admin',
+            'name'=>[
+                'en'=>'admin',
+                'ar'=>'admin'
+            ],
             'user_name'=>'admin',
             'email'=>'admin@gmail.com',
             'password'=>bcrypt('123456'),
@@ -29,7 +32,10 @@ class UsersTableSeeder extends Seeder
             'location_id'=>2
         ]);
         \App\Models\User::create([
-            'name'=>'customer',
+            'name'=>[
+                'ar'=>'customer',
+                'en'=>'customer'
+            ],
             'user_name'=>'customer',
             'email'=>'customer@gmail.com',
             'password'=>bcrypt('123456'),
