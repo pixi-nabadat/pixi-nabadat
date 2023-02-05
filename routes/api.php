@@ -122,6 +122,7 @@ Route::get('locations/governorates', [LocationController::class, 'getAllGovernor
 Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);
 
 Route::resource('centers', CenterController::class);
+Route::get('centers/{id}/reservation-appointments', [AppointmentController::class,'getReservationAppointmentsForCenter'])->name('api.center-reservation.appointments');
 
 //start user packages
 Route::get('userPackages/listing', [UserPackageController::class, 'userPackagesListing']);

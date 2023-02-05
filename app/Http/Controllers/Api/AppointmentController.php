@@ -34,15 +34,25 @@ class AppointmentController extends Controller
         return  AppointmentsResource::collection($center_appointments);
     }
 
+    public function getReservationAppointmentsForCenter($id)
+    {
+        $filters = ['center_id'=>$id];
+        $center_appointments= $this->appointmentService->getAll($filters);
+        $days_of_week = $center_appointments->pluck('day_of_week')->toArray();
+        return  apiResponse(getReservationDates($days_of_week));
+    }
+
     public function store(StoreAppointmentRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-
+            $center_id = auth()->user()->center_id ;
+            if (is_null($center_id))
+                throw new NotFoundException(trans('lang.center_not_found'));
             $inserted_data = [
                 'day_of_week' =>$request->day,
                 'day_text' => Appointment::WEEKDAYS[$request->day],
                 'is_active' => true,
-                'center_id' => $request->center_id,
+                'center_id' => auth()->user()->center_id,
                 'from' =>$request->from,
                 'to' => $request->to,
             ];
