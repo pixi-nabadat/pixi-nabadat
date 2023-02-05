@@ -74,12 +74,11 @@ class EmployeeService extends BaseService
 
     public function update($id, $data)
     {
-        $data['password'] = bcrypt($data['password']);
-        $data['date_of_birth'] = Carbon::parse($data['date_of_birth']);
-        isset($data['is_active']) ? $data['is_active'] = 1 : $data['is_active'] = 0;
+        if (isset( $data['password']))
+            $data['password'] = bcrypt($data['password']);
+        $data['is_active'] = isset($data['is_active']) ? 1 :  0;
 
-
-        $user = User::find($id);
+        $user = $this->find($id);
         if (!$user)
             return false;
         if (isset($data['logo']))

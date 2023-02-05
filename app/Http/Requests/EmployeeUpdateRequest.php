@@ -30,10 +30,9 @@ class EmployeeUpdateRequest extends FormRequest
             'phone' => 'required|string|unique:users,phone,'.$this->employee,
             'user_name' => 'required|string|unique:users,user_name,'.$this->employee,
             'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
-            'password' => 'required|string|max:255',
+            'password' => 'sometimes|required|string|max:255',
             'is_active' => 'nullable',
             'location_id' => 'required|integer',
-            'date_of_birth' => 'nullable|date',
             'permissions' => 'required|array',
             'permissions.*' => 'string|exists:permissions,name',
         ];

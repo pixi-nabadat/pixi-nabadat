@@ -165,14 +165,6 @@
                                 </div>
                                 {{-- date_of_birth --}}
                                 <div class="col-md-12">
-                                    <label class="form-label" for="date_of_birth">{{ trans('lang.date_of_birth') }}</label>
-                                    <input name="date_of_birth" class="form-control @error('date_of_birth') is-invalid @enderror"
-                                        id="date_of_birth" type="date" value="{{ $employee->date_of_birth }}" required>
-                                    @error('date_of_birth')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-12">
                                     <label class="form-label">{{ trans('lang.location') }}</label>
 
                                     <div class="col-md-12 mb-3">
