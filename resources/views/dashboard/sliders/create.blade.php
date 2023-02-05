@@ -34,41 +34,46 @@
                                     @enderror
                                 </div>
                                 
-                                {{--  package  --}}
+                                {{--packages  --}}
                                 <div class="col-md-12">
-                                    <label class="form-label" for="package_id">@lang('lang.package_id')</label>
-                                    <input type="number" name="package_id" step="1"
-                                        class="form-control @error('package_id') is-invalid @enderror">
-                                    @error('package_id')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div class="col-form-label col-3">{{ __('lang.package') }}</div>
+                                    <select id="package_id" name="package_id" class="js-example-basic-single col-sm-12">
+                                        <option selected>...</option>
+                                        @foreach ($packages as $package)
+                                            <option value="{{ $package->id }}">{{ $package->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 {{--  duration  --}}
-                                <div class="col-md-12">
-                                    <label class="form-label" for="duration">@lang('lang.duration')</label>
-                                    <input type="time" name="duration" step="0.01"
-                                        class="form-control @error('duration') is-invalid @enderror">
-                                    @error('duration')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
+{{--                                <div class="col-md-12">--}}
+{{--                                    <label class="form-label" for="duration">@lang('lang.duration')</label>--}}
+{{--                                    <input type="time" name="duration" step="0.01"--}}
+{{--                                        class="form-control @error('duration') is-invalid @enderror">--}}
+{{--                                    @error('duration')--}}
+{{--                                        <div class="invalid-feedback text-danger">{{ $message }}</div>--}}
+{{--                                    @enderror--}}
+{{--                                </div>--}}
                                 {{--  start date  --}}
                                 <div class="col-md-12">
                                     <label class="form-label" for="start_date">@lang('lang.start_date')</label>
-                                    <input type="date" name="start_date" step="0.01"
-                                        class="form-control @error('start_date') is-invalid @enderror">
-                                    @error('start_date')
+                                    <div class="input-group date" id="dt-start_date" data-target-input="nearest">
+                                        <input name="start_date" class="datepicker-here form-control digits  @error('start_date') is-invalid @enderror" type="text" data-language="en" data-target="#dt-start_date" data-bs-original-title title>
+                                        @error('start_date')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                        @enderror
+                                        <div class="input-group-text" data-target="#dt-start_date" data-toggle="datepicker"><i class="fa fa-calendar"> </i></div>
+                                    </div>
                                 </div>
                                 {{--  end date  --}}
                                 <div class="col-md-12">
-                                    <label class="form-label" for="end_date">@lang('lang.end_date')</label>
-                                    <input type="date" name="end_date" step="0.01"
-                                        class="form-control @error('end_date') is-invalid @enderror">
-                                    @error('end_date')
+                                    <label class="form-label" for="start_date">@lang('lang.end_date')</label>
+                                    <div class="input-group date" id="dt-start_date" data-target-input="nearest">
+                                        <input name="end_date" class="datepicker-here form-control digits  @error('end_date') is-invalid @enderror" type="text" data-language="en" data-target="#dt-end_date" data-bs-original-title title>
+                                        @error('end_date')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                        @enderror
+                                        <div class="input-group-text" data-target="#dt-start_date" data-toggle="datepicker"><i class="fa fa-calendar"> </i></div>
+                                    </div>
                                 </div>
                                 {{--  is_active  --}}
                                 <div class="media mb-2">

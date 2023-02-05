@@ -44,7 +44,25 @@ if (!function_exists('getDateOfSpecificDay')) {
         return $date ;
     }
 }
-
+if (! function_exists('getReservationDates')) {
+    function getReservationDates(array $days=[])
+    {
+        $date = \Carbon\Carbon::now();
+        $appointments = collect();
+        for ($start =  0 ; $start <=31 ; $start++)
+        {
+            $appointment = [
+                'day_of_week' => $date->dayOfWeek,
+                'date' => $date->format('Y-m-d'),
+                'day_en' => $date->locale('en')->dayName,
+                'day_ar' => $date->locale('ar')->dayName,
+            ];
+            $appointments->push($appointment);
+            $date->addDay();
+        }
+        return array_values($appointments->whereIn('day_of_week',$days)->take(7)->toArray());
+    }
+}
 if (! function_exists('setting')) {
 
     function setting($parent, $key, $default = null)

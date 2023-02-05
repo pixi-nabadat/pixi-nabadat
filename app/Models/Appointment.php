@@ -12,13 +12,13 @@ class Appointment extends Model
 {
     use HasFactory,Filterable,HasTranslations,EscapeUnicodeJson;
     public const WEEKDAYS = [
-        ['day_of_week'=>0,'en'=>'Sunday',        'ar'=>'الاحد '],
-        ['day_of_week'=>1,'en'=>'Monday',        'ar'=>'الاثنين'],
-        ['day_of_week'=>2,'en'=>'Tuesday',       'ar'=>'الثلاثاء'],
-        ['day_of_week'=>3,'en'=>'Wednesday',     'ar'=>'الأربعاء'],
-        ['day_of_week'=>4,'en'=>'Thursday',      'ar'=>'الخميس '],
-        ['day_of_week'=>5,'en'=>'Friday',        'ar'=>'الجمعة'],
-        ['day_of_week'=>6,'en'=>'Saturday',      'ar'=>'السبت'],
+        ['en'=>'Sunday',        'ar'=>'الاحد '],//0
+        ['en'=>'Monday',        'ar'=>'الاثنين'],//1
+        ['en'=>'Tuesday',       'ar'=>'الثلاثاء'],//2
+        ['en'=>'Wednesday',     'ar'=>'الأربعاء'],//3
+        ['en'=>'Thursday',      'ar'=>'الخميس '],//4
+        ['en'=>'Friday',        'ar'=>'الجمعة'],//5
+        ['en'=>'Saturday',      'ar'=>'السبت'], //6
     ];
 
     protected $fillable = ['day_of_week','day_text','center_id','is_active','to','from'];
