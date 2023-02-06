@@ -13,15 +13,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 use Spatie\Translatable\HasTranslations;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory,HasAttachment, Notifiable, Filterable, HasTranslations, EscapeUnicodeJson;
+    use HasApiTokens, HasFactory,HasAttachment, Notifiable, Filterable, HasTranslations, EscapeUnicodeJson, HasRoles;
 
     const SUPERADMINTYPE = 1;
     const CUSTOMERTYPE = 2;
     const CENTERADMIN = 4;
+    const EMPLOYEE = 5;
 
     const ACTIVE = 1;
     const NONACTIVE = 0;
@@ -50,9 +52,8 @@ class User extends Authenticatable
     /**
      * @param User $user
      * @param float $amount
-     * @param string $amountType
      */
-    public static function setPoints(Model $model, float $amount, string $amountType): bool
+    public static function setPoints(Model $model, float $amount): bool
     {
 
         if (is_null($model->center_id))
@@ -64,10 +65,7 @@ class User extends Authenticatable
             $pointsPerPound = config('global.center_points_per_pound') !== null ? config('global.center_points_per_pound') : Setting::get('points', 'center_points_per_pound');
             $pointsExpireDaysCount = config('global.center_points_expire_days_count') !== null ? config('global.center_points_expire_days_count') : Setting::get('points', 'center_points_expire_days_count');
         }
-        if ($amountType == 'points')
-            $model->points += $amount;
-        else
-            $model->points += $pointsPerPound * $amount;
+        $model->points += $pointsPerPound * $amount;
         $model->points_expire_date = Carbon::now()->addDays($pointsExpireDaysCount);
         $model->save();
         return true;

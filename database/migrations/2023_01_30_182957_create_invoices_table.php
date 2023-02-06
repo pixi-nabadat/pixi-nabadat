@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sliders', function (Blueprint $table) {
+        Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->integer('order');
-            $table->foreignIdFor(\App\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->time('duration');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->foreignIdFor(\App\Models\Center::class)->constrained();
+            $table->float('total_center_dues')->nullable();
+            $table->float('total_nabadat_dues')->nullable();
+            $table->smallInteger('status')->default(\App\Models\Invoice::PENDING);
+            $table->date('completed_date')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sliders');
+        Schema::dropIfExists('invoices');
     }
 };

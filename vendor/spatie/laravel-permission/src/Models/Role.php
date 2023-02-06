@@ -12,12 +12,10 @@ use Spatie\Permission\Guard;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\RefreshesPermissionCache;
-
 class Role extends Model implements RoleContract
 {
     use HasPermissions;
     use RefreshesPermissionCache;
-
     protected $guarded = [];
 
     public function __construct(array $attributes = [])

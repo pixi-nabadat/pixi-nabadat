@@ -15,6 +15,8 @@
     <!-- Container-fluid starts-->
     <div class="container-fluid">
         <div class="row">
+            
+            @can('edit_general_settings')
             <div class="col-sm-6 col-xl-3 xl-50 col-lg-6 box-col-6">
                 <a href="{{ route('general.settings') }}">
                     <div class="card social-widget-card">
@@ -30,7 +32,9 @@
                 </a>
 
             </div>
+            @endcan
 
+            @can('edit_points_settings')
             <div class="col-sm-6 col-xl-3 xl-50 col-lg-6 box-col-6">
                 <a href="{{ route('points.settings') }}">
                     <div class="card social-widget-card">
@@ -45,6 +49,9 @@
                     </div>
                 </a>
             </div>
+            @endcan
+
+            @can('edit_social_media_settings')
             <div class="col-sm-6 col-xl-3 xl-50 col-lg-6 box-col-6">
                 <a href="{{ route('social_media.settings') }}">
                     <div class="card social-widget-card">
@@ -60,6 +67,9 @@
                 </a>
 
             </div>
+            @endcan
+
+            @can('edit_terms_conditions_settings')
             <div class="col-sm-6 col-xl-3 xl-50 col-lg-6 box-col-6">
                 <a href="{{route('terms_and_conditions.settings')}}">
                     <div class="card social-widget-card">
@@ -74,6 +84,9 @@
                     </div>
                 </a>
             </div>
+            @endcan
+
+            @can('edit_schedule_fcm_settings')
             <div class="col-sm-6 col-xl-3 xl-50 col-lg-6 box-col-6">
                 <a href="{{route('schedule_fcm.settings')}}">
                     <div class="card social-widget-card">
@@ -88,6 +101,8 @@
                     </div>
                 </a>
             </div>
+            @endcan
+
         </div>
     </div>
     <!-- Container-fluid Ends-->

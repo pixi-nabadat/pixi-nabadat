@@ -35,13 +35,16 @@ class CentersTableSeeder extends Seeder
                 'en'=>'center is perfect',
             ],
             'avg_waiting_time'=>30,
-            'support_payments'=> [PaymentMethodEnum::CASH,PaymentMethodEnum::CASH],
+            'support_payments'=> [PaymentMethodEnum::CASH,PaymentMethodEnum::CREDIT],
             'app_discount'=>20
         ];
         $center = Center::create($center_data) ;
 
         $user_data =[
-            'name'=>'center test',
+            'name'=>[
+                'ar'=>'center test',
+                'en'=>'center test'
+            ],
             'email'=>'center_test@gmail.com',
             'user_name'=>"center".time(),
             'is_active'=>true,
