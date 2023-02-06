@@ -12,6 +12,7 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GovernorateController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
@@ -51,6 +52,7 @@ Route::prefix('authentication')->group(function () {
 Route::get('/', HomeController::class)->name('/')->middleware('auth');
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
+    Route::get('logout',[AuthController::class,'logout'])->name('auth.logout');
     // Start Settings
     Route::group(['prefix' => 'settings'], function () {
         Route::get('/', [SettingController::class, 'index'])->name('settings');
@@ -74,6 +76,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     });
     //end reservations
 
+    //start employees
+    Route::resource('employees', EmployeeController::class);
+    Route::post('employees/status', [EmployeeController::class, 'status'])->name('employees.status');
+    //end employees
+    
     Route::group(['prefix' => 'ajax'], function () {
         Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);
     });

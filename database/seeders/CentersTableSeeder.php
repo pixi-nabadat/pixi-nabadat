@@ -41,7 +41,10 @@ class CentersTableSeeder extends Seeder
         $center = Center::create($center_data) ;
 
         $user_data =[
-            'name'=>'center test',
+            'name'=>[
+                'ar'=>'center test',
+                'en'=>'center test'
+            ],
             'email'=>'center_test@gmail.com',
             'user_name'=>"center".time(),
             'is_active'=>true,
