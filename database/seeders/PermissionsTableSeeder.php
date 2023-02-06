@@ -174,10 +174,12 @@ class PermissionsTableSeeder extends Seeder
 
             //start settings permissions
             'settings'=>[
-                'show_settings',
+                'view_settings',
                 'edit_general_settings',
-                'edit_terms_and_condition',
-                'edit_fcm_settings',
+                'edit_points_settings',
+                'edit_terms_and_conditions_settings',
+                'edit_social_media_settings',
+                'edit_schedule_fcm_settings',
                 ],
             //end settings permissions
 
