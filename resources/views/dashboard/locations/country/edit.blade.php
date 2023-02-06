@@ -51,19 +51,16 @@
                             <div class="col-md-6 mb-3">
                                 <div class="col-form-label">{{trans("lang.Choose_Currency")}}</div>
                                 <select name="currency_id" class="js-example-placeholder-multiple col-sm-12 @error('currency_id') is-invalid @enderror" multiple="multiple">
-                                    {{-- @foreach ($currencies as $currency) --}}
-                                    <option value="1">£EGP</option>
-                                    <option value="2">$US</option>
-                                    <option value="3">€EUR</option>
-                                    <option value="4">﷼SAR</option>
-                                    {{-- @endforeach --}}
+                                    @foreach ($currencies as $currency)
+                                    <option value="{{ $currency->id }}" {{ $country->currency_id == $currency->id ? "selected":"" }}>{{ $currency->name }}</option>
+                                    @endforeach
                                 </select>
                                 @error('currency_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                               @enderror
                             </div>
 						</div>
-						<button class="btn btn-primary" type="submit">ADD country</button>
+						<button class="btn btn-primary" type="submit">Submit</button>
 					</form>
 				</div>
 			</div>

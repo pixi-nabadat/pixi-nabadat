@@ -61,7 +61,8 @@ class CountryController extends Controller
             ];
             return back()->with('toast',$toast);
         }
-        return view('dashboard.locations.country.edit',['country' => $country]);
+        $currencies = Currency::all();
+        return view('dashboard.locations.country.edit',['country' => $country, 'currencies' => $currencies]);
     }
 
     public function update($id, StoreLocationRequest $request)
