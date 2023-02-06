@@ -26,7 +26,7 @@ class CenterDeviceDataTable extends DataTable
                 return view('dashboard.centerDevices.action', compact('centerDevice'))->render();
             })
             ->editColumn('center_id', function (CenterDevice $centerDevice) {
-                return $centerDevice->center->name;
+                return $centerDevice->center->user->name;
             })
             ->addColumn('device_id', function (CenterDevice $centerDevice) {
                 return $centerDevice->device->name;
