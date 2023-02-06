@@ -34,8 +34,12 @@ class FcmEventsNames
         '@ORDER_STATUS@'=>'@ORDER_STATUS@',
         '@RESERVATION_NUMBER@'=>'@RESERVATION_NUMBER@',
         '@RESERVATION_STATUS@'=>'@RESERVATION_STATUS@',
-        '@CENTER_NAME@'=>'@RESERVATION_STATUS@',
-        '@COUPON_CODE@'=>'@RESERVATION_STATUS@',
+        '@CENTER_NAME@'=>'@CENTER_NAME@',
+        '@CENTER_LOCATION@'=>'@CENTER_LOCATION@',
+        '@COUPON_CODE@'=>'@COUPON_CODE@',
+        '@COUPON_DISCOUNT@'=>'@COUPON_DISCOUNT@',
+        '@COUPON_END_DATE@'=>'@COUPON_END_DATE@',
+        '@COUPON_MIN_BUY@'=>'@COUPON_MIN_BUY@',
     ];
 
     public static array $CHANNELS = [

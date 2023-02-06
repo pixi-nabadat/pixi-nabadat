@@ -3,6 +3,7 @@
 namespace App\Services;
 
 
+use App\Exceptions\NotFoundException;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use LaravelFCM\Message\OptionsBuilder;
@@ -13,20 +14,42 @@ use FCM;
 class PushNotificationService extends BaseService
 {
 
-    public function sendFcm(array $data = []): array
+    public function __construct(protected UserService $userService)
     {
-        $filters = ['type' => User::CUSTOMERTYPE];
-        if (!Arr::has($data['users'], 'all'))
-            $filters['users'] = $data['users'];
-        if (!Arr::has($data['locations'], 'all'))
-            $filters['locations'] = $data['locations'];
-        if (!Arr::has($data['centers'], 'all'))
-            $filters['where_has_reservation'] = $data['centers'];
-        $users = app()->make(UserService::class)->getAll($filters);
-        $device_tokens = $users->pluck('device_token');
-        return array_filter($device_tokens);
-    } //end of store
+    }
 
+//    public function sendFcm(array $data = []): array
+//    {
+//        $filters = ['type' => User::CUSTOMERTYPE];
+//        if (!Arr::has($data['users'], 'all'))
+//            $filters['users'] = $data['users'];
+//        if (!Arr::has($data['locations'], 'all'))
+//            $filters['locations'] = $data['locations'];
+//        if (!Arr::has($data['centers'], 'all'))
+//            $filters['where_has_reservation'] = $data['centers'];
+//        $users = app()->make(UserService::class)->getAll($filters);
+//        $device_tokens = $users->pluck('device_token');
+//        return array_filter($device_tokens);
+//    } //end of store
+
+
+    public function getUserNotifications()
+    {
+        $user = $this->userService->getAuthUser();
+        return $user->notifications()->orderByDesc('id')->get();
+    }
+
+    public function unReadCount($auth_user_id)
+    {
+        $user = $this->userService->getAuthUser();
+        return $user->notifications()->whereNull('read_at')->count();
+    }
+
+    public function markAsRead($notification_id)
+    {
+        $user =$this->userService->getAuthUser();
+        $user->notifications()->where('id', $notification_id)->markAsRead();
+    }
 
 
     public function sendToTokens(string $title, string $body,$tokens = [],$data = [])

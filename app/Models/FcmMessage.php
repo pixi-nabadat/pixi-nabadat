@@ -16,8 +16,8 @@ class FcmMessage extends Model
     public const CANCEL_CENTER_RESERVATION = 'CANCEL_CENTER_RESERVATION';
     public const COMPLETE_USER_RESERVATION = 'COMPLETE_USER_RESERVATION';
     public const DEAL_WITH_NEW_CENTER = 'DEAL_WITH_NEW_CENTER';
-    public const CENTER_CREATE_NEW_OFFER = 'COMPLETE_USER_RESERVATION';
-    public const CREATE_NEW_COUPON_DISCOUNT = 'COMPLETE_USER_RESERVATION';
+    public const CENTER_CREATE_NEW_OFFER = 'CENTER_CREATE_NEW_OFFER';
+    public const CREATE_NEW_COUPON_DISCOUNT = 'CREATE_NEW_COUPON_DISCOUNT';
 
     protected $fillable = ['title','content','fcm_action','is_active'];
 

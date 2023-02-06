@@ -31,16 +31,17 @@ class SendChangeOrderStatusNotification
     {
         if (is_null($event->type) or $event->type != FcmMessage::CHANGE_ORDER_STATUS)
             return ;
-        $order = $event->order ;
-        //prepare data
-        $user_name = $order->user->name ;
-        $order_id = $order->id ;
-        $order_status = trans('lang.pending');
+        $order = $event->model ;
+
 //        check if there is  an active fcm message for create order action
         $fcmMessage = FcmMessage::query()->where('is_active',true)->where('fcm_action',FcmMessage::CHANGE_ORDER_STATUS)->first();
         if (!$fcmMessage)
             return;
 
+        //prepare data
+        $user_name = $order->user->name ;
+        $order_id = $order->id ;
+        $order_status = $order->orderStatus->status;
         $title = $fcmMessage->title ;
         $body = $fcmMessage->content ;
         $replaced_values = [

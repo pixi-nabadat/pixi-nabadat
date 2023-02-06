@@ -44,7 +44,6 @@ if (!function_exists('getDateOfSpecificDay')) {
         return $date;
     }
 }
-if (!function_exists('setting')) {
 if (! function_exists('getReservationDates')) {
     function getReservationDates(array $days=[])
     {
@@ -142,5 +141,29 @@ if (!function_exists('replaceFlags')) {
         }
         return $content;
 
+    }
+}
+if (!function_exists('notifyUser')) {
+
+    function notifyUser(\App\Models\User $user,$data=[])
+    {
+        $user->notify(new \App\Notifications\GeneralNotification($data));
+    }
+}
+
+if (!function_exists('getLocale')) {
+
+    function getLocale(): string
+    {
+        return app()->getLocale();
+    }
+}
+
+
+if (!function_exists('setLocale')) {
+
+    function setLocale(string $locale): void
+    {
+        app()->setLocale($locale);
     }
 }

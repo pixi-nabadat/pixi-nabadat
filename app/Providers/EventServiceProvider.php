@@ -6,6 +6,7 @@ use App\Events\PushEvent;
 use App\Events\OrderCreated;
 use App\Listeners\changeOrderDependencies;
 use App\Listeners\SendChangeOrderStatusNotification;
+use App\Listeners\SendCouponDiscountCreatedNotification;
 use App\Listeners\SendOrderCreatedNotification;
 use App\Listeners\SendReservationCreatedNotification;
 use Illuminate\Auth\Events\Registered;
@@ -30,6 +31,7 @@ class EventServiceProvider extends ServiceProvider
             SendOrderCreatedNotification::class,
             SendChangeOrderStatusNotification::class,
             SendReservationCreatedNotification::class,
+            SendCouponDiscountCreatedNotification::class,
         ]
     ];
 
