@@ -46,41 +46,37 @@ class EmployeesDataTable extends DataTable
             ->setTableId('employes-datatable-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('Bfrtip')
-            ->orderBy(1);
+            ->orderBy(1)
+            ->parameters([
+                'dom' => 'Blfrtip',
+                'order' => [[0, 'desc']],
+                "lengthMenu" => [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "responsive" => true,
+                "scrollX" => '100%',
+            ]);
     }
 
     protected function getColumns(): array
     {
         return [
-            Column::make('id')
-                ->title(trans('lang.id'))
-                ->searchable(true)
-                ->orderable(true),
             Column::make('name')
-                ->title(trans('lang.name'))
-                ->searchable(true)
-                ->orderable(true),
+                ->title(trans('lang.name')),
             Column::make('email')
                 ->title(trans('lang.email'))
-                ->searchable(true)
-                ->orderable(true),
+                ->searchable(false)
+                ->orderable(false),
             Column::make('user_name')
-                ->title(trans('lang.user_name'))
-                ->searchable(true)
-                ->orderable(true),
+                ->title(trans('lang.user_name')),
             Column::make('phone')
-                ->title(trans('lang.phone'))
-                ->searchable(true)
-                ->orderable(true),
+                ->title(trans('lang.phone')),
             Column::make('is_active')
                 ->title(trans('lang.is_active'))
-                ->searchable(true)
-                ->orderable(true),
+                ->searchable(false)
+                ->orderable(false),
             Column::make('location_id')
                 ->title(trans('lang.location_id'))
-                ->searchable(true)
-                ->orderable(true),
+                ->searchable(false)
+                ->orderable(false),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
