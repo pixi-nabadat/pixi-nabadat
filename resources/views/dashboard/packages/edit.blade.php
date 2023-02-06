@@ -25,11 +25,18 @@
                             @csrf
                             @method('put')
                             {{--center  --}}
-                            <div class="col-md-12">
-                                <label class="form-label mt-3" for="price">@lang('lang.center')</label>
-                                <p class="form-control">{{$package->center->name}}</p>
-
+                            <div class="col-md-12 d-flex my-3">
+                                <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
+                                <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12 @error('price') is-invalid @enderror">
+                                    @foreach ($centers as $center)
+                                        <option value="{{ $center->id }}" {{ $center->id == $package->center->id ? "selected":"" }}>{{ $center->user->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('center_id')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
+
                             {{-- English Name --}}
                             <div class="col-md-12">
                                 <label class="form-label mt-3" for="name_en">{{ trans('lang.name_en') }}</label>
