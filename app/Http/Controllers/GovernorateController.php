@@ -48,7 +48,7 @@ class GovernorateController extends Controller
                 'title'=>trans('lang.title'),
                 'message'=> 'governorate saved Successfully'
             ];
-            return back()->with('toast',$toast);
+            return redirect()->route('governorate.index')->with('toast', $toast);
         }catch (\Exception $exception)
         {
             $toast=[
