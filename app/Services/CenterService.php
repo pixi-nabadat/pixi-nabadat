@@ -138,8 +138,9 @@ class CenterService extends BaseService
     public function changeStatus($id)
     {
         $center = $this->find($id);
-        $center->is_active = !$center->is_active;
-        return $center->save();
+        $user = $center->user;
+        $user->is_active = !$user->is_active;
+        return $user->save();
     }
 
     public function changeSupportAutoServiceStatus($id)
