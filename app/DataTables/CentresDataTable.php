@@ -29,7 +29,7 @@ class CentresDataTable extends DataTable
                 return view('dashboard.components.switch-featured-btn',['model'=>$center,'url'=>route('centers.featured')])->render();
             })
             ->editColumn('is_active', function (Center $center) {
-                return  view('dashboard.components.switch-btn',['model'=>$center->user,'url'=>route('centers.changeStatus')]);
+                return  view('dashboard.components.switch-btn',['model'=>$center,'url'=>route('centers.changeStatus')]);
             })
             ->editColumn('is_support_auto_service', function (Center $center) {
                 return  view('dashboard.components.switch-support-auto-service-btn',['model'=>$center,'url'=>route('centers.support-auto-service.changeStatus')]);
