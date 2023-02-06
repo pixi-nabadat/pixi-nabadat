@@ -37,7 +37,7 @@
                         </ul>
                         {{-- end country --}}
                         @endcan
-                        
+
                         @can('view_governorate')
                         {{-- start governorate --}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/governorate' ? 'active' : '' }}" href="#"><i class="fa fa-map-marker p-r-5"></i><span class="lan-6">{{ trans('lang.governorate') }}</span>
@@ -169,7 +169,7 @@
                         </ul>
                         {{--end package --}}
                         @endcan
-                        
+
                         @can('view_employee')
                         {{-- start employee --}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/employees' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.employee') }}</span>
@@ -225,6 +225,17 @@
                         </ul>
                         {{-- end orders --}}
                         @endcan
+
+                        {{--start fcm ---}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/fcm' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.fcm') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/fcm' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('fcm-messages.index') ? 'active' : '' }}" href="{{route('fcm-messages.index')}}">{{ trans('lang.fcm_messages') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('schedule-fcm.index') ? 'active' : '' }}" href="{{route('schedule-fcm.index')}}">{{ trans('lang.schedule_fcm') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('fcm-messages.create') ? 'active' : '' }}" href="{{route('fcm-messages.create')}}">{{ trans('lang.create') }}</a></li>
+                        </ul>
+                        {{-- end fcm --}}
 
                         @can('view_settings')
                         {{--start Settings ---}}

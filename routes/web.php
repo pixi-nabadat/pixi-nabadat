@@ -23,6 +23,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\ScheduleFcmController;
+use App\Http\Controllers\FcmMessageController;
+use App\Http\Controllers\PushNotificationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -80,23 +83,24 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::resource('employees', EmployeeController::class);
     Route::post('employees/status', [EmployeeController::class, 'status'])->name('employees.status');
     //end employees
-    
+
     Route::group(['prefix' => 'ajax'], function () {
         Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);
     });
 
     Route::get('/', HomeController::class)->name('home');
     Route::post('doctors/changeStatus', [DoctorController::class, 'status'])->name('doctors.changeStatus');
-    Route::get('doctors/getAllCities/{doctor}', [DoctorController::class, 'getAllCities'])->name('doctors.getAllCities');
 
     Route::resource('governorate', GovernorateController::class);
     Route::resource('country', CountryController::class);
     Route::resource('city', CityController::class);
 
     Route::resource('centers', CenterController::class);
-    Route::post('centers/changeStatus', [CenterController::class, 'changeStatus'])->name('centers.changeStatus');
-    Route::post('centers/featured', [CenterController::class, 'featured'])->name('centers.featured');
-    Route::post('centers/support-service/changeStatus', [CenterController::class, 'changeStatusOfSupportAutoService'])->name('centers.support-auto-service.changeStatus');
+    Route::group(['prefix' => 'centers'],function (){
+        Route::post('changeStatus', [CenterController::class, 'changeStatus'])->name('centers.changeStatus');
+        Route::post('featured', [CenterController::class, 'featured'])->name('centers.featured');
+        Route::post('support-service/changeStatus', [CenterController::class, 'changeStatusOfSupportAutoService'])->name('centers.support-auto-service.changeStatus');
+    });
 
     #attachment routes
     Route::resource('doctors', DoctorController::class);
@@ -141,6 +145,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::get('invoices/{id}/print', [InvoiceController::class, 'print'])->name('invoices.print');
 
 
+//fcm routes
+Route::resource('schedule-fcm',ScheduleFcmController::class)->except('create');
+Route::resource('fcm-messages',FcmMessageController::class);
+Route::post('fcm-messages/status', [FcmMessageController::class, 'status'])->name('fcm-messages.status');
+Route::post('schedule-fcm/status', [ScheduleFcmController::class, 'status'])->name('schedule-fcm.status');
 });
 
 Route::get('/clear-cache', function () {
