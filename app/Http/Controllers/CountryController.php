@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreLocationRequest;
 use App\DataTables\CountriesDataTable;
+use App\Models\Currency;
 use App\Services\LocationService;
 
 class CountryController extends Controller
@@ -23,7 +24,8 @@ class CountryController extends Controller
 
     public function create()
     {
-        return view('dashboard.locations.country.create');
+        $currencies = Currency::all();
+        return view('dashboard.locations.country.create', compact('currencies'));
     }
 
     public function store(StoreLocationRequest $request)
@@ -35,7 +37,7 @@ class CountryController extends Controller
                 'title'=>trans('lang.title'),
                 'message'=> 'country saved Successfully'
             ];
-            return back()->with('toast',$toast);
+            return redirect()->route('country.index')->with('toast', $toast);
         }catch (\Exception $exception)
         {
             $toast=[
