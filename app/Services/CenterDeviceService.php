@@ -24,7 +24,7 @@ class CenterDeviceService extends BaseService
     public function store(array $data = [])
     {
         $data['center_id'] = Auth::user()->center_id;
-        $centerDevice = CenterDevice::find($data['device_id']);
+        $centerDevice = $this->find($data['device_id']);
         if(!$centerDevice)
             $centerDevice = CenterDevice::create($data);
         else
@@ -32,16 +32,7 @@ class CenterDeviceService extends BaseService
         return $centerDevice;
     }
 
-    public function update(int $id, array $data = []): bool
-    {
-        $centerDevice = $this->find($id);
-        if ($centerDevice) {
-            $centerDevice->update($data);
-        }
-        return false;
-    } //end of find
-
-public function find(int $id)
+    public function find(int $id)
     {
 
         $centerDevice = CenterDevice::find($id);
@@ -50,4 +41,16 @@ public function find(int $id)
         return false;
 
     } //end of update
+
+    public function delete(int $id)
+    {
+        $centerDevice = $this->find($id);
+        if(!$centerDevice)
+        {
+            return false;   
+        }else{
+            $centerDevice->delete();
+            return true;
+        }
+    }
 }
