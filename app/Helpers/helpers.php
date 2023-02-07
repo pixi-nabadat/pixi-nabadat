@@ -160,9 +160,9 @@ if (!function_exists('getLocale')) {
 }
 
 
-if (!function_exists('setLocale')) {
+if (!function_exists('setLanguage')) {
 
-    function setLocale(string $locale): void
+    function setLanguage(string $locale): void
     {
         app()->setLocale($locale);
     }

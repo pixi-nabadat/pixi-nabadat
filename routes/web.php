@@ -25,20 +25,11 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\ScheduleFcmController;
 use App\Http\Controllers\FcmMessageController;
+use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\PushNotificationController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 
 //Language Change
-Route::get('lang/{locale}', function ($locale) {
-    if (!in_array($locale, ['en', 'ar'])) {
-        abort(400);
-    }
-    Session()->put('locale', $locale);
-    Session::get('locale');
-    return redirect()->back();
-})->name('lang');
-
 Route::prefix('authentication')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('login', [AuthController::class, 'index'])->name('login');
@@ -54,6 +45,9 @@ Route::prefix('authentication')->group(function () {
 
 Route::get('/', HomeController::class)->name('/')->middleware('auth');
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
+
+//    change localization
+    Route::get('lang/{locale}',LocalizationController::class)->name('lang');
 
     Route::get('logout',[AuthController::class,'logout'])->name('auth.logout');
     // Start Settings
