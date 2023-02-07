@@ -19,10 +19,10 @@ class Localization
     {
         $lang = config('app.locale');
         if ($request->expectsJson())
-            $lang = $request->header('Accept-Language');
+            $lang = $request->header('Accept-Language',$lang);
         else
             if (Cookie::get('user-language') !== null)
-                $lang = Cookie::get('user-language');
+                $lang = Cookie::get('user-language')??$lang;
         setLanguage($lang);
         return $next($request);
     }
