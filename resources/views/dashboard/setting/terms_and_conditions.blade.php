@@ -1,8 +1,8 @@
 @extends('layouts.simple.master')
-@section('title', trans('lang.centers'))
+@section('title', trans('lang.settings'))
 
 @section('breadcrumb-title')
-    <h3>{{ trans('lang.terms_and_conditions') }}</h3>
+    <h3>{{ trans('lang.settings') }}</h3>
 @endsection
 @section('breadcrumb-items')
     <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ trans('lang.dashboard') }}</a></li>
