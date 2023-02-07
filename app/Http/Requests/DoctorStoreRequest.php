@@ -28,7 +28,7 @@ class DoctorStoreRequest extends BaseRequest
 
             'name.*' => 'required|string',
             'phone' => 'required|numeric|unique:doctors',
-            'description' => 'nullable|string',
+            'description.*' => 'nullable|string',
             'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'center_id' => 'required|exists:centers,id',
             'age' => 'nullable|integer',
