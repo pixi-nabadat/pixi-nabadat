@@ -215,7 +215,7 @@
                         {{-- end Center Devices --}}
                         @endcan
 
-                        @can('view_orders')
+                        @can('view_order')
                         {{--start orders ---}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/orders' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.orders') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/orders' ? 'down' : 'right' }}"></i></div>
