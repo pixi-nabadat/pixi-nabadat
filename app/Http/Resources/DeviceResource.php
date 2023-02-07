@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Enum\ImageTypeEnum;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class DeviceResource extends JsonResource
@@ -17,7 +18,10 @@ class DeviceResource extends JsonResource
         return [
             'name'        => $this->name,
             'description' => $this->description,
-            'is_active'   => $this->is_active
+            'is_active'   => $this->is_active,
+            'logo'      => $this->whenLoaded('attachments', AttachmentsResource::collection($this->attachments->where('type','!=',ImageTypeEnum::GALARY))),
+            'images'      => $this->whenLoaded('attachments', AttachmentsResource::collection($this->attachments->where('type','!=',ImageTypeEnum::LOGO))),
+
         ];
     }
 }

@@ -81,6 +81,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/devices', [DeviceController::class, 'listing']);
     Route::get('/centerDevices', [CenterDeviceController::class, 'listing']);
     Route::post('/centerDevices', [CenterDeviceController::class, 'store']);
+    Route::delete('/centerDevices/{id}', [CenterDeviceController::class, 'destroy']);
 
     //end center devices
 

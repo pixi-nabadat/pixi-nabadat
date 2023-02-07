@@ -53,4 +53,16 @@ class CenterDeviceController extends Controller
         }
     }
 
+    public function destroy($id)
+    {
+        try {
+            $result = $this->centerDeviceService->delete($id);
+            if (!$result)
+                return apiResponse(message: trans('lang.not_found'), code: 404);
+            return apiResponse(message: trans('lang.success_operation'), code: 200);
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+    } //end of destroy
+
 }
