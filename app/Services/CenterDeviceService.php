@@ -24,7 +24,11 @@ class CenterDeviceService extends BaseService
     public function store(array $data = [])
     {
         $data['center_id'] = Auth::user()->center_id;
-        $centerDevice = CenterDevice::create($data);
+        $centerDevice = CenterDevice::find($data['device_id']);
+        if(!$centerDevice)
+            $centerDevice = CenterDevice::create($data);
+        else
+            $centerDevice->update($data);
         return $centerDevice;
     }
 
