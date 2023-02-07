@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CenterController;
 use App\Http\Controllers\Api\CenterPackageController;
+use App\Http\Controllers\Api\DeviceController;
 use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\NabadatHistoryController;
@@ -75,6 +76,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('devices', [NabadatHistoryController::class, 'store']);
 
     });
+    //start center devices
+    Route::get('/devices', [DeviceController::class, 'listing']);
+    //end center devices
+
     // start rates
     Route::group(['prefix' => 'rate'], function () {
         Route::post('/', [RatesController::class, 'store']);
