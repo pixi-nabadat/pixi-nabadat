@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CancelReasonController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CenterController;
+use App\Http\Controllers\Api\CenterDeviceController;
 use App\Http\Controllers\Api\CenterPackageController;
 use App\Http\Controllers\Api\DeviceController;
 use App\Http\Controllers\Api\DoctorController;
@@ -78,6 +79,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
     //start center devices
     Route::get('/devices', [DeviceController::class, 'listing']);
+    Route::get('/centerDevices', [CenterDeviceController::class, 'listing']);
+    Route::post('/centerDevices', [CenterDeviceController::class, 'store']);
+
     //end center devices
 
     // start rates

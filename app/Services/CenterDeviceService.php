@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\CenterDevice;
 use App\QueryFilters\CenterDevicesFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class CenterDeviceService extends BaseService
 {
@@ -18,6 +19,13 @@ class CenterDeviceService extends BaseService
     {
         $centerDevices = CenterDevice::query()->with($withRelation);
         return $centerDevices->filter(new CenterDevicesFilter($where_condition));
+    }
+
+    public function store(array $data = [])
+    {
+        $data['center_id'] = Auth::user()->center_id;
+        $centerDevice = CenterDevice::create($data);
+        return $centerDevice;
     }
 
     public function update(int $id, array $data = []): bool
