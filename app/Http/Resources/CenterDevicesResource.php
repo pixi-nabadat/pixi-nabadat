@@ -14,6 +14,12 @@ class CenterDevicesResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'center'=> $this->whenLoaded('center') ? new CenterResource($this->center):[],
+            'device'=> $this->whenLoaded('device') ? new DeviceResource($this->device):[],
+            'regular_price'=> $this->regular_price,
+            'auto_service_price'=>$this->auto_service_rice,
+            'number_of_devices'=>$this->number_of_devices,
+        ];
     }
 }
