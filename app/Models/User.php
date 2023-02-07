@@ -167,4 +167,9 @@ class User extends Authenticatable
         }
     }
 
+    
+    public function reservation(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Reservation::class,'user_id');
+    }
 }

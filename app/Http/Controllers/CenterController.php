@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\CentresDataTable;
+use App\Events\PushEvent;
 use App\Http\Requests\StoreCenterRequest;
 use App\Http\Requests\UpdateCenterRequest ;
+use App\Models\FcmMessage;
 use App\Models\Location;
 use App\Services\CenterService;
 use App\Services\LocationService;
@@ -46,12 +48,13 @@ class CenterController extends Controller
     {
         try {
             DB::beginTransaction();
-            $this->centerService->store($request->validated());
+            $center = $this->centerService->store($request->validated());
             $toast = [
                 'title' => trans('lang.success'),
                 'message' => trans('lang.center_created_successfully')
             ];
             DB::commit();
+            event(new PushEvent($center,FcmMessage::DEAL_WITH_NEW_CENTER));
             return redirect()->route('centers.index')->with('toast', $toast);
         } catch (\Exception $exception) {
             $toast = [

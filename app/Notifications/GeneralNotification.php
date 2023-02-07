@@ -16,9 +16,10 @@ class GeneralNotification extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public $notification_data ;
+    public function __construct($notification_data)
     {
-        //
+        $this->notification_data = $notification_data ;
     }
 
     /**
@@ -41,9 +42,10 @@ class GeneralNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-        'url' => $this->data['url'],
-        'title' => $this->data['title'],
-        'message' => $this->data['message'],
+        'model_id' => $this->notification_data['model_id'],
+        'title' => $this->notification_data['title'],
+        'message' => $this->notification_data['message'],
+        'type' => $this->notification_data['type'],
     ];
     }
 }

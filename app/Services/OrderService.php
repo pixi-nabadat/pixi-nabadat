@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enum\NotificationTypeEnum;
 use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
 use App\Models\CouponUsage;
@@ -10,17 +11,16 @@ use App\Models\User;
 use App\QueryFilters\OrdersFilter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class OrderService extends BaseService
 {
 
-    public function listing($filters=[],$withRelations=[])
+    public function listing($filters = [], $withRelations = [])
     {
-        $perPage = config('app.perPage')??10;
-        return $this->queryGet($filters,$withRelations)->cursorPaginate($perPage);
+        $perPage = config('app.perPage') ?? 10;
+        return $this->queryGet($filters, $withRelations)->cursorPaginate($perPage);
     }
-    
+
     public function getAll(array $where_condition = [], array $withRelations = [])
     {
         $orders = $this->queryGet($where_condition, $withRelations);
@@ -54,7 +54,7 @@ class OrderService extends BaseService
 
         $this->setOrderItems($order, $order_data);
         $this->createOrderHistory($order);
-        $this->updateCouponUsage($user->id,$order_data['temp_user_id'],optional($order_data->coupon)->id);
+        $this->updateCouponUsage($user->id, $order_data['temp_user_id'], optional($order_data->coupon)->id);
         return $order->load('items.product.defaultLogo', 'history');
     }
 
@@ -80,11 +80,11 @@ class OrderService extends BaseService
         $order->update(['order_history_id' => $order_history->id]);
     }
 
-    private function updateCouponUsage($user_id , $temp_user_id, $coupon_id=null)
+    private function updateCouponUsage($user_id, $temp_user_id, $coupon_id = null)
     {
         if (!isset($coupon_id))
-            return ;
-        $coupon_usage = CouponUsage::query()->where('temp_user_id',$temp_user_id )->where('coupon_id', $coupon_id)->first();
+            return;
+        $coupon_usage = CouponUsage::query()->where('temp_user_id', $temp_user_id)->where('coupon_id', $coupon_id)->first();
         $old_usage = optional($coupon_usage)->number_of_usage ?? 0;
         CouponUsage::query()->updateOrCreate([
             'temp_user_id' => $temp_user_id,
@@ -107,11 +107,27 @@ class OrderService extends BaseService
 
         //set user points
         if ($data['status'] == Order::DELIVERED)
-            User::setPoints($order->user(), amount: (float)$order->grand_total, amountType: 'cash');
+            User::setPoints($order->user(), amount: (float)$order->grand_total);
     }
 
     public function find(int $id, $with_relation = [])
     {
         return Order::activeOrder()->with($with_relation)->find($id);
+    }
+
+    public function notifiyUser(Order $order)
+    {
+        return [
+            'model_id' => $order->id,
+            'title' => [
+                'ar' => 'test',
+                'en' => 'test',
+            ],
+            'message' => [
+                'ar' => 'test',
+                'en' => 'test',
+            ],
+            'type' => NotificationTypeEnum::ORDER
+        ];
     }
 }
