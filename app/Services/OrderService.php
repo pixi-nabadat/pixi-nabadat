@@ -107,7 +107,7 @@ class OrderService extends BaseService
 
         //set user points
         if ($data['status'] == Order::DELIVERED)
-            User::setPoints($order->user(), amount: (float)$order->grand_total);
+            User::setPoints($order->user, amount: (float)$order->grand_total);
     }
 
     public function find(int $id, $with_relation = [])
