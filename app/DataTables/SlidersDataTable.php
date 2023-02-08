@@ -51,13 +51,18 @@ class SlidersDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::make('order'),
+            Column::make('order')
+            ->title(trans('lang.order')),
             Column::make('package_id')
-            ->title(trans('package_name')),
-            Column::make('start_date'),
-            Column::make('end_date'),
-            Column::make('is_active'),
+            ->title(trans('lang.package_name')),
+            Column::make('start_date')
+            ->title(trans('lang.start_date')),
+            Column::make('end_date')
+            ->title(trans('lang.end_date')),
+            Column::make('is_active')
+            ->title(trans('lang.status')),
             Column::computed('action')
+            ->title(trans('lang.action'))
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)

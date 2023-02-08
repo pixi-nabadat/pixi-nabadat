@@ -75,23 +75,24 @@ class InvoicesDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::make('center'),
+            Column::make('center')
+                ->title(trans('lang.center')),
             Column::make('total_center_dues')
-            ->title('center_dues')
-            ->searchable(false)
-            ->orderable(false),
+                ->title(trans('lang.center_dues'))
+                ->searchable(false)
+                ->orderable(false),
             Column::make('total_nabadat_dues')
-                ->title('nabadat_dues')
+                ->title(trans('lang.nabadat_dues'))
                 ->searchable(false)
                 ->orderable(false),
             Column::make('completed_date')
-                ->title('completed_date'),
+                ->title(trans('lang.completed_date')),
             Column::computed('status')
-                ->title(trans('status'))
+                ->title(trans('lang.status'))
                 ->width(60)
                 ->addClass('text-center'),
             Column::computed('action')
-                ->title(trans('status'))
+                ->title(trans('lang.action'))
                 ->width(60)
                 ->addClass('text-center'),
         ];
