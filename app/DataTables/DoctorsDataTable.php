@@ -92,9 +92,11 @@ class DoctorsDataTable extends DataTable
                 ->searchable(false)
                 ->orderable(false),
             Column::computed('is_active')
+                ->title(trans('lang.status'))
                 ->exportable(false)
                 ->printable(false),
             Column::computed('action')
+                ->title(trans('lang.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->addClass('text-center'),

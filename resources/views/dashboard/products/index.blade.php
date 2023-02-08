@@ -22,20 +22,20 @@
                         <form class="needs-validation datatables_parameters" novalidate="">
                             <div class="row g-3">
                                 <div class="col-md-4">
-                                    <label class="form-label" for="validationCustom01">status</label>
+                                    <label class="form-label" for="validationCustom01">@lang('lang.status')</label>
                                     <select class="form-select" name="test" id="validationCustom01" required="">
                                         <option  disabled="" value="">Choose...</option>
                                         <option value="1" selected="">eslam</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label" for="validationCustom02">Last name</label>
+                                    <label class="form-label" for="validationCustom02">@lang('lang.last_name')</label>
                                     <input class="form-control" name="tttttt" id="validationCustom02" type="text" value="Otto"
                                            required="">
                                     <div class="valid-feedback">Looks good!</div>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <label class="form-label" for="validationCustomUsername">Username</label>
+                                    <label class="form-label" for="validationCustomUsername">@lang('lang.user_name')</label>
                                     <div class="input-group"><span class="input-group-text"
                                                                    id="inputGroupPrepend">@</span>
                                         <input class="form-control" name="ttttttttttttttttt" id="validationCustomUsername" type="text"
