@@ -28,6 +28,8 @@ class CenterResource extends JsonResource
             'rate'                          => $this->rate ,
             'lat'                           => $this->lat ,
             'lng'                           => $this->lng,
+            'pulse_price'                   => $this->pulse_price,
+            'app_discount'                  => $this->app_discount,
             'support_payments'              => $this->support_payments,
             'avg_waiting_time'              => $this->avg_waiting_time,
             'google_map_url'                => $this->google_map_url,
