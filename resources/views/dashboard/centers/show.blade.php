@@ -83,6 +83,12 @@
                             <p class="form-control" id="avg_waiting_time">{{ $center->getTranslation('description', 'en') }}</p>
                         </div>
 
+                        {{-- pulse_price --}}
+                        <div class="col-md-12 d-flex my-3">
+                            <label class="form-label col-3" for="pulse_price">{{ trans('lang.pulse_price') }}</label>
+                            <p class="form-control" id="pulse_price">{{ $center->pulse_price }}</p>
+                        </div>
+
                         {{-- app_discount --}}
                         <div class="col-md-12 d-flex my-3">
                             <label class="form-label col-3" for="app_discount">{{ trans('lang.app_discount') }}</label>

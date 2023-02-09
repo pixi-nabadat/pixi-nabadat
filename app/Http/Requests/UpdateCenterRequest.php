@@ -50,6 +50,7 @@ class UpdateCenterRequest extends BaseRequest
             'featured'                => 'nullable|string',
             'support_payments'        => 'array|min:1',
             'support_payments.*'      => 'string|in:'.PaymentMethodEnum::CREDIT.','.PaymentMethodEnum::CASH,
+            'pulse_price'             => 'required|numeric',
             'app_discount'            => 'required|numeric',
             'google_map_url'          => 'string|nullable',
         ];
