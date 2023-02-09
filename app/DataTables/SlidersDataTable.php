@@ -21,8 +21,8 @@ class SlidersDataTable extends DataTable
         ->addColumn('action', function(Slider $slider){
             return view('dashboard.sliders.action',compact('slider'))->render();
         })
-        ->editColumn('package_id', function(Slider $slider){
-            return $slider->package->name ;
+        ->editColumn('center_id', function(Slider $slider){
+            return $slider->center->user->name ;
         })
         
         ->addColumn('is_active', function(Slider $slider){
@@ -52,8 +52,8 @@ class SlidersDataTable extends DataTable
     {
         return [
             Column::make('order'),
-            Column::make('package_id')
-            ->title(trans('package_name')),
+            Column::make('center_id')
+            ->title(trans('lang.center_name')),
             Column::make('start_date'),
             Column::make('end_date'),
             Column::make('is_active'),
