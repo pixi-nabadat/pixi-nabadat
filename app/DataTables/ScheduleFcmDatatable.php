@@ -93,6 +93,7 @@ class ScheduleFcmDatatable extends DataTable
                 ->searchable(false)
                 ->orderable(false),
             Column::computed('action')
+                ->title(trans('lang.action'))
                 ->width(60)
                 ->addClass('text-center'),
         ];

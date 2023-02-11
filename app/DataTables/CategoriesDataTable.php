@@ -74,9 +74,12 @@ class CategoriesDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::make('name'),
+            
+            Column::make('name')
+            ->title(trans('lang.name')),
 
             Column::make('created_at')
+                ->title(trans('lang.created_at'))
                 ->searchable(false)
                 ->orderable(false),
 
@@ -86,6 +89,7 @@ class CategoriesDataTable extends DataTable
                 ->orderable(false),
 
             Column::computed('action')
+                  ->title(trans('lang.action'))
                   ->width(60)
                   ->addClass('text-center'),
         ];

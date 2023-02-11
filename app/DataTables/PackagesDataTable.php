@@ -56,7 +56,8 @@ class PackagesDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::make('name'),
+            Column::make('name')
+            ->title(trans('lang.name')),
             [
                 'data' => 'center_id',
                 'name' => 'center_id',
@@ -67,20 +68,28 @@ class PackagesDataTable extends DataTable
                 'data' => 'center_phone',
                 'title' => 'center_phone'
             ],
-            Column::make('num_nabadat'),
-            Column::make('price'),
+            Column::make('num_nabadat')
+            ->title(trans('lang.num_nabadat')),
+            Column::make('price')
+            ->title(trans('lang.price')),
             Column::make('start_date')
+            ->title(trans('lang.start_date'))
                 ->searchable(false)
                 ->orderable(false),
             Column::make('end_date')
+            ->title(trans('lang.end_date'))
                 ->searchable(false)
                 ->orderable(false),
-            Column::make('discount_percentage'),
-            Column::make('status'),
+            Column::make('discount_percentage')
+            ->title(trans('lang.discount_percentage')),
+            Column::make('status')
+            ->title(trans('lang.status')),
             Column::make('is_active')
+                ->title(trans('lang.is_active'))
                 ->searchable(false)
                 ->orderable(false),
             Column::computed('action')
+                ->title(trans('lang.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)

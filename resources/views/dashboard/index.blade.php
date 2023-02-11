@@ -89,7 +89,7 @@
                     <div class="card-body">
                         <div class="media static-top-widget">
                             <div class="media-body">
-                                <h6 class="font-roboto">Earnings</h6>
+                                <h6 class="font-roboto">@lang('lang.earnings')</h6>
                                 <h4 class="mb-0 counter">6659</h4>
                             </div>
                             <svg class="fill-secondary" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -110,7 +110,7 @@
             <div class="col-xl-6 col-md-12 box-col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Bar Chart</h5>
+                        <h5>@lang('lang.bar_chart')</h5>
                     </div>
                     <div class="card-body chart-block">
                         <canvas id="myBarGraph"></canvas>
@@ -120,7 +120,7 @@
             <div class="col-xl-6 col-md-12 box-col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Line Graph</h5>
+                        <h5>@lang('lang.line_graph')</h5>
                     </div>
                     <div class="card-body chart-block">
                         <canvas id="myGraph"></canvas>
@@ -130,7 +130,7 @@
             <div class="col-xl-6 col-md-12 box-col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Line Chart</h5>
+                        <h5>@lang('lang.line_chart')</h5>
                     </div>
                     <div class="card-body chart-block">
                         <canvas id="myLineCharts"></canvas>
@@ -140,7 +140,7 @@
             <div class="col-xl-6 col-md-12 box-col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Doughnut Chart</h5>
+                        <h5>@lang('lang.doughnut_chart')</h5>
                     </div>
                     <div class="card-body chart-block chart-vertical-center">
                         <canvas id="myDoughnutGraph"></canvas>

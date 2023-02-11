@@ -81,14 +81,22 @@ class OrdersDataTable extends DataTable
                 'name'=>'user_phone',
                 'title'=>'user_phone',
             ],
-            Column::make('shipping_fees'),
-            Column::make('sub_total'),
-            Column::make('grand_total'),
-            Column::make('coupon_discount'),
-            Column::make('payment_method'),
-            Column::make('payment_status'),
-            Column::make('order_status'),
+            Column::make('shipping_fees')
+            ->title(trans('lang.shipping_fees')),
+            Column::make('sub_total')
+            ->title(trans('lang.sub_total')),
+            Column::make('grand_total')
+            ->title(trans('lang.grand_total')),
+            Column::make('coupon_discount')
+            ->title(trans('lang.coupon_discount')),
+            Column::make('payment_method')
+            ->title(trans('lang.payment_method')),
+            Column::make('payment_status')
+            ->title(trans('lang.payment_status')),
+            Column::make('order_status')
+            ->title(trans('lang.order_status')),
             Column::computed('action')
+                ->title(trans('lang.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
