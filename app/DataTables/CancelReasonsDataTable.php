@@ -70,10 +70,14 @@ class CancelReasonsDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::make('reason'),
-            Column::make('created_at'),
-            Column::computed('is_active'),
+            Column::make('reason')
+                ->title(trans('lang.reason')),
+            Column::make('created_at')
+                ->title(trans('lang.created_at')),
+            Column::computed('is_active')
+                ->title(trans('lang.status')),
             Column::computed('action')
+                ->title(trans('lang.action'))
                 ->width(60)
                 ->addClass('text-center'),
         ];

@@ -81,10 +81,6 @@ class Center extends Model
             ->withPivot(['id', 'regular_price', 'nabadat_app_price','auto_service_price','number_of_devices'])->withTimestamps();
     }
 
-    public function centerFinancial(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(CenterFinance::class, 'center_id');
-    }
     /**
      * @param Center $center
      * @param float $amount

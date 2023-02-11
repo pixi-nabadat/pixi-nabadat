@@ -26,7 +26,7 @@ class CenterDeviceDataTable extends DataTable
                 return view('dashboard.centerDevices.action', compact('centerDevice'))->render();
             })
             ->editColumn('center_id', function (CenterDevice $centerDevice) {
-                return $centerDevice->center->name;
+                return $centerDevice->center->user->name;
             })
             ->addColumn('device_id', function (CenterDevice $centerDevice) {
                 return $centerDevice->device->name;
@@ -92,6 +92,7 @@ class CenterDeviceDataTable extends DataTable
                 ->searchable(false)
                 ->orderable(false),
             Column::computed('action')
+                ->title(trans('lang.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)

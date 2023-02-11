@@ -29,7 +29,7 @@ class CentresDataTable extends DataTable
                 return view('dashboard.components.switch-featured-btn',['model'=>$center,'url'=>route('centers.featured')])->render();
             })
             ->editColumn('is_active', function (Center $center) {
-                return  view('dashboard.components.switch-btn',['model'=>$center->user,'url'=>route('centers.changeStatus')]);
+                return  view('dashboard.components.switch-btn',['model'=>$center,'url'=>route('centers.changeStatus')]);
             })
             ->editColumn('is_support_auto_service', function (Center $center) {
                 return  view('dashboard.components.switch-support-auto-service-btn',['model'=>$center,'url'=>route('centers.support-auto-service.changeStatus')]);
@@ -74,17 +74,21 @@ class CentresDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::make('name'),
-            Column::make('address'),
+            Column::make('name')
+                ->title(trans('lang.name')),
+            Column::make('address')
+                ->title(trans('lang.address')),
             Column::make('phones')
                 ->searchable(false)
-                ->orderable(false),
+                ->orderable(false)
+                ->title(trans('lang.phones')),
             Column::make('app_discount')
                 ->title(trans('lang.discount')."%")
                 ->searchable(false)
                 ->orderable(false),
             Column::make('featured')
                 ->searchable(false)
+                ->title(trans('lang.featured'))
                 ->orderable(false),
             Column::make('is_support_auto_service')
                 ->title(trans('lang.auto_service'))
@@ -95,6 +99,7 @@ class CentresDataTable extends DataTable
                 ->searchable(false)
                 ->orderable(false),
             Column::computed('action')
+                ->title(trans('lang.action'))
                 ->width(60),
         ];
     }

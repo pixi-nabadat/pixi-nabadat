@@ -6,6 +6,7 @@ use App\Exceptions\NotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
+use App\Http\Resources\AppointmentsResource;
 use App\Http\Resources\WeekDaysResource;
 use App\Models\Appointment;
 use App\Services\AppointmentService;
@@ -17,27 +18,43 @@ class AppointmentController extends Controller
     {
     }
 
-    public function index(): \Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response|array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function index()
     {
         if (!isset(auth()->user()->center_id))
             return apiResponse(message: trans('lang.center_not_found'));
         $filters = ['center_id'=>auth()->user()->center_id];
         $center_appointments= $this->appointmentService->getAll($filters);
-        return  apiResponse(data: $center_appointments);
+        return  AppointmentsResource::collection($center_appointments);
+    }
+
+    public function getAppointmentsForCenter($center_id)
+    {
+        $filters = ['center_id'=>$center_id];
+        $center_appointments= $this->appointmentService->getAll($filters);
+        return  AppointmentsResource::collection($center_appointments);
+    }
+
+    public function getReservationAppointmentsForCenter($id)
+    {
+        $filters = ['center_id'=>$id];
+        $center_appointments= $this->appointmentService->getAll($filters);
+        $days_of_week = $center_appointments->pluck('day_of_week')->toArray();
+        return  apiResponse(getReservationDates($days_of_week));
     }
 
     public function store(StoreAppointmentRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-
-            $data = $request->validated();
+            $center_id = auth()->user()->center_id ;
+            if (is_null($center_id))
+                throw new NotFoundException(trans('lang.center_not_found'));
             $inserted_data = [
-                'day_of_week' => $data['day'],
-                'day_text' => Arr::except((Appointment::WEEKDAYS)[$data['day']], 'day_of_week'),
+                'day_of_week' =>$request->day,
+                'day_text' => Appointment::WEEKDAYS[$request->day],
                 'is_active' => true,
-                'center_id' => $data['center_id'],
-                'from' => $data['from'],
-                'to' => $data['to'],
+                'center_id' => auth()->user()->center_id,
+                'from' =>$request->from,
+                'to' => $request->to,
             ];
             $this->appointmentService->create($inserted_data);
             return apiResponse(message: trans('lang.created_successfully'));

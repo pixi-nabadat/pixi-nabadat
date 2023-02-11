@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
             $table->integer('order');
-            $table->foreignIdFor(\App\Models\Package::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->time('duration');
+            $table->foreignIdFor(\App\Models\Center::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('duration')->nullable();
             $table->date('start_date');
             $table->date('end_date');
             $table->boolean('is_active');

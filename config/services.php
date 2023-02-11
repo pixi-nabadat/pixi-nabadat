@@ -36,5 +36,7 @@ return [
         'integration_id' => env('PAYMOB_INTEGRATION_ID'),
         'iframe_url' => env('IFRAME_URL')
     ],
-
+    'fcm' => [
+        'key' => env('FCM_SECRET_KEY')
+    ]
 ];

@@ -20,6 +20,7 @@ use App\Http\Controllers\APi\ReservationController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 use App\Http\Controllers\Api\RestPasswordController;
 use App\Http\Controllers\Api\UserPackageController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\SliderController;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,9 @@ Route::group(['prefix' => 'auth'], function () {
 
 });
 
+Route::group(['prefix' => 'fcm'],function (){
+    Route::post('send-to-tokens',[\App\Http\Controllers\Api\NotificationController::class,'sendFcmToToken']);
+});
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('week-days', [AppointmentController::class, 'getWeekDays']); // all reservations for center
@@ -54,6 +58,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::patch('doctors/{doctorId}', [DoctorController::class, 'update']);
         Route::get('cancel-reasons', [CancelReasonController::class, 'listing']);
         Route::apiResource('appointments', AppointmentController::class);
+    });
+
+//start notifications routes
+    Route::group(['prefix' => 'notifications'],function (){
+        Route::get('/',[NotificationController::class,'getNotifications']);
+        Route::get('/{id}/mark-as-read',[NotificationController::class,'getNotifications']);
     });
 
     Route::group(['prefix' => 'reservations'], function () {
@@ -123,6 +133,7 @@ Route::get('locations/governorates', [LocationController::class, 'getAllGovernor
 Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);
 
 Route::resource('centers', CenterController::class);
+Route::get('centers/{id}/reservation-appointments', [AppointmentController::class,'getReservationAppointmentsForCenter'])->name('api.center-reservation.appointments');
 
 //start user packages
 Route::get('userPackages/listing', [UserPackageController::class, 'userPackagesListing']);
