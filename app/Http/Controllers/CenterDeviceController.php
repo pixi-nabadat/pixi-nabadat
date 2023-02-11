@@ -46,4 +46,28 @@ class CenterDeviceController extends Controller
         }
     } //end of update
 
+    public function autoService(Request $request)
+    {
+        try {
+            $result = $this->centerDeviceService->autoService($request->id);
+            if (!$result)
+                return apiResponse(message: trans('lang.not_found'), code: 404);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+    } //end of autoService
+
+    public function status(Request $request)
+    {
+        try {
+            $result = $this->centerDeviceService->status($request->id);
+            if (!$result)
+                return apiResponse(message: trans('lang.not_found'), code: 404);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+    } //end of status
+
 }
