@@ -28,7 +28,7 @@ class Center extends Model
 
     protected $fillable = [
         'lat','lng','is_support_auto_service','address','description','phones',
-        'google_map_url','avg_waiting_time','featured', 'rate', 'support_payments','pulse_price','app_discount',
+        'google_map_url','avg_waiting_time','featured', 'rate', 'support_payments','pulse_price','pulse_discount','app_discount',
     ];
 
     protected $casts = [

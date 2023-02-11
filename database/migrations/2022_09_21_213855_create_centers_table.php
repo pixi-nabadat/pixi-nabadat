@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('google_map_url')->nullable();
             $table->double('rate')->default(0.0);
             $table->double('pulse_price');
+            $table->double('pulse_discount');
             $table->double('app_discount');
             $table->string('support_payments')->default(PaymentMethodEnum::CASH);
             $table->timestamps();

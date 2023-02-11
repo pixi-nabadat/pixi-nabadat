@@ -89,6 +89,12 @@
                             <p class="form-control" id="pulse_price">{{ $center->pulse_price }}</p>
                         </div>
 
+                        {{-- pulse_discount --}}
+                        <div class="col-md-12 d-flex my-3">
+                            <label class="form-label col-3" for="pulse_discount">{{ trans('lang.pulse_discount') }}</label>
+                            <p class="form-control" id="pulse_discount">{{ $center->pulse_discount }}</p>
+                        </div>
+
                         {{-- app_discount --}}
                         <div class="col-md-12 d-flex my-3">
                             <label class="form-label col-3" for="app_discount">{{ trans('lang.app_discount') }}</label>

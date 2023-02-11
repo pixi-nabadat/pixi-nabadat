@@ -86,6 +86,10 @@ class CentresDataTable extends DataTable
                 ->title(trans('lang.pulse_price'))
                 ->searchable(false)
                 ->orderable(false),
+            Column::make('pulse_discount')
+                ->title(trans('lang.pulse_discount'))
+                ->searchable(false)
+                ->orderable(false),
             Column::make('app_discount')
                 ->title(trans('lang.discount')."%")
                 ->searchable(false)

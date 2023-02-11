@@ -84,6 +84,7 @@ class CenterService extends BaseService
             'avg_waiting_time'=>$data['avg_waiting_time'],
             'support_payments'=> $data['support_payments'],
             'pulse_price'=>$data['pulse_price'],
+            'pulse_discount'=>$data['pulse_discount'],
             'app_discount'=>$data['app_discount'],
             'lat'=>$data['lng'],
             'lng'=>$data['lng'],

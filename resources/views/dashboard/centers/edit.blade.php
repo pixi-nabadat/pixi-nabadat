@@ -151,6 +151,17 @@
                                     @enderror
                                 </div>
 
+                                {{-- pulse_discount --}}
+                                <div class="col-md-6 my-3">
+                                    <div class="col-form-label">{{ trans('lang.pulse_discount') }}</div>
+                                    <input type="number" name="pulse_discount" step="0.1"
+                                        class="form-control @error('pulse_discount') is-invalid @enderror"
+                                        value="{{ $center->pulse_discount }}">
+                                    @error('pulse_discount')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
                                 {{-- app_discount --}}
                                 <div class="col-md-6 my-3">
                                     <div class="col-form-label">{{ trans('lang.app_discount') }}</div>

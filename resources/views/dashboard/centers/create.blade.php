@@ -144,6 +144,16 @@
                                     @enderror
                                 </div>
 
+                                {{-- pulse_discount --}}
+                                <div class="col-md-6 mb-3">
+                                    <div class="col-form-label">{{ trans('lang.pulse_discount') }}</div>
+                                    <input type="number" name="pulse_discount" step="0.1"
+                                           class="form-control @error('pulse_discount') is-invalid @enderror">
+                                    @error('pulse_discount')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
                                 {{-- app_discount --}}
                                 <div class="col-md-6 mb-3">
                                     <div class="col-form-label">{{ trans('lang.app_discount') }}</div>
@@ -181,7 +191,7 @@
                                                 <input name="support_payments[]"
                                                 @error('support_payments.credit') is-invalid @enderror
                                                 id="support_payments_credit"
-                                                type="checkbox" value="{{\App\Enum\PaymentMethodEnum::CREDIT}}"><span class="switch-state"></span>
+                                                type="checkbox" checked value="{{\App\Enum\PaymentMethodEnum::CREDIT}}"><span class="switch-state"></span>
                                             </label>
                                         </div>
                                         @error('support_payments.credit')
