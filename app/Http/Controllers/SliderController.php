@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\SlidersDataTable;
+use App\Http\Requests\CenterDeviceUpdateRequest;
 use App\Http\Requests\SliderStoreRequest;
 use App\Http\Requests\SliderStoreRequest as SliderUpdateRequest;
-use App\Services\PackageService;
+use App\Services\CenterService;
 use App\Services\SliderService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SliderController extends Controller
 {
-    public function __construct(private SliderService $sliderService, protected PackageService $packageService)
+    public function __construct(private SliderService $sliderService, private CenterService $centerService)
     {
 
     }
@@ -21,7 +22,7 @@ class SliderController extends Controller
     {
 
         $filters = $request->all();
-        $withRelations = ['package'];
+        $withRelations = ['center'];
         return $dataTable->with(['filters' => $filters, 'withRelations' => $withRelations])->render('dashboard.sliders.index');
 
     }//end of index
@@ -33,14 +34,14 @@ class SliderController extends Controller
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.slider_not_found')];
             return back()->with('toast', $toast);
         }
-        $packages = $this->packageService->getAll();
-        return view('dashboard.sliders.edit', compact('slider', 'packages'));
+        $centers = $this->centerService->getAll();
+        return view('dashboard.sliders.edit', compact('slider', 'centers'));
     }//end of edit 
 
     public function create()
     {
-        $packages = $this->packageService->getAll();
-        return view('dashboard.sliders.create', compact('packages'));
+        $centers = $this->centerService->getAll();
+        return view('dashboard.sliders.create', compact('centers'));
     }//end of create
 
     public function store(SliderStoreRequest $request)

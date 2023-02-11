@@ -12,11 +12,11 @@ class Slider extends Model
     use HasFactory, Filterable;
 
     //        'duration',
-    protected $fillable = ['order', 'package_id', 'start_date', 'end_date', 'is_active',];
+    protected $fillable = ['order', 'center_id', 'start_date', 'end_date', 'is_active',];
 
 
-    public function package(): BelongsTo
+    public function center(): BelongsTo
     {
-        return $this->belongsTo(Package::class);
+        return $this->belongsTo(Center::class);
     }
 }
