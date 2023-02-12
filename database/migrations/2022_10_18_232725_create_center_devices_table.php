@@ -21,6 +21,7 @@ return new class extends Migration
             $table->float('nabadat_app_price')->nullable();
             $table->float('auto_service_price')->nullable()->default(0);
             $table->integer('number_of_devices');
+            $table->double('rate')->default(0.0);
             $table->timestamps();
         });
     }

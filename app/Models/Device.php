@@ -16,16 +16,11 @@ class Device extends Model
     const SEARCHFLAG = 3 ;
 
     public $translatable =['name','description'];
-    protected $fillable  =['name','description','is_active', 'rate'];
+    protected $fillable  =['name','description','is_active'];
 
     public function center(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Center::class);
-    }
-
-    public function rates(): \Illuminate\Database\Eloquent\Relations\MorphMany
-    {
-        return $this->morphMany(Rate::class, 'ratable');
     }
 
     public function getSearchFlagTextAttribute(): string
