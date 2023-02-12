@@ -24,7 +24,7 @@ class CenterDevicesTableSeeder extends Seeder
        CenterDevice::create([
            'center_id'=>Center::first()->id,
            'device_id'=>Device::first()->id,
-           'auto_service'=>1,
+           'is_support_auto_service'=>1,
            'is_active'=>1,
            'number_of_devices'=>3
         ]);

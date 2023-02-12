@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\CenterDevice;
 use App\QueryFilters\CenterDevicesFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Auth;
 
 class CenterDeviceService extends BaseService
 {
@@ -21,16 +20,16 @@ class CenterDeviceService extends BaseService
         return $centerDevices->filter(new CenterDevicesFilter($where_condition));
     }
 
-    public function store(array $data = [])
+    public function update(int $id, array $data = []): bool
     {
-        $data['center_id'] = Auth::user()->center_id;
-        $centerDevice = $this->find($data['device_id']);
-        if(!$centerDevice)
-            $centerDevice = CenterDevice::create($data);
-        else
+        $centerDevice = $this->find($id);
+        if ($centerDevice) {
+            $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ? 1 : 0;
+            $data['is_active'] = isset($data['is_active']) ? 1 : 0;
             $centerDevice->update($data);
-        return $centerDevice;
-    }
+        }
+        return false;
+    } //end of find
 
     public function find(int $id)
     {
@@ -47,10 +46,27 @@ class CenterDeviceService extends BaseService
         $centerDevice = $this->find($id);
         if(!$centerDevice)
         {
-            return false;   
+            return false;
         }else{
             $centerDevice->delete();
             return true;
         }
     }
+
+    public function supportAutoService($id): bool
+    {
+        $centerDevice = $this->find($id);
+        $centerDevice->is_support_auto_service = !$centerDevice->is_support_auto_service;
+        return $centerDevice->save();
+
+    }//end of is_support_auto_service
+
+    public function status($id): bool
+    {
+        $centerDevice = $this->find($id);
+        $centerDevice->is_active = !$centerDevice->is_active;
+        return $centerDevice->save();
+
+    }//end of status
+
 }

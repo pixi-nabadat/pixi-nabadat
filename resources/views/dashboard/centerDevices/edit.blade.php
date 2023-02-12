@@ -34,32 +34,41 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                {{-- regular_price --}}
-                                <div class="col-md-6  my-3">
-                                    <label class="form-label" for="regular_price">@lang('lang.regular_price')</label>
-                                    <input type="number" name="regular_price" value={{ $centerDevice->regular_price }}  step="0.01"
-                                        class="form-control @error('regular_price') is-invalid @enderror">
-                                    @error('regular_price')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                {{-- is_support_auto_service --}}
+                                <div class="col-md-12 d-flex">
+                                    <div class="media mb-2">
+                                        <label
+                                            class="col-form-label m-r-10" for="is_support_auto_service">{{ trans('lang.is_support_auto_service') }}</label>
+                                        <div class="media-body  icon-state">
+                                            <label class="switch">
+                                                <input name="is_support_auto_service"
+                                                @error('is_support_auto_service') is-invalid @enderror
+                                                id="is_support_auto_service"
+                                                type="checkbox" {{ $centerDevice->is_support_auto_service ? "checked":"" }}><span class="switch-state"></span>
+                                            </label>
+                                        </div>
+                                        @error('is_support_auto_service')
+                                            <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-                                {{-- nabadat_app_price --}}
-                                <div class="col-md-6  my-3">
-                                    <label class="form-label" for="nabadat_app_price">@lang('lang.nabadat_app_price')</label>
-                                    <input type="number" name="nabadat_app_price" value={{ $centerDevice->nabadat_app_price }}  step="0.01"
-                                        class="form-control @error('nabadat_app_price') is-invalid @enderror">
-                                    @error('nabadat_app_price')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                {{-- auto_service_price --}}
-                                <div class="col-md-6  my-3">
-                                    <label class="form-label" for="auto_service_price">@lang('lang.auto_service_price')</label>
-                                    <input type="number" name="auto_service_price"  value={{ $centerDevice->auto_service_price }}  step="0.01"
-                                        class="form-control @error('auto_service_price') is-invalid @enderror">
-                                    @error('auto_service_price')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
+                                {{-- is_active --}}
+                                <div class="col-md-12 d-flex">
+                                    <div class="media mb-2">
+                                        <label
+                                            class="col-form-label m-r-10" for="is_active">{{ trans('lang.is_active') }}</label>
+                                        <div class="media-body  icon-state">
+                                            <label class="switch">
+                                                <input name="is_active"
+                                                @error('is_active') is-invalid @enderror
+                                                id="is_active"
+                                                type="checkbox" {{ $centerDevice->is_active ? "checked":"" }}><span class="switch-state"></span>
+                                            </label>
+                                        </div>
+                                        @error('is_active')
+                                            <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                             <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>

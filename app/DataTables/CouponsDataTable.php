@@ -83,16 +83,22 @@ class CouponsDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::make('code'),
-            Column::make('added_by'),
-            Column::make('discount'),
+            Column::make('code')
+                ->title(trans('lang.code')),
+            Column::make('added_by')
+                ->title(trans('lang.added_by')),
+            Column::make('discount')
+                ->title(trans('lang.discount')),
             Column::make('min_buy')
+                ->title(trans('lang.min_buy'))
                 ->searchable(false)
                 ->orderable(false),
             Column::make('allowed_usage')
+                ->title(trans('lang.allowed_usage'))
                 ->searchable(false)
                 ->orderable(false),
             Column::make('coupon_for')
+                ->title(trans('lang.coupon_for'))
                 ->searchable(false)
                 ->orderable(false),
             Column::make('start_date')
@@ -104,6 +110,7 @@ class CouponsDataTable extends DataTable
                 ->searchable(false)
                 ->orderable(false),
             Column::computed('action')
+                ->title(trans('lang.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
