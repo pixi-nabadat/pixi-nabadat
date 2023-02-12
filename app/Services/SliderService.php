@@ -15,9 +15,15 @@ class SliderService extends BaseService
         return $sliders->get();
     }
 
+    public function listing(array $where_condition = [], array $withRelations = [])
+    {
+        $perPage = config('app.perPage');
+        return $this->queryGet($where_condition, $withRelations)->cursorPaginate($perPage);
+    }
+
     public function queryGet(array $where_condition = [], array $withRelation = []): Builder
     {
-        $sliders = Slider::query()->with($withRelation);
+        $sliders = Slider::query()->orderBy('order')->with($withRelation);
         return $sliders->filter(new SlidersFilter($where_condition));
     }
 

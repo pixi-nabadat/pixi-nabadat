@@ -16,11 +16,7 @@ class SlidersResource extends JsonResource
     {
         return [
             'order'=> $this->order,
-            'center'=> $this->relationLoaded('center') ? new CenterResource($this->center): null,
-            'duration'=> $this->duration,
-            'start_date'=> $this->start_date,
-            'end_date'=> $this->end_date,
-            'is_active'=> $this->is_active,
+            'center'=> $this->center_id,
         ];
     }
 }
