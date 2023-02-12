@@ -31,7 +31,7 @@ class CenterDeviceService extends BaseService
         return false;
     } //end of find
 
-public function find(int $id)
+    public function find(int $id)
     {
 
         $centerDevice = CenterDevice::find($id);
@@ -41,7 +41,7 @@ public function find(int $id)
 
     } //end of update
 
-    public function autoService($id): bool
+    public function supportAutoService($id): bool
     {
         $centerDevice = $this->find($id);
         $centerDevice->is_support_auto_service = !$centerDevice->is_support_auto_service;

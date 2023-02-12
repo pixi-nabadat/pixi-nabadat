@@ -18,7 +18,7 @@ class CenterDeviceController extends Controller
 
     public function index(CenterDeviceDataTable $dataTable, Request $request)
     {
-        $loadRelation = ['center', 'device'];
+        $loadRelation = ['center.user', 'device'];
         return $dataTable->with(['filters' => $request->all(), 'withRelations' => $loadRelation])->render('dashboard.centerDevices.index');
 
     }//end of index
@@ -49,7 +49,7 @@ class CenterDeviceController extends Controller
     public function autoService(Request $request)
     {
         try {
-            $result = $this->centerDeviceService->autoService($request->id);
+            $result = $this->centerDeviceService->supportAutoService($request->id);
             if (!$result)
                 return apiResponse(message: trans('lang.not_found'), code: 404);
             return apiResponse(message: trans('lang.success'));

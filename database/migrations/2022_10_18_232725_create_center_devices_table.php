@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('number_of_devices');
             $table->double('rate')->default(0.0);
             $table->timestamps();
+            $table->unique(["center_id","device_id"],'center_device_unique');
         });
     }
 
