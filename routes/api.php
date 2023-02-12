@@ -79,9 +79,14 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
     //start center devices
     Route::get('/devices', [DeviceController::class, 'listing']);
-    Route::get('/centerDevices', [CenterDeviceController::class, 'listing']);
-    Route::post('/centerDevices', [CenterDeviceController::class, 'store']);
-    Route::delete('/centerDevices/{id}', [CenterDeviceController::class, 'destroy']);
+    Route::group(['prefix' => 'center-devices'],function (){
+        Route::get('/', [CenterDeviceController::class, 'listing']);
+        Route::post('/', [CenterDeviceController::class, 'store']);
+        Route::delete('/{id}', [CenterDeviceController::class, 'destroy']);
+        Route::patch('/{id}/auto-service', [CenterDeviceController::class, 'autoService']);
+        Route::patch('/{id}/status', [CenterDeviceController::class, 'status']);
+
+    });
 
     //end center devices
 
