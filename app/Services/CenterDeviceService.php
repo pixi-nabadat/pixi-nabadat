@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\NotFoundException;
 use App\Models\CenterDevice;
 use App\QueryFilters\CenterDevicesFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -18,6 +19,11 @@ class CenterDeviceService extends BaseService
     {
         $centerDevices = CenterDevice::query()->with($withRelation);
         return $centerDevices->filter(new CenterDevicesFilter($where_condition));
+    }
+
+    public function store(array $data = [])
+    {
+        return CenterDevice::create($data);
     }
 
     public function update(int $id, array $data = []): bool
@@ -40,6 +46,17 @@ class CenterDeviceService extends BaseService
         return false;
 
     } //end of update
+
+    /**
+     * @throws NotFoundException
+     */
+    public function delete(int $id)
+    {
+        $centerDevice = $this->find($id);
+        if (!$centerDevice)
+            throw new NotFoundException(trans('lang.center_device_not_found'));
+        return $centerDevice->delete();
+    }
 
     public function supportAutoService($id): bool
     {

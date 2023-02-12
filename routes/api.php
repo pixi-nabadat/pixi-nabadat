@@ -8,7 +8,9 @@ use App\Http\Controllers\Api\CancelReasonController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CenterController;
+use App\Http\Controllers\Api\CenterDeviceController;
 use App\Http\Controllers\Api\CenterPackageController;
+use App\Http\Controllers\Api\DeviceController;
 use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\NabadatHistoryController;
@@ -75,6 +77,19 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('devices', [NabadatHistoryController::class, 'store']);
 
     });
+    //start center devices
+    Route::get('/devices', [DeviceController::class, 'listing']);
+    Route::group(['prefix' => 'center-devices'],function (){
+        Route::get('/', [CenterDeviceController::class, 'listing']);
+        Route::post('/', [CenterDeviceController::class, 'store']);
+        Route::delete('/{id}', [CenterDeviceController::class, 'destroy']);
+        Route::patch('/{id}/auto-service', [CenterDeviceController::class, 'autoService']);
+        Route::patch('/{id}/status', [CenterDeviceController::class, 'status']);
+
+    });
+
+    //end center devices
+
     // start rates
     Route::group(['prefix' => 'rate'], function () {
         Route::post('/', [RatesController::class, 'store']);
