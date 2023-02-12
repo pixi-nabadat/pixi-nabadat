@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Rate extends Model
 {
     use HasFactory;
-    const PRODUCT = 1 ;
-    const DEVICE = 2 ;
-    const CENTER = 3 ;
+    const PRODUCT        = 1 ;
+    const CENTER_DEVICE  = 2 ;
+    const CENTER         = 3 ;
     const RATABLE_TAYPES = [
-        self::PRODUCT,self::DEVICE,self::CENTER
+        self::PRODUCT,self::CENTER_DEVICE,self::CENTER
     ];
     protected $fillable = ['user_id','status','comment','rate_number','ratable_id','ratable_type'];
 
