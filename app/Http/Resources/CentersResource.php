@@ -17,12 +17,14 @@ class CentersResource extends JsonResource
     {
 
         return [
-            'id'                            => $this->id,
-            'name'                          => $this->whenLoaded('user',$this->user->name),
-            'description'                   => $this->description,
-            'address'                       => $this->address,
-            'logo'                          => $this->whenLoaded('defaultLogo',isset($this->defaultLogo)?asset($this->defaultLogo->path ."/".$this->defaultLogo->filename):null),
-            'rate'                          => $this->rate
+            'id'               => $this->id,
+            'name'             => $this->whenLoaded('user',$this->user->name),
+            'description'      => $this->description,
+            'address'          => $this->address,
+            'logo'             => $this->whenLoaded('defaultLogo',isset($this->defaultLogo)?asset($this->defaultLogo->path ."/".$this->defaultLogo->filename):null),
+            'rate'             => $this->rate,
+            'rate_users_count' => $this->whenLoaded('rates',$this->rates->count()),
+
             ];
     }
 }
