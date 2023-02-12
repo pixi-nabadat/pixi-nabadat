@@ -25,6 +25,8 @@ return new class extends Migration
             $table->boolean('is_support_auto_service')->default(\App\Models\Center::NON_SUPPORT_AUTO_SERVICE);
             $table->string('google_map_url')->nullable();
             $table->double('rate')->default(0.0);
+            $table->double('pulse_price');
+            $table->double('pulse_discount');
             $table->double('app_discount');
             $table->string('support_payments')->default(PaymentMethodEnum::CASH);
             $table->timestamps();

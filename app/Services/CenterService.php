@@ -3,15 +3,11 @@
 namespace App\Services;
 
 use App\Enum\ImageTypeEnum;
-use App\Enum\PaymentMethodEnum;
 use App\Exceptions\NotFoundException;
 use App\Models\Center;
 use App\Models\User;
 use App\QueryFilters\CentersFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
-
 class CenterService extends BaseService
 {
 
@@ -87,6 +83,8 @@ class CenterService extends BaseService
             'description' => $data['description'],
             'avg_waiting_time'=>$data['avg_waiting_time'],
             'support_payments'=> $data['support_payments'],
+            'pulse_price'=>$data['pulse_price'],
+            'pulse_discount'=>$data['pulse_discount'],
             'app_discount'=>$data['app_discount'],
             'lat'=>$data['lng'],
             'lng'=>$data['lng'],
