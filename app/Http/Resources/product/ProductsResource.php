@@ -22,6 +22,7 @@ class ProductsResource extends JsonResource
             'discount_type'         =>$this->discount_type,
             'description'           =>$this->description,
             'rate'                  =>$this->rate,
+            'rate_users_count'      =>$this->whenLoaded('rates',$this->rates->count()),
             'price_after_discount'  =>getPriceAfterDiscount($this->unit_price,$this->product_discount),
             'image'                 =>$this->whenLoaded('defaultLogo',isset($this->defaultLogo)? url($this->defaultLogo->path."\\".$this->defaultLogo->filename):null),
         ];
