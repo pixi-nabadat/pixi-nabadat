@@ -35,12 +35,12 @@
                                 @enderror
                             </div>
                             
-                            {{--packages  --}}
+                            {{--centers  --}}
                             <div class="col-md-12">
-                                <div class="col-form-label col-3">{{ __('lang.package') }}</div>
-                                <select id="package_id" name="package_id" class="js-example-basic-single col-sm-12">
-                                    @foreach ($packages as $package)
-                                        <option value="{{ $package->id }}" {{ $package->id == $slider->package_id ? "selected":"" }}>{{ $package->name }}</option>
+                                <div class="col-form-label col-3">{{ __('lang.center') }}</div>
+                                <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12">
+                                    @foreach ($centers as $center)
+                                        <option value="{{ $center->id }}" {{ $center->id == $slider->center_id ? "selected":"" }}>{{ $center->user->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

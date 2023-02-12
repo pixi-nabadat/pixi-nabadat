@@ -22,4 +22,9 @@ class CenterDevice extends Model
         return $this->belongsTo(Device::class,'device_id');
     }
 
+    public function rates(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Rate::class, 'ratable');
+    }
+
 }

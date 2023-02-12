@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('is_support_auto_service')->default(true);
             $table->boolean('is_active')->default(true);
             $table->integer('number_of_devices');
+            $table->double('rate')->default(0.0);
             $table->timestamps();
         });
     }
