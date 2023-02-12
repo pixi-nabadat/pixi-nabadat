@@ -6,6 +6,7 @@ use App\Enum\ImageTypeEnum;
 use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
 use App\Enum\UserPackageStatusEnum;
+use App\Exceptions\NotFoundException;
 use App\Models\Invoice;
 use App\Models\User;
 use App\QueryFilters\UsersFilter;
@@ -15,9 +16,9 @@ use Illuminate\Database\Eloquent\Builder;
 class UserService extends BaseService
 {
 
-    public function getAll(array $where_condition = [])
+    public function getAll(array $where_condition = [],$withRelations=[]): \Illuminate\Database\Eloquent\Collection|array
     {
-        $users = $this->queryGet($where_condition);
+        $users = $this->queryGet($where_condition,$withRelations);
         return $users->get();
     }
 
@@ -123,4 +124,14 @@ class UserService extends BaseService
         $user->is_active = !$user->is_active;
         return $user->save();
     }//end of status
+
+    public function getAuthUser()
+    {
+        $user =auth()->user();
+        if (!$user)
+            throw new NotFoundException(trans('lang.user_not_found'));
+        else
+            return $user;
+
+    }
 }

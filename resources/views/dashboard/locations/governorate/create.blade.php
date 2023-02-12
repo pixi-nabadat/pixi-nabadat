@@ -23,14 +23,14 @@
 		<div class="col-sm-12">
 			<div class="card">
 				<div class="card-header">
-					<h5>ADD Governorate</h5>
+					<h5>@lang('lang.add_governorate')</h5>
 				</div>
 				<div class="card-body">
 					<form class="needs-validation" novalidate="" method="POST" action="{{ route('governorate.store')}}" >
                         @csrf
 						<div class="row">
 							<div class="col-md-6 mb-3">
-								<label for="validationCustom01">Slug</label>
+								<label for="validationCustom01">@lang('lang.slug')</label>
 								<input name="slug" class="form-control @error('slug') is-invalid @enderror" id="validationCustom01" type="text" placeholder="Slug" required="">
                                 @error('slug')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -51,7 +51,7 @@
                                 @enderror
 							</div>
                             <div class="col-md-6 mb-3">
-                                <div class="col-form-label">Choose Country</div>
+                                <div class="col-form-label">@lang('lang.choose_country')</div>
                                 <select name="parent_id" class="js-example-placeholder-multiple col-sm-12 @error('currency_id') is-invalid @enderror" multiple="multiple">
                                     @foreach ($countries as $country)
                                     <option value="{{$country->id}}">{{$country->title}}</option>

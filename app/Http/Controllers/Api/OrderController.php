@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Enum\PaymentMethodEnum;
+use App\Events\PushEvent;
 use App\Events\OrderCreated;
 use App\Exceptions\BadRequestHttpException;
 use App\Exceptions\NotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderStoreRequest;
 use App\Http\Resources\OrderResource;
+use App\Models\FcmMessage;
+use App\Models\Order;
 use App\Services\AddressService;
 use App\Services\CartService;
 use App\Services\OrderService;
@@ -90,6 +93,11 @@ class OrderController extends Controller
             }
             $this->cartService->emptyCart($request->temp_user_id);
             DB::commit();
+//            store order notification
+              $notification_data = $this->orderService->notifiyUser($order);
+              notifyUser($order->user , $notification_data);
+//            event to fire fcm notification message
+            event(new PushEvent($order,FcmMessage::CREATE_NEW_ORDER));
             return new OrderResource($order);
         }
         catch (BadRequestHttpException $exception){

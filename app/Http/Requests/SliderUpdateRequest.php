@@ -24,8 +24,7 @@ class SliderUpdateRequest extends BaseRequest
     {
         return [
             'order'      => 'required|integer',
-            'package_id' => 'required|integer|exists:packages,id',
-            'duration'   => 'required',
+            'center_id' => 'required|integer|exists:centers,id',
             'start_date' => 'required|date',
             'end_date'   => 'required|date',
             'is_active'  => 'nullable|string',

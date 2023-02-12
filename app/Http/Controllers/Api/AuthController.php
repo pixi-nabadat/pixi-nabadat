@@ -18,18 +18,13 @@ class AuthController extends Controller
     {
     }
 
-    public function login(LoginRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function login(LoginRequest $request)
     {
 
         try {
             $user = $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password);
-            $data = [
-                'token' => $user->getToken(),
-                'token_type' => 'Bearer',
-                'user' => $user
-            ];
             $this->authService->setUserFcmToken($user,$request->fcm_token);
-            return apiResponse($data, __('lang.login success'));
+            return new AuthUserResource($user);
         } catch (UserNotFoundException $e) {
             return apiResponse($e->getMessage(), 'Unauthorized', $e->getCode());
         }

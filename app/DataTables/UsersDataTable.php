@@ -100,6 +100,7 @@ class UsersDataTable extends DataTable
                 ->searchable(false)
                 ->orderable(false),
             Column::computed('action')
+                ->title(trans('lang.action'))
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)

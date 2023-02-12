@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 
-class SliderStoreRequest extends BaseRequest 
+use Carbon\Carbon;
+
+class SliderStoreRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +26,18 @@ class SliderStoreRequest extends BaseRequest
     {
         return [
             'order'      => 'required|integer',
-            'package_id' => 'required|integer|exists:packages,id',
-            'duration'   => 'required',
+            'center_id' => 'required|integer|exists:centers,id',
             'start_date' => 'required|date',
             'end_date'   => 'required|date',
             'is_active'  => 'nullable|string',
+        ];
+    }
+
+    public function prepareForValidation()
+    {
+        return [
+            'start_date'=>Carbon::parse($this->start_date)->format('Y-m-d'),
+            'end_date'=>Carbon::parse($this->end_date)->format('Y-m-d'),
         ];
     }
 

@@ -76,7 +76,7 @@ class ReservationDataTable extends DataTable
                 ->searchable(true)
                 ->orderable(true),
             Column::make('customer_id')
-                ->title(trans('user'))
+                ->title(trans('lang.user'))
                 ->searchable(true)
                 ->orderable(true),
             Column::make('center_id')
@@ -84,7 +84,7 @@ class ReservationDataTable extends DataTable
                 ->searchable(true)
                 ->orderable(true),
             Column::make('check_date')
-                ->title(trans('check_date'))
+                ->title(trans('lang.check_date'))
                 ->searchable(true)
                 ->orderable(true),
             Column::make('from')

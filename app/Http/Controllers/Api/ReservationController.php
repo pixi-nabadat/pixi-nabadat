@@ -44,7 +44,7 @@ class ReservationController extends Controller
             $filters['user_id'] = auth('sanctum')->id();
             $withRelations = ['history', 'nabadatHistory', 'user', 'center'];
             $reservations = $this->reservationService->listing(filters: $filters, withRelation: $withRelations);
-            return apiResponse(data: ReservationsResource::collection($reservations));
+            return ReservationsResource::collection($reservations);
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
