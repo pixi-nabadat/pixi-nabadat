@@ -17,8 +17,8 @@ class CenterDevicesResource extends JsonResource
         return [
             'center'=> $this->whenLoaded('center') ? new CenterResource($this->center):[],
             'device'=> $this->whenLoaded('device') ? new DeviceResource($this->device):[],
-            'regular_price'=> $this->regular_price,
-            'auto_service_price'=>$this->auto_service_rice,
+            'auto_service'=> $this->auto_service,
+            'is_active'=>$this->is_active,
             'number_of_devices'=>$this->number_of_devices,
         ];
     }

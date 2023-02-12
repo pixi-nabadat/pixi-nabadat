@@ -24,9 +24,8 @@ class CenterDevicesTableSeeder extends Seeder
        CenterDevice::create([
            'center_id'=>Center::first()->id,
            'device_id'=>Device::first()->id,
-           'regular_price'=>5,
-           'nabadat_app_price'=>3,
-           'auto_service_price'=>3.5,
+           'auto_service'=>1,
+           'is_active'=>1,
            'number_of_devices'=>3
         ]);
     }
