@@ -16,12 +16,11 @@ class DeviceResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name'        => $this->name,
-            'description' => $this->description,
-            'is_active'   => $this->is_active,
-            'logo'      => $this->whenLoaded('attachments', AttachmentsResource::collection($this->attachments->where('type','!=',ImageTypeEnum::GALARY))),
-            'images'      => $this->whenLoaded('attachments', AttachmentsResource::collection($this->attachments->where('type','!=',ImageTypeEnum::LOGO))),
-
+            'name'          => $this->name,
+            'description'   => $this->description,
+            'is_active'     => $this->is_active,
+            'logo'          => $this->whenLoaded('attachments', AttachmentsResource::collection($this->attachments->where('type','!=',ImageTypeEnum::GALARY))),
+            'images'        => $this->whenLoaded('attachments', new AttachmentsResource($this->attachments->where('type','!=',ImageTypeEnum::LOGO)->first())),
         ];
     }
 }

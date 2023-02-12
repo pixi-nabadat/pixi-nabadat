@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\NotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CenterDeviceStoreRequest;
+use App\Http\Requests\CenterDeviceUpdateRequest;
 use App\Http\Resources\CenterDevicesResource;
 use App\Services\CenterDeviceService;
 use App\Services\CenterService;
@@ -33,7 +34,7 @@ class CenterDeviceController extends Controller
                 throw new NotFoundException('route not found');
             $withRelations = [];
             $centerDevices = $this->centerDeviceService->getAll(where_condition: $filters, withRelation: $withRelations);
-            return apiResponse(data: CenterDevicesResource::collection($centerDevices), message: trans('lang.success_operation'));
+            return CenterDevicesResource::collection($centerDevices);
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
@@ -53,16 +54,49 @@ class CenterDeviceController extends Controller
         }
     }
 
+
+    public function update(CenterDeviceUpdateRequest $request, $id)
+    {
+        try {
+            $this->centerDeviceService->update($id, $request->validated());
+            return apiResponse(message: trans('lang.updated_successfully'));
+        } catch (\Exception $ex) {
+            return apiResponse(message: trans('lang.there_is_an_error'),code: 400);
+        }
+    } //end of update
+
     public function destroy($id)
     {
         try {
-            $result = $this->centerDeviceService->delete($id);
-            if (!$result)
-                return apiResponse(message: trans('lang.not_found'), code: 404);
-            return apiResponse(message: trans('lang.success_operation'), code: 200);
+            $this->centerDeviceService->delete($id);
+            return apiResponse(message: trans('lang.success_operation'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
     } //end of destroy
+
+    public function autoService(Request $request)
+    {
+        try {
+            $result = $this->centerDeviceService->supportAutoService($request->id);
+            if (!$result)
+                return apiResponse(message: trans('lang.not_found'), code: 404);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+    } //end of autoService
+
+    public function status(Request $request)
+    {
+        try {
+            $result = $this->centerDeviceService->status($request->id);
+            if (!$result)
+                return apiResponse(message: trans('lang.not_found'), code: 404);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+    } //end of status
 
 }

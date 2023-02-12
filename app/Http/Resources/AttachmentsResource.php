@@ -17,7 +17,7 @@ class AttachmentsResource extends JsonResource
 
        return [
            'id' =>$this->id,
-           'path'=>url($this->path."/".$this->filename),
+           'path'=> isset($this->path) ? url($this->path."/".$this->filename):asset('assets/images/default-image.jpg'),
        ];
     }
 }
