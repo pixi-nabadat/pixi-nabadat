@@ -30,7 +30,14 @@ class CenterDeviceDataTable extends DataTable
             })
             ->addColumn('device_id', function (CenterDevice $centerDevice) {
                 return $centerDevice->device->name;
-            });
+            })
+            ->addColumn('auto_service', function (CenterDevice $centerDevice) {
+                return view('dashboard.components.switch-support-auto-service-btn', ['model' => $centerDevice, 'url' => route('centerDevices.autoService')])->render();
+            })
+            ->addColumn('is_active', function (CenterDevice $centerDevice) {
+                return view('dashboard.components.switch-btn', ['model' => $centerDevice, 'url' => route('centerDevices.status')])->render();
+            })
+            ->rawColumns(['action', 'auto_service','is_active']);
 
     }
 
@@ -79,12 +86,12 @@ class CenterDeviceDataTable extends DataTable
                 ->title(trans('lang.center')),
             Column::make('device_id')
                 ->title(trans('lang.device')),
-            Column::make('regular_price')
-                ->title(trans('lang.regular_price'))
+            Column::make('auto_service')
+                ->title(trans('lang.auto_service'))
                 ->searchable(false)
                 ->orderable(false),
-            Column::make('auto_service_price')
-                ->title(trans('lang.auto_service'))
+            Column::make('is_active')
+                ->title(trans('lang.is_active'))
                 ->searchable(false)
                 ->orderable(false),
             Column::make('number_of_devices')
