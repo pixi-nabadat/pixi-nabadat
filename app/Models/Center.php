@@ -95,4 +95,9 @@ class Center extends Model
     {
         return self::SEARCHFLAG;
     }
+
+    public function getpulsePriceAfterDiscountAttribute(): float
+    {
+        return $this->pulse_price - ($this->pulse_price * $this->pulse_discount);
+    }
 }
