@@ -7,19 +7,23 @@ use App\Http\Resources\CentersResource;
 use App\Http\Resources\HomeSearchResource;
 use App\Http\Resources\LocationsResource;
 use App\Http\Resources\product\ProductsResource;
+use App\Http\Resources\SlidersResource;
 use App\Models\Center;
 use App\Models\Device;
 use App\Models\Product;
 use App\Services\CenterService;
 use App\Services\LocationService;
 use App\Services\ProductService;
+use App\Services\SliderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    public function __construct(protected ProductService $productService, protected CenterService $centerService, protected LocationService $locationService)
+    public function __construct(protected ProductService $productService,
+                                protected CenterService $centerService,
+                                protected LocationService $locationService,protected SliderService $sliderService)
     {
     }
 
@@ -34,11 +38,10 @@ class HomeController extends Controller
         $data = Cache::remember('home-api', 60 * 60 * 24, function () use ($location_id) {
             $data ['featured_products'] = ProductsResource::collection($this->productService->getAll(where_condition: ['featured' => 1], withRelation: ['attachments']));
             $data ['featured_centers'] = CentersResource::collection($this->centerService->listing(filters: ['featured' => 1], withRelation: ['location', 'attachments']));
-            $data ['sliders'] = [];
+            $data ['sliders'] = SlidersResource::collection($this->sliderService->listing(withRelations: ['center','attachments']));
             $data['locations'] = LocationsResource::collection($this->locationService->getAll(filters: ['depth' => 2]));
             return $data;
         });
-
         return apiResponse(data: $data);
     }
 

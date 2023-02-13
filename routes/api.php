@@ -10,8 +10,10 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CenterController;
 use App\Http\Controllers\Api\CenterPackageController;
 use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\NabadatHistoryController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PhoneVerifyController;
 use App\Http\Controllers\Api\ProductController;
@@ -19,10 +21,8 @@ use App\Http\Controllers\Api\RatesController;
 use App\Http\Controllers\APi\ReservationController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 use App\Http\Controllers\Api\RestPasswordController;
-use App\Http\Controllers\Api\UserPackageController;
-use App\Http\Controllers\Api\NotificationController;
-use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\SliderController;
+use App\Http\Controllers\Api\UserPackageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,13 +41,13 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('phone/verify', PhoneVerifyController::class);
     Route::post('password/forget', PhoneVerifyController::class);
     Route::post('password/reset', RestPasswordController::class);
-    Route::post('user/set-fcm-token', [AuthController::class, 'setFcmToken'])->middleware( 'auth:sanctum');
-    Route::get('user', [AuthController::class, 'profile'])->middleware( 'auth:sanctum');
+    Route::post('user/set-fcm-token', [AuthController::class, 'setFcmToken'])->middleware('auth:sanctum');
+    Route::get('user', [AuthController::class, 'profile'])->middleware('auth:sanctum');
 
 });
 
-Route::group(['prefix' => 'fcm'],function (){
-    Route::post('send-to-tokens',[\App\Http\Controllers\Api\NotificationController::class,'sendFcmToToken']);
+Route::group(['prefix' => 'fcm'], function () {
+    Route::post('send-to-tokens', [\App\Http\Controllers\Api\NotificationController::class, 'sendFcmToToken']);
 });
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
@@ -61,9 +61,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
 //start notifications routes
-    Route::group(['prefix' => 'notifications'],function (){
-        Route::get('/',[NotificationController::class,'getNotifications']);
-        Route::get('/{id}/mark-as-read',[NotificationController::class,'getNotifications']);
+    Route::group(['prefix' => 'notifications'], function () {
+        Route::get('/', [NotificationController::class, 'getNotifications']);
+        Route::get('/{id}/mark-as-read', [NotificationController::class, 'getNotifications']);
     });
 
     Route::group(['prefix' => 'reservations'], function () {
@@ -107,8 +107,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 //start buy pulsses from nabdat app
 });
 
-Route::get('home',[HomeController::class,'index']);
-Route::get('home/search',[HomeController::class,'search']);
+//start home routes
+Route::get('home', [HomeController::class, 'index']);
+Route::get('home/search', [HomeController::class, 'search']);
+
+
 //callback form paymob getaway
 Route::any('paymob/payment/done', [OrderController::class, 'checkPaymobPaymentStatus']);
 //start cart
@@ -133,7 +136,7 @@ Route::get('locations/governorates', [LocationController::class, 'getAllGovernor
 Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);
 
 Route::resource('centers', CenterController::class);
-Route::get('centers/{id}/reservation-appointments', [AppointmentController::class,'getReservationAppointmentsForCenter'])->name('api.center-reservation.appointments');
+Route::get('centers/{id}/reservation-appointments', [AppointmentController::class, 'getReservationAppointmentsForCenter'])->name('api.center-reservation.appointments');
 
 //start user packages
 Route::get('userPackages/listing', [UserPackageController::class, 'userPackagesListing']);

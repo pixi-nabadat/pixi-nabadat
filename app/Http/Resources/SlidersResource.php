@@ -20,7 +20,7 @@ class SlidersResource extends JsonResource
             'duration'   => $this->duration,
             'start_date' => $this->start_date,
             'end_date'   => $this->end_date,
-            'logo'       => $this->whenLoaded('defaultLogo',isset($this->defaultLogo)?asset($this->defaultLogo->path ."/".$this->defaultLogo->filename):null),
+            'logo'       => $this->whenLoaded('attachments',isset($this->attachments)?asset($this->attachments->path ."/".$this->attachments->filename):null),
             'is_active'  => $this->is_active,
         ];
     }
