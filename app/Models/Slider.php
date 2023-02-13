@@ -22,7 +22,7 @@ class Slider extends Model
         return $this->belongsTo(Center::class);
     }
 
-    public function attachments()
+    public function logo()
     {
         return $this->morphOne(Attachment::class,'attachmentable');
     }
