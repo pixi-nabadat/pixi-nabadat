@@ -21,19 +21,14 @@ class NabadatHistoryService extends BaseService
         $reservation = Reservation::with('center')->find($data['reservation_id']);
         if (!$reservation)
             return false ;
-        $data['auto_service'] = isset($data['auto_service']);
-        $centerDevice = $reservation->center->device()->where('device_id', $data['device_id'])->first();
-        if (!$centerDevice)
-            return false ;
-        $nabadaPrice = $data['auto_service'] ? $centerDevice->auto_service_price : $centerDevice->regular_price;
+        $data['auto_service'] = isset($data['auto_service']) ? 1 : 0;
         $reservation->nabadatHistory()->updateOrCreate([
             'user_id'=>$reservation->customer_id,
             'center_id'=>$reservation->center_id,
             'device_id'=>$data['device_id'],
         ],[
             'num_nabadat'  => $data['num_nabadat'],
-            'pulse_price' => $nabadaPrice,
-            'total_price'  => $data['num_nabadat'] * $nabadaPrice
+            'auto_service'  => $data['auto_service'],
         ]);
         $reservation->refresh();
         return $reservation->load(['center','user','history']);

@@ -69,16 +69,6 @@
                             <label class="form-label col-3">@lang('lang.num_nabdat')</label>
                             <input type="text" class="form-control" value="{{ $item->num_nabadat }}" @disabled(true)>
                         </div>
-                        {{--  nabada_price  --}}
-                        <div class="col-md-12 d-flex my-3">
-                            <label class="form-label col-3">@lang('lang.nabada_price')</label>
-                            <input type="text" class="form-control" value="{{ $item->pulse_price }}" @disabled(true)>
-                        </div>
-                        {{--  total_price  --}}
-                        <div class="col-md-12 d-flex my-3">
-                            <label class="form-label col-3">@lang('lang.total_price')</label>
-                            <input type="text" class="form-control" value="{{ $item->total_price }}" @disabled(true)>
-                        </div>
                         <hr>
                         @endforeach
                     </div>
