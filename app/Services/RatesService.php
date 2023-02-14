@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Center;
-use App\Models\Device;
+use App\Models\CenterDevice;
 use App\Models\Product;
 use App\Models\Rate;
 
@@ -18,9 +18,9 @@ class RatesService extends BaseService
     public function store(array $data)
     {
         $model = match ((int)$data['ratable_type']) {
-            Rate::PRODUCT => Product::find($data['ratable_id']),
-            Rate::DEVICE  => Device::find($data['ratable_id']),
-            Rate::CENTER  => Center::find($data['ratable_id']),
+            Rate::PRODUCT        => Product::find($data['ratable_id']),
+            Rate::CENTER_DEVICE  => CenterDevice::find($data['ratable_id']),
+            Rate::CENTER         => Center::find($data['ratable_id']),
         };
         if (isset($model))
             $model->rates()->updateOrCreate(['user_id'     => $data['user_id']],[
@@ -34,7 +34,7 @@ class RatesService extends BaseService
 
     }
 
-    private function refreshItemRate(Product|Device|Center $model): void
+    private function refreshItemRate(Product|CenterDevice|Center $model): void
     {
 
         $totalItemRate = $model->rates->sum('rate_number');
@@ -53,7 +53,7 @@ class RatesService extends BaseService
      */
     public function destroy(int $id): bool
     {
-        $rate        = Rate::find($id);
+        $rate = Rate::find($id);
         if(!$rate)
             return false;
         $ratableType = $rate->ratable_type;
