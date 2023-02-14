@@ -100,6 +100,17 @@
                                         <div class="input-group-text" data-target="#dt-end_date" data-toggle="datepicker-here"><i class="fa fa-calendar"> </i></div>
                                     </div>
                                 </div>
+                                {{-- is_active --}}
+                                <div class="media my-2">
+                                    <label class="col-form-label m-r-10">{{ __('lang.status') }}</label>
+                                    <div class="media-body  icon-state">
+                                        <label class="switch">
+                                            <input type="checkbox" name="is_active"
+                                                {{ $coupon->is_active == 1 ? 'checked' : '' }}><span
+                                                class="switch-state"></span>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
                         </form>

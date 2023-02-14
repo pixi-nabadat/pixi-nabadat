@@ -30,6 +30,7 @@ class CouponService extends BaseService
 
     public function store(array $data = [])
     {
+        $data['is_active'] = isset($data['is_active']) ? 1 : 0;
         return Coupon::create($data);
     } //end of store
 
@@ -56,8 +57,17 @@ class CouponService extends BaseService
     {
         $coupon = $this->find($id);
         if ($coupon) {
+            $data['is_active'] = isset($data['is_active']) ? 1 : 0;
             $coupon->update($data);
         }
         return false;
     } //end of update
+
+    public function status($id): bool
+    {
+        $coupon = $this->find($id);
+        $coupon->is_active = !$coupon->is_active;
+        return $coupon->save();
+
+    }//end of status
 }

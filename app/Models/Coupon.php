@@ -13,7 +13,7 @@ class Coupon extends Model
     const DISCOUNT_FLAT = 'flat';
     const STORECOUPON = 'store';
     const RESERVATIONCOUPON = 'reservation';
-    protected $fillable = ['added_by','code','discount','discount_type','start_date','end_date','min_buy','allowed_usage','coupon_for'];
+    protected $fillable = ['added_by','code','discount','discount_type','start_date','end_date','min_buy','allowed_usage','coupon_for', 'is_active'];
 
     public function creator(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
