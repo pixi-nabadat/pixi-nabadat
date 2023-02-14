@@ -22,7 +22,7 @@ class Slider extends Model
         return $this->belongsTo(Center::class);
     }
 
-    public function logo()
+    public function logo(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
         return $this->morphOne(Attachment::class,'attachmentable');
     }

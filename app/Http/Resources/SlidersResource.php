@@ -16,12 +16,9 @@ class SlidersResource extends JsonResource
     {
         return [
             'order'      => $this->order,
-            'center'     => $this->relationLoaded('center') ? new CenterResource($this->center): null,
+            'center'     => $this->center_id,
             'duration'   => $this->duration,
-            'start_date' => $this->start_date,
-            'end_date'   => $this->end_date,
-            'logo'       => $this->whenLoaded('logo',isset($this->logo)?asset($this->logo->path ."/".$this->logo->filename):null),
-            'is_active'  => $this->is_active,
+            'image'      => isset($this->logo)?asset($this->logo->path ."/".$this->logo->filename):asset('assets/images/default-image.jpg'),
         ];
     }
 }
