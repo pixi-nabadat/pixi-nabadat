@@ -8,10 +8,14 @@ use App\Http\Controllers\Api\CancelReasonController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CenterController;
+use App\Http\Controllers\Api\CenterDeviceController;
 use App\Http\Controllers\Api\CenterPackageController;
+use App\Http\Controllers\Api\DeviceController;
 use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\NabadatHistoryController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PhoneVerifyController;
 use App\Http\Controllers\Api\ProductController;
@@ -19,9 +23,8 @@ use App\Http\Controllers\Api\RatesController;
 use App\Http\Controllers\APi\ReservationController;
 use App\Http\Controllers\Api\ReservationHistoryController;
 use App\Http\Controllers\Api\RestPasswordController;
+use App\Http\Controllers\Api\SliderController;
 use App\Http\Controllers\Api\UserPackageController;
-use App\Http\Controllers\Api\NotificationController;
-use App\Http\Controllers\Api\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,13 +43,13 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('phone/verify', PhoneVerifyController::class);
     Route::post('password/forget', PhoneVerifyController::class);
     Route::post('password/reset', RestPasswordController::class);
-    Route::post('user/set-fcm-token', [AuthController::class, 'setFcmToken'])->middleware( 'auth:sanctum');
-    Route::get('user', [AuthController::class, 'profile'])->middleware( 'auth:sanctum');
+    Route::post('user/set-fcm-token', [AuthController::class, 'setFcmToken'])->middleware('auth:sanctum');
+    Route::get('user', [AuthController::class, 'profile'])->middleware('auth:sanctum');
 
 });
 
-Route::group(['prefix' => 'fcm'],function (){
-    Route::post('send-to-tokens',[\App\Http\Controllers\Api\NotificationController::class,'sendFcmToToken']);
+Route::group(['prefix' => 'fcm'], function () {
+    Route::post('send-to-tokens', [\App\Http\Controllers\Api\NotificationController::class, 'sendFcmToToken']);
 });
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
@@ -60,9 +63,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
 //start notifications routes
-    Route::group(['prefix' => 'notifications'],function (){
-        Route::get('/',[NotificationController::class,'getNotifications']);
-        Route::get('/{id}/mark-as-read',[NotificationController::class,'getNotifications']);
+    Route::group(['prefix' => 'notifications'], function () {
+        Route::get('/', [NotificationController::class, 'getNotifications']);
+        Route::post('/mark-as-read', [NotificationController::class, 'markAsRead']);
     });
 
     Route::group(['prefix' => 'reservations'], function () {
@@ -75,6 +78,19 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('devices', [NabadatHistoryController::class, 'store']);
 
     });
+    //start center devices
+    Route::get('/devices', [DeviceController::class, 'listing']);
+    Route::group(['prefix' => 'center-devices'],function (){
+        Route::get('/', [CenterDeviceController::class, 'listing']);
+        Route::post('/', [CenterDeviceController::class, 'store']);
+        Route::delete('/{id}', [CenterDeviceController::class, 'destroy']);
+        Route::patch('/{id}/auto-service', [CenterDeviceController::class, 'autoService']);
+        Route::patch('/{id}/status', [CenterDeviceController::class, 'status']);
+
+    });
+
+    //end center devices
+
     // start rates
     Route::group(['prefix' => 'rate'], function () {
         Route::post('/', [RatesController::class, 'store']);
@@ -106,8 +122,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 //start buy pulsses from nabdat app
 });
 
-Route::get('home',[HomeController::class,'index']);
-Route::get('home/search',[HomeController::class,'search']);
+//start home routes
+Route::get('home', [HomeController::class, 'index']);
+Route::get('home/search', [HomeController::class, 'search']);
+
+
 //callback form paymob getaway
 Route::any('paymob/payment/done', [OrderController::class, 'checkPaymobPaymentStatus']);
 //start cart
@@ -132,13 +151,18 @@ Route::get('locations/governorates', [LocationController::class, 'getAllGovernor
 Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByParentId']);
 
 Route::resource('centers', CenterController::class);
-Route::get('centers/{id}/reservation-appointments', [AppointmentController::class,'getReservationAppointmentsForCenter'])->name('api.center-reservation.appointments');
+Route::get('centers/{id}/reservation-appointments', [AppointmentController::class, 'getReservationAppointmentsForCenter'])->name('api.center-reservation.appointments');
 
 //start user packages
 Route::get('userPackages/listing', [UserPackageController::class, 'userPackagesListing']);
 Route::get('centerPackages/listing', [UserPackageController::class, 'centerPackagesListing']);
 Route::resource('userPackages', CenterController::class)->except(['index', 'store']);
 //end user packages
+
+//start slider
+Route::get('sliders', [SliderController::class, 'listing']);
+//end slider
+
 Route::get('center-offers', [CenterPackageController::class, 'listing']);
 Route::resource('packages', CenterPackageController::class);
 Route::get('doctor/{id}', [DoctorController::class, 'find']);

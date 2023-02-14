@@ -111,7 +111,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::post('categories/changeStatus', [CategoryController::class, 'changeStatus'])->name('categories.changeStatus');
 
     Route::resource('coupons', CouponController::class);
-    Route::post('coupons/status', [CategoryController::class, 'status'])->name('coupons.status');
+    Route::post('coupons/status', [CouponController::class, 'status'])->name('coupons.status');
 
     Route::resource('products', ProductController::class);
     Route::post('products/featured', [ProductController::class, 'featured'])->name('products.featured');
@@ -129,6 +129,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::get('gevernorate/all', [App\Http\Controllers\GovernorateController::class, 'getAllGovernorates'])->name('allGovernorates');
 
     Route::resource('centerDevices', CenterDeviceController::class);
+    Route::post('centerDevices/status', [CenterDeviceController::class, 'status'])->name('centerDevices.status');
+    Route::post('centerDevices/auotService', [CenterDeviceController::class, 'autoService'])->name('centerDevices.autoService');
 
     Route::post('orders/updateOrderStatus', [OrderController::class, 'updateOrderStatus'])->name('orders.updateOrderStatus');
     Route::resource('orders', OrderController::class);

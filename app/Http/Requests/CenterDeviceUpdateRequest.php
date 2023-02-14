@@ -24,9 +24,8 @@ class CenterDeviceUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'regular_price'=>'required|numeric',
-            'nabadat_app_price'=>'required|numeric',
-            'auto_service_price'=>'required|numeric',
+            'is_support_auto_service'=>'nullable|string',
+            'is_active'=>'nullable|string',
             'number_of_devices'=>'required|numeric',
         ];
     }

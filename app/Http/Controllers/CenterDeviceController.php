@@ -18,7 +18,7 @@ class CenterDeviceController extends Controller
 
     public function index(CenterDeviceDataTable $dataTable, Request $request)
     {
-        $loadRelation = ['center', 'device'];
+        $loadRelation = ['center.user', 'device'];
         return $dataTable->with(['filters' => $request->all(), 'withRelations' => $loadRelation])->render('dashboard.centerDevices.index');
 
     }//end of index
@@ -45,5 +45,29 @@ class CenterDeviceController extends Controller
             return back()->with('toast', $toast);
         }
     } //end of update
+
+    public function autoService(Request $request)
+    {
+        try {
+            $result = $this->centerDeviceService->supportAutoService($request->id);
+            if (!$result)
+                return apiResponse(message: trans('lang.not_found'), code: 404);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+    } //end of autoService
+
+    public function status(Request $request)
+    {
+        try {
+            $result = $this->centerDeviceService->status($request->id);
+            if (!$result)
+                return apiResponse(message: trans('lang.not_found'), code: 404);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+    } //end of status
 
 }

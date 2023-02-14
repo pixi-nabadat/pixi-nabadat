@@ -28,7 +28,7 @@ class Center extends Model
 
     protected $fillable = [
         'lat','lng','is_support_auto_service','address','description','phones',
-        'google_map_url','avg_waiting_time','featured', 'rate', 'support_payments','app_discount',
+        'google_map_url','avg_waiting_time','featured', 'rate', 'support_payments','pulse_price','pulse_discount','app_discount',
     ];
 
     protected $casts = [
@@ -94,5 +94,10 @@ class Center extends Model
     public function getSearchFlagAttribute(): int
     {
         return self::SEARCHFLAG;
+    }
+
+    public function getPulsePriceAfterDiscountAttribute(): float
+    {
+        return $this->pulse_price - ($this->pulse_price * ($this->pulse_discount/100));
     }
 }

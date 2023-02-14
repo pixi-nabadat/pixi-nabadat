@@ -9,7 +9,7 @@ use App\Traits\Filterable;
 class CenterDevice extends Model
 {
     use HasFactory,Filterable;
-    protected $fillable = ['center_id','device_id','regular_price', 'nabadat_app_price','auto_service_price','number_of_devices', 'rate'];
+    protected $fillable = ['center_id','device_id','number_of_devices', 'is_support_auto_service','is_active'];
 
 
     public function center(): \Illuminate\Database\Eloquent\Relations\BelongsTo

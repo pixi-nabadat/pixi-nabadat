@@ -36,6 +36,8 @@ class CentersTableSeeder extends Seeder
             ],
             'avg_waiting_time'=>30,
             'support_payments'=> [PaymentMethodEnum::CASH,PaymentMethodEnum::CREDIT],
+            'pulse_price'=>1,
+            'pulse_discount'=>0.25,
             'app_discount'=>20
         ];
         $center = Center::create($center_data) ;

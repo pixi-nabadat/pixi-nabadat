@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AttachmentsResource extends JsonResource
+class CouponsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,10 +14,10 @@ class AttachmentsResource extends JsonResource
      */
     public function toArray($request)
     {
-
        return [
-           'id' =>$this->id,
-           'path'=> isset($this->path) ? url($this->path."/".$this->filename):asset('assets/images/default-image.jpg'),
+           'id'=>$this->id,
+           'code'=>$this->code,
+           'discount'=>$this->discount,
        ];
     }
 }

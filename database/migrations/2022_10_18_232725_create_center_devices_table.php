@@ -17,12 +17,12 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\Center::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(\App\Models\Device::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->float('regular_price')->nullable();
-            $table->float('nabadat_app_price')->nullable();
-            $table->float('auto_service_price')->nullable()->default(0);
+            $table->boolean('is_support_auto_service')->default(true);
+            $table->boolean('is_active')->default(true);
             $table->integer('number_of_devices');
             $table->double('rate')->default(0.0);
             $table->timestamps();
+            $table->unique(["center_id","device_id"],'center_device_unique');
         });
     }
 
