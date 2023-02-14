@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Coupon extends Model
 {
-    use HasFactory;
+    use HasFactory,Filterable;
     const DISCOUNT_PERCENTAGE = 'percent';
     const DISCOUNT_FLAT = 'flat';
     const STORECOUPON = 'store';

@@ -65,7 +65,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 //start notifications routes
     Route::group(['prefix' => 'notifications'], function () {
         Route::get('/', [NotificationController::class, 'getNotifications']);
-        Route::get('/{id}/mark-as-read', [NotificationController::class, 'getNotifications']);
+        Route::post('/mark-as-read', [NotificationController::class, 'markAsRead']);
     });
 
     Route::group(['prefix' => 'reservations'], function () {

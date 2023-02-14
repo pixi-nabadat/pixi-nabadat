@@ -16,6 +16,12 @@ class CouponService extends BaseService
         return $Coupons->get();
     }
 
+    public function listing(array $filters = []): \Illuminate\Contracts\Pagination\CursorPaginator
+    {
+        $perPage = config('app.perPage');
+        return $this->queryGet($filters)->cursorPaginate($perPage);
+    }
+
     public function queryGet(array $where_condition = []): Builder
     {
         $coupons = Coupon::query();
