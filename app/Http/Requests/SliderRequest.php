@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 
 use Carbon\Carbon;
 
-class SliderStoreRequest extends BaseRequest
+class SliderRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
