@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\ImageTypeEnum;
 use App\Traits\Filterable;
 use App\Traits\HasAttachment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Slider extends Model
 {
-    use HasFactory, Filterable,HasAttachment;
+    use HasFactory, Filterable, HasAttachment;
 
     protected $fillable = ['order', 'center_id', 'start_date', 'end_date', 'is_active',];
 
@@ -21,7 +22,7 @@ class Slider extends Model
         return $this->belongsTo(Center::class);
     }
 
-    public function attachments()
+    public function logo()
     {
         return $this->morphOne(Attachment::class,'attachmentable');
     }

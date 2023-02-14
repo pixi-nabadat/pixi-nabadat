@@ -15,8 +15,13 @@ class SlidersResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'order'=> $this->order,
-            'center'=> $this->center_id,
+            'order'      => $this->order,
+            'center'     => $this->relationLoaded('center') ? new CenterResource($this->center): null,
+            'duration'   => $this->duration,
+            'start_date' => $this->start_date,
+            'end_date'   => $this->end_date,
+            'logo'       => $this->whenLoaded('logo',isset($this->logo)?asset($this->logo->path ."/".$this->logo->filename):null),
+            'is_active'  => $this->is_active,
         ];
     }
 }
