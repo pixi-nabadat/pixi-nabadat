@@ -30,6 +30,7 @@ class CouponUpdateRequest extends BaseRequest
             'min_buy'=>'required|numeric',
             'allowed_usage'=>'required|numeric',
             'coupon_for'=>'required',
+            'is_active'=>'nullable|string'
         ];
     }
 
