@@ -23,10 +23,10 @@ class PackagesDataTable extends DataTable
                 return $package->name;
             })
             ->addColumn('center_id', function (Package $package) {
-                return $package->center->name;
+                return $package->center->user->name;
             })
             ->addColumn('center_phone', function (Package $package) {
-                return $package->center->phone;
+                return $package->center->user->phone;
             })
             ->editColumn('status', function (Package $package) {
                 return $package->status;
