@@ -22,7 +22,7 @@ class SlidersDataTable extends DataTable
             return view('dashboard.sliders.action',compact('slider'))->render();
         })
         ->editColumn('center_id', function(Slider $slider){
-            return $slider->package->name ;
+            return $slider->center->user->name ;
         })
         
         ->addColumn('is_active', function(Slider $slider){

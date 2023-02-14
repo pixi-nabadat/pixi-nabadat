@@ -75,6 +75,19 @@
                                         <div class="input-group-text" data-target="#dt-start_date" data-toggle="datepicker"><i class="fa fa-calendar"> </i></div>
                                     </div>
                                 </div>
+                                {{-- slider_logo --}}
+                                <div class="col-md-12">
+                                    <label class="form-label col-3" for="logo">{{ trans('lang.logo') }}</label>
+                                        <input name="logo" class="form-control image @error('logo') is-invalid @enderror"
+                                            id="logo" type="file">
+                                        @error('logo')
+                                            <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        @enderror
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <img src="{{ asset('/uploads/products/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                                </div>
                                 {{--  is_active  --}}
                                 <div class="media mb-2">
                                     <label class="col-form-label m-r-10">{{ __('lang.is_active') }}</label>
