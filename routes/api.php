@@ -116,7 +116,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     //end order delivery
 //start buy pulsses from nabdat app
     Route::group(['prefix' => 'offers'], function () {
-        Route::post('/buy', [BuyOfferController::class, 'buyOffer']);
+        Route::post('/buy',        [BuyOfferController::class, 'buyOffer']);
+        Route::post('/buy-custom', [BuyOfferController::class, 'buyCustomPulses']);
     });
 //start buy pulsses from nabdat app
 });
