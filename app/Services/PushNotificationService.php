@@ -36,7 +36,7 @@ class PushNotificationService extends BaseService
     public function getUserNotifications()
     {
         $user = $this->userService->getAuthUser();
-        return $user->notifications()->orderByDesc('id')->get();
+        return $user->notifications()->orderByDesc('id')->cursorPaginate(20);
     }
 
     public function unReadCount($auth_user_id)
@@ -45,10 +45,13 @@ class PushNotificationService extends BaseService
         return $user->notifications()->whereNull('read_at')->count();
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function markAsRead($notification_id)
     {
         $user =$this->userService->getAuthUser();
-        $user->notifications()->where('id', $notification_id)->markAsRead();
+        $user->notifications->where('id', $notification_id)->markAsRead();
     }
 
 

@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\SlidersDataTable;
-use App\Http\Requests\CenterDeviceUpdateRequest;
-use App\Http\Requests\SliderStoreRequest;
-use App\Http\Requests\SliderStoreRequest as SliderUpdateRequest;
+use App\Http\Requests\SliderRequest;
+use App\Http\Requests\SliderRequest as SliderUpdateRequest;
 use App\Services\CenterService;
 use App\Services\SliderService;
 use Carbon\Carbon;
@@ -44,7 +43,7 @@ class SliderController extends Controller
         return view('dashboard.sliders.create', compact('centers'));
     }//end of create
 
-    public function store(SliderStoreRequest $request)
+    public function store(SliderRequest $request)
     {
         try {
             $data = $request->validated();

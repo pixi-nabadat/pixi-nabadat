@@ -44,7 +44,10 @@ class CouponsDataTable extends DataTable
             })
             ->editColumn('end_date', function (Coupon $coupon) {
                 return $coupon->end_date;
-            });
+            })->addColumn('is_active', function (Coupon $coupon) {
+                return view('dashboard.components.switch-btn', ['model' => $coupon, 'url' => route('coupons.status')])->render();
+            })
+            ->rawColumns(['action', 'is_active']);
     }
 
     /**
@@ -107,6 +110,10 @@ class CouponsDataTable extends DataTable
                 ->orderable(false),
             Column::make('end_date')
                 ->title(trans('lang.end_date'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('is_active')
+                ->title(trans('lang.is_active'))
                 ->searchable(false)
                 ->orderable(false),
             Column::computed('action')

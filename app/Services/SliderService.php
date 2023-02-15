@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enum\ImageTypeEnum;
 use App\Models\Slider;
 use App\QueryFilters\SlidersFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,16 +16,30 @@ class SliderService extends BaseService
         return $sliders->get();
     }
 
+    public function listing(array $where_condition = [], array $withRelations = [])
+    {
+        $perPage = config('app.perPage');
+        return $this->queryGet($where_condition, $withRelations)->cursorPaginate($perPage);
+    }
+
     public function queryGet(array $where_condition = [], array $withRelation = []): Builder
     {
-        $sliders = Slider::query()->with($withRelation);
+        $sliders = Slider::query()->orderBy('order')->with($withRelation);
         return $sliders->filter(new SlidersFilter($where_condition));
     }
 
     public function store($data)
     {
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-        return Slider::create($data);
+        $slider = Slider::create($data);
+        if (!$slider)
+            return false ;
+        if (isset($data['logo']))
+        {
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\sliders', field_name: 'logo');
+            $fileData['type'] = ImageTypeEnum::LOGO;
+            $slider->storeAttachment($fileData);
+        }
     } //end of store
 
     public function delete($id)
@@ -32,6 +47,7 @@ class SliderService extends BaseService
         $slider = $this->find($id);
         if (!$slider)
             return false;
+        $slider->deleteAttachments();
         return $slider->delete();
 
     } //end of find
@@ -50,6 +66,13 @@ class SliderService extends BaseService
         $slider = $this->find($id);
         if (!$slider)
             return false;
+        if (isset($data['logo']))
+        {
+            $slider->deleteAttachmentsLogo();
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\sliders', field_name: 'logo');
+            $fileData['type'] = ImageTypeEnum::LOGO;
+            $slider->storeAttachment($fileData);
+        }
         return $slider->update($data);
     } //end of update
 
