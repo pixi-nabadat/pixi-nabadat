@@ -27,8 +27,8 @@ class CenterDeviceStoreRequest extends FormRequest
         return [
             'center_id'=>'required|exists:centers,id',
             'device_id'=>['required',Rule::exists('devices','id'),Rule::unique('center_devices')->where('center_id',$this->center_id)],
-            'regular_price'=>'required|numeric',
-            'auto_service_price'=>'required|numeric',
+            'auto_service'=>'nullable|string',
+            'is_active'=>'nullable|string',
             'number_of_devices'=>'required|integer'
         ];
     }

@@ -24,7 +24,7 @@ class CenterDeviceUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'is_support_auto_service'=>'nullable|string',
+            'auto_service'=>'nullable|string',
             'is_active'=>'nullable|string',
             'number_of_devices'=>'required|numeric',
         ];

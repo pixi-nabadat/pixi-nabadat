@@ -36,7 +36,8 @@ class CenterController extends Controller
 
             $withRelations = ['user:id,center_id,name','defaultLogo'];
             $centers = $this->centerService->listing(filters: $filters,withRelation: $withRelations);
-            return CentersResource::collection($centers);
+            $response = CentersResource::collection($centers);
+            return apiResponse(data: $response, message: trans('lang.success_operation'));
         } catch (\Exception $e) {
             return apiResponse($e->getMessage(), 'Unauthorized',$e->getCode());
         }

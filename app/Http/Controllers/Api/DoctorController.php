@@ -24,7 +24,8 @@ class DoctorController extends Controller
     {
         try {
             $doctor = $this->doctorService->store($request->validated());
-            return apiResponse(data:$doctor,message: __('lang.doctor_saved_successfully'));
+            $response = new DoctorsResource(resource: $doctor);
+            return apiResponse(data:$response,message: __('lang.doctor_saved_successfully'));
         } catch (\Exception $ex) {
             return apiResponse(message: $ex->getMessage(), code: 422);
         }
@@ -33,8 +34,9 @@ class DoctorController extends Controller
     public function update($id, UpdateDoctorRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $this->doctorService->update($id, $request->validated());
-            return apiResponse(message: __('lang.doctor_updated_successfully'));
+            $doctor = $this->doctorService->update($id, $request->validated());
+            $response = new DoctorsResource(resource: $doctor);
+            return apiResponse(data:$response,message: __('lang.doctor_updated_successfully'));
         } catch (\Exception $ex) {
             return apiResponse(message: $ex->getMessage(), code: 422);
         }

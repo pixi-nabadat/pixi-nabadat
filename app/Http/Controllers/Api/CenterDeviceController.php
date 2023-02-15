@@ -34,7 +34,8 @@ class CenterDeviceController extends Controller
                 throw new NotFoundException('route not found');
             $withRelations = [];
             $centerDevices = $this->centerDeviceService->getAll(where_condition: $filters, withRelation: $withRelations);
-            return CenterDevicesResource::collection($centerDevices);
+            $response = CenterDevicesResource::collection($centerDevices);
+            return apiResponse(data: $response, message: trans('lang.success_operation'));
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }

@@ -23,6 +23,8 @@ class CenterDeviceService extends BaseService
 
     public function store(array $data = [])
     {
+        $data['auto_service'] = isset($data['auto_service']) ? 1 : 0;
+        $data['is_active'] = isset($data['is_active']) ? 1 : 0;
         return CenterDevice::create($data);
     }
 
@@ -30,7 +32,7 @@ class CenterDeviceService extends BaseService
     {
         $centerDevice = $this->find($id);
         if ($centerDevice) {
-            $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ? 1 : 0;
+            $data['auto_service'] = isset($data['auto_service']) ? 1 : 0;
             $data['is_active'] = isset($data['is_active']) ? 1 : 0;
             $centerDevice->update($data);
         }
