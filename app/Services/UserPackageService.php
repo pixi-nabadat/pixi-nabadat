@@ -38,10 +38,14 @@ class UserPackageService extends BaseService
        $is_updated =  $userPackage->update([
             'payment_status' => $data['payment_status'],
         ]);
-       if ($is_updated)
-            Settlement::createFinancial($userPackage);
      return  $userPackage;
     }
+
+    public function create(array $data =[]){
+        return UserPackage::create($data);
+    }
+
+
     public function find(int $id, array $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
         $userPackage = UserPackage::with($with)->find($id);

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BuyCustomPulsesController;
 use App\Http\Controllers\Api\BuyOfferController;
 use App\Http\Controllers\Api\CancelReasonController;
 use App\Http\Controllers\Api\CartController;
@@ -48,6 +49,7 @@ Route::group(['prefix' => 'auth'], function () {
 
 });
 
+//for test fcm
 Route::group(['prefix' => 'fcm'], function () {
     Route::post('send-to-tokens', [\App\Http\Controllers\Api\NotificationController::class, 'sendFcmToToken']);
 });
@@ -60,6 +62,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::patch('doctors/{doctorId}', [DoctorController::class, 'update']);
         Route::get('cancel-reasons', [CancelReasonController::class, 'listing']);
         Route::apiResource('appointments', AppointmentController::class);
+        Route::post('/buy-pulses', [BuyCustomPulsesController::class, 'buyCustomPulses']);
     });
 
 //start notifications routes
@@ -80,7 +83,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
     //start center devices
     Route::get('/devices', [DeviceController::class, 'listing']);
-    Route::group(['prefix' => 'center-devices'],function (){
+    Route::group(['prefix' => 'center-devices'], function () {
         Route::get('/', [CenterDeviceController::class, 'listing']);
         Route::post('/', [CenterDeviceController::class, 'store']);
         Route::delete('/{id}', [CenterDeviceController::class, 'destroy']);
@@ -117,8 +120,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     //end order delivery
 //start buy pulsses from nabdat app
     Route::group(['prefix' => 'offers'], function () {
-        Route::post('/buy',        [BuyOfferController::class, 'buyOffer']);
-        Route::post('/buy-custom', [BuyOfferController::class, 'buyCustomPulses']);
+        Route::post('/buy', [BuyOfferController::class, 'buyOffer']);
     });
 //start buy pulsses from nabdat app
 });
@@ -164,8 +166,7 @@ Route::resource('userPackages', CenterController::class)->except(['index', 'stor
 Route::get('sliders', [SliderController::class, 'listing']);
 //end slider
 
-Route::get('center-offers', [CenterPackageController::class, 'listing']);
-Route::resource('packages', CenterPackageController::class);
+Route::apiResource('packages', CenterPackageController::class);
 Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
 Route::get('cancel-reasons', [CancelReasonController::class, 'listing']);

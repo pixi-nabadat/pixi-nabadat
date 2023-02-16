@@ -10,6 +10,7 @@ use App\Exceptions\NotFoundException;
 use App\Models\Center;
 use App\Models\Invoice;
 use App\Models\User;
+use App\Models\UserPackage;
 use App\QueryFilters\UsersFilter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -92,54 +93,11 @@ class UserService extends BaseService
         $user->update($data);
     }//end of update
 
-    public function updateOrCreateNabadatWallet(User $user, $package,$payment_method=PaymentMethodEnum::CASH,$payment_status =PaymentStatusEnum::UNPAID): bool
+    public function updateOrCreateNabadatWallet(User $user,UserPackage $userPackage): bool
     {
-        if (!$user)
-            return false;
         $old_pulses = $user->nabadatWallet->total_pulses ?? 0;
-        $total_pulses = $old_pulses + $package->num_nabadat;
-        //check if user has in progress offer
-        $active_user_package = $user->package()->where('status',UserPackageStatusEnum::ONGOING)->where('payment_status',PaymentStatusEnum::PAID)->count();
-        $user_package_data = [
-            'package_id'            => $package->id,
-            'num_nabadat'           => $package->num_nabadat,
-            'price'                 => $package->price,
-            'center_id'             => $package->center_id,
-            'discount_percentage'   => $package->discount_percentage,
-            'payment_method'        => $payment_method,
-            'payment_status'        => $payment_status,
-            'status'                => $active_user_package > 0 ? UserPackageStatusEnum::PENDING : UserPackageStatusEnum::ONGOING,
-            'used_amount'           =>0,
-            'remain'                =>$package->num_nabadat
-        ];
-        $user_package = $user->package()->create($user_package_data);
-        if ($user_package && $user_package->payment_status == PaymentStatusEnum::PAID){
-            $user->nabadatWallet()->updateOrCreate(['user_id'=>$user->id],['total_pulses' => $total_pulses]);
-        }
-        return true;
-    }
-
-    public function updateOrCreateNabadatWalletForCustomPulses(User $user, Center $center, int $numNabadat, $payment_method=PaymentMethodEnum::CASH,$payment_status =PaymentStatusEnum::UNPAID): bool
-    {
-        if (!$user)
-            return false;
-        $old_pulses = $user->nabadatWallet->total_pulses ?? 0;
-        $total_pulses = $old_pulses + $numNabadat;
-        //check if user has in progress offer
-        $active_user_package = $user->package()->where('status',UserPackageStatusEnum::ONGOING)->where('payment_status',PaymentStatusEnum::PAID)->count();
-        $user_package_data = [
-            'num_nabadat'           => $numNabadat,
-            'price'                 => $center->PulsePriceAfterDiscount * $numNabadat,
-            'center_id'             => $center->id,
-            'discount_percentage'   => $center->pulse_discount,
-            'payment_method'        => $payment_method,
-            'payment_status'        => $payment_status,
-            'status'                => $active_user_package > 0 ? UserPackageStatusEnum::PENDING : UserPackageStatusEnum::ONGOING,
-            'used_amount'           =>0,
-            'remain'                =>$numNabadat
-        ];
-        $user_package = $user->package()->create($user_package_data);
-        if ($user_package && $user_package->payment_status == PaymentStatusEnum::PAID){
+        $total_pulses = $old_pulses + $userPackage->num_nabadat;
+        if ($userPackage && $userPackage->payment_status == PaymentStatusEnum::PAID){
             $user->nabadatWallet()->updateOrCreate(['user_id'=>$user->id],['total_pulses' => $total_pulses]);
         }
         return true;

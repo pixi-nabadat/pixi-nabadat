@@ -9,6 +9,7 @@ use App\Exceptions\NotFoundException;
 use App\Models\Order;
 use App\Models\Package;
 use App\Models\User;
+use App\Models\UserPackage;
 use App\Services\UserService;
 
 class changeOrderDependencies
@@ -37,14 +38,14 @@ class changeOrderDependencies
         if (is_null($order_id))
             throw new NotFoundException('merchant_order_id_not_found');
         $order = Order::withTrashed()->find($order_id);
-        $user = User::with('nabadatWallet')->find($order->user_id);
         if (!$order)
             throw new NotFoundException('merchant_order_id_not_found');
+        $user = User::with('nabadatWallet')->find($order->user_id);
         if (!is_null($order->relatable_id) && !is_null($order->relatable_type)) {
-            $package = Package::find($order->relatable_id);
-            $this->userService->updateOrCreateNabadatWallet($user, $package, PaymentMethodEnum::CREDIT, PaymentStatusEnum::PAID);
+            $userPackage = UserPackage::withTrashed()->find($order->relatable_id);
+            $userPackage->update(['deleted_at'=>null,'payment_status'=>PaymentStatusEnum::PAID]);
+            $this->userService->updateOrCreateNabadatWallet($user, $userPackage);
             $order->update(['payment_status' => PaymentStatusEnum::PAID]);
-            return;
         }
         $order->update(['deleted_at' => null, 'payment_status' => PaymentStatusEnum::PAID]);
         User::setPoints($user, amount: (float)$order->grand_total);

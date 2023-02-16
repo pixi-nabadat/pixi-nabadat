@@ -95,9 +95,6 @@ class CenterService extends BaseService
     public function update(int $centerId, array $data): bool
     {
         $center = $this->find($centerId);
-        if (!$center)
-            throw new NotFoundException(trans('lang.center_not_found'));
-
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
         $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ? 1 : 0;
         $data['featured'] = isset($data['featured']) ? 1 : 0;
