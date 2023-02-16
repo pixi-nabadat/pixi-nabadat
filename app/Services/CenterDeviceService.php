@@ -63,7 +63,7 @@ class CenterDeviceService extends BaseService
     public function supportAutoService($id): bool
     {
         $centerDevice = $this->find($id);
-        $centerDevice->is_support_auto_service = !$centerDevice->is_support_auto_service;
+        $centerDevice->auto_service = !$centerDevice->auto_service;
         return $centerDevice->save();
 
     }//end of is_support_auto_service
