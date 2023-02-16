@@ -56,11 +56,6 @@ class Center extends Model
         return $this->hasMany(Doctor::class,'center_id');
     }
 
-    public function device(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Device::class,'center_id');
-    }
-
     public function appointments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Appointment::class,'center_id');
@@ -75,10 +70,9 @@ class Center extends Model
     {
         return $this->morphOne(Attachment::class,'attachmentable')->where('type', ImageTypeEnum::LOGO);
     }
-    public function devices()
+    public function devices(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Device::class, 'center_devices', 'center_id', 'device_id')
-            ->withPivot(['id', 'regular_price', 'nabadat_app_price','auto_service_price','number_of_devices'])->withTimestamps();
+        return $this->belongsToMany(Device::class, 'center_devices');
     }
 
     /**

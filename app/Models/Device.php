@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\ImageTypeEnum;
 use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
 use App\Traits\HasAttachment;
@@ -20,7 +21,12 @@ class Device extends Model
 
     public function center(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Center::class);
+        return $this->belongsToMany(Center::class,'center_devices');
+    }
+
+    public function defaultImage(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    {
+        return $this->morphOne(Attachment::class,'attachmentable')->where('type',ImageTypeEnum::LOGO);
     }
 
     public function getSearchFlagTextAttribute(): string

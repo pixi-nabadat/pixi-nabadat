@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 class CenterDeviceService extends BaseService
 {
 
-    public function getAll(array $where_condition = [], array $withRelation = [])
+    public function getAll(array $where_condition = [], array $withRelation = []): \Illuminate\Database\Eloquent\Collection|array
     {
         return $this->queryGet($where_condition, $withRelation)->get();
     }
