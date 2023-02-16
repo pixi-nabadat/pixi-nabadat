@@ -14,7 +14,7 @@ class ProductObserver
      */
     public function created(Product $product)
     {
-        //
+        cache()->forget('home-api');
     }
 
     /**
@@ -25,7 +25,8 @@ class ProductObserver
      */
     public function updated(Product $product)
     {
-
+        dd('test');
+        cache()->forget('home-api');
     }
 
     /**
@@ -36,7 +37,7 @@ class ProductObserver
      */
     public function deleted(Product $product)
     {
-        //
+        cache()->forget('home-api');
     }
 
     /**
@@ -47,7 +48,7 @@ class ProductObserver
      */
     public function restored(Product $product)
     {
-        //
+        cache()->forget('home-api');
     }
 
     /**
@@ -58,6 +59,6 @@ class ProductObserver
      */
     public function forceDeleted(Product $product)
     {
-        //
+        cache()->forget('home-api');
     }
 }
