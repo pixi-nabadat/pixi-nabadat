@@ -34,12 +34,16 @@ class HomeController extends Controller
     public function index(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $location_id = request()->input('location_id',null);
-        $data = Cache::remember('home-api', 60 * 60 * 24, function () use ($location_id) {
-            $data ['featured_products'] = ProductsResource::collection($this->productService->getAll(where_condition: ['featured' => 1], withRelation: ['defaultLogo']));
-            $data['locations'] = LocationsResource::collection($this->locationService->getAll(filters: ['depth' => 2]));
-            $data['coupons'] = CouponsResource::collection($this->couponService->listing(filters:['in_period'=>true]));
-            return $data;
-        });
+        // $data = Cache::remember('home-api', 60 * 60 * 24, function () use ($location_id) {
+        //     $data ['featured_products'] = ProductsResource::collection($this->productService->getAll(where_condition: ['featured' => 1], withRelation: ['defaultLogo']));
+        //     $data['locations'] = LocationsResource::collection($this->locationService->getAll(filters: ['depth' => 2]));
+        //     $data['coupons'] = CouponsResource::collection($this->couponService->listing(filters:['in_period'=>true]));
+        //     return $data;
+        // });
+        $data ['featured_products'] = ProductsResource::collection($this->productService->getAll(where_condition: ['featured' => 1], withRelation: ['defaultLogo']));
+        $data['locations'] = LocationsResource::collection($this->locationService->getAll(filters: ['depth' => 2]));
+        $data['coupons'] = CouponsResource::collection($this->couponService->listing(filters:['in_period'=>true]));
+
         $data ['sliders']  = SlidersResource::collection($this->sliderService->listing(where_condition:['location_id'=>$location_id],withRelations: ['logo']));
         $data ['featured_centers'] = CentersResource::collection($this->centerService->listing(filters: ['is_active'=>1,'featured' => 1,'location_id'=>$location_id], withRelation: ['defaultLogo']));
         return apiResponse(data: $data);
