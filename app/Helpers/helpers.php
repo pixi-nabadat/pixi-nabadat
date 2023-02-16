@@ -23,7 +23,7 @@ if (!function_exists('successCode')) {
 
 
 if (!function_exists('getPriceAfterDiscount')) {
-    function getPriceAfterDiscount(int $price, int $discountValue, $discountType = \App\Enum\DiscountEnum::PERCENTAGE)
+    function getPriceAfterDiscount(int $price, float $discountValue, $discountType = \App\Enum\DiscountEnum::PERCENTAGE)
     {
         if ($discountType == \App\Enum\DiscountEnum::PERCENTAGE)
             return $price - ($price * ($discountValue / 100));

@@ -54,7 +54,7 @@ class BuyCustomPulsesController extends Controller
 
                 $order = $this->setUserOfferAsOrder($user, $order_data, $order_item_data);
 
-                $total_order_amount_in_cents = $user_package * 100;
+                $total_order_amount_in_cents = getPriceAfterDiscount($user_package->price, $user_package->discount_percentage) * 100;
 
                 $result = $this->paymobService->payCredit(order_id: $order->id, items: $paymob_order_items, userAddress: $userAddress, total_amount_cents: $total_order_amount_in_cents);
 
