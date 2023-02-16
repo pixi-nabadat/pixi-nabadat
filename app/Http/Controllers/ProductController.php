@@ -96,6 +96,8 @@ class ProductController extends Controller
     public function featured(Request $request)
     {
         try {
+            //first forget cash
+            cache()->forget('home-api');
             $result = $this->productService->featured($request->id);
             if (!$result)
                 return apiResponse(message: trans('lang.not_found'), code: 404);
@@ -108,6 +110,8 @@ class ProductController extends Controller
     public function status(Request $request)
     {
         try {
+            //first forget cash
+            cache()->forget('home-api');
             $result = $this->productService->status($request->id);
             if (!$result)
                 return apiResponse(message: trans('lang.not_found'), code: 404);

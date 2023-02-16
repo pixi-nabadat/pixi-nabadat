@@ -41,6 +41,8 @@ class GovernorateController extends Controller
 
     public function store(StoreLocationRequest $request)
     {
+        //first forget cash
+        cache()->forget('home-api');
         try {
             $this->locationService->store($request->all());
             $toast=[
@@ -82,6 +84,8 @@ class GovernorateController extends Controller
 
     public function update($id, StoreLocationRequest $request)
     {
+        //first forget cash
+        cache()->forget('home-api');
         try {
             $this->locationService->update($id, $request->all());
             $toast=[
@@ -103,6 +107,8 @@ class GovernorateController extends Controller
 
     public function destroy($id)
     {
+        //first forget cash
+        cache()->forget('home-api');
         try {
             $result =  $this->locationService->delete($id);
             if(!$result)
