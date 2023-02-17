@@ -25,6 +25,7 @@ return new class extends Migration
             $table->double('min_buy')->nullable();
             $table->enum('coupon_for',['store','reservation'])->default('store');
             $table->unsignedInteger('allowed_usage')->default(1);
+            $table->boolean('is_active')->default(\App\Enum\ActivationStatusEnum::ACTIVE);
             $table->timestamps();
         });
     }

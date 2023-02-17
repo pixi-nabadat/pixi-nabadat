@@ -15,13 +15,14 @@ class NotifcationsResource extends JsonResource
      */
     public function toArray($request)
     {
-
         $lang = getLocale();
        return [
-           'id'=>$this->data['model_id'],
+           'id'=>$this->id,
+           'model_id'=>$this->data['model_id'],
            'type'=>$this->data['type'],
            'title'=>$this->data['title']["$lang"]??null,
            'message'=>$this->data['message']["$lang"]??null,
+           'read_at'=> isset($this->read_at),
            'created_at'=>Carbon::parse($this->created_at)->diffForHumans()
            ];
     }

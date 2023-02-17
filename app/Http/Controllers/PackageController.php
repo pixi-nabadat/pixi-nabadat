@@ -31,7 +31,8 @@ class PackageController extends Controller
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.package_not_found')];
             return back()->with('toast', $toast);
         }
-        return view('dashboard.packages.edit', compact('package'));
+        $centers = $this->centerService->getAll();
+        return view('dashboard.packages.edit', compact('package', 'centers'));
     }//end of edit
 
     public function create()

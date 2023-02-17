@@ -4,41 +4,44 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CentersResource;
+use App\Http\Resources\CouponsResource;
 use App\Http\Resources\HomeSearchResource;
 use App\Http\Resources\LocationsResource;
 use App\Http\Resources\product\ProductsResource;
+use App\Http\Resources\SlidersResource;
 use App\Models\Center;
 use App\Models\Device;
 use App\Models\Product;
 use App\Services\CenterService;
+use App\Services\CouponService;
 use App\Services\LocationService;
 use App\Services\ProductService;
+use App\Services\SliderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    public function __construct(protected ProductService $productService, protected CenterService $centerService, protected LocationService $locationService)
+    public function __construct(protected ProductService $productService,
+                                protected CenterService $centerService,
+                                protected LocationService $locationService,
+                                protected SliderService $sliderService,protected CouponService $couponService)
     {
     }
 
 
     public function index(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        $user = auth('sanctum')->user();
-        if (isset($user))
-            $location_id = $user->location_id;
-        else
-            $location_id = request()->input('location_id');
+        $location_id = request()->input('location_id',null);
         $data = Cache::remember('home-api', 60 * 60 * 24, function () use ($location_id) {
-            $data ['featured_products'] = ProductsResource::collection($this->productService->getAll(where_condition: ['featured' => 1], withRelation: ['attachments']));
-            $data ['featured_centers'] = CentersResource::collection($this->centerService->listing(filters: ['featured' => 1], withRelation: ['location', 'attachments']));
-            $data ['sliders'] = [];
+            $data ['featured_products'] = ProductsResource::collection($this->productService->getAll(where_condition: ['featured' => 1], withRelation: ['defaultLogo']));
             $data['locations'] = LocationsResource::collection($this->locationService->getAll(filters: ['depth' => 2]));
+            $data['coupons'] = CouponsResource::collection($this->couponService->listing(filters:['in_period'=>true]));
+            $data ['featured_centers'] = CentersResource::collection($this->centerService->listing(filters: ['is_active'=>1,'featured' => 1,'location_id'=>$location_id], withRelation: ['defaultLogo']));
+            $data ['sliders']  = SlidersResource::collection($this->sliderService->listing(where_condition:['location_id'=>$location_id],withRelations: ['logo']));
             return $data;
         });
-
         return apiResponse(data: $data);
     }
 
