@@ -19,9 +19,8 @@ class OrderResource extends JsonResource
             'sub_total'=>$this->sub_total,
             'grand_total'=>$this->grand_total,
             'discount'=>$this->coupon_discount,
-            'status'=>$this->whenLoaded('orderStatus',$this->orderStatus->status_text),
+            'status'=>$this->whenLoaded('latestStatus',$this->latestStatus->status_text),
             'items'=>$this->whenLoaded('items',OrderItemResource::collection($this->items))
-
         ];
     }
 }

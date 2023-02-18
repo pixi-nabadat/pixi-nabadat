@@ -31,10 +31,4 @@ class OrderHistory extends Model
                 return trans('lang.canceled');
         }
     }
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::observe(OrderHistoryObserver::class);
-    }
 }

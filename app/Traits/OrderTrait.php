@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Enum\PaymentMethodEnum;
 use App\Exceptions\BadRequestHttpException;
 use App\Exceptions\NotFoundException;
+use App\Models\Order;
 use App\Models\User;
 use App\Services\AddressService;
 use App\Services\CartService;
@@ -34,6 +35,11 @@ trait OrderTrait
     {
         $order = $user->orders()->create($order_data);
         $order->items()->create($items);
+        $order_history = [
+            'order_id'=>$order->id,
+            'status'=>Order::PENDING,
+        ];
+        $order->history()->create($order_history);
         return $order->load('items');
     }
 

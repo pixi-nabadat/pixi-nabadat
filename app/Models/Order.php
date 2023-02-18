@@ -21,7 +21,7 @@ class Order extends Model
         DELIVERED   = 4,
         CANCELED    = 5;
 
-    protected $fillable = ['user_id','payment_status','payment_method','address_info','address_id','shipping_fees','sub_total','grand_total','coupon_id','coupon_discount','order_history_id','paymob_transaction_id','relatable_id','relatable_type','deleted_at'];
+    protected $fillable = ['user_id','payment_status','payment_method','address_info','address_id','shipping_fees','sub_total','grand_total','coupon_id','coupon_discount','paymob_transaction_id','relatable_id','relatable_type','deleted_at'];
 
     protected $casts = [
         'address_info' => 'object'
@@ -42,9 +42,9 @@ class Order extends Model
         return $this->hasMany(OrderHistory::class, 'order_id');
     }
 
-    public function orderStatus(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function latestStatus(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->belongsTo(OrderHistory::class,'order_history_id');
+        return $this->hasOne(OrderHistory::class, 'order_id')->latestOfMany();
     }
 
     public function scopeActiveOrder(Builder $builder)
@@ -58,16 +58,16 @@ class Order extends Model
         return trans('lang.'.$value) ;
     }
 
-    public function getPaymentStatusAttribute($value)
+    public function getPaymentStatusAttribute($value): array|string|\Illuminate\Contracts\Translation\Translator|\Illuminate\Contracts\Foundation\Application|null
     {
         return trans('lang.'.$value) ;
     }
 
     public function getOrderStatusTextAttribute()
     {
-        if (!$this->relationLoaded('orderStatus'))
+        if (!$this->relationLoaded('latestStatus'))
             return null;
-        $order_status = $this->orderStatus->status;
+        $order_status = $this->latestStatus->status;
         switch ($order_status) {
             case self::PENDING :
                 return trans('lang.pending');
