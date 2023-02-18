@@ -2,16 +2,12 @@
 
 namespace App\Services;
 
-use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
 use App\Exceptions\NotFoundException;
-use App\Models\Settlement;
-use App\Models\Package;
 use App\Models\UserPackage;
 use App\QueryFilters\UserPackagesFilter;
-
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+
 class UserPackageService extends BaseService
 {
 
@@ -32,13 +28,13 @@ class UserPackageService extends BaseService
      */
     public function update(int $id, array $data): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|Builder|array
     {
-        $userPackage = UserPackage::with('center')->find($id);
+        $userPackage = $this->find(id:$id,with:['user','package'] );
         if (!$userPackage)
             throw new NotFoundException(trans('lang.offers_not_found'));
-       $is_updated =  $userPackage->update([
+      $userPackage->update([
             'payment_status' => $data['payment_status'],
         ]);
-     return  $userPackage;
+     return  $userPackage->refresh();
     }
 
     public function create(array $data =[]){
@@ -46,24 +42,22 @@ class UserPackageService extends BaseService
     }
 
 
+    /**
+     * @throws NotFoundException
+     */
     public function find(int $id, array $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
         $userPackage = UserPackage::with($with)->find($id);
-        if ($userPackage)
-            return $userPackage;
-        return false;
+        if (!$userPackage)
+            throw new NotFoundException(trans('user package not found'));
+        return $userPackage;
     }
 
     public function delete(int $id)
     {
-        $userPackage = UserPackage::find($id);
-        if ($userPackage) {
-            $paymentStatus = $userPackage->payment_status;
-            if($paymentStatus != PaymentStatusEnum::UNPAID)
-                return ['status'=>false, 'message'=> trans('lang.operation_success')];
-            return $userPackage->delete();
-        }
-        return ['status'=>false, 'message'=> trans('lang.not_found')];
+        $userPackage = $this->find($id);
+        return $userPackage->delete();
+
     } //end of delete
 
 }
