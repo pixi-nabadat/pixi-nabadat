@@ -53,7 +53,6 @@ Route::group(['prefix' => 'fcm'], function () {
 });
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
-    Route::get('week-days', [AppointmentController::class, 'getWeekDays']); // all reservations for center
     Route::group(['prefix' => 'centers'], function () {
         Route::post('store/doctor', [DoctorController::class, 'store']);
         Route::delete('doctors/{doctorId}', [DoctorController::class, 'delete']);
@@ -153,6 +152,8 @@ Route::get('locations/{parent_id}', [LocationController::class, 'getLocationByPa
 Route::resource('centers', CenterController::class);
 Route::get('centers/{id}/reservation-appointments', [AppointmentController::class, 'getReservationAppointmentsForCenter'])->name('api.center-reservation.appointments');
 
+Route::get('week-days', [AppointmentController::class, 'getWeekDays']); // all reservations for center
+
 //start user packages
 Route::get('userPackages/listing', [UserPackageController::class, 'userPackagesListing']);
 Route::get('centerPackages/listing', [UserPackageController::class, 'centerPackagesListing']);
@@ -168,6 +169,7 @@ Route::resource('packages', CenterPackageController::class);
 Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
 Route::get('cancel-reasons', [CancelReasonController::class, 'listing']);
+
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);
 });
