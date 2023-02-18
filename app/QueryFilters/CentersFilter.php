@@ -40,4 +40,9 @@ class CentersFilter extends QueryFilter
             });
     }
 
+    public function appointment_id($term)
+    {
+        return $this->builder->whereHas('appointments',fn($query)=>$query->where('day_of_week',$term));
+    }
+
 }
