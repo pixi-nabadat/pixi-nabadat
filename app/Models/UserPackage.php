@@ -25,6 +25,7 @@ class UserPackage extends Model
         'status',
         'used',
         'remain',
+        'deleted_at'
     ];
 
     public function user(): BelongsTo

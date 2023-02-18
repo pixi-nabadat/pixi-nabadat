@@ -46,8 +46,8 @@ class changeOrderDependencies
             $userPackage->update(['deleted_at'=>null,'payment_status'=>PaymentStatusEnum::PAID]);
             $this->userService->updateOrCreateNabadatWallet($user, $userPackage);
             $order->update(['payment_status' => PaymentStatusEnum::PAID]);
-        }
-        $order->update(['deleted_at' => null, 'payment_status' => PaymentStatusEnum::PAID]);
+        }else
+             $order->update(['deleted_at' => null, 'payment_status' => PaymentStatusEnum::PAID]);
         User::setPoints($user, amount: (float)$order->grand_total);
 
     }

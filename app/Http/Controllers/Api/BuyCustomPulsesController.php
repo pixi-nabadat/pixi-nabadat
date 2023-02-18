@@ -37,6 +37,8 @@ class BuyCustomPulsesController extends Controller
             $user = auth('sanctum')->user();
             $user = $user->load('defaultAddress');
             $userAddress = $user->defaultAddress->first();
+            if (!isset($userAddress))
+                throw new \Exception(trans('user_desnot_have_default_address'));
             //create user package log
             $center = $this->centerService->find($request->center_id);
             $numNabadat = $request->num_nabadat;
@@ -61,6 +63,8 @@ class BuyCustomPulsesController extends Controller
                 if (!$result['status'])
                     return apiResponse(message: trans('lang.there_is_an_error'), code: 422);
 
+                $status_code = 200 ;
+                $message = null;
                 $result_data = $result['data'] ?? null;
             } else {
                 $user_package_data = $this->getUserPackageDataForCustomPulses($numNabadat, $center, $user);
@@ -130,6 +134,7 @@ class BuyCustomPulsesController extends Controller
         $active_user_package = $user->package()->where('status', UserPackageStatusEnum::ONGOING)->where('payment_status', PaymentStatusEnum::PAID)->count();
         return [
             'package_id' => null,
+            'user_id' => $user->id,
             'num_nabadat' => $num_nabadat,
             'price' => $num_nabadat * $center->pulse_price,
             'center_id' => $center->id,
@@ -143,5 +148,4 @@ class BuyCustomPulsesController extends Controller
         ];
     }
     //end buy custom pulses
-
 }
