@@ -14,18 +14,8 @@ class UserPackage extends Model
     use HasFactory,Filterable,SoftDeletes;
 
     protected $fillable = [
-        'num_nabadat',
-        'price',
-        'center_id',
-        'user_id',
-        'package_id',
-        'discount_percentage',
-        'payment_method',
-        'payment_status',
-        'status',
-        'used',
-        'remain',
-        'deleted_at'
+        'num_nabadat', 'price', 'center_id', 'user_id', 'package_id', 'discount_percentage',
+        'payment_method', 'payment_status', 'status', 'used', 'remain', 'deleted_at'
     ];
 
     public function user(): BelongsTo
