@@ -131,7 +131,7 @@ class OrderController extends Controller
         $result = $this->paymobService->paymentCallback($request);
         if ($result != false) {
             logger('merchant_order_id : ' . $result['merchant_order_id']);
-            event(new OrderCreated($result['merchant_order_id']));
+            event(new OrderCreated($result));
             return apiResponse(message: trans('lang.payment_accepted'));
         }
         return apiResponse(message: trans('lang.there_is_an_error_try_again_later'), code: 422);
