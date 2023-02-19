@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 
 use Carbon\Carbon;
 
-class SliderStoreRequest extends BaseRequest
+class SliderRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +26,10 @@ class SliderStoreRequest extends BaseRequest
     {
         return [
             'order'      => 'required|integer',
-            'center_id' => 'required|integer|exists:centers,id',
+            'center_id'  => 'required|integer|exists:centers,id',
             'start_date' => 'required|date',
             'end_date'   => 'required|date',
+            'logo'       => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'is_active'  => 'nullable|string',
         ];
     }

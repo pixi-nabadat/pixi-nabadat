@@ -22,7 +22,7 @@ class StoreDoctorRequest extends BaseRequest
     public function rules()
     {
         return [
-            // 'center_id'=>'required|exists:centers,id',
+            'center_id'=>'required|exists:centers,id',
             'name.*' => 'required|string',
             'phone' => 'required|string',
             'description.*' => 'string|nullable',

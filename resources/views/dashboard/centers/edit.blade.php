@@ -376,6 +376,7 @@
                                     <div class="row">
                                         @if($center->attachments->count())
                                             @foreach($center->attachments as $attachment)
+                                                    @if($attachment->type == App\Enum\ImageTypeEnum::GALARY)
                                                     <div class="col-md-3 col-lg-3 col-sm-12">
                                                         <div class="img-container">
                                                             <div class="form-group my-3">
@@ -388,6 +389,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    @endif
                                             @endforeach
                                         @endif
                                     </div>

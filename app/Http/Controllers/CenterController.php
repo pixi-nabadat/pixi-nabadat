@@ -46,6 +46,7 @@ class CenterController extends Controller
 
     public function store(StoreCenterRequest $request): \Illuminate\Http\RedirectResponse
     {
+        cache()->forget('home-api');
         try {
             DB::beginTransaction();
             $center = $this->centerService->store($request->validated());
@@ -91,6 +92,8 @@ class CenterController extends Controller
 
     public function update($id, UpdateCenterRequest $request)
     {
+        cache()->forget('home-api');
+
         try {
             $this->centerService->update($id, $request->validated());
             $toast = [
@@ -121,6 +124,7 @@ class CenterController extends Controller
 
     public function changeStatus(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
+        cache()->forget('home-api');
 
         try {
             $this->centerService->changeStatus($request->id);
@@ -154,6 +158,7 @@ class CenterController extends Controller
 
     public function featured(Request $request)
     {
+        cache()->forget('home-api');
         try {
             $this->centerService->featured($request->id);
             return apiResponse(message: trans('lang.success'));

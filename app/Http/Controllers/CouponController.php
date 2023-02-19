@@ -43,6 +43,8 @@ class CouponController extends Controller
 
     public function store(CouponStoreRequest $request): \Illuminate\Http\RedirectResponse
     {
+        //first forget cash
+        cache()->forget('home-api');
        $data = $request->validated();
        $data['start_date'] = Carbon::parse($data['start_date'])->format('Y-m-d');
        $data['end_date'] = Carbon::parse($data['end_date'])->format('Y-m-d');
@@ -59,6 +61,8 @@ class CouponController extends Controller
 
     public function update(CouponUpdateRequest $request, $id): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
+        //first forget cash
+        cache()->forget('home-api');
         try {
             $this->couponService->update($id,  $request->validated());
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
@@ -72,6 +76,8 @@ class CouponController extends Controller
 
     public function destroy($id)
     {
+        //first forget cash
+        cache()->forget('home-api');
         try {
             $result = $this->couponService->delete($id);
             if (!$result)
@@ -92,5 +98,23 @@ class CouponController extends Controller
         }
        return view('dashboard.coupons.show', compact('coupon'));
     } //end of show
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     *
+     * status method for change is_active column only
+     */
+    public function status(Request $request)
+    {
+        try {
+            $result = $this->couponService->status($request->id);
+            if (!$result)
+                return apiResponse(message: trans('lang.not_found'), code: 404);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+    } //end of status
 
 }

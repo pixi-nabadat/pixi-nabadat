@@ -33,7 +33,7 @@ class CenterDeviceStoreRequest extends BaseRequest
         ];
     }
 
-    public function prepareForValidation()
+    public function validationData()
     {
         return array_merge($this->all(),['center_id'=>auth()->user()->center_id]);
     }
