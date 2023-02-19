@@ -36,7 +36,7 @@ class ReservationService extends BaseService
         ]);
 
         $reservation->refresh();
-        return $reservation->load('center','user','history');
+        return $reservation->load('center','user','latestStatus');
     }
 
     /**

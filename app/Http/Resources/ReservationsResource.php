@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\CentersResource;
 use App\Models\Reservation;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\CentersResource;
 use Carbon\Carbon;
 
 class ReservationsResource extends JsonResource
@@ -24,10 +24,14 @@ class ReservationsResource extends JsonResource
             'qr_code'         => $this->qr_code,
             'from'            => $this->from,
             'to'              => $this->to,
-            'customer'        => $this->relationLoaded('user') ? new AuthUserResource($this->user):null,
-            'center'          => $this->relationLoaded('center') ? new CentersResource($this->center):null,
-            'status'          => $this->relationLoaded('history') ? new ReservationHistoryResource($this->history->last()) :null,
-            'nabadat_history' => $this->relationLoaded('nabadatHistory') ? NabadatHistoryResource::collection($this->nabadatHistory):null,
+            'customer'        => $this->whenLoaded('user',[
+                'id'=>$this->user->id,
+                'name'=>$this->user->name,
+                'phone'=>$this->user->phone,
+            ]),
+            'center'          => $this->whenLoaded('center',new CentersResource($this->center)),
+            'status'          => $this->whenLoaded('latestStatus',$this->reservation_status),
+            'nabadat_history' => $this->whenLoaded('nabadatHistory') ? NabadatHistoryResource::collection($this->nabadatHistory):null,
         ];
     }
 }

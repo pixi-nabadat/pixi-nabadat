@@ -29,9 +29,9 @@ class ReservationController extends Controller
             $filters = $request->all();
             if (auth('sanctum')->user()->center_id == null)
                 throw new NotFoundException('route not found');
-            $withRelations = ['history', 'nabadatHistory', 'user', 'center'];
+            $withRelations = ['latestStatus', 'nabadatHistory', 'user'];
             $reservations = $this->reservationService->listing(filters: $filters, withRelation: $withRelations);
-            return apiResponse(data: ReservationsResource::collection($reservations));
+            return ReservationsResource::collection($reservations);
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
@@ -42,9 +42,9 @@ class ReservationController extends Controller
         try {
             $filters = $request->all();
             $filters['user_id'] = auth('sanctum')->id();
-            $withRelations = ['history', 'nabadatHistory', 'user', 'center'];
+            $withRelations = ['latestStatus', 'nabadatHistory', 'center'];
             $reservations = $this->reservationService->listing(filters: $filters, withRelation: $withRelations);
-            return apiResponse(data: ReservationsResource::collection($reservations));
+            return ReservationsResource::collection($reservations);
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
@@ -69,7 +69,7 @@ class ReservationController extends Controller
     public function find(string $id)
     {
         try {
-            $withRelations = ['history', 'nabadatHistory', 'user', 'center'];
+            $withRelations = ['latestStatus', 'nabadatHistory', 'user', 'center'];
             $reservation = $this->reservationService->findByQr($id, $withRelations);
             if ($reservation)
                 return apiResponse(new ReservationsResource($reservation), trans('lang.operation_success'));
