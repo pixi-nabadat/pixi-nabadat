@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\Center\AuthController as CenterAuthController;
 use App\Http\Controllers\Api\BuyCustomPulsesController;
 use App\Http\Controllers\Api\BuyOfferController;
 use App\Http\Controllers\Api\CancelReasonController;
@@ -41,6 +42,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'auth'], function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
+    Route::post('center-login',[CenterAuthController::class, 'login']);
     Route::post('phone/verify', PhoneVerifyController::class);
     Route::post('password/forget', PhoneVerifyController::class);
     Route::post('password/reset', RestPasswordController::class);
@@ -171,7 +173,6 @@ Route::apiResource('packages', CenterPackageController::class);
 Route::get('doctor/{id}', [DoctorController::class, 'find']);
 
 Route::get('cancel-reasons', [CancelReasonController::class, 'listing']);
-
 Route::fallback(function () {
     return apiResponse(message: 'Invalid Route', code: 404);
 });
