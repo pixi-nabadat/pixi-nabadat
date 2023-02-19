@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exceptions\NotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CenterDeviceStoreRequest;
-use App\Http\Requests\CenterDeviceUpdateRequest;
-use App\Http\Resources\CenterDevicesResource;
 use App\Http\Resources\DeviceResource;
 use App\Services\CenterDeviceService;
-use App\Services\CenterService;
-use App\Services\DeviceService;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -26,12 +21,12 @@ class CenterDeviceController extends Controller
 
     }
 
-    // listing all reservations for logged in center
-    public function listing(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function listing(): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $centerDevices = $this->centerDeviceService->getAllCenterDevices(id: $request->id);
-            $response = DeviceResource::collection($centerDevices);
+            $center_id = auth()->user()->center_id;
+            $centerWithDevices = $this->centerDeviceService->getAllCenterDevices(id: $center_id);
+            $response = DeviceResource::collection($centerWithDevices->devices);
             return apiResponse(data: $response, message: trans('lang.success_operation'));
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
@@ -40,7 +35,7 @@ class CenterDeviceController extends Controller
 
     /**
      * @param CenterDeviceStoreRequest $request
-     * @return CenterDevicesResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|DeviceResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
      */
     public function store(CenterDeviceStoreRequest $request): \Illuminate\Http\Response|DeviceResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
