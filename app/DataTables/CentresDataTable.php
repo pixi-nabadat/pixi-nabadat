@@ -106,6 +106,10 @@ class CentresDataTable extends DataTable
                 ->title(trans('lang.status'))
                 ->searchable(false)
                 ->orderable(false),
+            Column::make('devices_count')
+                ->title(trans('lang.devices'))
+                ->searchable(false)
+                ->orderable(false),
             Column::computed('action')
                 ->title(trans('lang.action'))
                 ->width(60),

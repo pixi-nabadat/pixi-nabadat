@@ -19,7 +19,7 @@ class CenterService extends BaseService
 
     public function queryGet(array $where_condition = [], $withRelation = []): Builder
     {
-        $centers = Center::query()->with($withRelation);
+        $centers = Center::query()->with($withRelation)->withCount('devices');
         return $centers->filter(new CentersFilter($where_condition));
     }
 
@@ -127,7 +127,7 @@ class CenterService extends BaseService
 
     public function find($id, $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
-        $center = Center::with($with)->find($id);
+        $center = Center::with($with)->withCount('devices')->find($id);
         if (!$center)
             throw new NotFoundException(trans('lang.center_not_found'));
         return $center;
