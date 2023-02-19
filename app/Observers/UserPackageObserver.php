@@ -55,7 +55,8 @@ class UserPackageObserver
      */
     public function updated(UserPackage $userPackage)
     {
-        //
+//        ToDo when user package update payment status to paid
+//       ToDo update nabadat user wallet
     }
 
     /**

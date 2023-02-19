@@ -9,6 +9,7 @@ use App\Exceptions\NotFoundException;
 use App\Models\Order;
 use App\Models\Package;
 use App\Models\User;
+use App\Models\UserPackage;
 use App\Services\UserService;
 
 class changeOrderDependencies
@@ -32,21 +33,39 @@ class changeOrderDependencies
      */
     public function handle(OrderCreated $event)
     {
-        $order_id = $event->merchant_order_id;
+        $paymob_object = $event->paymobResult;
+        $order_id = $paymob_object['merchant_order_id'];
+        $paymob_transaction_id = $paymob_object['id'];
+
         logger('inside event change Order Dependencies : ' . $order_id);
+
         if (is_null($order_id))
             throw new NotFoundException('merchant_order_id_not_found');
+
         $order = Order::withTrashed()->find($order_id);
-        $user = User::with('nabadatWallet')->find($order->user_id);
+
         if (!$order)
             throw new NotFoundException('merchant_order_id_not_found');
+
+        $user = User::with('nabadatWallet')->find($order->user_id);
+
         if (!is_null($order->relatable_id) && !is_null($order->relatable_type)) {
-            $package = Package::find($order->relatable_id);
-            $this->userService->updateOrCreateNabadatWallet($user, $package, PaymentMethodEnum::CREDIT, PaymentStatusEnum::PAID);
-            $order->update(['payment_status' => PaymentStatusEnum::PAID]);
-            return;
-        }
-        $order->update(['deleted_at' => null, 'payment_status' => PaymentStatusEnum::PAID]);
+            $userPackage = UserPackage::withTrashed()->find($order->relatable_id);
+            $userPackage->update(['deleted_at'=>null,'payment_status'=>PaymentStatusEnum::PAID]);
+            $this->userService->updateOrCreateNabadatWallet($user, $userPackage);
+            $order_data = [
+                'payment_status' => PaymentStatusEnum::PAID,
+                'paymob_transaction_id'=>$paymob_transaction_id
+            ];
+        }else
+            $order_data = [
+                'payment_status' => PaymentStatusEnum::PAID,
+                'paymob_transaction_id'=>$paymob_transaction_id,
+                'deleted_at' => null
+            ];
+
+        $order->update($order_data);
+
         User::setPoints($user, amount: (float)$order->grand_total);
 
     }

@@ -17,8 +17,7 @@ class UserPackagesResource extends JsonResource
         return [
             'id'                  =>$this->id,
             'center'              => $this->whenLoaded('center', new CentersResource($this->center)),
-            'package'             => $this->whenLoaded('package', new PackagesResource($this->package)),
-            'user'                => $this->whenLoaded('user', new AuthUserResource($this->user)),
+            'package'             => $this->whenLoaded('package', $this->package?->name),
             'num_nabadat'         => $this->num_nabadat,
             'price'               => $this->price,
             'discount_percentage' => $this->discount_percentage,

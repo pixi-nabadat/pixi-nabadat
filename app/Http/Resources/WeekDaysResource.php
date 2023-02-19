@@ -17,9 +17,11 @@ class WeekDaysResource extends JsonResource
      */
     public function toArray($request)
     {
+        $date = \Carbon\Carbon::now(config('app.africa_timezone'));
        return [
            'id'=>array_search($this->resource,Appointment::WEEKDAYS),
            'day_text'=>$this->resource,
+           'date'=>getDateOfSpecificDay(array_search($this->resource,Appointment::WEEKDAYS),$date)->format('F j, Y'),
        ];
     }
 }

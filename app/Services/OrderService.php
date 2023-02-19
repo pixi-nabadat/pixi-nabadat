@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enum\NotificationTypeEnum;
 use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
+use App\Exceptions\NotFoundException;
 use App\Models\CouponUsage;
 use App\Models\Order;
 use App\Models\User;
@@ -74,10 +75,9 @@ class OrderService extends BaseService
 
     private function createOrderHistory(Order $order): void
     {
-        $order_history = $order->history()->create([
+       $order->history()->create([
             'status' => Order::PENDING,
         ]);
-        $order->update(['order_history_id' => $order_history->id]);
     }
 
     private function updateCouponUsage($user_id, $temp_user_id, $coupon_id = null)
@@ -98,21 +98,24 @@ class OrderService extends BaseService
     public function updateOrderStatus($data): void
     {
         $order = $this->find($data['id']);
-        $order_history = $order->history()->create([
+        $order->history()->create([
             'status' => $data['status'],
         ]);
-        $order->order_history_id = $order_history->id;
-        $order->save();
-        $order->refresh();
 
         //set user points
         if ($data['status'] == Order::DELIVERED)
             User::setPoints($order->user, amount: (float)$order->grand_total);
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function find(int $id, $with_relation = [])
     {
-        return Order::activeOrder()->with($with_relation)->find($id);
+        $order = Order::activeOrder()->with($with_relation)->find($id);
+        if (!$order)
+            throw new NotFoundException(trans('lang.order_not_found'));
+        return $order ;
     }
 
     public function notifiyUser(Order $order)

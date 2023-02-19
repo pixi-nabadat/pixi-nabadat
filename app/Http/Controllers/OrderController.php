@@ -38,7 +38,7 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $loadRelation = ['user:id,name,phone' , 'items','orderStatus'];
+        $loadRelation = ['user:id,name,phone' , 'items','latestStatus'];
         $order = $this->orderService->find($id,$loadRelation);
         if (!$order) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.order_not_found')];
