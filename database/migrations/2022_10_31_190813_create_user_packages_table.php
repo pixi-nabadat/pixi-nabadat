@@ -28,6 +28,7 @@ return new class extends Migration
             $table->enum('status',[\App\Enum\UserPackageStatusEnum::PENDING,\App\Enum\UserPackageStatusEnum::READYFORUSE,\App\Enum\UserPackageStatusEnum::ONGOING,\App\Enum\UserPackageStatusEnum::COMPLETED]);
             $table->integer('used')->default(0);
             $table->integer('remain')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

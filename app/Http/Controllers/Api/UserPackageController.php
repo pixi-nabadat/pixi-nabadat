@@ -41,7 +41,7 @@ class UserPackageController extends Controller
             $filters = $request->all();
             $filters['user_type'] = User::CUSTOMERTYPE;
             $filters['user_id']   = auth()->id();
-            $withRelations = [];
+            $withRelations = ['center:id,description,address','center.defaultLogo','center.user:id,center_id,name','package'];
             $userPackages = $this->userPackageService->listing(filters: $filters,withRelation: $withRelations);
             return UserPackagesResource::collection($userPackages);
         } catch (\Exception $e) {
@@ -55,7 +55,7 @@ class UserPackageController extends Controller
             $filters = $request->all();
             $filters['user_type'] = 'center';
             $filters['center_id'] = auth()->user()->center_id;
-            $withRelations = [];
+            $withRelations = ['package','user'];
             $userPackages = $this->userPackageService->listing(filters: $filters,withRelation: $withRelations);
             return UserPackagesResource::collection($userPackages);
         } catch (\Exception $e) {
@@ -74,12 +74,8 @@ class UserPackageController extends Controller
         try{
             $withRelations = [];
             $userPackage = $this->userPackageService->find($id,$withRelations);
-            if($userPackage){
-                $userPackage = new UserPackagesResource($userPackage);
-                return apiResponse(data: $userPackage, message: trans('lang.operation_success'), code: 200);
-            }else
-                return apiResponse(data: null, message: trans('lang.error_has_occurred'), code: 422);
-
+            $userPackage = new UserPackagesResource($userPackage);
+            return apiResponse(data: $userPackage, message: trans('lang.operation_success'), code: 200);
         }catch(Exception $e){
             return apiResponse(message:  $e->getMessage(), code: 422);
         }
@@ -107,8 +103,8 @@ class UserPackageController extends Controller
     {
         try {
             $result = $this->userPackageService->delete($id);
-            if (!$result['status'])
-                return apiResponse(message: $result['message'], code: 404);
+            if (!$result)
+                return apiResponse(message: trans('there_is_an_error'), code: 404);
             return apiResponse(message: trans('lang.success'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);

@@ -12,10 +12,10 @@ class OrderCreated
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * @param $merchant_order_id
+     * @param $paymobResult
      * refernece to order im my database
      */
-    public function __construct(public $merchant_order_id)
+    public function __construct(public $paymobResult)
     {
         //
     }

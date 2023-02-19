@@ -31,7 +31,7 @@ class StoreDoctorRequest extends BaseRequest
         ];
     }
 
-    public function validationData(): array
+    public function prepareForValidation(): array
     {
         return array_merge($this->all(), ['center_id' => auth()->user()->center_id]);
     }

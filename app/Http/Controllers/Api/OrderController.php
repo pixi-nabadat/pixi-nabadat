@@ -40,16 +40,21 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $filters = array_merge($request->all(), ['user_id' => auth('sanctum')->id()]);
-        $relations = ['orderStatus', 'items.product.defaultLogo'];
+        $relations = ['latestStatus', 'items.product.defaultLogo'];
         $order = $this->orderService->listing($filters, $relations);
         return OrderResource::collection($order);
     }
 
     public function find(int $id): Application|ResponseFactory|Response
     {
-        $withRelations = ['items', 'orderStatus'];
-        $order = $this->orderService->find($id, $withRelations);
-        return apiResponse(data: new OrderResource($order));
+        try {
+            $withRelations = ['items', 'latestStatus'];
+            $order = $this->orderService->find($id, $withRelations);
+            return apiResponse(data: new OrderResource($order));
+        }catch (Exception $exception)
+        {
+            return  apiResponse(message: $exception->getMessage(),code: 422);
+        }
     }
 
     /**
@@ -74,38 +79,54 @@ class OrderController extends Controller
             $order = $this->storeOrder($orderData,$userAddress, $user,$request->payment_method); // method store order in trait for multiple usage
             if ($request->payment_method == PaymentMethodEnum::CREDIT) {
                 $paymob_order_items = $this->prepareOrderItemsForPaymobOrder($order->items);
+
                 $total_order_amount_in_cents = $order->grand_total * 100;
+
                 $status_code = 422;
+
                 $message = trans('lang.there_is_an_error');
+
                 $result = $this->paymobService->payCredit(order_id: $order->id, items: $paymob_order_items, userAddress: $userAddress, total_amount_cents: $total_order_amount_in_cents);
+
                 if ($result['status']) {
                     $status_code = 200;
                     $message = null;
                     DB::commit();
                     $this->cartService->emptyCart($request->temp_user_id);
                 }// check if status true commit transaction and store order in database else order not stored in db
+
                 $result_data = $result['data'] ?? null;
+
                 $result = (object)[
                     'payment_token'  =>$result_data,
                     'payment_method' =>PaymentMethodEnum::CREDIT
                 ];
                 return apiResponse(data: $result, message: $message, code: $status_code);
             }
+
             $this->cartService->emptyCart($request->temp_user_id);
+
             DB::commit();
 //            store order notification
+
               $notification_data = $this->orderService->notifiyUser($order);
+
               notifyUser($order->user , $notification_data);
 //            event to fire fcm notification message
+
             event(new PushEvent($order,FcmMessage::CREATE_NEW_ORDER));
+
             return new OrderResource($order);
         }
         catch (BadRequestHttpException $exception){
+
             DB::rollBack();
+
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
         catch (Exception $e) {
             DB::rollBack();
+
             return apiResponse(message: trans('lang.there_is_an_error'), code: 422);
         }
     }
@@ -131,7 +152,7 @@ class OrderController extends Controller
         $result = $this->paymobService->paymentCallback($request);
         if ($result != false) {
             logger('merchant_order_id : ' . $result['merchant_order_id']);
-            event(new OrderCreated($result['merchant_order_id']));
+            event(new OrderCreated($result));
             return apiResponse(message: trans('lang.payment_accepted'));
         }
         return apiResponse(message: trans('lang.there_is_an_error_try_again_later'), code: 422);
