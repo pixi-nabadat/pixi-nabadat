@@ -12,16 +12,6 @@ use Illuminate\Support\Arr;
 class CenterDeviceService extends BaseService
 {
 
-    public function getAll(array $where_condition = [], array $withRelation = []): \Illuminate\Database\Eloquent\Collection|array
-    {
-        return $this->queryGet($where_condition, $withRelation)->get();
-    }
-
-    public function queryGet(array $where_condition = [], $withRelation = []): Builder
-    {
-        $centerDevices = CenterDevice::query()->with($withRelation);
-        return $centerDevices->filter(new CenterDevicesFilter($where_condition));
-    }
 
     //get center devices api
     public function getAllCenterDevices($id)
@@ -39,27 +29,6 @@ class CenterDeviceService extends BaseService
         $center->devices()->syncWithoutDetaching([$data['device_id']=> Arr::except($data, 'device_id')]);
         return $center->devices;
     }
-
-    public function update(int $id, array $data = []): bool
-    {
-        $centerDevice = $this->find($id);
-        if ($centerDevice) {
-            $data['auto_service'] = isset($data['auto_service']) ? 1 : 0;
-            $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-            $centerDevice->update($data);
-        }
-        return false;
-    } //end of find
-
-    public function find(int $id)
-    {
-
-        $centerDevice = CenterDevice::find($id);
-        if ($centerDevice)
-            return $centerDevice;
-        return false;
-
-    } //end of update
 
     /**
      * @throws NotFoundException
