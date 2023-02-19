@@ -114,6 +114,11 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- devices_count --}}
+                        <div class="col-md-12 d-flex my-3">
+                            <label class="form-label col-3" for="devices_count">{{ trans('lang.devices_count') }}</label>
+                            <p class="form-control" id="devices_count">{{ $center->devices_count }}</p>
+                        </div>
                         {{-- support payments --}}
                         <div class="col-md-12 d-flex my-3">
                             <div class="mb-3">
@@ -297,6 +302,57 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- center Devices --}}
+                <div class="col-lg-12 col-md-12">
+
+                    {{-- center information --}}
+                    <div class="card  col-md-12">
+                        <div class="card-header py-4">
+                            <h6 class="card-titel">{{ __('lang.devices') }}</h6>
+                        </div>
+                        <div class="card-body row">
+                            @foreach ($center->devices as $device)
+                                {{-- name  --}}
+                                <div class="col-md-12 d-flex my-3">
+                                    <label class="form-label col-3" for="name">{{ trans('lang.name') }}</label>
+                                    <p class="form-control" id="name">{{ $device->name }}</p>
+                                </div>
+                                {{-- number_of_devices  --}}
+                                <div class="col-md-12 d-flex my-3">
+                                    <label class="form-label col-3" for="number_of_devices">{{ trans('lang.number_of_devices') }}</label>
+                                    <p class="form-control" id="number_of_devices">{{ $device->pivot->number_of_devices }}</p>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="media mb-2">
+                                        <label
+                                            class="col-form-label m-r-10">{{ trans('lang.is_active') }}</label>
+                                        <div class="media-body  icon-state">
+                                            <label class="switch">
+                                                <input type="checkbox" name="is_active" value="1"
+                                                    {{ $device->pivot->is_active ? "checked":"" }} disabled><span class="switch-state"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="media mb-2">
+                                        <label
+                                            class="col-form-label m-r-10">{{ trans('lang.auto_service') }}</label>
+                                        <div class="media-body  icon-state">
+                                            <label class="switch">
+                                                <input type="checkbox" name="auto_service" value="1"
+                                                    {{ $device->pivot->auto_service ? "checked":"" }} disabled><span class="switch-state"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                            @endforeach
+
                         </div>
                     </div>
                 </div>
