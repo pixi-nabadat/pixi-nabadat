@@ -72,7 +72,7 @@ class Center extends Model
     }
     public function devices(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Device::class, 'center_devices', 'center_id', 'device_id')
+        return $this->belongsToMany(Device::class, 'center_devices')
             ->withPivot(['id','auto_service','is_active','number_of_devices'])->withTimestamps();
     }
 
