@@ -52,17 +52,6 @@ class CenterDeviceController extends Controller
         }
     }
 
-
-    public function update(CenterDeviceUpdateRequest $request, $id)
-    {
-        try {
-            $this->centerDeviceService->update($id, $request->validated());
-            return apiResponse(message: trans('lang.updated_successfully'));
-        } catch (\Exception $ex) {
-            return apiResponse(message: trans('lang.there_is_an_error'),code: 400);
-        }
-    } //end of update
-
     public function destroy($id)
     {
         try {
