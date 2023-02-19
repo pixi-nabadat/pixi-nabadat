@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exceptions\NotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CenterDeviceStoreRequest;
-use App\Http\Requests\CenterDeviceUpdateRequest;
-use App\Http\Resources\CenterDevicesResource;
+use App\Http\Resources\DeviceResource;
 use App\Services\CenterDeviceService;
-use App\Services\CenterService;
-use App\Services\DeviceService;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -25,16 +21,13 @@ class CenterDeviceController extends Controller
 
     }
 
-    // listing all reservations for logged in center
-    public function listing(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function listing(): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $filters = $request->all();
-            if (auth('sanctum')->user()->center_id == null)
-                throw new NotFoundException('route not found');
-            $withRelations = [];
-            $centerDevices = $this->centerDeviceService->getAll(where_condition: $filters, withRelation: $withRelations);
-            return CenterDevicesResource::collection($centerDevices);
+            $center_id = auth()->user()->center_id;
+            $centerWithDevices = $this->centerDeviceService->getAllCenterDevices(id: $center_id);
+            $response = DeviceResource::collection($centerWithDevices->devices);
+            return apiResponse(data: $response, message: trans('lang.success_operation'));
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
@@ -42,28 +35,17 @@ class CenterDeviceController extends Controller
 
     /**
      * @param CenterDeviceStoreRequest $request
-     * @return CenterDevicesResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|DeviceResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
      */
-    public function store(CenterDeviceStoreRequest $request): \Illuminate\Http\Response|CenterDevicesResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function store(CenterDeviceStoreRequest $request): \Illuminate\Http\Response|DeviceResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $centerDevice = $this->centerDeviceService->store($request->validated());
-            return apiResponse(data: new CenterDevicesResource($centerDevice), message: trans('lang.success_operation'));
+            $centerDevices = $this->centerDeviceService->store($request->validated());
+            return apiResponse(data: DeviceResource::collection($centerDevices), message: trans('lang.success_operation'));
         } catch (Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
     }
-
-
-    public function update(CenterDeviceUpdateRequest $request, $id)
-    {
-        try {
-            $this->centerDeviceService->update($id, $request->validated());
-            return apiResponse(message: trans('lang.updated_successfully'));
-        } catch (\Exception $ex) {
-            return apiResponse(message: trans('lang.there_is_an_error'),code: 400);
-        }
-    } //end of update
 
     public function destroy($id)
     {

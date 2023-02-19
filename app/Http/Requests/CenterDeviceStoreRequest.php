@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CenterDeviceStoreRequest extends FormRequest
+class CenterDeviceStoreRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,13 +27,13 @@ class CenterDeviceStoreRequest extends FormRequest
         return [
             'center_id'=>'required|exists:centers,id',
             'device_id'=>['required',Rule::exists('devices','id'),Rule::unique('center_devices')->where('center_id',$this->center_id)],
-            'regular_price'=>'required|numeric',
-            'auto_service_price'=>'required|numeric',
+            'auto_service'=>'nullable|string',
+            'is_active'=>'nullable|string',
             'number_of_devices'=>'required|integer'
         ];
     }
 
-    public function prepareForValidation()
+    public function validationData()
     {
         return array_merge($this->all(),['center_id'=>auth()->user()->center_id]);
     }

@@ -55,7 +55,8 @@ class DoctorService extends BaseService
             $doctor->storeAttachment($fileData);
         }
         $data['is_active'] = isset($data['is_active'])  ? 1 :  0;
-        return $doctor->update($data);
+        $doctor->update($data);
+        return $doctor;
     }
 
     public function find(int $doctorId , array $withRelations = []): Doctor|Model|bool

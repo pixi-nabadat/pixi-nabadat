@@ -19,7 +19,8 @@ class DoctorsResource extends JsonResource
             'name'          => $this->name,
             'phone'         => $this->phone,
             'description'   => $this->description,
-            'image'         => $this->whenLoaded('defaultLogo',isset($this->defaultLogo) ?asset($this->defaultLogo->path."/".$this->defaultLogo->filename):null)
-       ];
+            'image'         => $this->whenLoaded('defaultLogo',isset($this->defaultLogo) ?asset($this->defaultLogo->path."/".$this->defaultLogo->filename):asset('assets/images/default-image.jpg')),
+            'is_active'     => $this->is_active,
+        ];
     }
 }

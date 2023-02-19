@@ -128,10 +128,6 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     Route::get('gevernorate/all', [App\Http\Controllers\GovernorateController::class, 'getAllGovernorates'])->name('allGovernorates');
 
-    Route::resource('centerDevices', CenterDeviceController::class);
-    Route::post('centerDevices/status', [CenterDeviceController::class, 'status'])->name('centerDevices.status');
-    Route::post('centerDevices/auotService', [CenterDeviceController::class, 'autoService'])->name('centerDevices.autoService');
-
     Route::post('orders/updateOrderStatus', [OrderController::class, 'updateOrderStatus'])->name('orders.updateOrderStatus');
     Route::resource('orders', OrderController::class);
 

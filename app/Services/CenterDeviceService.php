@@ -3,74 +3,78 @@
 namespace App\Services;
 
 use App\Exceptions\NotFoundException;
+use App\Models\Center;
 use App\Models\CenterDevice;
 use App\QueryFilters\CenterDevicesFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 
 class CenterDeviceService extends BaseService
 {
 
-    public function getAll(array $where_condition = [], array $withRelation = [])
+    /**
+     * @throws NotFoundException
+     */
+    public function find(int $id, array $withRelations = [])
     {
-        return $this->queryGet($where_condition, $withRelation)->get();
-    }
+        $center = Center::with($withRelations)->find($id);
+        if (!$center)
+            throw new NotFoundException(trans('lang.center_not_found'));
+        return $center;
 
-    public function queryGet(array $where_condition = [], $withRelation = []): Builder
+    }
+    //get center devices api
+    /**
+     * @throws NotFoundException
+     */
+    public function getAllCenterDevices($id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|Builder|array
     {
-        $centerDevices = CenterDevice::query()->with($withRelation);
-        return $centerDevices->filter(new CenterDevicesFilter($where_condition));
+        $withRelations = ['devices.attachments'];
+        $center = $this->find(id:$id,withRelations: $withRelations);
+        return $center;
     }
-
     public function store(array $data = [])
     {
-        return CenterDevice::create($data);
+        $withRelations = ['devices.attachments'];
+        $center   = $this->find(id:$data['center_id'],withRelations:$withRelations );
+        $data['auto_service'] = isset($data['auto_service']) ? 1 : 0;
+        $data['is_active'] = isset($data['is_active']) ? 1 : 0;
+        $center->devices()->syncWithoutDetaching([$data['device_id']=> Arr::except($data, 'device_id')]);
+        return $center->refresh();
     }
-
-    public function update(int $id, array $data = []): bool
-    {
-        $centerDevice = $this->find($id);
-        if ($centerDevice) {
-            $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ? 1 : 0;
-            $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-            $centerDevice->update($data);
-        }
-        return false;
-    } //end of find
-
-    public function find(int $id)
-    {
-
-        $centerDevice = CenterDevice::find($id);
-        if ($centerDevice)
-            return $centerDevice;
-        return false;
-
-    } //end of update
 
     /**
      * @throws NotFoundException
      */
     public function delete(int $id)
     {
-        $centerDevice = $this->find($id);
+        $centerId     = auth('sanctum')->user()->center_id;
+        $center       = $this->find($centerId);
+        $centerDevice = $center->devices()->detach($id);
         if (!$centerDevice)
             throw new NotFoundException(trans('lang.center_device_not_found'));
-        return $centerDevice->delete();
+        return true;
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function supportAutoService($id): bool
     {
-        $centerDevice = $this->find($id);
-        $centerDevice->is_support_auto_service = !$centerDevice->is_support_auto_service;
-        return $centerDevice->save();
-
+        $centerId = auth('sanctum')->user()->center_id;
+        $center = $this->find($centerId);
+        $centerDevice = $center->devices()->where('device_id', $id)->first();
+        $centerDevice->pivot->auto_service = !$centerDevice->pivot->auto_service;
+        return $centerDevice->pivot->save();
     }//end of is_support_auto_service
 
     public function status($id): bool
     {
-        $centerDevice = $this->find($id);
-        $centerDevice->is_active = !$centerDevice->is_active;
-        return $centerDevice->save();
+        $centerId = auth('sanctum')->user()->center_id;
+        $center = $this->find($centerId);
+        $centerDevice = $center->devices()->where('device_id', $id)->first();
+        $centerDevice->pivot->is_active = !$centerDevice->pivot->is_active;
+        return $centerDevice->pivot->save();
 
     }//end of status
 

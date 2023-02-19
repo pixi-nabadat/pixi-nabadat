@@ -26,8 +26,6 @@ class CenterResource extends JsonResource
             'description'                   => $this->description,
             'address'                       => $this->address,
             'rate'                          => $this->rate ,
-            'lat'                           => $this->lat ,
-            'lng'                           => $this->lng,
             'pulse_price'                   => $this->pulse_price,
             'pulse_discount'                => $this->pulse_discount,
             'pulse_price_after_discount'    => $this->pulsePriceAfterDiscount,
@@ -38,8 +36,9 @@ class CenterResource extends JsonResource
             'appointments'                  => $this->whenLoaded('appointments',AppointmentsResource::collection($this->appointments)),
             'is_support_auto_service'       => ($this->is_support_auto_service == 1),
             'images'                        => $this->whenLoaded('attachments', AttachmentsResource::collection($this->attachments->where('type','!=',ImageTypeEnum::LOGO))),
-            'logo'                          => $this->whenLoaded('attachments', isset($logo) ? url($logo->path.'/'.$logo->filename) : null),
+            'logo'                          => $this->whenLoaded('attachments', isset($logo) ? url($logo->path.'/'.$logo->filename) : asset('assets/images/default-image.jpg')),
             'feedback'                      =>$this->whenLoaded('rates',RatesResource::collection($this->rates)),
+            'devices'                       =>$this->whenLoaded('devices',DeviceResource::collection($this->devices)),
         ];
     }
 }
