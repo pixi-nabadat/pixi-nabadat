@@ -20,8 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Center::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignIdFor(\App\Models\Device::class)->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->integer('num_nabadat');
-            $table->double('pulse_price');
-            $table->double('total_price');
+            $table->integer('auto_service');
             $table->timestamps();
         });
     }

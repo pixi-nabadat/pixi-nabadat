@@ -6,6 +6,7 @@ use App\Enum\PaymentStatusEnum;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Reservation extends Model
 {
@@ -52,6 +53,11 @@ class Reservation extends Model
         return $this->hasMany(ReservationHistory::class, 'reservation_id');
     }
 
+    public function latestStatus(): HasOne
+    {
+        return $this->hasOne(ReservationHistory::class, 'reservation_id')->latestOfMany();
+    }
+
     public function nabadatHistory(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(NabadatHistory::class, 'reservation_id');
@@ -67,8 +73,22 @@ class Reservation extends Model
         return $this->belongsTo(Center::class);
     }
 
-    public function getPaymentStatusAttribute($value): string
+    public function getReservationStatusTextAttribute()
     {
-        return trans('lang.'.$value);
+        if (!$this->relationLoaded('latestStatus'))
+            return null;
+        $order_status = $this->latestStatus->status;
+        switch ($order_status) {
+            case self::PENDING :
+                return trans('lang.pending');
+            case self::CONFIRMED :
+                return trans('lang.confirmed');
+            case self::ATTEND :
+                return trans('lang.shipped');
+            case self::COMPLETED :
+                return trans('lang.completed');
+            case self::CANCELED :
+                return trans('lang.canceled');
+        }
     }
 }

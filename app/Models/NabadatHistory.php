@@ -18,8 +18,7 @@ class NabadatHistory extends Model
         'reservation_id',
         'device_id',
         'num_nabadat',
-        'pulse_price',
-        'total_price'
+        'auto_service',
     ];
     public function device()
     {

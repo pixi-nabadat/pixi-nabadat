@@ -36,7 +36,7 @@ class ReservationService extends BaseService
         ]);
 
         $reservation->refresh();
-        return $reservation->load('center','user','history');
+        return $reservation->load('center','user','latestStatus');
     }
 
     /**
@@ -61,7 +61,15 @@ class ReservationService extends BaseService
         return $reservation;
     }
 
-
+    public function destroy($id)
+    {
+        $reservation = Reservation::find($id);
+        if ($reservation) {
+            return $reservation->delete();
+        }
+        return false;
+    } //end of delete
+    
     /**
      * @throws NotFoundException
      */
