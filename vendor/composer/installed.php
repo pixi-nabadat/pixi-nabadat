@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '29c46965012f92f766ad6ce0e3de9633ab288a57',
+        'reference' => '401a2f868fbbfe46571e83dbc0c786338ee4a52f',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -42,15 +42,6 @@
             'replaced' => array(
                 0 => '*',
             ),
-        ),
-        'carlos-meneses/laravel-mpdf' => array(
-            'pretty_version' => '2.1.11',
-            'version' => '2.1.11.0',
-            'reference' => 'cb52e5c17df9caa340eaed8566cfb1e3c7b37c33',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../carlos-meneses/laravel-mpdf',
-            'aliases' => array(),
-            'dev_requirement' => false,
         ),
         'consoletvs/charts' => array(
             'pretty_version' => '6.6.0',
@@ -445,7 +436,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '29c46965012f92f766ad6ce0e3de9633ab288a57',
+            'reference' => '401a2f868fbbfe46571e83dbc0c786338ee4a52f',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -586,15 +577,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'mpdf/mpdf' => array(
-            'pretty_version' => 'v8.0.16',
-            'version' => '8.0.16.0',
-            'reference' => 'df333a84190ac549b25204b6de2dfb7eb0bffa3d',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../mpdf/mpdf',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'mtdowling/cron-expression' => array(
             'dev_requirement' => false,
             'replaced' => array(
@@ -608,7 +590,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../myclabs/deep-copy',
             'aliases' => array(),
-            'dev_requirement' => false,
+            'dev_requirement' => true,
         ),
         'nesbot/carbon' => array(
             'pretty_version' => '2.66.0',
@@ -661,15 +643,6 @@
             'reference' => '8ab0b32c8caa4a2e09700ea32925441385e4a5dc',
             'type' => 'library',
             'install_path' => __DIR__ . '/../nunomaduro/termwind',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'paragonie/random_compat' => array(
-            'pretty_version' => 'v9.99.100',
-            'version' => '9.99.100.0',
-            'reference' => '996434e5492cb4c3edcb9168db6fbb1359ef965a',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../paragonie/random_compat',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -1045,15 +1018,6 @@
             'install_path' => __DIR__ . '/../sebastian/version',
             'aliases' => array(),
             'dev_requirement' => true,
-        ),
-        'setasign/fpdi' => array(
-            'pretty_version' => 'v2.3.7',
-            'version' => '2.3.7.0',
-            'reference' => 'bccc892d5fa1f48c43f8ba7db5ed4ba6f30c8c05',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../setasign/fpdi',
-            'aliases' => array(),
-            'dev_requirement' => false,
         ),
         'spatie/backtrace' => array(
             'pretty_version' => '1.2.1',
