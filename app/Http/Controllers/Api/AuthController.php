@@ -22,7 +22,7 @@ class AuthController extends Controller
     {
 
         try {
-            $user = $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password);
+            $user = $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password,type: $request->type);
             $this->authService->setUserFcmToken($user,$request->fcm_token);
             return new AuthUserResource($user);
         } catch (UserNotFoundException $e) {

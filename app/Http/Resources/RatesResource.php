@@ -19,7 +19,7 @@ class RatesResource extends JsonResource
             'user'  =>
                 [
                     'id' => $this->user->id,
-                    'image' => isset($this->user->attachments)? asset(optional($this->user->attachments)->path."/".optional($this->user->attachments)->filename):null,
+                    'image' => isset($this->user->attachments)? asset(optional($this->user->attachments)->path."/".optional($this->user->attachments)->filename):asset('assets/images/user/user.png'),
                     'name' => $this->user->name,
                 ],
             'rate_number' => $this->rate_number,

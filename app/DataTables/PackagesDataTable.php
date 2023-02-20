@@ -3,7 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Package;
-use App\Services\PackageService;
+use App\Services\CenterPackageService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -37,7 +37,7 @@ class PackagesDataTable extends DataTable
             ->rawColumns(['action', 'is_active']);
     }
 
-    public function query(PackageService $model): QueryBuilder
+    public function query(CenterPackageService $model): QueryBuilder
     {
         return $model->queryGet($this->filters, $this->withRelations);
     }
