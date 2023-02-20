@@ -26,6 +26,7 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\ScheduleFcmController;
 use App\Http\Controllers\FcmMessageController;
 use App\Http\Controllers\LocalizationController;
+use App\Http\Controllers\NabadatHistoryController;
 use App\Http\Controllers\PushNotificationController;
 use App\Http\Controllers\ReservationHistoryController;
 use Illuminate\Support\Facades\Route;

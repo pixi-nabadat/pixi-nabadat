@@ -33,7 +33,7 @@ class ReservationController extends Controller
         }
         $centers = $this->centerService->getAll();
         $users = $this->userService->getAll();
-        $centerDevices = $reservation->center->device;
+        $centerDevices = $reservation->center->devices;
         return view('dashboard.reservations.edit', compact(['centers', 'reservation', 'users', 'centerDevices']));
 
     } //end of edit

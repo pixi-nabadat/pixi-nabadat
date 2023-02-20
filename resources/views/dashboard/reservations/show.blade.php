@@ -69,6 +69,16 @@
                             <label class="form-label col-3">@lang('lang.num_nabdat')</label>
                             <input type="text" class="form-control" value="{{ $item->num_nabadat }}" @disabled(true)>
                         </div>
+                        {{-- auto_service --}}
+                        <div class="media my-3">
+                            <label class="col-form-label m-r-10">{{ __('lang.auto_service') }}</label>
+                            <div class="media-body  icon-state">
+                                <label class="switch">
+                                    <input type="checkbox" disabled="true" name="auto_service"
+                                        {{ $item->auto_service == 1 ? 'checked' : '' }}><span class="switch-state"></span>
+                                </label>
+                            </div>
+                        </div>
                         <hr>
                         @endforeach
                     </div>
@@ -78,18 +88,6 @@
 
             <div class='col-md-4'>
 
-                {{-- qr_code --}}
-                <div class="card col-12">
-                    <div class="card-header py-4">
-                        <h6>{{ __('lang.qr_code') }}</h6>
-                    </div>
-                    <div class="card-body">
-                        {{--  qr_code  --}}
-                        <div class="col-md-12 d-flex my-3">
-                            <img class="img-responsive" src="{{ asset('uploads/reservations/qr_code.png') }}">
-                        </div>
-                    </div>
-                </div>
                 {{-- reservation_time --}}
                 <div class="card col-12">
                     <div class="card-header py-4">
