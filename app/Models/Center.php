@@ -99,6 +99,6 @@ class Center extends Model
 
     public function getPulsePriceAfterDiscountAttribute(): float
     {
-        return round($this->pulse_price - ($this->pulse_price * ($this->pulse_discount/100)), 3);
+        return  round($this->pulse_price - ($this->pulse_price * ($this->pulse_discount/100)), 3);
     }
 }
