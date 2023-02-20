@@ -26,7 +26,7 @@ if (!function_exists('getPriceAfterDiscount')) {
     function getPriceAfterDiscount(int $price, float $discountValue, $discountType = \App\Enum\DiscountEnum::PERCENTAGE)
     {
         if ($discountType == \App\Enum\DiscountEnum::PERCENTAGE)
-            return $price - ($price * ($discountValue / 100));
+            return round($price - ($price * ($discountValue / 100)));
         if ($discountType == \App\Enum\DiscountEnum::FLAT)
             return $price - $discountValue;
     }
