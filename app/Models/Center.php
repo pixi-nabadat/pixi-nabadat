@@ -9,6 +9,7 @@ use App\Traits\HasAttachment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
 class Center extends Model
@@ -74,6 +75,11 @@ class Center extends Model
     {
         return $this->belongsToMany(Device::class, 'center_devices')
             ->withPivot(['id','auto_service','is_active','number_of_devices'])->withTimestamps();
+    }
+
+    public function packages(): HasMany
+    {
+        return $this->hasMany(Package::class,'center_id');
     }
 
     /**

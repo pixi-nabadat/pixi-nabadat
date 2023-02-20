@@ -18,16 +18,16 @@ use App\Services\UserPackageService;
 use App\Services\UserService;
 use App\Traits\OrderTrait;
 use Carbon\Carbon;
-use App\Services\PackageService;
+use App\Services\CenterPackageService;
 use Illuminate\Support\Facades\DB;
 
 class BuyOfferController extends Controller
 {
     use OrderTrait;
 
-    public function __construct(public PackageService $packageService, protected UserService $userService,
-                                protected PaymobService $paymobService,
-                                protected UserPackageService $userPackageService,protected CenterService $centerService)
+    public function __construct(public CenterPackageService  $packageService, protected UserService $userService,
+                                protected PaymobService      $paymobService,
+                                protected UserPackageService $userPackageService, protected CenterService $centerService)
     {
     }
 

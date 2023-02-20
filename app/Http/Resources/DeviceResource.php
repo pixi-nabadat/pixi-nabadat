@@ -19,7 +19,7 @@ class DeviceResource extends JsonResource
             'id'            => $this->id,
             'name'          => $this->name,
             'description'   => $this->description,
-            'logo'          => $this->whenLoaded('attachments', new AttachmentsResource($this->attachments->where('type',ImageTypeEnum::LOGO)->first())),
+            'logo'          => $this->whenLoaded('attachments', $this->attachments->where('type', ImageTypeEnum::LOGO)->first() !== null ? new AttachmentsResource($this->attachments->where('type',ImageTypeEnum::LOGO)->first()):asset('assets/images/default-image.jpg')),
             'images'        => $this->whenLoaded('attachments', AttachmentsResource::collection($this->attachments->where('type',ImageTypeEnum::GALARY))),
         ];
     }
