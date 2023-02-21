@@ -6,12 +6,12 @@ use App\DataTables\PackagesDataTable;
 use App\Http\Requests\PackageStoreRequest;
 use App\Http\Requests\PackageUpdateRequest;
 use App\Services\CenterService;
-use App\Services\PackageService;
+use App\Services\CenterPackageService;
 use Illuminate\Http\Request;
 
 class PackageController extends Controller
 {
-    public function __construct(private PackageService $packageService, private CenterService $centerService)
+    public function __construct(private CenterPackageService $packageService, private CenterService $centerService)
     {
 
     }

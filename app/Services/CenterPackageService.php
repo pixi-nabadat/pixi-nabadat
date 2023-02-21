@@ -7,7 +7,7 @@ use App\Models\Package;
 use App\QueryFilters\PackagesFilter;
 use Illuminate\Database\Eloquent\Builder;
 
-class PackageService extends BaseService
+class CenterPackageService extends BaseService
 {
 
     public function getAll(array $where_condition = [], array $withRelations = []): \Illuminate\Database\Eloquent\Collection|array

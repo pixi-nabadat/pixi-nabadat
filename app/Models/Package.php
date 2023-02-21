@@ -25,11 +25,11 @@ class Package extends Model
         return $this->hasMany(UserPackage::class);
     }
 
-
     public function center(): BelongsTo
     {
-        return $this->belongsTo(Center::class);
+        return $this->belongsTo(Center::class,'center_id');
     }
+
 
     public function getStatusAttribute($value)
     {

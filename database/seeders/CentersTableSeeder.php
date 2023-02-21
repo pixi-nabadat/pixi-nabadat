@@ -8,6 +8,7 @@ use App\Models\Center;
 use App\Models\Device;
 use App\Models\Location;
 use App\Models\Product;
+use App\Models\Rate;
 use App\Models\User;
 use App\Services\CenterService;
 use Illuminate\Database\Seeder;
@@ -56,5 +57,15 @@ class CentersTableSeeder extends Seeder
             'type'=>User::CENTERADMIN,
         ];
         $center->user()->create($user_data);
+
+        $user = User::where('type',User::CUSTOMERTYPE)->first();
+        Rate::create([
+            'user_id'=>$user->id,
+            'status'=>1,
+            'comment'=>'test comment',
+            'rate_number'=>3,
+            'ratable_id'=>$center->id,
+            'ratable_type'=>get_class($center)
+        ]);
     }
 }

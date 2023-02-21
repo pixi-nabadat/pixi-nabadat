@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
+
 class LoginRequest extends BaseRequest
 {
     /**
@@ -25,6 +27,7 @@ class LoginRequest extends BaseRequest
             'identifier'=>'required|string',
             'password'=>'required',
             'fcm_token'=>'nullable|string',
+            'type'=>'nullable|in:'.User::SUPERADMINTYPE.','.User::CENTERADMIN.','.User::CUSTOMERTYPE
         ];
     }
 }

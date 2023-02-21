@@ -30,6 +30,7 @@ class CouponService extends BaseService
 
     public function store(array $data = [])
     {
+        cache()->forget('home-api');
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
         return Coupon::create($data);
     } //end of store
@@ -46,6 +47,7 @@ class CouponService extends BaseService
 
     public function delete(int $id): bool
     {
+        cache()->forget('home-api');
         $coupon = $this->find($id);
         if ($coupon) {
             return $coupon->delete();
@@ -55,6 +57,7 @@ class CouponService extends BaseService
 
     public function update(int $id, array $data = []): bool
     {
+        cache()->forget('home-api');
         $coupon = $this->find($id);
         if ($coupon) {
             $data['is_active'] = isset($data['is_active']) ? 1 : 0;

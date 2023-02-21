@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PackageStoreRequest;
 use App\Http\Requests\PackageUpdateRequest;
 use App\Http\Resources\PackagesResource;
-use App\Services\PackageService;
+use App\Services\CenterPackageService;
 use Exception;
 
 class CenterPackageController extends Controller
 {
-    public function __construct(private PackageService $packageService)
+    public function __construct(public CenterPackageService $packageService)
     {
     }
 
@@ -20,7 +20,7 @@ class CenterPackageController extends Controller
     {
         try {
             $filters = ['is_active' => 1, 'in_duration' => true , 'status'=>true];
-            $withRelations = ['center'];
+            $withRelations = ['center.user:id,center_id,name','center.defaultLogo'];
             $allPackages = $this->packageService->listing(where_condition: $filters, withRelation: $withRelations);
             return PackagesResource::collection($allPackages);
         } catch (\Exception $exception) {
@@ -30,6 +30,7 @@ class CenterPackageController extends Controller
 
     public function store(PackageStoreRequest $request)
     {
+        cache()->forget('home-api');
         try {
             $data = $request->validated();
             $package = $this->packageService->store($data);
@@ -42,6 +43,7 @@ class CenterPackageController extends Controller
 
     public function update(PackageUpdateRequest $request, $id)
     {
+        cache()->forget('home-api');
         try {
             $package = $this->packageService->update($id, $request->validated());
             $data = new PackagesResource($package);
@@ -53,6 +55,7 @@ class CenterPackageController extends Controller
 
     public function destroy($id)
     {
+        cache()->forget('home-api');
         try {
             $result = $this->packageService->delete($id);
             if (!$result)

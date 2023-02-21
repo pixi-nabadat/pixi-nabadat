@@ -19,7 +19,7 @@ class DoctorsResource extends JsonResource
             'name'          => $this->name,
             'phone'         => $this->phone,
             'description'   => $this->description,
-            'image'         => $this->whenLoaded('defaultLogo',isset($this->defaultLogo) ?asset($this->defaultLogo->path."/".$this->defaultLogo->filename):asset('assets/images/default-image.jpg')),
+            'image'         => $this->when(($this->relationLoaded('defaultLogo')&&!empty($this->defaultLogo)),asset(optional($this->defaultLogo)->path."/".optional($this->defaultLogo)->filename),asset('assets/images/default-image.jpg')),
             'is_active'     => $this->is_active,
         ];
     }

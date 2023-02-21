@@ -9,6 +9,7 @@ use App\Traits\HasAttachment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
 class Center extends Model
@@ -76,6 +77,11 @@ class Center extends Model
             ->withPivot(['id','auto_service','is_active','number_of_devices'])->withTimestamps();
     }
 
+    public function packages(): HasMany
+    {
+        return $this->hasMany(Package::class,'center_id');
+    }
+
     /**
      * @param Center $center
      * @param float $amount
@@ -93,6 +99,6 @@ class Center extends Model
 
     public function getPulsePriceAfterDiscountAttribute(): float
     {
-        return $this->pulse_price - ($this->pulse_price * ($this->pulse_discount/100));
+        return  round($this->pulse_price - ($this->pulse_price * ($this->pulse_discount/100)), 3);
     }
 }
