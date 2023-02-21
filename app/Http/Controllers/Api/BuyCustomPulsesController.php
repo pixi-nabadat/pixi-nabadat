@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BuyCustomPulsesRequest;
 use App\Models\UserPackage;
 use App\Services\CenterService;
-use App\Services\PackageService;
+use App\Services\CenterPackageService;
 use App\Services\Payment\PaymobService;
 use App\Services\UserPackageService;
 use App\Services\UserService;
@@ -22,7 +22,7 @@ class BuyCustomPulsesController extends Controller
 {
     use OrderTrait;
 
-    public function __construct(public PackageService        $packageService, protected UserService $userService,
+    public function __construct(public CenterPackageService  $packageService, protected UserService $userService,
                                 protected PaymobService      $paymobService,
                                 protected UserPackageService $userPackageService, protected CenterService $centerService)
     {

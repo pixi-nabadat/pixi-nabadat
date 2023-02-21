@@ -28,8 +28,6 @@ class OrderTableSeeder extends Seeder
             ]
         );
         OrderItem::create(['order_id'=>$order->id,'product_id'=>1,'quantity'=>2,'price'=>100,'discount'=>20]);
-        $order_history = OrderHistory::create(['order_id'=>$order->id,'status'=>Order::PENDING]);
-        $order->order_history_id = $order_history->id;
-        $order->save() ;
+        OrderHistory::create(['order_id'=>$order->id,'status'=>Order::PENDING]);
     }
 }

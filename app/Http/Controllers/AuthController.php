@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\UserNotFoundException;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -23,7 +24,8 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         try {
-            $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password);
+            $type = User::SUPERADMINTYPE ;
+            $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password,type: $type);
             $toast = [
                 'type'=>'success',
                 'message'=>__('lang.sign_in'),

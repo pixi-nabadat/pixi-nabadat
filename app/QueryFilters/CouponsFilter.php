@@ -20,10 +20,10 @@ class CouponsFilter extends QueryFilter
         return $this->builder->where('is_active',$term);
     }
 
-    public function in_period($term)
+    public function in_period()
     {
         $date = Carbon::now(config('app.africa_timezone'))->format('Y-m-d');
-        return  $this->builder->whereDate('start_date', '>=', $date)
+        return  $this->builder->whereDate('start_date', '<=', $date)
             ->whereDate('end_date', '>=', $date);
     }
 }

@@ -4,7 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Package;
 use App\Models\User;
-use App\Services\PackageService;
+use App\Services\CenterPackageService;
 use App\Services\UserService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
