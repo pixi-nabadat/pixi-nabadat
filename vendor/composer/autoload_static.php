@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e
+class ComposerStaticInit91af1857b16b167e362a0f7cbc8b2cfa
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -22,9 +22,9 @@ class ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
-        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '3bd81c9b8fcc150b69d8b63b4d2ccf23' => __DIR__ . '/..' . '/spatie/flare-client-php/src/helpers.php',
         '23c18046f52bef3eea034657bafda50f' => __DIR__ . '/..' . '/symfony/polyfill-php81/bootstrap.php',
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '09f6b20656683369174dd6fa83b7e5fb' => __DIR__ . '/..' . '/symfony/polyfill-uuid/bootstrap.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
         '35a6ad97d21e794e7e22a17d806652e4' => __DIR__ . '/..' . '/nunomaduro/termwind/src/Functions.php',
@@ -127,7 +127,6 @@ class ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e
         array (
             'Mpdf\\' => 5,
             'Monolog\\' => 8,
-            'Mccarlosen\\LaravelMpdf\\' => 23,
         ),
         'L' => 
         array (
@@ -439,10 +438,6 @@ class ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
-        ),
-        'Mccarlosen\\LaravelMpdf\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/carlos-meneses/laravel-mpdf/src',
         ),
         'League\\OAuth1\\Client\\' => 
         array (
@@ -3778,10 +3773,6 @@ class ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e
         'League\\OAuth1\\Client\\Signature\\RsaSha1Signature' => __DIR__ . '/..' . '/league/oauth1-client/src/Signature/RsaSha1Signature.php',
         'League\\OAuth1\\Client\\Signature\\Signature' => __DIR__ . '/..' . '/league/oauth1-client/src/Signature/Signature.php',
         'League\\OAuth1\\Client\\Signature\\SignatureInterface' => __DIR__ . '/..' . '/league/oauth1-client/src/Signature/SignatureInterface.php',
-        'Mccarlosen\\LaravelMpdf\\Facades\\LaravelMpdf' => __DIR__ . '/..' . '/carlos-meneses/laravel-mpdf/src/Facades/LaravelMpdf.php',
-        'Mccarlosen\\LaravelMpdf\\LaravelMpdf' => __DIR__ . '/..' . '/carlos-meneses/laravel-mpdf/src/LaravelMpdf.php',
-        'Mccarlosen\\LaravelMpdf\\LaravelMpdfServiceProvider' => __DIR__ . '/..' . '/carlos-meneses/laravel-mpdf/src/LaravelMpdfServiceProvider.php',
-        'Mccarlosen\\LaravelMpdf\\LaravelMpdfWrapper' => __DIR__ . '/..' . '/carlos-meneses/laravel-mpdf/src/LaravelMpdfWrapper.php',
         'Mockery' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditions' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditions.php',
@@ -6823,10 +6814,10 @@ class ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit91af1857b16b167e362a0f7cbc8b2cfa::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit91af1857b16b167e362a0f7cbc8b2cfa::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit91af1857b16b167e362a0f7cbc8b2cfa::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit91af1857b16b167e362a0f7cbc8b2cfa::$classMap;
 
         }, null, ClassLoader::class);
     }

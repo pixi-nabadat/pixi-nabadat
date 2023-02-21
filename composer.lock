@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "62a1c38d2aaeeae8d0f03bf5634f868b",
+    "content-hash": "1a78d1485f7a3039c9f75e27c8146596",
     "packages": [
         {
             "name": "apility/laravel-fcm",
@@ -184,62 +184,6 @@
                 }
             ],
             "time": "2022-08-10T22:54:19+00:00"
-        },
-        {
-            "name": "carlos-meneses/laravel-mpdf",
-            "version": "2.1.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mccarlosen/laravel-mpdf.git",
-                "reference": "cb52e5c17df9caa340eaed8566cfb1e3c7b37c33"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mccarlosen/laravel-mpdf/zipball/cb52e5c17df9caa340eaed8566cfb1e3c7b37c33",
-                "reference": "cb52e5c17df9caa340eaed8566cfb1e3c7b37c33",
-                "shasum": ""
-            },
-            "require": {
-                "mpdf/mpdf": "^8.0",
-                "php": "^5.6|^7.0|^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Mccarlosen\\LaravelMpdf\\LaravelMpdfServiceProvider"
-                    ],
-                    "aliases": {
-                        "PDF": "Mccarlosen\\LaravelMpdf\\Facades\\LaravelMpdf"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Mccarlosen\\LaravelMpdf\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Laravel Mpdf: Using Mpdf in Laravel to generate Pdfs.",
-            "keywords": [
-                "laravel",
-                "mpdf",
-                "pdf"
-            ],
-            "support": {
-                "issues": "https://github.com/mccarlosen/laravel-mpdf/issues",
-                "source": "https://github.com/mccarlosen/laravel-mpdf/tree/2.1.11"
-            },
-            "funding": [
-                {
-                    "url": "https://www.paypal.me/mccarlosen",
-                    "type": "custom"
-                }
-            ],
-            "time": "2022-12-28T02:20:09+00:00"
         },
         {
             "name": "consoletvs/charts",
@@ -1409,16 +1353,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.52.0",
+            "version": "v9.52.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "eb85cd9d72e5bfa54b4d0d9040786f26d6184a9e"
+                "reference": "cf021e5e9edf854f832b191ad5168e9f2327cdf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/eb85cd9d72e5bfa54b4d0d9040786f26d6184a9e",
-                "reference": "eb85cd9d72e5bfa54b4d0d9040786f26d6184a9e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/cf021e5e9edf854f832b191ad5168e9f2327cdf7",
+                "reference": "cf021e5e9edf854f832b191ad5168e9f2327cdf7",
                 "shasum": ""
             },
             "require": {
@@ -1603,7 +1547,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-02-14T14:51:14+00:00"
+            "time": "2023-02-21T18:19:59+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -1801,16 +1745,16 @@
         },
         {
             "name": "laravel/tinker",
-            "version": "v2.8.0",
+            "version": "v2.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/tinker.git",
-                "reference": "74d0b287cc4ae65d15c368dd697aae71d62a73ad"
+                "reference": "04a2d3bd0d650c0764f70bf49d1ee39393e4eb10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/tinker/zipball/74d0b287cc4ae65d15c368dd697aae71d62a73ad",
-                "reference": "74d0b287cc4ae65d15c368dd697aae71d62a73ad",
+                "url": "https://api.github.com/repos/laravel/tinker/zipball/04a2d3bd0d650c0764f70bf49d1ee39393e4eb10",
+                "reference": "04a2d3bd0d650c0764f70bf49d1ee39393e4eb10",
                 "shasum": ""
             },
             "require": {
@@ -1863,9 +1807,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/tinker/issues",
-                "source": "https://github.com/laravel/tinker/tree/v2.8.0"
+                "source": "https://github.com/laravel/tinker/tree/v2.8.1"
             },
-            "time": "2023-01-10T18:03:30+00:00"
+            "time": "2023-02-15T16:40:09+00:00"
         },
         {
             "name": "laravelcollective/html",
@@ -6847,16 +6791,16 @@
         },
         {
             "name": "yajra/laravel-datatables-editor",
-            "version": "v1.25.3",
+            "version": "v1.25.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yajra/laravel-datatables-editor.git",
-                "reference": "0428a8bbb578321f459dee9f9ba19bbdce966322"
+                "reference": "23962356700d6b31f49bb119665b13e87303e13f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables-editor/zipball/0428a8bbb578321f459dee9f9ba19bbdce966322",
-                "reference": "0428a8bbb578321f459dee9f9ba19bbdce966322",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables-editor/zipball/23962356700d6b31f49bb119665b13e87303e13f",
+                "reference": "23962356700d6b31f49bb119665b13e87303e13f",
                 "shasum": ""
             },
             "require": {
@@ -6906,7 +6850,7 @@
             ],
             "support": {
                 "issues": "https://github.com/yajra/laravel-datatables-editor/issues",
-                "source": "https://github.com/yajra/laravel-datatables-editor/tree/v1.25.3"
+                "source": "https://github.com/yajra/laravel-datatables-editor/tree/v1.25.4"
             },
             "funding": [
                 {
@@ -6922,7 +6866,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-02-20T16:20:02+00:00"
+            "time": "2023-02-21T06:57:59+00:00"
         },
         {
             "name": "yajra/laravel-datatables-fractal",
@@ -7480,16 +7424,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.20.2",
+            "version": "v1.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "5ae072b182b1efbec927409e8a3ce3b1078cc42c"
+                "reference": "758a914fc4da41f3f6ca5522c85902181b228bd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/5ae072b182b1efbec927409e8a3ce3b1078cc42c",
-                "reference": "5ae072b182b1efbec927409e8a3ce3b1078cc42c",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/758a914fc4da41f3f6ca5522c85902181b228bd1",
+                "reference": "758a914fc4da41f3f6ca5522c85902181b228bd1",
                 "shasum": ""
             },
             "require": {
@@ -7537,7 +7481,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2023-02-08T20:22:21+00:00"
+            "time": "2023-02-16T19:16:27+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -9196,16 +9140,16 @@
         },
         {
             "name": "spatie/backtrace",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/backtrace.git",
-                "reference": "4ee7d41aa5268107906ea8a4d9ceccde136dbd5b"
+                "reference": "7b34fee6c1ad45f8ee0498d17cd8ea9a076402c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/backtrace/zipball/4ee7d41aa5268107906ea8a4d9ceccde136dbd5b",
-                "reference": "4ee7d41aa5268107906ea8a4d9ceccde136dbd5b",
+                "url": "https://api.github.com/repos/spatie/backtrace/zipball/7b34fee6c1ad45f8ee0498d17cd8ea9a076402c1",
+                "reference": "7b34fee6c1ad45f8ee0498d17cd8ea9a076402c1",
                 "shasum": ""
             },
             "require": {
@@ -9241,8 +9185,7 @@
                 "spatie"
             ],
             "support": {
-                "issues": "https://github.com/spatie/backtrace/issues",
-                "source": "https://github.com/spatie/backtrace/tree/1.2.1"
+                "source": "https://github.com/spatie/backtrace/tree/1.2.2"
             },
             "funding": [
                 {
@@ -9254,7 +9197,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2021-11-09T10:57:15+00:00"
+            "time": "2023-02-21T08:29:12+00:00"
         },
         {
             "name": "spatie/flare-client-php",
