@@ -3,15 +3,10 @@
 namespace App\Services;
 
 use App\Exceptions\NotFoundException;
-use App\Exceptions\StatusNotEquelException;
 use App\Models\Reservation;
-use App\Models\User;
-use App\Models\Center;
 use App\QueryFilters\ReservationsFilter;
-use Exception;
-
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Arr;
+
 class ReservationService extends BaseService
 {
 
@@ -26,17 +21,18 @@ class ReservationService extends BaseService
         $reservations = Reservation::query()->with($withRelation);
         return $reservations->filter(new ReservationsFilter($where_condition));
     }
+
     public function store(array $data = [])
     {
-        $data['qr_code']     = uniqid();
+        $data['qr_code'] = uniqid();
         $reservation = Reservation::create($data);
 
         $reservation->history()->create([
-            'status' =>Reservation::PENDING,
+            'status' => Reservation::PENDING,
         ]);
 
         $reservation->refresh();
-        return $reservation->load('center','user','latestStatus');
+        return $reservation->load('center.user:id,center_id,name,phone', 'latestStatus');
     }
 
     /**
@@ -63,19 +59,16 @@ class ReservationService extends BaseService
 
     public function destroy($id)
     {
-        $reservation = Reservation::find($id);
-        if ($reservation) {
-            return $reservation->delete();
-        }
-        return false;
+        $reservation = $this->findById($id);
+        return $reservation->delete();
     } //end of delete
-    
+
     /**
      * @throws NotFoundException
      */
-    public function findByQr($qr_code, $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
+    public function findByQrCode($qr_code, $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
-        $reservation = Reservation::query()->where('qr_code',$qr_code)->with($with)->first();
+        $reservation = Reservation::query()->where('qr_code', $qr_code)->with($with)->first();
         if (!$reservation)
             throw new NotFoundException(trans('lang.reservation_not_found'));
         return $reservation;

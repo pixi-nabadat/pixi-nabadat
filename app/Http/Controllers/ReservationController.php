@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ReservationDataTable;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\ReservationStoreRequest;
 use App\Http\Requests\ReservationUpdateRequest;
@@ -41,7 +42,8 @@ class ReservationController extends Controller
     public function create()
     {
         $centers = $this->centerService->getAll();
-        $users = $this->userService->getAll();
+        $users_filter = ['type'=>User::CUSTOMERTYPE];
+        $users = $this->userService->getAll(where_condition: $users_filter);
         return view('dashboard.reservations.create', compact(['centers', 'users']));
     } //end of create
 

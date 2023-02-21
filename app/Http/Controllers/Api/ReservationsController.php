@@ -7,25 +7,21 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ReservationStoreRequest;
 use App\Http\Resources\ReservationsResource;
 use App\Services\ReservationService;
-use Exception;
 use Illuminate\Http\Request;
 
-class ReservationController extends Controller
+class ReservationsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function __construct(private ReservationService $reservationService)
+    public function __construct(public ReservationService $reservationService)
     {
-
     }
 
-    // listing all reservations for logged in center
-    public function listing(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Http\Response
+     */
+    public function centerReservations(Request $request)
     {
-        try {
+        try{
             $filters = $request->all();
             if (auth('sanctum')->user()->center_id == null)
                 throw new NotFoundException('route not found');
@@ -39,7 +35,7 @@ class ReservationController extends Controller
 
     public function patientReservations(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        try {
+        try{
             $filters = $request->all();
             $filters['user_id'] = auth('sanctum')->id();
             $withRelations = ['latestStatus', 'nabadatHistory', 'center'];
@@ -50,32 +46,47 @@ class ReservationController extends Controller
         }
     }
 
-    /////////////////////////
-
-    /**
-     * @param ReservationStoreRequest $reservationStoreRequest
-     * @return ReservationsResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
-     */
     public function store(ReservationStoreRequest $reservationStoreRequest): \Illuminate\Http\Response|ReservationsResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             $reservation = $this->reservationService->store($reservationStoreRequest->validated());
             return apiResponse(data: new ReservationsResource($reservation));
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
     }
 
-    public function find(string $id)
+    public function find(int $id)
     {
         try {
             $withRelations = ['latestStatus', 'nabadatHistory', 'user', 'center'];
-            $reservation = $this->reservationService->findByQr($id, $withRelations);
+            $reservation = $this->reservationService->findById($id, $withRelations);
             if ($reservation)
                 return apiResponse(new ReservationsResource($reservation), trans('lang.operation_success'));
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
     }
 
+    public function findByQrCode(string $id)
+    {
+        try {
+            $withRelations = ['latestStatus', 'nabadatHistory', 'user', 'center'];
+            $reservation = $this->reservationService->findByQrCode($id, $withRelations);
+            if ($reservation)
+                return apiResponse(new ReservationsResource($reservation), trans('lang.operation_success'));
+        } catch (\Exception $e) {
+            return apiResponse(message: $e->getMessage(), code: 422);
+        }
+    }
+
+    public function delete(int $id)
+    {
+        try {
+            $this->reservationService->destroy($id);
+            return apiResponse(message: trans('lang.operation_success'));
+        } catch (\Exception $e) {
+            return apiResponse(message: $e->getMessage(), code: 422);
+        }
+    }
 }
