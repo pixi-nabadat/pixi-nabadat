@@ -43,7 +43,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -87,8 +87,8 @@ return [
     */
 
     'locale' => 'en',
-    'availableLocales'=>[
-        'ar','en'
+    'availableLocales' => [
+        'ar', 'en'
     ],
 
     /*
@@ -203,6 +203,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
 
+        Mccarlosen\LaravelMpdf\LaravelMpdfServiceProvider::class
+
 
     ],
 
@@ -219,7 +221,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        'PDF' => Mccarlosen\LaravelMpdf\Facades\LaravelMpdf::class
 
     ])->toArray(),
 
