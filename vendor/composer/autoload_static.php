@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6674ba23bc0c9a78ab9f7f560680ebb2
+class ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -213,11 +213,11 @@ class ComposerStaticInit6674ba23bc0c9a78ab9f7f560680ebb2
         ),
         'Yajra\\DataTables\\' => 
         array (
-            0 => __DIR__ . '/..' . '/yajra/laravel-datatables-buttons/src',
-            1 => __DIR__ . '/..' . '/yajra/laravel-datatables-editor/src',
+            0 => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src',
+            1 => __DIR__ . '/..' . '/yajra/laravel-datatables-html/src',
             2 => __DIR__ . '/..' . '/yajra/laravel-datatables-fractal/src',
-            3 => __DIR__ . '/..' . '/yajra/laravel-datatables-html/src',
-            4 => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src',
+            3 => __DIR__ . '/..' . '/yajra/laravel-datatables-editor/src',
+            4 => __DIR__ . '/..' . '/yajra/laravel-datatables-buttons/src',
         ),
         'Whoops\\' => 
         array (
@@ -401,8 +401,8 @@ class ComposerStaticInit6674ba23bc0c9a78ab9f7f560680ebb2
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -6793,10 +6793,10 @@ class ComposerStaticInit6674ba23bc0c9a78ab9f7f560680ebb2
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6674ba23bc0c9a78ab9f7f560680ebb2::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6674ba23bc0c9a78ab9f7f560680ebb2::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit6674ba23bc0c9a78ab9f7f560680ebb2::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit6674ba23bc0c9a78ab9f7f560680ebb2::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e::$classMap;
 
         }, null, ClassLoader::class);
     }
