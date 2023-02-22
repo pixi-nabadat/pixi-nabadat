@@ -26,11 +26,13 @@
                     <ul class="nav nav-pills" id="pills-icontab" role="tablist">
                         <li class="nav-item"><a class="nav-link active" id="pills-iconhome-tab" data-bs-toggle="pill" href="#pills-iconhome" role="tab" aria-controls="pills-iconhome" aria-selected="true"><i class="icofont icofont-ui-home"></i>{{ trans('lang.reservation_information') }}</a></li>
                         <li class="nav-item"><a class="nav-link" id="pills-iconprofile-tab" data-bs-toggle="pill" href="#pills-iconprofile" role="tab" aria-controls="pills-iconprofile" aria-selected="false"><i class="icofont icofont-man-in-glasses"></i>{{ trans('lang.reservation_devices') }}</a></li>
-                        <li class="nav-item"><a class="nav-link" id="reservation_status-tab" data-bs-toggle="pill" href="#reservation_status" role="tab" aria-controls="reservation_status" aria-selected="false"><i class="icofont icofont-man-in-glasses"></i>{{ trans('lang.reservation_status') }}</a></li>
                     </ul>
                     <div class="tab-content" id="pills-icontabContent">
                         <div class="tab-pane fade show active" id="pills-iconhome" role="tabpanel" aria-labelledby="pills-iconhome-tab">
                             <div class="card  col-md-12">
+                                <div class="card-header py-4">
+                                    <h6 class="card-titel">{{ __('lang.reservation_information') }}</h6>
+                                </div>
                                 <div class="card-body row">
                                     <form method="post" class="needs-validation" novalidate="" action="{{ route('reservations.update', $reservation) }}">
                                         @csrf
@@ -83,6 +85,64 @@
                                     </form>
                                 </div>
                             </div>
+                            {{-- start reservation status --}}
+                            <div class="card  col-md-12">
+                                <div class="card-header py-4">
+                                    <h6 class="card-titel">{{ __('lang.reservation_status') }}</h6>
+                                </div>
+                                <div class="card-body row">
+                                    <form method="post" class="needs-validation" novalidate="" action="{{ route('reservation-history.store', $reservation) }}">
+                                        @csrf
+                                        <div class="media mb-2">
+                                            <label class="col-form-label m-r-10">{{ __('lang.current_status') }}</label>
+                                            <div class="media-body  icon-state">
+                                                <label class="btn  
+                                                {{$reservation->history->last()->getRawOriginal('status') == App\Models\Reservation::PENDING ? "btn-secondary":""}}
+                                                {{$reservation->history->last()->getRawOriginal('status') == App\Models\Reservation::CONFIRMED ? "btn-primary":""}}
+                                                {{$reservation->history->last()->getRawOriginal('status') == App\Models\Reservation::ATTEND ? "btn-info":""}}
+                                                {{$reservation->history->last()->getRawOriginal('status') == App\Models\Reservation::COMPLETED ? "btn-success":""}}
+                                                {{$reservation->history->last()->getRawOriginal('status') == App\Models\Reservation::CANCELED ? "btn-dark":""}}
+                                                {{$reservation->history->last()->getRawOriginal('status') == App\Models\Reservation::Expired ? "btn-danger":""}}
+                                                ">{{ $reservation->history->last()->status }}</label>   
+                                            </div>
+                                        </div>
+                                        {{--next_status  --}}
+                                        <div class="media mb-2">
+                                            <div class="col-form-label col-3">{{ __('lang.next_status') }}</div>
+                                            <select id="status" name="status" class="js-example-basic-single col-sm-12 @error('status') is-invalid @enderror">
+                                                <option selected disabled>...</option>
+                                                <option value="2">{{ trans('lang.confirmed') }}</option>
+                                                <option value="3">{{trans('lang.attend') }}</option>
+                                                <option value="4">{{ trans('lang.completed') }}</option>
+                                                <option value="5">{{ trans('lang.canceled') }}</option>
+                                            </select>
+                                            @error('status')
+                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div> 
+                                        <div class="media mb-2">
+                                            <label class="col-form-label m-r-10">{{ __('lang.from') }}</label>
+                                            <div class="media-body  icon-state">
+                                                <input name="from" type="time" class="form-control" value="{{ $reservation->from }}">    
+                                            </div>
+                                        </div>
+                                        <div class="media mb-2">
+                                            <label class="col-form-label m-r-10">{{ __('lang.to') }}</label>
+                                            <div class="media-body  icon-state">
+                                                <input name="to" type="time" class="form-control" value="{{ $reservation->to }}">    
+                                            </div>
+                                        </div>
+                                        <div class="media mb-2">
+                                            <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                                                <div class="btn-group mr-2" role="group" aria-label="Third group">
+                                                    <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            {{-- end reservation status --}}
                             
                         </div>
                         <div class="tab-pane fade" id="pills-iconprofile" role="tabpanel" aria-labelledby="pills-iconprofile-tab">
@@ -141,55 +201,7 @@
                             </div>
                             
                         </div>
-                        <div class="tab-pane fade" id="reservation_status" role="tabpanel" aria-labelledby="reservation_status-tab">
-                            <div class="card  col-md-12">
-                                <div class="card-body row">
-                                    <form method="post" class="needs-validation" novalidate="" action="{{ route('reservation-history.store', $reservation) }}">
-                                        @csrf
-                                        <div class="media mb-2">
-                                            <label class="col-form-label m-r-10">{{ __('lang.current_status') }}</label>
-                                            <div class="media-body  icon-state">
-                                                <input type="text" class="form-control" value="{{ $reservation->history->last()->status }}" @disabled(true)>    
-                                            </div>
-                                        </div>
-                                        {{--next_status  --}}
-                                        <div class="media mb-2">
-                                            <div class="col-form-label col-3">{{ __('lang.next_status') }}</div>
-                                            <select id="status" name="status" class="js-example-basic-single col-sm-12 @error('status') is-invalid @enderror">
-                                                <option selected disabled>...</option>
-                                                <option value="2">{{ trans('lang.confirmed') }}</option>
-                                                <option value="3">{{trans('lang.attend') }}</option>
-                                                <option value="4">{{ trans('lang.completed') }}</option>
-                                                <option value="5">{{ trans('lang.canceled') }}</option>
-                                            </select>
-                                            @error('status')
-                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div> 
-                                        <div class="media mb-2">
-                                            <label class="col-form-label m-r-10">{{ __('lang.from') }}</label>
-                                            <div class="media-body  icon-state">
-                                                <input name="from" type="time" class="form-control" value="{{ $reservation->from }}">    
-                                            </div>
-                                        </div>
-                                        <div class="media mb-2">
-                                            <label class="col-form-label m-r-10">{{ __('lang.to') }}</label>
-                                            <div class="media-body  icon-state">
-                                                <input name="to" type="time" class="form-control" value="{{ $reservation->to }}">    
-                                            </div>
-                                        </div>
-                                        <div class="media mb-2">
-                                            <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
-                                                <div class="btn-group mr-2" role="group" aria-label="Third group">
-                                                    <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            
-                        </div>
+                        
                     </div>
                 </div>
             </div>
