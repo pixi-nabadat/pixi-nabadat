@@ -1,55 +1,123 @@
 @extends('layouts.simple.master')
 
-@section('title', trans('lang.cancelReasons'))
+@section('title', trans('lang.reservations'))
 
 @section('breadcrumb-title')
-    <h3>{{ trans('lang.cancelReasons') }}</h3>
+    <h3>{{ trans('lang.reservations') }}</h3>
 @endsection
 
 @section('breadcrumb-items')
-    <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ trans('lang.dashboard') }}</a></li>
-    <li class="breadcrumb-item active"><a href="{{ route('cancelReasons.index') }}">{{ trans('lang.cancelReasons') }}</a></li>
-    <li class="breadcrumb-item active">{{ trans('lang.edit') }}</li>
+    <li class="breadcrumb-item">{{ trans('lang.dashboard') }}</li>
+    <li class="breadcrumb-item active">{{ trans('lang.reservations') }}</li>
+    <li class="breadcrumb-item active">{{ trans('lang.add') }}</li>
+@endsection
+
+@section('style')
+<link rel="stylesheet" href="{{asset('assets/css/image-container.css')}}"/>
 @endsection
 
 @section('content')
 
     <!-- Container-fluid starts-->
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card">
+        <div class="row ">
+
+            <div class="col-md-8">
+
+                {{-- reservation_information --}}
+                <div class="card  col-md-12">
+                    <div class="card-header py-4">
+                        <h6 class="card-titel">{{ __('lang.reservation_information') }}</h6>
+                    </div>
+                    <div class="card-body row">
+
+                            {{--  center  --}}
+                            <div class="col-md-12 d-flex my-3">
+                                <label class="form-label col-3">@lang('lang.center')</label>
+                                <input type="text" class="form-control" value="{{ $reservation->center->user->name }}" @disabled(true)>
+                            </div>
+
+                            {{--  user  --}}
+                            <div class="col-md-12 d-flex my-3">
+                                <label class="form-label col-3">@lang('lang.user')</label>
+                                <input type="text" class="form-control" value="{{ $reservation->user->name }}" @disabled(true)>
+                            </div>
+                            
+                            {{--  status  --}}
+                            <div class="col-md-12 d-flex my-3">
+                                <label class="form-label col-3">@lang('lang.status')</label>
+                                <input type="text" class="form-control" value="{{ $reservation->history->last()->status }}" @disabled(true)>
+                            </div>
+
+                    </div>
+                </div>
+
+                {{-- reservation_devices --}}
+                <div class="card  col-md-12">
+                    <div class="card-header py-4">
+                        <h6>{{ __('lang.reservation_devices') }}</h6>
+                    </div>
                     <div class="card-body">
-                        {{-- English Reason --}}
-                        <div class="col-md-12">
-                            <label class="form-label mt-3" for="reason_en">{{ trans('lang.reason_en') }}</label>
-                            <p name="reason[en]" class="form-control " id="reason_en">
-                                {{ $cancelReason->getTranslation('reason', 'en') }}</p>
+                        @foreach($reservation->nabadatHistory as $item)
+                        {{--  device_name  --}}
+                        <div class="col-md-12 d-flex my-3">
+                            <label class="form-label col-3">@lang('lang.device_name')</label>
+                            <input type="text" class="form-control" value="{{ $item->device->name }}" @disabled(true)>
                         </div>
-                        {{-- Arabic Reason --}}
-                        <div class="col-md-12">
-                            <label class="form-label mt-3" for="reason_ar">{{ trans('lang.reason_ar') }}</label>
-                            <p name="reason[ar]" class="form-control" id="reason_ar">
-                                {{ $cancelReason->getTranslation('reason', 'ar') }}</p>
+                        {{--  num_nabdat  --}}
+                        <div class="col-md-12 d-flex my-3">
+                            <label class="form-label col-3">@lang('lang.num_nabdat')</label>
+                            <input type="text" class="form-control" value="{{ $item->num_nabadat }}" @disabled(true)>
                         </div>
-                        {{-- Is Active --}}
+                        {{-- auto_service --}}
                         <div class="media my-3">
-                            <label class="col-form-label m-r-10">{{ __('lang.is_active') }}</label>
+                            <label class="col-form-label m-r-10">{{ __('lang.auto_service') }}</label>
                             <div class="media-body  icon-state">
                                 <label class="switch">
-                                    <input type="checkbox" disabled="true" name="is_active"
-                                        {{ $cancelReason->is_active == 1 ? 'checked' : '' }}>
-                                    <span class="switch-state"></span>
+                                    <input type="checkbox" disabled="true" name="auto_service"
+                                        {{ $item->auto_service == 1 ? 'checked' : '' }}><span class="switch-state"></span>
                                 </label>
                             </div>
+                        </div>
+                        <hr>
+                        @endforeach
+                    </div>
+                </div>
+
+            </div>
+
+            <div class='col-md-4'>
+
+                {{-- reservation_time --}}
+                <div class="card col-12">
+                    <div class="card-header py-4">
+                        <h6>{{ __('lang.reservation_time') }}</h6>
+                    </div>
+                    <div class="card-body row">
+                        {{--  check_date  --}}
+                        <div class="col-md-12 d-flex my-3">
+                            <label class="form-label col-3">@lang('lang.check_date')</label>
+                            <input type="date" class="form-control" value="{{ $reservation->check_date }}" @disabled(true)>
+                        </div>
+                        {{--  from  --}}
+                        <div class="col-md-12 d-flex my-3">
+                            <label class="form-label col-3">@lang('lang.from')</label>
+                            <input type="time" class="form-control" value="{{ $reservation->from }}" @disabled(true)>
+                        </div>
+                        {{--  to  --}}
+                        <div class="col-md-12 d-flex my-3">
+                            <label class="form-label col-3">@lang('lang.to')</label>
+                            <input type="time" class="form-control" value="{{ $reservation->to }}" @disabled(true)>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
     <!-- Container-fluid Ends-->
 @endsection
 
 @section('script')
+
 @endsection

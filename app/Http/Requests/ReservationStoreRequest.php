@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ReservationStoreRequest extends BaseRequest
 {
@@ -24,15 +25,23 @@ class ReservationStoreRequest extends BaseRequest
     public function rules()
     {
         return [
-            'customer_id' => 'required|exists:users,id',
+            'customer_id' => ['required','exists:users,id', Rule::unique('reservations')->where(function ($query) {
+                return $query->where('check_date', $this->check_date);
+            })],
             'center_id'   => 'required|exists:centers,id',
             'check_date'  => 'required|date',
-            'payment_type' => 'required|in:cash,palses',
         ];
     }
 
     public function validationData()
     {
         return array_merge($this->all(),['customer_id'=>auth('sanctum')->id()]);
+    }
+
+    public function messages()
+    {
+        return [
+            'customer_id.unique'=>trans('lang.already_has_reservation_for_this_day')
+        ] ;
     }
 }

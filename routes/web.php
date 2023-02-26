@@ -26,7 +26,9 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\ScheduleFcmController;
 use App\Http\Controllers\FcmMessageController;
 use App\Http\Controllers\LocalizationController;
+use App\Http\Controllers\NabadatHistoryController;
 use App\Http\Controllers\PushNotificationController;
+use App\Http\Controllers\ReservationHistoryController;
 use Illuminate\Support\Facades\Route;
 
 //Language Change
@@ -68,9 +70,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     // End Settings
 
     //start reservations
-    Route::group(['prefix' => 'reservations'], function () {
-        Route::get('/', [ReservationController::class, 'index'])->name('reservations.index');
-    });
+    Route::resource('reservations', ReservationController::class);
+    Route::post('reservation/history/{id}', [ReservationHistoryController::class, 'store'])->name('reservation-history.store');
+    Route::post('reservation/devices', [NabadatHistoryController::class, 'store'])->name('reservation-devices.store');
     //end reservations
 
     //start employees

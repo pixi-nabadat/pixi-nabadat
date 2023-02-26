@@ -3,7 +3,6 @@
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\Center\AuthController as CenterAuthController;
 use App\Http\Controllers\Api\BuyCustomPulsesController;
 use App\Http\Controllers\Api\BuyOfferController;
 use App\Http\Controllers\Api\CancelReasonController;
@@ -16,14 +15,11 @@ use App\Http\Controllers\Api\DeviceController;
 use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\LocationController;
-use App\Http\Controllers\Api\NabadatHistoryController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PhoneVerifyController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RatesController;
-use App\Http\Controllers\APi\ReservationController;
-use App\Http\Controllers\Api\ReservationHistoryController;
 use App\Http\Controllers\Api\RestPasswordController;
 use App\Http\Controllers\Api\SliderController;
 use App\Http\Controllers\Api\UserPackageController;
@@ -42,7 +38,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'auth'], function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
-    Route::post('center-login',[CenterAuthController::class, 'login']);
     Route::post('phone/verify', PhoneVerifyController::class);
     Route::post('password/forget', PhoneVerifyController::class);
     Route::post('password/reset', RestPasswordController::class);
@@ -73,18 +68,18 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
     Route::group(['prefix' => 'reservations'], function () {
-        Route::get('/', [ReservationController::class, 'listing']); // all reservations for center
-        Route::get('/patient', [ReservationController::class, 'patientReservations']); // all reservations for patient
-        Route::post('/', [ReservationController::class, 'store']);
-        Route::get('{id}', [ReservationController::class, 'find']);
-        Route::get('{qrcode}', [ReservationController::class, 'findByQrCode']);
-        Route::post('{id}/status', [ReservationHistoryController::class, 'store']);
-        Route::post('devices', [NabadatHistoryController::class, 'store']);
-
+        Route::get('center', [\App\Http\Controllers\Api\ReservationsController::class, 'centerReservations']);
+        Route::get('customer', [\App\Http\Controllers\Api\ReservationsController::class, 'patientReservations']);
+        Route::post('customer', [\App\Http\Controllers\Api\ReservationsController::class, 'store']);
+        Route::get('{id}',  [\App\Http\Controllers\Api\ReservationsController::class, 'find']);
+        Route::get('qrcode/{qrcode}',[\App\Http\Controllers\Api\ReservationsController::class, 'findByQrCode']);
+//        Route::post('{id}/status', [ReservationHistoryController::class, 'store']);
+//        Route::post('devices', [NabadatHistoryController::class, 'store']);
     });
+
     //start center devices
     Route::get('/devices', [DeviceController::class, 'listing']);
-    Route::group(['prefix' => 'center-devices'],function (){
+    Route::group(['prefix' => 'center-devices'], function () {
         Route::get('/{id}', [CenterDeviceController::class, 'listing']);
         Route::post('/', [CenterDeviceController::class, 'store']);
         Route::delete('/{id}', [CenterDeviceController::class, 'destroy']);

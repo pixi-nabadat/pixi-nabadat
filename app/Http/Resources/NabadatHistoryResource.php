@@ -17,10 +17,9 @@ class NabadatHistoryResource extends JsonResource
         return [
             'user'         => $this->user_id,
             'center'       => $this->center_id,
-            'device'       => $this->relationLoaded('device') ? new DeviceResource($this->device) : null,
+            'device'       => $this->whenLoaded('device',new DeviceResource($this->device)),
             'num_nabadat'  => $this->num_nabadat,
-            'nabada_price' => $this->nabada_price,
-            'total_price'  => $this->total_price,
+            'auto_service' => $this->auto_service,
             'created_at'   => $this->created_at
         ];
     }
