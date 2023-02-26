@@ -25,26 +25,16 @@ class PermissionsTableSeeder extends Seeder
                'edit_country',
                'delete_country',
                'view_country',
+               'create_city',
+               'edit_city',
+               'delete_city',
+               'view_city',
+               'create_governorate',
+               'edit_governorate',
+               'delete_governorate',
+               'view_governorate'
            ],
             //end country permissions
-
-            //start city permissions
-            'locations'=>[
-                'create_city',
-                'edit_city',
-                'delete_city',
-                'view_city'
-            ],
-            //end city permissions
-
-            //start governorate permissions
-           'locations'=>[
-                'create_governorate',
-                'edit_governorate',
-                'delete_governorate',
-                'view_governorate'
-           ],
-            //end governorate permissions
 
             //start employee permissions
             'employee'=>[
@@ -87,7 +77,11 @@ class PermissionsTableSeeder extends Seeder
                 'create_device',
                 'edit_device',
                 'delete_device',
-                'view_device'
+                'view_device',
+                'create_center_device',
+                'edit_center_device',
+                'delete_center_device',
+                'view_center_device'
             ],
             //end devices permissions
 
@@ -154,13 +148,6 @@ class PermissionsTableSeeder extends Seeder
             ],
             //end cancel_reasons permissions
 
-            //start center_devices permissions
-            'devices_and_center_devices'=>[
-                'create_center_device',
-                'edit_center_device',
-                'delete_center_device',
-                'view_center_device'
-            ],
             //end center_devices permissions
 
             //start orders permissions
