@@ -25,26 +25,16 @@ class PermissionsTableSeeder extends Seeder
                'edit_country',
                'delete_country',
                'view_country',
+               'create_city',
+               'edit_city',
+               'delete_city',
+               'view_city',
+               'create_governorate',
+               'edit_governorate',
+               'delete_governorate',
+               'view_governorate'
            ],
             //end country permissions
-
-            //start city permissions
-            'locations'=>[
-                'create_city',
-                'edit_city',
-                'delete_city',
-                'view_city'
-            ],
-            //end city permissions
-
-            //start governorate permissions
-           'locations'=>[
-                'create_governorate',
-                'edit_governorate',
-                'delete_governorate',
-                'view_governorate'
-           ],
-            //end governorate permissions
 
             //start employee permissions
             'employee'=>[
