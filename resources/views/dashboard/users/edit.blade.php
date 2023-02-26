@@ -1,15 +1,62 @@
 @extends('layouts.simple.master')
 
-@section('title', trans('lang.cancelReasons'))
+@section('title', trans('lang.clients'))
 
 @section('breadcrumb-title')
-    <h3>{{ trans('lang.cancelReasons') }}</h3>
+    <h3>{{ trans('lang.clients') }}</h3>
 @endsection
 
 @section('breadcrumb-items')
-    <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ trans('lang.dashboard') }}</a></li>
-    <li class="breadcrumb-item active"><a href="{{ route('cancelReasons.index') }}">{{ trans('lang.cancelReasons') }}</a></li>
-    <li class="breadcrumb-item active">{{ trans('lang.edit') }}</li>
+<li class="breadcrumb-item"><a href="{{route('home')}}">{{ trans('lang.dashboard') }}</a></li>
+<li class="breadcrumb-item active"><a href="{{route('clients.index')}}">{{ trans('lang.clients') }}</a></li>
+<li class="breadcrumb-item active">{{ trans('lang.edit') }}</li>
+@endsection
+@section('style')
+    <style>
+        .img-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .image {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: .3s ease;
+            background-color: #ff5151;
+        }
+
+        .img-container:hover .overlay {
+            opacity: 1;
+        }
+
+        .icon {
+            color: white;
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .fa-user:hover {
+            color: #eee;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -20,42 +67,161 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <form class="needs-validation" novalidate="" enctype="multipart/form-data"
-                            action="{{ route('cancelReasons.update', $cancelReason) }}" method="post">
+                        <form method="post" class="needs-validation" enctype="multipart/form-data" novalidate="" action="{{ route('clients.update', $client) }}">
                             @csrf
                             @method('put')
-                            {{-- English Reason --}}
-                            <div class="col-md-12">
-                                <label class="form-label mt-3" for="reason_en">{{ trans('lang.reason_en') }}</label>
-                                <input name="reason[en]" value={{ $cancelReason->getTranslation('reason', 'en') }}
-                                    class="form-control @error('reason.en') is-invalid @enderror" id="reason_en"
-                                    type="text" required>
-                                @error('reason.en')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                @enderror
+                            <div class="row g-3">
+                                <div class="col-md-12">
+                                    <label class="form-label" for="name_ar">{{ trans('lang.name_ar') }}</label>
+                                    <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
+                                        id="name_ar" type="text" value="{{ $client->getTranslation('name', 'ar') }}" required>
+                                    @error('name.ar')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label" for="name_en">{{ trans('lang.name_en') }}</label>
+                                    <input name="name[en]" class="form-control @error('name.en') is-invalid @enderror"
+                                        id="name_en" type="text" value="{{ $client->getTranslation('name', 'en') }}" required>
+                                    @error('name.en')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label" for="email">{{ trans('lang.email') }}</label>
+                                    <input name="email" class="form-control @error('email') is-invalid @enderror"
+                                        id="email" type="email" value="{{ $client->email }}" required>
+                                    @error('email')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label" for="phone">{{ trans('lang.phone') }}</label>
+                                    <input name="phone" class="form-control @error('phone') is-invalid @enderror"
+                                        id="phone" type="phone" value="{{ $client->phone }}" required>
+                                    @error('phone')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label" for="date_of_birth">{{ trans('lang.date_of_birth') }}</label>
+                                    <input name="date_of_birth" class="form-control @error('date_of_birth') is-invalid @enderror"
+                                        id="date_of_birth" type="date_of_birth" value="{{ $client->date_of_birth }}" required>
+                                    @error('date_of_birth')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                {{-- password --}}
+                                <div class="col-md-12">
+                                    <label class="form-label" for="password">{{ trans('lang.password') }}</label>
+                                    <input name="password" class="form-control @error('password') is-invalid @enderror"
+                                        id="password" type="password" required>
+                                    @error('password')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                {{-- device_logo --}}
+                                <div class="col-md-12">
+                                    <label class="form-label" for="logo">{{ trans('lang.logo') }}</label>
+                                    <input name="logo" class="form-control image @error('logo') is-invalid @enderror"
+                                        id="logo" type="file">
+                                    @error('logo')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <img src="{{ asset('/uploads/users/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                                </div>
+                                {{-- show_logo --}}
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        @if($client->attachments()->count())
+                                            @foreach(array($client->attachments) as $attachment)
+                                                 @if($attachment->type == App\Enum\ImageTypeEnum::LOGO)
+                                                <div class="col-md-3 col-lg-3 col-sm-12">
+                                                    <div class="img-container">
+                                                        <div class="form-group my-3">
+                                                            <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" class="img-fluid image" alt="">
+                                                        </div>
+                                                        <div class="overlay">
+                                                            <a role="button" onclick="destroy('{{route('attachment.destroy',$attachment->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
+                                                                <i class="fa fa-trash-o"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @endif
+                                            @endforeach
+                                        @endif
+            
+                                    </div>
+                                </div>
+
+                                {{-- user_name --}}
+                                <div class="col-md-12">
+                                    <label class="form-label" for="user_name">{{ trans('lang.user_name') }}</label>
+                                    <input name="user_name" class="form-control @error('user_name') is-invalid @enderror"
+                                        id="user_name" type="user_name" value="{{ $client->user_name }}" required>
+                                    @error('user_name')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                {{-- date_of_birth --}}
+                                <div class="col-md-12">
+                                   <div class="col-md-12 mb-3">
+                                        <div class="col-form-label">{{ trans('lang.choose_governorates') }}</div>
+                                        <select id="change_location" data-filling-name="location_id"
+                                            class="form-select form-control mb-3 @error('parent_id') is-invalid @enderror">
+                                            <option selected>{{ trans('lang.choose_governorates') }}</option>
+                                            @foreach ($governorates as $governorate)
+                                                <option value="{{ $governorate->id }}">{{ $governorate->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <div class="col-form-label">{{ trans('lang.city') }}</div>
+                                        <select name="location_id"
+                                            class="form-select form-control mb-3 @error('location_id') is-invalid @enderror"
+                                            id="city"></select>
+                                        @error('location_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                
                             </div>
-                            {{-- Arabic Reason --}}
-                            <div class="col-md-12">
-                                <label class="form-label" for="reason_ar">{{ trans('lang.reason_ar') }}</label>
-                                <input name="reason[ar]" value={{ $cancelReason->getTranslation('reason', 'ar') }}
-                                    class="form-control @error('reason.ar') is-invalid @enderror" id="reason_ar"
-                                    type="text" required>
-                                @error('reason.ar')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            {{-- is Active --}}
-                            <div class="media my-3">
+                            
+                            {{-- is_active --}}
+                            <div class="media mb-2">
                                 <label class="col-form-label m-r-10">{{ __('lang.is_active') }}</label>
                                 <div class="media-body  icon-state">
                                     <label class="switch">
-                                        <input type="checkbox" name="is_active"
-                                            {{ $cancelReason->is_active == 1 ? 'checked' : '' }}><span
+                                        <input type="checkbox" name="is_active" {{ $client->is_active ? "checked":"" }}><span
                                             class="switch-state"></span>
                                     </label>
                                 </div>
                             </div>
+                            
+                            {{-- allow_notification --}}
+                            <div class="media mb-2">
+                                <label class="col-form-label m-r-10">{{ __('lang.allow_notification') }}</label>
+                                <div class="media-body  icon-state">
+                                    <label class="switch">
+                                        <input type="checkbox" name="allow_notification" {{ $client->allow_notification ? "checked":"" }}><span
+                                            class="switch-state"></span>
+                                    </label>
+                                </div>
+                            </div>
+
                             <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
+
                         </form>
                     </div>
                 </div>
@@ -66,4 +232,5 @@
 @endsection
 
 @section('script')
+    <script src="{{ asset('assets/js/location.js') }}"></script>
 @endsection
