@@ -60,8 +60,8 @@ class BuyCustomPulsesController extends Controller
 
                 $result = $this->paymobService->payCredit(order_id: $order->id, items: $paymob_order_items, userAddress: $userAddress, total_amount_cents: $total_order_amount_in_cents);
 
-                if (!$result['status'])
-                    return apiResponse(message: trans('lang.there_is_an_error'), code: 422);
+//                if (!$result['status'])
+//                    return apiResponse(message: trans('lang.there_is_an_error'), code: 422);
 
                 $status_code = 200 ;
                 $message = null;
