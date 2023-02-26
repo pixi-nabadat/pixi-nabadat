@@ -77,7 +77,11 @@ class PermissionsTableSeeder extends Seeder
                 'create_device',
                 'edit_device',
                 'delete_device',
-                'view_device'
+                'view_device',
+                'create_center_device',
+                'edit_center_device',
+                'delete_center_device',
+                'view_center_device'
             ],
             //end devices permissions
 
@@ -144,13 +148,6 @@ class PermissionsTableSeeder extends Seeder
             ],
             //end cancel_reasons permissions
 
-            //start center_devices permissions
-            'devices_and_center_devices'=>[
-                'create_center_device',
-                'edit_center_device',
-                'delete_center_device',
-                'view_center_device'
-            ],
             //end center_devices permissions
 
             //start orders permissions
