@@ -17,7 +17,6 @@ class ReservationHistoryResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'user'      => $this->whenLoaded('user') ? new AuthUserResource($this->user):null,
             'status' => $this->status,
             'created_at'=> Carbon::parse($this->created_at)->format('d-m-Y')
         ];

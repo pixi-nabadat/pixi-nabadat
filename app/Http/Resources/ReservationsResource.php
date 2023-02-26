@@ -28,8 +28,7 @@ class ReservationsResource extends JsonResource
                 'phone' => $this->user->phone,
             ]),
             'center' => new CentersResource($this->whenLoaded('center')),
-            'status' => new ReservationHistoryResource($this->whenLoaded('latestStatus')),
-            'nabadat_history' => NabadatHistoryResource::collection($this->whenLoaded('nabadatHistory')),
+            'status' =>$this->when($this->whenLoaded('latestStatus'),$this->latestStatus->status),
         ];
     }
 }

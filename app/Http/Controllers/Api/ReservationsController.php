@@ -25,7 +25,7 @@ class ReservationsController extends Controller
             $filters = $request->all();
             if (auth('sanctum')->user()->center_id == null)
                 throw new NotFoundException('route not found');
-            $withRelations = ['latestStatus', 'nabadatHistory', 'user'];
+            $withRelations = ['latestStatus', 'user'];
             $reservations = $this->reservationService->listing(filters: $filters, withRelation: $withRelations);
             return ReservationsResource::collection($reservations);
         } catch (\Exception $e) {
