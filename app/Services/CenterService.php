@@ -132,8 +132,7 @@ class CenterService extends BaseService
 
     public function changeStatus($id)
     {
-        $center = $this->find($id);
-        $user = $center->user;
+        $user = User::find($id);
         $user->is_active = !$user->is_active;
         return $user->save();
     }
