@@ -36,6 +36,7 @@ class UserService extends BaseService
         $data['password'] = bcrypt($data['password']);
         $data['date_of_birth'] = isset($data['date_of_birth']) ? Carbon::parse($data['date_of_birth']) : null;
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
+        $data['allow_notification'] = isset($data['allow_notification']) ? 1 : 0;
         $user = User::create($data);
         if (isset($data['logo']))
         {
@@ -78,6 +79,7 @@ class UserService extends BaseService
         $data['password'] = bcrypt($data['password']);
         $data['date_of_birth'] = Carbon::parse($data['date_of_birth']);
         isset($data['is_active']) ? $data['is_active'] = 1 : $data['is_active'] = 0;
+        $data['allow_notification'] = isset($data['allow_notification']) ? 1 : 0;
 
 
         $user = User::find($id);
