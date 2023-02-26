@@ -19,7 +19,7 @@ class ReservationsController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Http\Response
      */
-    public function centerReservations(Request $request)
+    public function centerReservations(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try{
             $filters = $request->all();
@@ -80,7 +80,7 @@ class ReservationsController extends Controller
         }
     }
 
-    public function delete(int $id)
+    public function delete(int $id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             $this->reservationService->destroy($id);

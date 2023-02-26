@@ -6,7 +6,7 @@ use App\DataTables\ReservationDataTable;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\ReservationStoreRequest;
-use App\Http\Requests\ReservationUpdateRequest;
+use App\Http\Requests\ReservationStoreRequest as ReservationUpdateRequest;
 use App\Services\CenterService;
 use App\Services\ReservationService;
 use App\Services\UserService;
@@ -47,7 +47,7 @@ class ReservationController extends Controller
         return view('dashboard.reservations.create', compact(['centers', 'users']));
     } //end of create
 
-    public function store(ReservationStoreRequest $request)
+    public function store(ReservationStoreRequest $request): \Illuminate\Http\RedirectResponse
     {
         try {
             $data = $request->validated();
