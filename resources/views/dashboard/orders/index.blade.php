@@ -19,9 +19,6 @@
             <!-- Zero Configuration  Starts-->
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">
-                        {{ trans('lang.orders') }}
-                    </div>
                     <div class="card-body">
                         <div class="table">
                             {!! $dataTable->table() !!}

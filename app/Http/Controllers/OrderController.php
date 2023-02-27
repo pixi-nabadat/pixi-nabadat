@@ -17,7 +17,7 @@ class OrderController extends Controller
     public function index(OrdersDataTable $dataTable, Request $request)
     {
         try {
-            $loadRelation = ['orderStatus', 'user:id,name,phone'];
+            $loadRelation = ['latestStatus','user:id,name,phone'];
             return $dataTable->with(['filters' => $request->all(), 'withRelations' => $loadRelation])->render('dashboard.orders.index');
         } catch (\Exception $exception) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => $exception->getMessage()];
