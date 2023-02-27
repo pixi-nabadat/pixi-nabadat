@@ -22,7 +22,10 @@ class CenterPackageController extends Controller
             $filters = ['is_active' => 1, 'in_duration' => true , 'status'=>true];
             $withRelations = ['center.user:id,center_id,name','center.defaultLogo'];
             $allPackages = $this->packageService->listing(where_condition: $filters, withRelation: $withRelations);
-            return PackagesResource::collection($allPackages);
+            if(!$allPackages)
+                return apiResponse(message: trans('lang.something_went_rong'), code:422);
+            $packages = PackagesResource::collection($allPackages);
+            return apiResponse(data: $packages, message: trans('lang.success_operation'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
@@ -34,10 +37,12 @@ class CenterPackageController extends Controller
         try {
             $data = $request->validated();
             $package = $this->packageService->store($data);
-            $data = new PackagesResource($package);
-            return apiResponse(data: $data, message: trans('lang.success_operation'), code: 200);
+            if(!$package)
+                return apiResponse(message: trans('lang.something_went_rong'), code:422);
+            $response = new PackagesResource($package);
+            return apiResponse(data: $response, message: trans('lang.success_operation'), code: 200);
         } catch (\Exception $ex) {
-            return apiResponse(message: $ex->getMessage(), code: 422);
+            return apiResponse(message: trans('lang.something_went_rong'), code: 422);
         }
     }//end of store
 
@@ -46,8 +51,10 @@ class CenterPackageController extends Controller
         cache()->forget('home-api');
         try {
             $package = $this->packageService->update($id, $request->validated());
-            $data = new PackagesResource($package);
-            return apiResponse(data: $data, message: trans('lang.success_operation'), code: 200);
+            if(!$package)
+                return apiResponse(message: trans('lang.something_went_rong'), code:422);
+            $response = new PackagesResource($package);
+            return apiResponse(data: $response, message: trans('lang.success_operation'), code: 200);
         } catch (\Exception $ex) {
             return apiResponse(message: $ex->getMessage(), code: 422);
         }

@@ -154,11 +154,11 @@ Route::get('centers/{id}/reservation-appointments', [AppointmentController::clas
 
 Route::get('week-days', [AppointmentController::class, 'getWeekDays']); // all reservations for center
 
-//start user packages
-Route::get('userPackages/listing', [UserPackageController::class, 'userPackagesListing']);
-Route::get('centerPackages/listing', [UserPackageController::class, 'centerPackagesListing']);
-Route::resource('userPackages', CenterController::class)->except(['index', 'store']);
-//end user packages
+// //start user packages
+// Route::get('userPackages/listing', [UserPackageController::class, 'userPackagesListing']);
+// Route::get('centerPackages/listing', [UserPackageController::class, 'centerPackagesListing']);
+// Route::resource('userPackages', CenterController::class)->except(['index', 'store']);
+// //end user packages
 
 //start slider
 Route::get('sliders', [SliderController::class, 'listing']);

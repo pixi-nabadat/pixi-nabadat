@@ -22,7 +22,7 @@ return new class extends Migration
             $table->double('price');
             $table->date('start_date');
             $table->date('end_date');
-            $table->double('discount_percentage');
+            $table->double('discount_percentage')->default(0.0);
             $table->integer('status')->default(\App\Enum\PackageStatusEnum::UNDERACHIEVING);
             $table->boolean('is_active')->default(\App\Enum\ActivationStatusEnum::ACTIVE);
             $table->timestamps();
