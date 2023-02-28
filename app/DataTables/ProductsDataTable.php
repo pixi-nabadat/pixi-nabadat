@@ -77,10 +77,9 @@ class ProductsDataTable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->orderBy(1)
-            ->buttons(
-                Button::make('reset'),
-                Button::make('reload')
-            );
+            ->parameters([
+                'scrollX'=>true
+            ]);
     }
 
     /**
