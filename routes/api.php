@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\CenterDeviceController;
 use App\Http\Controllers\Api\CenterPackageController;
 use App\Http\Controllers\Api\DeviceController;
 use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\FinanceController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\NotificationController;
@@ -52,6 +53,11 @@ Route::group(['prefix' => 'fcm'], function () {
 });
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
+    //start finance
+    Route::get('/all-center-dues/{id}', [FinanceController::class, 'getAllCenterDues']);
+    Route::get('/all-center-dues-history/{id}', [FinanceController::class, 'getAllCenterDuesHistory']);
+    Route::get('/all-invoice-transactions/{id}', [FinanceController::class, 'getInvoiceTransactions']);
+    //end finance
     Route::group(['prefix' => 'centers'], function () {
         Route::post('store/doctor', [DoctorController::class, 'store']);
         Route::delete('doctors/{doctorId}', [DoctorController::class, 'delete']);
