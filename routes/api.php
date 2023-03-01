@@ -118,6 +118,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'offers'], function () {
         Route::post('/buy', [BuyOfferController::class, 'buyOffer']);
     });
+    Route::get('/all-customer-offers', [BuyOfferController::class, 'getAllCustomerOffers']);
+
 //start buy pulsses from nabdat app
 });
 
