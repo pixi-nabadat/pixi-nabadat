@@ -57,7 +57,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/all-center-dues/{id}',          [FinanceController::class, 'getAllCenterDues']);
     Route::get('/all-center-dues-history/{id}',  [FinanceController::class, 'getAllCenterDuesHistory']);
     Route::get('/all-invoice-transactions/{id}', [FinanceController::class, 'getInvoiceTransactions']);
-    Route::get('/transaction-details/{id}',     [FinanceController::class, 'getTransactionDetails']);
+    Route::get('/transaction-details/{id}',      [FinanceController::class, 'getTransactionDetails']);
+    Route::get('/customer-wallet/{id}',          [FinanceController::class, 'getCustomerWallet']);
     //end finance
     Route::group(['prefix' => 'centers'], function () {
         Route::post('store/doctor', [DoctorController::class, 'store']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CustomerWalletResource;
 use App\Http\Resources\FinanceResource;
 use App\Http\Resources\TransactionsResource;
 use App\Models\Invoice;
@@ -82,8 +83,24 @@ class FinanceController extends Controller
             $response = new TransactionsResource($transactionDetails);
             return apiResponse(data: $response, message: trans('lang.success_operation'));
         }catch(Exception $e){
-            return apiResponse(message: $e->getMessage(), code: 422);
-            // return apiResponse(message: trans('lang.something_went_rong'), code: 422);
+            return apiResponse(message: trans('lang.something_went_rong'), code: 422);
+        }
+    }
+
+    /**
+     * get customer wallet
+     * @param int $id //user id
+     */
+    public function getCustomerWallet(int $id)
+    {
+        try{
+            $customerWallet = $this->invoiceService->getCustomerWallet(userId: $id);
+            if(!$customerWallet)
+                return apiResponse(message: trans('lang.not_found'), code: 422);
+            $response = new CustomerWalletResource($customerWallet);
+            return apiResponse(data: $response, message: trans('lang.success_operation'));
+        }catch(Exception $e){
+            return apiResponse(message: trans('lang.something_went_rong'), code: 422);
         }
     }
 

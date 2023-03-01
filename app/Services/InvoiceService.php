@@ -7,9 +7,11 @@ use App\Models\Center;
 use App\Models\Device;
 use App\Models\Invoice;
 use App\Models\Transaction;
+use App\Models\User;
 use App\QueryFilters\DevicesFilter;
 use App\QueryFilters\InvoiceFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class InvoiceService extends BaseService
 {
@@ -93,5 +95,18 @@ class InvoiceService extends BaseService
         if(!$transaction)
             return false;
         return $transaction;
+    }
+
+    /**
+     * get customer wallet
+     * @param int userId
+     */
+    public function getCustomerWallet(int $userId): bool|Model
+    {
+        $user = User::find($userId);
+        $customerWallet = $user->nabadatWallet;
+        if(!$customerWallet)
+            return false;
+        return $customerWallet;
     }
 }
