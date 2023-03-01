@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FinanceResource;
-use App\Http\Resources\InvoiceTransactionsResource;
+use App\Http\Resources\TransactionsResource;
 use App\Models\Invoice;
 use App\Services\InvoiceService;
 use Exception;
@@ -62,10 +62,29 @@ class FinanceController extends Controller
             $invoiceTransactions = $this->invoiceService->getInvoiceTransactions(invoiceId: $id);
             if(!$invoiceTransactions)
                 return apiResponse(message: trans('lang.not_found'), code: 422);
-            $response = InvoiceTransactionsResource::collection($invoiceTransactions);
+            $response = TransactionsResource::collection($invoiceTransactions);
             return apiResponse(data: $response, message: trans('lang.success_operation'));
         }catch(Exception $e){
             return apiResponse(message: trans('lang.something_went_rong'), code: 422);
         }
     }
+
+    /**
+     * get transaction details
+     * @param int $id //transaction id
+     */
+    public function getTransactionDetails(int $id)
+    {
+        try{
+            $transactionDetails = $this->invoiceService->getTransactionDetails(transactionId: $id);
+            if(!$transactionDetails)
+                return apiResponse(message: trans('lang.not_found'), code: 422);
+            $response = new TransactionsResource($transactionDetails);
+            return apiResponse(data: $response, message: trans('lang.success_operation'));
+        }catch(Exception $e){
+            return apiResponse(message: $e->getMessage(), code: 422);
+            // return apiResponse(message: trans('lang.something_went_rong'), code: 422);
+        }
+    }
+
 }

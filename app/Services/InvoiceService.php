@@ -6,6 +6,7 @@ use App\Enum\ImageTypeEnum;
 use App\Models\Center;
 use App\Models\Device;
 use App\Models\Invoice;
+use App\Models\Transaction;
 use App\QueryFilters\DevicesFilter;
 use App\QueryFilters\InvoiceFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -80,5 +81,17 @@ class InvoiceService extends BaseService
         if(!$invoiceTransactions)
             return false;
         return $invoiceTransactions;
+    }
+
+    /**
+     * get transaction details
+     * @param int transactionId
+     */
+    public function getTransactionDetails(int $transactionId)
+    {
+        $transaction = Transaction::find($transactionId);
+        if(!$transaction)
+            return false;
+        return $transaction;
     }
 }
