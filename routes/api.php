@@ -58,7 +58,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/all-center-dues-history/{id}',  [FinanceController::class, 'getAllCenterDuesHistory']);
     Route::get('/all-invoice-transactions/{id}', [FinanceController::class, 'getInvoiceTransactions']);
     Route::get('/transaction-details/{id}',      [FinanceController::class, 'getTransactionDetails']);
-    Route::get('/customer-wallet/{id}',          [FinanceController::class, 'getCustomerWallet']);
+    Route::get('/customer-wallet',          [FinanceController::class, 'getCustomerWallet']);
     //end finance
     Route::group(['prefix' => 'centers'], function () {
         Route::post('store/doctor', [DoctorController::class, 'store']);
@@ -126,6 +126,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'offers'], function () {
         Route::post('/buy', [BuyOfferController::class, 'buyOffer']);
     });
+    Route::get('/all-customer-offers', [BuyOfferController::class, 'getAllCustomerOffers']);
+
 //start buy pulsses from nabdat app
 });
 
