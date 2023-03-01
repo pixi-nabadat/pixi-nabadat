@@ -91,10 +91,11 @@ class FinanceController extends Controller
      * get customer wallet
      * @param int $id //user id
      */
-    public function getCustomerWallet(int $id)
+    public function getCustomerWallet()
     {
         try{
-            $customerWallet = $this->invoiceService->getCustomerWallet(userId: $id);
+            $user = auth('sanctum')->user();
+            $customerWallet = $this->invoiceService->getCustomerWallet(userId: $user->id);
             if(!$customerWallet)
                 return apiResponse(message: trans('lang.not_found'), code: 422);
             $response = new CustomerWalletResource($customerWallet);
