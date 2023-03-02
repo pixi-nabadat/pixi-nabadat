@@ -14,6 +14,7 @@ use App\Models\UserPackage;
 use App\QueryFilters\UsersFilter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 
 class UserService extends BaseService
 {
@@ -55,12 +56,15 @@ class UserService extends BaseService
         $user->save();
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function find($id, $withRelations = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|Builder|bool|array
     {
         $user = User::with($withRelations)->find($id);
-        if ($user)
-            return $user;
-        return false;
+        if (!$user)
+            throw new NotFoundException(trans('lang.user_not_found'));
+        return $user;
     }//end of changeStatus
 
     public function delete($id)
@@ -76,7 +80,10 @@ class UserService extends BaseService
 
     public function update($id, $data)
     {
-        $data['password'] = bcrypt($data['password']);
+        if (isset($data['password']) && $data['password'] !=null)
+            $data['password'] = bcrypt($data['password']);
+        else
+            Arr::forget($data,'password');
         $data['date_of_birth'] = Carbon::parse($data['date_of_birth']);
         isset($data['is_active']) ? $data['is_active'] = 1 : $data['is_active'] = 0;
         $data['allow_notification'] = isset($data['allow_notification']) ? 1 : 0;

@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\UsersDataTable;
+use App\Exceptions\NotFoundException;
 use App\Http\Requests\ClientStoreRequest;
 use App\Http\Requests\ClientUpdateRequest;
+use App\Models\Location;
 use App\Models\User;
 use App\Services\LocationService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Mockery\Exception;
 
 class ClientController extends Controller
 {
@@ -46,15 +49,19 @@ class ClientController extends Controller
 
     public function edit($id)
     {
-        $withRelation = ['attachments'];
-        $client = $this->userService->find($id,$withRelation);
-        if (!$client) {
+        try {
+            $withRelation = ['attachments','location'];
+            $client = $this->userService->find($id,$withRelation);
+            $governorates = $this->locationService->getAll(['depth' => 1, 'is_active' => 1]);
+            $cities =$client->location->getSiblings();
+            $governorate_city = $client->location->ancestors->whereNotNull('parent_id')->first();
+            return view('dashboard.users.edit', compact('client', 'governorates','cities','governorate_city'));
+
+        }catch (Exception|NotFoundException $exception)
+        {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.patient_not_found')];
             return back()->with('toast', $toast);
         }
-        $filters = ['depth' => 1, 'is_active' => 1];
-        $governorates = $this->locationService->getAll($filters);
-        return view('dashboard.users.edit', compact('client', 'governorates'));
     }
 
     public function update(ClientUpdateRequest $request, $id)

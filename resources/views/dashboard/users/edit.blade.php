@@ -109,8 +109,8 @@
 
                                 <div class="col-md-12">
                                     <label class="form-label" for="date_of_birth">{{ trans('lang.date_of_birth') }}</label>
-                                    <input name="date_of_birth" class="form-control @error('date_of_birth') is-invalid @enderror"
-                                        id="date_of_birth" type="date_of_birth" value="{{ $client->date_of_birth }}" required>
+                                    <input name="date_of_birth" data-language="en" class="datepicker-here form-control digits @error('date_of_birth') is-invalid @enderror"
+                                        id="date_of_birth" type="text" value="{{ $client->date_of_birth }}">
                                     @error('date_of_birth')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
@@ -180,15 +180,17 @@
                                             class="form-select form-control mb-3 @error('parent_id') is-invalid @enderror">
                                             <option selected>{{ trans('lang.choose_governorates') }}</option>
                                             @foreach ($governorates as $governorate)
-                                                <option value="{{ $governorate->id }}">{{ $governorate->title }}</option>
+                                                <option value="{{ $governorate->id }}" @if($governorate->id == $governorate_city->id)selected @endif>{{ $governorate->title }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="col-form-label">{{ trans('lang.city') }}</div>
-                                        <select name="location_id"
-                                            class="form-select form-control mb-3 @error('location_id') is-invalid @enderror"
-                                            id="city"></select>
+                                        <select name="location_id" class="form-select form-control mb-3 @error('location_id') is-invalid @enderror" id="city">
+                                            @foreach($cities as $city)
+                                                <option value="{{ $city->id }}" @if($city->id == $client->location_id)selected @endif>{{ $city->title }}</option>
+                                            @endforeach
+                                        </select>
                                         @error('location_id')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
