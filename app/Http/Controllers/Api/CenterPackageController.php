@@ -22,10 +22,7 @@ class CenterPackageController extends Controller
             $filters = ['is_active' => 1, 'in_duration' => true , 'status'=>true];
             $withRelations = ['center.user:id,center_id,name','center.defaultLogo'];
             $allPackages = $this->packageService->listing(where_condition: $filters, withRelation: $withRelations);
-            if(!$allPackages)
-                return apiResponse(message: trans('lang.something_went_rong'), code:422);
-            $packages = PackagesResource::collection($allPackages);
-            return apiResponse(data: $packages, message: trans('lang.success_operation'));
+            return PackagesResource::collection($allPackages);
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
