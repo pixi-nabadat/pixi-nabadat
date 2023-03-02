@@ -88,8 +88,7 @@ class UserService extends BaseService
         isset($data['is_active']) ? $data['is_active'] = 1 : $data['is_active'] = 0;
         $data['allow_notification'] = isset($data['allow_notification']) ? 1 : 0;
 
-
-        $user = User::find($id);
+        $user = $this->find($id);
         if (!$user)
             return false;
         if (isset($data['logo']))
