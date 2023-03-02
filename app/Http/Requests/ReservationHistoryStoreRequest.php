@@ -26,8 +26,7 @@ class ReservationHistoryStoreRequest extends BaseRequest
     {
         return [
             'status' => 'required|integer|in:2,3,4,5',
-            'from'=>'required_if:status,==,'.Reservation::CONFIRMED,
-            'to'=>'required_if:status,==,'.Reservation::CONFIRMED,
+            'period'=>'required_if:status,==,'.Reservation::CONFIRMED,
         ];
     }
 

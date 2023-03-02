@@ -87,14 +87,10 @@ class ReservationDataTable extends DataTable
                 ->title(trans('check_date'))
                 ->searchable(true)
                 ->orderable(true),
-            Column::make('from')
-                ->title(trans('lang.from'))
+            Column::make('period')
+                ->title(trans('lang.period'))
                 ->searchable(false)
                 ->orderable(false),
-            Column::make('to')
-                ->title(trans('lang.to'))
-                ->searchable(true)
-                ->orderable(true),
             Column::make('qr_code')
                 ->title(trans('lang.qr_code'))
                 ->searchable(true)

@@ -120,18 +120,17 @@
                                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
                                             @enderror
                                         </div> 
+                                        {{--period  --}}
                                         <div class="media mb-2">
-                                            <label class="col-form-label m-r-10">{{ __('lang.from') }}</label>
-                                            <div class="media-body  icon-state">
-                                                <input name="from" type="time" class="form-control" value="{{ $reservation->from }}">    
-                                            </div>
-                                        </div>
-                                        <div class="media mb-2">
-                                            <label class="col-form-label m-r-10">{{ __('lang.to') }}</label>
-                                            <div class="media-body  icon-state">
-                                                <input name="to" type="time" class="form-control" value="{{ $reservation->to }}">    
-                                            </div>
-                                        </div>
+                                            <div class="col-form-label col-3">{{ __('lang.period') }}</div>
+                                            <select id="period" name="period" class="js-example-basic-single col-sm-12 @error('period') is-invalid @enderror">
+                                                <option value="am" {{ $reservation->period == 'am'? "selected":"" }}>{{ trans('lang.am') }}</option>
+                                                <option value="pm" {{ $reservation->period == 'pm'? "selected":"" }}>{{ trans('lang.pm') }}</option>
+                                            </select>
+                                            @error('period')
+                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div> 
                                         <div class="media mb-2">
                                             <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
                                                 <div class="btn-group mr-2" role="group" aria-label="Third group">
