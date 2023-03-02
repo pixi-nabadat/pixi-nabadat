@@ -64,10 +64,10 @@
 
                         @can('view_client')
                         {{--start clients--}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/doctors' ? 'active' : '' }}" href="#"><i class="fa fa-user p-r-5"></i><span class="lan-6">{{ trans('lang.clients') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/clients' ? 'active' : '' }}" href="#"><i class="fa fa-user p-r-5"></i><span class="lan-6">{{ trans('lang.clients') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/doctors' ? 'down' : 'right' }}"></i></div>
                         </a>
-                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/doctors' ? 'block;' : 'none;' }}">
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/clients' ? 'block;' : 'none;' }}">
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('clients.index') ? 'active' : '' }}" href="{{route('clients.index')}}">{{ trans('lang.view') }}</a></li>
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('clients.index') ? 'active' : '' }}" href="{{route('clients.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
