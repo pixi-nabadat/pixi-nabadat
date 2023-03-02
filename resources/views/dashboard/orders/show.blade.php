@@ -102,28 +102,29 @@
                                             <p class="badge badge-info">{{$order->order_status_text}}</p>
                                         </div>
                                         <div class="col-md-5 col-sm-5 col-lg-5">
-                                            @if($order->orderStatus->status == \App\Models\Order::PENDING)
+
+                                            @if($order->latestStatus->status == \App\Models\Order::PENDING)
                                                 <button role="button"
                                                         onclick="changeOrderStatus({{ $order->id }},{{ \App\Models\Order::CANCELED }})"
                                                         class="btn btn-danger delete-btn me-1">
                                                     {{trans('lang.canceled')}}
                                                 </button>
                                             @endif
-                                            @if($order->orderStatus->status == \App\Models\Order::PENDING)
+                                            @if($order->latestStatus->status == \App\Models\Order::PENDING)
                                                 <button role="button"
                                                         onclick="changeOrderStatus('{{ $order->id }}','{{ \App\Models\Order::CONFIRMED }}')"
                                                         class="btn btn-primary delete-btn me-1">
                                                     {{trans('lang.confirmed')}}
                                                 </button>
                                             @endif
-                                            @if($order->orderStatus->status ==\App\Models\Order::CONFIRMED)
+                                            @if($order->latestStatus->status ==\App\Models\Order::CONFIRMED)
                                                 <button role="button"
                                                         onclick="changeOrderStatus('{{ $order->id }}','{{  \App\Models\Order::SHIPPED }}')"
                                                         class="btn btn-success delete-btn me-1">
                                                     {{trans('lang.shipped')}}
                                                 </button>
                                             @endif
-                                            @if($order->orderStatus->status == \App\Models\Order::SHIPPED)
+                                            @if($order->latestStatus->status == \App\Models\Order::SHIPPED)
                                                 <button role="button"
                                                         onclick="changeOrderStatus('{{ $order->id }}','{{ \App\Models\Order::DELIVERED }}')"
                                                         class="btn btn-success-gradien delete-btn me-1">
