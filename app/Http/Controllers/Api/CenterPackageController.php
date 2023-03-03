@@ -34,10 +34,12 @@ class CenterPackageController extends Controller
         try {
             $data = $request->validated();
             $package = $this->packageService->store($data);
-            $data = new PackagesResource($package);
-            return apiResponse(data: $data, message: trans('lang.success_operation'), code: 200);
+            if(!$package)
+                return apiResponse(message: trans('lang.something_went_rong'), code:422);
+            $response = new PackagesResource($package);
+            return apiResponse(data: $response, message: trans('lang.success_operation'), code: 200);
         } catch (\Exception $ex) {
-            return apiResponse(message: $ex->getMessage(), code: 422);
+            return apiResponse(message: trans('lang.something_went_rong'), code: 422);
         }
     }//end of store
 
@@ -46,8 +48,10 @@ class CenterPackageController extends Controller
         cache()->forget('home-api');
         try {
             $package = $this->packageService->update($id, $request->validated());
-            $data = new PackagesResource($package);
-            return apiResponse(data: $data, message: trans('lang.success_operation'), code: 200);
+            if(!$package)
+                return apiResponse(message: trans('lang.something_went_rong'), code:422);
+            $response = new PackagesResource($package);
+            return apiResponse(data: $response, message: trans('lang.success_operation'), code: 200);
         } catch (\Exception $ex) {
             return apiResponse(message: $ex->getMessage(), code: 422);
         }

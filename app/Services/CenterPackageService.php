@@ -6,6 +6,7 @@ use App\Exceptions\NotFoundException;
 use App\Models\Package;
 use App\QueryFilters\PackagesFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class CenterPackageService extends BaseService
 {
@@ -60,7 +61,7 @@ class CenterPackageService extends BaseService
         return $package;
     } //end of delete
 
-    public function update($id, $data): bool|int
+    public function update($id, $data): Model|Package
     {
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
         $package = $this->find($id);
@@ -71,7 +72,8 @@ class CenterPackageService extends BaseService
             $package->updateAttachment($fileData);
         }
         $package->update($data);
-        return true;
+        $package->save();
+        return $package;
     } //end of update
 
     public function status($id): bool

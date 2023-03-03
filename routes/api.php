@@ -157,7 +157,7 @@ Route::get('week-days', [AppointmentController::class, 'getWeekDays']); // all r
 //start user packages
 Route::get('userPackages/listing', [UserPackageController::class, 'userPackagesListing']);
 Route::get('centerPackages/listing', [UserPackageController::class, 'centerPackagesListing']);
-Route::resource('userPackages', CenterController::class)->except(['index', 'store']);
+// Route::resource('userPackages', CenterController::class)->except(['index', 'store']);
 //end user packages
 
 //start slider
