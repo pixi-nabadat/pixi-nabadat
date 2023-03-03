@@ -31,6 +31,11 @@ class Package extends Model
     }
 
 
+    public function attachments()
+    {
+        return $this->morphOne(Attachment::class,'attachmentable');
+    }
+
     public function getStatusAttribute($value)
     {
         switch ($value) {
@@ -55,7 +60,6 @@ class Package extends Model
 
     public function scopeActive(Builder $builder)
     {
-
         $builder->where('start_date' ,  '<=' , Carbon::now(config('app.africa_timezone'))->format('Y-m-d'))->where('end_date' ,  '>=' , Carbon::now(config('app.africa_timezone'))->format('Y-m-d'));
     }
 }

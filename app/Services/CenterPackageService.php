@@ -33,7 +33,7 @@ class CenterPackageService extends BaseService
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
         $package = Package::create($data);
         if (isset($data['image'])) {
-            $fileData = FileService::saveImage(file: $data['image'], path: 'uploads\packages');
+            $fileData = FileService::saveImage(file: $data['image'], path: 'uploads/packages');
             $package->storeAttachment($fileData);
         }
 
