@@ -33,5 +33,11 @@ class ReservationsFilter extends QueryFilter
         return $this->builder->where('customer_id',$term);
     }
 
+    public function status($term)
+    {
+        return $this->builder->whereHas('history', function ($query) use ($term) {
+            $query->where('status', $term);
+        });
+    }
 
 }

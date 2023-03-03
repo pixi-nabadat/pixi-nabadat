@@ -39,10 +39,14 @@ class UserPackageController extends Controller
     {
         try {
             $filters = $request->all();
-            $filters['user_type'] = User::CUSTOMERTYPE;
-            $filters['user_id']   = auth()->id();
+            $user = auth('sanctum')->user();
+            $filters['user_id'] = $user->id;
+            if(!$filters['user_id'])
+                return apiResponse(message: trans('lang.not_found'), code: 422);
             $withRelations = ['center:id,description,address','center.defaultLogo','center.user:id,center_id,name','package'];
             $userPackages = $this->userPackageService->listing(filters: $filters,withRelation: $withRelations);
+            if(!$userPackages)
+                return apiResponse(message: trans('lang.something_went_rong'), code: 422);
             return UserPackagesResource::collection($userPackages);
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
@@ -53,10 +57,14 @@ class UserPackageController extends Controller
     {
         try {
             $filters = $request->all();
-            $filters['user_type'] = 'center';
-            $filters['center_id'] = auth()->user()->center_id;
+            $user = auth('sanctum')->user();
+            $filters['center_id'] = $user->center_id;
+            if(!$filters['center_id'])
+                return apiResponse(message: trans('lang.not_found'), code: 422);
             $withRelations = ['package','user'];
             $userPackages = $this->userPackageService->listing(filters: $filters,withRelation: $withRelations);
+            if(!$userPackages)
+                return apiResponse(message: trans('lang.something_went_rong'), code: 422);
             return UserPackagesResource::collection($userPackages);
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
