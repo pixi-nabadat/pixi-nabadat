@@ -20,7 +20,7 @@ class CentersResource extends JsonResource
             'name' => $this->whenLoaded('user', $this->user->name),
             'description' => $this->description,
             'address' => $this->address,
-            'logo' => $this->when(($this->whenLoaded('defaultLogo')&&isset($this->defaultLogo)),asset(optional($this->defaultLogo)->path . "/" . optional($this->defaultLogo)->filename),'') ?  : asset('assets/images/default-image.jpg'),
+            'logo' => isset($this->defaultLogo) ? asset(optional($this->defaultLogo)->path . "/" . optional($this->defaultLogo)->filename):asset('assets/images/default-image.jpg'),
             'rate' => $this->rate
         ];
     }
