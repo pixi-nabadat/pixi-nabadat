@@ -132,16 +132,6 @@ class User extends Authenticatable
         return $this->hasMany(UserPackage::class, 'user_id');
     }
 
-    public function ongoingPackage(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(UserPackage::class, 'user_id');
-    }
-
-    public function readyForUsePackage(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(UserPackage::class, 'user_id');
-    }
-
     public function reservation(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Reservation::class,'user_id');
