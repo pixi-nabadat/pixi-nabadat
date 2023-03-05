@@ -2,15 +2,8 @@
 
 namespace App\Services;
 
-use App\Enum\PaymentMethodEnum;
-use App\Enum\PaymentStatusEnum;
-use App\Enum\UserPackageStatusEnum;
-use App\Exceptions\NotFoundException;
 use App\Exceptions\StatusNotEquelException;
-use App\Models\Invoice;
 use App\Models\Reservation;
-use App\Models\ReservationHistory;
-use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Arr;
 
@@ -52,5 +45,4 @@ class ReservationHistoryService extends BaseService
         $reservation->refresh();
         return true;
     }
-
 }
