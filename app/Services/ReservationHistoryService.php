@@ -49,59 +49,8 @@ class ReservationHistoryService extends BaseService
         ]);
         if ($status == Reservation::CONFIRMED)
             $reservation->update(Arr::except($reservation_data,'status'));
-        else if($status == Reservation::COMPLETED)
-            $this->completeReservation(reservation: $reservation);
         $reservation->refresh();
         return true;
     }
 
-    public function completeReservation(Reservation $reservation)
-    {
-        $reservationPulses   = $reservation->nabadatHistory->sum('num_nabadat');
-        $user = $reservation->user;
-        $active_user_package = $user->package()->where('status',UserPackageStatusEnum::ONGOING)->where('payment_status',PaymentStatusEnum::PAID)->first();
-        $center = $reservation->center;
-        if(!$active_user_package)
-        {
-            //pay cache for all reservation pulses and buy custom pulses
-            $data = [
-                'center_id'=>$center->id,
-                'num_nabadat'=>$reservationPulses,
-                'payment_method'=>PaymentMethodEnum::CASH,
-            ];
-            //call buyCsuomPulsesMethod here
-        }else{
-            $remainPulses = $active_user_package->remain;
-            $newRemain =  $remainPulses - $reservationPulses;
-            if($newRemain <= 0){// set status for the next package ingoing
-                $notPayedPulses = $reservationPulses - $remainPulses;//the pulses over the package capacity
-                $active_user_package->update([
-                    'remain'=>0,
-                    'used'=>$remainPulses,
-                    'status'=>UserPackageStatusEnum::COMPLETED,
-                ]);
-                $readyUserPackage =  $user->package()->where('status',UserPackageStatusEnum::READYFORUSE)->where('payment_status',PaymentStatusEnum::PAID)->orderByDesc('id')->first();
-                if($readyUserPackage)
-                {
-                    $readyUserPackage->update([
-                        'remain'=>$readyUserPackage->remain - $notPayedPulses,
-                        'used'=>$notPayedPulses,
-                        'status'=>UserPackageStatusEnum::ONGOING,
-                    ]);
-                }else{
-                    $data = [
-                        'center_id'=>$center->id,
-                        'num_nabadat'=>$notPayedPulses,
-                        'payment_method'=>PaymentMethodEnum::CASH,
-                    ];
-                    //call buyCsuomPulsesMethod here
-                }
-
-            }else{
-                $active_user_package->remain = $newRemain;
-                $active_user_package->used = $active_user_package->used + $reservationPulses;
-            }
-        }
-
-    }
 }
