@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Enum\PaymentStatusEnum;
+use App\Enum\UserPackageStatusEnum;
 use App\Exceptions\NotFoundException;
 use App\Models\UserPackage;
+use App\Models\User;
 use App\QueryFilters\UserPackagesFilter;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -26,19 +28,46 @@ class UserPackageService extends BaseService
     /**
      * @throws NotFoundException
      */
-    public function update(int $id, array $data): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|Builder|array
+    public function update(int $id, array $data=[]): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|Builder|array
     {
         $userPackage = $this->find(id:$id,with:['user','package'] );
         if (!$userPackage)
             throw new NotFoundException(trans('lang.offers_not_found'));
-      $userPackage->update([
-            'payment_status' => $data['payment_status'],
-        ]);
-     return  $userPackage->refresh();
+        $ongoingPackage = $userPackage->user->package->where('status', UserPackageStatusEnum::ONGOING)->first();
+        if(!$ongoingPackage)
+            $data['status'] = $data['payment_status'] == PaymentStatusEnum::PAID ? UserPackageStatusEnum::ONGOING: UserPackageStatusEnum::PENDING;
+        else
+            $data['status'] = $data['payment_status'] == PaymentStatusEnum::PAID ? UserPackageStatusEnum::READYFORUSE: UserPackageStatusEnum::PENDING;
+        $data['remain'] = $data['num_nabadat'];
+        $is_updated =  $userPackage->update($data);
+        /**
+         * TODO
+         * add finance code here
+         */
+        return  $userPackage->refresh();
     }
 
     public function create(array $data =[]){
         return UserPackage::create($data);
+    }
+
+    public function store(array $data)
+    {
+        $user = User::find($data['user_id']);
+        if(!$user)
+            throw new NotFoundException(trans('lang.user_not_found'));
+        $userPackages = $user->package->where('status', UserPackageStatusEnum::ONGOING)->first();
+        if(!$userPackages)
+            $data['status'] = $data['payment_status'] == PaymentStatusEnum::PAID ? UserPackageStatusEnum::ONGOING: UserPackageStatusEnum::PENDING;
+        else
+            $data['status'] = $data['payment_status'] == PaymentStatusEnum::PAID ? UserPackageStatusEnum::READYFORUSE: UserPackageStatusEnum::PENDING;
+        $data['remain'] = $data['num_nabadat'];
+        $userPackage = UserPackage::create($data);
+        /**
+         * TODO
+         * add user package financial code here
+         */
+        return  $userPackage;
     }
 
 
@@ -56,6 +85,11 @@ class UserPackageService extends BaseService
     public function delete(int $id)
     {
         $userPackage = $this->find($id);
+        if(!$userPackage)
+            throw new NotFoundException(trans('lang.user_package_not_found'));
+        $paymentStatus = $userPackage->payment_status;
+        if($paymentStatus != PaymentStatusEnum::UNPAID)
+            throw new NotFoundException(trans('lang.not_allowed'));
         return $userPackage->delete();
 
     } //end of delete
