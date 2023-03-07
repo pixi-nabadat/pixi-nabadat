@@ -82,9 +82,6 @@ class UserPackageService extends BaseService
                 self::getNextReadyUserPackage(user: $user);
                 $activeUserPackage->save();
                 $activeUserPackage->refresh();
-                //start create transaction
-                self::createTransaction(center: $center, user: $user, pulsesCount: $activeUserPackage->remain);
-                //end create transaction
 
                 //start update user wallet
                 self::updateUserWallet(user: $user, usedPulses: $activeUserPackage->remain);
@@ -102,9 +99,6 @@ class UserPackageService extends BaseService
                 }
                 $activeUserPackage->save();
                 $activeUserPackage->refresh();
-                //start create transaction
-                self::createTransaction(center: $center, user: $user, pulsesCount: $number_of_pulses);
-                //end create transaction
 
                 //start update user wallet
                 self::updateUserWallet(user: $user, usedPulses: $number_of_pulses);
