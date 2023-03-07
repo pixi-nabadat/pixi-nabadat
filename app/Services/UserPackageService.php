@@ -10,7 +10,6 @@ use App\Models\Invoice;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserPackage;
-use App\Models\User;
 use App\QueryFilters\UserPackagesFilter;
 use Illuminate\Database\Eloquent\Builder;
 
