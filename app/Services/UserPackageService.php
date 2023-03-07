@@ -35,7 +35,9 @@ class UserPackageService extends BaseService
     {
         $userPackage = $this->find(id:$id,with:['user','package'] );
         if (!$userPackage)
-            throw new NotFoundException(trans('lang.offers_not_found'));
+            throw new NotFoundException(trans("lang.offers_not_found_or_package_paid"));
+        if($userPackage->payment_status == PaymentStatusEnum::PAID)
+            throw new NotFoundException(trans("lang.package_is_paid"));
         $ongoingPackage = $userPackage->user->package->where('status', UserPackageStatusEnum::ONGOING)->first();
         if(!$ongoingPackage)
             $data['status'] = $data['payment_status'] == PaymentStatusEnum::PAID ? UserPackageStatusEnum::ONGOING: UserPackageStatusEnum::PENDING;
@@ -43,11 +45,14 @@ class UserPackageService extends BaseService
             $data['status'] = $data['payment_status'] == PaymentStatusEnum::PAID ? UserPackageStatusEnum::READYFORUSE: UserPackageStatusEnum::PENDING;
         $data['remain'] = $data['num_nabadat'];
         $is_updated =  $userPackage->update($data);
-        /**
-         * TODO
-         * add finance code here
-         */
-        return  $userPackage->refresh();
+        $userPackage->refresh();
+        $user = $userPackage->user;
+        if($data['payment_status'] == PaymentStatusEnum::PAID)
+        {
+            $this->increaseUserWallet(user: $user, pulses: $data['num_nabadat']);
+            $this->createTransaction(center: $userPackage->center, user: $user, pulsesCount: $data['num_nabadat']);
+        }
+        return $userPackage;
     }
 
     public function create(array $data =[]){
@@ -66,6 +71,11 @@ class UserPackageService extends BaseService
             $data['status'] = $data['payment_status'] == PaymentStatusEnum::PAID ? UserPackageStatusEnum::READYFORUSE: UserPackageStatusEnum::PENDING;
         $data['remain'] = $data['num_nabadat'];
         $userPackage = UserPackage::create($data);
+        if($data['payment_status'] == PaymentStatusEnum::PAID)
+        {
+            $this->increaseUserWallet(user: $user, pulses: $data['num_nabadat']);
+            $this->createTransaction(center: $userPackage->center, user: $user, pulsesCount: $data['num_nabadat']);
+        }
         /**
          * TODO
          * add user package financial code here
@@ -97,7 +107,7 @@ class UserPackageService extends BaseService
 
     } //end of delete
 
-    public static function decreaseFromOffer(User $user, Center $center, int $number_of_pulses)
+    public function decreaseFromOffer(User $user, Center $center, int $number_of_pulses)
     {
         if ($number_of_pulses == 0)
             return true ;
@@ -111,15 +121,15 @@ class UserPackageService extends BaseService
                 $activeUserPackage->used = $activeUserPackage->used + $activeUserPackage->remain;
                 $activeUserPackage->remain = 0;
                 $activeUserPackage->status = UserPackageStatusEnum::COMPLETED;
-                self::getNextReadyUserPackage(user: $user);
+                $this->getNextReadyUserPackage(user: $user);
                 $activeUserPackage->save();
                 $activeUserPackage->refresh();
 
                 //start update user wallet
-                self::updateUserWallet(user: $user, usedPulses: $activeUserPackage->remain);
+                $this->decreaseUserWallet(user: $user, pulses: $activeUserPackage->remain);
                 //end update user wallet
                 
-                self::decreaseFromOffer(user: $user, center: $center, number_of_pulses: $remain_pulses);
+                $this->decreaseFromOffer(user: $user, center: $center, number_of_pulses: $remain_pulses);
             }else{
                 $old_remain = $activeUserPackage->remain ;
                 $activeUserPackage->remain = $old_remain - $number_of_pulses ;
@@ -127,20 +137,20 @@ class UserPackageService extends BaseService
                 if ($old_remain - $number_of_pulses == 0)
                 {
                     $activeUserPackage->status = UserPackageStatusEnum::COMPLETED ;
-                    self::getNextReadyUserPackage(user: $user);
+                    $this->getNextReadyUserPackage(user: $user);
                 }
                 $activeUserPackage->save();
                 $activeUserPackage->refresh();
 
                 //start update user wallet
-                self::updateUserWallet(user: $user, usedPulses: $number_of_pulses);
+                $this->decreaseUserWallet(user: $user, pulses: $number_of_pulses);
                 //end update user wallet
                 return true;
             }
         }else{
             //there is no userpackage and number_of_pulses != 0
             //start create transaction
-            self::createTransaction(center: $center, user: $user, pulsesCount: $number_of_pulses);
+            $this->createTransaction(center: $center, user: $user, pulsesCount: $number_of_pulses);
             //end create transaction
 
         }
@@ -152,7 +162,7 @@ class UserPackageService extends BaseService
      * @param User $user
      * @return bool
      */
-    private static function getNextReadyUserPackage(User $user): bool
+    private function getNextReadyUserPackage(User $user): bool
     {
         $readyUserPackage =  $user->package->where('status',UserPackageStatusEnum::READYFORUSE)->where('payment_status',PaymentStatusEnum::PAID)->first();
         
@@ -167,21 +177,35 @@ class UserPackageService extends BaseService
     }
 
     /**
-     * get the user wallet and update it
+     * get the user wallet and increase it
      * @param User $user
-     * @param int $usedPulses
+     * @param int $pulses
      * @return bool
      */
-    private static function updateUserWallet(User $user, int $usedPulses): bool
+    private function increaseUserWallet(User $user, int $pulses): bool
     {
         $userWallet = $user->nabadatWallet;
-        $userWallet->total_pulses = $userWallet->total_pulses - $usedPulses;
-        $userWallet->used_amount = $userWallet->used_amount + $usedPulses;
+        $userWallet->total_pulses = $userWallet->total_pulses + $pulses;
         $userWallet->save();
         return true;
-    }    
+    }
 
-    private static function createTransaction(Center $center, $user, $pulsesCount)
+    /**
+     * get the user wallet and decrease it
+     * @param User $user
+     * @param int $pulses
+     * @return bool
+     */
+    private function decreaseUserWallet(User $user, int $pulses): bool
+    {
+        $userWallet = $user->nabadatWallet;
+        $userWallet->total_pulses = $userWallet->total_pulses - $pulses;
+        $userWallet->used_amount = $userWallet->used_amount + $pulses;
+        $userWallet->save();
+        return true;
+    }
+
+    private function createTransaction(Center $center, $user, $pulsesCount)
     {
         $centerInvoice = $center->invoices()->where('status', Invoice::PENDING)->first();
         $center_dues = $pulsesCount - ($pulsesCount * ($center->app_discount/100));
