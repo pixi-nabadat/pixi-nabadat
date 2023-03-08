@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
 use App\Enum\UserPackageStatusEnum;
 use App\Exceptions\NotFoundException;
+use App\Http\Controllers\Api\BuyCustomPulsesController;
 use App\Models\Center;
 use App\Models\Invoice;
 use App\Models\Transaction;
@@ -50,7 +52,7 @@ class UserPackageService extends BaseService
         if($data['payment_status'] == PaymentStatusEnum::PAID)
         {
             $this->increaseUserWallet(user: $user, pulses: $data['num_nabadat']);
-            $this->createTransaction(center: $userPackage->center, user: $user, pulsesCount: $data['num_nabadat']);
+            $this->createTransaction(center: $userPackage->center, user: $user, pulsesCount: $data['num_nabadat'], packageId: $userPackage->package_id);
         }
         return $userPackage;
     }
@@ -74,7 +76,7 @@ class UserPackageService extends BaseService
         if($data['payment_status'] == PaymentStatusEnum::PAID)
         {
             $this->increaseUserWallet(user: $user, pulses: $data['num_nabadat']);
-            $this->createTransaction(center: $userPackage->center, user: $user, pulsesCount: $data['num_nabadat']);
+            $this->createTransaction(center: $userPackage->center, user: $user, pulsesCount: $data['num_nabadat'], packageId: $userPackage->package_id);
         }
         /**
          * TODO
@@ -150,7 +152,10 @@ class UserPackageService extends BaseService
         }else{
             //there is no userpackage and number_of_pulses != 0
             //start create transaction
+            $userPackageData = app()->make(BuyCustomPulsesController::class)->getUserPackageDataForCustomPulses(num_nabadat: $number_of_pulses, center: $center, user: $user, payment_status: PaymentStatusEnum::UNPAID, payment_method: PaymentMethodEnum::CASH);
+            $user_package = $this->store($userPackageData);
             $this->createTransaction(center: $center, user: $user, pulsesCount: $number_of_pulses);
+
             //end create transaction
 
         }
@@ -205,7 +210,7 @@ class UserPackageService extends BaseService
         return true;
     }
 
-    private function createTransaction(Center $center, $user, $pulsesCount)
+    private function createTransaction(Center $center, User $user, int $pulsesCount, int $packageId = null)
     {
         $centerInvoice = $center->invoices()->where('status', Invoice::PENDING)->first();
         $center_dues = $pulsesCount - ($pulsesCount * ($center->app_discount/100));
@@ -213,6 +218,7 @@ class UserPackageService extends BaseService
         $transactionData = [
             'invoice_id'=>$centerInvoice->id,
             'user_id'=>$user->id,
+            'package_id'=>$packageId,
             'num_pulses'=>$pulsesCount,
             'center_dues'=>$center_dues,
             'nabadat_app_dues'=>$nabadat_app_dues,
