@@ -58,7 +58,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::patch('doctors/{doctorId}', [DoctorController::class, 'update']);
         Route::get('cancel-reasons', [CancelReasonController::class, 'listing']);
         Route::apiResource('appointments', AppointmentController::class);
-        Route::post('/buy-pulses', [BuyCustomPulsesController::class, 'buyCustomPulses']);
     });
 
 //start notifications routes
@@ -117,6 +116,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 //start buy pulsses from nabdat app
     Route::group(['prefix' => 'offers'], function () {
         Route::post('/buy', [BuyOfferController::class, 'buyOffer']);
+        Route::post('/buy-custom', [BuyCustomPulsesController::class, 'buyCustomPulses']);
     });
 //start buy pulsses from nabdat app
 });

@@ -150,6 +150,7 @@ class BuyOfferController extends Controller
 
         return [
             'num_nabadat'           => $package->num_nabadat,
+            'user_id'               => $user->id,
             'price'                 => $package->price,
             'center_id'             => $package->center_id,
             'discount_percentage'   => $package->discount_percentage,
