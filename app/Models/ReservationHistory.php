@@ -52,9 +52,9 @@ class ReservationHistory extends Model
                 return $value;
         }
     }
-    protected static function boot()
-    {
-        parent::boot();
-        static::observe(ReservationHistoryObserver::class);
-    }
+    // protected static function boot()
+    // {
+    //     parent::boot();
+    //     static::observe(ReservationHistoryObserver::class);
+    // }
 }
