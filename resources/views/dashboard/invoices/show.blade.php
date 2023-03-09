@@ -1,14 +1,14 @@
 @extends('layouts.simple.master')
 
-@section('title', trans('lang.cancelReasons'))
+@section('title', trans('lang.invoices'))
 
 @section('breadcrumb-title')
-    <h3>{{ trans('lang.cancelReasons') }}</h3>
+    <h3>{{ trans('lang.invoices') }}</h3>
 @endsection
 
 @section('breadcrumb-items')
     <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ trans('lang.dashboard') }}</a></li>
-    <li class="breadcrumb-item active"><a href="{{ route('cancelReasons.index') }}">{{ trans('lang.cancelReasons') }}</a></li>
+    <li class="breadcrumb-item active"><a href="{{ route('invoices.index') }}">{{ trans('lang.invoices') }}</a></li>
     <li class="breadcrumb-item active">{{ trans('lang.edit') }}</li>
 @endsection
 
@@ -38,7 +38,7 @@
                                                 <div class="media-body m-l-20 text-right">
                                                     <h4 class="media-heading">{{config('global.company_name_ar')??'company_name'}}</h4>
                                                     <p>{{config('global.primary_phone')??'phone'}}<br><span></span></p>
-                                                    <p>{{config('global.primary_phone')??'address'}}<br><span></span></p>
+                                                    <p>{{config('global.address')??'address'}}<br><span></span></p>
                                                 </div>
                                             </div>
                                             <!-- End Info-->
@@ -58,16 +58,16 @@
                                                 <h5>Invoice #<span class="counter">{{$invoice->id}}</span></h5>
                                                 <h6 class="media-heading">{{$invoice->status_text}}</h6>
                                                 <p>
-                                                    Total center amount : {{$invoice->total_center_dues}}
+                                                    Total center dues : {{$invoice->total_center_dues}}
                                                 </p>
                                                 <p>
-                                                    Total center amount : {{$invoice->total_nabadat_dues}}
+                                                    Total nabadat dues : {{$invoice->total_nabadat_dues}}
                                                 </p>
-                                                <p>{{trans('lang.started_date')}}:
+                                                <p>{{trans('lang.from')}}:
                                                     <span> {{$invoice->created_at}}</span><br>
                                                 </p>
                                                 @isset($invoice->completed_date)
-                                                    <p>{{trans('lang.completed_date')}}:
+                                                    <p>{{trans('lang.to')}}:
                                                         <span> {{$invoice->completed_date}}</span><br>
                                                     </p>
                                                 @endisset
@@ -101,10 +101,10 @@
                                                 <td colspan="3"></td>
                                                 <td>
                                                     <p>
-                                                        Total center amount : {{$invoice->total_center_dues}}
+                                                        Total center dues : {{$invoice->total_center_dues}}
                                                     </p>
                                                     <p>
-                                                        Total center amount : {{$invoice->total_nabadat_dues}}
+                                                        Total nabadat dues : {{$invoice->total_nabadat_dues}}
                                                     </p>
                                                 </td>
 
