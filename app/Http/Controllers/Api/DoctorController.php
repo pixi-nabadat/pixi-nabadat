@@ -47,6 +47,8 @@ class DoctorController extends Controller
         try {
             $withRelation = ['center'];
             $doctor = $this->doctorService->find(doctorId: $id, withRelations: $withRelation);
+            if(!$doctor)
+                return apiResponse(message: trans('lang.not_found'), code: 422);
             return new DoctorsResource($doctor);
         } catch (\Exception $ex) {
             return apiResponse(message: $ex->getMessage(), code: 422);
