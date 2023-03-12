@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PhoneVerifyController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RatesController;
+use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\RestPasswordController;
 use App\Http\Controllers\Api\SliderController;
 use App\Http\Controllers\Api\UserPackageController;
@@ -60,6 +61,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::apiResource('appointments', AppointmentController::class);
         Route::post('/buy-pulses', [BuyCustomPulsesController::class, 'buyCustomPulses']);
     });
+
+    //start reports
+    Route::get('/cancelation-report',         [ReportController::class, 'cancelationReport']);
+    Route::get('/approved-report',            [ReportController::class, 'approvedReport']);
+    Route::get('/areas-report/{location_id}', [ReportController::class, 'areasReportBySales']);
+    //end reports
 
 //start notifications routes
     Route::group(['prefix' => 'notifications'], function () {
