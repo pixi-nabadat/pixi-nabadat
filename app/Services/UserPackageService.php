@@ -221,7 +221,10 @@ class UserPackageService extends BaseService
         $old_used_pulses = $user->nabadatWallet->used_amount ?? 0;
         $total_pulses = $old_pulses - $pulses;
         $used_amount = $old_used_pulses + $pulses;
-        $user->nabadatWallet()->updateOrCreate(['user_id'=>$user->id],['total_pulses' => $total_pulses, 'used_amount'=>$used_amount]);
+
+        $user->nabadatWallet->total_pulses = $total_pulses;
+        $user->nabadatWallet->used_amount = $used_amount;
+        $user->nabadatWallet->save();
 
         return true;
     }
