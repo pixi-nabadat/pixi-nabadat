@@ -15,7 +15,6 @@ class AttachmentsResource extends JsonResource
     public function toArray($request)
     {
 
-        dd($this->resource);
        return [
            'id' =>$this->id,
            'path'=> isset($this->path) ? url($this->path."/".$this->filename):asset('assets/images/default-image.jpg'),

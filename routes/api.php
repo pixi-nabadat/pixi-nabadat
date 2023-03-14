@@ -83,6 +83,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/{id}', [CenterDeviceController::class, 'listing']);
         Route::post('/', [CenterDeviceController::class, 'store']);
         Route::delete('/{id}', [CenterDeviceController::class, 'destroy']);
+        Route::patch('{id}', [CenterDeviceController::class, 'update']);
         Route::patch('/{id}/auto-service', [CenterDeviceController::class, 'autoService']);
         Route::patch('/{id}/status', [CenterDeviceController::class, 'status']);
 

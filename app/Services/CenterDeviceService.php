@@ -50,7 +50,8 @@ class CenterDeviceService extends BaseService
                 $fileData['type'] = ImageTypeEnum::GALARY;
                 $center_devices->storeAttachment($fileData);
             }
-        return $center->refresh();
+        $center->refresh();
+        return $center_devices;
     }
 
     /**
@@ -59,12 +60,42 @@ class CenterDeviceService extends BaseService
     public function delete(int $id)
     {
         $centerId     = auth('sanctum')->user()->center_id;
-        $center       = $this->find($centerId);
-        $centerDevice = $center->devices()->detach($id);
+        $centerDevice =CenterDevice::query()->where('device_id',$id)->where('center_id',$centerId)->first();
+        
         if (!$centerDevice)
             throw new NotFoundException(trans('lang.center_device_not_found'));
+        $centerDevice->delete();
+        $centerDevice->deleteAttachments();
         return true;
     }
+
+    public function update($id, $data)
+    {
+        $centerId     = auth('sanctum')->user()->center_id;
+        $centerDevice =CenterDevice::query()->where('device_id',$id)->where('center_id',$centerId)->first();
+
+        if(!$centerDevice)
+            return false;
+        $data['auto_service'] = isset($data['auto_service'])  ? 1 :  0;
+        $data['is_active'] = isset($data['is_active'])  ? 1 :  0;
+        if (isset($data['primary_image']))
+        {
+            $centerDevice->deleteAttachmentsLogo();
+            $fileData = FileService::saveImage(file: $data['primary_image'],path: 'uploads\center_devices', field_name: 'primary_image');
+            $fileData['type'] = ImageTypeEnum::LOGO;
+            $centerDevice->storeAttachment($fileData);
+        }
+        if (isset($data['gallery'])&&is_array($data['gallery']))
+        foreach ($data['gallery'] as $image)
+        {
+            $fileData = FileService::saveImage(file: $image,path: 'uploads\center_devices', field_name: 'gallery');
+            $fileData['type'] = ImageTypeEnum::GALARY;
+            $centerDevice->updateAttachment($fileData);
+        }
+        $centerDevice->update($data);
+        return $centerDevice;
+    } //end of update
+
 
     /**
      * @throws NotFoundException

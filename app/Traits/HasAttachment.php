@@ -18,7 +18,8 @@ trait HasAttachment
     public function updateAttachment($data=[])
     {
         $this->attachments->each(function ($attachment){
-            $attachment->delete();
+            if($attachment->type != ImageTypeEnum::LOGO)
+                $attachment->delete();
         });
         $this->storeAttachment($data);
     }
