@@ -13,7 +13,7 @@ class ReservationService extends BaseService
     public function listing(array $filters = [], array $withRelation = []): \Illuminate\Contracts\Pagination\CursorPaginator
     {
         $perPage = config('app.perPage');
-        return $this->queryGet(where_condition: $filters, withRelation: $withRelation)->cursorPaginate($perPage);
+        return $this->queryGet(where_condition: $filters, withRelation: $withRelation)->limit(10)->cursorPaginate($perPage);
     }
 
     public function queryGet(array $where_condition = [], $withRelation = []): Builder

@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CenterController;
 use App\Http\Controllers\Api\CenterDeviceController;
+use App\Http\Controllers\Api\CenterHomeController;
 use App\Http\Controllers\Api\CenterPackageController;
 use App\Http\Controllers\Api\DeviceController;
 use App\Http\Controllers\Api\DoctorController;
@@ -60,6 +61,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/buy-pulses', [BuyCustomPulsesController::class, 'buyCustomPulses']);
     });
 
+    //start center home
+    Route::get('center-home', [CenterHomeController::class, 'index']);
+
+    //end center home
 //start notifications routes
     Route::group(['prefix' => 'notifications'], function () {
         Route::get('/', [NotificationController::class, 'getNotifications']);
