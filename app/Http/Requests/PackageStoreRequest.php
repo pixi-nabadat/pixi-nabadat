@@ -25,9 +25,20 @@ class PackageStoreRequest extends BaseRequest
      */
     public function rules()
     {
+
         return [
             'center_id'            => 'required|exists:centers,id',
-            'name.*'               => 'required|string|unique:packages,name',
+            'name.*'                 => 'required',
+            'name.en' => [
+                Rule::unique('packages', 'name->en')->where(function ($query) {
+                    return $query->where('name->en', $this->name['en']);
+                })
+            ],
+            'name.ar' => [
+                Rule::unique('packages', 'name->ar')->where(function ($query) {
+                    return $query->where('name->ar', $this->name['ar']);
+                })
+            ],
             'num_nabadat'          => 'required|integer',
             'price'                => 'required|numeric',
             'start_date'           => 'required|date',
@@ -35,7 +46,6 @@ class PackageStoreRequest extends BaseRequest
             'image'                => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'status'               => 'required|integer',
             'discount_percentage'  => ['numeric',Rule::requiredIf($this->status == PackageStatusEnum::APPROVED)],
-            'is_active'            => 'nullable|string',
         ];
     }
 

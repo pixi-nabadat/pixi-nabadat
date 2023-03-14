@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
+use App\Enum\ImageTypeEnum;
 use App\Exceptions\NotFoundException;
 use App\Models\Center;
 use App\Models\CenterDevice;
-use App\QueryFilters\CenterDevicesFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 
@@ -35,11 +35,21 @@ class CenterDeviceService extends BaseService
     }
     public function store(array $data = [])
     {
-        $withRelations = ['devices.attachments'];
-        $center   = $this->find(id:$data['center_id'],withRelations:$withRelations );
+        $center   = $this->find(id:$data['center_id']);
         $data['auto_service'] = isset($data['auto_service']) ? 1 : 0;
-        $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-        $center->devices()->syncWithoutDetaching([$data['device_id']=> Arr::except($data, 'device_id')]);
+        $center->devices()->syncWithoutDetaching([$data['device_id']=> Arr::except($data, ['device_id','primary_image','gallery'])]);
+        $center_devices =CenterDevice::query()->where('device_id',$data['device_id'])->where('center_id',$center->id)->first();
+        if (isset($data['primary_image'])) {
+            $fileData = FileService::saveImage(file: $data['primary_image'], path: 'uploads\center_devices', field_name: 'primary_image');
+            $fileData['type'] = ImageTypeEnum::LOGO;
+            $center_devices->storeAttachment($fileData);
+        }
+        if (isset($data['gallery']) && is_array($data['gallery']))
+            foreach ($data['gallery'] as $image) {
+                $fileData = FileService::saveImage(file: $image, path: 'uploads\center_devices', field_name: 'gallery');
+                $fileData['type'] = ImageTypeEnum::GALARY;
+                $center_devices->storeAttachment($fileData);
+            }
         return $center->refresh();
     }
 
