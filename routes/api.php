@@ -53,6 +53,7 @@ Route::group(['prefix' => 'fcm'], function () {
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => 'centers'], function () {
+        Route::get('doctors', [DoctorController::class, 'listing']);
         Route::post('store/doctor', [DoctorController::class, 'store']);
         Route::delete('doctors/{doctorId}', [DoctorController::class, 'destroy']);
         Route::patch('doctors/{doctorId}', [DoctorController::class, 'update']);
