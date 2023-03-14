@@ -54,9 +54,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => 'centers'], function () {
         Route::post('store/doctor', [DoctorController::class, 'store']);
-        Route::delete('doctors/{doctorId}', [DoctorController::class, 'delete']);
+        Route::delete('doctors/{doctorId}', [DoctorController::class, 'destroy']);
         Route::patch('doctors/{doctorId}', [DoctorController::class, 'update']);
-        Route::get('cancel-reasons', [CancelReasonController::class, 'listing']);
         Route::apiResource('appointments', AppointmentController::class);
         Route::post('/buy-pulses', [BuyCustomPulsesController::class, 'buyCustomPulses']);
     });
