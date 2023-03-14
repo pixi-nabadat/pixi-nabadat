@@ -40,8 +40,8 @@ class CenterDeviceController extends Controller
     public function store(CenterDeviceStoreRequest $request): \Illuminate\Http\Response|DeviceResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $centerDevices = $this->centerDeviceService->store($request->validated());
-            return apiResponse(data: DeviceResource::collection($centerDevices), message: trans('lang.success_operation'));
+            $this->centerDeviceService->store($request->validated());
+            return apiResponse(message: trans('lang.success_operation'));
         } catch (Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }

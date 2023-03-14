@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasAttachment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Filterable;
 
 class CenterDevice extends Model
 {
-    use HasFactory,Filterable;
+    use HasFactory,Filterable,HasAttachment;
     protected $fillable = ['center_id','device_id','number_of_devices', 'auto_service','is_active'];
 
 
@@ -26,5 +27,4 @@ class CenterDevice extends Model
     {
         return $this->morphMany(Rate::class, 'ratable');
     }
-
 }
