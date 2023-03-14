@@ -54,8 +54,7 @@ class UserPackageService extends BaseService
         $user = $userPackage->user;
         if($currentUserPackageStatus == PaymentStatusEnum::UNPAID && $data['payment_status'] == PaymentStatusEnum::PAID)
         {
-            $this->increaseUserWallet(user: $user, pulses: $data['num_nabadat']);
-            $this->createTransaction(center: $userPackage->center, user: $user, userPackage: $userPackage);
+            app()->make(UserService::class)->updateOrCreateNabadatWallet(user: $user, userPackage: $userPackage);
         }
         return $userPackage;
     }
@@ -78,7 +77,7 @@ class UserPackageService extends BaseService
         $userPackage = UserPackage::create($data);
         if($data['payment_status'] == PaymentStatusEnum::PAID)
         {
-            $this->increaseUserWallet(user: $user, pulses: $data['num_nabadat']);
+            app()->make(UserService::class)->updateOrCreateNabadatWallet(user: $user, userPackage: $userPackage);
         }
         /**
          * TODO
@@ -196,20 +195,6 @@ class UserPackageService extends BaseService
     }
 
     /**
-     * get the user wallet and increase it
-     * @param User $user
-     * @param int $pulses
-     * @return bool
-     */
-    private function increaseUserWallet(User $user, int $pulses): bool
-    {
-        $old_pulses = $user->nabadatWallet->total_pulses ?? 0;
-        $total_pulses = $old_pulses + $pulses;
-        $user->nabadatWallet()->updateOrCreate(['user_id'=>$user->id],['total_pulses' => $total_pulses]);
-        return true;
-    }
-
-    /**
      * get the user wallet and decrease it
      * @param User $user
      * @param int $pulses
@@ -229,28 +214,4 @@ class UserPackageService extends BaseService
         return true;
     }
 
-    private function createTransaction(Center $center, User $user, UserPackage $userPackage)
-    {
-        $centerInvoice = $center->invoices()->where('status', Invoice::PENDING)->first();
-        $pulsesCount = $userPackage->num_nabadat;
-        $price = $userPackage->price;
-        $center_dues = $price - ($price * ($center->app_discount/100));
-        $nabadat_app_dues = $price - ($price - ($price * ($center->app_discount/100))) - ($price * ($userPackage->discount_percentage/100));
-        $transactionData = [
-            'invoice_id'=>$centerInvoice->id,
-            'user_id'=>$user->id,
-            'package_id'=>$userPackage->package_id,
-            'num_pulses'=>$pulsesCount,
-            'center_dues'=>$center_dues,
-            'nabadat_app_dues'=>$nabadat_app_dues,
-            'original_price'=>$userPackage->price,
-            'center_discount'=>$center->pulse_discount,
-            'user_discount'=>$userPackage->price -($userPackage->price * $center->pulse_discount/100),
-        ];
-        Transaction::create($transactionData);
-        $centerInvoice->update([
-            'total_center_dues'=>$centerInvoice->total_center_dues + $center_dues,
-            'total_nabadat_dues'=>$centerInvoice->total_nabadat_dues + $nabadat_app_dues,
-        ]);
-    }
 }
