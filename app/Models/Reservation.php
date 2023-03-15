@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enum\PaymentStatusEnum;
 use App\Traits\Filterable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -90,5 +91,15 @@ class Reservation extends Model
             case self::CANCELED :
                 return trans('lang.canceled');
         }
+    }
+
+    public function getFromAttribute($value)
+    {
+        return Carbon::createFromTimeString($value)->format('g:i a');
+    }
+
+    public function getToAttribute($value)
+    {
+        return Carbon::createFromTimeString($value)->format('g:i a');
     }
 }
