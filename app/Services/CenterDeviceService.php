@@ -29,9 +29,9 @@ class CenterDeviceService extends BaseService
      */
     public function getAllCenterDevices($id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|Builder|array
     {
-        $withRelations = ['devices.attachments'];
-        $center = $this->find(id:$id,withRelations: $withRelations);
-        return $center;
+        $center = $this->find(id:$id);
+        $centerDevices =CenterDevice::query()->where('center_id',$center->id)->get();
+        return $centerDevices;
     }
     public function store(array $data = [])
     {
