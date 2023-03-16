@@ -172,4 +172,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reservation::class,'user_id');
     }
+
+    public function getImageAttribute(): string
+    {
+       return $this->relationLoaded('attachments') && isset($this->attachments)
+           ? asset(optional($this->attachments)->path . "/" . optional($this->attachments)->filename)
+           :asset('assets/images/default-image.jpg');
+
+    }
 }
