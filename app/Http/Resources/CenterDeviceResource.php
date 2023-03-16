@@ -19,6 +19,8 @@ class CenterDeviceResource extends JsonResource
             'id'                 => $this->id,
             'device_id'          => $this->device_id,
             'center_id'          => $this->center_id,
+            'number_of_devices'  => $this->number_of_devices,
+            'is_active'          => $this->is_active,
             'name'               => $this->whenLoaded('device',optional($this->device)->name),
             'description'        => $this->whenLoaded('device',optional($this->device)->description),
             'primary_image'      => $this->primary_image_path,

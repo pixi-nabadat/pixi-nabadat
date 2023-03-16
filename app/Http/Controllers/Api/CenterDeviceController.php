@@ -54,7 +54,7 @@ class CenterDeviceController extends Controller
         }
     }
 
-    public function update(CenterDeviceUpdateRequest $request, $id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function update(int $id,CenterDeviceUpdateRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             $centerDevice = $this->centerDeviceService->update(id: $id, data: $request->validated());
