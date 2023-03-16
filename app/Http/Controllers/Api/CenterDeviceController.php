@@ -27,9 +27,10 @@ class CenterDeviceController extends Controller
     {
         try {
             $center_id = auth()->user()->center_id;
-            $centerWithDevices = $this->centerDeviceService->getAllCenterDevices(id: $center_id);
-            $response = DeviceResource::collection($centerWithDevices->devices);
-            return apiResponse(data: $response, message: trans('lang.success_operation'));
+            $centerDevices = $this->centerDeviceService->getAllCenterDevices(id: $center_id);
+            if(!$centerDevices)
+                return apiResponse(message: trans('lang.something_went_rong'), code: 422);
+            return CenterDeviceResource::collection($centerDevices);
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
