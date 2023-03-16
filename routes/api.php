@@ -77,10 +77,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 //        Route::post('devices', [NabadatHistoryController::class, 'store']);
     });
 
-    //start center devices
+//    get All devices
     Route::get('/devices', [DeviceController::class, 'listing']);
+    //start center devices
     Route::group(['prefix' => 'center-devices'], function () {
-        Route::get('/{id}', [CenterDeviceController::class, 'listing']);
+        Route::get('/', [CenterDeviceController::class, 'listing']);
         Route::post('/', [CenterDeviceController::class, 'store']);
         Route::delete('/{id}', [CenterDeviceController::class, 'destroy']);
         Route::patch('{id}', [CenterDeviceController::class, 'update']);

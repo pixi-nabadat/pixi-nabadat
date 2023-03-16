@@ -10,6 +10,7 @@ use App\Http\Resources\DeviceResource;
 use App\Services\CenterDeviceService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Validation\UnauthorizedException;
 
 class CenterDeviceController extends Controller
 {
@@ -27,9 +28,9 @@ class CenterDeviceController extends Controller
     {
         try {
             $center_id = auth()->user()->center_id;
+            if (is_null($center_id))
+                throw new UnauthorizedException('unauthorized');
             $centerDevices = $this->centerDeviceService->getAllCenterDevices(id: $center_id);
-            if(!$centerDevices)
-                return apiResponse(message: trans('lang.something_went_rong'), code: 422);
             return CenterDeviceResource::collection($centerDevices);
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
@@ -53,7 +54,7 @@ class CenterDeviceController extends Controller
         }
     }
 
-    public function update(CenterDeviceUpdateRequest $request, $id)//: \Illuminate\Http\Response|DeviceResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function update(CenterDeviceUpdateRequest $request, $id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             $centerDevice = $this->centerDeviceService->update(id: $id, data: $request->validated());
@@ -76,28 +77,23 @@ class CenterDeviceController extends Controller
         }
     } //end of destroy
 
-    public function autoService(Request $request)
+    public function autoService(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $result = $this->centerDeviceService->supportAutoService($request->id);
-            if (!$result)
-                return apiResponse(message: trans('lang.not_found'), code: 404);
+            $this->centerDeviceService->supportAutoService($request->id);
             return apiResponse(message: trans('lang.success'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
     } //end of autoService
 
-    public function status(Request $request)
+    public function status(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $result = $this->centerDeviceService->status($request->id);
-            if (!$result)
-                return apiResponse(message: trans('lang.not_found'), code: 404);
+            $this->centerDeviceService->status($request->id);
             return apiResponse(message: trans('lang.success'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
     } //end of status
-
 }
