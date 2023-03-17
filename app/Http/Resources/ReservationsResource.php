@@ -15,10 +15,11 @@ class ReservationsResource extends JsonResource
      */
     public function toArray($request)
     {
+        $lang = getLocale();
         return [
             'id' => $this->id,
             'check_date' => $this->check_date,
-            'check_day' => Carbon::parse($this->check_date)->dayName,
+            'check_day' => Carbon::parse($this->check_date)->locale($lang)->dayName,
             'qr_code' => $this->qr_code,
             'from' => $this->from,
             'to' => $this->to,
@@ -26,6 +27,7 @@ class ReservationsResource extends JsonResource
                 'id' => $this->user->id,
                 'name' => $this->user->name,
                 'phone' => $this->user->phone,
+                'image' => $this->user->image,
             ]),
             'center' => new CentersResource($this->whenLoaded('center')),
             'status' =>$this->when($this->whenLoaded('latestStatus'),$this->latestStatus->status),

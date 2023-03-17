@@ -27,6 +27,9 @@ class CenterDeviceUpdateRequest extends BaseRequest
             'auto_service'=>'nullable|string',
             'is_active'=>'nullable|string',
             'number_of_devices'=>'required|numeric',
+            'gallery' => 'nullable|array',
+            'gallery.*' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'primary_image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ];
     }
 

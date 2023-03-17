@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\ImageTypeEnum;
 use App\Traits\HasAttachment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,5 +27,15 @@ class CenterDevice extends Model
     public function rates(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
         return $this->morphMany(Rate::class, 'ratable');
+    }
+
+    public function getPrimaryImagePathAttribute(): string
+    {
+        if ($this->relationLoaded('attachments') && isset($this->attachments))
+        {
+            $attachment = $this->attachments->where('type',ImageTypeEnum::LOGO)->first();
+            return asset($attachment->path."/".$attachment->filename);
+        }else
+            return asset('assets/images/default-image.jpg');
     }
 }
