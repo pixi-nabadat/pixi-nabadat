@@ -37,13 +37,24 @@ class DoctorController extends Controller
     public function store(StoreDoctorRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $doctor = $this->doctorService->store($request->validated());
-            $response = new DoctorsResource(resource: $doctor);
-            return apiResponse(data:$response,message: __('lang.doctor_saved_successfully'));
+            $this->doctorService->store($request->validated());
+            return apiResponse(message: __('lang.doctor_saved_successfully'));
         } catch (\Exception $ex) {
             return apiResponse(message: $ex->getMessage(), code: 422);
         }
     }
+
+    public function find($id)
+    {
+        try {
+            $withRelation = ['center','defaultLogo'];
+            $doctor = $this->doctorService->find(doctorId: $id, withRelations: $withRelation);
+            return new DoctorsResource($doctor);
+        } catch (\Exception $ex) {
+            return apiResponse(message: $ex->getMessage(), code: 422);
+        }
+    }
+
 
     public function update($id, UpdateDoctorRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
@@ -56,26 +67,10 @@ class DoctorController extends Controller
         }
     }
 
-    public function find($id)
-    {
-        try {
-            $withRelation = ['center'];
-            $doctor = $this->doctorService->find(doctorId: $id, withRelations: $withRelation);
-            if(!$doctor)
-                return apiResponse(message: trans('lang.not_found'), code: 422);
-            return new DoctorsResource($doctor);
-        } catch (\Exception $ex) {
-            return apiResponse(message: $ex->getMessage(), code: 422);
-        }
-    }
-
-
     public function destroy($id)
     {
         try {
-            $result = $this->doctorService->delete($id);
-            if (!$result)
-                return apiResponse(message: trans('lang.not_found'), code: 404);
+            $this->doctorService->delete($id);
             return apiResponse(message: trans('lang.success'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
