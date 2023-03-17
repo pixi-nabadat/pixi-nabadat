@@ -26,4 +26,11 @@ class Doctor extends Model
     {
         return $this->morphOne(Attachment::class,'attachmentable');
     }
+
+    public function getImagePathAttribute()
+    {
+        return $this->relationLoaded('defaultLogo')&& isset($this->defaultLogo)
+        ? asset($this->defaultLogo->path . "/" . $this->defaultLogo->filename)
+        : asset('assets/images/default-image.jpg');
+    }
 }

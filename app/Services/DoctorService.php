@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enum\ImageTypeEnum;
+use App\Exceptions\NotFoundException;
 use App\Models\Doctor;
 use App\QueryFilters\DoctorsFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -59,22 +60,25 @@ class DoctorService extends BaseService
         return $doctor;
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function find(int $doctorId , array $withRelations = []): Doctor|Model|bool
     {
         $doctor =  Doctor::with($withRelations)->find($doctorId);
         if (!$doctor)
-            return false;
+           throw new NotFoundException(trans('lang.doctor_no_found'));
         return $doctor;
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function delete($id)
     {
         $doctor = $this->find($id);
-        if ($doctor) {
-            $doctor->deleteAttachments();
-            return $doctor->delete();
-        }
-        return false;
+        $doctor->deleteAttachments();
+        return $doctor->delete();
     } //end of delete
 
     public function status($id)
