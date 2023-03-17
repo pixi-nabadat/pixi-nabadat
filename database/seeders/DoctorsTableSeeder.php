@@ -24,7 +24,6 @@ class DoctorsTableSeeder extends Seeder
                 'en' => 'test doctor',
                 'ar' => 'test doctor',
             ],
-            'age' => 22,
             'center_id' => Center::first()->id,
             'phone' => 0111362245
         ]);
