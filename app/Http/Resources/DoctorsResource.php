@@ -19,7 +19,8 @@ class DoctorsResource extends JsonResource
             'name_ar'       => $this->getTranslation('name', 'ar'),
             'name_en'       => $this->getTranslation('name', 'en'),
             'phone'         => $this->phone,
-            'description'   => $this->description,
+            'description_ar'       => $this->getTranslation('description', 'ar'),
+            'description_en'       => $this->getTranslation('description', 'en'),
             'image'         => $this->when(($this->relationLoaded('defaultLogo')&&!empty($this->defaultLogo)),asset(optional($this->defaultLogo)->path."/".optional($this->defaultLogo)->filename),asset('assets/images/default-image.jpg')),
             'is_active'     => $this->is_active,
         ];
