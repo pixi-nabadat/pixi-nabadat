@@ -16,7 +16,8 @@ class DoctorsResource extends JsonResource
     {
        return  [
             'id'            => $this->id,
-            'name'          => $this->name,
+            'name_ar'       => $this->getTranslation('name', 'ar'),
+            'name_en'       => $this->getTranslation('name', 'en'),
             'phone'         => $this->phone,
             'description'   => $this->description,
             'image'         => $this->when(($this->relationLoaded('defaultLogo')&&!empty($this->defaultLogo)),asset(optional($this->defaultLogo)->path."/".optional($this->defaultLogo)->filename),asset('assets/images/default-image.jpg')),
