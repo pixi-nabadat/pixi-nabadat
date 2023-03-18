@@ -29,10 +29,11 @@ class Doctor extends Model
 
     public function getImagePathAttribute()
     {
-        logger('doctorrrrrrrrrrrrs');
-        logger($this->defaultLogo);
-        return $this->relationLoaded('defaultLogo')&& isset($this->defaultLogo)
-        ? asset($this->defaultLogo->path . "/" . $this->defaultLogo->filename)
-        : asset('assets/images/default-image.jpg');
+        $image_path = asset('assets/images/default-image.jpg');
+        if ($this->relationLoaded('defaultLogo')&& isset($this->defaultLogo))
+        {
+           $image_path =  asset($this->defaultLogo->path . "/" . $this->defaultLogo->filename);
+        }
+        return $image_path ;
     }
 }
