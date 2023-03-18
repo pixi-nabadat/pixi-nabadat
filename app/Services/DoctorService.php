@@ -28,7 +28,7 @@ class DoctorService extends BaseService
 
     public function store(array $data = [])
     {
-        $data['is_active'] = isset($data['is_active'])  ? 1 :  0;
+//        $data['is_active'] = isset($data['is_active'])  ? 1 :  0;
         $doctor = Doctor::create($data);
         if (!$doctor)
             return false ;
