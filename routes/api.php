@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PhoneVerifyController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RatesController;
+use App\Http\Controllers\Api\ReservationHistoryController;
 use App\Http\Controllers\Api\RestPasswordController;
 use App\Http\Controllers\Api\SliderController;
 use App\Http\Controllers\Api\UserPackageController;
