@@ -26,7 +26,7 @@ class StoreDoctorRequest extends BaseRequest
             'name.*' => 'required|string',
             'phone' => 'required|string',
             'description.*' => 'string|nullable',
-            'image' => 'image|mimes:jpg,png,jpeg,gif,svg',
+            'logo' => 'image|mimes:jpg,png,jpeg,gif,svg',
             'is_active' => 'nullable'
         ];
     }
