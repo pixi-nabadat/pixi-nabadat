@@ -32,9 +32,8 @@ class Doctor extends Model
         $image_path = asset('assets/images/default-image.jpg');
         if ($this->relationLoaded('defaultLogo')&& isset($this->defaultLogo))
         {
-            logger('loadded relations');
            $image_path =  asset($this->defaultLogo->path . "/" . $this->defaultLogo->filename);
         }
-        return $image_path;
+        return $image_path ;
     }
 }
