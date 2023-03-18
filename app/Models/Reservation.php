@@ -21,32 +21,21 @@ class Reservation extends Model
     const Expired = 6;
 
     protected $fillable = [
-        'customer_id',
-        'center_id',
-        'check_date',
-        'from',
-        'to',
-        'payment_type',
-        'payment_status',
-        'qr_code',
+        'customer_id', 'center_id', 'check_date', 'from', 'to', 'payment_type', 'payment_status', 'qr_code',
     ];
 
     public static function getStatusText(int $status)
     {
-        switch ($status){
-            case self::PENDING:
-                return trans('lang.pending');
-            case self::CONFIRMED:
-                return trans('lang.confirmed');
-            case self::ATTEND:
-                return trans('lang.attend');
-            case self::COMPLETED:
-                return trans('lang.completed');
-            case self::CANCELED:
-                return trans('lang.canceled');
-            case self::Expired:
-                return trans('lang.expired');
-        }
+
+        return match ($status) {
+            Reservation::PENDING => trans('lang.pending'),
+            Reservation::CONFIRMED => trans('lang.confirmed'),
+            Reservation::ATTEND => trans('lang.attend'),
+            Reservation::COMPLETED => trans('lang.completed'),
+            Reservation::CANCELED => trans('lang.canceled'),
+            Reservation::Expired => trans('lang.expired'),
+            default => trans('lang.pending'),
+        };
     }
 
     public function history(): \Illuminate\Database\Eloquent\Relations\HasMany
