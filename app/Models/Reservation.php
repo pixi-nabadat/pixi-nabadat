@@ -95,11 +95,11 @@ class Reservation extends Model
 
     public function getFromAttribute($value)
     {
-        return Carbon::createFromTimeString($value)->format('g:i a');
+        return isset($value) ? Carbon::createFromTimeString($value)->format('g:i a') : null;
     }
 
     public function getToAttribute($value)
     {
-        return Carbon::createFromTimeString($value)->format('g:i a');
+        return isset($value) ? Carbon::createFromTimeString($value)->format('g:i a') : null;
     }
 }
