@@ -4,14 +4,17 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Enum\ActivationStatusEnum;
+use App\Events\PushEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCenterRequest;
+use App\Http\Requests\StoreCenterRequestApi;
 use App\Http\Resources\CenterResource;
 use App\Http\Resources\CentersResource;
+use App\Models\FcmMessage;
 use App\Services\CenterService;
 use Exception;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 
 class CenterController extends Controller
 {
@@ -60,9 +63,17 @@ class CenterController extends Controller
         }
     }
 
-    public function store(StoreCenterRequest $request)
+    public function store(StoreCenterRequestApi $request)//: \Illuminate\Http\RedirectResponse
     {
-
+        try {
+            DB::beginTransaction();
+            $center = $this->centerService->store($request->validated());
+            DB::commit();
+            event(new PushEvent($center,FcmMessage::DEAL_WITH_NEW_CENTER));
+            return apiResponse(data: new CenterResource($center));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
     }
 
 
