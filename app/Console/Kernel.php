@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ExpirePointsCommand;
 use App\Console\Commands\ExpireReservationCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -17,7 +18,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command(ExpireReservationCommand::class)->daily();
-        $schedule->command('points:expire')->daily();
+        $schedule->command(ExpirePointsCommand::class)->daily();
     }
 
     /**

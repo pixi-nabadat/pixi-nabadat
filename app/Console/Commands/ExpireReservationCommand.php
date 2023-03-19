@@ -30,12 +30,12 @@ class ExpireReservationCommand extends Command
      */
     public function handle()
     {
-        $currentDate = Carbon::today()->format('Y-m-d H:i:s');
+        $currentDate = Carbon::today()->format('Y-m-d');
 
-        $reservations = Reservation::query()->whereHas('latestStatus',fn($query)=>$query->where('status','!=',Reservation::CONFIRMED))->where('check_date','<',$currentDate)->get();
+        $reservations = Reservation::query()->whereHas('latestStatus',fn($query)=>$query->where('status','!=',Reservation::CONFIRMED))->whereDate('check_date','<',$currentDate)->get();
         foreach($reservations as $reservation)
         {
-            $reservationCheckDate = Carbon::parse($reservation->check_date)->format('Y-m-d H:i:s');
+            $reservationCheckDate = Carbon::parse($reservation->check_date)->format('Y-m-d');
             if($currentDate->gt($reservationCheckDate))
             {
                 $reservation->history()->create([
