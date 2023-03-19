@@ -21,7 +21,13 @@ class Reservation extends Model
     const Expired = 6;
 
     protected $fillable = [
-        'customer_id', 'center_id', 'check_date', 'from', 'to', 'payment_type', 'payment_status', 'qr_code',
+        'customer_id',
+        'center_id',
+        'check_date',
+        'period',
+        'payment_type',
+        'payment_status',
+        'qr_code',
     ];
 
     public static function getStatusText(int $status)
@@ -80,15 +86,5 @@ class Reservation extends Model
             case self::CANCELED :
                 return trans('lang.canceled');
         }
-    }
-
-    public function getFromAttribute($value)
-    {
-        return isset($value) ? Carbon::createFromTimeString($value)->format('g:i a') : null;
-    }
-
-    public function getToAttribute($value)
-    {
-        return isset($value) ? Carbon::createFromTimeString($value)->format('g:i a') : null;
     }
 }
