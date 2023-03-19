@@ -46,7 +46,6 @@ class CenterPackageController extends Controller
 
     public function update(PackageUpdateRequest $request, $id)
     {
-        cache()->forget('home-api');
         try {
             $package = $this->packageService->update($id, $request->validated());
             if(!$package)
@@ -60,7 +59,6 @@ class CenterPackageController extends Controller
 
     public function destroy($id)
     {
-        cache()->forget('home-api');
         try {
             $result = $this->packageService->delete($id);
             if (!$result)
