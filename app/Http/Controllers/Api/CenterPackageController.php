@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enum\PackageStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PackageStoreRequest;
 use App\Http\Requests\PackageUpdateRequest;
@@ -13,14 +14,15 @@ class CenterPackageController extends Controller
 {
     public function __construct(public CenterPackageService $packageService)
     {
+        $this->middleware('auth:sanctum')->except('index');
     }
 
 
     public function index(): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $filters = ['is_active' => 1, 'in_duration' => true , 'status'=>true];
-            $withRelations = ['center.user:id,center_id,name','center.defaultLogo'];
+            $filters = ['is_active' => 1, 'in_duration' => true , 'status'=>PackageStatusEnum::APPROVED];
+            $withRelations = ['center.user:id,center_id,name','center.defaultLogo','attachments'];
             $allPackages = $this->packageService->listing(where_condition: $filters, withRelation: $withRelations);
             return PackagesResource::collection($allPackages);
         } catch (\Exception $exception) {
@@ -28,26 +30,28 @@ class CenterPackageController extends Controller
         }
     }
 
-    public function store(PackageStoreRequest $request)
+    public function store(PackageStoreRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        cache()->forget('home-api');
         try {
             $data = $request->validated();
             $package = $this->packageService->store($data);
-            $data = new PackagesResource($package);
-            return apiResponse(data: $data, message: trans('lang.success_operation'), code: 200);
+            if(!$package)
+                return apiResponse(message: trans('lang.something_went_rong'), code:422);
+            $response = new PackagesResource($package);
+            return apiResponse(data: $response, message: trans('lang.success_operation'), code: 200);
         } catch (\Exception $ex) {
-            return apiResponse(message: $ex->getMessage(), code: 422);
+            return apiResponse(message: trans('lang.something_went_rong'), code: 422);
         }
     }//end of store
 
     public function update(PackageUpdateRequest $request, $id)
     {
-        cache()->forget('home-api');
         try {
             $package = $this->packageService->update($id, $request->validated());
-            $data = new PackagesResource($package);
-            return apiResponse(data: $data, message: trans('lang.success_operation'), code: 200);
+            if(!$package)
+                return apiResponse(message: trans('lang.something_went_rong'), code:422);
+            $response = new PackagesResource($package);
+            return apiResponse(data: $response, message: trans('lang.success_operation'), code: 200);
         } catch (\Exception $ex) {
             return apiResponse(message: $ex->getMessage(), code: 422);
         }
@@ -55,7 +59,6 @@ class CenterPackageController extends Controller
 
     public function destroy($id)
     {
-        cache()->forget('home-api');
         try {
             $result = $this->packageService->delete($id);
             if (!$result)

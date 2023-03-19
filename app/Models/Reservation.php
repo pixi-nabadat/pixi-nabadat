@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enum\PaymentStatusEnum;
 use App\Traits\Filterable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -31,20 +32,16 @@ class Reservation extends Model
 
     public static function getStatusText(int $status)
     {
-        switch ($status){
-            case self::PENDING:
-                return trans('lang.pending');
-            case self::CONFIRMED:
-                return trans('lang.confirmed');
-            case self::ATTEND:
-                return trans('lang.attend');
-            case self::COMPLETED:
-                return trans('lang.completed');
-            case self::CANCELED:
-                return trans('lang.canceled');
-            case self::Expired:
-                return trans('lang.expired');
-        }
+
+        return match ($status) {
+            Reservation::PENDING => trans('lang.pending'),
+            Reservation::CONFIRMED => trans('lang.confirmed'),
+            Reservation::ATTEND => trans('lang.attend'),
+            Reservation::COMPLETED => trans('lang.completed'),
+            Reservation::CANCELED => trans('lang.canceled'),
+            Reservation::Expired => trans('lang.expired'),
+            default => trans('lang.pending'),
+        };
     }
 
     public function history(): \Illuminate\Database\Eloquent\Relations\HasMany
