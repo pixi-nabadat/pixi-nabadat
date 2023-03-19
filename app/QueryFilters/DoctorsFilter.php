@@ -27,6 +27,11 @@ class DoctorsFilter extends QueryFilter
         return $this->builder->where('location_id',$term);
     }
 
+    public function center_id($term)
+    {
+        return $this->builder->where('center_id',$term);
+    }
+
     // public function center_id($term)
     // {
     //     return $this->builder->where('center_id',$term);

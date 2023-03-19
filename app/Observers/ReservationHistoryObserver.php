@@ -20,6 +20,7 @@ class ReservationHistoryObserver
      */
     public function created(ReservationHistory $reservationHistory)
     {
+        cache()->forget('center-home-api');
         if($reservationHistory->status == Reservation::COMPLETED){
             $reservation = $reservationHistory->reservation;
             $reservationPulses   = $reservation->nabadatHistory->sum('num_nabadat');
@@ -48,7 +49,8 @@ class ReservationHistoryObserver
      */
     public function updated(ReservationHistory $reservationHistory)
     {
-        //
+        cache()->forget('center-home-api');
+
     }
 
     /**
@@ -59,7 +61,8 @@ class ReservationHistoryObserver
      */
     public function deleted(ReservationHistory $reservationHistory)
     {
-        //
+        cache()->forget('center-home-api');
+
     }
 
     /**
@@ -70,7 +73,8 @@ class ReservationHistoryObserver
      */
     public function restored(ReservationHistory $reservationHistory)
     {
-        //
+        cache()->forget('center-home-api');
+
     }
 
     /**
@@ -81,6 +85,7 @@ class ReservationHistoryObserver
      */
     public function forceDeleted(ReservationHistory $reservationHistory)
     {
-        //
+        cache()->forget('center-home-api');
+
     }
 }

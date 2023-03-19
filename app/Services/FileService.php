@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\File;
 use Image;
 use Intervention\Image\Constraint;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
+use Illuminate\Support\Str;
 class FileService
 {
 
@@ -48,7 +48,7 @@ class FileService
     protected static function getFileName(UploadedFile $file)
     {
         $filename = $file->getClientOriginalName();
-        $filename = date('Ymd') . '_' . time() . '.' . pathinfo($filename, PATHINFO_EXTENSION);
+        $filename = date('Ymd') . '_' . time() .'.' . pathinfo($filename, PATHINFO_EXTENSION);
         return $filename;
     }
 

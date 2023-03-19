@@ -6,9 +6,14 @@ use App\Exceptions\NotFoundException;
 use App\Models\Package;
 use App\QueryFilters\PackagesFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class CenterPackageService extends BaseService
 {
+
+    public function __construct(public Package $model)
+    {
+    }
 
     public function getAll(array $where_condition = [], array $withRelations = []): \Illuminate\Database\Eloquent\Collection|array
     {
@@ -18,7 +23,7 @@ class CenterPackageService extends BaseService
 
     public function queryGet(array $where_condition = [], array $withRelation = []): Builder
     {
-        $packages = Package::orderBy('status')->with($withRelation);
+        $packages = $this->model->orderBy('status')->with($withRelation);
         return $packages->filter(new PackagesFilter($where_condition));
     }
 
@@ -29,10 +34,9 @@ class CenterPackageService extends BaseService
 
     public function store($data)
     {
-        $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-        $package = Package::create($data);
+        $package = $this->model->create($data);
         if (isset($data['image'])) {
-            $fileData = FileService::saveImage(file: $data['image'], path: 'uploads\packages');
+            $fileData = FileService::saveImage(file: $data['image'], path: 'uploads/packages');
             $package->storeAttachment($fileData);
         }
 
@@ -54,13 +58,13 @@ class CenterPackageService extends BaseService
      */
     public function find($id, $withRelation = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
-        $package = Package::with($withRelation)->find($id);
+        $package = $this->model->query()->with($withRelation)->find($id);
         if (!$package)
             throw new NotFoundException(trans('lang.package_not_fount'));
         return $package;
     } //end of delete
 
-    public function update($id, $data): bool|int
+    public function update($id, $data): Model|Package
     {
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
         $package = $this->find($id);
@@ -71,7 +75,8 @@ class CenterPackageService extends BaseService
             $package->updateAttachment($fileData);
         }
         $package->update($data);
-        return true;
+        $package->save();
+        return $package;
     } //end of update
 
     public function status($id): bool

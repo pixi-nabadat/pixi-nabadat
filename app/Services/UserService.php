@@ -101,11 +101,11 @@ class UserService extends BaseService
         $user->update($data);
     }//end of update
 
-    public function updateOrCreateNabadatWallet(User $user,UserPackage $userPackage): bool
+    public function updateOrCreateNabadatWallet(User $user,int $num_pulses,$payment_status = PaymentStatusEnum::UNPAID): bool
     {
         $old_pulses = $user->nabadatWallet->total_pulses ?? 0;
-        $total_pulses = $old_pulses + $userPackage->num_nabadat;
-        if ($userPackage && $userPackage->payment_status == PaymentStatusEnum::PAID){
+        $total_pulses = $old_pulses + $num_pulses;
+        if ($payment_status == PaymentStatusEnum::PAID){
             $user->nabadatWallet()->updateOrCreate(['user_id'=>$user->id],['total_pulses' => $total_pulses]);
         }
         return true;

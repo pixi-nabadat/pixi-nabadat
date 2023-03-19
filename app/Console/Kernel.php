@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command(ExpireReservationCommand::class)->daily();
+        $schedule->command('points:expire')->daily();
     }
 
     /**
