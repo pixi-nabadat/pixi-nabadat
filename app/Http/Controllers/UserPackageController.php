@@ -107,7 +107,7 @@ class UserPackageController extends Controller
             $data = $request->validated();
             $this->userPackageService->store($data);
             $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.operation_success')];
-            return redirect()->route('userPackages.index')->with('toast', $toast);
+            return redirect()->route('user-packages.index')->with('toast', $toast);
         } catch (\Exception $ex) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
             return redirect()->back()->with('toast', $toast);
@@ -123,7 +123,7 @@ class UserPackageController extends Controller
             $data = $request->validated();
             $this->userPackageService->update($id, $data);
             $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.operation_success')];
-            return redirect()->route('userPackages.index')->with('toast', $toast);
+            return redirect()->route('user-packages.index')->with('toast', $toast);
         } catch (\Exception $ex) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
             return redirect()->back()->with('toast', $toast);
