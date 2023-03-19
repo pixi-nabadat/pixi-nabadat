@@ -32,7 +32,6 @@ class CenterPackageController extends Controller
 
     public function store(PackageStoreRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        cache()->forget('home-api');
         try {
             $data = $request->validated();
             $package = $this->packageService->store($data);

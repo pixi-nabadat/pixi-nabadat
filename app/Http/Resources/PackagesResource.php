@@ -17,8 +17,8 @@ class PackagesResource extends JsonResource
        return [
         'id'            =>$this->id,
         'name'          =>$this->name,
-        'num_nabadat'   =>$this->num_nabadat,
-        'price'         =>$this->price,
+        'num_nabadat'   =>(int)$this->num_nabadat,
+        'price'         =>(int)$this->price,
         'price_after_discount'  =>getPriceAfterDiscount(price: $this->price,discountValue: $this->discount_percentage ?? 0),
         'image'         =>$this->when(($this->whenLoaded('attachments')&&isset($this->attachments)),asset(optional($this->attachments)->path . "/" . optional($this->attachments)->filename),asset('assets/images/default-image.jpg')),
         'center'        =>new CentersResource($this->whenLoaded('center')),
