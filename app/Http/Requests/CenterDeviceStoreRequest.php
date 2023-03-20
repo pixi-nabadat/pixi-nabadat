@@ -26,10 +26,15 @@ class CenterDeviceStoreRequest extends BaseRequest
     {
         return [
             'center_id'=>'required|exists:centers,id',
-            'device_id'=>['required',Rule::exists('devices','id'),Rule::unique('center_devices')->where('center_id',$this->center_id)],
+            'device_id'=>[
+                'required',
+                Rule::exists('devices','id'),
+                Rule::unique('center_devices')->where('center_id',auth()->user()->center_id)],
             'auto_service'=>'nullable|string',
-            'is_active'=>'nullable|string',
-            'number_of_devices'=>'required|integer'
+            'number_of_devices'=>'required|integer',
+            'primary_image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:5000',
+            'gallery' => 'nullable|array',
+            'gallery.*' => 'image|mimes:jpg,png,jpeg,gif,svg|max:5000',
         ];
     }
 

@@ -17,8 +17,8 @@ trait HasAttachment
 
     public function updateAttachment($data=[])
     {
-        $this->attachments->each(function ($attachment){
-            $attachment->delete();
+        $this->attachments->where('type', ImageTypeEnum::GALARY)->each(function ($attachment){
+                $attachment->delete();
         });
         $this->storeAttachment($data);
     }

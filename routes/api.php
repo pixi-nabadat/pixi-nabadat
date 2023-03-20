@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CenterController;
 use App\Http\Controllers\Api\CenterDeviceController;
+use App\Http\Controllers\Api\CenterHomeController;
 use App\Http\Controllers\Api\CenterPackageController;
 use App\Http\Controllers\Api\DeviceController;
 use App\Http\Controllers\Api\DoctorController;
@@ -53,13 +54,17 @@ Route::group(['prefix' => 'fcm'], function () {
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => 'centers'], function () {
+        Route::get('doctors', [DoctorController::class, 'listing']);
         Route::post('store/doctor', [DoctorController::class, 'store']);
-        Route::delete('doctors/{doctorId}', [DoctorController::class, 'delete']);
+        Route::delete('doctors/{doctorId}', [DoctorController::class, 'destroy']);
         Route::patch('doctors/{doctorId}', [DoctorController::class, 'update']);
-        Route::get('cancel-reasons', [CancelReasonController::class, 'listing']);
         Route::apiResource('appointments', AppointmentController::class);
     });
 
+    //start center home
+    Route::get('center-home', [CenterHomeController::class, 'index']);
+
+    //end center home
 //start notifications routes
     Route::group(['prefix' => 'notifications'], function () {
         Route::get('/', [NotificationController::class, 'getNotifications']);
@@ -72,16 +77,18 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('customer', [\App\Http\Controllers\Api\ReservationsController::class, 'store']);
         Route::get('{id}',  [\App\Http\Controllers\Api\ReservationsController::class, 'find']);
         Route::get('qrcode/{qrcode}',[\App\Http\Controllers\Api\ReservationsController::class, 'findByQrCode']);
-//        Route::post('{id}/status', [ReservationHistoryController::class, 'store']);
-//        Route::post('devices', [NabadatHistoryController::class, 'store']);
+        Route::post('{id}/status', [\App\Http\Controllers\Api\ReservationHistoryController::class, 'store']);
+        Route::post('devices', [\App\Http\Controllers\Api\NabadatHistoryController::class, 'store']);
     });
 
-    //start center devices
+//    get All devices
     Route::get('/devices', [DeviceController::class, 'listing']);
+    //start center devices
     Route::group(['prefix' => 'center-devices'], function () {
-        Route::get('/{id}', [CenterDeviceController::class, 'listing']);
+        Route::get('/', [CenterDeviceController::class, 'listing']);
         Route::post('/', [CenterDeviceController::class, 'store']);
         Route::delete('/{id}', [CenterDeviceController::class, 'destroy']);
+        Route::patch('{id}', [CenterDeviceController::class, 'update']);
         Route::patch('/{id}/auto-service', [CenterDeviceController::class, 'autoService']);
         Route::patch('/{id}/status', [CenterDeviceController::class, 'status']);
 

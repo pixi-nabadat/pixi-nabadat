@@ -20,8 +20,8 @@ class AppointmentsResource extends JsonResource
            'id'=>$this->id,
            'day_key'=>$this->day_of_week,
            'day_text'=>$this->day_text,
-           'from'=>Carbon::parse($this->from)->format('H:i a'),
-           'to'=>Carbon::parse($this->to)->format('H:i a'),
+           'from'=>Carbon::parse($this->from)->format('h:i a'),
+           'to'=>Carbon::parse($this->to)->format('h:i a'),
        ];
     }
 }

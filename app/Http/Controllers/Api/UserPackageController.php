@@ -2,26 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exceptions\NotFoundException;
-use App\Exceptions\NotFoundHttpException;
-use App\Exceptions\StatusNotEquelException;
 use App\Http\Controllers\Controller;
-use Exception;
-use Illuminate\Http\Request;
-use App\Http\Requests\ReservationStoreRequest;
-use App\Http\Requests\ReservationUpdateRequest;
 use App\Http\Requests\UserPackageStoreRequest;
 use App\Http\Requests\UserPackageUpdateRequest;
-use App\Http\Resources\CentersResource;
-use App\Http\Resources\ReservationsResource;
 use App\Http\Resources\UserPackagesResource;
-use Carbon\Carbon;
-use App\Models\Reservation;
-use App\Services\ReservationService;
-use Illuminate\Validation\Rules\Unique;
-use App\Models\User;
 use App\Services\UserPackageService;
-use Illuminate\Support\Facades\Auth;
+use Exception;
+use Illuminate\Http\Request;
 
 class UserPackageController extends Controller
 {
@@ -41,11 +28,11 @@ class UserPackageController extends Controller
             $filters = $request->all();
             $user = auth('sanctum')->user();
             $filters['user_id'] = $user->id;
-            if(!$filters['user_id'])
+            if (!$filters['user_id'])
                 return apiResponse(message: trans('lang.not_found'), code: 422);
-            $withRelations = ['center:id,description,address','center.defaultLogo','center.user:id,center_id,name','package'];
-            $userPackages = $this->userPackageService->listing(filters: $filters,withRelation: $withRelations);
-            if(!$userPackages)
+            $withRelations = ['center:id,description,address', 'center.defaultLogo', 'center.user:id,center_id,name', 'package'];
+            $userPackages = $this->userPackageService->listing(filters: $filters, withRelation: $withRelations);
+            if (!$userPackages)
                 return apiResponse(message: trans('lang.something_went_rong'), code: 422);
             return UserPackagesResource::collection($userPackages);
         } catch (\Exception $e) {
@@ -59,11 +46,11 @@ class UserPackageController extends Controller
             $filters = $request->all();
             $user = auth('sanctum')->user();
             $filters['center_id'] = $user->center_id;
-            if(!$filters['center_id'])
+            if (!$filters['center_id'])
                 return apiResponse(message: trans('lang.not_found'), code: 422);
-            $withRelations = ['package','user'];
-            $userPackages = $this->userPackageService->listing(filters: $filters,withRelation: $withRelations);
-            if(!$userPackages)
+            $withRelations = ['package', 'user'];
+            $userPackages = $this->userPackageService->listing(filters: $filters, withRelation: $withRelations);
+            if (!$userPackages)
                 return apiResponse(message: trans('lang.something_went_rong'), code: 422);
             return UserPackagesResource::collection($userPackages);
         } catch (\Exception $e) {
@@ -74,18 +61,18 @@ class UserPackageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function find(int $id)
     {
-        try{
+        try {
             $withRelations = [];
-            $userPackage = $this->userPackageService->find($id,$withRelations);
+            $userPackage = $this->userPackageService->find($id, $withRelations);
             $userPackage = new UserPackagesResource($userPackage);
             return apiResponse(data: $userPackage, message: trans('lang.operation_success'), code: 200);
-        }catch(Exception $e){
-            return apiResponse(message:  $e->getMessage(), code: 422);
+        } catch (Exception $e) {
+            return apiResponse(message: $e->getMessage(), code: 422);
         }
     }
 
@@ -95,10 +82,10 @@ class UserPackageController extends Controller
      */
     public function update(int $id, UserPackageUpdateRequest $userPackageUpdateRequest)
     {
-        try{
+        try {
             $userPackage = $this->userPackageService->update($id, $userPackageUpdateRequest->validated());
             return new UserPackagesResource($userPackage);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
     }
