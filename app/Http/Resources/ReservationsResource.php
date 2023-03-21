@@ -22,12 +22,12 @@ class ReservationsResource extends JsonResource
             'check_day' => Carbon::parse($this->check_date)->locale($lang)->dayName,
             'qr_code' => $this->qr_code,
             'period' => $this->period,
-            'customer' => $this->whenLoaded('user', [
+            'customer' => $this->relationLoaded('user')?[
                 'id' => $this->user->id,
                 'name' => $this->user->name,
                 'phone' => $this->user->phone,
                 'image' => $this->user->image,
-            ]),
+            ]:null,
             'center' => new CentersResource($this->whenLoaded('center')),
             'status' =>$this->when($this->whenLoaded('latestStatus'),$this->latestStatus->status),
             'nabadat_history' => NabadatHistoryResource::collection($this->whenLoaded('nabadatHistory')),
