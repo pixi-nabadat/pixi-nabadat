@@ -14,27 +14,23 @@ class Reservation extends Model
     use HasFactory, Filterable;
 
     const PENDING = 1;
-    const CONFIRMED = 2;
-    const ATTEND = 3;
-    const COMPLETED = 4;
-    const CANCELED = 5;
-    const Expired = 6;
+    const APPROVED = 2;
+    const CONFIRMED = 3;
+    const ATTEND = 4;
+    const COMPLETED = 5;
+    const CANCELED = 6;
+    const Expired = 7;
 
     protected $fillable = [
-        'customer_id',
-        'center_id',
-        'check_date',
-        'period',
-        'payment_type',
-        'payment_status',
-        'qr_code',
+        'customer_id', 'center_id', 'check_date', 'period', 'payment_type', 'payment_status', 'qr_code',
     ];
 
-    public static function getStatusText(int $status)
+    public static function getStatusText(int $status): array|string|\Illuminate\Contracts\Translation\Translator|\Illuminate\Contracts\Foundation\Application|null
     {
 
         return match ($status) {
             Reservation::PENDING => trans('lang.pending'),
+            Reservation::APPROVED => trans('lang.approved'),
             Reservation::CONFIRMED => trans('lang.confirmed'),
             Reservation::ATTEND => trans('lang.attend'),
             Reservation::COMPLETED => trans('lang.completed'),
@@ -69,22 +65,20 @@ class Reservation extends Model
         return $this->belongsTo(Center::class);
     }
 
-    public function getReservationStatusTextAttribute()
+    public function getReservationStatusTextAttribute(): array|string|\Illuminate\Contracts\Translation\Translator|\Illuminate\Contracts\Foundation\Application|null
     {
         if (!$this->relationLoaded('latestStatus'))
             return null;
         $order_status = $this->latestStatus->status;
-        switch ($order_status) {
-            case self::PENDING :
-                return trans('lang.pending');
-            case self::CONFIRMED :
-                return trans('lang.confirmed');
-            case self::ATTEND :
-                return trans('lang.shipped');
-            case self::COMPLETED :
-                return trans('lang.completed');
-            case self::CANCELED :
-                return trans('lang.canceled');
-        }
+        return match ($order_status) {
+            Reservation::PENDING => trans('lang.pending'),
+            Reservation::APPROVED => trans('lang.approved'),
+            Reservation::CONFIRMED => trans('lang.confirmed'),
+            Reservation::ATTEND => trans('lang.attend'),
+            Reservation::COMPLETED => trans('lang.completed'),
+            Reservation::CANCELED => trans('lang.canceled'),
+            Reservation::Expired => trans('lang.expired'),
+            default => trans('lang.pending'),
+        };
     }
 }

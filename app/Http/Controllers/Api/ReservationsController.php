@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\NotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReservationStoreRequest;
+use App\Http\Requests\ReservationUpdateRequest;
 use App\Http\Resources\ReservationsResource;
 use App\Services\ReservationService;
 use Illuminate\Http\Request;
@@ -68,6 +69,17 @@ class ReservationsController extends Controller
         }
     }
 
+    public function update(int $id, ReservationUpdateRequest $request )
+    {
+        try {
+            $reservation = $this->reservationService->update(reservationId: $id,reservationData: $request->validated());
+            if ($reservation)
+                return apiResponse(trans('lang.reservation_updated_successfully'));
+        } catch (\Exception $e) {
+            return apiResponse(message: $e->getMessage(), code: 422);
+        }
+    }
+
     public function findByQrCode(string $id)
     {
         try {
@@ -85,6 +97,17 @@ class ReservationsController extends Controller
         try {
             $this->reservationService->destroy($id);
             return apiResponse(message: trans('lang.operation_success'));
+        } catch (\Exception $e) {
+            return apiResponse(message: $e->getMessage(), code: 422);
+        }
+    }
+
+    public function findForEdit(int $id)
+    {
+        try {
+            $reservation = $this->reservationService->findById($id);
+            if ($reservation)
+                return apiResponse(new ReservationsResource($reservation), trans('lang.operation_success'));
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }

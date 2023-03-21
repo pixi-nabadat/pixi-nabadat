@@ -22,7 +22,9 @@ class ReservationHistoryService extends BaseService
 
         if($lastStatus == Reservation::CANCELED || $lastStatus == Reservation::Expired)
             throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));
-        if ($status == Reservation::CONFIRMED && $lastStatus != Reservation::PENDING)
+        elseif ($status == Reservation::APPROVED && $lastStatus != Reservation::PENDING)
+            throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));
+        elseif ($status == Reservation::CONFIRMED && $lastStatus != Reservation::APPROVED)
             throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));
         elseif ($status == Reservation::ATTEND && $lastStatus != Reservation::CONFIRMED)
             throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));

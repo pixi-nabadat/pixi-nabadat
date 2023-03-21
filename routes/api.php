@@ -80,6 +80,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('qrcode/{qrcode}',[\App\Http\Controllers\Api\ReservationsController::class, 'findByQrCode']);
         Route::post('{id}/status', [\App\Http\Controllers\Api\ReservationHistoryController::class, 'store']);
         Route::post('devices', [\App\Http\Controllers\Api\NabadatHistoryController::class, 'store']);
+        Route::get('{id}/edit',[\App\Http\Controllers\Api\ReservationsController::class,'findForEdit']);
+        Route::patch('{id}',[\App\Http\Controllers\Api\ReservationsController::class,'update']);
+
     });
 
 //    get All devices
