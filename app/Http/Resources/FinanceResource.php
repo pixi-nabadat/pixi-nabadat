@@ -15,7 +15,6 @@ class FinanceResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
             'total_center_dues'=>$this->total_center_dues,
             'total_nabadat_dues'=>$this->total_nabadat_dues,
         ];
