@@ -132,42 +132,6 @@ class User extends Authenticatable
         return $this->hasMany(UserPackage::class, 'user_id');
     }
 
-
-    public static function decreaseFromOffer(User $user, $number_of_pulses)
-    {
-        if ($number_of_pulses == 0)
-            return true ;
-        $activeUserPackage = UserPackage::where('status','!=',UserPackageStatusEnum::COMPLETED)
-            ->where('user_id' , $user->id)
-            ->where('payment_status',PaymentStatusEnum::PAID)
-            ->where('remain','!=',0)->first();
-        if ($activeUserPackage)
-        {
-            if ($number_of_pulses > $activeUserPackage->remain)
-            {
-                $remain_pulses = $number_of_pulses - $activeUserPackage->remain ;
-                $activeUserPackage->remain = 0 ;
-                $activeUserPackage->used_amount = $activeUserPackage->used_amount + $activeUserPackage->remain ;
-                $activeUserPackage->status = UserPackageStatusEnum::COMPLETED ;
-                $activeUserPackage->save();
-                $activeUserPackage->refresh();
-                self::decreaseFromOffer($user, $remain_pulses);
-            }else{
-                $old_remain = $activeUserPackage->remain ;
-                $activeUserPackage->remain = $old_remain-$number_of_pulses ;
-                if ($old_remain - $number_of_pulses == 0)
-                    $activeUserPackage->status = UserPackageStatusEnum::COMPLETED ;
-                $activeUserPackage->save();
-            }
-        }
-
-        if (!$activeUserPackage && $number_of_pulses)
-        {
-            //todo register it in financial
-        }
-    }
-
-    
     public function reservation(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Reservation::class,'user_id');

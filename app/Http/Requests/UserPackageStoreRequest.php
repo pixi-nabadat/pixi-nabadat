@@ -6,7 +6,7 @@ use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserPackageUpdateRequest extends BaseRequest
+class UserPackageStoreRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
