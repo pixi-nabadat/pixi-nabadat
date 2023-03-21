@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\CenterHomeController;
 use App\Http\Controllers\Api\CenterPackageController;
 use App\Http\Controllers\Api\DeviceController;
 use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\FinanceController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\NotificationController;
@@ -53,6 +54,13 @@ Route::group(['prefix' => 'fcm'], function () {
 });
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
+    //start finance
+    Route::get('/all-center-dues/{id}',          [FinanceController::class, 'getAllCenterDues']);
+    Route::get('/all-center-dues-history/{id}',  [FinanceController::class, 'getAllCenterDuesHistory']);
+    Route::get('/all-invoice-transactions/{id}', [FinanceController::class, 'getInvoiceTransactions']);
+    Route::get('/transaction-details/{id}',      [FinanceController::class, 'getTransactionDetails']);
+    Route::get('/customer-wallet',          [FinanceController::class, 'getCustomerWallet']);
+    //end finance
     Route::group(['prefix' => 'centers'], function () {
         Route::get('doctors', [DoctorController::class, 'listing']);
         Route::post('store/doctor', [DoctorController::class, 'store']);
@@ -128,6 +136,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'offers'], function () {
         Route::post('/buy', [BuyOfferController::class, 'buyOffer']);
     });
+    Route::get('/all-customer-offers', [BuyOfferController::class, 'getAllCustomerOffers']);
+
 //start buy pulsses from nabdat app
 });
 

@@ -3,12 +3,16 @@
 namespace App\Services;
 
 use App\Enum\ImageTypeEnum;
+use App\Models\Center;
 use App\Models\Device;
 use App\Models\Invoice;
+use App\Models\Transaction;
+use App\Models\User;
 use App\QueryFilters\DevicesFilter;
 use App\QueryFilters\InvoiceFilter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class InvoiceService extends BaseService
 {
@@ -55,4 +59,56 @@ class InvoiceService extends BaseService
         $invoice->completed_date = Carbon::now();
         return $invoice->save();
     }//end of changeStatus
+
+    /**
+     * get all center dues based on the invoice status
+     * @param int id
+     * @param int $status
+     */
+    public function getAllCenterDues(int $id, int $status)
+    {
+        $center = Center::find($id);
+        $currentInvoice = $center->invoices->where('status', $status)->all();
+        if(!$currentInvoice)
+            return false;
+        return $currentInvoice;
+    }
+
+    /**
+     * get invoice transactions
+     * @param int invoiceId
+     */
+    public function getInvoiceTransactions(int $invoiceId)
+    {
+        $invoice = Invoice::find($invoiceId);
+        $invoiceTransactions = $invoice->transactions;
+        if(!$invoiceTransactions)
+            return false;
+        return $invoiceTransactions;
+    }
+
+    /**
+     * get transaction details
+     * @param int transactionId
+     */
+    public function getTransactionDetails(int $transactionId)
+    {
+        $transaction = Transaction::find($transactionId);
+        if(!$transaction)
+            return false;
+        return $transaction;
+    }
+
+    /**
+     * get customer wallet
+     * @param int userId
+     */
+    public function getCustomerWallet(int $userId): bool|Model
+    {
+        $user = User::find($userId);
+        $customerWallet = $user->nabadatWallet;
+        if(!$customerWallet)
+            return false;
+        return $customerWallet;
+    }
 }

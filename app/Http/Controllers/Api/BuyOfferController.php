@@ -9,6 +9,7 @@ use App\Exceptions\NotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BuyCustomPulsesRequest;
 use App\Http\Requests\BuyOfferRequest;
+use App\Http\Resources\UserPackagesResource;
 use App\Models\Center;
 use App\Models\Package;
 use App\Models\UserPackage;
@@ -19,6 +20,7 @@ use App\Services\UserService;
 use App\Traits\OrderTrait;
 use Carbon\Carbon;
 use App\Services\CenterPackageService;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class BuyOfferController extends Controller
@@ -155,5 +157,20 @@ class BuyOfferController extends Controller
             'remain'                =>$package->num_nabadat,
             'deleted_at'            => isset($deleted_at) ? Carbon::now() : null
         ];
+    }
+
+    public function getAllCustomerOffers()
+    {
+        try{
+            $user = auth('sanctum')->user();
+            $filters['user_id'] = $user->id;
+            $customerOffers = $this->userPackageService->listing(filters: $filters, withRelation:[]);
+            if(!$customerOffers)
+                return apiResponse(message: trans('lang.not_found'), code: 422);
+            $response = UserPackagesResource::collection($customerOffers);
+            return apiResponse(data: $response, message: trans('lang.success_operation'));
+        }catch(Exception $e){
+            return apiResponse(message: trans('lang.something_went_rong'), code: 422);
+        }
     }
 }
