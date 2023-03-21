@@ -38,7 +38,7 @@ class ReservationService extends BaseService
     /**
      * @throws NotFoundException
      */
-    public function update(int $reservationId, array $reservationData): bool
+    public function update(int $reservationId, array $reservationData=[]): bool
     {
         $reservation = $this->findById($reservationId);
         if (!$reservation)
