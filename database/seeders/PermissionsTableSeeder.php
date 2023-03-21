@@ -70,6 +70,14 @@ class PermissionsTableSeeder extends Seeder
                 'delete_package',
                 'view_package'
             ],
+
+            //start user_package permissions
+            'user-packages'=>[
+                'create_user_package',
+                'edit_user_package',
+                'delete_user_package',
+                'view_user_package'
+            ],
             //end packages permissions
 
             //start devices permissions

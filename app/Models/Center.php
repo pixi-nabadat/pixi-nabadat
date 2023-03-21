@@ -82,6 +82,11 @@ class Center extends Model
         return $this->hasMany(Package::class,'center_id');
     }
 
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class,'center_id');
+    }
+
     /**
      * @param Center $center
      * @param float $amount

@@ -132,6 +132,10 @@ class BuyCustomPulsesController extends Controller
     private function getUserPackageDataForCustomPulses(int $num_nabadat, $center, $user, $payment_status = PaymentStatusEnum::UNPAID, $payment_method = PaymentMethodEnum::CASH, $deleted_at = null)
     {
         $active_user_package = $user->package()->where('status', UserPackageStatusEnum::ONGOING)->where('payment_status', PaymentStatusEnum::PAID)->count();
+        if(!$active_user_package)
+            $status = $payment_status == PaymentStatusEnum::PAID ? UserPackageStatusEnum::ONGOING: UserPackageStatusEnum::PENDING;
+        else
+            $status = $payment_status == PaymentStatusEnum::PAID ? UserPackageStatusEnum::READYFORUSE: UserPackageStatusEnum::PENDING;
 
         return [
             'package_id' => null,
@@ -142,7 +146,7 @@ class BuyCustomPulsesController extends Controller
             'discount_percentage' => $center->pulse_discount,
             'payment_method' => $payment_method,
             'payment_status' => $payment_status,
-            'status' => $active_user_package > 0 ? UserPackageStatusEnum::PENDING : UserPackageStatusEnum::ONGOING,
+            'status' => $status,
             'used_amount' => 0,
             'remain' => $num_nabadat,
             'deleted_at' => isset($deleted_at) ? Carbon::now() : null
