@@ -137,9 +137,9 @@
 						<table>
 							<tr>
 								<td>
-									Company Name.<br />
-									Phone<br />
-									address
+									{{ App\Models\Setting::get('points', 'company_name_en') }}<br />
+									{{ App\Models\Setting::get('points', 'primary_phone') }}<br />
+									{{ App\Models\Setting::get('points', 'address') }}
 								</td>
 
 								<td>
@@ -174,10 +174,10 @@
 					
 				
 				<tr class="total">
-					<td colspan="5">Total Center Amount: {{ $invoice->total_center_dues }} LE</td>
+					<td colspan="5">Total Center Dues: {{ $invoice->total_center_dues }} LE</td>
 				</tr>
 				<tr class="total">
-					<td colspan="5">Total: {{ $invoice->total_nabadat_dues }} LE</td>
+					<td colspan="5">Total Nabadat Dues: {{ $invoice->total_nabadat_dues }} LE</td>
 				</tr>
 			</table>
 		</div>
