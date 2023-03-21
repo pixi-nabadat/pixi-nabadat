@@ -6,9 +6,10 @@ use App\DataTables\CategoriesDataTable;
 use App\DataTables\InvoicesDataTable;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Requests\SettleInvoiceRequest;
+use App\Models\Invoice;
 use App\Services\InvoiceService;
 use Illuminate\Http\Request;
-
+use PDF;
 class InvoiceController extends Controller
 {
     public function __construct(protected InvoiceService $invoiceService)
@@ -67,6 +68,9 @@ class InvoiceController extends Controller
 
     public function export($id)
     {
+        $invoice = Invoice::with(['center', 'transactions'])->find($id);
+        $pdf = PDF::loadView('dashboard.invoices.export', ['invoice'=>$invoice]);
 
+        return $pdf->stream('document.pdf');
     }
 }
