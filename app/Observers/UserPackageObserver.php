@@ -24,15 +24,15 @@ class UserPackageObserver
         //user after paid for package earn point
         if ($userPackage->payment_status == PaymentStatusEnum::PAID) {
             $userPackage->load(['center','user']);
-            $amount_after_discount = $userPackage->price - ($userPackage->price * ($userPackage->center->app_discount / 100));
+            $user_amount_for_points = $userPackage->price - ($userPackage->price * ($userPackage->center->pulse_discount / 100));
 //          set user points after pay the offer
-            User::setPoints($userPackage->user, amount: $amount_after_discount);
+            User::setPoints($userPackage->user, amount: $user_amount_for_points);
 //          set center points after pay the offer
-            User::setPoints($userPackage->center->user, amount: $amount_after_discount);
+            User::setPoints($userPackage->center->user, amount: $user_amount_for_points);
 //          set financial for center
-            $final_discount = $userPackage->center->app_discount - $userPackage->discount_percentage;
+            $final_discount_for_nabadat_company = $userPackage->center->app_discount - $userPackage->discount_percentage;
             $center_dues = $userPackage->price - ($userPackage->price * ($userPackage->center->app_discount / 100));
-            $nabadat_app_dues =($final_discount > 0) ?  ($userPackage->price * ($final_discount/ 100)):0;
+            $nabadat_app_dues =($final_discount_for_nabadat_company > 0) ?  ($userPackage->price - $center_dues - ($userPackage->price * $final_discount_for_nabadat_company/ 100)):0;
             $invoice = Invoice::where('center_id',$userPackage->center->id)->where('status',Invoice::PENDING)->orderByDesc('id')->first();
             if ($invoice)
             {
@@ -60,15 +60,15 @@ class UserPackageObserver
             //user after paid for package earn point
             if ($userPackage->payment_status == PaymentStatusEnum::PAID) {
                 $userPackage->load(['center','user']);
-                $amount_after_discount = $userPackage->price - ($userPackage->price * ($userPackage->center->app_discount / 100));
+                $user_amount_for_points = $userPackage->price - ($userPackage->price * ($userPackage->center->pulse_discount / 100));
     //          set user points after pay the offer
-                User::setPoints($userPackage->user, amount: $amount_after_discount);
+                User::setPoints($userPackage->user, amount: $user_amount_for_points);
     //          set center points after pay the offer
-                User::setPoints($userPackage->center->user, amount: $amount_after_discount);
+                User::setPoints($userPackage->center->user, amount: $user_amount_for_points);
     //          set financial for center
-                $final_discount = $userPackage->center->app_discount - $userPackage->discount_percentage;
+                $final_discount_for_nabadat_company = $userPackage->center->app_discount - $userPackage->discount_percentage;
                 $center_dues = $userPackage->price - ($userPackage->price * ($userPackage->center->app_discount / 100));
-                $nabadat_app_dues =($final_discount > 0) ?  ($userPackage->price * ($final_discount/ 100)):0;
+                $nabadat_app_dues =($final_discount_for_nabadat_company > 0) ?  ($userPackage->price - $center_dues - ($userPackage->price * $final_discount_for_nabadat_company/ 100)):0;
                 $invoice = Invoice::where('center_id',$userPackage->center->id)->where('status',Invoice::PENDING)->orderByDesc('id')->first();
                 if ($invoice)
                 {

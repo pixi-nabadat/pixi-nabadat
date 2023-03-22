@@ -154,7 +154,7 @@ class UserPackageService extends BaseService
         }else{
             //there is no userpackage and number_of_pulses != 0
             //start create transaction
-            $this->userPackageData = [
+            $userPackageData = [
                 'user_id' => $user->id,
                 'num_nabadat' => $number_of_pulses,
                 'price' => $number_of_pulses * $center->pulse_price,
@@ -167,8 +167,7 @@ class UserPackageService extends BaseService
                 'remain' => 0,
                 'deleted_at' => isset($deleted_at) ? Carbon::now() : null
             ];
-            UserPackage::create($this->userPackageData);
-
+            UserPackage::create($userPackageData);
             //end create transaction
 
         }

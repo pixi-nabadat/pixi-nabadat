@@ -137,9 +137,9 @@
 						<table>
 							<tr>
 								<td>
-									{{ App\Models\Setting::get('points', 'company_name_en') }}<br />
-									{{ App\Models\Setting::get('points', 'primary_phone') }}<br />
-									{{ App\Models\Setting::get('points', 'address') }}
+									{{ App\Models\Setting::get('general', 'company_name_en') }}<br />
+									{{ App\Models\Setting::get('general', 'primary_phone') }}<br />
+									{{ App\Models\Setting::get('general', 'address') }}
 								</td>
 
 								<td>
@@ -154,7 +154,6 @@
 
 				<tr class="heading">
 					<td>Num Of Pulses</td>
-
 					<td>Package Name</td>
 					<td>Original Price</td>
 					<td>Center Dues</td>
@@ -165,7 +164,7 @@
                 @foreach ($invoice->transactions as $transaction)
                 <tr class="details">
                     <td>{{ $transaction->num_pulses }}</td>
-                    <td>{{ $transaction->package != null ? $transaction->package->name : "cucstom" }}</td>
+                    <td>{{ $transaction->package != null ? $transaction->package->name : "custom" }}</td>
                     <td>{{ $transaction->original_price }}</td>
                     <td>{{ $transaction->center_dues }}</td>
                     <td>{{ $transaction->nabadat_app_dues }}</td>

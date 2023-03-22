@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\CategoriesDataTable;
 use App\DataTables\InvoicesDataTable;
-use App\Http\Requests\CategoryRequest;
 use App\Http\Requests\SettleInvoiceRequest;
 use App\Models\Invoice;
 use App\Services\InvoiceService;
 use Illuminate\Http\Request;
 use PDF;
+
 class InvoiceController extends Controller
 {
     public function __construct(protected InvoiceService $invoiceService)
@@ -17,11 +16,11 @@ class InvoiceController extends Controller
 
     }
 
-    public function index(InvoicesDataTable $dataTable,Request $request)
+    public function index(InvoicesDataTable $dataTable, Request $request)
     {
         $filters = $request->filters ?? [];
         $withRelations = ['center.user'];
-        return $dataTable->with(['filters'=>$filters,'withRelations'=>$withRelations])->render('dashboard.invoices.index');
+        return $dataTable->with(['filters' => $filters, 'withRelations' => $withRelations])->render('dashboard.invoices.index');
     }//end of index
 
     public function edit($id)
@@ -50,8 +49,8 @@ class InvoiceController extends Controller
 
     public function show($id)
     {
-        $invoice = $this->invoiceService->find($id,['center.user:id,center_id,name,phone','transactions.user:id,center_id,name,phone']);
-        return view('dashboard.invoices.show',compact('invoice'));
+        $invoice = $this->invoiceService->find($id, ['center.user:id,center_id,name,phone', 'transactions.user:id,center_id,name,phone']);
+        return view('dashboard.invoices.show', compact('invoice'));
     } //end of show
 
     public function settleInvoice(SettleInvoiceRequest $request)
@@ -69,7 +68,7 @@ class InvoiceController extends Controller
     public function export($id)
     {
         $invoice = Invoice::with(['center', 'transactions'])->find($id);
-        $pdf = PDF::loadView('dashboard.invoices.export', ['invoice'=>$invoice]);
+        $pdf = PDF::loadView('dashboard.invoices.export', ['invoice' => $invoice]);
 
         return $pdf->stream('document.pdf');
     }
