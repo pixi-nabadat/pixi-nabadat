@@ -21,7 +21,7 @@ class ReservationHistoryObserver
     public function created(ReservationHistory $reservationHistory)
     {
         cache()->forget('center-home-api');
-//        To check if not used remove it
+//      ToDo check if not used remove it
         if($reservationHistory->status == Reservation::COMPLETED){
             $reservation = $reservationHistory->reservation;
             $reservationPulses   = $reservation->nabadatHistory->sum('num_nabadat');
