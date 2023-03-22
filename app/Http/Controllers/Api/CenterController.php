@@ -8,6 +8,7 @@ use App\Events\PushEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCenterRequest;
 use App\Http\Requests\StoreCenterRequestApi;
+use App\Http\Resources\AuthUserResource;
 use App\Http\Resources\CenterResource;
 use App\Http\Resources\CentersResource;
 use App\Models\FcmMessage;
@@ -70,7 +71,7 @@ class CenterController extends Controller
             $center = $this->centerService->store($request->validated());
             DB::commit();
             event(new PushEvent($center,FcmMessage::DEAL_WITH_NEW_CENTER));
-            return apiResponse(data: new CenterResource($center));
+            return apiResponse(data: new AuthUserResource($center->user));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
