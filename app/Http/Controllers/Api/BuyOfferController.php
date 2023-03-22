@@ -149,6 +149,7 @@ class BuyOfferController extends Controller
             $status = $payment_status == PaymentStatusEnum::PAID ? UserPackageStatusEnum::READYFORUSE: UserPackageStatusEnum::PENDING;
 
         return [
+            'package_id'            => $package->id,
             'num_nabadat'           => $package->num_nabadat,
             'user_id'               => $user->id,
             'price'                 => $package->price,
