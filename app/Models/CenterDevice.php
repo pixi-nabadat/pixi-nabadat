@@ -31,9 +31,9 @@ class CenterDevice extends Model
 
     public function getPrimaryImagePathAttribute(): string
     {
-        if ($this->relationLoaded('attachments') && isset($this->attachments))
+        $attachment = $this->attachments->where('type',ImageTypeEnum::LOGO)->first();
+        if ($this->relationLoaded('attachments') && isset($attachment))
         {
-            $attachment = $this->attachments->where('type',ImageTypeEnum::LOGO)->first();
             return asset($attachment->path."/".$attachment->filename);
         }else
             return asset('assets/images/default-image.jpg');

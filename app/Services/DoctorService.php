@@ -35,7 +35,7 @@ class DoctorService extends BaseService
 
         if (isset($data['logo']))
         {
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\doctors', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/doctors', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $doctor->storeAttachment($fileData);
         }

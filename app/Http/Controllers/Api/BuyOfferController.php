@@ -143,14 +143,21 @@ class BuyOfferController extends Controller
     private function getUserPackageDataForBuyOffer(Package $package ,$user,$payment_status = PaymentStatusEnum::UNPAID,$payment_method = PaymentMethodEnum::CASH,$deleted_at = null)
     {
         $active_user_package = $user->package()->where('status',UserPackageStatusEnum::ONGOING)->where('payment_status',PaymentStatusEnum::PAID)->count();
+        if(!$active_user_package)
+            $status = $payment_status == PaymentStatusEnum::PAID ? UserPackageStatusEnum::ONGOING: UserPackageStatusEnum::PENDING;
+        else
+            $status = $payment_status == PaymentStatusEnum::PAID ? UserPackageStatusEnum::READYFORUSE: UserPackageStatusEnum::PENDING;
+
         return [
+            'package_id'            => $package->id,
             'num_nabadat'           => $package->num_nabadat,
+            'user_id'               => $user->id,
             'price'                 => $package->price,
             'center_id'             => $package->center_id,
             'discount_percentage'   => $package->discount_percentage,
             'payment_method'        => $payment_method,
             'payment_status'        => $payment_status,
-            'status'                => $active_user_package > 0 ? UserPackageStatusEnum::PENDING : UserPackageStatusEnum::ONGOING,
+            'status'                => $status,
             'used_amount'           =>0,
             'remain'                =>$package->num_nabadat,
             'deleted_at'            => isset($deleted_at) ? Carbon::now() : null

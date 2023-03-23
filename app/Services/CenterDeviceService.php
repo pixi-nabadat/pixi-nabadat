@@ -54,7 +54,7 @@ class CenterDeviceService extends BaseService
         $center = $this->findCenterById(id: $data['center_id']);
         $data['auto_service'] = isset($data['auto_service']) ? 1 : 0;
         $center->devices()->syncWithoutDetaching([$data['device_id'] => Arr::except($data, ['device_id', 'primary_image', 'gallery'])]);
-        $center_devices = $this->model->query()->with(['attachments', 'device'])->where('center_id', $center->id)->where('device_id', $data['device_id'])->first();
+        $center_devices = $this->model->query()->where('center_id', $center->id)->where('device_id', $data['device_id'])->first();
         if (isset($data['primary_image'])) {
             $fileData = FileService::saveImage(file: $data['primary_image'], path: 'uploads/center_devices', field_name: 'primary_image');
             $fileData['type'] = ImageTypeEnum::LOGO;
@@ -66,8 +66,6 @@ class CenterDeviceService extends BaseService
                 $fileData['type'] = ImageTypeEnum::GALARY;
                 $center_devices->storeAttachment($fileData);
             }
-        $center->refresh();
-        $center_devices->refresh();
         return $center_devices;
     }
 

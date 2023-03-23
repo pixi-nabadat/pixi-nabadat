@@ -20,6 +20,8 @@ class ReservationHistoryObserver
      */
     public function created(ReservationHistory $reservationHistory)
     {
+        cache()->forget('center-home-api');
+//      ToDo check if not used remove it
         if($reservationHistory->status == Reservation::COMPLETED){
             $reservation = $reservationHistory->reservation;
             $reservationPulses   = $reservation->nabadatHistory->sum('num_nabadat');
@@ -33,7 +35,6 @@ class ReservationHistoryObserver
             $newRemain = $active_user_package->remain - $reservationPulses;
             if($newRemain <= 0)// set status for the next package ingoing
                 throw new NotFoundException(trans('lang.there_is_no_enough_pulses'));
-
             $active_user_package->remain = $newRemain;
             $active_user_package->used = $active_user_package->used + $reservationPulses;
 
@@ -48,7 +49,8 @@ class ReservationHistoryObserver
      */
     public function updated(ReservationHistory $reservationHistory)
     {
-        //
+        cache()->forget('center-home-api');
+
     }
 
     /**
@@ -59,7 +61,7 @@ class ReservationHistoryObserver
      */
     public function deleted(ReservationHistory $reservationHistory)
     {
-        //
+        cache()->forget('center-home-api');
     }
 
     /**
@@ -70,7 +72,8 @@ class ReservationHistoryObserver
      */
     public function restored(ReservationHistory $reservationHistory)
     {
-        //
+        cache()->forget('center-home-api');
+
     }
 
     /**
@@ -81,6 +84,6 @@ class ReservationHistoryObserver
      */
     public function forceDeleted(ReservationHistory $reservationHistory)
     {
-        //
+        cache()->forget('center-home-api');
     }
 }

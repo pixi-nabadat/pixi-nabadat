@@ -11,6 +11,10 @@ use Illuminate\Database\Eloquent\Model;
 class CenterPackageService extends BaseService
 {
 
+    public function __construct(public Package $model)
+    {
+    }
+
     public function getAll(array $where_condition = [], array $withRelations = []): \Illuminate\Database\Eloquent\Collection|array
     {
         $packages = $this->queryGet($where_condition, $withRelations);
@@ -19,7 +23,7 @@ class CenterPackageService extends BaseService
 
     public function queryGet(array $where_condition = [], array $withRelation = []): Builder
     {
-        $packages = Package::orderBy('status')->with($withRelation);
+        $packages = $this->model->orderBy('status')->with($withRelation);
         return $packages->filter(new PackagesFilter($where_condition));
     }
 
@@ -30,7 +34,7 @@ class CenterPackageService extends BaseService
 
     public function store($data)
     {
-        $package = Package::create($data);
+        $package = $this->model->create($data);
         if (isset($data['image'])) {
             $fileData = FileService::saveImage(file: $data['image'], path: 'uploads/packages');
             $package->storeAttachment($fileData);
@@ -54,7 +58,7 @@ class CenterPackageService extends BaseService
      */
     public function find($id, $withRelation = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
-        $package = Package::with($withRelation)->find($id);
+        $package = $this->model->query()->with($withRelation)->find($id);
         if (!$package)
             throw new NotFoundException(trans('lang.package_not_fount'));
         return $package;
