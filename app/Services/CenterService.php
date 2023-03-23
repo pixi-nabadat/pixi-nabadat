@@ -11,6 +11,10 @@ use Illuminate\Database\Eloquent\Builder;
 class CenterService extends BaseService
 {
 
+    public function __construct(public  Center $model)
+    {
+    }
+
     public function listing(array $filters = [], array $withRelation = []): \Illuminate\Contracts\Pagination\CursorPaginator
     {
         $perPage = config('app.perPage');
@@ -19,7 +23,7 @@ class CenterService extends BaseService
 
     public function queryGet(array $where_condition = [], $withRelation = []): Builder
     {
-        $centers = Center::query()->active()->with($withRelation)->withCount('devices');
+        $centers = $this->model->query()->active()->with($withRelation)->withCount('devices');
         return $centers->filter(new CentersFilter($where_condition));
     }
 
@@ -34,12 +38,12 @@ class CenterService extends BaseService
      */
     public function store(array $data = [])
     {
-        $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-        $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ? 1 : 0;
-        $data['featured'] = isset($data['featured']) ? 1 : 0;
+        $data['is_active'] = isset($data['is_active']) ?? 0;
+        $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ?? 0;
+        $data['featured'] = isset($data['featured']) ??  0;
         
         $center_data = $this->prepareCenterData($data);
-        $center = Center::create($center_data);
+        $center = $this->model->create($center_data);
         if (!$center)
            throw new NotFoundException(trans('lang.center_not_created'));
         if (isset($data['logo']))
@@ -95,9 +99,9 @@ class CenterService extends BaseService
     public function update(int $centerId, array $data): bool
     {
         $center = $this->find($centerId);
-        $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-        $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ? 1 : 0;
-        $data['featured'] = isset($data['featured']) ? 1 : 0;
+        $data['is_active'] = isset($data['is_active']) ?? 0;
+        $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ?? 0;
+        $data['featured'] = isset($data['featured']) ?? 0;
         
         if (isset($data['logo']))
         {
@@ -124,7 +128,7 @@ class CenterService extends BaseService
 
     public function find($id, $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
-        $center = Center::with($with)->withCount('devices')->find($id);
+        $center = $this->model->with($with)->withCount('devices')->find($id);
         if (!$center)
             throw new NotFoundException(trans('lang.center_not_found'));
         return $center;
@@ -132,6 +136,7 @@ class CenterService extends BaseService
 
     public function changeStatus($id)
     {
+//        todo check you pass id of user not center
         $user = User::find($id);
         $user->is_active = !$user->is_active;
         return $user->save();
