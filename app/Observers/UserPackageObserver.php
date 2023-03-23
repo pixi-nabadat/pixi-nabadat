@@ -37,7 +37,7 @@ class UserPackageObserver
         if($userPackage->isDirty('payment_status'))
         {
             app()->make(UserPackageService::class)->completeUserPackage(userPackage: $userPackage);
-    
+
         }
     }
     /**

@@ -22,9 +22,9 @@ class ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '3bd81c9b8fcc150b69d8b63b4d2ccf23' => __DIR__ . '/..' . '/spatie/flare-client-php/src/helpers.php',
         '23c18046f52bef3eea034657bafda50f' => __DIR__ . '/..' . '/symfony/polyfill-php81/bootstrap.php',
-        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '09f6b20656683369174dd6fa83b7e5fb' => __DIR__ . '/..' . '/symfony/polyfill-uuid/bootstrap.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
         '35a6ad97d21e794e7e22a17d806652e4' => __DIR__ . '/..' . '/nunomaduro/termwind/src/Functions.php',
@@ -127,6 +127,7 @@ class ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e
         array (
             'Mpdf\\' => 5,
             'Monolog\\' => 8,
+            'Mccarlosen\\LaravelMpdf\\' => 23,
         ),
         'L' => 
         array (
@@ -439,6 +440,10 @@ class ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
+        'Mccarlosen\\LaravelMpdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/carlos-meneses/laravel-mpdf/src',
+        ),
         'League\\OAuth1\\Client\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/oauth1-client/src',
@@ -647,6 +652,7 @@ class ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e
         'App\\DataTables\\ReservationDataTable' => __DIR__ . '/../..' . '/app/DataTables/ReservationDataTable.php',
         'App\\DataTables\\ScheduleFcmDatatable' => __DIR__ . '/../..' . '/app/DataTables/ScheduleFcmDatatable.php',
         'App\\DataTables\\SlidersDataTable' => __DIR__ . '/../..' . '/app/DataTables/SlidersDataTable.php',
+        'App\\DataTables\\UserPackagesDatatable' => __DIR__ . '/../..' . '/app/DataTables/UserPackagesDatatable.php',
         'App\\DataTables\\UsersDataTable' => __DIR__ . '/../..' . '/app/DataTables/UsersDataTable.php',
         'App\\Enum\\ActivationStatusEnum' => __DIR__ . '/../..' . '/app/Enum/ActivationStatusEnum.php',
         'App\\Enum\\DiscountEnum' => __DIR__ . '/../..' . '/app/Enum/DiscountEnum.php',
@@ -728,6 +734,7 @@ class ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e
         'App\\Http\\Controllers\\ScheduleFcmController' => __DIR__ . '/../..' . '/app/Http/Controllers/ScheduleFcmController.php',
         'App\\Http\\Controllers\\SettingController' => __DIR__ . '/../..' . '/app/Http/Controllers/SettingController.php',
         'App\\Http\\Controllers\\SliderController' => __DIR__ . '/../..' . '/app/Http/Controllers/SliderController.php',
+        'App\\Http\\Controllers\\UserPackageController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserPackageController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -792,6 +799,7 @@ class ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e
         'App\\Http\\Requests\\UpdateAppointmentRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateAppointmentRequest.php',
         'App\\Http\\Requests\\UpdateCartAddressRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateCartAddressRequest.php',
         'App\\Http\\Requests\\UpdateCenterRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateCenterRequest.php',
+        'App\\Http\\Requests\\UserPackageStoreRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UserPackageStoreRequest.php',
         'App\\Http\\Requests\\UserPackageUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UserPackageUpdateRequest.php',
         'App\\Http\\Resources\\AddressesResource' => __DIR__ . '/../..' . '/app/Http/Resources/AddressesResource.php',
         'App\\Http\\Resources\\AppointmentsResource' => __DIR__ . '/../..' . '/app/Http/Resources/AppointmentsResource.php',
@@ -3783,6 +3791,10 @@ class ComposerStaticInitecb4d5830d960f8eaf8586d4ae02929e
         'League\\OAuth1\\Client\\Signature\\RsaSha1Signature' => __DIR__ . '/..' . '/league/oauth1-client/src/Signature/RsaSha1Signature.php',
         'League\\OAuth1\\Client\\Signature\\Signature' => __DIR__ . '/..' . '/league/oauth1-client/src/Signature/Signature.php',
         'League\\OAuth1\\Client\\Signature\\SignatureInterface' => __DIR__ . '/..' . '/league/oauth1-client/src/Signature/SignatureInterface.php',
+        'Mccarlosen\\LaravelMpdf\\Facades\\LaravelMpdf' => __DIR__ . '/..' . '/carlos-meneses/laravel-mpdf/src/Facades/LaravelMpdf.php',
+        'Mccarlosen\\LaravelMpdf\\LaravelMpdf' => __DIR__ . '/..' . '/carlos-meneses/laravel-mpdf/src/LaravelMpdf.php',
+        'Mccarlosen\\LaravelMpdf\\LaravelMpdfServiceProvider' => __DIR__ . '/..' . '/carlos-meneses/laravel-mpdf/src/LaravelMpdfServiceProvider.php',
+        'Mccarlosen\\LaravelMpdf\\LaravelMpdfWrapper' => __DIR__ . '/..' . '/carlos-meneses/laravel-mpdf/src/LaravelMpdfWrapper.php',
         'Mockery' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditions' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditions.php',

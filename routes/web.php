@@ -138,7 +138,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     Route::resource('invoices', InvoiceController::class);
     Route::post('invoices/settle', [InvoiceController::class, 'settleInvoice'])->name('invoices.settle');
-    Route::get('invoices/export-pdf', [InvoiceController::class, 'export'])->name('invoices.export-pdf');
+    Route::get('invoices/export-pdf/{id}', [InvoiceController::class, 'export'])->name('invoices.export-pdf');
     Route::get('invoices/{id}/print', [InvoiceController::class, 'print'])->name('invoices.print');
 
 

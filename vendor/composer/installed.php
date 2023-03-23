@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '9f37f95c75d0bf6c39b3ad62fbac0c448d665652',
+        'reference' => '874bb83a89b84c348420195a6cdd52e587f12880',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -42,6 +42,15 @@
             'replaced' => array(
                 0 => '*',
             ),
+        ),
+        'carlos-meneses/laravel-mpdf' => array(
+            'pretty_version' => '2.1.11',
+            'version' => '2.1.11.0',
+            'reference' => 'cb52e5c17df9caa340eaed8566cfb1e3c7b37c33',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../carlos-meneses/laravel-mpdf',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'consoletvs/charts' => array(
             'pretty_version' => '6.6.0',
@@ -436,7 +445,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '9f37f95c75d0bf6c39b3ad62fbac0c448d665652',
+            'reference' => '874bb83a89b84c348420195a6cdd52e587f12880',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
