@@ -41,12 +41,6 @@
                             <p class="form-control" id="name_en">{{ $center->user->getTranslation('name', 'en') }}</p>
                         </div>
 
-                        {{-- username  --}}
-                        <div class="col-md-12 d-flex my-3">
-                            <label class="form-label col-3" for="user_name">{{ trans('lang.user_name') }}</label>
-                            <p class="form-control" id="user_name">{{ $center->user->user_name }}</p>
-                        </div>
-
                         {{-- email --}}
                         <div class="col-md-12 d-flex my-3">
                             <label class="form-label col-3" for="email">{{ trans('lang.email') }}</label>

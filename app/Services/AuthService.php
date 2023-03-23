@@ -13,7 +13,7 @@ class AuthService extends BaseService
     public function loginWithUsernameOrPhone(string $identifier, string $password,$type = User::CUSTOMERTYPE) :User|Model
     {
 
-        $identifierField = is_numeric($identifier) ? 'phone':'user_name';
+        $identifierField = is_numeric($identifier) ? 'phone':'email';
         $credential = [$identifierField=>$identifier,'password'=>$password,'type'=>$type];
         if (!auth()->attempt($credential))
             return throw new UserNotFoundException(__('lang.login failed'));

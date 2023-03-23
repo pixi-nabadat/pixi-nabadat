@@ -65,8 +65,6 @@ class EmployeesDataTable extends DataTable
                 ->title(trans('lang.email'))
                 ->searchable(false)
                 ->orderable(false),
-            Column::make('user_name')
-                ->title(trans('lang.user_name')),
             Column::make('phone')
                 ->title(trans('lang.phone')),
             Column::make('is_active')
