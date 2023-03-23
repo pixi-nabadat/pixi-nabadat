@@ -39,9 +39,4 @@ class ReservationHistory extends Model
             default => trans('lang.pending'),
         };
     }
-    // protected static function boot()
-    // {
-    //     parent::boot();
-    //     static::observe(ReservationHistoryObserver::class);
-    // }
 }

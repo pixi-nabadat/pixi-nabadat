@@ -9,6 +9,7 @@ use App\Models\Settlement;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserPackage;
+use App\Services\UserPackageService;
 use Carbon\Carbon;
 
 class UserPackageObserver
@@ -21,30 +22,8 @@ class UserPackageObserver
      */
     public function created(UserPackage $userPackage)
     {
-        //user after paid for package earn point
-        if ($userPackage->payment_status == PaymentStatusEnum::PAID) {
-            $userPackage->load(['center','user']);
-            $user_amount_for_points = $userPackage->price - ($userPackage->price * ($userPackage->center->pulse_discount / 100));
-//          set user points after pay the offer
-            User::setPoints($userPackage->user, amount: $user_amount_for_points);
-//          set center points after pay the offer
-            User::setPoints($userPackage->center->user, amount: $user_amount_for_points);
-//          set financial for center
-            $final_discount_for_nabadat_company = $userPackage->center->app_discount - $userPackage->discount_percentage;
-            $center_dues = $userPackage->price - ($userPackage->price * ($userPackage->center->app_discount / 100));
-            $nabadat_app_dues =($final_discount_for_nabadat_company > 0) ?  ($userPackage->price - $center_dues - ($userPackage->price * $final_discount_for_nabadat_company/ 100)):0;
-            $invoice = Invoice::where('center_id',$userPackage->center->id)->where('status',Invoice::PENDING)->orderByDesc('id')->first();
-            if ($invoice)
-            {
-                $center_dues = $invoice->total_center_dues + $center_dues ;
-                $nabadat_app_dues = $invoice->total_nabadat_dues + $nabadat_app_dues;
-                $invoice->update(['total_center_dues'=>$center_dues, 'total_nabadat_dues'=>$nabadat_app_dues]);
-            }else
-            {
-                $invoice = Invoice::create(['total_center_dues'=>$center_dues, 'total_nabadat_dues'=>$nabadat_app_dues,'center_id'=>$userPackage->center->id]);
-            }
-            Transaction::createTransaction($userPackage,$invoice->id);
-        }
+        app()->make(UserPackageService::class)->completeUserPackage(userPackage: $userPackage);
+
     }
 
     /**
@@ -57,30 +36,8 @@ class UserPackageObserver
     {
         if($userPackage->isDirty('payment_status'))
         {
-            //user after paid for package earn point
-            if ($userPackage->payment_status == PaymentStatusEnum::PAID) {
-                $userPackage->load(['center','user']);
-                $user_amount_for_points = $userPackage->price - ($userPackage->price * ($userPackage->center->pulse_discount / 100));
-    //          set user points after pay the offer
-                User::setPoints($userPackage->user, amount: $user_amount_for_points);
-    //          set center points after pay the offer
-                User::setPoints($userPackage->center->user, amount: $user_amount_for_points);
-    //          set financial for center
-                $final_discount_for_nabadat_company = $userPackage->center->app_discount - $userPackage->discount_percentage;
-                $center_dues = $userPackage->price - ($userPackage->price * ($userPackage->center->app_discount / 100));
-                $nabadat_app_dues =($final_discount_for_nabadat_company > 0) ?  ($userPackage->price - $center_dues - ($userPackage->price * $final_discount_for_nabadat_company/ 100)):0;
-                $invoice = Invoice::where('center_id',$userPackage->center->id)->where('status',Invoice::PENDING)->orderByDesc('id')->first();
-                if ($invoice)
-                {
-                    $center_dues = $invoice->total_center_dues + $center_dues ;
-                    $nabadat_app_dues = $invoice->total_nabadat_dues + $nabadat_app_dues;
-                    $invoice->update(['total_center_dues'=>$center_dues, 'total_nabadat_dues'=>$nabadat_app_dues]);
-                }else
-                {
-                    $invoice = Invoice::create(['total_center_dues'=>$center_dues, 'total_nabadat_dues'=>$nabadat_app_dues,'center_id'=>$userPackage->center->id]);
-                }
-                Transaction::createTransaction($userPackage,$invoice->id);
-            }
+            app()->make(UserPackageService::class)->completeUserPackage(userPackage: $userPackage);
+
         }
     }
     /**
