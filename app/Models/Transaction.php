@@ -30,10 +30,9 @@ class Transaction extends Model
 
     public static function createTransaction(UserPackage $userPackage,$invoice_id)
     {
-        $final_discount = $userPackage->center->app_discount - $userPackage->discount_percentage;
-//        center dues
+        $final_discount_for_nabadat_company = $userPackage->center->app_discount - $userPackage->discount_percentage;
         $center_dues = $userPackage->price - ($userPackage->price * ($userPackage->center->app_discount / 100));
-        $nabadat_app_dues =($final_discount > 0) ?  ($userPackage->price * ($final_discount/ 100)):0;
+        $nabadat_app_dues =($final_discount_for_nabadat_company > 0) ?  ($userPackage->price - $center_dues - ($userPackage->price * $final_discount_for_nabadat_company/ 100)):0;
         $center_financial_data = [
             'invoice_id' => $invoice_id,
             'user_id' => $userPackage->user_id,

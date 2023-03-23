@@ -154,7 +154,7 @@ class UserPackageService extends BaseService
         }else{
             //there is no userpackage and number_of_pulses != 0
             //start create transaction
-            $this->userPackageData = [
+            $userPackageData = [
                 'user_id' => $user->id,
                 'num_nabadat' => $number_of_pulses,
                 'price' => $number_of_pulses * $center->pulse_price,
@@ -167,8 +167,7 @@ class UserPackageService extends BaseService
                 'remain' => 0,
                 'deleted_at' => isset($deleted_at) ? Carbon::now() : null
             ];
-            UserPackage::create($this->userPackageData);
-
+            UserPackage::create($userPackageData);
             //end create transaction
 
         }
@@ -212,6 +211,38 @@ class UserPackageService extends BaseService
         $user->nabadatWallet->save();
 
         return true;
+    }
+
+    /**
+     * calculate the user and center points and create transaction
+     * @param UserPackage $userPackage
+     */
+    public function completeUserPackage(UserPackage $userPackage)
+    {
+        //user after paid for package earn point
+        if ($userPackage->payment_status == PaymentStatusEnum::PAID) {
+            $userPackage->load(['center','user']);
+            $amount_after_discount = $userPackage->price - ($userPackage->price * ($userPackage->center->app_discount / 100));
+//          set user points after pay the offer
+            User::setPoints($userPackage->user, amount: $amount_after_discount);
+//          set center points after pay the offer
+            User::setPoints($userPackage->center->user, amount: $amount_after_discount);
+//          set financial for center
+            $final_discount = $userPackage->center->app_discount - $userPackage->discount_percentage;
+            $center_dues = $userPackage->price - ($userPackage->price * ($userPackage->center->app_discount / 100));
+            $nabadat_app_dues =($final_discount > 0) ?  ($userPackage->price * ($final_discount/ 100)):0;
+            $invoice = Invoice::where('center_id',$userPackage->center->id)->where('status',Invoice::PENDING)->orderByDesc('id')->first();
+            if ($invoice)
+            {
+                $center_dues = $invoice->total_center_dues + $center_dues ;
+                $nabadat_app_dues = $invoice->total_nabadat_dues + $nabadat_app_dues;
+                $invoice->update(['total_center_dues'=>$center_dues, 'total_nabadat_dues'=>$nabadat_app_dues]);
+            }else
+            {
+                $invoice = Invoice::create(['total_center_dues'=>$center_dues, 'total_nabadat_dues'=>$nabadat_app_dues,'center_id'=>$userPackage->center->id]);
+            }
+            Transaction::createTransaction($userPackage,$invoice->id);
+        }
     }
 
 }

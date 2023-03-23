@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\NotFoundException;
 use App\Exceptions\StatusNotEquelException;
 use App\Models\Reservation;
 use App\Models\User;
@@ -22,8 +23,8 @@ class NabadatHistoryService extends BaseService
         $user = $reservation->user;
         $center = $reservation->center;
         if (!$reservation)
-            return false ;
-        $data['auto_service'] = isset($data['auto_service']) ? 1 : 0;
+           throw new NotFoundException(trans('lang.reservation_not_found'));
+        $data['auto_service'] = $data['auto_service'] ?? 0;
         $reservation->nabadatHistory()->create([
             'user_id'=>$reservation->customer_id,
             'center_id'=>$reservation->center_id,

@@ -3,10 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Center;
-use App\Models\Slider;
+use App\Models\Reservation;
 use App\Models\User;
 use App\Services\ReservationService;
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class ReservationsTableSeeder extends Seeder
@@ -24,10 +23,13 @@ class ReservationsTableSeeder extends Seeder
             'customer_id' => $customer->id,
             'center_id' => $center->id,
             'check_date' => '2023-03-26',
-            'qr_code'=>uniqid()
+            'qr_code' => uniqid()
         ];
 
-       $reservation = new ReservationService();
-       $reservation->store($data);
+        $reservation = new ReservationService();
+        $reservation = $reservation->store($data);
+        $reservation->history()->create([
+            'status' => Reservation::APPROVED,
+        ]);
     }
 }
