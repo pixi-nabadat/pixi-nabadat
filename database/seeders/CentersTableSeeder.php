@@ -48,7 +48,6 @@ class CentersTableSeeder extends Seeder
                 'en'=>'center from seeder'
             ],
             'email'=>'center_test@gmail.com',
-            'user_name'=>"center".time(),
             'is_active'=>true,
             'location_id'=>7 ,
             'password'=>bcrypt(123456),

@@ -84,7 +84,7 @@
                                 <div class="form-group">
                                     <img src="{{ asset('/uploads/users/default.png') }}" class="img-thumbnail image-preview " alt="">
                                 </div>
-                                {{-- user_name --}}
+                                
                                 <div class="col-md-12">
                                     <div class="col-md-12 mb-3">
                                         <div class="col-form-label">{{ trans('lang.choose_governorates') }}</div>

@@ -28,7 +28,6 @@ class ClientUpdateRequest extends FormRequest
             'name.*' => 'string',
             'email' => 'required|email|unique:users,email,'.$this->client,
             'phone' => 'required|string|unique:users,phone,'.$this->client,
-            'user_name' => 'required|string|unique:users,user_name,'.$this->client,
             'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             'password' => 'sometimes|nullable|string|max:255',
             'is_active' => 'nullable',
