@@ -109,12 +109,6 @@
 
                                 </div>
                             </div>
-                            
-                            {{-- user_name --}}
-                            <div class="col-md-12">
-                                <label class="form-label mt-3" for="name_ar">{{ trans('lang.user_name') }}</label>
-                                <p class="form-control" id="name_ar">{{ $client->user_name }}</p>
-                            </div>
                             {{-- date_of_birth --}}
                             <div class="col-md-12">
                                 <label class="form-label mt-3" for="name_ar">{{ trans('lang.date_of_birth') }}</label>

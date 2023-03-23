@@ -21,7 +21,6 @@ class UsersTableSeeder extends Seeder
                 'en'=>'admin',
                 'ar'=>'admin'
             ],
-            'user_name'=>'admin',
             'email'=>'admin@gmail.com',
             'password'=>bcrypt('123456'),
             'phone'=>'01113622098',
@@ -36,7 +35,6 @@ class UsersTableSeeder extends Seeder
                 'ar'=>'customer',
                 'en'=>'customer'
             ],
-            'user_name'=>'customer',
             'email'=>'customer@gmail.com',
             'password'=>bcrypt('123456'),
             'phone'=>'01022843293',

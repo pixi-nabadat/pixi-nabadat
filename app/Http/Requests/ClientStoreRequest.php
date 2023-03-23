@@ -29,7 +29,6 @@ class ClientStoreRequest extends FormRequest
             'name.*' => 'string',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|string|unique:users,phone',
-            'user_name' => 'required|string|unique:users,user_name',
             'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             'password' => 'required|string|max:255',
             'is_active' => 'nullable',
