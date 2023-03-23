@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Enum\PaymentMethodEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCenterRequestApi extends FormRequest
+class StoreCenterRequestApi extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -42,7 +42,7 @@ class StoreCenterRequestApi extends FormRequest
             'images.*'                => 'image|mimes:jpg,png,jpeg,gif,svg',
             'password'                => 'required|string',
             'email'                   => 'required|email|unique:users,email',
-            // 'is_active'               => 'nullable|string',
+             'is_active'               => 'nullable|string',
             'is_support_auto_service' => 'string|nullable',
             'avg_waiting_time'         => 'required',
             // 'featured'                => 'nullable|string',
