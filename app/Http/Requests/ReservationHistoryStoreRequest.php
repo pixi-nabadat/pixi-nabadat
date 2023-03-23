@@ -26,7 +26,7 @@ class ReservationHistoryStoreRequest extends BaseRequest
     public function rules()
     {
         return [
-            'status' => ['required','integer',Rule::in(Reservation::CONFIRMED,Reservation::ATTEND,Reservation::COMPLETED,Reservation::CANCELED)],
+            'status' => ['required','integer',Rule::in(Reservation::CONFIRMED,Reservation::APPROVED,Reservation::ATTEND,Reservation::COMPLETED,Reservation::CANCELED)],
             'period'=>'required_if:status,==,'.Reservation::CONFIRMED,
             'check_date'=>'required_if:status,==,'.Reservation::CONFIRMED,
             'cancel_reason_id'=>[Rule::requiredIf($this->status == Reservation::CANCELED),Rule::exists('cancel_reasons','id')],
