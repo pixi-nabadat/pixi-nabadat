@@ -33,7 +33,7 @@ class ClientUpdateRequest extends FormRequest
             'is_active' => 'nullable',
             'allow_notification' => 'nullable',
             'location_id' => 'required|integer',
-            'date_of_birth'=>'required|date'
+            'date_of_birth'=>'nullable|date'
         ];
     }
 

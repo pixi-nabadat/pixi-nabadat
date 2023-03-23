@@ -78,19 +78,21 @@ class UserService extends BaseService
         return false;
     }//end of delete
 
+    /**
+     * @throws NotFoundException
+     */
     public function update($id, $data)
     {
         if (isset($data['password']) && $data['password'] !=null)
             $data['password'] = bcrypt($data['password']);
         else
             Arr::forget($data,'password');
-        $data['date_of_birth'] = Carbon::parse($data['date_of_birth']);
-        isset($data['is_active']) ? $data['is_active'] = 1 : $data['is_active'] = 0;
+        $data['date_of_birth'] = isset($data['date_of_birth']) ? Carbon::parse($data['date_of_birth']):null;
+        $data['is_active'] = isset($data['is_active']) ?? 0 ;
         $data['allow_notification'] = isset($data['allow_notification']) ? 1 : 0;
-
         $user = $this->find($id);
         if (!$user)
-            return false;
+            throw new NotFoundException(trans('lang.user_not_found'));
         if (isset($data['logo']))
         {
             $user->deleteAttachmentsLogo();
