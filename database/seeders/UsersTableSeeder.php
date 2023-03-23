@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
             'last_login'=>now(),
             'date_of_birth'=>Carbon::now()->format('Y-m-d'),
             'is_active'=>User::ACTIVE,
-            'location_id'=>2
+            'location_id'=>7
         ]);
         \App\Models\User::create([
             'name'=>[
@@ -42,7 +42,7 @@ class UsersTableSeeder extends Seeder
             'last_login'=>now(),
             'date_of_birth'=>Carbon::now()->format('Y-m-d'),
             'is_active'=>User::ACTIVE,
-            'location_id'=>2
+            'location_id'=>7
         ]);
   }
 }
