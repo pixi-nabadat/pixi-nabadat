@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Enum\ReservationStatusEnum;
-use App\Observers\ReservationHistoryObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,6 +30,7 @@ class ReservationHistory extends Model
     {
         return match ($value) {
             Reservation::CONFIRMED => trans('lang.confirmed'),
+            Reservation::APPROVED => trans('lang.approved'),
             Reservation::ATTEND => trans('lang.attend'),
             Reservation::COMPLETED => trans('lang.completed'),
             Reservation::CANCELED => trans('lang.canceled'),

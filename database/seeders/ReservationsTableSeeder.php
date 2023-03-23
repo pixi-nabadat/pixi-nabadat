@@ -28,8 +28,5 @@ class ReservationsTableSeeder extends Seeder
 
         $reservation = new ReservationService();
         $reservation = $reservation->store($data);
-        $reservation->history()->create([
-            'status' => Reservation::APPROVED,
-        ]);
     }
 }
