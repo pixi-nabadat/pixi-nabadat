@@ -69,7 +69,6 @@ class CenterService extends BaseService
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['primary_phone'],
-            'user_name' => $data['user_name'],
             'password' => bcrypt($data['password']),
             'type' => User::CENTERADMIN,
             'is_active' => $data['is_active'] ,

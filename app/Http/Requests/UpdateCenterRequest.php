@@ -41,7 +41,6 @@ class UpdateCenterRequest extends BaseRequest
             'images'                  => 'nullable|array',
             'logo'                    => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             'images.*'                => 'image|mimes:jpg,png,jpeg,gif,svg',
-            'user_name'               => ['required',Rule::unique('users','user_name')->ignore($this->center,'center_id')] ,
             'password'                => 'nullable|string',
             'email'                   =>['required',Rule::unique('users','email')->ignore($this->center,'center_id')] ,
             'is_active'               => 'nullable|string',

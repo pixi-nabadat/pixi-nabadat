@@ -86,15 +86,6 @@
                                 </div>
                                 {{-- user_name --}}
                                 <div class="col-md-12">
-                                    <label class="form-label" for="user_name">{{ trans('lang.user_name') }}</label>
-                                    <input name="user_name" class="form-control @error('user_name') is-invalid @enderror"
-                                        id="user_name" type="user_name" required>
-                                    @error('user_name')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                {{-- date_of_birth --}}
-                                <div class="col-md-12">
                                     <div class="col-md-12 mb-3">
                                         <div class="col-form-label">{{ trans('lang.choose_governorates') }}</div>
                                         <select id="change_location" data-filling-name="location_id"
