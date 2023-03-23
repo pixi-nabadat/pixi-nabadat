@@ -59,7 +59,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::delete('doctors/{doctorId}', [DoctorController::class, 'destroy']);
         Route::patch('doctors/{doctorId}', [DoctorController::class, 'update']);
         Route::apiResource('appointments', AppointmentController::class);
-        Route::post('/buy-pulses', [BuyCustomPulsesController::class, 'buyCustomPulses']);
     });
 
     //start center home
@@ -78,8 +77,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('customer', [\App\Http\Controllers\Api\ReservationsController::class, 'store']);
         Route::get('{id}',  [\App\Http\Controllers\Api\ReservationsController::class, 'find']);
         Route::get('qrcode/{qrcode}',[\App\Http\Controllers\Api\ReservationsController::class, 'findByQrCode']);
-//        Route::post('{id}/status', [ReservationHistoryController::class, 'store']);
-//        Route::post('devices', [NabadatHistoryController::class, 'store']);
+        Route::post('{id}/status', [\App\Http\Controllers\Api\ReservationHistoryController::class, 'store']);
+        Route::post('devices', [\App\Http\Controllers\Api\NabadatHistoryController::class, 'store']);
+        Route::get('{id}/edit',[\App\Http\Controllers\Api\ReservationsController::class,'findForEdit']);
+        Route::patch('{id}',[\App\Http\Controllers\Api\ReservationsController::class,'update']);
+
     });
 
 //    get All devices
@@ -124,6 +126,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 //start buy pulsses from nabdat app
     Route::group(['prefix' => 'offers'], function () {
         Route::post('/buy', [BuyOfferController::class, 'buyOffer']);
+        Route::post('/buy-custom', [BuyCustomPulsesController::class, 'buyCustomPulses']);
     });
 //start buy pulsses from nabdat app
 });

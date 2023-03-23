@@ -18,8 +18,7 @@ return new class extends Migration
             $table->foreignId('customer_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(\App\Models\Center::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->date('check_date');
-            $table->time('from')->nullable();
-            $table->time('to')->nullable();
+            $table->enum('period', ['am','pm'])->nullable();
             $table->string('qr_code')->unique();
             $table->timestamps();
         });

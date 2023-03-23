@@ -12,7 +12,7 @@ class UserNabadatWallet extends Model
     const COMPLETED = 2;
     const CASH = 1;
     const CREDIT_CARD = 2 ;
-    protected $fillable = ['user_id','total_pulses','used_pulses','status'];
+    protected $fillable = ['user_id','total_pulses','used_amount'];
 
     public function subscriber(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

@@ -21,14 +21,13 @@ class ReservationsResource extends JsonResource
             'check_date' => $this->check_date,
             'check_day' => Carbon::parse($this->check_date)->locale($lang)->dayName,
             'qr_code' => $this->qr_code,
-            'from' => $this->from,
-            'to' => $this->to,
-            'customer' => $this->whenLoaded('user', [
+            'period' => $this->period,
+            'customer' => $this->relationLoaded('user')?[
                 'id' => $this->user->id,
                 'name' => $this->user->name,
                 'phone' => $this->user->phone,
                 'image' => $this->user->image,
-            ]),
+            ]:null,
             'center' => new CentersResource($this->whenLoaded('center')),
             'status' =>$this->when($this->whenLoaded('latestStatus'),$this->latestStatus->status),
             'nabadat_history' => NabadatHistoryResource::collection($this->whenLoaded('nabadatHistory')),

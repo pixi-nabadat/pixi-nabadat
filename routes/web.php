@@ -21,6 +21,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\UserPackageController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\ScheduleFcmController;
@@ -122,6 +123,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::resource('packages', PackageController::class);
     Route::post('packages/status', [PackageController::class, 'status'])->name('packages.status');
 
+    Route::resource('user-packages', UserPackageController::class);
+    
     Route::resource('sliders', SliderController::class);
     Route::post('sliders/status', [SliderController::class, 'status'])->name('sliders.status');
 
@@ -135,7 +138,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     Route::resource('invoices', InvoiceController::class);
     Route::post('invoices/settle', [InvoiceController::class, 'settleInvoice'])->name('invoices.settle');
-    Route::get('invoices/export-pdf', [InvoiceController::class, 'export'])->name('invoices.export-pdf');
+    Route::get('invoices/export-pdf/{id}', [InvoiceController::class, 'export'])->name('invoices.export-pdf');
     Route::get('invoices/{id}/print', [InvoiceController::class, 'print'])->name('invoices.print');
 
 

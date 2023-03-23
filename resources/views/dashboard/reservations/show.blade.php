@@ -97,17 +97,12 @@
                         {{--  check_date  --}}
                         <div class="col-md-12 d-flex my-3">
                             <label class="form-label col-3">@lang('lang.check_date')</label>
-                            <input type="date" class="form-control" value="{{ $reservation->check_date }}" @disabled(true)>
+                            <p class="form-control" id="check_date">{{ $reservation->check_date }}</p>
                         </div>
-                        {{--  from  --}}
+                        {{--  period  --}}
                         <div class="col-md-12 d-flex my-3">
-                            <label class="form-label col-3">@lang('lang.from')</label>
-                            <input type="time" class="form-control" value="{{ $reservation->from }}" @disabled(true)>
-                        </div>
-                        {{--  to  --}}
-                        <div class="col-md-12 d-flex my-3">
-                            <label class="form-label col-3">@lang('lang.to')</label>
-                            <input type="time" class="form-control" value="{{ $reservation->to }}" @disabled(true)>
+                            <label class="form-label col-3">@lang('lang.period')</label>
+                            <p class="form-control" id="period">{{ $reservation->period }}</p>
                         </div>
                     </div>
                 </div>

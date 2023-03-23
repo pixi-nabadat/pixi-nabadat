@@ -47,7 +47,7 @@ class DoctorController extends Controller
     public function find($id)
     {
         try {
-            $withRelation = ['center','defaultLogo'];
+            $withRelation = ['defaultLogo'];
             $doctor = $this->doctorService->find(doctorId: $id, withRelations: $withRelation);
             return new DoctorsResource($doctor);
         } catch (\Exception $ex) {

@@ -7,6 +7,7 @@ use App\Models\Device;
 use App\Models\Invoice;
 use App\QueryFilters\DevicesFilter;
 use App\QueryFilters\InvoiceFilter;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
 class InvoiceService extends BaseService
@@ -51,6 +52,7 @@ class InvoiceService extends BaseService
     {
         $invoice = $this->find($id);
         $invoice->status = Invoice::COMEPELETED;
+        $invoice->completed_date = Carbon::now();
         return $invoice->save();
     }//end of changeStatus
 }

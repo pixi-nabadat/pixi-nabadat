@@ -47,8 +47,7 @@ class CenterDeviceController extends Controller
             $centerDevice = $this->centerDeviceService->store($request->validated());
             if(!$centerDevice)
                 return apiResponse(message: trans('lang.something_went_rong'), code: 422);
-            $response = new CenterDeviceResource($centerDevice);
-            return apiResponse(data: $response, message: trans('lang.success_operation'));
+            return apiResponse( message: trans('lang.success_operation'));
         } catch (Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }

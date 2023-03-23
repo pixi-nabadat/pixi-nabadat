@@ -29,8 +29,8 @@ class ExpirePointsCommand extends Command
      */
     public function handle()
     {
-        $currentDate = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::today());
-        $users = User::where('points_expire_date','<=',$currentDate)->get();
+        $currentDate =Carbon::today()->format('Y-m-d');
+        $users = User::query()->whereDate('points_expire_date','<=',$currentDate)->get();
         foreach($users as $user)
         {
             $user->update([

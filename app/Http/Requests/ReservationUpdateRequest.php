@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Enum\PaymentMethodEnum;
+use App\Models\Reservation;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ReservationUpdateRequest extends BaseRequest
 {
@@ -25,9 +27,8 @@ class ReservationUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'customer_id' => 'required|exists:users,id',
-            'center_id'   => 'required|exists:centers,id',
-            'check_date'  => 'required|date',
+           'period'=>'required|in:am,pm',
+           'check_date'  =>'required|date',
         ];
     }
 }
