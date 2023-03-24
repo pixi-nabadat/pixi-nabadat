@@ -36,7 +36,7 @@ abstract class QueryFilter
                 continue;
             }
 
-            if(strlen($value)) {
+            if($value) {
                 $this->$name($value);
             } else {
                 $this->$name();

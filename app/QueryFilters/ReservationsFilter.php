@@ -46,9 +46,8 @@ class ReservationsFilter extends QueryFilter
         });
     }
 
-    public function status_in($term)
+    public function status_in($term=[])
     {
-        $term = Arr::wrap($term);
         return $this->builder->whereHas('latestStatus', function ($query) use ($term) {
             $query->whereIn('status', $term);
         });
