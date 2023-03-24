@@ -19,7 +19,7 @@ class CenterHomeController extends Controller
     {
         $data=[];
         $centerId = auth('sanctum')->user()->center_id;
-        $data ['upcoming_reservations'] = ReservationsResource::collection($this->reservationService->queryGet(where_condition: ['center_id' => $centerId, 'status' => Reservation::PENDING], withRelation: ['user.attachments', 'latestStatus'])->orderByDesc('id')->limit(8)->get());
+        $data ['upcoming_reservations'] = ReservationsResource::collection($this->reservationService->queryGet(where_condition: ['center_id' => $centerId, 'status_in' => [Reservation::PENDING,Reservation::APPROVED]], withRelation: ['user.attachments', 'latestStatus'])->orderBy('id')->limit(10)->get());
 //        return $data;
 //
 //        $data = Cache::remember('center-home-api', 60 * 60 * 24, function () use ($centerId) {
