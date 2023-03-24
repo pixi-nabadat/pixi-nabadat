@@ -3,6 +3,7 @@
 namespace App\QueryFilters;
 
 use App\Abstracts\QueryFilter;
+use Illuminate\Support\Arr;
 
 class ReservationsFilter extends QueryFilter
 {
@@ -42,6 +43,14 @@ class ReservationsFilter extends QueryFilter
     {
         return $this->builder->whereHas('latestStatus', function ($query) use ($term) {
             $query->where('status', $term);
+        });
+    }
+
+    public function status_in($term)
+    {
+        $term = Arr::wrap($term);
+        return $this->builder->whereHas('latestStatus', function ($query) use ($term) {
+            $query->whereIn('status', $term);
         });
     }
 

@@ -30,6 +30,7 @@ class ReservationsResource extends JsonResource
             ]:null,
             'center' => new CentersResource($this->whenLoaded('center')),
             'status' =>$this->when($this->whenLoaded('latestStatus'),$this->latestStatus->status),
+            'status_slug' =>$this->latestStatus->getRawOriginal('status'),
             'nabadat_history' => NabadatHistoryResource::collection($this->whenLoaded('nabadatHistory')),
         ];
     }
