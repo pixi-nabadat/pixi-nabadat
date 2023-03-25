@@ -81,7 +81,7 @@ class CenterService extends BaseService
         return [
             'is_support_auto_service'=>$data['is_support_auto_service'],
             'featured'=>$data['featured'],
-            'phones'=>array_filter($data['phones']),
+            'phones'=>isset($data['phones']) ? array_filter($data['phones']):null,
             'address' => $data['address'],
             'description' => $data['description'],
             'avg_waiting_time'=>$data['avg_waiting_time'],
