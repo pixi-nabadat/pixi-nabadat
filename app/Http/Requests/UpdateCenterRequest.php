@@ -41,7 +41,6 @@ class UpdateCenterRequest extends BaseRequest
             'images'                  => 'nullable|array',
             'logo'                    => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             'images.*'                => 'image|mimes:jpg,png,jpeg,gif,svg',
-            'user_name'               => ['required',Rule::unique('users','user_name')->ignore($this->center,'center_id')] ,
             'password'                => 'nullable|string',
             'email'                   =>['required',Rule::unique('users','email')->ignore($this->center,'center_id')] ,
             'is_active'               => 'nullable|string',
@@ -63,7 +62,6 @@ class UpdateCenterRequest extends BaseRequest
             'phone.*.string' => __('lang.phone_en_should_be_string'),
             'name.*.required' => __('lang.title_in_ar__should_be_required'),
             'location_id.required' => __('lang.location_should_be_required'),
-            // 'user_name.required' => __('lang.user_name_should_be_required'),
         ];
     }
 }

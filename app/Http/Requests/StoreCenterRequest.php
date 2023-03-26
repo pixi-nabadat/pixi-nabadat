@@ -39,7 +39,6 @@ class StoreCenterRequest extends BaseRequest
             'images'                  => 'nullable|array',
             'logo'                    => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             'images.*'                => 'image|mimes:jpg,png,jpeg,gif,svg',
-            'user_name'               => 'required|unique:users,user_name',
             'password'                => 'required|string',
             'email'                   => 'required|email|unique:users,email',
             'is_active'               => 'nullable|string',
@@ -61,7 +60,6 @@ class StoreCenterRequest extends BaseRequest
             'phones.*.string' => __('lang.phone_en_should_be_string'),
             'name.*.required' => __('lang.title_in_ar__should_be_required'),
             'location_id.required' => __('lang.location_should_be_required'),
-            'user_name.required' => __('lang.user_name_should_be_required'),
         ];
     }
 }

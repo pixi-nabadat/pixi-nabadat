@@ -26,12 +26,12 @@ class StoreDoctorRequest extends BaseRequest
             'name.*' => 'required|string',
             'phone' => 'required|string',
             'description.*' => 'string|nullable',
-            'image' => 'image|mimes:jpg,png,jpeg,gif,svg',
-            'is_active' => 'nullable'
+            'logo' => 'image|mimes:jpg,png,jpeg,gif,svg',
+//            'is_active' => 'nullable'
         ];
     }
 
-    public function prepareForValidation(): array
+    public function validationData(): array
     {
         return array_merge($this->all(), ['center_id' => auth()->user()->center_id]);
     }

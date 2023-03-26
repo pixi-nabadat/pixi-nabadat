@@ -18,7 +18,7 @@ class UserPackagesFilter extends QueryFilter
     }
     public function user_type($term)
     {
-        return $this->builder->where('user_type',$term);
+        return $this->builder->where('type',$term);
     }
 
     public function user_id($term)

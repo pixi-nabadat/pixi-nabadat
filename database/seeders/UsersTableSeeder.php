@@ -21,7 +21,6 @@ class UsersTableSeeder extends Seeder
                 'en'=>'admin',
                 'ar'=>'admin'
             ],
-            'user_name'=>'admin',
             'email'=>'admin@gmail.com',
             'password'=>bcrypt('123456'),
             'phone'=>'01113622098',
@@ -29,14 +28,13 @@ class UsersTableSeeder extends Seeder
             'last_login'=>now(),
             'date_of_birth'=>Carbon::now()->format('Y-m-d'),
             'is_active'=>User::ACTIVE,
-            'location_id'=>2
+            'location_id'=>7
         ]);
         \App\Models\User::create([
             'name'=>[
                 'ar'=>'customer',
                 'en'=>'customer'
             ],
-            'user_name'=>'customer',
             'email'=>'customer@gmail.com',
             'password'=>bcrypt('123456'),
             'phone'=>'01022843293',
@@ -44,7 +42,7 @@ class UsersTableSeeder extends Seeder
             'last_login'=>now(),
             'date_of_birth'=>Carbon::now()->format('Y-m-d'),
             'is_active'=>User::ACTIVE,
-            'location_id'=>2
+            'location_id'=>7
         ]);
   }
 }

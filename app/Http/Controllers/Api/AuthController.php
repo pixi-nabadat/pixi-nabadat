@@ -34,7 +34,7 @@ class AuthController extends Controller
     public function register(RegisterRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $data = $request->validated();
-        $data = array_merge($data, ['type' => User::CUSTOMERTYPE, 'email' => $data['user_name'] . "@gmail.com", 'last_login_at' => now()]);
+        $data = array_merge($data, ['type' => User::CUSTOMERTYPE, 'last_login_at' => now()]);
         $data['name'] = [
             'en' => $data['name'],
             'ar' => $data['name'],
@@ -61,7 +61,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::user()->tokens()->delete();
-        return apiResponse(message: __('lang.login success'));
+        return apiResponse(message: __('lang.logout_success'));
     }
 
     public function setFcmToken(StoreFcmTokenRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory

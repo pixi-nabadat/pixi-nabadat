@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\Reservation::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->integer('status');
+            $table->foreignIdFor(\App\Models\CancelReason::class)->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }

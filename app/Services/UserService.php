@@ -14,6 +14,7 @@ use App\Models\UserPackage;
 use App\QueryFilters\UsersFilter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 
 class UserService extends BaseService
 {
@@ -36,6 +37,7 @@ class UserService extends BaseService
         $data['password'] = bcrypt($data['password']);
         $data['date_of_birth'] = isset($data['date_of_birth']) ? Carbon::parse($data['date_of_birth']) : null;
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
+        $data['allow_notification'] = isset($data['allow_notification']) ? 1 : 0;
         $user = User::create($data);
         if (isset($data['logo']))
         {
@@ -54,12 +56,15 @@ class UserService extends BaseService
         $user->save();
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function find($id, $withRelations = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|Builder|bool|array
     {
         $user = User::with($withRelations)->find($id);
-        if ($user)
-            return $user;
-        return false;
+        if (!$user)
+            throw new NotFoundException(trans('lang.user_not_found'));
+        return $user;
     }//end of changeStatus
 
     public function delete($id)
@@ -73,16 +78,21 @@ class UserService extends BaseService
         return false;
     }//end of delete
 
+    /**
+     * @throws NotFoundException
+     */
     public function update($id, $data)
     {
-        $data['password'] = bcrypt($data['password']);
-        $data['date_of_birth'] = Carbon::parse($data['date_of_birth']);
-        isset($data['is_active']) ? $data['is_active'] = 1 : $data['is_active'] = 0;
-
-
-        $user = User::find($id);
+        if (isset($data['password']) && $data['password'] !=null)
+            $data['password'] = bcrypt($data['password']);
+        else
+            Arr::forget($data,'password');
+        $data['date_of_birth'] = isset($data['date_of_birth']) ? Carbon::parse($data['date_of_birth']):null;
+        $data['is_active'] = isset($data['is_active']) ?? 0 ;
+        $data['allow_notification'] = isset($data['allow_notification']) ? 1 : 0;
+        $user = $this->find($id);
         if (!$user)
-            return false;
+            throw new NotFoundException(trans('lang.user_not_found'));
         if (isset($data['logo']))
         {
             $user->deleteAttachmentsLogo();
@@ -95,7 +105,7 @@ class UserService extends BaseService
 
     public function updateOrCreateNabadatWallet(User $user,UserPackage $userPackage): bool
     {
-        $old_pulses = $user->nabadatWallet->total_pulses ?? 0;
+        $old_pulses = optional($user->nabadatWallet)->total_pulses ?? 0;
         $total_pulses = $old_pulses + $userPackage->num_nabadat;
         if ($userPackage && $userPackage->payment_status == PaymentStatusEnum::PAID){
             $user->nabadatWallet()->updateOrCreate(['user_id'=>$user->id],['total_pulses' => $total_pulses]);

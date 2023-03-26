@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Observers\ReservationHistoryObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,34 +26,16 @@ class ReservationHistory extends Model
         return $this->belongsTo(Reservation::class);
     }
 
-    public function getStatusAttribute($value)
+    public function getStatusAttribute($value): array|string|\Illuminate\Contracts\Translation\Translator|\Illuminate\Contracts\Foundation\Application|null
     {
-        switch($value){
-            case 1:
-                return trans('lang.pending');
-                break;
-            case 2:
-                return trans('lang.confirmed');
-                break;
-            case 3:
-                return trans('lang.attend');
-                break;
-            case 4:
-                return trans('lang.completed');
-                break;
-            case 5:
-                return trans('lang.canceled');
-                break;
-            case 6:
-                return trans('lang.expired');
-                break;
-            default:
-                return $value;
-        }
-    }
-    protected static function boot()
-    {
-        parent::boot();
-        static::observe(ReservationHistoryObserver::class);
+        return match ($value) {
+            Reservation::CONFIRMED => trans('lang.confirmed'),
+            Reservation::APPROVED => trans('lang.approved'),
+            Reservation::ATTEND => trans('lang.attend'),
+            Reservation::COMPLETED => trans('lang.completed'),
+            Reservation::CANCELED => trans('lang.canceled'),
+            Reservation::Expired => trans('lang.expired'),
+            default => trans('lang.pending'),
+        };
     }
 }

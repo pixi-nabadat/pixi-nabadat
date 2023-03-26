@@ -3,7 +3,10 @@
 namespace App\Http\Requests;
 
 
-class PackageStoreRequest extends BaseRequest 
+use App\Enum\PackageStatusEnum;
+use Illuminate\Validation\Rule;
+
+class PackageStoreRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,17 +25,27 @@ class PackageStoreRequest extends BaseRequest
      */
     public function rules()
     {
+
         return [
             'center_id'            => 'required|exists:centers,id',
-            'name.*'               => 'required|string|unique:packages,name',
+            'name.*'                 => 'required',
+            'name.en' => [
+                Rule::unique('packages', 'name->en')->where(function ($query) {
+                    return $query->where('name->en', $this->name['en']);
+                })
+            ],
+            'name.ar' => [
+                Rule::unique('packages', 'name->ar')->where(function ($query) {
+                    return $query->where('name->ar', $this->name['ar']);
+                })
+            ],
             'num_nabadat'          => 'required|integer',
             'price'                => 'required|numeric',
             'start_date'           => 'required|date',
             'end_date'             => 'required|date',
-            'discount_percentage'  => 'nullable|numeric',
-            'image'                => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'status'               => 'nullable|integer',
-            'is_active'            => 'nullable|string',
+            'image'                => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'status'               => 'required|integer',
+            'discount_percentage'  => ['numeric',Rule::requiredIf($this->status == PackageStatusEnum::APPROVED)],
         ];
     }
 
@@ -42,5 +55,10 @@ class PackageStoreRequest extends BaseRequest
             'name.*.string' => __('lang.name_should_be_string'),
             'name.*.required' => __('lang.name__should_be_required'),
         ];
+    }
+
+    public function validationData()
+    {
+        return array_merge($this->all(),['center_id'=>auth()->user()->center_id,'status'=>PackageStatusEnum::UNDERACHIEVING]);
     }
 }

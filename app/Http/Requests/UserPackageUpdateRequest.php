@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,7 +26,13 @@ class UserPackageUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'payment_status' => 'required|integer|in:'.PaymentStatusEnum::PAID.','.PaymentStatusEnum::UNPAID, 
+            'user_id'=>'required|exists:users,id',
+            'center_id'=>'required|exists:centers,id',
+            'num_nabadat'=>'required|numeric',
+            'price'=>'required|numeric',
+            'discount_percentage'=>'nullable|numeric',
+            'payment_method'=>'required|in:'.PaymentMethodEnum::CASH.','.PaymentMethodEnum::CREDIT,
+            'payment_status'=>'required',
         ];
     }
 

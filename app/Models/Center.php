@@ -7,6 +7,7 @@ use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
 use App\Traits\HasAttachment;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -82,6 +83,11 @@ class Center extends Model
         return $this->hasMany(Package::class,'center_id');
     }
 
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class,'center_id');
+    }
+
     /**
      * @param Center $center
      * @param float $amount
@@ -100,5 +106,12 @@ class Center extends Model
     public function getPulsePriceAfterDiscountAttribute(): float
     {
         return  round($this->pulse_price - ($this->pulse_price * ($this->pulse_discount/100)), 3);
+    }
+
+
+    public function scopeActive(Builder $builder): Builder
+    {
+        return $builder->whereHas('user',fn($query)=>$query->where('is_active',User::ACTIVE))
+            ->whereNotNull('pulse_price')->whereNotNull('pulse_discount')->whereNotNull('app_discount');
     }
 }

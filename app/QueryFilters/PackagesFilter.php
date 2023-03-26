@@ -26,8 +26,8 @@ class PackagesFilter extends QueryFilter
         return $this->builder->where('is_active', $term);
     }
 
-    public function status()
+    public function status($term)
     {
-        return $this->builder->where('status', PackageStatusEnum::APPROVED);
+        return $this->builder->where('status', $term);
     }
 }

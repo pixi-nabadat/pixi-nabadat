@@ -64,10 +64,10 @@
 
                         @can('view_client')
                         {{--start clients--}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/doctors' ? 'active' : '' }}" href="#"><i class="fa fa-user p-r-5"></i><span class="lan-6">{{ trans('lang.clients') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/clients' ? 'active' : '' }}" href="#"><i class="fa fa-user p-r-5"></i><span class="lan-6">{{ trans('lang.clients') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/doctors' ? 'down' : 'right' }}"></i></div>
                         </a>
-                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/doctors' ? 'block;' : 'none;' }}">
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/clients' ? 'block;' : 'none;' }}">
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('clients.index') ? 'active' : '' }}" href="{{route('clients.index')}}">{{ trans('lang.view') }}</a></li>
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('clients.index') ? 'active' : '' }}" href="{{route('clients.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
@@ -177,6 +177,7 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('employees.index') ? 'active' : '' }}" href="{{route('employees.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('employees.create') ? 'active' : '' }}" href="{{route('employees.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
                         {{--end employee --}}
                         @endcan
@@ -187,9 +188,21 @@
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/reservations' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
-                            <li><a class="lan-5 {{ Route::currentRouteName()==route('packages.index') ? 'active' : '' }}" href="{{route('reservations.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('reservations.index') ? 'active' : '' }}" href="{{route('reservations.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('reservations.create') ? 'active' : '' }}" href="{{route('reservations.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
                         {{--end reservations --}}
+                        @endcan
+
+                        @can('view_user_package')
+                        {{-- start User Packages --}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/user-packages' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.user_packages') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/user-packages' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('packages.index') ? 'active' : '' }}" href="{{route('user-packages.index')}}">{{ trans('lang.view') }}</a></li>
+                        </ul>
+                        {{--end User Packages --}}
                         @endcan
 
                         @can('view_cancel_reason')

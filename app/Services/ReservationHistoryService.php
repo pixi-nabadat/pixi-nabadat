@@ -14,15 +14,17 @@ class ReservationHistoryService extends BaseService
      */
     public function store(Reservation $reservation, array $reservation_data = []): bool
     {
-        $lastStatus = $reservation->history->last()->getRawOriginal('status');
-
+        $reservation = $reservation->loadMissing('latestStatus');
+        $lastStatus = $reservation->latestStatus->getRawOriginal('status');
         $reservationDevicesCount = $reservation->nabadatHistory->count();
 
         $status = $reservation_data['status'] ;
 
         if($lastStatus == Reservation::CANCELED || $lastStatus == Reservation::Expired)
             throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));
-        if ($status == Reservation::CONFIRMED && $lastStatus != Reservation::PENDING)
+        elseif ($status == Reservation::APPROVED && $lastStatus != Reservation::PENDING)
+            throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));
+        elseif ($status == Reservation::CONFIRMED && $lastStatus != Reservation::APPROVED)
             throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));
         elseif ($status == Reservation::ATTEND && $lastStatus != Reservation::CONFIRMED)
             throw new StatusNotEquelException(trans('lang.the_current_status_is: ') . Reservation::getStatusText($lastStatus));
