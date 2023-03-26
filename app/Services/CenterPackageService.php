@@ -47,8 +47,6 @@ class CenterPackageService extends BaseService
     public function delete($id)
     {
         $package = $this->find($id);
-        if (!$package)
-            return false;
         return $package->delete();
 
     } //end of find
@@ -68,8 +66,6 @@ class CenterPackageService extends BaseService
     {
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
         $package = $this->find($id);
-        if (!$package)
-            return false;
         if (isset($data['image'])) {
             $fileData = FileService::saveImage(file: $data['image'], path: 'uploads\packages', field_name: 'image');
             $package->updateAttachment($fileData);
