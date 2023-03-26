@@ -17,11 +17,10 @@ class CenterPackageController extends Controller
         $this->middleware('auth:sanctum')->except('index');
     }
 
-
     public function index(): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $filters = ['is_active' => 1, 'in_duration' => true , 'status'=>PackageStatusEnum::APPROVED];
+            $filters = ['is_active' => 1, 'in_duration' => true , 'status'=>true];
             $withRelations = ['center.user:id,center_id,name','center.defaultLogo','attachments'];
             $allPackages = $this->packageService->listing(where_condition: $filters, withRelation: $withRelations);
             return PackagesResource::collection($allPackages);
@@ -36,20 +35,18 @@ class CenterPackageController extends Controller
             $data = $request->validated();
             $package = $this->packageService->store($data);
             if(!$package)
-                return apiResponse(message: trans('lang.something_went_rong'), code:422);
+                return apiResponse(message: trans('lang.something_went_wrong'), code:422);
             $response = new PackagesResource($package);
             return apiResponse(data: $response, message: trans('lang.success_operation'), code: 200);
         } catch (\Exception $ex) {
-            return apiResponse(message: trans('lang.something_went_rong'), code: 422);
+            return apiResponse(message: trans('lang.something_went_wrong'), code: 422);
         }
     }//end of store
 
-    public function update(PackageUpdateRequest $request, $id)
+    public function update(PackageUpdateRequest $request, $id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             $package = $this->packageService->update($id, $request->validated());
-            if(!$package)
-                return apiResponse(message: trans('lang.something_went_rong'), code:422);
             $response = new PackagesResource($package);
             return apiResponse(data: $response, message: trans('lang.success_operation'), code: 200);
         } catch (\Exception $ex) {
@@ -57,7 +54,7 @@ class CenterPackageController extends Controller
         }
     } //end of update
 
-    public function destroy($id)
+    public function destroy($id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             $result = $this->packageService->delete($id);
@@ -69,15 +66,12 @@ class CenterPackageController extends Controller
         }
     } //end of destroy
 
-    public function show($id)
+    public function show($id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             $package = $this->packageService->find($id);
-            if (!$package) {
-                return apiResponse(message: trans('lang.error'), code: 422);
-            }
             $data = new PackagesResource($package);
-            return apiResponse(data: $data, message: trans('lang.success_operation'), code: 200);
+            return apiResponse(data: $data, message: trans('lang.success_operation'));
         } catch (Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }

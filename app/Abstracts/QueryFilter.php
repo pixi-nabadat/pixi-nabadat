@@ -36,10 +36,14 @@ abstract class QueryFilter
                 continue;
             }
 
-            if($value) {
+            if (is_array($value)) {
                 $this->$name($value);
             } else {
-                $this->$name();
+                if (strlen($value)) {
+                    $this->$name($value);
+                }else{
+                    $this->$name();
+                }
             }
         }
 

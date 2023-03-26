@@ -25,7 +25,7 @@
                             @csrf
                             @method('put')
                             {{--center  --}}
-                            <div class="col-md-12 d-flex my-3">
+                            <div class="col-md-12">
                                 <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
                                 <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12 @error('price') is-invalid @enderror">
                                     @foreach ($centers as $center)
@@ -40,7 +40,7 @@
                             {{-- English Name --}}
                             <div class="col-md-12">
                                 <label class="form-label mt-3" for="name_en">{{ trans('lang.name_en') }}</label>
-                                <input name="name[en]" value={{ $package->getTranslation('name', 'en') }}
+                                <input name="name[en]" value="{{ $package->getTranslation('name', 'en') }}"
                                     class="form-control @error('name.en') is-invalid @enderror" id="name_en"
                                     type="text" required>
                                 @error('name.en')
@@ -50,7 +50,7 @@
                             {{-- Arabic Name --}}
                             <div class="col-md-12">
                                 <label class="form-label" for="name_ar">{{ trans('lang.name_ar') }}</label>
-                                <input name="name[ar]" value={{ $package->getTranslation('name', 'ar') }}
+                                <input name="name[ar]" value="{{ $package->getTranslation('name', 'ar') }}"
                                     class="form-control @error('name.ar') is-invalid @enderror" id="name_ar"
                                     type="text" required>
                                 @error('name.ar')
@@ -102,7 +102,7 @@
                                 @enderror
                             </div>
                             {{--status  --}}
-                            <div class="col-md-12 d-flex my-3">
+                            <div class="col-md-12">
                                 <div class="col-form-label col-3">{{ __('lang.status') }}</div>
                                 <select id="status" name="center_id" class="form-select form-control-sm digits @error('price') is-invalid @enderror">
                                     <option value="{{\App\Enum\PackageStatusEnum::APPROVED}}" {{$package->status == \App\Enum\PackageStatusEnum::APPROVED ? 'selected' : ''}}>{{ __('lang.approved') }}</option>
@@ -118,7 +118,7 @@
                                     <h6>{{ __('lang.package_image') }}</h6>
                                 </div>
                                 <div class="card-body">
-                                    <div class="col-md-12 d-flex">
+                                    <div class="col-md-12">
                                         <label class="form-label col-3" for="image">{{ trans('lang.image') }}</label>
                                             <input name="image" class="form-control image @error('image') is-invalid @enderror"
                                                 id="image" type="file">
