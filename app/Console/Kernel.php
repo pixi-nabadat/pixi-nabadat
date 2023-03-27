@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\ExpirePointsCommand;
 use App\Console\Commands\ExpireReservationCommand;
+use App\Console\Commands\FcmCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -19,6 +20,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command(ExpireReservationCommand::class)->daily();
         $schedule->command(ExpirePointsCommand::class)->daily();
+        $schedule->command(FcmCommand::class)->everyMinute();
     }
 
     /**
