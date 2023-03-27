@@ -8,8 +8,6 @@ use App\Models\ScheduleFcm;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use App\Services\PushNotificationService;
-use App\Services\ReservationService;
 
 class FcmCommand extends Command
 {
@@ -33,14 +31,8 @@ class FcmCommand extends Command
      * @return int
      */
     public function handle()
-    {
-
-        $reservationsOneDayRemain = Reservation::query()->whereHas('latestStatus',fn($query)=>$query->where('status',Reservation::CONFIRMED))
-        ->where('check_date', Carbon::parse(Carbon::now()->addDays(2))->format('Y-m-d'))->get();
-        
-        $reservationsTwoDaysRemain = Reservation::query()->whereHas('latestStatus',fn($query)=>$query->where('status',Reservation::CONFIRMED))
-        ->where('check_date', Carbon::parse(Carbon::now()->addDays(3))->format('Y-m-d'))->get();
-        
+    {        
+        //start reservations check date reminder
         $scheduleFcmOneDay  = ScheduleFcm::query()
         ->where('is_active', 1)
         ->where('trigger', FcmEventsNames::$EVENTS['ONE_DAY_BEFORE_RESERVATION'])
@@ -49,58 +41,58 @@ class FcmCommand extends Command
         ->where('is_active', 1)
         ->where('trigger', FcmEventsNames::$EVENTS['TWO_DAYS_BEFORE_RESERVATION'])
         ->first();
-        
-        
         if($scheduleFcmOneDay)
         {
-            
-            //prepare data
-            $title = $scheduleFcmOneDay->title ;
-            $body = $scheduleFcmOneDay->content ;
-            foreach($reservationsOneDayRemain as $reservation)
-            {
-                $replaced_values = [
-                    '@USER_NAME@'=>$reservation->user->name,
-                    '@EXPIRE_DATE@'=>$reservation->check_date,
-                    '@RESERVATION_NUMBER@'=>$reservation->id,
-                    '@RESERVATION_STATUS@'=> $reservation->latestStatus,
-                    '@CENTER_NAME@'=>$reservation->center->user->name,
-                    '@CENTER_LOCATION@'=>$reservation->center->user->location->title,
-                ];
-                $body = replaceFlags($body,$replaced_values);
-                // $tokens = $usersToken->toArray();
-                $tokens[0] = $reservation->user->device_token;
-                app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $tokens);
+            $reservationsOneDayRemain = Reservation::query()->whereHas('latestStatus',fn($query)=>$query->where('status',Reservation::CONFIRMED))
+            ->where('check_date', Carbon::parse(Carbon::now()->addDays(2))->format('Y-m-d'))->get();
     
-            }
-
+            ScheduleFcm::ReservationCheckDateRemiderFcm($scheduleFcmOneDay, $reservationsOneDayRemain);
         }
-
-        if($scheduleFcmTwoDays)
+        if($scheduleFcmOneDay)
         {
-            
-            //prepare data
-            $title = $scheduleFcmTwoDays->title ;
-            $body = $scheduleFcmTwoDays->content ;
-            foreach($reservationsTwoDaysRemain as $reservation)
-            {
-                $replaced_values = [
-                    '@USER_NAME@'=>$reservation->user->name,
-                    '@EXPIRE_DATE@'=>$reservation->check_date,
-                    '@RESERVATION_NUMBER@'=>$reservation->id,
-                    '@RESERVATION_STATUS@'=> $reservation->latestStatus,
-                    '@CENTER_NAME@'=>$reservation->center->user->name,
-                    '@CENTER_LOCATION@'=>$reservation->center->user->location->title,
-                ];
-                $body = replaceFlags($body,$replaced_values);
-                // $tokens = $usersToken->toArray();
-                $tokens[0] = $reservation->user->device_token;
-                app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $tokens);
-    
-            }
+            $reservationsTwoDaysRemain = Reservation::query()->whereHas('latestStatus',fn($query)=>$query->where('status',Reservation::CONFIRMED))
+            ->where('check_date', Carbon::parse(Carbon::now()->addDays(3))->format('Y-m-d'))->get();
 
+            ScheduleFcm::ReservationCheckDateRemiderFcm($scheduleFcmTwoDays, $reservationsTwoDaysRemain);
         }
-        
+        //end reservation check date reminder
+
+        //start points expire reminder
+        $scheduleFcmPointsOneDay = ScheduleFcm::query()
+        ->where('is_active', 1)
+        ->where('trigger', FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_1'])
+        ->first();
+        $scheduleFcmPointsthreeDays = ScheduleFcm::query()
+        ->where('is_active', 1)
+        ->where('trigger', FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_3'])
+        ->first();
+        $scheduleFcmPointsSevenDays = ScheduleFcm::query()
+        ->where('is_active', 1)
+        ->where('trigger', FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_7'])
+        ->first();
+
+        if($scheduleFcmPointsOneDay)
+        {
+            $userPointsOneDayRemain = User::query()
+            ->where('points_expire_date', '!=', null)
+            ->where('points_expire_date', Carbon::parse(Carbon::now()->addDays(2))->format('Y-m-d'))->get();
+            ScheduleFcm::UserPointsExpireReminderFcm($scheduleFcmPointsOneDay, $userPointsOneDayRemain);
+        }
+        if($scheduleFcmPointsthreeDays)
+        {
+            $userPointsThreeDaysRemain = User::query()
+            ->where('points_expire_date', '!=', null)
+            ->where('points_expire_date', Carbon::parse(Carbon::now()->addDays(4))->format('Y-m-d'))->get();
+            ScheduleFcm::UserPointsExpireReminderFcm($scheduleFcmPointsthreeDays, $userPointsThreeDaysRemain);
+        }
+        if($scheduleFcmPointsSevenDays)
+        {
+            $userPointsSevenDaysRemain = User::query()
+            ->where('points_expire_date', '!=', null)
+            ->where('points_expire_date', Carbon::parse(Carbon::now()->addDays(8))->format('Y-m-d'))->get();
+            ScheduleFcm::UserPointsExpireReminderFcm($scheduleFcmPointsthreeDays, $userPointsSevenDaysRemain);
+        }
+        //end points expire reminder
         return Command::SUCCESS;
     }
 }
