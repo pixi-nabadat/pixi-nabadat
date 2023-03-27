@@ -76,23 +76,69 @@ class FcmCommand extends Command
             $userPointsOneDayRemain = User::query()
             ->where('points_expire_date', '!=', null)
             ->where('points_expire_date', Carbon::parse(Carbon::now()->addDays(2))->format('Y-m-d'))->get();
-            ScheduleFcm::UserPointsExpireReminderFcm($scheduleFcmPointsOneDay, $userPointsOneDayRemain);
+            ScheduleFcm::UserReminderFcm($scheduleFcmPointsOneDay, $userPointsOneDayRemain);
         }
         if($scheduleFcmPointsthreeDays)
         {
             $userPointsThreeDaysRemain = User::query()
             ->where('points_expire_date', '!=', null)
             ->where('points_expire_date', Carbon::parse(Carbon::now()->addDays(4))->format('Y-m-d'))->get();
-            ScheduleFcm::UserPointsExpireReminderFcm($scheduleFcmPointsthreeDays, $userPointsThreeDaysRemain);
+            ScheduleFcm::UserReminderFcm($scheduleFcmPointsthreeDays, $userPointsThreeDaysRemain);
         }
         if($scheduleFcmPointsSevenDays)
         {
             $userPointsSevenDaysRemain = User::query()
             ->where('points_expire_date', '!=', null)
             ->where('points_expire_date', Carbon::parse(Carbon::now()->addDays(8))->format('Y-m-d'))->get();
-            ScheduleFcm::UserPointsExpireReminderFcm($scheduleFcmPointsthreeDays, $userPointsSevenDaysRemain);
+            ScheduleFcm::UserReminderFcm($scheduleFcmPointsthreeDays, $userPointsSevenDaysRemain);
         }
         //end points expire reminder
+
+        //start nabadat usage reminder
+        $scheduleFcmNabadatThreeDays = ScheduleFcm::query()
+        ->where('is_active', 1)
+        ->where('trigger', FcmEventsNames::$EVENTS['NABADAT_NOT_USED_FOR_3'])
+        ->first();
+        $scheduleFcmNabadatSevenDays = ScheduleFcm::query()
+        ->where('is_active', 1)
+        ->where('trigger', FcmEventsNames::$EVENTS['NABADAT_NOT_USED_FOR_7'])
+        ->first();
+        $scheduleFcmNabadatElevenDays = ScheduleFcm::query()
+        ->where('is_active', 1)
+        ->where('trigger', FcmEventsNames::$EVENTS['NABADAT_NOT_USED_FOR_11'])
+        ->first();
+        
+        if($scheduleFcmNabadatThreeDays)
+        {
+            $users = User::query()
+            ->whereHas('nabadatWallet',
+            fn($query)=>$query
+                ->where('total_pulses', '>', 0)
+                ->where('updated_at', Carbon::parse(Carbon::now()->addDays(-4))->format('Y-m-d'))
+            )->get();
+            ScheduleFcm::UserReminderFcm($scheduleFcmNabadatThreeDays, $users);
+        }
+        if($scheduleFcmNabadatSevenDays)
+        {
+            $users = User::query()
+            ->whereHas('nabadatWallet',
+            fn($query)=>$query
+                ->where('total_pulses', '>', 0)
+                ->where('updated_at', Carbon::parse(Carbon::now()->addDays(-8))->format('Y-m-d'))
+            )->get();
+            ScheduleFcm::UserReminderFcm($scheduleFcmNabadatSevenDays, $users);
+        }
+        if($scheduleFcmNabadatElevenDays)
+        {
+            $users = User::query()
+            ->whereHas('nabadatWallet',
+            fn($query)=>$query
+                ->where('total_pulses', '>', 0)
+                ->where('updated_at', Carbon::parse(Carbon::now()->addDays(-11))->format('Y-m-d'))
+            )->get();
+            ScheduleFcm::UserReminderFcm($scheduleFcmNabadatElevenDays, $users);
+        }
+        //end nabadat usage reminder
         return Command::SUCCESS;
     }
 }

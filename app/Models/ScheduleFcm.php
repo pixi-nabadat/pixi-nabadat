@@ -45,7 +45,7 @@ class ScheduleFcm extends Model
 
     }
 
-    public static function UserPointsExpireReminderFcm(ScheduleFcm $scheduleFcm, $users)
+    public static function UserReminderFcm(ScheduleFcm $scheduleFcm, $users)
     {
 
         //prepare data
