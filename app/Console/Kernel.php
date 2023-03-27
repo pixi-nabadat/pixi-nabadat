@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command(ExpireReservationCommand::class)->daily();
         $schedule->command(ExpirePointsCommand::class)->daily();
-        $schedule->command(FcmCommand::class)->everyMinute();
+        $schedule->command(FcmCommand::class)->daily();
     }
 
     /**

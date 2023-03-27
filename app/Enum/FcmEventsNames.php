@@ -10,8 +10,7 @@ class FcmEventsNames
         'EXPIRE_POINTS_BEFORE_7'        =>'expire points before seven day',
 
         'ONE_DAY_BEFORE_RESERVATION'    =>'One day before reservation',
-        'SIX_HOUR_BEFORE_RESERVATION'   =>'Six hours before reservation',
-        'TWO_HOUR_BEFORE_RESERVATION'   =>'Two hours before reservation',
+        'TWO_DAYS_BEFORE_RESERVATION'   =>'two days before reservation',
 
         'NABADAT_NOT_USED_FOR_3'        =>'nabadat not used for 5 days',
         'NABADAT_NOT_USED_FOR_7'        =>'nabadat not used for 10 days',

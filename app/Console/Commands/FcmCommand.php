@@ -35,19 +35,54 @@ class FcmCommand extends Command
     public function handle()
     {
 
-        $reservations = Reservation::query()->whereHas('latestStatus',fn($query)=>$query->where('status',Reservation::CONFIRMED))
-        ->where('check_date', Carbon::parse(Carbon::now()->addDay())->format('Y-m-d'))->get();
+        $reservationsOneDayRemain = Reservation::query()->whereHas('latestStatus',fn($query)=>$query->where('status',Reservation::CONFIRMED))
+        ->where('check_date', Carbon::parse(Carbon::now()->addDays(2))->format('Y-m-d'))->get();
         
-        $scheduleFcm = ScheduleFcm::query()->where('trigger', FcmEventsNames::$EVENTS['ONE_DAY_BEFORE_RESERVATION'])->first();
+        $reservationsTwoDaysRemain = Reservation::query()->whereHas('latestStatus',fn($query)=>$query->where('status',Reservation::CONFIRMED))
+        ->where('check_date', Carbon::parse(Carbon::now()->addDays(3))->format('Y-m-d'))->get();
+        
+        $scheduleFcmOneDay  = ScheduleFcm::query()
+        ->where('is_active', 1)
+        ->where('trigger', FcmEventsNames::$EVENTS['ONE_DAY_BEFORE_RESERVATION'])
+        ->first();
+        $scheduleFcmTwoDays = ScheduleFcm::query()
+        ->where('is_active', 1)
+        ->where('trigger', FcmEventsNames::$EVENTS['TWO_DAYS_BEFORE_RESERVATION'])
+        ->first();
         
         
-        if($scheduleFcm)
+        if($scheduleFcmOneDay)
         {
             
             //prepare data
-            $title = $scheduleFcm->title ;
-            $body = $scheduleFcm->content ;
-            foreach($reservations as $reservation)
+            $title = $scheduleFcmOneDay->title ;
+            $body = $scheduleFcmOneDay->content ;
+            foreach($reservationsOneDayRemain as $reservation)
+            {
+                $replaced_values = [
+                    '@USER_NAME@'=>$reservation->user->name,
+                    '@EXPIRE_DATE@'=>$reservation->check_date,
+                    '@RESERVATION_NUMBER@'=>$reservation->id,
+                    '@RESERVATION_STATUS@'=> $reservation->latestStatus,
+                    '@CENTER_NAME@'=>$reservation->center->user->name,
+                    '@CENTER_LOCATION@'=>$reservation->center->user->location->title,
+                ];
+                $body = replaceFlags($body,$replaced_values);
+                // $tokens = $usersToken->toArray();
+                $tokens[0] = $reservation->user->device_token;
+                app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $tokens);
+    
+            }
+
+        }
+
+        if($scheduleFcmTwoDays)
+        {
+            
+            //prepare data
+            $title = $scheduleFcmTwoDays->title ;
+            $body = $scheduleFcmTwoDays->content ;
+            foreach($reservationsTwoDaysRemain as $reservation)
             {
                 $replaced_values = [
                     '@USER_NAME@'=>$reservation->user->name,
