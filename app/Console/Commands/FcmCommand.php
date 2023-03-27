@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Services\PushNotificationService;
+use App\Services\ReservationService;
 
 class FcmCommand extends Command
 {
@@ -34,16 +35,14 @@ class FcmCommand extends Command
     public function handle()
     {
 
-        $reservations = Reservation::query()
+        $reservations = Reservation::query()->whereHas('latestStatus',fn($query)=>$query->where('status',Reservation::CONFIRMED))
         ->where('check_date', Carbon::parse(Carbon::now()->addDay())->format('Y-m-d'))->get();
-
-        // $users = $reservations->pluck('customer_id');
+        
         $scheduleFcm = ScheduleFcm::query()->where('trigger', FcmEventsNames::$EVENTS['ONE_DAY_BEFORE_RESERVATION'])->first();
         
         
         if($scheduleFcm)
         {
-            // $usersToken = User::whereIn('id', $users->toArray())->Pluck('device_token');
             
             //prepare data
             $title = $scheduleFcm->title ;
