@@ -89,9 +89,9 @@ class CenterService extends BaseService
             'pulse_price'=>$data['pulse_price'],
             'pulse_discount'=>isset($data['pulse_discount']) ? $data['pulse_discount']:null,
             'app_discount'=>isset($data['app_discount']) ? $data['app_discount']:null,
-            'lat'=>$data['lng'],
-            'lng'=>$data['lng'],
-            'google_map_url'=>$data['google_map_url'],
+            'lat'=>isset($data['lat']) ? $data['lat']:null,
+            'lng'=>isset($data['lng']) ? $data['lng']:null,
+            'google_map_url'=>isset($data['google_map_url']) ? $data['google_map_url']:null,
         ];
     }
 
