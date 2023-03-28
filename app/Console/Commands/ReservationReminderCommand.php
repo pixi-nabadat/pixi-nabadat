@@ -37,6 +37,7 @@ class ReservationReminderCommand extends Command
         $now = Carbon::now();
 
         $reservationFilter = ['status'=>Reservation::CONFIRMED];
+
         $withRelations = ['user','center.user.location','latestStatus'] ;
 
         $baseReservationBuilder = app()->make(ReservationService::class)->queryGet(where_condition: $reservationFilter,withRelation: $withRelations);
@@ -47,6 +48,7 @@ class ReservationReminderCommand extends Command
         ->get();
 
         $scheduleFcmReservationBeforeOnDay = $scheduleFcmForReservation->where('trigger',FcmEventsNames::$EVENTS['ONE_DAY_BEFORE_RESERVATION'])->first();
+
         $scheduleFcmReservationBeforeTwoDays = $scheduleFcmForReservation->where('trigger',FcmEventsNames::$EVENTS['TWO_DAYS_BEFORE_RESERVATION'])->first();
 
         if($scheduleFcmReservationBeforeOnDay)

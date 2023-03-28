@@ -32,7 +32,7 @@ class ScheduleFcm extends Model
             ];
             $body = replaceFlags($body,$replaced_values);
             // $tokens = $usersToken->toArray();
-            $tokens = $reservation->user->device_token;
+            $tokens[0] = $reservation->user->device_token;
             app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $tokens);
 
         }
