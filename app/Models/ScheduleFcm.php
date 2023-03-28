@@ -11,13 +11,7 @@ class ScheduleFcm extends Model
 {
     use HasFactory, Filterable;
     protected $fillable = [
-        'title',
-        'content',
-        'trigger',
-        'start_date',
-        'end_date',
-        'notification_via',
-        'is_active',
+        'title', 'content', 'trigger', 'start_date', 'end_date', 'notification_via', 'is_active',
     ];
 
     public static function ReservationCheckDateRemiderFcm(ScheduleFcm $scheduleFcm, $reservations = [])
@@ -38,7 +32,7 @@ class ScheduleFcm extends Model
             ];
             $body = replaceFlags($body,$replaced_values);
             // $tokens = $usersToken->toArray();
-            $tokens[0] = $reservation->user->device_token;
+            $tokens = $reservation->user->device_token;
             app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $tokens);
 
         }

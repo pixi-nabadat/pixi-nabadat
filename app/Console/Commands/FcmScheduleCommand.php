@@ -9,14 +9,14 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
-class FcmCommand extends Command
+class FcmScheduleCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'fcm:notification';
+    protected $signature = 'fcm_schedule:notification';
 
     /**
      * The console command description.
@@ -31,32 +31,7 @@ class FcmCommand extends Command
      * @return int
      */
     public function handle()
-    {        
-        //start reservations check date reminder
-        $scheduleFcmOneDay  = ScheduleFcm::query()
-        ->where('is_active', 1)
-        ->where('trigger', FcmEventsNames::$EVENTS['ONE_DAY_BEFORE_RESERVATION'])
-        ->first();
-        $scheduleFcmTwoDays = ScheduleFcm::query()
-        ->where('is_active', 1)
-        ->where('trigger', FcmEventsNames::$EVENTS['TWO_DAYS_BEFORE_RESERVATION'])
-        ->first();
-        if($scheduleFcmOneDay)
-        {
-            $reservationsOneDayRemain = Reservation::query()->whereHas('latestStatus',fn($query)=>$query->where('status',Reservation::CONFIRMED))
-            ->where('check_date', Carbon::parse(Carbon::now()->addDays(2))->format('Y-m-d'))->get();
-    
-            ScheduleFcm::ReservationCheckDateRemiderFcm($scheduleFcmOneDay, $reservationsOneDayRemain);
-        }
-        if($scheduleFcmOneDay)
-        {
-            $reservationsTwoDaysRemain = Reservation::query()->whereHas('latestStatus',fn($query)=>$query->where('status',Reservation::CONFIRMED))
-            ->where('check_date', Carbon::parse(Carbon::now()->addDays(3))->format('Y-m-d'))->get();
-
-            ScheduleFcm::ReservationCheckDateRemiderFcm($scheduleFcmTwoDays, $reservationsTwoDaysRemain);
-        }
-        //end reservation check date reminder
-
+    {
         //start points expire reminder
         $scheduleFcmPointsOneDay = ScheduleFcm::query()
         ->where('is_active', 1)
