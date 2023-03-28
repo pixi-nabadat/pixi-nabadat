@@ -8,6 +8,8 @@ use App\Models\Center;
 use App\Models\User;
 use App\QueryFilters\CentersFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
+
 class CenterService extends BaseService
 {
 
@@ -87,11 +89,11 @@ class CenterService extends BaseService
             'avg_waiting_time'=>$data['avg_waiting_time'],
             'support_payments'=> $data['support_payments'],
             'pulse_price'=>$data['pulse_price'],
-            'pulse_discount'=>isset($data['pulse_discount']) ? $data['pulse_discount']:null,
-            'app_discount'=>isset($data['app_discount']) ? $data['app_discount']:null,
-            'lat'=>$data['lng'],
-            'lng'=>$data['lng'],
-            'google_map_url'=>$data['google_map_url'],
+            'pulse_discount'=> Arr::get($data,'pulse_discount'),
+            'app_discount'=> Arr::get($data,'app_discount'),
+            'lat'=> Arr::get($data,'lat'),
+            'lng'=> Arr::get($data,'lng'),
+            'google_map_url'=> Arr::get($data,'google_map_url'),
         ];
     }
 
