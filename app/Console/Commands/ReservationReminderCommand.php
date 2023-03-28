@@ -45,12 +45,14 @@ class ReservationReminderCommand extends Command
         if($scheduleFcmReservationBeforeOnDay)
         {
             $reservationsOneDayReminder = Reservation::status(Reservation::CONFIRMED)
+                ->with(['user','center.user.location','latestStatus'])
             ->where('check_date', $now->addDay()->format('Y-m-d'))->get();
             ScheduleFcm::ReservationCheckDateRemiderFcm($scheduleFcmReservationBeforeOnDay, $reservationsOneDayReminder);
         }
         if($scheduleFcmReservationBeforeTwoDays)
         {
             $reservationsTwoDaysReminder = Reservation::status(Reservation::CONFIRMED)
+                ->with(['user','center.user.location','latestStatus'])
             ->where('check_date', $now->addDays(2)->format('Y-m-d'))->get();
             ScheduleFcm::ReservationCheckDateRemiderFcm($scheduleFcmReservationBeforeTwoDays, $reservationsTwoDaysReminder);
         }
