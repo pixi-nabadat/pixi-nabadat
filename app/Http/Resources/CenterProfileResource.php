@@ -32,7 +32,24 @@ class CenterProfileResource extends JsonResource
                 "device_token"=> $this->device_token,
                 "created_at"=> $this->created_at,
                 "updated_at"=> $this->updated_at,
-                'description'=>$this->whenLoaded('center', $this->center, "kj")
+                'center'=>$this->whenLoaded('center', 
+                [
+                    'id'=>$this->center->id,
+                    'phones'=>$this->center->phones,
+                    'description'=>$this->center->getTranslations('description'),
+                    'address'=>$this->center->getTranslations('address'),
+                    'lat'=>$this->center->lat,
+                    'lng'=>$this->center->lng,
+                    'featured'=>$this->center->featured,
+                    'avg_waiting_time'=>$this->Center->avg_waiting_time,
+                    'is_support_auto_service'=>$this->center->is_support_auto_service,
+                    'google_map_url'=>$this->center->google_map_url,
+                    'rate'=>$this->center->rate,
+                    'pulse_price'=>$this->center->pulse_price,
+                    'support_payments'=>$this->center->support_payments,
+                    'created_at'=>$this->center->created_at,
+                    'update_at'=>$this->center->updated_at,
+                ])
             ],
         ];
     }

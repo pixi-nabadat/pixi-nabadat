@@ -91,6 +91,11 @@ class User extends Authenticatable
         return $this->belongsTo(Location::class);
     }
 
+    public function center(): \Illuminate\Database\Eloquent\Relations\belongsTo
+    {
+        return $this->belongsTo(Center::class);
+    }
+
 //    ovveried attchments relation in user model
     public function attachments(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
