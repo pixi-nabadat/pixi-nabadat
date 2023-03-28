@@ -14,7 +14,7 @@ class ScheduleFcm extends Model
         'title', 'content', 'trigger', 'start_date', 'end_date', 'notification_via', 'is_active',
     ];
 
-    public static function ReservationCheckDateRemiderFcm(ScheduleFcm $scheduleFcm, $reservations = [])
+    public static function ReservationCheckDateReminderFcm(ScheduleFcm $scheduleFcm, $reservations = [])
     {
 
         //prepare data
