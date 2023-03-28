@@ -6,6 +6,7 @@ use App\Enum\FcmEventsNames;
 use App\Models\Reservation;
 use App\Models\ScheduleFcm;
 use App\Models\User;
+use App\Services\ReservationService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -34,6 +35,12 @@ class ReservationReminderCommand extends Command
     {        
         //start reservations check date reminder
         $now = Carbon::now();
+
+        $reservationFilter = ['status'=>Reservation::CONFIRMED];
+        $withRelations = ['user','center.user.location','latestStatus'] ;
+
+        $baseReservationBuilder = app()->make(ReservationService::class)->queryGet(where_condition: $reservationFilter,withRelation: $withRelations);
+
         $scheduleFcmForReservation  = ScheduleFcm::query()
         ->where('is_active', 1)
         ->whereIn('trigger', [FcmEventsNames::$EVENTS['ONE_DAY_BEFORE_RESERVATION'],FcmEventsNames::$EVENTS['TWO_DAYS_BEFORE_RESERVATION']])
@@ -44,16 +51,12 @@ class ReservationReminderCommand extends Command
 
         if($scheduleFcmReservationBeforeOnDay)
         {
-            $reservationsOneDayReminder = Reservation::status(Reservation::CONFIRMED)
-                ->with(['user','center.user.location','latestStatus'])
-            ->where('check_date', $now->addDay()->format('Y-m-d'))->get();
+            $reservationsOneDayReminder = $baseReservationBuilder->where('check_date', $now->addDay()->format('Y-m-d'))->get();
             ScheduleFcm::ReservationCheckDateRemiderFcm($scheduleFcmReservationBeforeOnDay, $reservationsOneDayReminder);
         }
         if($scheduleFcmReservationBeforeTwoDays)
         {
-            $reservationsTwoDaysReminder = Reservation::status(Reservation::CONFIRMED)
-                ->with(['user','center.user.location','latestStatus'])
-            ->where('check_date', $now->addDays(2)->format('Y-m-d'))->get();
+            $reservationsTwoDaysReminder =$baseReservationBuilder->where('check_date', $now->addDays(2)->format('Y-m-d'))->get();
             ScheduleFcm::ReservationCheckDateRemiderFcm($scheduleFcmReservationBeforeTwoDays, $reservationsTwoDaysReminder);
         }
         //end reservation check date reminder
