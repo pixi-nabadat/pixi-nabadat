@@ -33,16 +33,16 @@ class PointsRemindercommand extends Command
     {
         //start points expire reminder
 
-        $scheduleFcmForReservation  = ScheduleFcm::query()
+        $scheduleFcmForPoints  = ScheduleFcm::query()
         ->where('is_active', 1)
         ->whereIn('trigger', [FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_1'],FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_3'],FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_7']])
         ->get();
 
-        $scheduleFcmPointsOneDay = $scheduleFcmForReservation->where('trigger',FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_1'])->first();
+        $scheduleFcmPointsOneDay = $scheduleFcmForPoints->where('trigger',FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_1'])->first();
         
-        $scheduleFcmPointsthreeDays = $scheduleFcmForReservation->where('trigger',FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_3'])->first();
+        $scheduleFcmPointsthreeDays = $scheduleFcmForPoints->where('trigger',FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_3'])->first();
         
-        $scheduleFcmPointsSevenDays = $scheduleFcmForReservation->where('trigger',FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_7'])->first();
+        $scheduleFcmPointsSevenDays = $scheduleFcmForPoints->where('trigger',FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_7'])->first();
 
         $usersFilters = ['points_expire_date' => null];
         
