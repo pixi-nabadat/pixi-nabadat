@@ -23,6 +23,7 @@ class Kernel extends ConsoleKernel
         $schedule->command(ExpirePointsCommand::class)->daily();
         $schedule->command(FcmScheduleCommand::class)->daily();
         $schedule->command(ReservationReminderCommand::class)->daily();
+        $schedule->command(PointsRemindercommand::class)->daily();
     }
 
     /**
