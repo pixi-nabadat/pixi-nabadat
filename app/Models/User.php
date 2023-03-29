@@ -15,6 +15,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable
 {
@@ -143,5 +144,13 @@ class User extends Authenticatable
            ? asset(optional($this->attachments)->path . "/" . optional($this->attachments)->filename)
            :asset('assets/images/default-image.jpg');
 
+    }
+
+    public function scopeWalletGreaterThan(Builder $builder , int $number, $daysNumber): Builder
+    {
+        return $builder->whereHas('nabadatWallet',fn($query)=>$query
+        ->where('total_pulses','>', $number)
+        ->where('updated_at', Carbon::parse(Carbon::now()->addDays(-$daysNumber))->format('Y-m-d'))
+        );
     }
 }
