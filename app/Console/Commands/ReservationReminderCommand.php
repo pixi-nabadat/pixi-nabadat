@@ -34,31 +34,29 @@ class ReservationReminderCommand extends Command
     public function handle()
     {        
         //start reservations check date reminder
-        $now = Carbon::now();
-
         $reservationFilter = ['status'=>Reservation::CONFIRMED];
 
         $withRelations = ['user','center.user.location','latestStatus'] ;
-
-        $baseReservationBuilder = app()->make(ReservationService::class)->queryGet(where_condition: $reservationFilter,withRelation: $withRelations);
 
         $scheduleFcmForReservation  = ScheduleFcm::query()
         ->where('is_active', 1)
         ->whereIn('trigger', [FcmEventsNames::$EVENTS['ONE_DAY_BEFORE_RESERVATION'],FcmEventsNames::$EVENTS['TWO_DAYS_BEFORE_RESERVATION']])
         ->get();
 
-        $scheduleFcmReservationBeforeOnDay = $scheduleFcmForReservation->where('trigger',FcmEventsNames::$EVENTS['ONE_DAY_BEFORE_RESERVATION'])->first();
+        $scheduleFcmReservationBeforeOneDay = $scheduleFcmForReservation->where('trigger',FcmEventsNames::$EVENTS['ONE_DAY_BEFORE_RESERVATION'])->first();
 
         $scheduleFcmReservationBeforeTwoDays = $scheduleFcmForReservation->where('trigger',FcmEventsNames::$EVENTS['TWO_DAYS_BEFORE_RESERVATION'])->first();
 
-        if($scheduleFcmReservationBeforeOnDay)
+        if($scheduleFcmReservationBeforeOneDay)
         {
-            $reservationsOneDayReminder = $baseReservationBuilder->where('check_date', $now->addDay()->format('Y-m-d'))->get();
-            ScheduleFcm::ReservationCheckDateReminderFcm($scheduleFcmReservationBeforeOnDay, $reservationsOneDayReminder);
+            $reservationsOneDayReminder = app()->make(ReservationService::class)->queryGet(where_condition: $reservationFilter,withRelation: $withRelations)
+            ->where('check_date',  Carbon::now()->addDay()->format('Y-m-d'))->get();
+            ScheduleFcm::ReservationCheckDateReminderFcm($scheduleFcmReservationBeforeOneDay, $reservationsOneDayReminder);
         }
         if($scheduleFcmReservationBeforeTwoDays)
         {
-            $reservationsTwoDaysReminder =$baseReservationBuilder->where('check_date', $now->addDays(2)->format('Y-m-d'))->get();
+            $reservationsTwoDaysReminder =app()->make(ReservationService::class)->queryGet(where_condition: $reservationFilter,withRelation: $withRelations)
+            ->where('check_date',  Carbon::now()->addDays(2)->format('Y-m-d'))->get();
             ScheduleFcm::ReservationCheckDateReminderFcm($scheduleFcmReservationBeforeTwoDays, $reservationsTwoDaysReminder);
         }
         //end reservation check date reminder
