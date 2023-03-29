@@ -32,9 +32,7 @@ class PulsesReminderCommand extends Command
      */
     public function handle()
     {
-
         //start nabadat usage reminder
-
         $scheduleFcmForPulses  = ScheduleFcm::query()
         ->where('is_active', 1)
         ->whereIn('trigger', [FcmEventsNames::$EVENTS['NABADAT_NOT_USED_FOR_3'],FcmEventsNames::$EVENTS['NABADAT_NOT_USED_FOR_7'],FcmEventsNames::$EVENTS['NABADAT_NOT_USED_FOR_11']])
@@ -49,20 +47,20 @@ class PulsesReminderCommand extends Command
 
         if($scheduleFcmNabadatThreeDays)
         {
-            $users = app()->make(UserService::class)->queryGet(where_condition: [], withRelation: [])
-            ->WalletGreaterThan(0, 3)->get();
+            $users = app()->make(UserService::class)->queryGet()
+            ->walletGreaterThan(minimum_number_of_pulses:0,days_number:3)->get();
             ScheduleFcm::UserReminderFcm($scheduleFcmNabadatThreeDays, $users);
         }
         if($scheduleFcmNabadatSevenDays)
         {
-            $users = app()->make(UserService::class)->queryGet(where_condition: [], withRelation: [])
-            ->WalletGreaterThan(0, 7)->get();
+            $users = app()->make(UserService::class)->queryGet()
+            ->walletGreaterThan(minimum_number_of_pulses:0,days_number: 7)->get();
             ScheduleFcm::UserReminderFcm($scheduleFcmNabadatSevenDays, $users);
         }
         if($scheduleFcmNabadatElevenDays)
         {
-            $users = app()->make(UserService::class)->queryGet(where_condition: [], withRelation: [])
-            ->WalletGreaterThan(0, 11)->get();
+            $users = app()->make(UserService::class)->queryGet()
+            ->walletGreaterThan(minimum_number_of_pulses:0, days_number:11)->get();
             ScheduleFcm::UserReminderFcm($scheduleFcmNabadatElevenDays, $users);
         }
         //end nabadat usage reminder

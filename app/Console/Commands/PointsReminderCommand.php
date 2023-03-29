@@ -8,7 +8,7 @@ use App\Services\UserService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
-class PointsRemindercommand extends Command
+class PointsReminderCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -40,7 +40,7 @@ class PointsRemindercommand extends Command
 
         $scheduleFcmPointsOneDay = $scheduleFcmForPoints->where('trigger',FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_1'])->first();
         
-        $scheduleFcmPointsthreeDays = $scheduleFcmForPoints->where('trigger',FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_3'])->first();
+        $scheduleFcmPointsThreeDays = $scheduleFcmForPoints->where('trigger',FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_3'])->first();
         
         $scheduleFcmPointsSevenDays = $scheduleFcmForPoints->where('trigger',FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_7'])->first();
 
@@ -52,11 +52,11 @@ class PointsRemindercommand extends Command
             ->where('points_expire_date', Carbon::parse(Carbon::now()->addDay())->format('Y-m-d'))->get();
             ScheduleFcm::UserReminderFcm($scheduleFcmPointsOneDay, $userPointsOneDayRemain);
         }
-        if($scheduleFcmPointsthreeDays)
+        if($scheduleFcmPointsThreeDays)
         {
             $userPointsThreeDaysRemain = app()->make(UserService::class)->queryGet(where_condition: $usersFilters, withRelation: [])
             ->where('points_expire_date', Carbon::parse(Carbon::now()->addDays(4))->format('Y-m-d'))->get();
-            ScheduleFcm::UserReminderFcm($scheduleFcmPointsthreeDays, $userPointsThreeDaysRemain);
+            ScheduleFcm::UserReminderFcm($scheduleFcmPointsThreeDays, $userPointsThreeDaysRemain);
         }
         if($scheduleFcmPointsSevenDays)
         {
@@ -65,7 +65,6 @@ class PointsRemindercommand extends Command
             ScheduleFcm::UserReminderFcm($scheduleFcmPointsSevenDays, $userPointsSevenDaysRemain);
         }
         //end points expire reminder
-        
         return Command::SUCCESS;
     }
 }
