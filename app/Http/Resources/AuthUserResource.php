@@ -20,8 +20,8 @@ class AuthUserResource extends JsonResource
            'token_type'=>'Bearer',
            'user'=>[
             "id"=> $this->id,
-            "name"=> $this->getTranslations('name'),
-            "name_translatable"=> $this->name,
+            "name"=> $this->name,
+            "name_translatable"=> $this->getTranslations('name'),
             "email"=> $this->email,
             "phone"=> $this->phone,
             "type"=> $this->type,
