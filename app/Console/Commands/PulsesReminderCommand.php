@@ -51,21 +51,18 @@ class PulsesReminderCommand extends Command
         {
             $users = app()->make(UserService::class)->queryGet(where_condition: [], withRelation: [])
             ->WalletGreaterThan(0, 3)->get();
-            // dd($users->count());
             ScheduleFcm::UserReminderFcm($scheduleFcmNabadatThreeDays, $users);
         }
         if($scheduleFcmNabadatSevenDays)
         {
             $users = app()->make(UserService::class)->queryGet(where_condition: [], withRelation: [])
             ->WalletGreaterThan(0, 7)->get();
-            dd($users->count());
             ScheduleFcm::UserReminderFcm($scheduleFcmNabadatSevenDays, $users);
         }
         if($scheduleFcmNabadatElevenDays)
         {
             $users = app()->make(UserService::class)->queryGet(where_condition: [], withRelation: [])
             ->WalletGreaterThan(0, 11)->get();
-            dd($users->count());
             ScheduleFcm::UserReminderFcm($scheduleFcmNabadatElevenDays, $users);
         }
         //end nabadat usage reminder
