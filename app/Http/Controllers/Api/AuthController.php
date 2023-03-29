@@ -8,8 +8,6 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\StoreFcmTokenRequest;
 use App\Http\Resources\AuthUserResource;
-use App\Http\Resources\CenterProfileResource;
-use App\Http\Resources\UserProfileResource;
 use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Support\Facades\Auth;
@@ -53,21 +51,7 @@ class AuthController extends Controller
     {
         try {
             $user = Auth::user();
-            return apiResponse(data: new UserProfileResource($user));
-        } catch (\Exception $exception) {
-            logger('auth user exception');
-            return apiResponse(message: $exception->getMessage(), code: 422);
-        }
-    }
-
-    public function userProfile(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
-    {
-        try {
-            $user = Auth::user();
-            if(!$user->center_id)
-                return apiResponse(data: new UserProfileResource($user));
-            else
-                return apiResponse(data: new CenterProfileResource($user));
+            return apiResponse(data: new AuthUserResource($user));
         } catch (\Exception $exception) {
             logger('auth user exception');
             return apiResponse(message: $exception->getMessage(), code: 422);

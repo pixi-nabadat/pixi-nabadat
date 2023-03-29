@@ -20,7 +20,8 @@ class AuthUserResource extends JsonResource
            'token_type'=>'Bearer',
            'user'=>[
             "id"=> $this->id,
-            "name"=> $this->name,
+            "name"=> $this->getTranslations('name'),
+            "name_translatable"=> $this->name,
             "email"=> $this->email,
             "phone"=> $this->phone,
             "type"=> $this->type,
@@ -32,7 +33,10 @@ class AuthUserResource extends JsonResource
             "last_login"=> $this->last_login,
             "device_token"=> $this->device_token,
             "created_at"=> $this->created_at,
-            "updated_at"=> $this->updated_at
+            "updated_at"=> $this->updated_at,
+            "wallet"=>$this->whenLoaded('nabadatWallet',$this->nabadatWallet, null),
+            'center'=>$this->whenLoaded('center', new CenterResource($this->center)),
+
         ],
        ];
     }
