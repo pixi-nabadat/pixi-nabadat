@@ -12,9 +12,9 @@ class FcmEventsNames
         'ONE_DAY_BEFORE_RESERVATION'    =>'One day before reservation',
         'TWO_DAYS_BEFORE_RESERVATION'   =>'two days before reservation',
 
-        'NABADAT_NOT_USED_FOR_3'        =>'nabadat not used for 5 days',
-        'NABADAT_NOT_USED_FOR_7'        =>'nabadat not used for 10 days',
-        'NABADAT_NOT_USED_FOR_11'       =>'nabadat not used for 15 days',
+        'NABADAT_NOT_USED_FOR_3'        =>'nabadat not used for 3 days',
+        'NABADAT_NOT_USED_FOR_7'        =>'nabadat not used for 7 days',
+        'NABADAT_NOT_USED_FOR_11'       =>'nabadat not used for 11 days',
     ];
 
     public static array $FCMACTIONS = [
