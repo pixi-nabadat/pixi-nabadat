@@ -50,7 +50,7 @@ class AuthController extends Controller
     public function authUser(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $user = Auth::user();
+            $user = Auth::user()->load('center');
             return apiResponse(data: new AuthUserResource($user));
         } catch (\Exception $exception) {
             logger('auth user exception');
