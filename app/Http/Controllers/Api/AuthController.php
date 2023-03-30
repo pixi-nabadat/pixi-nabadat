@@ -35,6 +35,10 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         $data = array_merge($data, ['type' => User::CUSTOMERTYPE, 'last_login_at' => now()]);
+        $data['name'] = [
+            'en' => $data['name'],
+            'ar' => $data['name'],
+        ];
         $data['password'] = bcrypt($data['password']);
         $result = $this->authService->register(data: $data);
         if ($result)
