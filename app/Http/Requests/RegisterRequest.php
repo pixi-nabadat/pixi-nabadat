@@ -24,6 +24,7 @@ class RegisterRequest extends BaseRequest
         return [
             'name'=>'required|string',
             'phone'=>'required|string|unique:users,phone',
+            'email'=>'required|email|unique:users,email',
             'password'=>'required|string|confirmed|min:6',
             'date_of_birth'=>'nullable|date',
             'location_id'=>'nullable|integer|exists:locations,id',
