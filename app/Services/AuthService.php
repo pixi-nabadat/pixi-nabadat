@@ -35,6 +35,10 @@ class AuthService extends BaseService
         return auth('sanctum')->user();
     }
 
+    public function update(User $user, array $data)
+    {
+        return $user->update($data);
+    }
     public function setUserFcmToken(User $user , $fcm_token)
     {
         if (isset($fcm_token))

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Enum\ImageTypeEnum;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AuthUserResource extends JsonResource
@@ -26,7 +27,8 @@ class AuthUserResource extends JsonResource
             "phone"=> $this->phone,
             "type"=> $this->type,
             "is_active"=> $this->is_active,
-            "location_id"=> $this->location_id,
+            "location"=> $this->whenLoaded('location', new LocationsResource($this->location)),
+            'logo' =>($this->whenLoaded('attachments') && isset($this->attachments))?new AttachmentsResource($this->attachments):asset('assets/images/default-image.jpg'),
             "date_of_birth"=> $this->date_of_birth,
             "points"=> $this->points,
             "points_expire_date"=> $this->points_expire_date,

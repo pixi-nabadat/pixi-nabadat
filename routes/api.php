@@ -44,6 +44,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('password/reset', RestPasswordController::class);
     Route::post('user/set-fcm-token', [AuthController::class, 'setFcmToken'])->middleware('auth:sanctum');
     Route::get('user', [AuthController::class, 'authUser'])->middleware('auth:sanctum');
+    Route::patch('user/update/{user}', [AuthController::class, 'update'])->middleware('auth:sanctum');
 });
 
 //for test fcm
