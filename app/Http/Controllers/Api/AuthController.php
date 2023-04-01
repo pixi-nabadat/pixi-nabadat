@@ -69,7 +69,7 @@ class AuthController extends Controller
             $user = User::find($user);
             $user = $this->authService->update($user, $request->validated());
             DB::commit();
-            return apiResponse(message: trans('lang.success_operation'));
+            return apiResponse(data: new AuthUserResource($user), message: trans('lang.success_operation'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
         }

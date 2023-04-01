@@ -38,7 +38,8 @@ class AuthService extends BaseService
 
     public function update(User $user, array $data)
     {
-        return $user->update($data);
+        $user->update($data);
+        return $user;
     }
 
     public function updateLogo(array $data)
