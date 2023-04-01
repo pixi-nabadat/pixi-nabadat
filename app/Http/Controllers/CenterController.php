@@ -70,7 +70,7 @@ class CenterController extends Controller
     public function edit($id)
     {
         try {
-            $withRelation = ['user','attachments','defaultLogo'];
+            $withRelation = ['user.attachments','attachments'];
             $center = $this->centerService->find($id, $withRelation);
             $locations = $this->locationService->getLocationAncestors($center->user->location_id);
             $locations = $locations->whereNotNull('parent_id');
@@ -147,7 +147,7 @@ class CenterController extends Controller
 
     public function show($id)
     {
-        $withRelation = ['attachments', 'devices'];
+        $withRelation = ['user.attachments', 'attachments', 'devices'];
         $center = $this->centerService->find($id, $withRelation);
         $location = $this->locationService->getLocationAncestors($center->location_id);
 
