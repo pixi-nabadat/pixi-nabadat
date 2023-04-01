@@ -201,22 +201,18 @@
                             <div class="col-md-12  d-flex">
                                 <label class="form-label col-3" for="logo">{{ trans('lang.logo') }}</label>
                                 <div class="col-md-12">
-                                    @if ($center->attachments->count())
-                                        @foreach ($center->attachments as $attachment)
-                                            @if ($attachment->type == App\Enum\ImageTypeEnum::LOGO)
-                                                <div class="col-md-3 col-lg-3 col-sm-12">
-                                                    <div class="img-container">
-                                                        <div class="form-group my-3">
-                                                            <img src="{{ asset($attachment->path . '/' . $attachment->filename) }}"
-                                                                style="width: 150px;height: 150px" class="img-thumbnail image"
-                                                                alt="">
-                                                        </div>
-                                                    </div>
+                                    @if (isset($center->user->attachments))
+                                        <div class="col-md-3 col-lg-3 col-sm-12">
+                                            <div class="img-container">
+                                                <div class="form-group my-3">
+                                                    <img src="{{ asset($center->user->attachments->path . '/' . $center->user->attachments->filename) }}"
+                                                        style="width: 150px;height: 150px" class="img-thumbnail image"
+                                                        alt="">
                                                 </div>
-                                            @endif
-                                            
-                                        @endforeach
-                                    @endif                                </div>
+                                            </div>
+                                        </div>
+                                    @endif                                
+                                </div>
                                 <div class="form-group">
                                     <img src="{{ asset('/uploads/device/default.png') }}" style="width: 500px"
                                         class="img-thumbnail image-preview " alt="">
@@ -225,15 +221,15 @@
                             {{-- center logo --}}
                             <div class="col-md-12  d-flex">
                                 <label class="form-label col-3" for="images">{{ trans('lang.images') }}</label>
-                                <div class="col-md-12">
+                                <div class="row">
                                     @if ($center->attachments->count())
                                         @foreach ($center->attachments as $attachment)
                                             @if ($attachment->type == App\Enum\ImageTypeEnum::GALARY)
-                                                <div class="col-md-3 col-lg-3 col-sm-12">
+                                                <div class="col-md-4 col-lg-4 col-sm-12">
                                                     <div class="img-container">
                                                         <div class="form-group my-3">
                                                             <img src="{{ asset($attachment->path . '/' . $attachment->filename) }}"
-                                                                style="width: 150px;height: 150px" class="img-thumbnail image"
+                                                                style="width: 600px;" class="img-thumbnail image"
                                                                 alt="">
                                                         </div>
                                                     </div>

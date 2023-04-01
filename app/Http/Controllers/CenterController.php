@@ -147,7 +147,7 @@ class CenterController extends Controller
 
     public function show($id)
     {
-        $withRelation = ['attachments', 'devices'];
+        $withRelation = ['user.attachments', 'attachments', 'devices'];
         $center = $this->centerService->find($id, $withRelation);
         $location = $this->locationService->getLocationAncestors($center->location_id);
 
