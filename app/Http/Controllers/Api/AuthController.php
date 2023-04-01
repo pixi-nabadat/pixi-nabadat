@@ -8,9 +8,11 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\StoreFcmTokenRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UserUpdateLogoRequest;
 use App\Http\Resources\AuthUserResource;
 use App\Models\User;
 use App\Services\AuthService;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -73,6 +75,17 @@ class AuthController extends Controller
         }
     }
 
+    public function updateLogo(UserUpdateLogoRequest $request)
+    {
+        try{
+            $user = $this->authService->updateLogo(data: $request->validated());
+            if(!$user)
+                return apiResponse(message: trans('lang.some_thing_went_rong'), code: 422);
+            return apiResponse(data: new AuthUserResource($user), message: trans('lang.success_operation'));
+        }catch(Exception $e){
+            return apiResponse(message: $e->getMessage(), code: 422);
+        }
+    }
 
     public function logout()
     {

@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
-
+use App\Enum\ImageTypeEnum;
 use App\Exceptions\UserNotFoundException;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class AuthService extends BaseService
 {
@@ -38,6 +39,19 @@ class AuthService extends BaseService
     public function update(User $user, array $data)
     {
         return $user->update($data);
+    }
+
+    public function updateLogo(array $data)
+    {
+        $user = User::find(Auth::user()->id);
+        if (isset($data['logo'])) {
+            $user->deleteAttachmentsLogo();
+            $fileData = FileService::saveImage(file: $data['logo'], path: 'uploads/users', field_name: 'logo');
+            $fileData['type'] = ImageTypeEnum::LOGO;
+            $user->storeAttachment($fileData);
+        }
+        return $user;
+
     }
     public function setUserFcmToken(User $user , $fcm_token)
     {
