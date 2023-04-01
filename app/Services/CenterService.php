@@ -50,7 +50,7 @@ class CenterService extends BaseService
            throw new NotFoundException(trans('lang.center_not_created'));
         if (isset($data['logo']))
         {
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\users', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/users', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $center->user->storeAttachment($fileData);
         }
