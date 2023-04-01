@@ -38,7 +38,7 @@ class CenterController extends Controller
                 $filters['location_id'] = $request->location_id;
             $filters = array_merge($filters,$request->except('location_id'));
 
-            $withRelations = ['user:id,center_id,name','defaultLogo'];
+            $withRelations = ['user.attachments'];
             $centers = $this->centerService->listing(filters: $filters,withRelation: $withRelations);
             return CentersResource::collection($centers);
         } catch (\Exception $e) {
@@ -53,7 +53,7 @@ class CenterController extends Controller
             $withRelations = [
                 'rates' =>fn($rates)=>$rates->where('status',ActivationStatusEnum::ACTIVE)->orderByDesc('rate_number')->limit(10),
                 'rates.user:id,name','rates.user.attachments', 'doctors.defaultLogo',
-                'user:id,name,phone,location_id,center_id','user.location:id,title',
+                'user.attachments','user.location:id,title',
                 'attachments','appointments','devices.attachments','packages'
                 ];
             $center = $this->centerService->find($id, $withRelations);

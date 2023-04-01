@@ -50,9 +50,9 @@ class CenterService extends BaseService
            throw new NotFoundException(trans('lang.center_not_created'));
         if (isset($data['logo']))
         {
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\centers', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\users', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
-            $center->storeAttachment($fileData);
+            $center->user->storeAttachment($fileData);
         }
         if (isset($data['images']) && is_array($data['images']))
             foreach ($data['images'] as $image) {
@@ -106,10 +106,10 @@ class CenterService extends BaseService
         
         if (isset($data['logo']))
         {
-            $center->deleteAttachmentsLogo();
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/centers', field_name: 'logo');
+            $center->user->deleteAttachmentsLogo();
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/users', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
-            $center->storeAttachment($fileData);
+            $center->user->storeAttachment($fileData);
         }
         if (isset($data['images']) && is_array($data['images']))
             foreach ($data['images'] as $image) {
@@ -154,6 +154,7 @@ class CenterService extends BaseService
     {
         $center = $this->find($id);
         $center->deleteAttachments();
+        $center->user->deleteAttachments();
         return $center->delete();
     }
 

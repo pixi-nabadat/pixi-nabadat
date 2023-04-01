@@ -17,7 +17,7 @@ class AuthUserResource extends JsonResource
     {
 
        return [
-           'token'=>$this->getToken(),
+           'token'=>$request->bearerToken() ?? $this->getToken(),
            'token_type'=>'Bearer',
            'user'=>[
             "id"=> $this->id,
@@ -37,7 +37,18 @@ class AuthUserResource extends JsonResource
             "created_at"=> $this->created_at,
             "updated_at"=> $this->updated_at,
             "wallet"=>$this->whenLoaded('nabadatWallet',$this->nabadatWallet, null),
-            'center'=>$this->whenLoaded('center', new CenterResource($this->center)),
+            'center'=>$this->whenLoaded('center', [
+                'id' => $this->id,
+                'phones' => $this->center->phones,
+                'description' => $this->center->description,
+                'address' => $this->center->address,
+                'pulse_price' => $this->center->pulse_price,
+                'support_payments' => $this->center->support_payments,
+                'avg_waiting_time' => $this->center->avg_waiting_time,
+                'google_map_url' => $this->center->google_map_url,
+                'is_support_auto_service' => ($this->center->is_support_auto_service == 1),
+                'images' => AttachmentsResource::collection($this->center->attachments->where('type', ImageTypeEnum::GALARY)),
+            ]),
 
         ],
        ];

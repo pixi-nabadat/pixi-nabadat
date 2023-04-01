@@ -43,7 +43,7 @@ class AuthService extends BaseService
 
     public function updateLogo(array $data)
     {
-        $user = User::find(Auth::user()->id);
+        $user = Auth::user();
         if (isset($data['logo'])) {
             $user->deleteAttachmentsLogo();
             $fileData = FileService::saveImage(file: $data['logo'], path: 'uploads/users', field_name: 'logo');

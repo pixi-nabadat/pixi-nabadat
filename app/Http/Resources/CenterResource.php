@@ -16,7 +16,6 @@ class CenterResource extends JsonResource
     public function toArray($request)
     {
 
-        $logo = $this->attachments->where('type', ImageTypeEnum::LOGO)->first();
         return [
             'id' => $this->id,
             'name' => $this->when($this->whenLoaded('user'), $this->user->name),
@@ -36,7 +35,7 @@ class CenterResource extends JsonResource
             'appointments' =>  AppointmentsResource::collection($this->whenLoaded('appointments')),
             'is_support_auto_service' => ($this->is_support_auto_service == 1),
             'images' => AttachmentsResource::collection($this->whenLoaded('attachments',$this->attachments->where('type', '!=', ImageTypeEnum::LOGO))),
-            'logo' => $this->when(($this->whenLoaded('attachments') && isset($logo)), asset(optional($logo)->path . '/' . optional($logo)->filename), asset('assets/images/default-image.jpg')),
+            'logo' => $this->whenLoaded('user', $this->user->image),
             'feedback' => RatesResource::collection($this->whenLoaded('rates')),
             'devices' => DeviceResource::collection($this->whenLoaded('devices')),
             'packages' => PackagesResource::collection($this->whenLoaded('packages')),
