@@ -325,15 +325,15 @@
                                         </div>
                                     </div>
 
-                                    @if(isset($center->defaultLogo))
+                                    @if(isset($center->user->attachments))
                                         <div class="row">
                                             <div class="col-md-3 col-lg-3 col-sm-12">
                                                 <div class="img-container">
                                                     <div class="form-group my-3">
-                                                        <img src="{{asset($center->defaultLogo->path.'/'.$center->defaultLogo->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
+                                                        <img src="{{asset($center->user->attachments->path.'/'.$center->user->attachments->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
                                                     </div>
                                                     <div class="overlay">
-                                                        <a role="button" onclick="destroy('{{route('attachment.destroy',$center->defaultLogo->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
+                                                        <a role="button" onclick="destroy('{{route('attachment.destroy',$center->user->attachments->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
                                                             <i class="fa fa-trash-o"></i>
                                                         </a>
                                                     </div>

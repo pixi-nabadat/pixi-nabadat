@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AppointmentController;
+use App\Http\Controllers\Api\AttachmentController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BuyCustomPulsesController;
 use App\Http\Controllers\Api\BuyOfferController;
@@ -46,6 +47,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('user', [AuthController::class, 'authUser'])->middleware('auth:sanctum');
     Route::patch('user/update/{user}', [AuthController::class, 'update'])->middleware('auth:sanctum');
     Route::patch('update-logo', [AuthController::class, 'updateLogo'])->middleware('auth:sanctum');
+    Route::post('store-in-galary', [AttachmentController::class, 'storeInGalary'])->middleware('auth:sanctum');
+    Route::delete('delete-from-galary/{id}', [AttachmentController::class, 'deleteFromGalary'])->middleware('auth:sanctum');
 });
 
 //for test fcm
