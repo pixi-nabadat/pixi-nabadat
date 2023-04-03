@@ -89,6 +89,7 @@
                             <div class="col-md-12">
                                 <div class="row">
                                     @isset($slider->attachments)
+                                        @foreach ($slider->attachments as $attachment)
                                         @if ($attachment->type == App\Enum\ImageTypeEnum::LOGO)
                                         <div class="col-md-3 col-lg-3 col-sm-12">
                                             <div class="img-container">
@@ -103,6 +104,8 @@
                                             </div>
                                         </div>
                                         @endif
+                                        @endforeach
+                                       
                                     @endisset
                                 </div>
                             </div>
