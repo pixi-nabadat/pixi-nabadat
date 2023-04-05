@@ -128,7 +128,7 @@
                                     </div>
 
                                     <div class="form-group mt-3">
-                                        <img src="{{$package->attachments->first() !== null ? asset($package->attachments->first()->path."\\".$package->attachments->first()->filename) : asset('/uploads/packages/default.png')}}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                                        <img src="{{$package->attachments()->first() !== null ? asset($package->attachments()->first()->path."\\".$package->attachments()->first()->filename) : asset('/uploads/packages/default.png')}}" style="width: 500px" class="img-thumbnail image-preview " alt="">
                                     </div>
                                 </div>
                             </div>

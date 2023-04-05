@@ -8,6 +8,7 @@ use App\Events\PushEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCenterRequest;
 use App\Http\Requests\StoreCenterRequestApi;
+use App\Http\Requests\UpdateCenterRequestApi;
 use App\Http\Resources\AuthUserResource;
 use App\Http\Resources\CenterResource;
 use App\Http\Resources\CentersResource;
@@ -15,6 +16,7 @@ use App\Models\FcmMessage;
 use App\Services\CenterService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CenterController extends Controller
@@ -72,6 +74,21 @@ class CenterController extends Controller
             DB::commit();
             event(new PushEvent($center,FcmMessage::DEAL_WITH_NEW_CENTER));
             return apiResponse(data: new AuthUserResource($center->user));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+    }
+
+    public function update(UpdateCenterRequestApi $request)
+    {
+        try {
+            DB::beginTransaction();
+            $user = Auth::user();
+            $center = $user->center;
+            $center = $this->centerService->update(centerId: $center->id, data: $request->validated());
+            DB::commit();
+            $user->refresh();
+            return apiResponse(data: new AuthUserResource($user));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
         }

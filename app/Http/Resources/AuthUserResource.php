@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Enum\ImageTypeEnum;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 
 class AuthUserResource extends JsonResource
 {
@@ -17,7 +18,7 @@ class AuthUserResource extends JsonResource
     {
 
        return [
-           'token'=>$request->bearerToken() ?? $this->getToken(),
+           'token'=>$request->bearerToken()?? $this->getToken(),
            'token_type'=>'Bearer',
            'user'=>[
             "id"=> $this->id,
