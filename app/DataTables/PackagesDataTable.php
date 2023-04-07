@@ -61,12 +61,12 @@ class PackagesDataTable extends DataTable
             [
                 'data' => 'center_id',
                 'name' => 'center_id',
-                'title' => 'center_name'
+                'title' => trans('lang.center_name')
             ],
             [
                 'name' => 'center_phone',
                 'data' => 'center_phone',
-                'title' => 'center_phone'
+                'title' => trans('lang.center_phone')
             ],
             Column::make('num_nabadat')
             ->title(trans('lang.num_nabadat')),

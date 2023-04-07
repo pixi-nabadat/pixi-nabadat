@@ -85,17 +85,17 @@ class CitiesDataTable extends DataTable
             [
                 'name'=>'slug',
                 'data'=>'slug',
-                'title'=> 'slug',
+                'title'=> trans('lang.slug'),
             ],
             [
                 'name'=>'title',
                 'data'=>'title',
-                'title'=> 'title',
+                'title'=> trans('lang.title'),
             ],
             [
                 'name'=>'shipping_cost',
                 'data'=>'shipping_cost',
-                'title'=> 'shipping_cost',
+                'title'=> trans('lang.shipping_cost'),
             ],
             [
                 'name'=>'action',

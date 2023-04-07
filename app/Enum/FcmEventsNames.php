@@ -5,13 +5,13 @@ namespace App\Enum;
 class FcmEventsNames
 {
     public static array $EVENTS = [
-        'EXPIRE_POINTS_BEFORE_1'        =>'expire points before one day',
-        'EXPIRE_POINTS_BEFORE_3'        =>'expire points before three day',
-        'EXPIRE_POINTS_BEFORE_7'        =>'expire points before seven day',
+        'EXPIRE_POINTS_BEFORE_1'        =>'expire_points_before_one_day',
+        'EXPIRE_POINTS_BEFORE_3'        =>'expire_points_before_three_day',
+        'EXPIRE_POINTS_BEFORE_7'        =>'expire_points_before_seven_day',
 
-        'NABADAT_NOT_USED_FOR_3'        =>'nabadat not used for 5 days',
-        'NABADAT_NOT_USED_FOR_7'        =>'nabadat not used for 10 days',
-        'NABADAT_NOT_USED_FOR_11'       =>'nabadat not used for 15 days',
+        'NABADAT_NOT_USED_FOR_3'        =>'nabadat_not_used_for_5_days',
+        'NABADAT_NOT_USED_FOR_7'        =>'nabadat_not_used_for_10_days',
+        'NABADAT_NOT_USED_FOR_11'       =>'nabadat_not_used_for_15_days',
     ];
 
     public static array $FCMACTIONS = [
@@ -20,9 +20,9 @@ class FcmEventsNames
         'CREATE_USER_RESERVATION'       =>'create_user_reservation',
         'CANCEL_CENTER_RESERVATION'     =>'cancel_center_reservation',
         'COMPLETE_USER_RESERVATION'     =>'complete_user_reservation',
-        'DEAL_WITH_NEW_CENTER'          =>'deal with new center',
-        'CENTER_CREATE_NEW_OFFER'       =>'center create new offer',
-        'CREATE_NEW_COUPON_DISCOUNT'    =>'create new coupon discount',
+        'DEAL_WITH_NEW_CENTER'          =>'deal_with_new_center',
+        'CENTER_CREATE_NEW_OFFER'       =>'center_create_new_offer',
+        'CREATE_NEW_COUPON_DISCOUNT'    =>'create_new_coupon_discount',
 
     ];
 
