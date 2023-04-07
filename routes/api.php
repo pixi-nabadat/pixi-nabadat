@@ -49,7 +49,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('center/update/{user}', [CenterController::class, 'update'])->middleware('auth:sanctum');
     Route::patch('update-logo', [AuthController::class, 'updateLogo'])->middleware('auth:sanctum');
     Route::post('store-in-galary', [AttachmentController::class, 'storeInGalary'])->middleware('auth:sanctum');
-    Route::delete('delete-from-galary/{id}', [AttachmentController::class, 'deleteFromGalary'])->middleware('auth:sanctum');
+    Route::delete('delete-attachment/{id}', [AttachmentController::class, 'deleteAttachment'])->middleware('auth:sanctum');
 });
 
 //for test fcm
