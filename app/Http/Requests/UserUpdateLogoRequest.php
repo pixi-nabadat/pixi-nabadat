@@ -24,7 +24,7 @@ class UserUpdateLogoRequest extends FormRequest
     public function rules()
     {
         return [
-            'logo' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
+            'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
         ];
     }
 }
