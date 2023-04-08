@@ -20,6 +20,7 @@ class OrderItemResource extends JsonResource
             'image'=>$this->whenLoaded('defaultLogo',url(optional($this->defaultLogo)->path."\\".optional($this->defaultLogo)->filename)),
             'quantity'=>$this->quantity,
             'price'=>$this->price,
+            'discount'=>$this->when(isset($this->discount),$this->discount),
             'total_price'=>$this->quantity*$this->price,
             'total_price_after_discount' => $this->quantity * getPriceAfterDiscount($this->price,$this->discount)
         ];
