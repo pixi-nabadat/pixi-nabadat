@@ -67,7 +67,7 @@ class CenterPackageService extends BaseService
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
         $package = $this->find($id);
         if (isset($data['image'])) {
-            $fileData = FileService::saveImage(file: $data['image'], path: 'uploads\packages', field_name: 'image');
+            $fileData = FileService::saveImage(file: $data['image'], path: 'uploads/packages', field_name: 'image');
             $package->updateAttachment($fileData);
         }
         $package->update($data);

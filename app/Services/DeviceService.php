@@ -34,14 +34,14 @@ class DeviceService extends BaseService
             return false ;
         if (isset($data['logo']))
         {
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\devices', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/devices', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $device->storeAttachment($fileData);
         }
         if (isset($data['images'])&&is_array($data['images']))
             foreach ($data['images'] as $image)
             {
-                $fileData = FileService::saveImage(file: $image,path: 'uploads\devices', field_name: 'images');
+                $fileData = FileService::saveImage(file: $image,path: 'uploads/devices', field_name: 'images');
                 $fileData['type'] = ImageTypeEnum::GALARY;
                 $device->storeAttachment($fileData);
             }
@@ -74,14 +74,14 @@ class DeviceService extends BaseService
             if (isset($data['logo']))
             {
                 $device->deleteAttachmentsLogo();
-                $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\devices', field_name: 'logo');
+                $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/devices', field_name: 'logo');
                 $fileData['type'] = ImageTypeEnum::LOGO;
                 $device->storeAttachment($fileData);
             }
             if (isset($data['images'])&&is_array($data['images']))
             foreach ($data['images'] as $image)
             {
-                $fileData = FileService::saveImage(file: $image,path: 'uploads\devices', field_name: 'images');
+                $fileData = FileService::saveImage(file: $image,path: 'uploads/devices', field_name: 'images');
                 $fileData['type'] = ImageTypeEnum::GALARY;
                 $device->storeAttachment($fileData);
             }
