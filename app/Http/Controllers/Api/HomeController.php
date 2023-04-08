@@ -60,8 +60,8 @@ class HomeController extends Controller
             $query->on('centers.id', '=', 'users.center_id');
             $query->where('users.name', 'LIKE', "%$keyword%");
         })->select(['centers.id as id', DB::raw("JSON_UNQUOTE(users.name->'$.$lang') as name")])->limit(10)->get();
-        $result = $product->merge($device);
-        $finalResult = $result->merge($center);
+        $result = $product->union($device);
+        $finalResult = $result->union($center);
         $search_results = HomeSearchResource::collection($finalResult);
         return apiResponse(data: $search_results);
     }
