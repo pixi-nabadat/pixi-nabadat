@@ -35,5 +35,6 @@ class NotificationController extends Controller
         }
     }
 
+
 //    send fcm to token
 }

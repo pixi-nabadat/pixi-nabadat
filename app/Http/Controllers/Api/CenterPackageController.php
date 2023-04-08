@@ -35,11 +35,11 @@ class CenterPackageController extends Controller
             $data = $request->validated();
             $package = $this->packageService->store($data);
             if(!$package)
-                return apiResponse(message: trans('lang.something_went_wrong'), code:422);
+                return apiResponse(message: trans('lang.there_is_problem_when_create_offer'), code:422);
             $response = new PackagesResource($package);
             return apiResponse(data: $response, message: trans('lang.success_operation'), code: 200);
         } catch (\Exception $ex) {
-            return apiResponse(message: trans('lang.something_went_wrong'), code: 422);
+            return apiResponse(message: $ex->getMessage(), code: 500);
         }
     }//end of store
 

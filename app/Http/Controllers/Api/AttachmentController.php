@@ -42,12 +42,12 @@ class AttachmentController extends Controller
         }     
     }
 
-    public function deleteFromGalary(int $id)
+    public function deleteAttachment(int $id)
     {
         try {
             $attachment =  Attachment::find($id);
             if(!$attachment)
-                return apiResponse(message: trans('lang.not_found'),code: 404);
+                return apiResponse(message: trans('lang.attachment_not_found'),code: 404);
             unlink(public_path($attachment->path."/".$attachment->filename));
             $attachment->delete();
             return apiResponse(message: trans('lang.success'));

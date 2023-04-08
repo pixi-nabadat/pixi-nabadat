@@ -35,7 +35,7 @@ class AuthUserResource extends JsonResource
             "points_expire_date"=> $this->points_expire_date,
             "last_login"=> $this->last_login,
             "device_token"=> $this->device_token,
-            "created_at"=> $this->created_at,
+            "allow_push_notification"=>(bool) $this->allow_notification,
             "updated_at"=> $this->updated_at,
             "wallet"=>$this->whenLoaded('nabadatWallet',$this->nabadatWallet, null),
             'center'=> $this->whenLoaded('center', new UserCenterResource($this->center)),

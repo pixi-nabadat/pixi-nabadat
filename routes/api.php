@@ -46,10 +46,10 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('user/set-fcm-token', [AuthController::class, 'setFcmToken'])->middleware('auth:sanctum');
     Route::get('user', [AuthController::class, 'authUser'])->middleware('auth:sanctum');
     Route::patch('user/update/{user}', [AuthController::class, 'update'])->middleware('auth:sanctum');
-    Route::patch('center/update/{user}', [CenterController::class, 'update'])->middleware('auth:sanctum');
+    Route::post('center/update/{user}', [CenterController::class, 'update'])->middleware('auth:sanctum');
     Route::patch('update-logo', [AuthController::class, 'updateLogo'])->middleware('auth:sanctum');
     Route::post('store-in-galary', [AttachmentController::class, 'storeInGalary'])->middleware('auth:sanctum');
-    Route::delete('delete-from-galary/{id}', [AttachmentController::class, 'deleteFromGalary'])->middleware('auth:sanctum');
+    Route::delete('delete-attachment/{id}', [AttachmentController::class, 'deleteAttachment'])->middleware('auth:sanctum');
 });
 
 //for test fcm
@@ -74,6 +74,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'notifications'], function () {
         Route::get('/', [NotificationController::class, 'getNotifications']);
         Route::post('/mark-as-read', [NotificationController::class, 'markAsRead']);
+        Route::post('status',[\App\Http\Controllers\Api\UserController::class,'allowNotification'])->name('notification.status');
     });
 
     Route::group(['prefix' => 'reservations'], function () {

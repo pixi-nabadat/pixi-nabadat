@@ -84,8 +84,8 @@ class CenterController extends Controller
         try {
             DB::beginTransaction();
             $user = Auth::user();
-            $center = $user->center;
-            $center = $this->centerService->update(centerId: $center->id, data: $request->validated());
+            $user =$user->load('center');
+            $this->centerService->update(centerId: $user->center_id, data: $request->validated());
             DB::commit();
             $user->refresh();
             return apiResponse(data: new AuthUserResource($user));
