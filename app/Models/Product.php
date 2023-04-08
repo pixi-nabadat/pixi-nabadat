@@ -78,4 +78,9 @@ class Product extends Model
     {
         return $this->morphOne(Attachment::class, 'attachmentable')->where('type', ImageTypeEnum::LOGO);
     }
+
+    public function getImagePathAttribute(): string
+    {
+        return $this->relationLoaded('defaultLogo') && isset($this->defaultLogo) ? asset($this->defaultLogo->path."/".$this->defaultLogo->filename) : asset('assets/images/default-image.jpg');
+    }
 }
