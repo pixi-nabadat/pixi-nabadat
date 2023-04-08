@@ -38,7 +38,7 @@ class EmployeeService extends BaseService
         $user->givePermissionTo($data['permissions']);
         if (isset($data['logo']))
         {
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\employees', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/employees', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $user->storeAttachment($fileData);
         }
@@ -84,7 +84,7 @@ class EmployeeService extends BaseService
         if (isset($data['logo']))
         {
             $user->deleteAttachmentsLogo();
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\employees', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/employees', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $user->storeAttachment($fileData);
         }
