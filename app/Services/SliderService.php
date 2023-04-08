@@ -36,7 +36,7 @@ class SliderService extends BaseService
             return false ;
         if (isset($data['logo']))
         {
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\sliders', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/sliders', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $slider->storeAttachment($fileData);
         }
@@ -69,7 +69,7 @@ class SliderService extends BaseService
         if (isset($data['logo']))
         {
             $slider->deleteAttachmentsLogo();
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\sliders', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/sliders', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $slider->storeAttachment($fileData);
         }
