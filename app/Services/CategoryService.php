@@ -33,7 +33,7 @@ class CategoryService extends BaseService
 
         if (isset($data['logo']))
         {
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\categories', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/categories', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $category->storeAttachment($fileData);
         }
@@ -70,7 +70,7 @@ class CategoryService extends BaseService
             if (isset($data['logo']))
             {
                 $category->deleteAttachmentsLogo();
-                $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\categories', field_name: 'logo');
+                $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/categories', field_name: 'logo');
                 $fileData['type'] = ImageTypeEnum::LOGO;
                 $category->storeAttachment($fileData);
             }

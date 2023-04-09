@@ -27,7 +27,7 @@ class AttachmentController extends Controller
             {
                 if (isset($data['image']))
                 {
-                    $fileData = FileService::saveImage(file: $data['image'],path: 'uploads\centers', field_name: 'image');
+                    $fileData = FileService::saveImage(file: $data['image'],path: 'uploads/centers', field_name: 'image');
                     $fileData['type'] = ImageTypeEnum::GALARY;
                     $center->storeAttachment($fileData);
                 }

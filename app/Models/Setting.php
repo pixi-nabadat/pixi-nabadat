@@ -27,7 +27,7 @@ class Setting extends Model
     public static function add($key, $val, $type = 'string')
     {
         if ($key == 'company_logo'){
-            $fileData = FileService::saveImage(file: $val,path: 'uploads\settings');
+            $fileData = FileService::saveImage(file: $val,path: 'uploads/settings');
             $val = $fileData['filename'];
         }
         

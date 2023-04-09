@@ -36,7 +36,7 @@ class UserService extends BaseService
         $data['allow_notification'] = isset($data['allow_notification']) ? 1 : 0;
         $user = User::create($data);
         if (isset($data['logo'])) {
-            $fileData = FileService::saveImage(file: $data['logo'], path: 'uploads\users', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['logo'], path: 'uploads/users', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $user->storeAttachment($fileData);
         }
