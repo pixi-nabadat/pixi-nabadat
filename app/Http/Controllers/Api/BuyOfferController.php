@@ -99,7 +99,6 @@ class BuyOfferController extends Controller
                 DB::commit();
             return apiResponse(data: $result_data, message: $message, code: $status_code);
         } catch (NotFoundException|\Exception $exception) {
-            return $exception;
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
     } //end of index
