@@ -59,6 +59,6 @@ class PackageStoreRequest extends BaseRequest
 
     public function validationData()
     {
-        return array_merge($this->all(),['center_id'=>auth()->user()->center_id,'status'=>PackageStatusEnum::UNDERACHIEVING]);
+        return array_merge($this->all(),['status'=>PackageStatusEnum::UNDERACHIEVING]);
     }
 }
