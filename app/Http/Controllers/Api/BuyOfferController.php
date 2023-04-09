@@ -37,7 +37,7 @@ class BuyOfferController extends Controller
      * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
      */
 
-    public function buyOffer(BuyOfferRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function buyOffer(BuyOfferRequest $request)
     {
         try {
             DB::beginTransaction();
