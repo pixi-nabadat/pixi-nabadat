@@ -59,15 +59,6 @@ class Package extends Model
         return $this->price - ($this->price * ($this->center->app_discount / 100));
     }
 
-    public function getImageAttribute()
-    {
-        if (!$this->relationLoaded('attachments') || !isset($this->attachments))
-        {
-            return null ;
-        }
-        return $this->attachments ;
-    }
-
     public function scopeActive(Builder $builder): void
     {
         $builder->where('start_date' ,  '<=' , Carbon::now(config('app.africa_timezone'))->format('Y-m-d'))->where('end_date' ,  '>=' , Carbon::now(config('app.africa_timezone'))->format('Y-m-d'));
