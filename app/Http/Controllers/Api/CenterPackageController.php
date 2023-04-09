@@ -20,7 +20,7 @@ class CenterPackageController extends Controller
     public function index(): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $filters = ['is_active' => 1, 'in_duration' => true , 'status'=>true];
+            $filters = ['is_active' => 1, 'in_duration' => true , 'status' =>PackageStatusEnum::APPROVED];
             $withRelations = ['center.user:id,center_id,name','center.defaultLogo','attachments'];
             $allPackages = $this->packageService->listing(where_condition: $filters, withRelation: $withRelations);
             return PackagesResource::collection($allPackages);
