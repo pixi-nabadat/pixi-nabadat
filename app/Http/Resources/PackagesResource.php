@@ -22,7 +22,7 @@ class PackagesResource extends JsonResource
             'price' => $this->price,
             'price_after_discount' => getPriceAfterDiscount(price: $this->price, discountValue: $this->discount_percentage ?? 0),
             // 'image' => $this->image_path,
-            'image'=> $this->whenLoaded(relationship: 'attachments',value: new AttachmentsResource($this->attachments),default: ['path'=>asset('assets/images/default-image.jpg')]),
+            'image'=> $this->whenLoaded(relationship: 'attachments',value: isset($this->attachments) ? new AttachmentsResource($this->attachments):['path'=>asset('assets/images/default-image.jpg')]),
             'center' => new CentersResource($this->whenLoaded('center')),
         ];
     }
