@@ -7,18 +7,16 @@ use App\Enum\PaymentStatusEnum;
 use App\Enum\UserPackageStatusEnum;
 use App\Exceptions\NotFoundException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BuyCustomPulsesRequest;
 use App\Http\Requests\BuyOfferRequest;
-use App\Models\Center;
 use App\Models\Package;
 use App\Models\UserPackage;
+use App\Services\CenterPackageService;
 use App\Services\CenterService;
 use App\Services\Payment\PaymobService;
 use App\Services\UserPackageService;
 use App\Services\UserService;
 use App\Traits\OrderTrait;
 use Carbon\Carbon;
-use App\Services\CenterPackageService;
 use Illuminate\Support\Facades\DB;
 
 class BuyOfferController extends Controller
@@ -44,12 +42,15 @@ class BuyOfferController extends Controller
             $user = auth('sanctum')->user();
             $user = $user->load('defaultAddress');
             $userAddress = $user->defaultAddress->first();
+            if (!isset($userAddress)) {
+                throw new NotFoundException(trans('please set your address before compeleting the purchase'));
+            }
             $withRelation = ['center'];
             $package = $this->packageService->find($request->offer_id, $withRelation);
             //create user package log
             if ($request->payment_method == PaymentMethodEnum::CREDIT) {
 
-                $user_package_data = $this->getUserPackageDataForBuyOffer($package,$user,PaymentStatusEnum::UNPAID,PaymentMethodEnum::CREDIT,deleted_at: true);
+                $user_package_data = $this->getUserPackageDataForBuyOffer($package, $user, PaymentStatusEnum::UNPAID, PaymentMethodEnum::CREDIT, deleted_at: true);
 
                 $userPackage = $this->userPackageService->create($user_package_data);
 
@@ -57,7 +58,7 @@ class BuyOfferController extends Controller
 
                 $order_item_data = $this->prepareOrderItemsData($userPackage);
 
-                $paymob_order_items = $this->preparePaymobOrderItems(name: $package->name , price: $userPackage->price);
+                $paymob_order_items = $this->preparePaymobOrderItems(name: $package->name, price: $userPackage->price);
 
                 $order = $this->setUserOfferAsOrder($user, $order_data, $order_item_data);
 
@@ -77,7 +78,7 @@ class BuyOfferController extends Controller
                 $result_data = $result['data'] ?? null;
             } else {
 
-                $user_package_data = $this->getUserPackageDataForBuyOffer($package,$user);
+                $user_package_data = $this->getUserPackageDataForBuyOffer($package, $user);
 
                 $userPackage = $this->userPackageService->create($user_package_data);
 
@@ -98,7 +99,7 @@ class BuyOfferController extends Controller
                 DB::commit();
             return apiResponse(data: $result_data, message: $message, code: $status_code);
         } catch (NotFoundException|\Exception $exception) {
-            return $exception ;
+            return $exception;
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
     } //end of index
@@ -111,7 +112,7 @@ class BuyOfferController extends Controller
             'address_info' => $user->defaultAddress->toJson(),
             'shipping_fees' => 0,
             'sub_total' => $userPackage->price,
-            'grand_total' => getPriceAfterDiscount($userPackage->price,$userPackage->discount_percentage),
+            'grand_total' => getPriceAfterDiscount($userPackage->price, $userPackage->discount_percentage),
             'coupon_discount' => 0,
             'deleted_at' => Carbon::now(),
             'relatable_id' => $userPackage->id,
@@ -128,7 +129,7 @@ class BuyOfferController extends Controller
         ];
     }
 
-    private function preparePaymobOrderItems(string $name , int $price): array
+    private function preparePaymobOrderItems(string $name, int $price): array
     {
         $order_items[] = [
             "name" => $name,
@@ -141,27 +142,27 @@ class BuyOfferController extends Controller
 
     //start buy custom pulses
 
-    private function getUserPackageDataForBuyOffer(Package $package ,$user,$payment_status = PaymentStatusEnum::UNPAID,$payment_method = PaymentMethodEnum::CASH,$deleted_at = null)
+    private function getUserPackageDataForBuyOffer(Package $package, $user, $payment_status = PaymentStatusEnum::UNPAID, $payment_method = PaymentMethodEnum::CASH, $deleted_at = null)
     {
-        $active_user_package = $user->package()->where('status',UserPackageStatusEnum::ONGOING)->where('payment_status',PaymentStatusEnum::PAID)->count();
-        if(!$active_user_package)
-            $status = $payment_status == PaymentStatusEnum::PAID ? UserPackageStatusEnum::ONGOING: UserPackageStatusEnum::PENDING;
+        $active_user_package = $user->package()->where('status', UserPackageStatusEnum::ONGOING)->where('payment_status', PaymentStatusEnum::PAID)->count();
+        if (!$active_user_package)
+            $status = $payment_status == PaymentStatusEnum::PAID ? UserPackageStatusEnum::ONGOING : UserPackageStatusEnum::PENDING;
         else
-            $status = $payment_status == PaymentStatusEnum::PAID ? UserPackageStatusEnum::READYFORUSE: UserPackageStatusEnum::PENDING;
+            $status = $payment_status == PaymentStatusEnum::PAID ? UserPackageStatusEnum::READYFORUSE : UserPackageStatusEnum::PENDING;
 
         return [
-            'package_id'            => $package->id,
-            'num_nabadat'           => $package->num_nabadat,
-            'user_id'               => $user->id,
-            'price'                 => $package->price,
-            'center_id'             => $package->center_id,
-            'discount_percentage'   => $package->discount_percentage,
-            'payment_method'        => $payment_method,
-            'payment_status'        => $payment_status,
-            'status'                => $status,
-            'used_amount'           =>0,
-            'remain'                =>$package->num_nabadat,
-            'deleted_at'            => isset($deleted_at) ? Carbon::now() : null
+            'package_id' => $package->id,
+            'num_nabadat' => $package->num_nabadat,
+            'user_id' => $user->id,
+            'price' => $package->price,
+            'center_id' => $package->center_id,
+            'discount_percentage' => $package->discount_percentage,
+            'payment_method' => $payment_method,
+            'payment_status' => $payment_status,
+            'status' => $status,
+            'used_amount' => 0,
+            'remain' => $package->num_nabadat,
+            'deleted_at' => isset($deleted_at) ? Carbon::now() : null
         ];
     }
 }
