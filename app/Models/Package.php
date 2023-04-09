@@ -59,14 +59,13 @@ class Package extends Model
         return $this->price - ($this->price * ($this->center->app_discount / 100));
     }
 
-    public function getImagePathAttribute(): string
+    public function getImageAttribute()
     {
-        $image_path = asset('assets/images/default-image.jpg');
-        if ($this->relationLoaded('attachments')&& isset($this->attachments))
+        if (!$this->relationLoaded('attachments') || !isset($this->attachments))
         {
-            $image_path =  asset($this->attachments->path . "/" . $this->attachments->filename);
+            return null ;
         }
-        return $image_path ;
+        return $this->attachments ;
     }
 
     public function scopeActive(Builder $builder): void
