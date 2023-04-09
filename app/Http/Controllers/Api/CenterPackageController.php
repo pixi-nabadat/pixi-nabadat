@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enum\PackageStatusEnum;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PackageStoreRequest;
+use App\Http\Requests\PackageStoreRequestApi;
 use App\Http\Requests\PackageUpdateRequest;
 use App\Http\Resources\PackagesResource;
 use App\Services\CenterPackageService;
@@ -29,7 +29,7 @@ class CenterPackageController extends Controller
         }
     }
 
-    public function store(PackageStoreRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function store(PackageStoreRequestApi $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             $data = $request->validated();
