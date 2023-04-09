@@ -34,7 +34,7 @@ class CenterPackageService extends BaseService
 
     public function store($data)
     {
-        $data['is_active'] = (isset($data['is_active']) && $data['is_active'] != 0) ? 1:0;
+        $data['is_active'] = isset($data['is_active']) ? 1:0;
         $package = $this->model->create($data);
         if (isset($data['image'])) {
             $fileData = FileService::saveImage(file: $data['image'], path: 'uploads/packages');
