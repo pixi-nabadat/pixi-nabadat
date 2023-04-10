@@ -22,7 +22,6 @@ class PackagesResource extends JsonResource
             'num_nabadat' => $this->num_nabadat,
             'price' => $this->price,
             'price_after_discount' => getPriceAfterDiscount(price: $this->price, discountValue: $this->discount_percentage ?? 0),
-            // 'image' => $this->image_path,
             'image'=> isset($this->attachments) ? new AttachmentsResource($this->attachments):$default_image,
             'center' => new CentersResource($this->whenLoaded('center')),
         ];
