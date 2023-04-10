@@ -6,7 +6,7 @@ namespace App\Http\Requests;
 use App\Enum\PackageStatusEnum;
 use Illuminate\Validation\Rule;
 
-class PackageStoreRequest extends BaseRequest
+class PackageStoreRequestApi extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -59,6 +59,6 @@ class PackageStoreRequest extends BaseRequest
 
     public function validationData()
     {
-        return array_merge($this->all(),['status'=>PackageStatusEnum::UNDERACHIEVING]);
+        return array_merge($this->all(),['center_id'=>auth()->user()->center_id,'status'=>PackageStatusEnum::UNDERACHIEVING]);
     }
 }
