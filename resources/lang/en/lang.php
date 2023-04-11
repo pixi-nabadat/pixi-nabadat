@@ -248,8 +248,7 @@
 		'product_id'=>'product id',
 		'product_name'=>'product name',
 		'quantity'=>'quantity',
-		'ev
-		ent'=>'event',
+		'event'=>'event',
 		'sms'=>'sms',
 		'select_governorate'=>'select governorate',
 		'expire_points_before_one_day'=>'expire points before one day',
@@ -267,5 +266,14 @@
 		'center_create_new_offer'=>'center create new offer',
 		'create_new_coupon_discount'=>'create new coupon discount',
 		'delete_image'=>'delete image',
+		'general_routes'=>'general routes',
+		'not_found'=>'not found',
+		'not_allowed'=>'not allowed',
+		'error'=>'error',
+		'success'=>'success',
+		'success_operation'=>'success operation',
+		'coupon_not_found'=>'coupon not found',
+		'applications'=>'applications',
+		'animation'=>'animation',
     ]
 ?>

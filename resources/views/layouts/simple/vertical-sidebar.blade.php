@@ -52,7 +52,7 @@
 					</li>
 					<li class="sidebar-main-title">
 						<div>
-							<h6 class="lan-8">{{ trans('lang.Applications') }}</h6>
+							<h6 class="lan-8">{{ trans('lang.applications') }}</h6>
                      		<p class="lan-9">{{ trans('lang.Ready to use Apps') }}</p>
 						</div>
 					</li>
@@ -322,7 +322,7 @@
 						</ul>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/animation' ? 'active' : '' }}" href="#"><i data-feather="cloud-drizzle"></i><span>{{ trans('lang.Animation') }}</span></a>
+						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/animation' ? 'active' : '' }}" href="#"><i data-feather="cloud-drizzle"></i><span>{{ trans('lang.animation') }}</span></a>
 						<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/animation' ? 'block;' : 'none;' }}">
 							<li><a href="{{route('animate')}}" class="{{ Route::currentRouteName()=='animate' ? 'active' : '' }}">Animate</a></li>
 	                        <li><a href="{{route('scroll-reval')}}" class="{{ Route::currentRouteName()=='scroll-reval' ? 'active' : '' }}">Scroll Reveal</a></li>

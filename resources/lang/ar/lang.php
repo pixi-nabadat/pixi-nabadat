@@ -266,5 +266,14 @@
 		'center_create_new_offer'=>'المركز انشاء عرض جديد',
 		'create_new_coupon_discount'=>'انشاء كوبون خصم جديد',
 		'delete_image'=>'حذف الصورة',
+		'general_routes'=> 'مسارات عامة',
+		'not_found'=>'غير موجود',
+		'not_allowed'=>'غير مسموح',
+		'error'=>'خطاء',
+		'success'=>'تم بنجاح',
+		'success_operation'=>'عملية ناجحة',
+		'coupon_not_found'=>'كوبون غير موجود',
+		'applications'=>'التطبيقات',
+		'animation'=>'الرسوم المتحركة',
     ]
 ?>

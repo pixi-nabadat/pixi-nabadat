@@ -23,7 +23,7 @@ class CancelReasonController extends Controller
     {
         $cancelReason = $this->cancelReasonService->find($id);
         if (!$cancelReason) {
-            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.cancelReason_not_found')];
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.cancel_reason_not_found')];
             return back()->with('toast', $toast);
         }
         return view('dashboard.cancelReasons.edit', compact('cancelReason'));
@@ -75,7 +75,7 @@ class CancelReasonController extends Controller
     {
         $cancelReason = $this->cancelReasonService->find($id);
         if (!$cancelReason) {
-            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.cancelReason_not_found')];
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.cancel_reason_not_found')];
             return back()->with('toast', $toast);
         }
         return view('dashboard.cancelReasons.show', compact('cancelReason'));
