@@ -275,5 +275,6 @@
 		'coupon_not_found'=>'coupon not found',
 		'applications'=>'applications',
 		'animation'=>'animation',
+		'create_country'=>'create country',
     ]
 ?>

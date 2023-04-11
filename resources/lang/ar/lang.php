@@ -275,5 +275,6 @@
 		'coupon_not_found'=>'كوبون غير موجود',
 		'applications'=>'التطبيقات',
 		'animation'=>'الرسوم المتحركة',
+		'create_country'=>'اضافة دولة',
     ]
 ?>
