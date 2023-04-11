@@ -219,7 +219,7 @@
 		'create_city'=>'create city',
 		'add_client'=>'add client',
 		'date_of_birth'=>'date of birth',
-		'allow_notifications'=>'allow notifications',
+		'allow_notification'=>'allow notifications',
 		'pulse_price'=>'pulse price',
 		'pulse_discount'=>'pulse discount',
 		'center_page'=>'center page',

@@ -219,7 +219,7 @@
 		'create_city'=>'اضافة مدينة',
 		'add_client'=>'اضافة عميل',
 		'date_of_birth'=>'تاريخ الميلاد',
-		'allow_notifications'=>'السماح بالتنبية',
+		'allow_notification'=>'السماح بالتنبية',
 		'pulse_price'=>'سعر النبضة',
 		'pulse_discount'=>'خصم النبضة',
 		'center_page'=>'صفحة المركز',
