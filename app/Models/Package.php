@@ -59,16 +59,6 @@ class Package extends Model
         return $this->price - ($this->price * ($this->center->app_discount / 100));
     }
 
-    public function getImagePathAttribute(): string
-    {
-        $image_path = asset('assets/images/default-image.jpg');
-        if ($this->relationLoaded('attachments')&& isset($this->attachments))
-        {
-            $image_path =  asset($this->attachments->path . "/" . $this->attachments->filename);
-        }
-        return $image_path ;
-    }
-
     public function scopeActive(Builder $builder): void
     {
         $builder->where('start_date' ,  '<=' , Carbon::now(config('app.africa_timezone'))->format('Y-m-d'))->where('end_date' ,  '>=' , Carbon::now(config('app.africa_timezone'))->format('Y-m-d'));

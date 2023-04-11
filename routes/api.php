@@ -119,7 +119,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/', [AddressController::class, 'store']);
         Route::post('{address}', [AddressController::class, 'update']);
         Route::post('set-default/{address}', [AddressController::class, 'setDefault']);
-        Route::post('set-default/{address}', [AddressController::class, 'setDefault']);
         Route::delete('{address}', [AddressController::class, 'destroy']);
     });
     //start order delivery

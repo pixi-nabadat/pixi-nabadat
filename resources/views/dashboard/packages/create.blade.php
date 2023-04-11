@@ -30,7 +30,7 @@
                                     <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12 @error('price') is-invalid @enderror">
                                         <option selected>...</option>
                                         @foreach ($centers as $center)
-                                            <option value="{{ $center->id }}">{{ $center->name }}</option>
+                                            <option value="{{ $center->id }}">{{ $center->user->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('center_id')
@@ -103,7 +103,7 @@
                                 {{--status  --}}
                                 <div class="col-md-12 d-flex my-3">
                                     <div class="col-form-label col-3">{{ __('lang.status') }}</div>
-                                    <select id="status" name="center_id" class="js-example-basic-single col-sm-12 @error('price') is-invalid @enderror">
+                                    <select id="status" name="status" class="js-example-basic-single col-sm-12 @error('price') is-invalid @enderror">
                                         <option value="1">{{ __('lang.approved') }}</option>
                                         <option value="0">{{ __('lang.cancel') }}</option>
                                     </select>
