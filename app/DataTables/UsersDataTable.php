@@ -86,7 +86,7 @@ class UsersDataTable extends DataTable
             Column::make('phone')
                 ->title(trans('lang.phone')),
             Column::make('location')
-                ->title(trans('lang.location')),
+                ->title(trans('lang.location'))->searchable(false)->orderable(false),
             Column::make('points')
                 ->title(trans('lang.points'))
                 ->searchable(false)
