@@ -81,6 +81,7 @@ class AuthController extends Controller
     {
         try{
             $data = $request->validated();
+            $data['password'] = bcrypt(($data['password']));
             $user = Auth::user();
             $status = $this->authService->update(user: $user, data: $data);
             if(!$status)
