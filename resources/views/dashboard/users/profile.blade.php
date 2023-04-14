@@ -129,15 +129,17 @@
                                                 class="form-select form-control mb-3 @error('parent_id') is-invalid @enderror">
                                                 <option selected>{{ trans('lang.choose_governorates') }}</option>
                                                 @foreach ($governorates as $governorate)
-                                                    <option value="{{ $governorate->id }}">{{ $governorate->title }}</option>
+                                                    <option value="{{ $governorate->id }}" @if($governorate->id == isset($governorate_city->id) ? $governorate_city->id:null)selected @endif>{{ $governorate->title }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-md-12 mb-3">
                                             <div class="col-form-label">{{ trans('lang.city') }}</div>
-                                            <select name="location_id"
-                                                class="form-select form-control mb-3 @error('location_id') is-invalid @enderror"
-                                                id="city"></select>
+                                            <select name="location_id" class="form-select form-control mb-3 @error('location_id') is-invalid @enderror" id="city">
+                                                @foreach($cities as $city)
+                                                    <option value="{{ $city->id }}" @if($city->id == Auth::user()->location_id)selected @endif>{{ $city->title }}</option>
+                                                @endforeach
+                                            </select>
                                             @error('location_id')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror

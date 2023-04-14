@@ -70,9 +70,11 @@ class AuthController extends Controller
 
     public function getProfile()
     {
-        $filters = ['depth' => 1, 'is_active' => 1];
-        $governorates = $this->locationService->getAll($filters);
-        return view('dashboard.users.profile', compact('governorates'));
+        $user = Auth::user();
+        $governorates = $this->locationService->getAll(['depth' => 1, 'is_active' => 1]);
+        $cities = isset($user->location) ? $user->location->getSiblings() : [];
+        $governorate_city = isset($user->location) ? $user->location->ancestors->whereNotNull('parent_id')->first():[];
+        return view('dashboard.users.profile', compact('governorates', 'cities', 'governorate_city'));
     }
 
     public function updateProfile(UpdateUserProfileRequest $request)
@@ -82,7 +84,10 @@ class AuthController extends Controller
             $user = Auth::user();
             $status = $this->authService->update(user: $user, data: $data);
             if(!$status)
-                return redirect()->back();
+            {
+                $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.something_went_rong')];
+                return back()->with('toast', $toast);    
+            }
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect(route('/'))->with('toast', $toast);
 
@@ -97,7 +102,10 @@ class AuthController extends Controller
         try{
             $user = $this->authService->updateLogo(data: $request->validated());
             if(!$user)
-                return redirect()->back();
+            {
+                $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.something_went_rong')];
+                return back()->with('toast', $toast);    
+            }
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect(route('/'))->with('toast', $toast);
         }catch(Exception $e){
