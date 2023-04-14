@@ -129,7 +129,7 @@
                                                 class="form-select form-control mb-3 @error('parent_id') is-invalid @enderror">
                                                 <option selected>{{ trans('lang.choose_governorates') }}</option>
                                                 @foreach ($governorates as $governorate)
-                                                    <option value="{{ $governorate->id }}" @if($governorate->id == isset($governorate_city->id) ? $governorate_city->id:null)selected @endif>{{ $governorate->title }}</option>
+                                                    <option value="{{ $governorate->id }}" @if($governorate->id == $governorate_city->id)selected @endif>{{ $governorate->title }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
