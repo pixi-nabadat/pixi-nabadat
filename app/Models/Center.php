@@ -98,6 +98,12 @@ class Center extends Model
     {
         return trans('lang.centers') ;
     }
+
+    public function getImagePathAttribute(): string
+    {
+        return $this->relationLoaded('defaultLogo') && isset($this->defaultLogo) ? asset($this->defaultLogo->path."/".$this->defaultLogo->filename) : asset('assets/images/default-image.jpg');
+    }
+
     public function getSearchFlagAttribute(): int
     {
         return self::SEARCHFLAG;
