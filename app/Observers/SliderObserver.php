@@ -2,61 +2,61 @@
 
 namespace App\Observers;
 
-use App\Models\Reservation;
+use App\Models\Slider;
 
 class SliderObserver
 {
     /**
-     * Handle the Reservation "created" event.
+     * Handle the Slider "created" event.
      *
-     * @param  \App\Models\Reservation  $reservation
+     * @param  \App\Models\Slider  $slider
      * @return void
      */
-    public function created(Reservation $reservation)
+    public function created(Slider $slider)
     {
         cache()->forget('home-api');
     }
 
     /**
-     * Handle the Reservation "updated" event.
+     * Handle the Slider "updated" event.
      *
-     * @param  \App\Models\Reservation  $reservation
+     * @param  \App\Models\Slider  $slider
      * @return void
      */
-    public function updated(Reservation $reservation)
+    public function updated(Slider $slider)
     {
         cache()->forget('home-api');
     }
 
     /**
-     * Handle the Reservation "deleted" event.
+     * Handle the Slider "deleted" event.
      *
-     * @param  \App\Models\Reservation  $reservation
+     * @param  \App\Models\Slider  $slider
      * @return void
      */
-    public function deleted(Reservation $reservation)
+    public function deleted(Slider $slider)
     {
         cache()->forget('home-api');
     }
 
     /**
-     * Handle the Reservation "restored" event.
+     * Handle the Slider "restored" event.
      *
-     * @param  \App\Models\Reservation  $reservation
+     * @param  \App\Models\Slider  $slider
      * @return void
      */
-    public function restored(Reservation $reservation)
+    public function restored(Slider $slider)
     {
         cache()->forget('home-api');
     }
 
     /**
-     * Handle the Reservation "force deleted" event.
+     * Handle the Slider "force deleted" event.
      *
-     * @param  \App\Models\Reservation  $reservation
+     * @param  \App\Models\Slider  $slider
      * @return void
      */
-    public function forceDeleted(Reservation $reservation)
+    public function forceDeleted(Slider $slider)
     {
         cache()->forget('home-api');
     }

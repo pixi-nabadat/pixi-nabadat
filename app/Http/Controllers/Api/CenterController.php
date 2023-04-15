@@ -40,7 +40,7 @@ class CenterController extends Controller
                 $filters['location_id'] = $request->location_id;
             $filters = array_merge($filters,$request->except('location_id'));
 
-            $withRelations = ['user.attachments'];
+            $withRelations = ['user','defaultLogo'];
             $centers = $this->centerService->listing(filters: $filters,withRelation: $withRelations);
             return CentersResource::collection($centers);
         } catch (\Exception $e) {

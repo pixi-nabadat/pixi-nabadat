@@ -39,7 +39,6 @@ class AuthUserResource extends JsonResource
             "updated_at"=> $this->updated_at,
             "wallet"=>$this->whenLoaded('nabadatWallet',$this->nabadatWallet, null),
             'center'=> $this->whenLoaded('center', new UserCenterResource($this->center)),
-
         ],
        ];
     }
