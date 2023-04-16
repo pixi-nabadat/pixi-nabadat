@@ -48,20 +48,28 @@ class CenterService extends BaseService
         $center = $this->model->create($center_data);
         if (!$center)
            throw new NotFoundException(trans('lang.center_not_created'));
+
+        if (isset($data['primary_image']))
+        {
+            $fileData = FileService::saveImage(file: $data['primary_image'],path: 'uploads/centers', field_name: 'primary_image');
+            $fileData['type'] = ImageTypeEnum::PRIMARY_IMAGE;
+            $center->storeAttachment($fileData);
+        }
+
+        if (isset($data['images']) && is_array($data['images']))
+        foreach ($data['images'] as $image) {
+            $fileData = FileService::saveImage(file: $image, path: 'uploads/centers', field_name: 'images');
+            $fileData['type'] = ImageTypeEnum::GALARY;
+            $center->storeAttachment($fileData);
+        }
+        $userData = $this->prepareUserData($data);
+        $center->user()->create($userData);
         if (isset($data['logo']))
         {
             $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/users', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $center->user->storeAttachment($fileData);
         }
-        if (isset($data['images']) && is_array($data['images']))
-            foreach ($data['images'] as $image) {
-                $fileData = FileService::saveImage(file: $image, path: 'uploads/centers', field_name: 'images');
-                $fileData['type'] = ImageTypeEnum::GALARY;
-                $center->storeAttachment($fileData);
-            }
-        $userData = $this->prepareUserData($data);
-        $center->user()->create($userData);
         return $center;
     }
 
@@ -111,6 +119,15 @@ class CenterService extends BaseService
             $fileData['type'] = ImageTypeEnum::LOGO;
             $center->user->storeAttachment($fileData);
         }
+
+        if (isset($data['primary_image']))
+        {
+            $center->deleteAttachmentsPrimaryImage();
+            $fileData = FileService::saveImage(file: $data['primary_image'],path: 'uploads/centers', field_name: 'primary_image');
+            $fileData['type'] = ImageTypeEnum::PRIMARY_IMAGE;
+            $center->storeAttachment($fileData);
+        }
+
         if (isset($data['images']) && is_array($data['images']))
             foreach ($data['images'] as $image) {
                 $fileData = FileService::saveImage(file: $image, path: 'uploads/centers', field_name: 'images');

@@ -341,6 +341,37 @@
                                             </div>
                                         </div>
                                     @endif
+                                    {{-- center primary_image --}}
+                                    <div class="col-md-12  d-flex">
+                                        <div class="col-md-12">
+                                            <label class="form-label" for="primary_image">{{ trans('lang.primary_image') }}</label>
+                                            <input name="primary_image"
+                                                class="form-control image @error('primary_image') is-invalid @enderror"
+                                                id="primary_image" type="file">
+                                            @error('primary_image')
+                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    @if($center->attachments->count())
+                                            @foreach($center->attachments as $attachment)
+                                                    @if($attachment->type == App\Enum\ImageTypeEnum::PRIMARY_IMAGE)
+                                                    <div class="col-md-3 col-lg-3 col-sm-12">
+                                                        <div class="img-container">
+                                                            <div class="form-group my-3">
+                                                                <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
+                                                            </div>
+                                                            <div class="overlay">
+                                                                <a role="button" onclick="destroy('{{route('attachment.destroy',$attachment->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
+                                                                    <i class="fa fa-trash-o"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @endif
+                                            @endforeach
+                                        @endif
 
                                     {{-- center images --}}
                                     <div class="col-md-12  d-flex">

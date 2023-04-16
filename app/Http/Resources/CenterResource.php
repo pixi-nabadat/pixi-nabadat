@@ -36,6 +36,7 @@ class CenterResource extends JsonResource
             'is_support_auto_service' => ($this->is_support_auto_service == 1),
             'images' => AttachmentsResource::collection($this->whenLoaded('attachments',$this->attachments->where('type', '!=', ImageTypeEnum::LOGO))),
             'logo' => $this->whenLoaded('user', $this->user->image),
+            'primary_image' => new AttachmentsResource($this->attachments->where('type', ImageTypeEnum::PRIMARY_IMAGE)),
             'feedback' => RatesResource::collection($this->whenLoaded('rates')),
             'devices' => DeviceResource::collection($this->whenLoaded('devices')),
             'packages' => PackagesResource::collection($this->whenLoaded('packages')),
