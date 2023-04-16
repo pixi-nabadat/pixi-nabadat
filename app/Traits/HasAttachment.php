@@ -41,14 +41,5 @@ trait HasAttachment
         });
     }
 
-    public function deleteAttachmentsPrimaryImage()
-    {
-
-        $this->attachments()->where('type', ImageTypeEnum::PRIMARY_IMAGE)->each(function ($attachment){
-            unlink(public_path($attachment->path."/".$attachment->filename));
-           $attachment->delete();
-        });
-    }
-
 
 }

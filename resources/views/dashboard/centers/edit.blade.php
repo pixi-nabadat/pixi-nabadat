@@ -312,14 +312,14 @@
                                     <h6>{{ __('lang.center_image') }}</h6>
                                 </div>
                                 <div class="card-body">
-                                    {{-- center logo --}}
+                                    {{-- center profile_image --}}
                                     <div class="col-md-12  d-flex">
                                         <div class="col-md-12">
-                                            <label class="form-label" for="logo">{{ trans('lang.logo') }}</label>
-                                            <input name="logo"
-                                                class="form-control image @error('logo') is-invalid @enderror"
-                                                id="logo" type="file">
-                                            @error('logo')
+                                            <label class="form-label" for="profile_image">{{ trans('lang.profile_image') }}</label>
+                                            <input name="profile_image"
+                                                class="form-control image @error('profile_image') is-invalid @enderror"
+                                                id="profile_image" type="file">
+                                            @error('profile_image')
                                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -341,14 +341,14 @@
                                             </div>
                                         </div>
                                     @endif
-                                    {{-- center primary_image --}}
+                                    {{-- center logo --}}
                                     <div class="col-md-12  d-flex">
                                         <div class="col-md-12">
-                                            <label class="form-label" for="primary_image">{{ trans('lang.primary_image') }}</label>
-                                            <input name="primary_image"
-                                                class="form-control image @error('primary_image') is-invalid @enderror"
-                                                id="primary_image" type="file">
-                                            @error('primary_image')
+                                            <label class="form-label" for="logo">{{ trans('lang.logo') }}</label>
+                                            <input name="logo"
+                                                class="form-control image @error('logo') is-invalid @enderror"
+                                                id="logo" type="file">
+                                            @error('logo')
                                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -356,7 +356,7 @@
 
                                     @if($center->attachments->count())
                                             @foreach($center->attachments as $attachment)
-                                                    @if($attachment->type == App\Enum\ImageTypeEnum::PRIMARY_IMAGE)
+                                                    @if($attachment->type == App\Enum\ImageTypeEnum::LOGO)
                                                     <div class="col-md-3 col-lg-3 col-sm-12">
                                                         <div class="img-container">
                                                             <div class="form-group my-3">

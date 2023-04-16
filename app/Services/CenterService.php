@@ -49,10 +49,10 @@ class CenterService extends BaseService
         if (!$center)
            throw new NotFoundException(trans('lang.center_not_created'));
 
-        if (isset($data['primary_image']))
+        if (isset($data['logo']))
         {
-            $fileData = FileService::saveImage(file: $data['primary_image'],path: 'uploads/centers', field_name: 'primary_image');
-            $fileData['type'] = ImageTypeEnum::PRIMARY_IMAGE;
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/centers', field_name: 'logo');
+            $fileData['type'] = ImageTypeEnum::LOGO;
             $center->storeAttachment($fileData);
         }
 
@@ -64,9 +64,9 @@ class CenterService extends BaseService
         }
         $userData = $this->prepareUserData($data);
         $center->user()->create($userData);
-        if (isset($data['logo']))
+        if (isset($data['profile_image']))
         {
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/users', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['profile_image'],path: 'uploads/users', field_name: 'profile_image');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $center->user->storeAttachment($fileData);
         }
@@ -112,19 +112,19 @@ class CenterService extends BaseService
         $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ?? 0;
         $data['featured'] = isset($data['featured']) ?? 0;
         
-        if (isset($data['logo']))
+        if (isset($data['profile_image']))
         {
             $center->user->deleteAttachmentsLogo();
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/users', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['profile_image'],path: 'uploads/users', field_name: 'profile_image');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $center->user->storeAttachment($fileData);
         }
 
-        if (isset($data['primary_image']))
+        if (isset($data['logo']))
         {
-            $center->deleteAttachmentsPrimaryImage();
-            $fileData = FileService::saveImage(file: $data['primary_image'],path: 'uploads/centers', field_name: 'primary_image');
-            $fileData['type'] = ImageTypeEnum::PRIMARY_IMAGE;
+            $center->deleteAttachmentsLogo();
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/centers', field_name: 'logo');
+            $fileData['type'] = ImageTypeEnum::LOGO;
             $center->storeAttachment($fileData);
         }
 

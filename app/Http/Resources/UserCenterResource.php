@@ -25,7 +25,7 @@ class UserCenterResource extends JsonResource
             'avg_waiting_time' => $this->avg_waiting_time,
             'google_map_url' => $this->google_map_url,
             'is_support_auto_service' => ($this->is_support_auto_service == 1),
-            'primary_image' => new AttachmentsResource($this->attachments->where('type', ImageTypeEnum::PRIMARY_IMAGE)->first()),
+            'logo' => new AttachmentsResource($this->attachments->where('type', ImageTypeEnum::LOGO)->first()),
             'images' => AttachmentsResource::collection($this->attachments->where('type', ImageTypeEnum::GALARY)),
         ];
     }
