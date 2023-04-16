@@ -21,15 +21,21 @@ class Slider extends Model
         return $this->belongsTo(Center::class);
     }
 
-    public function logo(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    public function attachments(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
         return $this->morphOne(Attachment::class, 'attachmentable');
     }
 
     public function getImagePathAttribute(): string
     {
-        return $this->relationLoaded('logo') && isset($this->logo) ? asset($this->logo->path . "/" . $this->logo->filename) : asset('assets/images/default-image.jpg');
+        return $this->relationLoaded('attachments') && isset($this->attachments) ? asset($this->attachments->path."/".$this->attachments->filename) : asset('assets/images/default-image.jpg');
     }
+
+    public function getImageIdAttribute()
+    {
+        return $this->relationLoaded('attachments') && isset($this->attachments) ? $this->attachments->id : null;
+    }
+
 
     protected static function boot()
     {

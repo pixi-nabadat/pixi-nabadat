@@ -97,10 +97,7 @@ class ProductController extends Controller
     {
         try {
             //first forget cash
-            cache()->forget('home-api');
-            $result = $this->productService->featured($request->id);
-            if (!$result)
-                return apiResponse(message: trans('lang.not_found'), code: 404);
+            $this->productService->featured($request->id);
             return apiResponse(message: trans('lang.success'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
@@ -111,7 +108,6 @@ class ProductController extends Controller
     {
         try {
             //first forget cash
-            cache()->forget('home-api');
             $result = $this->productService->status($request->id);
             if (!$result)
                 return apiResponse(message: trans('lang.not_found'), code: 404);

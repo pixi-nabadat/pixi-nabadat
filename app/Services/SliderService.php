@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enum\ImageTypeEnum;
+use App\Exceptions\NotFoundException;
 use App\Models\Slider;
 use App\QueryFilters\SlidersFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -52,12 +53,15 @@ class SliderService extends BaseService
 
     } //end of find
 
+    /**
+     * @throws NotFoundException
+     */
     public function find($id, $withRelation = [])
     {
         $slider = Slider::with($withRelation)->find($id);
-        if ($slider)
-            return $slider;
-        return false;
+        if (!$slider)
+           throw  new NotFoundException(trans('lang.not_found'));
+        return $slider;
     } //end of delete
 
     public function update($id, $data): bool|int

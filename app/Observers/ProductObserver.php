@@ -25,7 +25,6 @@ class ProductObserver
      */
     public function updated(Product $product)
     {
-        dd('test');
         cache()->forget('home-api');
     }
 
