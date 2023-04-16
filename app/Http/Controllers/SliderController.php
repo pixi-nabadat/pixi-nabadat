@@ -81,7 +81,7 @@ class SliderController extends Controller
     public function destroy($id)
     {
         try {
-            $result = $this->sliderService->delete($id);
+            $this->sliderService->delete($id);
             return apiResponse(message: trans('lang.success'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
