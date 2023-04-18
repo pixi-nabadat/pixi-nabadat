@@ -13,7 +13,7 @@ use Illuminate\Support\Arr;
 class CenterService extends BaseService
 {
 
-    public function __construct(public  Center $model)
+    public function __construct(public Center $model)
     {
     }
 
@@ -42,31 +42,29 @@ class CenterService extends BaseService
     {
         $data['is_active'] = isset($data['is_active']) ?? 0;
         $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ?? 0;
-        $data['featured'] = isset($data['featured']) ??  0;
-        
+        $data['featured'] = isset($data['featured']) ?? 0;
+
         $center_data = $this->prepareCenterData($data);
         $center = $this->model->create($center_data);
         if (!$center)
-           throw new NotFoundException(trans('lang.center_not_created'));
+            throw new NotFoundException(trans('lang.center_not_created'));
 
-        if (isset($data['logo']))
-        {
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/centers', field_name: 'logo');
+        if (isset($data['logo'])) {
+            $fileData = FileService::saveImage(file: $data['logo'], path: 'uploads/centers', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $center->storeAttachment($fileData);
         }
 
         if (isset($data['images']) && is_array($data['images']))
-        foreach ($data['images'] as $image) {
-            $fileData = FileService::saveImage(file: $image, path: 'uploads/centers', field_name: 'images');
-            $fileData['type'] = ImageTypeEnum::GALARY;
-            $center->storeAttachment($fileData);
-        }
+            foreach ($data['images'] as $image) {
+                $fileData = FileService::saveImage(file: $image, path: 'uploads/centers', field_name: 'images');
+                $fileData['type'] = ImageTypeEnum::GALARY;
+                $center->storeAttachment($fileData);
+            }
         $userData = $this->prepareUserData($data);
         $center->user()->create($userData);
-        if (isset($data['profile_image']))
-        {
-            $fileData = FileService::saveImage(file: $data['profile_image'],path: 'uploads/users', field_name: 'profile_image');
+        if (isset($data['profile_image'])) {
+            $fileData = FileService::saveImage(file: $data['profile_image'], path: 'uploads/users', field_name: 'profile_image');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $center->user->storeAttachment($fileData);
         }
@@ -81,7 +79,7 @@ class CenterService extends BaseService
             'phone' => $data['primary_phone'],
             'password' => bcrypt($data['password']),
             'type' => User::CENTERADMIN,
-            'is_active' => $data['is_active'] ,
+            'is_active' => $data['is_active'],
             'location_id' => $data['location_id'],
         ];
     }
@@ -89,19 +87,19 @@ class CenterService extends BaseService
     private function prepareCenterData($data): array
     {
         return [
-            'is_support_auto_service'=>$data['is_support_auto_service'],
-            'featured'=>$data['featured'],
-            'phones'=>isset($data['phones']) ? array_filter($data['phones']):null,
+            'is_support_auto_service' => $data['is_support_auto_service'],
+            'featured' => $data['featured'],
+            'phones' => isset($data['phones']) ? array_filter($data['phones']) : null,
             'address' => $data['address'],
             'description' => $data['description'],
-            'avg_waiting_time'=>$data['avg_waiting_time'],
-            'support_payments'=> $data['support_payments'],
-            'pulse_price'=>$data['pulse_price'],
-            'pulse_discount'=> Arr::get($data,'pulse_discount'),
-            'app_discount'=> Arr::get($data,'app_discount'),
-            'lat'=> Arr::get($data,'lat'),
-            'lng'=> Arr::get($data,'lng'),
-            'google_map_url'=> Arr::get($data,'google_map_url'),
+            'avg_waiting_time' => $data['avg_waiting_time'],
+            'support_payments' => $data['support_payments'],
+            'pulse_price' => $data['pulse_price'],
+            'pulse_discount' => Arr::get($data, 'pulse_discount'),
+            'app_discount' => Arr::get($data, 'app_discount'),
+            'lat' => Arr::get($data, 'lat'),
+            'lng' => Arr::get($data, 'lng'),
+            'google_map_url' => Arr::get($data, 'google_map_url'),
         ];
     }
 
@@ -111,19 +109,17 @@ class CenterService extends BaseService
         $data['is_active'] = isset($data['is_active']) ?? 0;
         $data['is_support_auto_service'] = isset($data['is_support_auto_service']) ?? 0;
         $data['featured'] = isset($data['featured']) ?? 0;
-        
-        if (isset($data['profile_image']))
-        {
+
+        if (isset($data['profile_image'])) {
             $center->user->deleteAttachmentsLogo();
-            $fileData = FileService::saveImage(file: $data['profile_image'],path: 'uploads/users', field_name: 'profile_image');
+            $fileData = FileService::saveImage(file: $data['profile_image'], path: 'uploads/users', field_name: 'profile_image');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $center->user->storeAttachment($fileData);
         }
 
-        if (isset($data['logo']))
-        {
+        if (isset($data['logo'])) {
             $center->deleteAttachmentsLogo();
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/centers', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['logo'], path: 'uploads/centers', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $center->storeAttachment($fileData);
         }
@@ -138,7 +134,7 @@ class CenterService extends BaseService
         $center->update($centerData);
 
         $userData = $this->prepareUserData($data);
-        if(!isset($userData['password']))
+        if (!isset($userData['password']))
             $userData['password'] = $center->user->password;
         $center->user()->update($userData);
         return true;
@@ -155,7 +151,7 @@ class CenterService extends BaseService
     public function changeStatus($id)
     {
 //        todo check you pass id of user not center
-        $user = User::find($id);
+        $user = $this->find($id);
         $user->is_active = !$user->is_active;
         return $user->save();
     }
