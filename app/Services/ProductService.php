@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enum\ActivationStatusEnum;
 use App\Enum\ImageTypeEnum;
+use App\Exceptions\NotFoundException;
 use App\Models\Product;
 use App\QueryFilters\ProductsFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -52,18 +53,21 @@ class ProductService extends BaseService
 
     } //end of store
 
-    public function find($id,$withRelation=[]): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
+    /**
+     * @throws NotFoundException
+     */
+    public function find($id, $withRelation=[]): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
         $product = Product::with($withRelation)->find($id);
-        if ($product)
-            return $product;
-        return false;
+        if (!$product)
+            throw new NotFoundException(trans('lang.not_found'));
+        return $product;
 
     } //end of find
 
     public function delete($id)
     {
-        $product = Product::find($id);
+        $product = $this->find($id);
         if ($product) {
             $product->deleteAttachments();
             return $product->delete();

@@ -21,6 +21,7 @@ class CentersResource extends JsonResource
             'name' => $this->whenLoaded('user', $this->user->name),
             'description' => $this->description,
             'address' => $this->address,
+            'logo' =>  ['path'=>$this->image_path],
             'profile_image' =>  $this->image_path,
             'logo' => new AttachmentsResource($this->attachments->where('type', ImageTypeEnum::LOGO)),
             'rate' => $this->rate

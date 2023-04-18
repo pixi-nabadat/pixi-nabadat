@@ -85,6 +85,11 @@ class Product extends Model
         return $this->relationLoaded('defaultLogo') && isset($this->defaultLogo) ? asset($this->defaultLogo->path."/".$this->defaultLogo->filename) : asset('assets/images/default-image.jpg');
     }
 
+    public function getImageIdAttribute()
+    {
+        return $this->relationLoaded('defaultLogo') && isset($this->defaultLogo) ? $this->defaultLogo->id : null;
+    }
+
     protected static function boot()
     {
         parent::boot();
