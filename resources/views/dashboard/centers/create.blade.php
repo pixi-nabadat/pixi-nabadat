@@ -295,6 +295,22 @@
                                     <h6>{{ __('lang.center_image') }}</h6>
                                 </div>
                                 <div class="card-body">
+                                    {{-- center profile_image --}}
+                                    <div class="col-md-12  d-flex">
+                                        <div class="col-md-12">
+                                            <label class="form-label" for="profile_image">{{ trans('lang.profile_image') }}</label>
+                                            <input name="profile_image"
+                                                class="form-control image @error('profile_image') is-invalid @enderror"
+                                                id="profile_image" type="file">
+                                            @error('profile_image')
+                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <img src="{{ asset('/uploads/device/default.png') }}" style="width: 500px"
+                                                class="img-thumbnail image-preview " alt="">
+                                        </div>
+                                    </div>
                                     {{-- center logo --}}
                                     <div class="col-md-12  d-flex">
                                         <div class="col-md-12">
@@ -311,7 +327,8 @@
                                                 class="img-thumbnail image-preview " alt="">
                                         </div>
                                     </div>
-                                    {{-- center logo --}}
+
+                                    {{-- center images --}}
                                     <div class="col-md-12  d-flex">
                                         <div class="col-md-12">
                                             <label class="form-label" for="image">{{ trans('lang.image') }}</label>

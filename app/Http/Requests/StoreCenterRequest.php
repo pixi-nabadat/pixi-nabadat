@@ -38,6 +38,7 @@ class StoreCenterRequest extends BaseRequest
             'description.*'           => 'string|nullable',
             'images'                  => 'nullable|array',
             'logo'                    => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
+            'primary_image'           => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             'images.*'                => 'image|mimes:jpg,png,jpeg,gif,svg',
             'password'                => 'required|string',
             'email'                   => 'required|email|unique:users,email',
