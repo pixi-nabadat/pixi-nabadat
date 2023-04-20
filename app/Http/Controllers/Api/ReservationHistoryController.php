@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\StatusNotEquelException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReservationAttendRequest;
 use App\Http\Requests\ReservationHistoryStoreRequest;
 use App\Http\Resources\ReservationsResource;
 use App\Services\ReservationHistoryService;
@@ -23,6 +24,19 @@ class ReservationHistoryController extends Controller
             $reservation = $this->reservationService->findById($id);
             $reservationHistoryData = $request->validated();
             $this->reservationHistoryService->store($reservation, $reservationHistoryData);
+            $reservation = new ReservationsResource($reservation);
+            return apiResponse($reservation, trans('lang.reservation_status_updated_successfully'));
+        } catch (NotFoundException|StatusNotEquelException $e) {
+            return apiResponse(null, $e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function reservationAttend(ReservationAttendRequest $request)
+    {
+        try {
+            $reservation = $this->reservationService->findByQrCode($request->qr_code);
+            $reservationHistoryData = $request->validated();
+            $this->reservationHistoryService->store($reservation, $request->all());
             $reservation = new ReservationsResource($reservation);
             return apiResponse($reservation, trans('lang.reservation_status_updated_successfully'));
         } catch (NotFoundException|StatusNotEquelException $e) {
