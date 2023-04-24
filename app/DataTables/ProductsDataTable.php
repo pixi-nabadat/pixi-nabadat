@@ -27,6 +27,9 @@ class ProductsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            // ->filter(function($query){
+            //     $this->filter($query);
+            // })
             ->addColumn('action', function (Product $product) {
                 return view('dashboard.products.action', compact('product'))->render();
             })
@@ -39,8 +42,8 @@ class ProductsDataTable extends DataTable
             ->editColumn('stock', function (Product $product) {
                 return  $product->stock;
             })
-            ->editColumn('added_by', function (Product $product) {
-                return  $product->user->name;
+            ->editColumn('category_id', function (Product $product) {
+                return  $product->category->name;
             })
             ->editColumn('type', function (Product $product) {
                 return  $product->type;
@@ -92,8 +95,8 @@ class ProductsDataTable extends DataTable
         return [
             Column::make('name')
                 ->title(trans('lang.name')),
-            Column::make('added_by')
-                ->title(trans('lang.added_by'))
+            Column::make('category_id')
+                ->title(trans('lang.category_id'))
                 ->searchable(false)
                 ->orderable(false),
             Column::make('type')
@@ -146,4 +149,19 @@ class ProductsDataTable extends DataTable
     {
         return 'Products_' . date('YmdHis');
     }
+
+    // public function filter($query){
+    //     if ($this->request->has('search') && !empty($this->request->search['value'])){
+    //         $keyword = $this->request->search['value'];
+    //         $query->where(function ($subquery) use ($keyword) {
+    //             $subquery->where('name', 'like', '%' . $keyword . '%')
+    //                 ->orWhere(function ($q) use ($keyword) {
+    //                     $q->whereHas('category', function ($q) use ($keyword) {
+    //                         $q->where('name', 'like', '%' . $keyword . '%');
+    //                     });
+    //                 });
+    //         });
+    //     }
+    //     return $query;
+    // }
 }
