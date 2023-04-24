@@ -27,9 +27,19 @@ class ProductsFilter extends QueryFilter
         return $this->builder->where('featured',$term);
     }
 
+    public function name($term)
+    {
+        return $this->builder->where('name', 'like', '%'.$term.'%');
+    }
+
     public function category_id($term)
     {
         return $this->builder->where('category_id',$term);
+    }
+
+    public function stock_less_than($term)
+    {
+        return $this->builder->where('stock', '<', $term);
     }
 
     public function type($term)

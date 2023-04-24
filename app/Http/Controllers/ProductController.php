@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function index(ProductsDataTable $dataTable, Request $request)
     {
         $loadRelation = ['user'];
-        $filters = $request->filters ?? [];
+        $filters = $request->get('filters') ?? [];
         return $dataTable->with(['filters' => $filters, 'withRelations' => $loadRelation])->render('dashboard.products.index');
     } //end of index
 
