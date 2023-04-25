@@ -54,4 +54,9 @@ class UsersFilter extends QueryFilter
         return $this->builder->where('phone',$term);
     }
 
+    public function email($term)
+    {
+        return $this->builder->where('email',$term);
+    }
+
 }

@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <form class="needs-validation datatables_parameters" novalidate="">
                             <div class="row g-3">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label class="form-label" for="validationCustom01">@lang('lang.status')</label>
                                     <select class="form-select" name="is_active" id="validationCustom01">
                                         <option value="" selected>Choose...</option>
@@ -29,12 +29,17 @@
                                         <option value="0">{{ trans('lang.not_active') }}</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label class="form-label" for="validationCustom02">@lang('lang.phone')</label>
                                     <input class="form-control" name="phone" id="validationCustom02" type="text" value="">
                                     <div class="valid-feedback">Looks good!</div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <label class="form-label" for="validationCustom02">@lang('lang.email')</label>
+                                    <input class="form-control" name="email" id="validationCustom02" type="email" value="">
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="col-form-label">{{ trans('lang.choose_governorates') }}</div>
                                     <select id="change_location" data-filling-name="location_id"
                                         class="form-select form-control mb-3 @error('parent_id') is-invalid @enderror">
@@ -44,7 +49,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <div class="col-form-label">{{ trans('lang.city') }}</div>
                                     <select name="location_id"
                                         class="form-select form-control mb-3 @error('location_id') is-invalid @enderror"
