@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Category;
 use App\Models\Location;
+use App\Services\CategoryService;
 use App\Services\LocationService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -42,9 +43,9 @@ class CategoriesDataTable extends DataTable
      * @param \App\Models\categoriesDataTable $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(category $model): QueryBuilder
+    public function query(CategoryService $categoryService): QueryBuilder
     {
-        return $model->newQuery();
+        return $categoryService->queryGet($this->filters, $this->withRelations);
     }
 
     /**
