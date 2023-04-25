@@ -44,6 +44,11 @@
                                     <input class="form-control" name="order" id="validationCustom02" type="number" value="">
                                     <div class="valid-feedback">Looks good!</div>
                                 </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="validationCustom02">@lang('lang.center_id')</label>
+                                    <input class="form-control" name="center_id" id="validationCustom02" type="number" value="">
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-3">
