@@ -15,9 +15,12 @@ class DeviceController extends Controller
 
     }
 
-    public function index(DevicesDataTable $dataTable){
-
-        return $dataTable->render('dashboard.devices.index');
+    public function index(DevicesDataTable $dataTable, Request $request)
+    {
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+        return $dataTable->with(['filters'=>$filters])->render('dashboard.devices.index');
 
     }//end of index
 
