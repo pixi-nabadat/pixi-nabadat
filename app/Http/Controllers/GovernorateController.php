@@ -17,8 +17,11 @@ class GovernorateController extends Controller
 
     public function index(GovernoratesDataTable $dataTables,Request $request)
     {
-        $request = $request->merge(['depth'=> 1,'is_active'=>$request->is_active??1]);
-        return $dataTables->with(['filters'=>$request->all()])->render('dashboard.locations.governorate.index');
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+        $filters['depth'] = 1;
+        return $dataTables->with(['filters'=>$filters])->render('dashboard.locations.governorate.index');
     }
 
     public function getAllGovernorates(Request $request)

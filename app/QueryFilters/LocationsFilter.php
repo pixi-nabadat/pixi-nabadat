@@ -17,6 +17,11 @@ class LocationsFilter extends QueryFilter
         return $this->builder->where('is_active',$term);
     }
 
+    public function slug($term)
+    {
+        return $this->builder->where('slug',$term);
+    }
+
     public function depth($term)
     {
         return $this->builder->withDepth()->having('depth', $term);
