@@ -18,8 +18,11 @@ class CountryController extends Controller
 
     public function index(CountriesDataTable $dataTables,Request $request)
     {
-        $request = $request->merge(['depth'=>0,'is_active'=>$request->is_active??1]);
-        return $dataTables->with(['filters'=>$request->all()])->render('dashboard.locations.country.index');
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+        $filters['depth'] = 0;
+        return $dataTables->with(['filters'=>$filters])->render('dashboard.locations.country.index');
     }
 
     public function create()
