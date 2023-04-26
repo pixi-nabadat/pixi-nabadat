@@ -18,8 +18,12 @@ class CityController extends Controller
 
     public function index(CitiesDataTable $dataTables,Request $request)
     {
-        $request = $request->merge(['depth'=>2,'is_active'=>$request->is_active??1]);
-        return $dataTables->with(['filters'=>$request->all()])->render('dashboard.locations.city.index');
+        
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+        $filters['depth'] = 2;
+        return $dataTables->with(['filters'=>$filters])->render('dashboard.locations.city.index');
     }
 
     public function create()
