@@ -44,7 +44,7 @@ class HomeController extends Controller
             $data['locations'] = LocationsResource::collection($this->locationService->getAll(filters: ['depth' => 2]));
             $data['coupons'] = CouponsResource::collection($this->couponService->listing(filters: ['in_period' => true, 'is_active' => true]));
             $data['featured_centers'] = CentersResource::collection($this->centerService->listing(filters: ['is_active' => 1, 'featured' => 1, 'location_id' => $location_id], withRelation: ['defaultLogo']));
-            $data['sliders'] = SlidersResource::collection($this->sliderService->listing(where_condition: ['location_id' => $location_id], withRelations: ['attachments']));
+            $data['sliders'] = SlidersResource::collection($this->sliderService->listing(withRelations: ['attachments']));
             return $data;
         });
         return apiResponse(data: $data);
