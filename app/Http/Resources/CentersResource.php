@@ -21,7 +21,7 @@ class CentersResource extends JsonResource
             'name' => $this->whenLoaded('user', $this->user->name),
             'description' => $this->description,
             'address' => $this->address,
-            'logo' =>  ['path'=>$this->image_path],
+            'logo' => $this->image_path,
             'rate' => $this->rate
         ];
     }
