@@ -46,7 +46,6 @@ class CenterController extends Controller
 
     public function store(StoreCenterRequest $request): \Illuminate\Http\RedirectResponse
     {
-        cache()->forget('home-api');
         try {
             DB::beginTransaction();
             $center = $this->centerService->store($request->validated());

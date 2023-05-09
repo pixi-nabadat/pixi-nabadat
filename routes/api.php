@@ -43,13 +43,15 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('phone/verify', PhoneVerifyController::class);
     Route::post('password/forget', PhoneVerifyController::class);
     Route::post('password/reset', RestPasswordController::class);
-    Route::post('user/set-fcm-token', [AuthController::class, 'setFcmToken'])->middleware('auth:sanctum');
-    Route::get('user', [AuthController::class, 'authUser'])->middleware('auth:sanctum');
-    Route::patch('user/update/{user}', [AuthController::class, 'update'])->middleware('auth:sanctum');
-    Route::post('center/update/{user}', [CenterController::class, 'update'])->middleware('auth:sanctum');
-    Route::patch('update-logo', [AuthController::class, 'updateLogo'])->middleware('auth:sanctum');
-    Route::post('store-in-galary', [AttachmentController::class, 'storeInGalary'])->middleware('auth:sanctum');
-    Route::delete('delete-attachment/{id}', [AttachmentController::class, 'deleteAttachment'])->middleware('auth:sanctum');
+    Route::group(['middleware' => 'auth:sanctum'],function (){
+        Route::post('user/set-fcm-token', [AuthController::class, 'setFcmToken']);
+        Route::get('user', [AuthController::class, 'authUser']);
+        Route::patch('user/update/{user}', [AuthController::class, 'update']);
+        Route::post('center/update/{user}', [CenterController::class, 'update']);
+        Route::patch('update-profile-image', [AuthController::class, 'updateProfileImage']);
+        Route::post('store-in-gallery', [AttachmentController::class, 'storeInGallery']);
+        Route::delete('delete-attachment/{id}', [AttachmentController::class, 'deleteAttachment']);
+    });
 });
 
 //for test fcm
@@ -84,6 +86,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('{id}',  [\App\Http\Controllers\Api\ReservationsController::class, 'find']);
         Route::get('qrcode/{qrcode}',[\App\Http\Controllers\Api\ReservationsController::class, 'findByQrCode']);
         Route::post('{id}/status', [\App\Http\Controllers\Api\ReservationHistoryController::class, 'store']);
+        Route::post('attend', [\App\Http\Controllers\Api\ReservationHistoryController::class, 'reservationAttend']);
         Route::post('devices', [\App\Http\Controllers\Api\NabadatHistoryController::class, 'store']);
         Route::get('{id}/edit',[\App\Http\Controllers\Api\ReservationsController::class,'findForEdit']);
         Route::patch('{id}',[\App\Http\Controllers\Api\ReservationsController::class,'update']);

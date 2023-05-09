@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Enum\ImageTypeEnum;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CentersResource extends JsonResource

@@ -38,6 +38,7 @@ class StoreCenterRequestApi extends BaseRequest
             'description'            => 'required|array',
             'description.*'           => 'string',
             'images'                  => 'nullable|array',
+            'profile_image'           => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             'logo'                    => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             'images.*'                => 'image|mimes:jpg,png,jpeg,gif,svg',
             'password'                => 'required|string',

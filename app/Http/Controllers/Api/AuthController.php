@@ -55,7 +55,9 @@ class AuthController extends Controller
     public function authUser(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $user = Auth::user()->load(['location', 'center.attachments', 'attachments']);
+            $user = Auth::user()->load(['location','attachments']);
+            if ($user->type == User::CENTERADMIN)
+                $user->load(['center.attachments']);
             return apiResponse(data: new AuthUserResource($user));
         } catch (\Exception $exception) {
             logger('auth user exception');
@@ -76,7 +78,7 @@ class AuthController extends Controller
         }
     }
 
-    public function updateLogo(UserUpdateLogoRequest $request)
+    public function updateProfileImage(UserUpdateLogoRequest $request)
     {
         try{
             $user = $this->authService->updateLogo(data: $request->validated());

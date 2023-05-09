@@ -29,7 +29,7 @@ class AuthUserResource extends JsonResource
             "type"=> $this->type,
             "is_active"=> $this->is_active,
             "location"=> $this->whenLoaded('location', new LocationsResource($this->location)),
-            'logo' =>($this->whenLoaded('attachments') && isset($this->attachments))?new AttachmentsResource($this->attachments):array('path'=>asset('assets/images/default-image.jpg')),
+            'profile_image' =>($this->whenLoaded('attachments') && isset($this->attachments))?new AttachmentsResource($this->attachments) : array('path'=>asset('assets/images/default-image.jpg')),
             "date_of_birth"=> $this->date_of_birth,
             "points"=> $this->points,
             "points_expire_date"=> $this->points_expire_date,
@@ -37,7 +37,7 @@ class AuthUserResource extends JsonResource
             "device_token"=> $this->device_token,
             "allow_push_notification"=>(bool) $this->allow_notification,
             "updated_at"=> $this->updated_at,
-            "wallet"=>$this->whenLoaded('nabadatWallet',$this->nabadatWallet, null),
+            "wallet"=>$this->whenLoaded('nabadatWallet',$this->nabadatWallet),
             'center'=> $this->whenLoaded('center', new UserCenterResource($this->center)),
         ],
        ];

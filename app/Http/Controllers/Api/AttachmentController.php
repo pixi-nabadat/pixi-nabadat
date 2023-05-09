@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AttachmentController extends Controller
 {
-    public function storeInGalary(StoreGalaryRequest $request)
+    public function storeInGallery(StoreGalaryRequest $request)
     {
         try{
             $data = $request->validated();
