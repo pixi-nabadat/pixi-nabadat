@@ -18,7 +18,7 @@ class CenterResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'name' => $this->when($this->whenLoaded('user'), $this->user->name),
+            'name' => $this->name,
             'phones' => $this->phones,
             'location_title' => $this->whenLoaded('user',$this->user->location->title),
             'location_id' =>  $this->whenLoaded('user',$this->user->location_id),

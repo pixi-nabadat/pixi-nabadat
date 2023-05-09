@@ -46,8 +46,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::group(['middleware' => 'auth:sanctum'],function (){
         Route::post('user/set-fcm-token', [AuthController::class, 'setFcmToken']);
         Route::get('user', [AuthController::class, 'authUser']);
-        Route::patch('user/update/{user}', [AuthController::class, 'update']);
-        Route::post('center/update/{user}', [CenterController::class, 'update']);
+        Route::patch('user', [AuthController::class, 'update']);
+        Route::post('center/update', [CenterController::class, 'update']);
         Route::patch('update-profile-image', [AuthController::class, 'updateProfileImage']);
         Route::post('store-in-gallery', [AttachmentController::class, 'storeInGallery']);
         Route::delete('delete-attachment/{id}', [AttachmentController::class, 'deleteAttachment']);

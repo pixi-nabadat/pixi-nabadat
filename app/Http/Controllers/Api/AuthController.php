@@ -33,7 +33,6 @@ class AuthController extends Controller
         } catch (UserNotFoundException $e) {
             return apiResponse($e->getMessage(), 'Unauthorized', $e->getCode());
         }
-
     }
 
     public function register(RegisterRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
@@ -65,13 +64,13 @@ class AuthController extends Controller
         }
     }
 
-    public function update(UpdateUserRequest $request, $user)//: \Illuminate\Http\RedirectResponse
+    public function update(UpdateUserRequest $request)//: \Illuminate\Http\RedirectResponse
     {
         try {
-            DB::beginTransaction();
-            $user = User::find($user);
-            $user = $this->authService->update($user, $request->validated());
-            DB::commit();
+            $user = auth('sanctum')->user();
+            $data = $request->validated();
+            $data['name'] = ['ar'=>$data['name'],'en'=>$data['name']];
+            $user = $this->authService->update($user, $data);
             return apiResponse(data: new AuthUserResource($user), message: trans('lang.success_operation'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);

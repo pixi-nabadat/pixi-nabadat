@@ -26,6 +26,7 @@ class StoreCenterRequest extends BaseRequest
         return [
             'name'                   => 'required|array',
             'name.*'                 => 'required|string',
+            'user_name'              => 'required|string',
             'phones'                 => 'nullable|array',
             'phones.*'               => 'nullable|string',
             'location_id'            => 'required|integer',
