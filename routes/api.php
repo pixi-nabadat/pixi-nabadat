@@ -94,7 +94,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
 //    get All devices
-    Route::get('/devices', [DeviceController::class, 'listing']);
+    Route::get('devices', [DeviceController::class, 'listing']);
     //start center devices
     Route::group(['prefix' => 'center-devices'], function () {
         Route::get('/', [CenterDeviceController::class, 'listing']);
