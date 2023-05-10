@@ -31,7 +31,7 @@ class AuthController extends Controller
             $this->authService->setUserFcmToken($user,$request->fcm_token);
             return new AuthUserResource($user);
         } catch (UserNotFoundException $e) {
-            return apiResponse($e->getMessage(), 'Unauthorized', $e->getCode());
+            return apiResponse($e->getMessage(), 'phone or password incorrect', $e->getCode());
         }
     }
 
