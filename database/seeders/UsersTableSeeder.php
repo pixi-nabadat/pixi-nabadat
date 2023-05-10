@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
         \App\Models\User::create([
             'name'=>'admin',
             'email'=>'admin@gmail.com',
-            'password'=>bcrypt('123456'),
+            'password'=>123456,
             'phone'=>'01113622098',
             'type'=>User::SUPERADMINTYPE,
             'last_login'=>now(),
@@ -30,7 +30,7 @@ class UsersTableSeeder extends Seeder
         \App\Models\User::create([
             'name'=>'customer',
             'email'=>'customer@gmail.com',
-            'password'=>bcrypt('123456'),
+            'password'=>123456,
             'phone'=>'01022843293',
             'type'=>User::CUSTOMERTYPE,
             'last_login'=>now(),
