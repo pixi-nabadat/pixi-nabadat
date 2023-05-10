@@ -23,6 +23,7 @@ class ReservationsController extends Controller
     public function centerReservations(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try{
+            dd('test');
             $filters = $request->all();
             if (auth('sanctum')->user()->center_id == null)
                 throw new NotFoundException('route not found');
