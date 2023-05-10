@@ -48,7 +48,7 @@ class CentersTableSeeder extends Seeder
             'email'=>'center_test@gmail.com',
             'is_active'=>true,
             'location_id'=>7 ,
-            'password'=>bcrypt(123456),
+            'password'=>123456,
             'phone'=>'01113175575',
             'type'=>User::CENTERADMIN,
         ];
