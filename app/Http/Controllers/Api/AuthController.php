@@ -38,7 +38,6 @@ class AuthController extends Controller
     public function register(RegisterRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $data = $request->validated();
-        $data['password'] = bcrypt($data['password']);
         $result = $this->authService->register(data: $data);
         if ($result)
             return apiResponse( trans('lang.success'));
