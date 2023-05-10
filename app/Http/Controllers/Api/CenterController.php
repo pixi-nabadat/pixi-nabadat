@@ -54,7 +54,7 @@ class CenterController extends Controller
                 'rates' => fn($rates) => $rates->where('status', ActivationStatusEnum::ACTIVE)->orderByDesc('rate_number')->limit(10),
                 'rates.user:id,name', 'rates.user.attachments', 'doctors.defaultLogo',
                 'user.attachments', 'user.location:id,title',
-                'attachments', 'appointments', 'devices.attachments', 'packages'
+                'attachments','defaultLogo', 'appointments', 'devices.attachments', 'packages'
             ];
             $center = $this->centerService->find($id, $withRelations);
             return apiResponse(data: new CenterResource($center));
