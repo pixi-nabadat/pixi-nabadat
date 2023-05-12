@@ -12,6 +12,7 @@ use App\Http\Requests\OrderStoreRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\FcmMessage;
 use App\Models\Order;
+use App\Models\Setting;
 use App\Services\AddressService;
 use App\Services\CartService;
 use App\Services\OrderService;
@@ -76,6 +77,10 @@ class OrderController extends Controller
             if (!$userAddress)
                 throw new NotFoundException(trans('lang.address_not_found'));
 
+            if ($request->include_points && $user->points >= Setting::get('points','min_change_points')){
+                $poundsForPoints = changePointsToPounds($user->points);
+                $orderData->pounds_for_points = $poundsForPoints ;
+            }
             $order = $this->storeOrder($orderData,$userAddress, $user,$request->payment_method); // method store order in trait for multiple usage
             if ($request->payment_method == PaymentMethodEnum::CREDIT) {
                 $paymob_order_items = $this->prepareOrderItemsForPaymobOrder($order->items);

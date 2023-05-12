@@ -167,3 +167,12 @@ if (!function_exists('setLanguage')) {
         app()->setLocale($locale);
     }
 }
+
+
+if (!function_exists('changePointsToPounds')) {
+
+    function changePointsToPounds(float $points): float
+    {
+        return $points * setting('points','patient_points_per_pound');
+    }
+}

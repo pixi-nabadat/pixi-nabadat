@@ -33,7 +33,7 @@ class CartService extends BaseService
 
     public function getCart($temp_user_id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
     {
-        $cart = Cart::query()->with(['address', 'items.product.defaultLogo', 'coupon','address.city'])->withCount('items')->firstOrCreate(['temp_user_id' => $temp_user_id]);
+        $cart = Cart::query()->with(['user:id,points','address', 'items.product.defaultLogo', 'coupon','address.city'])->withCount('items')->firstOrCreate(['temp_user_id' => $temp_user_id]);
         $this->refresh($cart);
         return $cart;
     }
