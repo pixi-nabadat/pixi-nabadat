@@ -26,7 +26,7 @@ class ProductResource extends JsonResource
             'rate'                      =>$this->rate,
             'feedback'                  =>$this->whenLoaded('rates',RatesResource::collection($this->rates)),
             'price_after_discount'      =>getPriceAfterDiscount($this->unit_price,$this->product_discount),
-            'images'                    => $this->attachments->isNotEmpty() ? AttachmentsResource::collection($this->attachments) : $this->image_path,
+            'images'                    => $this->attachments->isNotEmpty() ? AttachmentsResource::collection($this->attachments) : ['path'=>$this->image_path],
         ];
     }
 }
