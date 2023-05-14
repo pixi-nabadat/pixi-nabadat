@@ -173,6 +173,15 @@ if (!function_exists('changePointsToPounds')) {
 
     function changePointsToPounds(float $points): float
     {
-        return $points * setting('points','patient_points_per_pound');
+        return round($points / setting('points','patient_points_per_pound'),2);
+    }
+}
+
+
+if (!function_exists('changePoundsToPoints')) {
+
+    function changePoundsToPoints(float $money): float
+    {
+        return $money * setting('points','patient_points_per_pound');
     }
 }

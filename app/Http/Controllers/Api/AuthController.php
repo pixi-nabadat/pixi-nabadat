@@ -13,6 +13,7 @@ use App\Http\Resources\AuthUserResource;
 use App\Models\User;
 use App\Services\AuthService;
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -63,7 +64,8 @@ class AuthController extends Controller
         try {
             $user = auth('sanctum')->user();
             $data = $request->validated();
-            $data['name'] = ['ar'=>$data['name'],'en'=>$data['name']];
+            if (!isset($data['password']))
+                $data = Arr::except($data,'password');
             $user = $this->authService->update($user, $data);
             return apiResponse(data: new AuthUserResource($user), message: trans('lang.success_operation'));
         } catch (\Exception $exception) {

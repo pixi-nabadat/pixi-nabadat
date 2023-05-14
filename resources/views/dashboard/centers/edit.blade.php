@@ -54,10 +54,10 @@
                                 </div>
 
                                 <div class="col-md-6 my-3">
-                                    <div class="col-form-label">{{ trans('lang.name_ar') }}</div>
+                                    <div class="col-form-label">{{ trans('lang.user_name') }}</div>
                                     <input name="user_name" class="form-control @error('user_name') is-invalid @enderror"
                                            id="user_name" value="{{ $center->user->name}}" type="text" required>
-                                    @error('name.ar')
+                                    @error('user_name')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

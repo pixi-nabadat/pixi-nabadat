@@ -91,8 +91,6 @@ class CenterController extends Controller
 
     public function update($id, UpdateCenterRequest $request)
     {
-        cache()->forget('home-api');
-
         try {
             $this->centerService->update($id, $request->validated());
             $toast = [

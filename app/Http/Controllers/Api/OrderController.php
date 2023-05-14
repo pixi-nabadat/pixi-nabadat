@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Enum\PaymentMethodEnum;
-use App\Events\PushEvent;
 use App\Events\OrderCreated;
+use App\Events\PushEvent;
 use App\Exceptions\BadRequestHttpException;
 use App\Exceptions\NotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderStoreRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\FcmMessage;
-use App\Models\Order;
 use App\Models\Setting;
 use App\Services\AddressService;
 use App\Services\CartService;
@@ -52,9 +51,8 @@ class OrderController extends Controller
             $withRelations = ['items', 'latestStatus'];
             $order = $this->orderService->find($id, $withRelations);
             return apiResponse(data: new OrderResource($order));
-        }catch (Exception $exception)
-        {
-            return  apiResponse(message: $exception->getMessage(),code: 422);
+        } catch (Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
         }
     }
 
@@ -70,18 +68,24 @@ class OrderController extends Controller
             //1- get cart data for user
             $orderData = app()->make(CartService::class)->getCart($request->temp_user_id);
             if ($orderData->items->isEmpty())
-                throw new BadRequestHttpException(trans('lang.there_is_no-items_to_create_order'),422);
+                throw new BadRequestHttpException(trans('lang.there_is_no-items_to_create_order'), 422);
 
             //2-get address info
             $userAddress = app()->make(AddressService::class)->find(id: $request->address_id, withRelations: ['city:id,title,shipping_cost', 'user:id,name,phone,email']);
             if (!$userAddress)
                 throw new NotFoundException(trans('lang.address_not_found'));
 
-            if ($request->include_points && $user->points >= Setting::get('points','min_change_points')){
+            $min_points = Setting::get('points', 'min_change_points');
+            if ($request->include_points && $user->points < Setting::get('points', 'min_change_points'))
+                throw new Exception(trans('lang.min_points_to_change_is :' . $min_points . " your points is : " . $user->points));
+            if ($request->include_points && $user->points >= Setting::get('points', 'min_change_points')) {
                 $poundsForPoints = changePointsToPounds($user->points);
-                $orderData->pounds_for_points = $poundsForPoints ;
+                $orderData->pounds_for_points = $poundsForPoints;
+                // reset user Points
+                $user->points = 0;
+                $user->save();
             }
-            $order = $this->storeOrder($orderData,$userAddress, $user,$request->payment_method); // method store order in trait for multiple usage
+            $order = $this->storeOrder($orderData, $userAddress, $user, $request->payment_method); // method store order in trait for multiple usage
             if ($request->payment_method == PaymentMethodEnum::CREDIT) {
                 $paymob_order_items = $this->prepareOrderItemsForPaymobOrder($order->items);
 
@@ -103,8 +107,8 @@ class OrderController extends Controller
                 $result_data = $result['data'] ?? null;
 
                 $result = (object)[
-                    'payment_token'  =>$result_data,
-                    'payment_method' =>PaymentMethodEnum::CREDIT
+                    'payment_token' => $result_data,
+                    'payment_method' => PaymentMethodEnum::CREDIT
                 ];
                 return apiResponse(data: $result, message: $message, code: $status_code);
             }
@@ -112,24 +116,20 @@ class OrderController extends Controller
             $this->cartService->emptyCart($request->temp_user_id);
 
             DB::commit();
-//            store order notification
+            $notification_data = $this->orderService->notifiyUser($order);
 
-              $notification_data = $this->orderService->notifiyUser($order);
-
-              notifyUser($order->user , $notification_data);
+            notifyUser($order->user, $notification_data);
 //            event to fire fcm notification message
 
-            event(new PushEvent($order,FcmMessage::CREATE_NEW_ORDER));
+            event(new PushEvent($order, FcmMessage::CREATE_NEW_ORDER));
 
             return new OrderResource($order);
-        }
-        catch (BadRequestHttpException $exception){
+        } catch (BadRequestHttpException $exception) {
 
             DB::rollBack();
 
             return apiResponse(message: $exception->getMessage(), code: 422);
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
 
             return apiResponse(message: trans('lang.there_is_an_error'), code: 422);

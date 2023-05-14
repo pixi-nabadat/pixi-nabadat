@@ -27,7 +27,7 @@ class UpdateUserRequest extends BaseRequest
             'name'=>'required|string',
             'phone'=>'required|string|unique:users,phone,'.$this->user_id,
             'email'=>'required|email|unique:users,email,'.$this->user_id,
-            'password'=>'required|string|confirmed|min:6',
+            'password'=>'nullable|string|confirmed|min:6',
             'date_of_birth'=>'nullable|date',
             'location_id'=>'nullable|integer|exists:locations,id',
         ];
