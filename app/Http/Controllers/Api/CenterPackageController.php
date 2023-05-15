@@ -33,11 +33,10 @@ class CenterPackageController extends Controller
     {
         try {
             $data = $request->validated();
-            $package = $this->packageService->store($data);
-            if(!$package)
+            $status = $this->packageService->store($data);
+            if(!$status)
                 return apiResponse(message: trans('lang.there_is_problem_when_create_offer'), code:422);
-            $response = new PackagesResource($package);
-            return apiResponse(data: $response, message: trans('lang.success_operation'), code: 200);
+            return apiResponse(message: trans('lang.success_operation'));
         } catch (\Exception $ex) {
             return apiResponse(message: $ex->getMessage(), code: 500);
         }
@@ -47,8 +46,10 @@ class CenterPackageController extends Controller
     {
         try {
             $package = $this->packageService->update($id, $request->validated());
-            $response = new PackagesResource($package);
-            return apiResponse(data: $response, message: trans('lang.success_operation'), code: 200);
+            $status = new PackagesResource($package);
+            if(!$status)
+                return apiResponse(message: trans('lang.something_went_rong'), code: 422);
+            return apiResponse(message: trans('lang.success_operation'));
         } catch (\Exception $ex) {
             return apiResponse(message: $ex->getMessage(), code: 422);
         }
@@ -69,7 +70,7 @@ class CenterPackageController extends Controller
     public function show($id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $package = $this->packageService->find($id);
+            $package = $this->packageService->find($id, ['attachments']);
             $data = new PackagesResource($package);
             return apiResponse(data: $data, message: trans('lang.success_operation'));
         } catch (Exception $e) {
