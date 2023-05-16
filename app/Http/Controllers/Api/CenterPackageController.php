@@ -21,7 +21,7 @@ class CenterPackageController extends Controller
     {
         try {
             $filters = ['is_active' => 1, 'in_duration' => true , 'status' =>PackageStatusEnum::APPROVED];
-            $withRelations = ['center.user:id,center_id,name','center.defaultLogo','attachments'];
+            $withRelations = ['center.defaultLogo','attachments'];
             $allPackages = $this->packageService->listing(where_condition: $filters, withRelation: $withRelations);
             return PackagesResource::collection($allPackages);
         } catch (\Exception $exception) {
