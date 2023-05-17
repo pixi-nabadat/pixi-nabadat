@@ -13,9 +13,12 @@ class CancelReasonController extends Controller
     {
     }
 
-    public function index(CancelReasonsDataTable $dataTable)
+    public function index(CancelReasonsDataTable $dataTable, Request $request)
     {
-        return $dataTable->render('dashboard.cancelReasons.index');
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+        return $dataTable->with(['filters'=>$filters, 'withRelations'=>[]])->render('dashboard.cancelReasons.index');
     } //end of index
 
 
