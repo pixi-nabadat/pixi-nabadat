@@ -27,6 +27,7 @@ class ReservationsController extends Controller
             if (auth('sanctum')->user()->center_id == null)
                 throw new NotFoundException('route not found');
             $withRelations = ['latestStatus', 'user'];
+            $filters['center_id'] = auth('sanctum')->user()->center_id;
             $reservations = $this->reservationService->listing(filters: $filters, withRelation: $withRelations);
             return ReservationsResource::collection($reservations);
         } catch (\Exception $e) {
