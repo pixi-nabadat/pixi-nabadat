@@ -9,6 +9,7 @@ use App\Http\Requests\PackageUpdateRequest;
 use App\Http\Resources\PackagesResource;
 use App\Services\CenterPackageService;
 use Exception;
+use Illuminate\Http\Request;
 
 class CenterPackageController extends Controller
 {
@@ -17,9 +18,10 @@ class CenterPackageController extends Controller
         $this->middleware('auth:sanctum')->except('index');
     }
 
-    public function index(): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function index(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
+            $filters = $request->all();
             $filters = ['is_active' => 1, 'in_duration' => true , 'status' =>PackageStatusEnum::APPROVED];
             $withRelations = ['attachments'];
             $allPackages = $this->packageService->listing(where_condition: $filters, withRelation: $withRelations);
