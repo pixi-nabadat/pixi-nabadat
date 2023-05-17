@@ -15,11 +15,12 @@ class DeviceResource extends JsonResource
      */
     public function toArray($request)
     {
+        $logo = $this->attachments->where('type', ImageTypeEnum::LOGO)->first();
         return [
             'id'            => $this->id,
             'name'          => $this->name,
             'description'   => $this->description,
-            'logo'          => $this->whenLoaded('attachments',  new AttachmentsResource($this->attachments->where('type',ImageTypeEnum::LOGO)->first())),
+            'logo'          => isset($logo) ? asset($logo->path."/".$logo->filename):asset('assets/images/default-image.jpg'),
             'images'        => $this->whenLoaded('attachments', AttachmentsResource::collection($this->attachments->where('type',ImageTypeEnum::GALARY))),
         ];
     }
