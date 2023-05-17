@@ -10,8 +10,6 @@ use App\Http\Resources\PackagesResource;
 use App\Models\User;
 use App\Services\CenterPackageService;
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CenterPackageController extends Controller
 {
@@ -20,7 +18,7 @@ class CenterPackageController extends Controller
         $this->middleware('auth:sanctum')->except('index');
     }
 
-    public function index(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function index(): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             $filters = [] ;
