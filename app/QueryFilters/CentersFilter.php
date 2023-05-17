@@ -17,6 +17,23 @@ class CentersFilter extends QueryFilter
         return $this->builder->where('id', $term);
     }
 
+    public function featured($term)
+    {
+        return $this->builder->where('featured', $term);
+    }
+
+    public function auto_service($term)
+    {
+        return $this->builder->where('is_support_auto_service', $term);
+    }
+
+    public function primary_phone($term)
+    {
+        return $this->builder->whereHas('user', function ($query) use ($term) {
+            $query->where('phone', $term);
+        });
+    }
+
 
     public function is_active($term)
     {
