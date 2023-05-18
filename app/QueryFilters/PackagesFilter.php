@@ -30,4 +30,9 @@ class PackagesFilter extends QueryFilter
     {
         return $this->builder->where('status', $term);
     }
+
+    public function center_id($term)
+    {
+        return $this->builder->where('center_id', $term);
+    }
 }

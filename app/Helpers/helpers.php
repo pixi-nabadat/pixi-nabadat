@@ -185,3 +185,20 @@ if (!function_exists('changePoundsToPoints')) {
         return $money * setting('points','patient_points_per_pound');
     }
 }
+
+if (!function_exists('changeCenterPointsToPounds')) {
+
+    function changeCenterPointsToPounds(float $points): float
+    {
+        return $points / setting('points','center_points_per_pound');
+    }
+}
+
+
+if (!function_exists('changeCenterPoundsToPoints')) {
+
+    function changeCenterPoundsToPoints(float $pounds): float
+    {
+        return $pounds * setting('points','center_points_per_pound');
+    }
+}
