@@ -28,7 +28,7 @@ class CategoryRequest extends BaseRequest
             'name.ar' => 'required|string',
             'name.en' => 'required|string',
             'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
-            'type' => 'required|in:'.Category::USERTYPE,','.Category::CENTERTYPT,
+            'type' => 'required',
             'is_active' => 'nullable'
         ];
     }
