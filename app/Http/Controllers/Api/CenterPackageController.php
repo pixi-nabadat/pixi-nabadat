@@ -28,6 +28,8 @@ class CenterPackageController extends Controller
                 $filters['center_id'] = $user->center_id ;
             if(auth('sanctum')->guest() || $user?->type == User::CUSTOMERTYPE)
                 $filters = ['is_active' => 1, 'in_duration' => true , 'status' =>PackageStatusEnum::APPROVED];
+            logger('filterssssssssss');
+            logger(json_encode($filters));
             $withRelations = ['attachments'];
             $allPackages = $this->packageService->listing(where_condition: $filters, withRelation: $withRelations);
             return PackagesResource::collection($allPackages);
