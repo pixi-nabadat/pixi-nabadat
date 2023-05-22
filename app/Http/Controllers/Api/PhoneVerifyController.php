@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PhoneVerifyRequest;
 use App\Models\FcmMessage;
 use App\Models\ResetCodePassword;
-use Illuminate\Http\Request;
+use App\Services\PushNotificationService;
 
 class PhoneVerifyController extends Controller
 {
@@ -21,8 +21,8 @@ class PhoneVerifyController extends Controller
          if ($codeData)
         {
             $title = 'Your OTP Code';
-            $body = $codeData;
-            $tokens = $request->token->toArray();
+            $body = $codeData->code;
+            $tokens = $request->token;
             app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $tokens);
         }
     }
