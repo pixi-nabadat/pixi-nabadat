@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PhoneVerifyRequest;
+use App\Models\FcmMessage;
 use App\Models\ResetCodePassword;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,11 @@ class PhoneVerifyController extends Controller
         //logic code of sending code here
 
          if ($codeData)
-             return apiResponse(data: $codeData->code , message: __('lang.code_send_successfully'));
+        {
+            $title = 'Your OTP Code';
+            $body = $codeData;
+            $tokens = $request->token->toArray();
+            app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $tokens);
+        }
     }
 }
