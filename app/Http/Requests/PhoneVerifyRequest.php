@@ -23,6 +23,7 @@ class PhoneVerifyRequest extends BaseRequest
     {
         return [
             'phone' => 'required|exists:users',
+            'fcm-token' => 'nullable',
         ];
     }
 
