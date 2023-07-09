@@ -77,7 +77,7 @@ class CenterPackageController extends Controller
     public function show($id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $package = $this->packageService->find($id, ['attachments']);
+            $package = $this->packageService->findById(id: $id, withRelations: ['attachments']);
             $data = new PackagesResource($package);
             return apiResponse(data: $data, message: trans('lang.success_operation'));
         } catch (Exception $e) {

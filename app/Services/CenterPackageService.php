@@ -15,6 +15,11 @@ class CenterPackageService extends BaseService
     {
     }
 
+    public function getModel(): Model
+    {
+        return $this->model;
+    }
+
     public function getAll(array $where_condition = [], array $withRelations = []): \Illuminate\Database\Eloquent\Collection|array
     {
         $packages = $this->queryGet($where_condition, $withRelations);
@@ -47,27 +52,16 @@ class CenterPackageService extends BaseService
 
     public function delete($id)
     {
-        $package = $this->find($id);
+        $package = $this->findById($id);
         $package->deleteAttachments();
         return $package->delete();
 
     } //end of find
 
-    /**
-     * @throws NotFoundException
-     */
-    public function find($id, $withRelation = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
-    {
-        $package = $this->model->query()->with($withRelation)->find($id);
-        if (!$package)
-            throw new NotFoundException(trans('lang.package_not_fount'));
-        return $package;
-    } //end of delete
-
     public function update($id, $data)
     {
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-        $package = $this->find($id);
+        $package = $this->findById($id);
         if (isset($data['image'])) {
             $package->deleteAttachments();
             $fileData = FileService::saveImage(file: $data['image'], path: 'uploads/packages', field_name: 'image');
@@ -80,7 +74,7 @@ class CenterPackageService extends BaseService
 
     public function status($id): bool
     {
-        $package = $this->find($id);
+        $package = $this->findById($id);
         $package->is_active = !$package->is_active;
         return $package->save();
 
