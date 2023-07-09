@@ -30,7 +30,7 @@ class AddressController extends Controller
     {
         try {
             $addresses = $this->addressService->store($request->validated());
-            return apiResponse(data: $addresses, message: trans('lang.address_updated_successfully'));
+            return apiResponse(data: $addresses, message: trans('lang.address_created_successfully'));
         } catch (\Exception $ex) {
             return apiResponse(message: $ex->getMessage(), code: 422);
         }
