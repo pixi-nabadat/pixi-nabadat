@@ -280,5 +280,6 @@
 		'address_updated_successfully'=>'address updated successfully',
 		'center_not_found'=>'center not found',
 		'reservation_updated_successfully'=>'reservation updated successfully',
+		'center_device_not_found'=>'center device not found',
     ]
 ?>

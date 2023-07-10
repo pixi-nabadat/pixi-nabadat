@@ -280,5 +280,6 @@
 		'address_updated_successfully'=>'تم تعديل العنوان',
 		'center_not_found'=>'المركز غير موجود',
 		'reservation_updated_successfully'=>'تم تعديل الحجز',
+		'center_device_not_found'=>'الجهاز غير موجود',
     ]
 ?>
