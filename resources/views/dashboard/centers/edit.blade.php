@@ -174,7 +174,7 @@
                                 <div class="field_wrapper">
                                     <div class="col-md-6 my-3">
                                         <div class="col-form-label">{{ trans('lang.other_phones') }}</div>
-                                        @foreach ($center->phones as $phone)
+                                        @foreach ($center->phones ?? [] as $phone)
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <a href="javascript:void(0);" class="add_button" title="Add field">
