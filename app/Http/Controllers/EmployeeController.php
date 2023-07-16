@@ -20,9 +20,13 @@ class EmployeeController extends Controller
 
     public function index(EmployeesDataTable $dataTable, Request $request)
     {
-        $filters = $request->all();
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
         $withRelations = [] ;
-        return $dataTable->with(['filters'=>$filters,'withRelations'=>$withRelations])->render('dashboard.employees.index');
+        $governorateFilters = ['depth' => 1, 'is_active' => 1];
+        $governorates = $this->locationService->getAll($governorateFilters);
+        return $dataTable->with(['filters'=>$filters,'withRelations'=>$withRelations])->render('dashboard.employees.index', ['governorates'=>$governorates]);
     }//end of index
 
     public function edit($id)
