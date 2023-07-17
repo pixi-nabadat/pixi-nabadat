@@ -28,7 +28,9 @@ class UserPackageController extends Controller
     public function index(Request $request, UserPackagesDatatable $dataTable)
     {
         $withRelations = ['user', 'center'];
-        $filters = $request->all();
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
         return $dataTable->with(['filters' => $filters, 'withRelations' => $withRelations])->render('dashboard.userPackages.index');
     }
 

@@ -23,7 +23,6 @@ class AuthUserResource extends JsonResource
            'user'=>[
             "id"=> $this->id,
             "name"=> $this->name,
-            "name_translatable"=> $this->getTranslations('name'),
             "email"=> $this->email,
             "phone"=> $this->phone,
             "type"=> $this->type,

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CouponUpdateRequest;
 use App\Http\Requests\CouponStoreRequest;
 use App\Models\FcmMessage;
+use App\Models\User;
 use App\Services\CouponService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,9 +20,13 @@ class CouponController extends Controller
 
     }
 
-    public function index(CouponsDataTable $dataTable){
-
-        return $dataTable->render('dashboard.coupons.index');
+    public function index(CouponsDataTable $dataTable, Request $request)
+    {
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+        $employees = User::where('type', User::SUPERADMINTYPE)->orWhere('type', User::EMPLOYEE)->get();
+        return $dataTable->with(['filters'=>$filters])->render('dashboard.coupons.index', ['employees'=>$employees]);
 
     }//end of index
 

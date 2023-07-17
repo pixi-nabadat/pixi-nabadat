@@ -35,7 +35,7 @@
                                 {{-- name_en  --}}
                                 <div class="col-md-6 my-3">
                                     <div class="col-form-label">{{ trans('lang.name_en') }}</div>
-                                    <input name="name[en]" value="{{ $center->user->getTranslation('name', 'en') }}"
+                                    <input name="name[en]" value="{{ $center->getTranslation('name', 'en') }}"
                                            class="form-control @error('name.en') is-invalid @enderror" id="name_en"
                                            type="text" required>
                                     @error('name.en')
@@ -47,9 +47,18 @@
                                 <div class="col-md-6 my-3">
                                     <div class="col-form-label">{{ trans('lang.name_ar') }}</div>
                                     <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
-                                        id="name_ar" value="{{ $center->user->getTranslation('name', 'ar') }}" type="text" required>
+                                        id="name_ar" value="{{ $center->getTranslation('name', 'ar') }}" type="text" required>
                                     @error('name.ar')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6 my-3">
+                                    <div class="col-form-label">{{ trans('lang.user_name') }}</div>
+                                    <input name="user_name" class="form-control @error('user_name') is-invalid @enderror"
+                                           id="user_name" value="{{ $center->user->name}}" type="text" required>
+                                    @error('user_name')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{-- email --}}
@@ -165,7 +174,7 @@
                                 <div class="field_wrapper">
                                     <div class="col-md-6 my-3">
                                         <div class="col-form-label">{{ trans('lang.other_phones') }}</div>
-                                        @foreach ($center->phones as $phone)
+                                        @foreach ($center->phones ?? [] as $phone)
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <a href="javascript:void(0);" class="add_button" title="Add field">

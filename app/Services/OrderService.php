@@ -39,7 +39,8 @@ class OrderService extends BaseService
         if (isset($deleted_at))
             $deleted_at = Carbon::now();
 
-        $grand_total = $order_data->grand_total_after_discount;
+        $pounds_for_points =  optional($order_data)->pounds_for_points ?? 0;
+        $grand_total = $order_data->grand_total_after_discount-$pounds_for_points;
         $order = Order::create([
             'user_id' => $user->id,
             'payment_status' => $payment_status,
@@ -50,6 +51,7 @@ class OrderService extends BaseService
             'sub_total' => $order_data->sub_total,
             'grand_total' => $grand_total,
             'coupon_discount' => optional($order_data->coupon)->discount ?? 0,
+            'points_discount' =>$pounds_for_points ,
             'deleted_at' => $deleted_at
         ]);
 

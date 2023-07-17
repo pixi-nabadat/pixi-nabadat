@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClientUpdateRequest extends FormRequest
+class ClientUpdateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,7 +31,6 @@ class ClientUpdateRequest extends FormRequest
             'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             'password' => 'sometimes|nullable|string|max:255',
             'is_active' => 'nullable',
-            'allow_notification' => 'nullable',
             'location_id' => 'required|integer',
             'date_of_birth'=>'nullable|date'
         ];

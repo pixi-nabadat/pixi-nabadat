@@ -233,6 +233,16 @@ return [
                 'class' => 'form-control', // any class for input
                 'value' => '0' // default value if you want
             ],
+
+            [
+                'type' => 'number', // input fields type
+                'data' => 'double', // data type, string, int, boolean
+                'name' => 'min_change_points', // unique name for field
+                'label' => 'Min Number For Change Points', // you know what label it is
+                'rules' => 'required|numeric', // validation rule of laravel
+                'class' => 'form-control', // any class for input
+                'value' => '0' // default value if you want
+            ],
             
         ]
     ],

@@ -64,9 +64,9 @@ class Package extends Model
         $builder->where('start_date' ,  '<=' , Carbon::now(config('app.africa_timezone'))->format('Y-m-d'))->where('end_date' ,  '>=' , Carbon::now(config('app.africa_timezone'))->format('Y-m-d'));
     }
 
-    public function getImagePathAttribute(): array
+    public function getImagePathAttribute(): string
     {
-        return $this->relationLoaded('attachments') && isset($this->attachments) ? ['id'=>$this->attachments->id ,'path'=>asset($this->attachments->path."/".$this->attachments->filename)] : ['path'=>asset('assets/images/default-image.jpg')];
+        return $this->relationLoaded('attachments') && isset($this->attachments) ? asset($this->attachments->path."/".$this->attachments->filename) : asset('assets/images/default-image.jpg');
     }
 
     public function getImageIdAttribute()

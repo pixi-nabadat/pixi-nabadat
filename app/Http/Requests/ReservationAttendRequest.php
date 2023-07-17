@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Reservation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReservationAttendRequest extends FormRequest
+class ReservationAttendRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,18 +26,17 @@ class ReservationAttendRequest extends FormRequest
     {
         return [
             'qr_code'=>'required|exists:reservations,qr_code',
+            'status'=>'required'
         ];
     }
  
     /**
      * Prepare the data for validation.
      *
-     * @return void
+     * @return m|ReservationAttendRequest
      */
-    protected function prepareForValidation()
+    public function prepareForValidation()
     {
-        $this->merge([
-            'status'=>Reservation::ATTEND,
-        ]);
+        return $this->merge(['status'=>Reservation::ATTEND]);
     }
 }

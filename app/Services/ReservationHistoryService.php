@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Exceptions\StatusNotEquelException;
 use App\Models\Reservation;
-use App\Models\User;
 use Illuminate\Support\Arr;
 
 class ReservationHistoryService extends BaseService

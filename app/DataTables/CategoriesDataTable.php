@@ -29,12 +29,15 @@ class CategoriesDataTable extends DataTable
         ->addColumn('action', function(Category $category){
             return view('dashboard.categories.action',compact('category'))->render();
         })
-        ->addcolumn('name', function(Category $category){
+        ->editColumn('name', function(Category $category){
             return $category->name ;
         })
+            ->editColumn('type', function(Category $category){
+                return $category->type;
+            })
             ->addcolumn('is_active', function(Category $category){
                 return  view('dashboard.components.switch-btn',['model'=>$category,'url'=>route('categories.changeStatus')]);
-            })->rawColumns(['action','is_active']);;
+            })->rawColumns(['action','is_active']);
     }
 
     /**
@@ -79,6 +82,10 @@ class CategoriesDataTable extends DataTable
             Column::make('name')
             ->title(trans('lang.name')),
 
+            Column::make('type')
+                ->title(trans('lang.type'))
+            ->searchable(false)->orderable(false),
+
             Column::make('created_at')
                 ->title(trans('lang.created_at'))
                 ->searchable(false)
@@ -91,7 +98,6 @@ class CategoriesDataTable extends DataTable
 
             Column::computed('action')
                   ->title(trans('lang.action'))
-                  ->width(60)
                   ->addClass('text-center'),
         ];
     }

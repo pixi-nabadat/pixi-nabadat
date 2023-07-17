@@ -23,6 +23,8 @@ class CartItemsResource extends JsonResource
             'price_after'       => $this->price_after_discount,
             'discount'          => $this->product->product_discount,
             'total_price'       => $this->quantity * $this->price_after_discount,
+            'image'             => $this->product->image_path,
+            'points'             => changePoundsToPoints(money: $this->price_after_discount*$this->quantity),
         ];
     }
 }
