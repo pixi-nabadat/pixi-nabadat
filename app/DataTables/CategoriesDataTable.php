@@ -48,7 +48,7 @@ class CategoriesDataTable extends DataTable
      */
     public function query(CategoryService $categoryService): QueryBuilder
     {
-        return $categoryService->queryGet();
+        return $categoryService->queryGet($this->filters, $this->withRelations);
     }
 
     /**
