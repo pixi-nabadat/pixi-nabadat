@@ -20,11 +20,14 @@ class NabadatHistoryService extends BaseService
     public function store(array $data = [])
     {
         $reservation = Reservation::with('center')->find($data['reservation_id']);
+        if($reservation->latestStatus->getRawOriginal('status') != Reservation::ATTEND);
+            throw new Exception(trans('lang.not_allowed'));
         $user = $reservation->user;
         $center = $reservation->center;
         if (!$reservation)
            throw new NotFoundException(trans('lang.reservation_not_found'));
         $data['auto_service'] = $data['auto_service'] ?? 0;
+        
         $reservation->nabadatHistory()->create([
             'user_id'=>$reservation->customer_id,
             'center_id'=>$reservation->center_id,

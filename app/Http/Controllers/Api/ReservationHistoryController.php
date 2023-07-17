@@ -36,7 +36,7 @@ class ReservationHistoryController extends Controller
         try {
             $reservation = $this->reservationService->findByQrCode($request->qr_code);
             $reservationHistoryData = $request->validated();
-            $this->reservationHistoryService->store($reservation, $request->all());
+            $this->reservationHistoryService->store($reservation,$reservationHistoryData);
             $reservation = new ReservationsResource($reservation);
             return apiResponse($reservation, trans('lang.reservation_status_updated_successfully'));
         } catch (NotFoundException|StatusNotEquelException $e) {

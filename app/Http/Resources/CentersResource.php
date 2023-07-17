@@ -18,10 +18,10 @@ class CentersResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'name' => $this->whenLoaded('user', $this->user->name),
+            'name' => $this->name,
             'description' => $this->description,
             'address' => $this->address,
-            'logo' =>  ['path'=>$this->image_path],
+            'logo' => $this->image_path,
             'rate' => $this->rate
         ];
     }

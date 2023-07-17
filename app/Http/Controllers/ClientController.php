@@ -22,9 +22,13 @@ class ClientController extends Controller
     public function index(UsersDataTable $dataTable, Request $request)
     {
         $withRelations = ['location:id,title'];
-        $filters = $request->filters ?? [];
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
         $filters = array_merge($filters , ['type'=>User::CUSTOMERTYPE]);
-        return $dataTable->with(['filters' => $filters, 'withRelations' => $withRelations])->render('dashboard.users.index');
+        $governorateFilters = ['depth' => 1, 'is_active' => 1];
+        $governorates = $this->locationService->getAll($governorateFilters);
+        return $dataTable->with(['filters' => $filters, 'withRelations' => $withRelations])->render('dashboard.users.index', ['governorates'=>$governorates]);
     }
 
     public function create()

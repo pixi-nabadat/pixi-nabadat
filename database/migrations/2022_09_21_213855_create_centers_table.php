@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('centers', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->string('phones')->nullable(); //cast array accept multiple phones
             $table->text('description')->nullable();
             $table->text('address')->nullable();
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->double('pulse_discount')->nullable();
             $table->double('app_discount')->nullable();
             $table->string('support_payments')->default(PaymentMethodEnum::CASH);
+            $table->string('status')->default(\App\Enum\CenterStatusEnum::UNDER_REVIEWING);
             $table->timestamps();
         });
     }

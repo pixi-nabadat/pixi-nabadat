@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Enum\ActivationStatusEnum;
+use App\Enum\PackageStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\product\ProductResource;
 use App\Http\Resources\product\ProductsResource;
+use App\Models\Product;
+use App\Models\User;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 
@@ -22,6 +25,11 @@ class ProductController extends Controller
         try {
             $filters = $request->all();
             $filters ['is_active'] = 1;
+            $user = auth('sanctum')->user();
+            if (isset($user) && $user->type == User::CENTERADMIN)
+                $filters['type'] = Product::PRODUCTCENTER;
+            if (auth('sanctum')->guest() || $user?->type != User::CENTERADMIN)
+                $filters['type'] = Product::PRODUCTUSER;
             $withRelation = ['defaultLogo'];
             $products = $this->productService->listing($filters,$withRelation);
             return ProductsResource::collection($products);
@@ -36,7 +44,7 @@ class ProductController extends Controller
             $withRelation = [
                 'attachments',
                 'rates' =>fn($rates)=>$rates->where('status',ActivationStatusEnum::ACTIVE)->limit(8),
-                'rates.user.attachments',
+                'rates.user.attachments','defaultLogo'
             ];
             $product = $this->productService->find($id,$withRelation);
             if ($product)

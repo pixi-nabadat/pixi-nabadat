@@ -18,7 +18,10 @@ class OrderController extends Controller
     {
         try {
             $loadRelation = ['latestStatus','user:id,name,phone'];
-            return $dataTable->with(['filters' => $request->all(), 'withRelations' => $loadRelation])->render('dashboard.orders.index');
+            $filters = array_filter($request->get('filters', []), function ($value) {
+                return ($value !== null && $value !== false && $value !== '');
+            });    
+            return $dataTable->with(['filters' => $filters, 'withRelations' => $loadRelation])->render('dashboard.orders.index');
         } catch (\Exception $exception) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => $exception->getMessage()];
             return back()->with('toast', $toast);

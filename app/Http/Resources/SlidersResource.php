@@ -18,7 +18,7 @@ class SlidersResource extends JsonResource
             'order'      => $this->order,
             'center'     => $this->center_id,
             'duration'   => $this->duration,
-            'image'      => ['path'=>$this->image_path],
+            'image'      => $this->image_path,
         ];
     }
 }

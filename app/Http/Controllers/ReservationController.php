@@ -19,7 +19,9 @@ class ReservationController extends Controller
     public function index(Request $request,ReservationDataTable $dataTable)
     {
         $withRelations = ['user','center'];
-        $filters = $request->all();
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
         return $dataTable->with(['filters'=>$filters , 'withRelations' => $withRelations])->render('dashboard.reservations.index');
     }
     

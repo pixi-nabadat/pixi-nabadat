@@ -18,7 +18,7 @@ class CenterResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'name' => $this->when($this->whenLoaded('user'), $this->user->name),
+            'name' => $this->name,
             'phones' => $this->phones,
             'location_title' => $this->whenLoaded('user',$this->user->location->title),
             'location_id' =>  $this->whenLoaded('user',$this->user->location_id),
@@ -36,7 +36,7 @@ class CenterResource extends JsonResource
             'is_support_auto_service' => ($this->is_support_auto_service == 1),
             'images' => AttachmentsResource::collection($this->whenLoaded('attachments',$this->attachments->where('type', '!=', ImageTypeEnum::LOGO))),
             'profile_image' => $this->whenLoaded('user', $this->user->image),
-            'logo' => new AttachmentsResource($this->attachments->where('type', ImageTypeEnum::LOGO)),
+            'logo' => $this->image_path,
             'feedback' => RatesResource::collection($this->whenLoaded('rates')),
             'devices' => DeviceResource::collection($this->whenLoaded('devices')),
             'packages' => PackagesResource::collection($this->whenLoaded('packages')),

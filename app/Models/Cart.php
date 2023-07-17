@@ -94,6 +94,11 @@ class Cart extends Model
         return $this->sub_total  - ($this->grand_total_after_discount + $this->shipping_cost);
     }
 
+    public function getPoundsForPointsAttribute(): float|int
+    {
+        return $this->relationLoaded('user') && isset($this->user) ? changePointsToPounds($this->user->points) : 0;
+    }
+
     /**
      * @param $value
      * @return mixed

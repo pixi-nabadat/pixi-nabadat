@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUserRequest extends FormRequest
+class UpdateUserRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +25,17 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name'=>'required|string',
-            'phone'=>'required|string|unique:users,phone,'.$this->user,
-            'email'=>'required|email|unique:users,email,'.$this->user,
-            'password'=>'required|string|confirmed|min:6',
+            'phone'=>'required|string|unique:users,phone,'.$this->user_id,
+            'email'=>'required|email|unique:users,email,'.$this->user_id,
+            'password'=>'nullable|string|confirmed|min:6',
             'date_of_birth'=>'nullable|date',
             'location_id'=>'nullable|integer|exists:locations,id',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge(['user_id'=>auth('sanctum')->id()]);
     }
 
 }

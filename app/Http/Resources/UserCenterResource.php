@@ -17,6 +17,8 @@ class UserCenterResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            "name"=> $this->name,
+            "name_translatable"=> $this->getTranslations('name'),
             'phones' => $this->phones,
             'description' => $this->description,
             'address' => $this->address,

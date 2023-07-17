@@ -36,7 +36,7 @@ class AuthService extends BaseService
         return auth('sanctum')->user();
     }
 
-    public function update(User $user, array $data)
+    public function update(User $user, array $data): User
     {
         $user->update($data);
         return $user;
