@@ -46,7 +46,7 @@
 		'password_confirmation'=>'تاكيد كلمة السر',
 		'description'=>'الوصف',
 		'is_active'=>'نشط',
-		'active'=>'Is نشط',
+		'active'=>'نشط',
 		'not_active'=>'غير نشط',
 		'yes'=>'نعم',
 		'no'=>'لا',
