@@ -30,7 +30,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label" for="validationCustom01">@lang('lang.feature')</label>
+                                    <label class="form-label" for="validationCustom01">@lang('lang.featured')</label>
                                     <select class="form-select" name="featured" id="validationCustom01">
                                         <option selected value="">Choose...</option>
                                         <option value="1">{{ trans('lang.yes') }}</option>
