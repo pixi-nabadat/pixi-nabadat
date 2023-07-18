@@ -24,11 +24,6 @@ class ReservationsFilter extends QueryFilter
         return $this->builder->where('is_active',$term);
     }
 
-    public function name($term)
-    {
-        return $this->builder->where('name',$term);
-    }
-
     public function user_id($term)
     {
         return $this->builder->where('customer_id',$term);
@@ -44,6 +39,11 @@ class ReservationsFilter extends QueryFilter
         return $this->builder->whereHas('latestStatus', function ($query) use ($term) {
             $query->where('status', $term);
         });
+    }
+
+    public function check_date($term)
+    {
+        return $this->builder->where('check_date',$term);
     }
 
     public function status_in($term=[])

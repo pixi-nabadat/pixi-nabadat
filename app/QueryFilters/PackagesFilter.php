@@ -30,4 +30,41 @@ class PackagesFilter extends QueryFilter
     {
         return $this->builder->where('status', $term);
     }
+
+    public function center_id($term)
+    {
+        return $this->builder->where('center_id', $term);
+    }
+
+    public function center_phone($term)
+    {
+        return $this->builder->whereHas('center.user', function ($query) use ($term) {
+            $query->where('phone', $term);
+        });
+    }
+
+    public function number_pulses($term)
+    {
+        return $this->builder->where('num_nabadat', $term);
+    }
+
+    public function price($term)
+    {
+        return $this->builder->where('price', $term);
+    }
+
+    public function start_date($term)
+    {
+        return $this->builder->where('start_date', $term);
+    }
+
+    public function end_date($term)
+    {
+        return $this->builder->where('end_date', $term);
+    }
+
+    public function discount_percentage($term)
+    {
+        return $this->builder->where('discount_percentage', $term);
+    }
 }

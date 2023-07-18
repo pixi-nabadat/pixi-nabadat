@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CategoryRequest extends BaseRequest
@@ -27,6 +28,7 @@ class CategoryRequest extends BaseRequest
             'name.ar' => 'required|string',
             'name.en' => 'required|string',
             'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
+            'type' => 'required',
             'is_active' => 'nullable'
         ];
     }

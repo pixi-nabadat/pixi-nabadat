@@ -16,7 +16,6 @@ use App\Services\CenterService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class CenterController extends Controller
 {
@@ -55,7 +54,7 @@ class CenterController extends Controller
                 'rates' => fn($rates) => $rates->where('status', ActivationStatusEnum::ACTIVE)->orderByDesc('rate_number')->limit(10),
                 'rates.user:id,name', 'rates.user.attachments', 'doctors.defaultLogo',
                 'user.attachments', 'user.location:id,title',
-                'attachments', 'appointments', 'devices.attachments', 'packages'
+                'attachments','defaultLogo', 'appointments', 'devices.attachments', 'packages'
             ];
             $center = $this->centerService->find($id, $withRelations);
             return apiResponse(data: new CenterResource($center));
@@ -68,9 +67,7 @@ class CenterController extends Controller
     public function store(StoreCenterRequestApi $request)//: \Illuminate\Http\RedirectResponse
     {
         try {
-            DB::beginTransaction();
-                 $center = $this->centerService->store($request->validated());
-            DB::commit();
+            $center = $this->centerService->store($request->validated());
             event(new PushEvent($center, FcmMessage::DEAL_WITH_NEW_CENTER));
             return apiResponse(message: trans('lang.created_successfully'));
         } catch (\Exception $exception) {
@@ -81,17 +78,12 @@ class CenterController extends Controller
     public function update(UpdateCenterRequestApi $request)
     {
         try {
-            DB::beginTransaction();
-            $user = Auth::user();
-            $user = $user->load('center');
-            $this->centerService->update(centerId: $user->center_id, data: $request->validated());
-            DB::commit();
-            $user->refresh();
+            $userWithCenter = Auth::user()->load('center');
+            $user = $this->centerService->updateForApi(user: $userWithCenter, data: $request->validated());
             return apiResponse(data: new AuthUserResource($user));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
     }
-
 
 }

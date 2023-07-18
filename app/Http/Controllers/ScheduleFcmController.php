@@ -25,8 +25,12 @@ class ScheduleFcmController extends Controller
     public function index(Request $request,ScheduleFcmDatatable $dataTable)
     {
         $withRelations = [];
-        $filters = [];
-        return $dataTable->with(['filters'=>$filters , 'withRelations' => $withRelations])->render('dashboard.marketing.schedule-fcm.index');
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+        $fcm_channels = FcmEventsNames::$CHANNELS;
+        $triggers = FcmEventsNames::$EVENTS;
+        return $dataTable->with(['filters'=>$filters , 'withRelations' => $withRelations])->render('dashboard.marketing.schedule-fcm.index', compact('fcm_channels', 'triggers'));
     }
 
     /**

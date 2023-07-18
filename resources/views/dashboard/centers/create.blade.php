@@ -47,6 +47,16 @@
                                     @enderror
                                 </div>
 
+{{--                                user name --}}
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="col-form-label">{{ trans('lang.name_ar') }}</div>
+                                    <input name="user_name" class="form-control @error('user_name') is-invalid @enderror"
+                                           id="user_name" value="{{ old('user_name') }}" type="text" required>
+                                    @error('user_name')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
 {{--                                email--}}
                                 <div class="col-md-6 mb-3">
                                     <div class="col-form-label">{{ trans('lang.email') }}</div>

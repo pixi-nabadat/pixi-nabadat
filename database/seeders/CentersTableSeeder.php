@@ -24,6 +24,7 @@ class CentersTableSeeder extends Seeder
     public function run()
     {
         $center_data = [
+            'name'=>['ar'=>'center_test','en'=>'center test'],
             'is_support_auto_service'=>true,
             'phones'=>['01234567895'],
             'address' => [
@@ -43,14 +44,11 @@ class CentersTableSeeder extends Seeder
         $center = Center::create($center_data) ;
 
         $user_data =[
-            'name'=>[
-                'ar'=>'center from seeder',
-                'en'=>'center from seeder'
-            ],
+            'name'=>'center test',
             'email'=>'center_test@gmail.com',
             'is_active'=>true,
             'location_id'=>7 ,
-            'password'=>bcrypt(123456),
+            'password'=>123456,
             'phone'=>'01113175575',
             'type'=>User::CENTERADMIN,
         ];

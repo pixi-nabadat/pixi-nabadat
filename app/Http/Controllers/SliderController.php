@@ -20,7 +20,9 @@ class SliderController extends Controller
     public function index(SlidersDataTable $dataTable, Request $request)
     {
 
-        $filters = $request->all();
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
         $withRelations = ['center'];
         return $dataTable->with(['filters' => $filters, 'withRelations' => $withRelations])->render('dashboard.sliders.index');
 

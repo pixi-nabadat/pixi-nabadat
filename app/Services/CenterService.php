@@ -29,7 +29,7 @@ class CenterService extends BaseService
         return $centers->filter(new CentersFilter($where_condition));
     }
 
-    public function getAll(array $where_condition = [], array $withRelations = [])
+    public function getAll(array $where_condition = [], array $withRelations = []): \Illuminate\Database\Eloquent\Collection|array
     {
         $centers = $this->queryGet($where_condition, $withRelations);
         return $centers->get();
@@ -71,30 +71,31 @@ class CenterService extends BaseService
         return $center;
     }
 
-    private function prepareUserData($data)
+    private function prepareUserData($data): array
     {
         return [
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['primary_phone'],
-            'password' => bcrypt($data['password']),
+            'name' => Arr::get($data, 'user_name'),
+            'email' => Arr::get($data, 'email'),
+            'phone' => Arr::get($data, 'primary_phone'),
+            'password' => Arr::get($data, 'password'),
             'type' => User::CENTERADMIN,
-            'is_active' => $data['is_active'],
-            'location_id' => $data['location_id'],
+            'is_active' => Arr::get($data, 'is_active'),
+            'location_id' =>Arr::get($data, 'location_id'),
         ];
     }
 
     private function prepareCenterData($data): array
     {
         return [
-            'is_support_auto_service' => $data['is_support_auto_service'],
-            'featured' => $data['featured'],
+            'name' => Arr::get($data, 'name'),
+            'is_support_auto_service' => Arr::get($data, 'is_support_auto_service'),
+            'featured' =>Arr::get($data, 'featured'),
             'phones' => isset($data['phones']) ? array_filter($data['phones']) : null,
-            'address' => $data['address'],
-            'description' => $data['description'],
-            'avg_waiting_time' => $data['avg_waiting_time'],
-            'support_payments' => $data['support_payments'],
-            'pulse_price' => $data['pulse_price'],
+            'address' => Arr::get($data, 'address'),
+            'description' => Arr::get($data, 'description'),
+            'avg_waiting_time' => Arr::get($data, 'avg_waiting_time'),
+            'support_payments' =>Arr::get($data, 'support_payments'),
+            'pulse_price' => Arr::get($data, 'pulse_price'),
             'pulse_discount' => Arr::get($data, 'pulse_discount'),
             'app_discount' => Arr::get($data, 'app_discount'),
             'lat' => Arr::get($data, 'lat'),
@@ -139,6 +140,20 @@ class CenterService extends BaseService
         $center->user()->update($userData);
         return true;
     }
+
+    public function updateForApi(User $user, array $data): User
+    {
+        $centerData = $this->prepareCenterData($data);
+        $user->center()->update($centerData);
+
+        $userData = $this->prepareUserData($data);
+        if (!isset($userData['password']))
+            $userData = Arr::except($userData,'password');
+        $user->update($userData);
+        $user->refresh();
+        return $user;
+    }
+
 
     public function find($id, $with = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
