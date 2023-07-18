@@ -23,24 +23,50 @@
                             <div class="row g-3">
                                 <div class="col-md-4">
                                     <label class="form-label" for="validationCustom01">@lang('lang.status')</label>
-                                    <select class="form-select" name="test" id="validationCustom01" required="">
-                                        <option  disabled="" value="">Choose...</option>
-                                        <option value="1" selected="">eslam</option>
+                                    <select class="form-select" name="is_active" id="validationCustom01">
+                                        <option value="" selected>Choose...</option>
+                                        <option value="1">{{ trans('lang.acitve') }}</option>
+                                        <option value="0">{{ trans('lang.not_acitve') }}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label" for="validationCustom02">@lang('lang.last_name')</label>
-                                    <input class="form-control" name="tttttt" id="validationCustom02" type="text" value="Otto"
-                                           required="">
-                                    <div class="valid-feedback">Looks good!</div>
+                                    <label class="form-label" for="validationCustom01">@lang('lang.feature')</label>
+                                    <select class="form-select" name="featured" id="validationCustom01">
+                                        <option selected value="">Choose...</option>
+                                        <option value="1">{{ trans('lang.yes') }}</option>
+                                        <option value="0">{{ trans('lang.no') }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="validationCustom01">@lang('lang.type')</label>
+                                    <select class="form-select" name="type" id="validationCustom01">
+                                        <option selected value="">Choose...</option>
+                                        <option value="1">{{ trans('lang.center') }}</option>
+                                        <option value="2">{{ trans('lang.user') }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="validationCustom01">@lang('lang.added_by')</label>
+                                    <select class="form-select" name="added_by" id="validationCustom01">
+                                        <option selected value="">Choose...</option>
+                                        @foreach($employees as $employee)
+                                        <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="validationCustom01">@lang('lang.category')</label>
+                                    <select class="form-select" name="category_id" id="validationCustom01">
+                                        <option selected value="">Choose...</option>
+                                        @foreach($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <label class="form-label" for="validationCustomUsername">@lang('lang.user_name')</label>
-                                    <div class="input-group"><span class="input-group-text"
-                                                                   id="inputGroupPrepend">@</span>
-                                        <input class="form-control" name="ttttttttttttttttt" id="validationCustomUsername" type="text"
-                                               placeholder="Username" value="eslam" aria-describedby="inputGroupPrepend" required="">
-                                    </div>
+                                    <label class="form-label" for="validationCustom02">@lang('lang.stock_less_than')</label>
+                                    <input class="form-control" name="stock_less_than" id="validationCustom02" type="number" value="">
+                                    <div class="valid-feedback">Looks good!</div>
                                 </div>
                             </div>
                             <div class="row">
