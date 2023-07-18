@@ -73,7 +73,7 @@
                                     <select class="form-select" name="status" id="validationCustom01">
                                         <option value="" selected>Choose...</option>
                                         <option value="{{ App\Enum\UserPackageStatusEnum::PENDING }}">{{ trans('lang.pending') }}</option>
-                                        <option value="{{ App\Enum\UserPackageStatusEnum::READYFORUSE }}">{{ trans('lang.readyforuse') }}</option>
+                                        <option value="{{ App\Enum\UserPackageStatusEnum::READYFORUSE }}">{{ trans('lang.ready_for_use') }}</option>
                                         <option value="{{ App\Enum\UserPackageStatusEnum::ONGOING }}">{{ trans('lang.ongoing') }}</option>
                                         <option value="{{ App\Enum\UserPackageStatusEnum::COMPLETED }}">{{ trans('lang.completed') }}</option>
                                     </select>

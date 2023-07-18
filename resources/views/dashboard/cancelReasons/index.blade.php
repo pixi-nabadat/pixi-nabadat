@@ -1,14 +1,14 @@
 @extends('layouts.simple.master')
 
-@section('title', trans('lang.cancelReasons'))
+@section('title', trans('lang.cancel_reasons'))
 
 @section('breadcrumb-title')
-    <h3>{{ trans('lang.cancelReasons') }}</h3>
+    <h3>{{ trans('lang.cancel_reasons') }}</h3>
 @endsection
 
 @section('breadcrumb-items')
     <li class="breadcrumb-item"><a href="{{route('home')}}">{{ trans('lang.dashboard') }}</a></li>
-    <li class="breadcrumb-item active">{{ trans('lang.cancelReasons') }}</li>
+    <li class="breadcrumb-item active">{{ trans('lang.cancel_reasons') }}</li>
 @endsection
 
 @section('content')
@@ -46,7 +46,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5><a role="button" class="btn btn-success " href={{ route('cancelReasons.create')}}><i class="fa fa-plus-circle"></i>{{trans('lang.add_cancelReason')}}</a></h5>
+                        <h5><a role="button" class="btn btn-success " href={{ route('cancelReasons.create')}}><i class="fa fa-plus-circle"></i>{{trans('lang.add_cancel_reason')}}</a></h5>
                     </div>
                     <div class="card-body">
                         <div class="table">
