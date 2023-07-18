@@ -224,6 +224,11 @@
 		'title'=>'Title',
 		'id'=>'ID',
 		'trigger'=>'Trigger',
-		'notification_via'=>'Notification Via'
+		'notification_via'=>'Notification Via',
+		'profile'=>'Profile',
+		'personal_information'=>'Personal information',
+		'date_of_birth'=>'Date of birth',
+		'allow_notification'=>'Allow notification',
+		'super_admin_type'=>'Super admin type',
     ]
 ?>
