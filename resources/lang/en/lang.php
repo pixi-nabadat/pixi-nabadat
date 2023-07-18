@@ -4,6 +4,7 @@
 		'login_failed' => 'The login data does not match our record.',
 		'login_success' => 'Logged In Successfully',
 		'logout_success' => 'You have been successfully logged out.',
+		'logout'=> 'Logout',
 		'Sign_in_to_account' => 'Sign in to account',
 		'enter_your_credential' => 'Enter your email & password to login',
 		'email_or_phone' => 'Email or Phone',
