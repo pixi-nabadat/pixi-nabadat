@@ -276,5 +276,7 @@
 		'applications'=>'التطبيقات',
 		'animation'=>'الرسوم المتحركة',
 		'create_country'=>'اضافة دولة',
+		'stock_less_than'=>'المخزون اقل من',
+		'category_id'=>'رقم الصنف',
     ]
 ?>

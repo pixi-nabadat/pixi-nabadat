@@ -276,5 +276,7 @@
 		'applications'=>'applications',
 		'animation'=>'animation',
 		'create_country'=>'create country',
+		'stock_less_than'=>'Stock less than',
+		'category_id'=>'Category id',
     ]
 ?>

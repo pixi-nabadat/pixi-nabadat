@@ -70,10 +70,8 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-3">
-                                    <button class="btn btn-primary search_datatable" type="submit">{{trans('lang.search')}}</button>
-                                </div>
-                                <div class="col-md-3">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-success search_datatable" type="submit">{{trans('lang.search')}}</button>
                                     <button class="btn btn-danger reset_form_data" type="button">{{trans('lang.rest')}}</button>
                                 </div>
                             </div>
