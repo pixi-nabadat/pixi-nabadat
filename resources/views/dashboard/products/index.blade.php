@@ -25,8 +25,8 @@
                                     <label class="form-label" for="validationCustom01">@lang('lang.status')</label>
                                     <select class="form-select" name="is_active" id="validationCustom01">
                                         <option value="" selected>Choose...</option>
-                                        <option value="1">{{ trans('lang.acitve') }}</option>
-                                        <option value="0">{{ trans('lang.not_acitve') }}</option>
+                                        <option value="1">{{ trans('lang.active') }}</option>
+                                        <option value="0">{{ trans('lang.not_active') }}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
