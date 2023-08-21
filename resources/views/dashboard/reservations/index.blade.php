@@ -58,7 +58,7 @@
                             <a role="button" class="btn btn-success" href="{{ route('reservations.create')}}"><i class="fa fa-plus-circle"></i> {{ trans('lang.add_reservation')}}</a>
                         </div>
                         <div class="table">
-                            {!! $dataTable->table(['class'=>'table-data']) !!}
+                            {!! $dataTable->table(['class'=>'table table-data table-striped table-bordered']) !!}
                         </div>
                     </div>
                 </div>

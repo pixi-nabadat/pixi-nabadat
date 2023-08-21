@@ -72,19 +72,10 @@
                             @method('put')
                             <div class="row g-3">
                                 <div class="col-md-12">
-                                    <label class="form-label" for="name_ar">{{ trans('lang.name_ar') }}</label>
-                                    <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
-                                        id="name_ar" type="text" value="{{ $client->getTranslation('name', 'ar') }}" required>
-                                    @error('name.ar')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-12">
-                                    <label class="form-label" for="name_en">{{ trans('lang.name_en') }}</label>
-                                    <input name="name[en]" class="form-control @error('name.en') is-invalid @enderror"
-                                        id="name_en" type="text" value="{{ $client->getTranslation('name', 'en') }}" required>
-                                    @error('name.en')
+                                    <label class="form-label" for="name">{{ trans('lang.name') }}</label>
+                                    <input name="name" class="form-control @error('name') is-invalid @enderror"
+                                        id="name_ar" type="text" value="{{ $client->name }}" required>
+                                    @error('name')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

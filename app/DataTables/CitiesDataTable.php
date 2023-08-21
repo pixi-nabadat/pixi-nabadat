@@ -28,7 +28,7 @@ class CitiesDataTable extends DataTable
                 return view('dashboard.locations.city.action',compact('location'))->render();
             })
             ->addcolumn('title', function(Location $location){
-                return $location->title ;
+                return $location->getTranslation('title', app()->getLocale()) ;
             })
             ->editColumn('shipping_cost', function(Location $location){
                 return $location->shipping_cost . " L.E" ;

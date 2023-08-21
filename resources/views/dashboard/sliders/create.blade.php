@@ -36,7 +36,7 @@
                                 
                                 {{--centers  --}}
                                 <div class="col-md-12">
-                                    <div class="col-form-label col-3">{{ __('lang.center') }}</div>
+                                    <label class="form-label">{{ __('lang.center') }}</label>
                                     <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12">
                                         <option selected>...</option>
                                         @foreach ($centers as $center)

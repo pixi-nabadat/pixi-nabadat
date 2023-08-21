@@ -49,9 +49,11 @@ class SlidersDataTable extends DataTable
     {
         return [
             Column::make('order')
-                ->title(trans('lang.order')),
+                ->title(trans('lang.order'))
+                ->orderable(true),
             Column::make('center_id')
-                ->title(trans('lang.center_name')),
+                ->title(trans('lang.center_name'))
+                ->orderable(true),
             Column::make('start_date')
                 ->title(trans('lang.start_date'))
                 ->orderable(false)

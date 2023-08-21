@@ -82,7 +82,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <img src="{{ asset('/uploads/users/default.png') }}" class="img-thumbnail image-preview " alt="">
+                                    <img src="{{ asset('/uploads/users/default.png') }}" class="image-preview " alt="">
                                 </div>
                                 
                                 <div class="col-md-12">

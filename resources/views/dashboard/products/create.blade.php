@@ -143,7 +143,7 @@
                             </div>
 
                             <div class="form-group mt-3">
-                                <img src="{{ asset('/uploads/products/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                                <img src="{{ asset('/uploads/products/default.png') }}" style="width: 100px" class="image-preview " alt="">
                             </div>
                         </div>
                     </div>
@@ -163,7 +163,7 @@
                             </div>
 
                             <div class="form-group mt-3">
-                                <img src="{{ asset('/uploads/products/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                                <img src="{{ asset('/uploads/products/default.png') }}" style="width: 100px" class="image-preview " alt="">
                             </div>
                         </div>
                     </div>

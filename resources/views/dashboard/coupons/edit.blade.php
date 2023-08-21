@@ -53,8 +53,8 @@
                                     @enderror
                                 </div>
                                 {{-- coupon_for --}}
-                                <div class="col-md-6  my-3">
-                                    <div class="col-form-label  col-3">{{ __('lang.coupon_for') }}</div>
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ __('lang.coupon_for') }}</label>
                                     <select id="select_coupon_for" name="coupon_for"
                                         class="col form-control">
                                         <option  {{ $coupon->coupon_for == \App\Models\Coupon::STORECOUPON ? 'selected' : '' }} value = 'store'>{{trans('lang.store')}}</option>
@@ -62,8 +62,8 @@
                                     </select>
                                 </div>
                                 {{-- discount_type --}}
-                                <div class="col-md-6  my-3">
-                                    <div class="col-form-label  col-3">{{ __('lang.discount_type') }}</div>
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ __('lang.discount_type') }}</label>
                                     <select id="select_discount_type" name="discount_type"
                                         class="form-control">
                                         <option {{ $coupon->discount_type == \App\Models\Coupon::DISCOUNT_FLAT ? 'selected' : '' }} value="{{\App\Models\Coupon::DISCOUNT_FLAT}}">{{trans('lang.flat')}}</option>
@@ -71,7 +71,7 @@
                                     </select>
                                 </div>
                                 {{-- discount --}}
-                                <div class="col-md-6  my-3">
+                                <div class="col-md-6">
                                     <label class="form-label" for="discount">@lang('lang.discount')</label>
                                     <input type="number" name="discount" step="0.01" value="{{ $coupon->discount }}" class="form-control  @error('discount') is-invalid @enderror">
                                     @error('discount')
@@ -79,7 +79,7 @@
                                     @enderror
                                 </div>
                                 {{-- start_date --}}
-                                <div class="col-md-6  my-3">
+                                <div class="col-md-6">
                                     <label class="form-label" for="start_date">@lang('lang.start_date')</label>
                                     <div class="input-group date" id="dt-start_date" data-target-input="nearest">
                                         <input name="start_date" class="datepicker-here form-control digits @error('start_date') is-invalid @enderror" type="text" data-target="#dt-start_date" value="{{ $coupon->start_date }}" data-bs-original-title title>
@@ -90,7 +90,7 @@
                                     </div>
                                 </div>
                                 {{-- end_date --}}
-                                <div class="col-md-6 ">
+                                <div class="col-md-6">
                                     <label class="form-label  col-3" for="end_date">@lang('lang.end_date')</label>
                                     <div class="input-group date" id="dt-end_date" data-target-input="nearest">
                                         <input name="end_date" class="datepicker-here form-control digits @error('end_date') is-invalid @enderror" type="text" data-target="#dt-end_date" value="{{ $coupon->end_date }}" data-bs-original-title title>
