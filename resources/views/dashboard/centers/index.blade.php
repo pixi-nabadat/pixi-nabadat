@@ -70,8 +70,8 @@
 						</div>
 						<div class="row">
 							<div class="col-xs-12">
-								<button class="btn btn-success search_datatable" type="submit">{{trans('lang.search')}}</button>
-								<button class="btn btn-danger reset_form_data" type="button">{{trans('lang.rest')}}</button>
+								<button class="btn btn-primary search_datatable" type="submit">{{trans('lang.search')}}</button>
+								<button class="btn btn-primary reset_form_data" type="button">{{trans('lang.rest')}}</button>
 							</div>
 						</div>
 					</form>
@@ -81,7 +81,7 @@
 		<div class="col-sm-12">
 			<div class="card">
                 <div class="card-header">
-					<a role="button" class="btn btn-success" href="{{ route('centers.create')}}"><i class="fa fa-plus-circle"></i> {{ trans('lang.add_center')}}</a>
+					<a role="button" class="btn btn-primary" href="{{ route('centers.create')}}"><i class="fa fa-plus-circle"></i> {{ trans('lang.add_center')}}</a>
 				</div>
 				<div class="card-body">
 					{!! $dataTable->table(['class'=>'table table-data table-striped table-bordered']) !!}
