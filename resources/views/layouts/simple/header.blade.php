@@ -36,7 +36,9 @@
             </div>
           </div>
         </li>
-        <li>                         <span class="header-search"><i data-feather="search"></i></span></li>
+        {{-- <li>
+          <span class="header-search"><i data-feather="search"></i></span>
+        </li> --}}
         {{-- <li class="onhover-dropdown">
           <div class="notification-box"><i data-feather="bell"> </i><span class="badge rounded-pill badge-secondary">4                                </span></div>
           <ul class="notification-dropdown onhover-show-div">
