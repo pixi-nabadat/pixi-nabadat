@@ -95,7 +95,7 @@ class ProductsDataTable extends DataTable
             Column::make('category_id')
                 ->title(trans('lang.category_id'))
                 ->searchable(false)
-                ->orderable(false),
+                ->orderable(true),
             Column::make('type')
                 ->title(trans('lang.type'))
                 ->searchable(false)

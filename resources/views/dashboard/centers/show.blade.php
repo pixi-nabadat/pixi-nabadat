@@ -30,15 +30,10 @@
                         <h6 class="card-titel">{{ __('lang.centers') }}</h6>
                     </div>
                     <div class="card-body row">
-                        {{-- name_ar  --}}
+                        {{-- name  --}}
                         <div class="col-md-12 d-flex my-3">
-                            <label class="form-label col-3" for="name_ar">{{ trans('lang.name_ar') }}</label>
-                            <p class="form-control" id="name_ar">{{ $center->user->getTranslation('name', 'ar') }}</p>
-                        </div>
-                        {{-- name_en  --}}
-                        <div class="col-md-12 d-flex my-3">
-                            <label class="form-label col-3" for="name_en">{{ trans('lang.name_en') }}</label>
-                            <p class="form-control" id="name_en">{{ $center->user->getTranslation('name', 'en') }}</p>
+                            <label class="form-label col-3" for="name">{{ trans('lang.name') }}</label>
+                            <p class="form-control" id="name">{{ $center->user->name }}</p>
                         </div>
 
                         {{-- email --}}

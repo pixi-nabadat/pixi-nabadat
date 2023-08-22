@@ -24,8 +24,7 @@ class ClientUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name' => 'required|array',
-            'name.*' => 'string',
+            'name' => 'required|string',
             'email' => 'required|email|unique:users,email,'.$this->client,
             'phone' => 'required|string|unique:users,phone,'.$this->client,
             'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',

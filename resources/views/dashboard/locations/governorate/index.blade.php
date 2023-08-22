@@ -17,7 +17,7 @@
 		<div class="col-sm-12">
 			<div class="card">
                 <div class="card-header">
-					<a role="button" class="btn btn-success" href="{{ route('governorate.create')}}"><i class="fa fa-plus-circle"></i> {{ trans('lang.add_governorate')}}</a>
+					<a role="button" class="btn btn-primary" href="{{ route('governorate.create')}}"><i class="fa fa-plus-circle"></i> {{ trans('lang.add_governorate')}}</a>
 				</div>
 				<div class="card-body">
 					{!! $dataTable->table(['width' => '100%','class'=>'table table-striped table-bordered']) !!}

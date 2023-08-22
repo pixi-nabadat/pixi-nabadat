@@ -25,20 +25,11 @@
                             @csrf
 
                             <div class="row g-3">
-                                <div class="col-md-6 col-lg-6 col-sm-6">
-                                    <label class="form-label" for="name_ar">{{ trans('lang.name_ar') }}</label>
-                                    <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
-                                        id="name_ar" type="text" required>
-                                    @error('name.ar')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-6 col-lg-6 col-sm-6">
-                                    <label class="form-label" for="name_en">{{ trans('lang.name_en') }}</label>
-                                    <input name="name[en]" class="form-control @error('name.en') is-invalid @enderror"
-                                        id="name_en" type="text" required>
-                                    @error('name.en')
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <label class="form-label" for="name">{{ trans('lang.name') }}</label>
+                                    <input name="name" class="form-control @error('name') is-invalid @enderror"
+                                        id="name" type="text" value="{{ old('name') }}" required>
+                                    @error('name')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -46,7 +37,7 @@
                                 <div class="col-md-12">
                                     <label class="form-label" for="email">{{ trans('lang.email') }}</label>
                                     <input name="email" class="form-control @error('email') is-invalid @enderror"
-                                        id="email" type="email" required>
+                                        id="email" type="email" value="{{ old('email') }}" required>
                                     @error('email')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
@@ -55,7 +46,7 @@
                                 <div class="col-md-12">
                                     <label class="form-label" for="phone">{{ trans('lang.phone') }}</label>
                                     <input name="phone" class="form-control @error('phone') is-invalid @enderror"
-                                        id="phone" type="phone" required>
+                                        id="phone" type="phone" value="{{ old('phone') }}" required>
                                     @error('phone')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
@@ -64,7 +55,7 @@
                                 <div class="col-md-12">
                                     <label class="form-label" for="date_of_birth">{{ trans('lang.date_of_birth') }}</label>
                                     <input name="date_of_birth" class="form-control @error('date_of_birth') is-invalid @enderror"
-                                        id="date_of_birth" type="date" required>
+                                        id="date_of_birth" type="date" value="{{ old('date') }}" required>
                                     @error('date_of_birth')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
@@ -91,7 +82,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <img src="{{ asset('/uploads/users/default.png') }}" class="img-thumbnail image-preview " alt="">
+                                    <img src="{{ asset('/uploads/users/default.png') }}" class="image-preview " alt="">
                                 </div>
                                 {{-- location --}}
                                 <div class="col-md-12">
