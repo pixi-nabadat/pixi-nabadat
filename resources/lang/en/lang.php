@@ -308,5 +308,8 @@
 		'stock_less_than'=>'Stock less than',
 		'category_id'=>'Category id',
 		'create_user_package'=>'Create user package',
+		'profile_image'=>'Profile image',
+		'total'=>'Total',
+
     ]
 ?>

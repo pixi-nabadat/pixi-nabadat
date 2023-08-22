@@ -308,5 +308,7 @@
 		'stock_less_than'=>'المخزون اقل من',
 		'category_id'=>'رقم الصنف',
 		'create_user_package'=>'إنشاء عرض للمستخدك',
+		'profile_image'=>'صورة الملف الشخصى',
+		'total'=>'الكلى',
     ]
 ?>
