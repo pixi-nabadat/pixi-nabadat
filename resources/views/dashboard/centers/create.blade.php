@@ -226,7 +226,7 @@
                         {{-- locations --}}
                         <div class="card col-lg-12 col-md-12">
                             <div class="card-header py-4">
-                                <h6 class="mb-0 h6">@lang('lang.Locations')</h6>
+                                <h6 class="mb-0 h6">@lang('lang.locations')</h6>
                             </div>
                             <div class="card-body row">
                                 <div class="col-md-6 mb-3">
