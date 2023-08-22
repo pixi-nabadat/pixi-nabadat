@@ -31,4 +31,24 @@ class SlidersFilter extends QueryFilter
     {
         return $this->builder->whereHas('center.user',fn($query)=>$query->where('location_id',$term));
     }
+
+    public function start_date_equal($term)
+    {
+        return $this->builder->where('start_date', $term);
+    }
+
+    public function end_date_equal($term)
+    {
+        return $this->builder->where('end_date', $term);
+    }
+
+    public function center_id($term)
+    {
+        return $this->builder->where('center_id', $term);
+    }
+
+    public function order($term)
+    {
+        return $this->builder->where('order', $term);
+    }
 }

@@ -28,6 +28,7 @@ class UpdateCenterRequest extends BaseRequest
 
             'name'                   => 'required|array',
             'name.*'                 => 'required|string',
+            'user_name'                 => 'required|string',
             'phones'                 => 'nullable|array',
             'phones.*'               => 'nullable|string',
             'location_id'            => 'required|integer',
@@ -40,6 +41,7 @@ class UpdateCenterRequest extends BaseRequest
             'description.*'           => 'string|nullable',
             'images'                  => 'nullable|array',
             'logo'                    => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
+            'primary_image'           => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             'images.*'                => 'image|mimes:jpg,png,jpeg,gif,svg',
             'password'                => 'nullable|string',
             'email'                   =>['required',Rule::unique('users','email')->ignore($this->center,'center_id')] ,

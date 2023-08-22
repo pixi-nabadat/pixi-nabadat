@@ -47,6 +47,16 @@
                                     @enderror
                                 </div>
 
+{{--                                user name --}}
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="col-form-label">{{ trans('lang.name_ar') }}</div>
+                                    <input name="user_name" class="form-control @error('user_name') is-invalid @enderror"
+                                           id="user_name" value="{{ old('user_name') }}" type="text" required>
+                                    @error('user_name')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
 {{--                                email--}}
                                 <div class="col-md-6 mb-3">
                                     <div class="col-form-label">{{ trans('lang.email') }}</div>
@@ -216,7 +226,7 @@
                         {{-- locations --}}
                         <div class="card col-lg-12 col-md-12">
                             <div class="card-header py-4">
-                                <h6 class="mb-0 h6">@lang('lang.Locations')</h6>
+                                <h6 class="mb-0 h6">@lang('lang.locations')</h6>
                             </div>
                             <div class="card-body row">
                                 <div class="col-md-6 mb-3">
@@ -295,6 +305,22 @@
                                     <h6>{{ __('lang.center_image') }}</h6>
                                 </div>
                                 <div class="card-body">
+                                    {{-- center profile_image --}}
+                                    <div class="col-md-12  d-flex">
+                                        <div class="col-md-12">
+                                            <label class="form-label" for="profile_image">{{ trans('lang.profile_image') }}</label>
+                                            <input name="profile_image"
+                                                class="form-control image @error('profile_image') is-invalid @enderror"
+                                                id="profile_image" type="file">
+                                            @error('profile_image')
+                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <img src="{{ asset('/uploads/device/default.png') }}" style="width: 500px"
+                                                class="img-thumbnail image-preview " alt="">
+                                        </div>
+                                    </div>
                                     {{-- center logo --}}
                                     <div class="col-md-12  d-flex">
                                         <div class="col-md-12">
@@ -311,7 +337,8 @@
                                                 class="img-thumbnail image-preview " alt="">
                                         </div>
                                     </div>
-                                    {{-- center logo --}}
+
+                                    {{-- center images --}}
                                     <div class="col-md-12  d-flex">
                                         <div class="col-md-12">
                                             <label class="form-label" for="image">{{ trans('lang.image') }}</label>

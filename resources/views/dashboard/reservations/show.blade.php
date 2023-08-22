@@ -51,8 +51,8 @@
 
                     </div>
                 </div>
-
-                {{-- reservation_devices --}}
+                @if (count($reservation->nabadatHistory))
+                    {{-- reservation_devices --}}
                 <div class="card  col-md-12">
                     <div class="card-header py-4">
                         <h6>{{ __('lang.reservation_devices') }}</h6>
@@ -83,6 +83,8 @@
                         @endforeach
                     </div>
                 </div>
+                @endif
+                
 
             </div>
 
@@ -97,12 +99,12 @@
                         {{--  check_date  --}}
                         <div class="col-md-12 d-flex my-3">
                             <label class="form-label col-3">@lang('lang.check_date')</label>
-                            <p class="form-control" id="check_date">{{ $reservation->check_date }}</p>
+                            <p class="form-control disabled" id="check_date">{{ $reservation->check_date }}</p>
                         </div>
                         {{--  period  --}}
                         <div class="col-md-12 d-flex my-3">
                             <label class="form-label col-3">@lang('lang.period')</label>
-                            <p class="form-control" id="period">{{ $reservation->period }}</p>
+                            <p class="form-control disabled" id="period">{{ $reservation->period }}</p>
                         </div>
                     </div>
                 </div>

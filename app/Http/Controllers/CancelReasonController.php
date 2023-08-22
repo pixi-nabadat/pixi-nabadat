@@ -13,9 +13,12 @@ class CancelReasonController extends Controller
     {
     }
 
-    public function index(CancelReasonsDataTable $dataTable)
+    public function index(CancelReasonsDataTable $dataTable, Request $request)
     {
-        return $dataTable->render('dashboard.cancelReasons.index');
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+        return $dataTable->with(['filters'=>$filters, 'withRelations'=>[]])->render('dashboard.cancelReasons.index');
     } //end of index
 
 
@@ -23,7 +26,7 @@ class CancelReasonController extends Controller
     {
         $cancelReason = $this->cancelReasonService->find($id);
         if (!$cancelReason) {
-            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.cancelReason_not_found')];
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.cancel_reason_not_found')];
             return back()->with('toast', $toast);
         }
         return view('dashboard.cancelReasons.edit', compact('cancelReason'));
@@ -75,7 +78,7 @@ class CancelReasonController extends Controller
     {
         $cancelReason = $this->cancelReasonService->find($id);
         if (!$cancelReason) {
-            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.cancelReason_not_found')];
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.cancel_reason_not_found')];
             return back()->with('toast', $toast);
         }
         return view('dashboard.cancelReasons.show', compact('cancelReason'));

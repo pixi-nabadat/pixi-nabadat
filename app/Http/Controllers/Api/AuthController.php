@@ -13,6 +13,7 @@ use App\Http\Resources\AuthUserResource;
 use App\Models\User;
 use App\Services\AuthService;
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -31,20 +32,13 @@ class AuthController extends Controller
             $this->authService->setUserFcmToken($user,$request->fcm_token);
             return new AuthUserResource($user);
         } catch (UserNotFoundException $e) {
-            return apiResponse($e->getMessage(), 'Unauthorized', $e->getCode());
+            return apiResponse($e->getMessage(), 'phone or password incorrect', $e->getCode());
         }
-
     }
 
     public function register(RegisterRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $data = $request->validated();
-        $data = array_merge($data, ['type' => User::CUSTOMERTYPE, 'last_login_at' => now()]);
-        $data['name'] = [
-            'en' => $data['name'],
-            'ar' => $data['name'],
-        ];
-        $data['password'] = bcrypt($data['password']);
         $result = $this->authService->register(data: $data);
         if ($result)
             return apiResponse( trans('lang.success'));
@@ -55,7 +49,9 @@ class AuthController extends Controller
     public function authUser(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $user = Auth::user()->load(['location', 'center.attachments', 'attachments']);
+            $user = Auth::user()->load(['location','attachments']);
+            if ($user->type == User::CENTERADMIN)
+                $user->load(['center.attachments']);
             return apiResponse(data: new AuthUserResource($user));
         } catch (\Exception $exception) {
             logger('auth user exception');
@@ -63,20 +59,21 @@ class AuthController extends Controller
         }
     }
 
-    public function update(UpdateUserRequest $request, $user)//: \Illuminate\Http\RedirectResponse
+    public function update(UpdateUserRequest $request)//: \Illuminate\Http\RedirectResponse
     {
         try {
-            DB::beginTransaction();
-            $user = User::find($user);
-            $user = $this->authService->update($user, $request->validated());
-            DB::commit();
+            $user = auth('sanctum')->user();
+            $data = $request->validated();
+            if (!isset($data['password']))
+                $data = Arr::except($data,'password');
+            $user = $this->authService->update($user, $data);
             return apiResponse(data: new AuthUserResource($user), message: trans('lang.success_operation'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
         }
     }
 
-    public function updateLogo(UserUpdateLogoRequest $request)
+    public function updateProfileImage(UserUpdateLogoRequest $request)
     {
         try{
             $user = $this->authService->updateLogo(data: $request->validated());

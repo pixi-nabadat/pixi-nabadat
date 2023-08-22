@@ -38,15 +38,19 @@ class HomeController extends Controller
     public function index(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $location_id = request()->input('location_id', null);
-        $data = Cache::remember('home-api', 60 * 60 * 24, function () use ($location_id) {
+        $centers_filter = ['is_active' => 1, 'featured' => 1];
+        if (isset($location_id))
+            $centers_filter['location_id'] =  $location_id;
+
+//        $data = Cache::remember('home-api', 60 * 60 * 24, function () use ($centers_filter) {
             $data ['featured_products'] = ProductsResource::collection($this->productService->getAll(where_condition: ['featured' => 1], withRelation: ['defaultLogo']));
             $data['center_packages'] = PackagesResource::collection($this->packageService->listing(where_condition: ['is_active' => true], withRelation: ['center.user:id,center_id,name', 'center.defaultLogo']));
             $data['locations'] = LocationsResource::collection($this->locationService->getAll(filters: ['depth' => 2]));
             $data['coupons'] = CouponsResource::collection($this->couponService->listing(filters: ['in_period' => true, 'is_active' => true]));
-            $data['featured_centers'] = CentersResource::collection($this->centerService->listing(filters: ['is_active' => 1, 'featured' => 1, 'location_id' => $location_id], withRelation: ['defaultLogo']));
-            $data['sliders'] = SlidersResource::collection($this->sliderService->listing(where_condition: ['location_id' => $location_id], withRelations: ['logo']));
-            return $data;
-        });
+            $data['featured_centers'] = CentersResource::collection($this->centerService->listing(filters: $centers_filter, withRelation: ['defaultLogo']));
+            $data['sliders'] = SlidersResource::collection($this->sliderService->listing(withRelations: ['attachments']));
+//            return $data;
+//        });
         return apiResponse(data: $data);
     }
 

@@ -35,7 +35,7 @@ class CenterDeviceService extends BaseService
     {
         $center_device =  $this->model->query()->with($withRelations)->find($id);
         if (!$center_device)
-            throw new NotFoundException(trans('lang.center_not_found'));
+            throw new NotFoundException(trans('lang.center_device_not_found'));
         return $center_device ;
 
     }

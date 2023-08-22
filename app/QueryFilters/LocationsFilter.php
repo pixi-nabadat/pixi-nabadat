@@ -27,4 +27,14 @@ class LocationsFilter extends QueryFilter
         return $this->builder->where('parent_id', $term);
     }
 
+    public function slug($term)
+    {
+        return $this->builder->where('slug', $term);
+    }
+
+    public function shipping_cost($term)
+    {
+        return $this->builder->where('shipping_cost', $term);
+    }
+
 }

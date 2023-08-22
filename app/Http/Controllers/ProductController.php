@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\DataTables\ProductsDataTable;
 use App\Http\Requests\ProductRequest;
+use App\Models\Category;
+use App\Models\User;
 use App\Services\CategoryService;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
@@ -17,8 +19,12 @@ class ProductController extends Controller
     public function index(ProductsDataTable $dataTable, Request $request)
     {
         $loadRelation = ['user'];
-        $filters = $request->filters ?? [];
-        return $dataTable->with(['filters' => $filters, 'withRelations' => $loadRelation])->render('dashboard.products.index');
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+        $employees = User::where('type', User::SUPERADMINTYPE)->orWhere('type', User::EMPLOYEE)->get();
+        $categories = Category::all();
+        return $dataTable->with(['filters' => $filters, 'withRelations' => $loadRelation])->render('dashboard.products.index', ['employees'=>$employees, 'categories'=>$categories]);
     } //end of index
 
     public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
@@ -97,10 +103,7 @@ class ProductController extends Controller
     {
         try {
             //first forget cash
-            cache()->forget('home-api');
-            $result = $this->productService->featured($request->id);
-            if (!$result)
-                return apiResponse(message: trans('lang.not_found'), code: 404);
+            $this->productService->featured($request->id);
             return apiResponse(message: trans('lang.success'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
@@ -111,7 +114,6 @@ class ProductController extends Controller
     {
         try {
             //first forget cash
-            cache()->forget('home-api');
             $result = $this->productService->status($request->id);
             if (!$result)
                 return apiResponse(message: trans('lang.not_found'), code: 404);

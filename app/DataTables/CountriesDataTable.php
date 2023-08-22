@@ -79,26 +79,12 @@ class CountriesDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            [
-                'name'=>'id',
-                'data'=>'id',
-                'title'=>'#',
-            ],
-            [
-                'name'=>'slug',
-                'data'=>'slug',
-                'title'=> 'slug',
-            ],
-            [
-                'name'=>'title',
-                'data'=>'title',
-                'title'=> 'title',
-            ],
-            // [
-            //     'name'=>'title_en',
-            //     'data'=>'title_en',
-            //     'title_en'=> 'title_en',
-            // ],
+            Column::make('id')
+                ->title("#"),
+            Column::make('slug')
+                ->title(trans('lang.slug')),
+            Column::make('title')
+                ->title(trans('lang.title')),
             [
                 'name'=>'action',
                 'data'=>'action',

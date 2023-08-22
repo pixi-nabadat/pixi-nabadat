@@ -16,4 +16,9 @@ class CategoriesFilter extends QueryFilter
     {
         return $this->builder->where('is_active',$term);
     }
+
+    public function type($term)
+    {
+        return $this->builder->where('type',$term);
+    }
 }

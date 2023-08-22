@@ -81,8 +81,6 @@
             $(".sidebar-submenu" ).css( "display", "block" );
       }
     </script>
-
-
-    
+    <script src="{{asset('assets/js/datatable-filter.js')}}"></script>
   </body>
 </html>

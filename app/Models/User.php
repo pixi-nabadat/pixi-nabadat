@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Enum\PaymentStatusEnum;
-use App\Enum\UserPackageStatusEnum;
 use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
 use App\Traits\HasAttachment;
@@ -15,11 +13,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory,HasAttachment, Notifiable, Filterable, HasTranslations, EscapeUnicodeJson, HasRoles;
+    use HasApiTokens, HasFactory,HasAttachment, Notifiable, Filterable, EscapeUnicodeJson, HasRoles;
 
     const SUPERADMINTYPE = 1;
     const CUSTOMERTYPE = 2;
@@ -29,7 +27,6 @@ class User extends Authenticatable
     const ACTIVE = 1;
     const NONACTIVE = 0;
 
-    public $translatable = ['name'];
     /**
      * The attributes that are mass assignable.
      *
@@ -80,6 +77,13 @@ class User extends Authenticatable
     public function getToken(): string
     {
         return $this->createToken(config('app.name'))->plainTextToken;
+    }
+
+    protected function password(): Attribute
+    {
+        return Attribute::make(
+            set: fn (string $value) => bcrypt($value),
+        );
     }
 
     public function getId()

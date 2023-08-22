@@ -43,7 +43,7 @@
 							</div>
 
                             <div class="col-md-6 mb-3">
-                                <div class="col-form-label">{{trans("lang.Choose_Currency")}}</div>
+                                <label class="form-label">{{trans("lang.choose_currency")}}</label>
                                 <select name="currency_id" class="js-example-placeholder-multiple col-sm-12 @error('currency_id') is-invalid @enderror" multiple="multiple">
                                     @foreach ($currencies as $currency)
                                     <option value="{{ $currency->id }}">{{ $currency->name }}</option>

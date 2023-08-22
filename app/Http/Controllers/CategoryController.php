@@ -14,9 +14,13 @@ class CategoryController extends Controller
 
     }
 
-    public function index(CategoriesDataTable $dataTable){
+    public function index(CategoriesDataTable $dataTable, Request $request){
 
-        return $dataTable->render('dashboard.categories.index');
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+        $withRelations = [];
+        return $dataTable->with(['filters'=>$filters, 'withRelations'=>$withRelations])->render('dashboard.categories.index');
 
     }//end of index
 

@@ -21,7 +21,7 @@
 					</li>
 					<li class="sidebar-main-title">
 						<div>
-							<h6 class="lan-1">{{ trans('lang.General') }} </h6>
+							<h6 class="lan-1">{{ trans('lang.general') }} </h6>
                      		<p class="lan-2">{{ trans('lang.general_routes') }}</p>
 						</div>
 					</li>
@@ -207,7 +207,7 @@
 
                         @can('view_cancel_reason')
                         {{--start Cancel Reason ---}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/cancelReasons' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.cancelReason') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/cancelReasons' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.cancel_reason') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/cancelReasons' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">

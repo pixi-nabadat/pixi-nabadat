@@ -28,8 +28,12 @@ class CenterController extends Controller
     public function index(CentresDataTable $dataTables, Request $request)
     {
         $loadRelation = ['user.location'];
-        $filters = $request->filters ?? [];
-        return $dataTables->with(['filters' => $filters, 'withRelations' => $loadRelation])->render('dashboard.centers.index');
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+        $governoratesFilters = ['depth' => 1, 'is_active' => 1];
+        $governorates = $this->locationService->getAll($governoratesFilters);
+        return $dataTables->with(['filters' => $filters, 'withRelations' => $loadRelation])->render('dashboard.centers.index', ['governorates'=>$governorates]);
     }
 
     /**
@@ -46,7 +50,6 @@ class CenterController extends Controller
 
     public function store(StoreCenterRequest $request): \Illuminate\Http\RedirectResponse
     {
-        cache()->forget('home-api');
         try {
             DB::beginTransaction();
             $center = $this->centerService->store($request->validated());
@@ -92,8 +95,6 @@ class CenterController extends Controller
 
     public function update($id, UpdateCenterRequest $request)
     {
-        cache()->forget('home-api');
-
         try {
             $this->centerService->update($id, $request->validated());
             $toast = [

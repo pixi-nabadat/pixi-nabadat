@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Reservation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUserRequest extends BaseRequest
+class ReservationAttendRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,18 +25,18 @@ class UpdateUserRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name'=>'required|string',
-            'phone'=>'required|string|unique:users,phone,'.$this->user_id,
-            'email'=>'required|email|unique:users,email,'.$this->user_id,
-            'password'=>'nullable|string|confirmed|min:6',
-            'date_of_birth'=>'nullable|date',
-            'location_id'=>'nullable|integer|exists:locations,id',
+            'qr_code'=>'required|exists:reservations,qr_code',
+            'status'=>'required'
         ];
     }
-
+ 
+    /**
+     * Prepare the data for validation.
+     *
+     * @return m|ReservationAttendRequest
+     */
     public function prepareForValidation()
     {
-        $this->merge(['user_id'=>auth('sanctum')->id()]);
+        return $this->merge(['status'=>Reservation::ATTEND]);
     }
-
 }

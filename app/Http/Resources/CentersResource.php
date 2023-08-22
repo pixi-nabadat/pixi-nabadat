@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Enum\ImageTypeEnum;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CentersResource extends JsonResource
@@ -17,10 +18,10 @@ class CentersResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'name' => $this->whenLoaded('user', $this->user->name),
+            'name' => $this->name,
             'description' => $this->description,
             'address' => $this->address,
-            'logo' =>  $this->whenLoaded('user', $this->user->image),
+            'logo' => $this->image_path,
             'rate' => $this->rate
         ];
     }

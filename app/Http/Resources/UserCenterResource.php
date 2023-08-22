@@ -17,6 +17,8 @@ class UserCenterResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            "name"=> $this->name,
+            "name_translatable"=> $this->getTranslations('name'),
             'phones' => $this->phones,
             'description' => $this->description,
             'address' => $this->address,
@@ -25,6 +27,7 @@ class UserCenterResource extends JsonResource
             'avg_waiting_time' => $this->avg_waiting_time,
             'google_map_url' => $this->google_map_url,
             'is_support_auto_service' => ($this->is_support_auto_service == 1),
+            'logo' => new AttachmentsResource($this->attachments->where('type', ImageTypeEnum::LOGO)->first()),
             'images' => AttachmentsResource::collection($this->attachments->where('type', ImageTypeEnum::GALARY)),
         ];
     }

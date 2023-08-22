@@ -74,7 +74,7 @@ class OrdersDataTable extends DataTable
             [
                 'data'=>'user_name',
                 'name'=>'user_name',
-                'title'=>'user_name',
+                'title'=>trans('lang.user_name'),
             ],
             [
                 'data'=>'user.phone',

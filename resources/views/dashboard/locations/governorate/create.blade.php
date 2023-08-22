@@ -51,7 +51,7 @@
                                 @enderror
 							</div>
                             <div class="col-md-6 mb-3">
-                                <div class="col-form-label">@lang('lang.choose_country')</div>
+                                <label class="form-label">@lang('lang.choose_country')</label>
                                 <select name="parent_id" class="js-example-placeholder-multiple col-sm-12 @error('currency_id') is-invalid @enderror" multiple="multiple">
                                     @foreach ($countries as $country)
                                     <option value="{{$country->id}}">{{$country->title}}</option>
