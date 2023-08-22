@@ -95,5 +95,4 @@
 @section('script')
 {!! $dataTable->scripts() !!}
 <script src="{{ asset('assets/js/location.js') }}"></script>
-<script src="{{asset('assets/js/datatable-filter.js')}}"></script>
 @endsection

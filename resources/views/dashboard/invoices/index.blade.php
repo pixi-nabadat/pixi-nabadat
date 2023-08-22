@@ -80,8 +80,6 @@
 @section('script')
 
     {!! $dataTable->scripts() !!}
-    <script src="{{asset('assets/js/datatable-filter.js')}}"></script>
-
     <script>
         function settleInvoice(url,id) {
             swal({
