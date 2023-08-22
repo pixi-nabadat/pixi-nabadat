@@ -20,7 +20,9 @@ class DoctorController extends Controller
     public function index(DoctorsDataTable $dataTable, Request $request)
     {
         $loadRelation = ['center.user:id,name,center_id'];
-        $filters = $request->filters ?? [];
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
         return $dataTable->with(['filters' => $filters, 'withRelations' => $loadRelation])->render('dashboard.doctors.index');
     } //end of index
 

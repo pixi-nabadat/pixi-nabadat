@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Coupon;
+use App\Services\CouponService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -54,9 +55,9 @@ class CouponsDataTable extends DataTable
      * @param Coupon $model
      * @return QueryBuilder
      */
-    public function query(Coupon $model): QueryBuilder
+    public function query(CouponService $couponService): QueryBuilder
     {
-        return $model->newQuery()->with('creator');
+        return $couponService->queryGet($this->filters);
     }
 
     /**

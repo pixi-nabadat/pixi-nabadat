@@ -39,8 +39,8 @@ class ProductsDataTable extends DataTable
             ->editColumn('stock', function (Product $product) {
                 return  $product->stock;
             })
-            ->editColumn('added_by', function (Product $product) {
-                return  $product->user->name;
+            ->editColumn('category_id', function (Product $product) {
+                return  $product->category->name;
             })
             ->editColumn('type', function (Product $product) {
                 return  $product->type;
@@ -92,8 +92,8 @@ class ProductsDataTable extends DataTable
         return [
             Column::make('name')
                 ->title(trans('lang.name')),
-            Column::make('added_by')
-                ->title(trans('lang.added_by'))
+            Column::make('category_id')
+                ->title(trans('lang.category_id'))
                 ->searchable(false)
                 ->orderable(false),
             Column::make('type')
@@ -146,4 +146,5 @@ class ProductsDataTable extends DataTable
     {
         return 'Products_' . date('YmdHis');
     }
+
 }
