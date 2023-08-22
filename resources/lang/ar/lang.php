@@ -307,5 +307,6 @@
 		'center_device_not_found'=>'الجهاز غير موجود',
 		'stock_less_than'=>'المخزون اقل من',
 		'category_id'=>'رقم الصنف',
+		'create_user_package'=>'إنشاء عرض للمستخدك',
     ]
 ?>

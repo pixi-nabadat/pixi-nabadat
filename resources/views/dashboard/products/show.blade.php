@@ -172,7 +172,7 @@
                     {{-- tax --}}
                     <div class="card col-12">
                         <div class="card-header py-4">
-                            <h6>{{ __('lang.Vat_TAX') }}</h6>
+                            <h6>{{ __('lang.vat_tax') }}</h6>
                         </div>
                         <div class="card-body">
                             <div class="col-md-12 row">

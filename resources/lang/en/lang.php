@@ -307,5 +307,6 @@
 		'center_device_not_found'=>'center device not found',
 		'stock_less_than'=>'Stock less than',
 		'category_id'=>'Category id',
+		'create_user_package'=>'Create user package',
     ]
 ?>

@@ -127,7 +127,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <img src="{{ asset('/uploads/users/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                                    <img src="{{ asset('/uploads/users/default.png') }}" style="width: 100px" class="image-preview " alt="">
                                 </div>
                                 {{-- show_logo --}}
                                 <div class="col-md-12">

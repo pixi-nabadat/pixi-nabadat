@@ -103,7 +103,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5><a role="button" class="btn btn-primary " href={{ route('user-packages.create')}}><i class="fa fa-plus-circle"></i>{{trans('lang.create_user_package')}}</a></h5>
+                        <h5><a role="button" class="btn btn-primary " href={{ route('user-packages.create')}}><i class="fa fa-plus-circle"></i> {{trans('lang.create_user_package')}}</a></h5>
                     </div>
                     <div class="card-body">
                         <div class="table">
