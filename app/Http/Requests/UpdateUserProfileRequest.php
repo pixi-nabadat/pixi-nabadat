@@ -24,8 +24,7 @@ class UpdateUserProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|array',
-            'name.*' => 'string',
+            'name' => 'required|string',
             'email' => 'required|email|unique:users,email,'.$this->user,
             'phone' => 'required|string|unique:users,phone,'.$this->user,
             'password' => 'sometimes|required|string|max:255',
