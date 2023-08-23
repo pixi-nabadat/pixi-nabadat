@@ -115,7 +115,7 @@
             </div>
           </div>
           <ul class="profile-dropdown onhover-show-div">
-            <li><a href="#"><i data-feather="user"></i><span>profile </span></a></li>
+            <li><a href="{{ route('get_profile') }}"><i data-feather="user"></i><span>profile </span></a></li>
             <li><a href="{{route('auth.logout')}}"><i data-feather="log-out"> </i><span>{{trans('lang.logout')}}</span></a></li>
           </ul>
         </li>

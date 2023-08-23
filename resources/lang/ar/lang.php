@@ -235,6 +235,12 @@
 		'devices_and_center_devices'=>'الأجهزة وأجهزة المركز',
 		'title'=>'الاسم',
 		'id'=>'كود التعريف',
+		'notification_via'=>'عبر الاشعارات',
+		'profile'=>'الملف الشخصى',
+		'personal_information'=>'المعلومات الشخصيه',
+		'date_of_birth'=>'تاريخ الميلاد',
+		'allow_notification'=>'السماح بالاشعارات',
+		'super_admin_type'=>'مسؤل',
 		'trigger'=>'المشغل',
 		'notification_via'=>'تنبية من خلال',
 		/////////////

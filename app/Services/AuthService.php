@@ -17,7 +17,7 @@ class AuthService extends BaseService
         $identifierField = is_numeric($identifier) ? 'phone':'email';
         $credential = [$identifierField=>$identifier,'password'=>$password,'type'=>$type];
         if (!auth()->attempt($credential))
-            return throw new UserNotFoundException(__('lang.login failed'));
+            return throw new UserNotFoundException(__('lang.login_failed'));
         return User::where($identifierField, $identifier)->first();
     }
 
