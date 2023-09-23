@@ -118,6 +118,7 @@
           </div>
           <ul class="profile-dropdown onhover-show-div">
             <li><a href="{{ route('get_profile') }}"><i data-feather="user"></i><span>profile </span></a></li>
+            <li><a href="https://nabadatbase.pixiagency.com/docs"><i data-feather="user"></i><span>{{ trans('lang.user_manual') }} </span></a></li>
             <li><a href="{{route('auth.logout')}}"><i data-feather="log-out"> </i><span>{{trans('lang.logout')}}</span></a></li>
           </ul>
         </li>
