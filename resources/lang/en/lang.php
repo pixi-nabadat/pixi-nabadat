@@ -314,6 +314,7 @@
 		'create_user_package'=>'Create user package',
 		'profile_image'=>'Profile image',
 		'total'=>'Total',
+		'user_manual'=>'User manual',
 
     ]
 ?>
