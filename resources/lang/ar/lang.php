@@ -316,5 +316,6 @@
 		'create_user_package'=>'إنشاء عرض للمستخدك',
 		'profile_image'=>'صورة الملف الشخصى',
 		'total'=>'الكلى',
+		'user_manual'=>'دليل المستخدم',
     ]
 ?>
