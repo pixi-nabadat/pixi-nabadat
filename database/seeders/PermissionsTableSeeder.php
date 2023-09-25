@@ -72,7 +72,7 @@ class PermissionsTableSeeder extends Seeder
             ],
 
             //start user_package permissions
-            'user-packages'=>[
+            'user_packages'=>[
                 'create_user_package',
                 'edit_user_package',
                 'delete_user_package',
@@ -148,7 +148,7 @@ class PermissionsTableSeeder extends Seeder
             //end products permissions
 
             //start cancel_reasons permissions
-            'cancel-reasons'=>[
+            'cancel_reasons'=>[
                 'create_cancel_reason',
                 'edit_cancel_reason',
                 'delete_cancel_reason',

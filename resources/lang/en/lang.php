@@ -30,7 +30,7 @@
         'add_new_city' => 'ADD NEW CITY',
         'add_new_country' => 'ADD NEW COUNTRY',
         'add_new_governorate' => 'ADD NEW GOVERNORATE',
-        'edit_city' =>  'EDIT CITY',
+        'edit_city' =>  'Edit city',
         'slug' => 'Slug',
         'choose_currency' => 'Choose Currency',
         'choose_governorate' => 'Choose Governorate',
@@ -315,6 +315,11 @@
 		'profile_image'=>'Profile image',
 		'total'=>'Total',
 		'user_manual'=>'User manual',
-
+		'create_fcm'=>'Create FCM',
+		'flags'=>'Flags',
+		'devices_count'=>'Devices count',
+		'images'=>'Images',
+		'reservation_status'=>'Reservation status',
+		'am'=>'Am',
     ]
 ?>

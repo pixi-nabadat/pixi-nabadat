@@ -171,7 +171,7 @@
                                     </div>                            
                                     {{--  num_nabdat  --}}
                                     <div class="col-md-12 d-flex my-3">
-                                        <label class="form-label col-3">@lang('lang.num_nabdat')</label>
+                                        <label class="form-label col-3">@lang('lang.num_nabadat')</label>
                                         <input type="number" name="num_nabadat" class="form-control">
                                         @error('center_id')
                                             <div class="invalid-feedback text-danger">{{ $message }}</div>
