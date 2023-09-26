@@ -20,10 +20,10 @@
 						<div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
 					</li>
 					<li class="sidebar-main-title">
-						<div>
+						{{-- <div>
 							<h6 class="lan-1">{{ trans('lang.general') }} </h6>
                      		<p class="lan-2">{{ trans('lang.general_routes') }}</p>
-						</div>
+						</div> --}}
 					</li>
 					<li class="sidebar-list">
                         @can('view_country')
@@ -200,7 +200,8 @@
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/user-packages' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
-                            <li><a class="lan-5 {{ Route::currentRouteName()==route('packages.index') ? 'active' : '' }}" href="{{route('user-packages.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('user-packages.index') ? 'active' : '' }}" href="{{route('user-packages.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('user-packages.create') ? 'active' : '' }}" href="{{route('user-packages.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
                         {{--end User Packages --}}
                         @endcan

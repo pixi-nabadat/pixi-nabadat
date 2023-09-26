@@ -70,19 +70,15 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row g-3">
+
                             <div class="col-md-12">
-                                <label class="form-label mt-3" for="name_ar">{{ trans('lang.name_ar') }}</label>
-                                <p class="form-control" id="name_ar">{{ $employee->getTranslation('name', 'ar') }}</p>
+                                <label class="form-label mt-3" for="name">{{ trans('lang.name') }}</label>
+                                <p class="form-control" id="name">{{ $employee->name }}</p>
                             </div>
 
                             <div class="col-md-12">
-                                <label class="form-label mt-3" for="name_ar">{{ trans('lang.name_en') }}</label>
-                                <p class="form-control" id="name_ar">{{ $employee->getTranslation('name', 'en') }}</p>
-                            </div>
-
-                            <div class="col-md-12">
-                                <label class="form-label mt-3" for="name_ar">{{ trans('lang.email') }}</label>
-                                <p class="form-control" id="name_ar">{{ $employee->email }}</p>
+                                <label class="form-label mt-3" for="email">{{ trans('lang.email') }}</label>
+                                <p class="form-control" id="email">{{ $employee->email }}</p>
                             </div>
 
                             <div class="col-md-12">

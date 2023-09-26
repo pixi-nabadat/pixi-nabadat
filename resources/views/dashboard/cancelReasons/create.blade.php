@@ -1,14 +1,14 @@
 @extends('layouts.simple.master')
 
-@section('title', trans('lang.cancelReasons'))
+@section('title', trans('lang.cancel_reasons'))
 
 @section('breadcrumb-title')
-    <h3>{{ trans('lang.cancelReasons') }}</h3>
+    <h3>{{ trans('lang.cancel_reasons') }}</h3>
 @endsection
 
 @section('breadcrumb-items')
     <li class="breadcrumb-item">{{ trans('lang.dashboard') }}</li>
-    <li class="breadcrumb-item active">{{ trans('lang.cancelReasons') }}</li>
+    <li class="breadcrumb-item active">{{ trans('lang.cancel_reasons') }}</li>
     <li class="breadcrumb-item active">{{ trans('lang.add') }}</li>
 @endsection
 

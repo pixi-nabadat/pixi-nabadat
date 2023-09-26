@@ -317,5 +317,12 @@
 		'profile_image'=>'صورة الملف الشخصى',
 		'total'=>'الكلى',
 		'user_manual'=>'دليل المستخدم',
+		'create_fcm'=>'انشاء fcm',
+		'flags'=>'أعلام',
+		'devices_count'=>'عدد الاجهزة',
+		'images'=>'الصور',
+		'reservation_status'=>'حالة الحجز',
+		'am'=>'ص',
+
     ]
 ?>

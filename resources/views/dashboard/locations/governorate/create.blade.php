@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                         </div>
-						<button class="btn btn-primary" type="submit">{{trans("lang.ADD_GOVERNORATE")}}</button>
+						<button class="btn btn-primary" type="submit">{{trans("lang.submit")}}</button>
 					</form>
 				</div>
 			</div>

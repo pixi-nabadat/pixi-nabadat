@@ -23,7 +23,7 @@
 		<div class="col-sm-12">
 			<div class="card">
 				<div class="card-header">
-					<h5>{{trans("lang.Edit_City")}}</h5>
+					<h5>{{trans("lang.edit_city")}}</h5>
 				</div>
 				<div class="card-body">
 					<form class="needs-validation" novalidate="" method="POST" action="{{route('city.update',['city' => $city->id])}}" >
@@ -31,7 +31,7 @@
                         @method('PUT')
 						<div class="row">
 							<div class="col-md-12 mb-3">
-								<label for="validationCustom01">{{trans('lang.Slug')}}</label>
+								<label for="validationCustom01">{{trans('lang.slug')}}</label>
 								<input name="slug" value="{{$city->slug}}" class="form-control" id="validationCustom01" type="text" placeholder="Slug" required="">
 								<div class="valid-feedback">Looks good!</div>
 							</div>

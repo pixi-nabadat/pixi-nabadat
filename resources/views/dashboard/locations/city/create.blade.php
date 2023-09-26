@@ -43,7 +43,7 @@
 							</div>
 
                             <div class="col-md-6 mb-3">
-                                <div class="col-form-label">{{trans("lang.Choose_Governorate")}}</div>
+                                <div class="col-form-label">{{trans("lang.choose_governorate")}}</div>
                                 <select name="parent_id" class="js-example-basic-single col-sm-12 @error('parent_id') is-invalid @enderror">
                                     @foreach ($governorates as $governorate)
                                         <option value="{{$governorate->id}}">{{$governorate->title}}</option>

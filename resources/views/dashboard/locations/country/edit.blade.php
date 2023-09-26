@@ -22,7 +22,7 @@
 		<div class="col-sm-12">
 			<div class="card">
 				<div class="card-header">
-					<h5>{{trans("lang.Edit_Country")}}</h5>
+					<h5>{{trans("lang.edit_country")}}</h5>
 				</div>
 				<div class="card-body">
 					<form class="needs-validation" novalidate="" method="POST" action="{{route('country.update',['country' => $country->id])}}" >
@@ -30,7 +30,7 @@
                         @method('PUT')
 						<div class="row">
                             <div class="col-md-6 mb-3">
-								<label for="validationCustom01">{{trans('lang.Slug')}}</label>
+								<label for="validationCustom01">{{trans('lang.slug')}}</label>
 								<input name="slug" value="{{$country->slug}}" class="form-control" id="validationCustom01" type="text" placeholder="Slug" required="">
 								<div class="valid-feedback">Looks good!</div>
 							</div>
@@ -49,7 +49,7 @@
                                 @enderror
 							</div>
                             <div class="col-md-6 mb-3">
-                                <div class="col-form-label">{{trans("lang.Choose_Currency")}}</div>
+                                <div class="col-form-label">{{trans("lang.choose_currency")}}</div>
                                 <select name="currency_id" class="js-example-placeholder-multiple col-sm-12 @error('currency_id') is-invalid @enderror" multiple="multiple">
                                     @foreach ($currencies as $currency)
                                     <option value="{{ $currency->id }}" {{ $country->currency_id == $currency->id ? "selected":"" }}>{{ $currency->name }}</option>
