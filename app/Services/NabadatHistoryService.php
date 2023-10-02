@@ -20,7 +20,7 @@ class NabadatHistoryService extends BaseService
     public function store(array $data = [])
     {
         $reservation = Reservation::with('center')->find($data['reservation_id']);
-        if($reservation->latestStatus->getRawOriginal('status') != Reservation::ATTEND);
+        if($reservation->latestStatus->getRawOriginal('status') != Reservation::ATTEND)
             throw new Exception(trans('lang.not_allowed'));
         $user = $reservation->user;
         $center = $reservation->center;
