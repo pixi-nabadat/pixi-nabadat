@@ -30,6 +30,7 @@ use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\NabadatHistoryController;
 use App\Http\Controllers\PushNotificationController;
 use App\Http\Controllers\ReservationHistoryController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 //Language Change
@@ -46,7 +47,9 @@ Route::prefix('authentication')->group(function () {
     Route::view('maintenance', 'authentication.maintenance')->name('maintenance');
 });
 
-Route::get('/', HomeController::class)->name('/')->middleware('auth');
+Route::get('/', function(){
+    return "Landing Page...";
+})->name('/');
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     //start user profile
