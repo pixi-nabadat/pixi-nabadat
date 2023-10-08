@@ -1,0 +1,98 @@
+body{margin-top:51px}
+
+/**** Start overriding Bootstrap****/
+
+.navbar{margin-bottom:0px}
+.navbar-default{
+    background-color: #FFF;
+}
+/*navbar link*/
+
+.navbar-nav > li > a{color:#BBB;font-size:16px}
+
+/*Brand name*/
+
+.navbar-brand{
+    color:#BBB;
+    font-size:20px;
+    line-height:20px
+}
+
+/*Start FAQ*/
+.help-center{
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+.help-center .faq-questions{padding:40px 0}
+
+
+.faq-questions .panel-heading,.faq-questions .panel-body{
+    padding:30px;
+    background-color: #FFF;
+    border:none;
+}
+
+.faq-questions .panel-body{
+    color:#bda2a2;
+    font-size: 16px;
+}
+
+.faq-questions .panel-heading a{
+    text-decoration: none;
+    font-weight: bold;
+}
+.faq-questions .panel-heading a:before{
+    font-weight: bold;
+    font-size: 30px;
+	content:"\00D7";
+	padding:10px;
+    color:#999;
+}
+
+.faq-questions .panel-heading a.collapsed:before{
+    content:"\002B";
+    
+}
+
+/*End FAQ*/
+/*Start Scroll To Top*/
+#scroll-top{
+    background-color:#00f;
+    cursor:pointer;
+    color:#FFF;
+    font-size:30px;
+    font-weight:bold;
+    position:fixed;
+    right:20px;
+    text-decoration:none;
+    bottom:20px;
+    padding:10px;
+    border-radius:50%;
+    display:none
+}
+#scroll-top:hover{background-color:#E41B17}
+/*End Scroll To Top*/
+/**** End overriding Bootstrap****/
+
+/*Start Media Query*/
+/*From 0 To Mobile*/
+@media (max-width:767px){
+        navbar > .carousel,.carousel .item img{
+        height:250px
+    }
+    .navbar-nav > li > a{
+        padding-top:5px;
+        padding-bottom:5px
+    }
+    .navbar-fixed-top .navbar-collapse,
+    .navbar-fixed-bottom .navbar-collapse{
+        max-height:none
+    }
+    .navbar-nav > li > a:hover,
+    .navbar-nav .open .dropdown-menu > li > a:hover
+    {
+        background-color:#E41B17
+    }
+}
+
+/*End Media Query*/
