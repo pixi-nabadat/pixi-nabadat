@@ -47,20 +47,23 @@ Route::prefix('authentication')->group(function () {
 });
 
 Route::get('/', function(){
-    return view('dashboard.landingPage.index');
+    return redirect('/lp');
 })->name('landingPage.index');
-Route::get('/features', function(){
-    return view('dashboard.landingPage.features');
-})->name('landingPage.features');
-Route::get('/testimonials', function(){
-    return view('dashboard.landingPage.testimonials');
-})->name('landingPage.testimonials');
-Route::get('/blog', function(){
-    return view('dashboard.landingPage.blog');
-})->name('landingPage.blog');
-Route::get('/contact', function(){
-    return view('dashboard.landingPage.contact');
-})->name('landingPage.contact');
+// Route::get('/', function(){
+//     return view('dashboard.landingPage.index');
+// })->name('landingPage.index');
+// Route::get('/features', function(){
+//     return view('dashboard.landingPage.features');
+// })->name('landingPage.features');
+// Route::get('/testimonials', function(){
+//     return view('dashboard.landingPage.testimonials');
+// })->name('landingPage.testimonials');
+// Route::get('/blog', function(){
+//     return view('dashboard.landingPage.blog');
+// })->name('landingPage.blog');
+// Route::get('/contact', function(){
+//     return view('dashboard.landingPage.contact');
+// })->name('landingPage.contact');
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     //start user profile
