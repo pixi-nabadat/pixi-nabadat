@@ -320,37 +320,37 @@
                     </div>
                     <!--End Question 3-->
                     <!--Start Question 4-->
-                    <div class="panel panel-default">
-                        <div class="panel-heading" roels="tab" id="heading-three">
-                            <h4 class="panel-title">
-                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-three" aria-expanded="true" aria-controls="collapse-three">
-                                    What should I do if I have a toothache?
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapse-three" class="panel-collapse collapse" roles="tabpanel" aria-labelledby="heading-three">
-                            <div class="panel-body">
-                                If you have a toothache, it is important to schedule an appointment with your dentist as soon as possible. In the meanwhile, you can try rinsing your mouth with warm salt water, taking pain medication as directed, and avoiding hot or cold foods and drinks.
-                            </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" roels="tab" id="heading-four">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-four" aria-expanded="true" aria-controls="collapse-four">
+                                What should I do if I have a toothache?
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse-four" class="panel-collapse collapse" roles="tabpanel" aria-labelledby="heading-four">
+                        <div class="panel-body">
+                            If you have a toothache, it is important to schedule an appointment with your dentist as soon as possible. In the meanwhile, you can try rinsing your mouth with warm salt water, taking pain medication as directed, and avoiding hot or cold foods and drinks.
                         </div>
                     </div>
-                    <!--End Question 4-->
-                    <!--Start Question 5-->
-                    <div class="panel panel-default">
-                        <div class="panel-heading" roels="tab" id="heading-three">
-                            <h4 class="panel-title">
-                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-three" aria-expanded="true" aria-controls="collapse-three">
-                                    How long do dental implants last?
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapse-three" class="panel-collapse collapse" roles="tabpanel" aria-labelledby="heading-three">
-                            <div class="panel-body">
-                                With proper care, dental implants can last a lifetime. However, the actual lifespan of dental implants may vary depending on several factors, including the patient's oral health habits and the quality of the implant and crown materials used.
-                            </div>
+                </div>
+                <!--End Question 4-->
+                <!--Start Question 5-->
+                <div class="panel panel-default">
+                    <div class="panel-heading" roels="tab" id="heading-five">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-five" aria-expanded="true" aria-controls="collapse-five">
+                                How long do dental implants last?
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse-five" class="panel-collapse collapse" roles="tabpanel" aria-labelledby="heading-five">
+                        <div class="panel-body">
+                            With proper care, dental implants can last a lifetime. However, the actual lifespan of dental implants may vary depending on several factors, including the patient's oral health habits and the quality of the implant and crown materials used.
                         </div>
                     </div>
-                    <!--End Question 5-->
+                </div>
+                <!--End Question 5-->
                 </div>
             </div>
         </section>
