@@ -12,6 +12,10 @@
     <li class="breadcrumb-item active">{{ trans('lang.edit') }}</li>
 @endsection
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/image-container.css') }}" />
+@endsection
+
 @section('content')
 
     <!-- Container-fluid starts-->
@@ -89,20 +93,18 @@
                             <div class="col-md-12">
                                 <div class="row">
                                     @isset($slider->attachments)
-                                        @if ($attachment->type == App\Enum\ImageTypeEnum::LOGO)
                                         <div class="col-md-3 col-lg-3 col-sm-12">
                                             <div class="img-container">
                                                 <div class="form-group my-3">
-                                                    <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
+                                                    <img src="{{asset($slider->attachments->path.'/'.$slider->attachments->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
                                                 </div>
                                                 <div class="overlay">
-                                                    <a role="button" onclick="destroy('{{route('attachment.destroy',$attachment->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
+                                                    <a role="button" onclick="destroy('{{route('attachment.destroy',$slider->attachments->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
                                                         <i class="fa fa-trash-o"></i>
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
-                                        @endif
                                     @endisset
                                 </div>
                             </div>

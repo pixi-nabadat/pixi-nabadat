@@ -35,7 +35,8 @@ class EmployeesDataTable extends DataTable
 
     public function query(UserService $model): QueryBuilder
     {
-        $filters = ['type'=> User::EMPLOYEE];
+        $filters = $this->filters;
+        $filters['type'] = User::EMPLOYEE;
         return $model->queryGet($filters, $this->withRelations);
     }
 

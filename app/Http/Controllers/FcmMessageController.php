@@ -21,10 +21,12 @@ class FcmMessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(FcmMessagesDatatable $dataTable)
+    public function index(FcmMessagesDatatable $dataTable, Request $request)
     {
         $withRelations = [];
-        $filters = [];
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
         return $dataTable->with(['filters'=>$filters , 'withRelations' => $withRelations])->render('dashboard.marketing.fcm-message.index');
     }
 

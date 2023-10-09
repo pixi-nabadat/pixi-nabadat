@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\CancelReason;
+use App\Services\CancelReasonService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -39,9 +40,9 @@ class CancelReasonsDataTable extends DataTable
      * @param CancelReason $model
      * @return QueryBuilder
      */
-    public function query(CancelReason $model): QueryBuilder
+    public function query(CancelReasonService $cancelReasonService): QueryBuilder
     {
-        return $model->newQuery();
+        return $cancelReasonService->queryGet($this->filters, $this->withRelations);
     }
 
     /**

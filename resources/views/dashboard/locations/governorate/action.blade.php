@@ -1,6 +1,6 @@
 
 @can('edit_governorate')
-<a role="button" class="btn btn-warning" href="{{route('governorate.edit',$location->id)}}" >
+<a role="button" class="btn btn-primary" href="{{route('governorate.edit',$location->id)}}" >
     <i class="fa fa-pencil-square-o"></i>
 </a>
 @endcan

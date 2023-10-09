@@ -79,7 +79,7 @@
                                 </div>
                                 {{--payment_method  --}}
                                 <div class="col-md-12 d-flex my-3">
-                                    <div class="col-form-label col-3">{{ __('lang.payment_methods') }}</div>
+                                    <div class="col-form-label col-3">{{ __('lang.payment_method') }}</div>
                                     <select id="payment_method" name="payment_method" class="js-example-basic-single col-sm-12 @error('payment_method') is-invalid @enderror">
                                         <option value="{{ App\Enum\PaymentMethodEnum::CASH }}" {{ $userPackage->payment_method == App\Enum\PaymentMethodEnum::CASH ? "selected":"" }}>{{ App\Enum\PaymentMethodEnum::CASH }}</option>
                                         <option value="{{ App\Enum\PaymentMethodEnum::CREDIT }}" {{ $userPackage->payment_method == App\Enum\PaymentMethodEnum::CREDIT ? "selected":"" }}>{{ App\Enum\PaymentMethodEnum::CREDIT }}</option>

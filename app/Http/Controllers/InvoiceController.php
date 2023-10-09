@@ -18,7 +18,9 @@ class InvoiceController extends Controller
 
     public function index(InvoicesDataTable $dataTable, Request $request)
     {
-        $filters = $request->filters ?? [];
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
         $withRelations = ['center.user'];
         return $dataTable->with(['filters' => $filters, 'withRelations' => $withRelations])->render('dashboard.invoices.index');
     }//end of index

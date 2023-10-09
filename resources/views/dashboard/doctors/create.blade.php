@@ -25,7 +25,7 @@
                             <div class="row g-3">
                                 {{--centers  --}}
                                 <div class="col-md-6">
-                                    <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
+                                    <label class="form-label">{{ __('lang.centers') }}</label>
                                     <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12">
                                         <option disabled>{{trans('lang.please_select_center')}}</option>
                                         @foreach ($centers as $center)

@@ -35,7 +35,7 @@
                                 {{-- name_en  --}}
                                 <div class="col-md-6 my-3">
                                     <div class="col-form-label">{{ trans('lang.name_en') }}</div>
-                                    <input name="name[en]" value="{{ $center->user->getTranslation('name', 'en') }}"
+                                    <input name="name[en]" value="{{ $center->getTranslation('name', 'en') }}"
                                            class="form-control @error('name.en') is-invalid @enderror" id="name_en"
                                            type="text" required>
                                     @error('name.en')
@@ -47,9 +47,18 @@
                                 <div class="col-md-6 my-3">
                                     <div class="col-form-label">{{ trans('lang.name_ar') }}</div>
                                     <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
-                                        id="name_ar" value="{{ $center->user->getTranslation('name', 'ar') }}" type="text" required>
+                                        id="name_ar" value="{{ $center->getTranslation('name', 'ar') }}" type="text" required>
                                     @error('name.ar')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6 my-3">
+                                    <div class="col-form-label">{{ trans('lang.user_name') }}</div>
+                                    <input name="user_name" class="form-control @error('user_name') is-invalid @enderror"
+                                           id="user_name" value="{{ $center->user->name}}" type="text" required>
+                                    @error('user_name')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{-- email --}}
@@ -165,7 +174,7 @@
                                 <div class="field_wrapper">
                                     <div class="col-md-6 my-3">
                                         <div class="col-form-label">{{ trans('lang.other_phones') }}</div>
-                                        @foreach ($center->phones as $phone)
+                                        @foreach ($center->phones ?? [] as $phone)
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <a href="javascript:void(0);" class="add_button" title="Add field">
@@ -230,7 +239,7 @@
                         {{-- locations --}}
                         <div class="card col-lg-12 col-md-12">
                             <div class="card-header py-4">
-                                <h6 class="mb-0 h6">@lang('lang.Locations')</h6>
+                                <h6 class="mb-0 h6">@lang('lang.locations')</h6>
                             </div>
                             <div class="card-body row">
                                 <div class="col-md-6 mb-3">
@@ -312,6 +321,35 @@
                                     <h6>{{ __('lang.center_image') }}</h6>
                                 </div>
                                 <div class="card-body">
+                                    {{-- center profile_image --}}
+                                    <div class="col-md-12  d-flex">
+                                        <div class="col-md-12">
+                                            <label class="form-label" for="profile_image">{{ trans('lang.profile_image') }}</label>
+                                            <input name="profile_image"
+                                                class="form-control image @error('profile_image') is-invalid @enderror"
+                                                id="profile_image" type="file">
+                                            @error('profile_image')
+                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    @if(isset($center->user->attachments))
+                                        <div class="row">
+                                            <div class="col-md-3 col-lg-3 col-sm-12">
+                                                <div class="img-container">
+                                                    <div class="form-group my-3">
+                                                        <img src="{{asset($center->user->attachments->path.'/'.$center->user->attachments->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
+                                                    </div>
+                                                    <div class="overlay">
+                                                        <a role="button" onclick="destroy('{{route('attachment.destroy',$center->user->attachments->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
+                                                            <i class="fa fa-trash-o"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
                                     {{-- center logo --}}
                                     <div class="col-md-12  d-flex">
                                         <div class="col-md-12">
@@ -325,22 +363,24 @@
                                         </div>
                                     </div>
 
-                                    @if(isset($center->defaultLogo))
-                                        <div class="row">
-                                            <div class="col-md-3 col-lg-3 col-sm-12">
-                                                <div class="img-container">
-                                                    <div class="form-group my-3">
-                                                        <img src="{{asset($center->defaultLogo->path.'/'.$center->defaultLogo->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
+                                    @if($center->attachments->count())
+                                            @foreach($center->attachments as $attachment)
+                                                    @if($attachment->type == App\Enum\ImageTypeEnum::LOGO)
+                                                    <div class="col-md-3 col-lg-3 col-sm-12">
+                                                        <div class="img-container">
+                                                            <div class="form-group my-3">
+                                                                <img src="{{asset($attachment->path.'/'.$attachment->filename)}}" style="width: 150px;height: 150px" class="img-thumbnail image" alt="">
+                                                            </div>
+                                                            <div class="overlay">
+                                                                <a role="button" onclick="destroy('{{route('attachment.destroy',$attachment->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
+                                                                    <i class="fa fa-trash-o"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="overlay">
-                                                        <a role="button" onclick="destroy('{{route('attachment.destroy',$center->defaultLogo->id)}}')" class="icon" title="{{trans('lang.delete_image')}}">
-                                                            <i class="fa fa-trash-o"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
+                                                    @endif
+                                            @endforeach
+                                        @endif
 
                                     {{-- center images --}}
                                     <div class="col-md-12  d-flex">

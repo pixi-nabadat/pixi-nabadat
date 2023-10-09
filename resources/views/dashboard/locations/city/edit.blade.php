@@ -23,7 +23,7 @@
 		<div class="col-sm-12">
 			<div class="card">
 				<div class="card-header">
-					<h5>{{trans("lang.Edit_City")}}</h5>
+					<h5>{{trans("lang.edit_city")}}</h5>
 				</div>
 				<div class="card-body">
 					<form class="needs-validation" novalidate="" method="POST" action="{{route('city.update',['city' => $city->id])}}" >
@@ -31,7 +31,7 @@
                         @method('PUT')
 						<div class="row">
 							<div class="col-md-12 mb-3">
-								<label for="validationCustom01">{{trans('lang.Slug')}}</label>
+								<label for="validationCustom01">{{trans('lang.slug')}}</label>
 								<input name="slug" value="{{$city->slug}}" class="form-control" id="validationCustom01" type="text" placeholder="Slug" required="">
 								<div class="valid-feedback">Looks good!</div>
 							</div>
@@ -50,7 +50,7 @@
                                 @enderror
 							</div>
                             <div class="col-md-6 mb-3">
-                                <div class="col-form-label">{{trans('select_governorate')}}</div>
+                                <div class="col-form-label">{{trans('lang.select_governorate')}}</div>
                                 <select name="parent_id"  class="js-example-basic-single col-sm-12">
                                     @foreach ($governorates as $governorate)
                                     <option value="{{$governorate->id}}" @if($governorate->id == $city->parent_id) selected @endif>{{$governorate->title}}</option>

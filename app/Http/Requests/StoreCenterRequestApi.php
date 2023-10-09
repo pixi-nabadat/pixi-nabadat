@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enum\CenterStatusEnum;
 use App\Enum\PaymentMethodEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -27,6 +28,7 @@ class StoreCenterRequestApi extends BaseRequest
         return [
             'name'                   => 'required|array',
             'name.*'                 => 'required|string',
+            'user_name'                 => 'required|string',
             'phones'                 => 'nullable|array',
             'phones.*'               => 'nullable|string',
             'location_id'            => 'required|integer',
@@ -36,21 +38,25 @@ class StoreCenterRequestApi extends BaseRequest
             'address'                => 'required|array',
             'address.*'              => 'string|required',
             'description'            => 'required|array',
-            'description.*'           => 'string|nullable',
+            'description.*'           => 'string',
             'images'                  => 'nullable|array',
+            'profile_image'           => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             'logo'                    => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             'images.*'                => 'image|mimes:jpg,png,jpeg,gif,svg',
             'password'                => 'required|string',
             'email'                   => 'required|email|unique:users,email',
-             'is_active'               => 'nullable|string',
             'is_support_auto_service' => 'string|nullable',
             'avg_waiting_time'         => 'required',
-            // 'featured'                => 'nullable|string',
-            'support_payments'        => 'array|min:1',
+            'support_payments'        => 'required|array|min:1',
             'support_payments.*'      => 'string|in:'.PaymentMethodEnum::CREDIT.','.PaymentMethodEnum::CASH,
             'pulse_price'             => 'required|numeric',
             'google_map_url'          => 'string|nullable',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge(['status'=>CenterStatusEnum::UNDER_REVIEWING]);
     }
 
     public function messages()

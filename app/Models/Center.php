@@ -29,7 +29,7 @@ class Center extends Model
     const SEARCHFLAG = 2 ;
 
     protected $fillable = [
-        'lat','lng','is_support_auto_service','address','description','phones',
+        'lat','lng','is_support_auto_service','address','description','phones','name',
         'google_map_url','avg_waiting_time','featured', 'rate', 'support_payments','pulse_price','pulse_discount','app_discount',
     ];
 
@@ -40,7 +40,7 @@ class Center extends Model
 
     protected $table = 'centers';
 
-    public $translatable = ['description','address'];
+    public $translatable = ['description','address','name'];
 
 
     public function location(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -98,6 +98,17 @@ class Center extends Model
     {
         return trans('lang.centers') ;
     }
+
+    public function getImagePathAttribute(): string
+    {
+        return $this->relationLoaded('defaultLogo') && isset($this->defaultLogo) ? asset($this->defaultLogo->path."/".$this->defaultLogo->filename) : asset('assets/images/default-image.jpg');
+    }
+
+    public function getImageIdAttribute()
+    {
+        return $this->relationLoaded('defaultLogo') && isset($this->defaultLogo) ? $this->defaultLogo->id : null;
+    }
+
     public function getSearchFlagAttribute(): int
     {
         return self::SEARCHFLAG;

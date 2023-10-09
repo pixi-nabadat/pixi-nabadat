@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Enum\PaymentStatusEnum;
-use App\Enum\UserPackageStatusEnum;
 use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
 use App\Traits\HasAttachment;
@@ -12,14 +10,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory,HasAttachment, Notifiable, Filterable, HasTranslations, EscapeUnicodeJson, HasRoles;
+    use HasApiTokens, HasFactory,HasAttachment, Notifiable, Filterable, EscapeUnicodeJson, HasRoles;
 
     const SUPERADMINTYPE = 1;
     const CUSTOMERTYPE = 2;
@@ -29,7 +28,6 @@ class User extends Authenticatable
     const ACTIVE = 1;
     const NONACTIVE = 0;
 
-    public $translatable = ['name'];
     /**
      * The attributes that are mass assignable.
      *
@@ -82,6 +80,13 @@ class User extends Authenticatable
         return $this->createToken(config('app.name'))->plainTextToken;
     }
 
+    protected function password(): Attribute
+    {
+        return Attribute::make(
+            set: fn (string $value) => bcrypt($value),
+        );
+    }
+
     public function getId()
     {
         return $this->id;
@@ -90,6 +95,11 @@ class User extends Authenticatable
     public function location(): \Illuminate\Database\Eloquent\Relations\belongsTo
     {
         return $this->belongsTo(Location::class);
+    }
+
+    public function center(): \Illuminate\Database\Eloquent\Relations\belongsTo
+    {
+        return $this->belongsTo(Center::class);
     }
 
 //    ovveried attchments relation in user model
@@ -144,6 +154,18 @@ class User extends Authenticatable
            ? asset(optional($this->attachments)->path . "/" . optional($this->attachments)->filename)
            :asset('assets/images/default-image.jpg');
 
+    }
+
+    public function getUserTypeAttribute()
+    {
+        switch(Auth::user()->type){
+            case 1:
+                return trans('lang.super_admin_type');
+                break;
+            case 5:
+                return trans('lang.employee_type');
+                break;
+        }
     }
 
     public function scopeWalletGreaterThan(Builder $builder , int $minimum_number_of_pulses, $days_number): Builder

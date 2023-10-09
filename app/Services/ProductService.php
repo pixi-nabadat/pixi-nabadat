@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enum\ActivationStatusEnum;
 use App\Enum\ImageTypeEnum;
+use App\Exceptions\NotFoundException;
 use App\Models\Product;
 use App\QueryFilters\ProductsFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -38,32 +39,35 @@ class ProductService extends BaseService
             return false ;
         if (isset($data['logo']))
         {
-            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\products', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/products', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $product->storeAttachment($fileData);
         }
         if (isset($data['images'])&&is_array($data['images']))
             foreach ($data['images'] as $image)
             {
-                $fileData = FileService::saveImage(file: $image,path: 'uploads\products', field_name: 'images');
+                $fileData = FileService::saveImage(file: $image,path: 'uploads/products', field_name: 'images');
                 $fileData['type'] = ImageTypeEnum::GALARY;
                 $product->storeAttachment($fileData);
             }
 
     } //end of store
 
-    public function find($id,$withRelation=[]): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
+    /**
+     * @throws NotFoundException
+     */
+    public function find($id, $withRelation=[]): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|Builder|array
     {
         $product = Product::with($withRelation)->find($id);
-        if ($product)
-            return $product;
-        return false;
+        if (!$product)
+            throw new NotFoundException(trans('lang.not_found'));
+        return $product;
 
     } //end of find
 
     public function delete($id)
     {
-        $product = Product::find($id);
+        $product = $this->find($id);
         if ($product) {
             $product->deleteAttachments();
             return $product->delete();
@@ -80,14 +84,14 @@ class ProductService extends BaseService
             if (isset($data['logo']))
             {
                 $product->deleteAttachmentsLogo();
-                $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads\products', field_name: 'logo');
+                $fileData = FileService::saveImage(file: $data['logo'],path: 'uploads/products', field_name: 'logo');
                 $fileData['type'] = ImageTypeEnum::LOGO;
                 $product->storeAttachment($fileData);
             }
             if (isset($data['images'])&&is_array($data['images']))
             foreach ($data['images'] as $image)
             {
-                $fileData = FileService::saveImage(file: $image,path: 'uploads\products', field_name: 'images');
+                $fileData = FileService::saveImage(file: $image,path: 'uploads/products', field_name: 'images');
                 $fileData['type'] = ImageTypeEnum::GALARY;
                 $product->storeAttachment($fileData);
             }

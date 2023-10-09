@@ -46,9 +46,32 @@ Route::prefix('authentication')->group(function () {
     Route::view('maintenance', 'authentication.maintenance')->name('maintenance');
 });
 
-Route::get('/', HomeController::class)->name('/')->middleware('auth');
+Route::get('/', function(){
+    return redirect('/lp');
+})->name('landingPage.index');
+// Route::get('/', function(){
+//     return view('dashboard.landingPage.index');
+// })->name('landingPage.index');
+// Route::get('/features', function(){
+//     return view('dashboard.landingPage.features');
+// })->name('landingPage.features');
+// Route::get('/testimonials', function(){
+//     return view('dashboard.landingPage.testimonials');
+// })->name('landingPage.testimonials');
+// Route::get('/blog', function(){
+//     return view('dashboard.landingPage.blog');
+// })->name('landingPage.blog');
+// Route::get('/contact', function(){
+//     return view('dashboard.landingPage.contact');
+// })->name('landingPage.contact');
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
+    //start user profile
+    Route::get('/profile',   [AuthController::class, 'getProfile'])->name('get_profile');
+    Route::patch('/profile/{user}', [AuthController::class, 'updateProfile'])->name('update_profile');
+    Route::patch('update-logo', [AuthController::class, 'updateLogo'])->name('update_logo');
+
+    //end user profile
 //    change localization
     Route::get('lang/{locale}',LocalizationController::class)->name('lang');
 

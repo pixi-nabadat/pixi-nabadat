@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
+
 class RegisterRequest extends BaseRequest
 {
     /**
@@ -24,12 +26,17 @@ class RegisterRequest extends BaseRequest
         return [
             'name'=>'required|string',
             'phone'=>'required|string|unique:users,phone',
+            'email'=>'required|email|unique:users,email',
             'password'=>'required|string|confirmed|min:6',
             'date_of_birth'=>'nullable|date',
             'location_id'=>'nullable|integer|exists:locations,id',
         ];
     }
 
+    public function prepareForValidation()
+    {
+        $this->merge(['type'=>User::CUSTOMERTYPE , 'last_login_at' => now()]);
+    }
 //    todo trans all validation message
 //    public function messages()
 //    {

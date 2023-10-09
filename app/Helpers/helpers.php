@@ -167,3 +167,38 @@ if (!function_exists('setLanguage')) {
         app()->setLocale($locale);
     }
 }
+
+
+if (!function_exists('changePointsToPounds')) {
+
+    function changePointsToPounds(float $points): float
+    {
+        return round($points / setting('points','patient_points_per_pound'),2);
+    }
+}
+
+
+if (!function_exists('changePoundsToPoints')) {
+
+    function changePoundsToPoints(float $money): float
+    {
+        return $money * setting('points','patient_points_per_pound');
+    }
+}
+
+if (!function_exists('changeCenterPointsToPounds')) {
+
+    function changeCenterPointsToPounds(float $points): float
+    {
+        return $points / setting('points','center_points_per_pound');
+    }
+}
+
+
+if (!function_exists('changeCenterPoundsToPoints')) {
+
+    function changeCenterPoundsToPoints(float $pounds): float
+    {
+        return $pounds * setting('points','center_points_per_pound');
+    }
+}

@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Enum\ImageTypeEnum;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 
 class AuthUserResource extends JsonResource
 {
@@ -16,7 +18,7 @@ class AuthUserResource extends JsonResource
     {
 
        return [
-           'token'=>$this->getToken(),
+           'token'=>$request->bearerToken()?? $this->getToken(),
            'token_type'=>'Bearer',
            'user'=>[
             "id"=> $this->id,
@@ -25,14 +27,17 @@ class AuthUserResource extends JsonResource
             "phone"=> $this->phone,
             "type"=> $this->type,
             "is_active"=> $this->is_active,
-            "location_id"=> $this->location_id,
+            "location"=> $this->whenLoaded('location', new LocationsResource($this->location)),
+            'profile_image' =>($this->whenLoaded('attachments') && isset($this->attachments))?new AttachmentsResource($this->attachments) : array('path'=>asset('assets/images/default-image.jpg')),
             "date_of_birth"=> $this->date_of_birth,
             "points"=> $this->points,
             "points_expire_date"=> $this->points_expire_date,
             "last_login"=> $this->last_login,
             "device_token"=> $this->device_token,
-            "created_at"=> $this->created_at,
-            "updated_at"=> $this->updated_at
+            "allow_push_notification"=>(bool) $this->allow_notification,
+            "updated_at"=> $this->updated_at,
+            "wallet"=>$this->whenLoaded('nabadatWallet',$this->nabadatWallet),
+            'center'=> $this->whenLoaded('center', new UserCenterResource($this->center)),
         ],
        ];
     }

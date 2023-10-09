@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AppointmentController;
+use App\Http\Controllers\Api\AttachmentController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BuyCustomPulsesController;
 use App\Http\Controllers\Api\BuyOfferController;
@@ -42,9 +43,15 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('phone/verify', PhoneVerifyController::class);
     Route::post('password/forget', PhoneVerifyController::class);
     Route::post('password/reset', RestPasswordController::class);
-    Route::post('user/set-fcm-token', [AuthController::class, 'setFcmToken'])->middleware('auth:sanctum');
-    Route::get('user', [AuthController::class, 'profile'])->middleware('auth:sanctum');
-
+    Route::group(['middleware' => 'auth:sanctum'],function (){
+        Route::post('user/set-fcm-token', [AuthController::class, 'setFcmToken']);
+        Route::get('user', [AuthController::class, 'authUser']);
+        Route::patch('user', [AuthController::class, 'update']);
+        Route::post('center/update', [CenterController::class, 'update']);
+        Route::patch('update-profile-image', [AuthController::class, 'updateProfileImage']);
+        Route::post('store-in-gallery', [AttachmentController::class, 'storeInGallery']);
+        Route::delete('delete-attachment/{id}', [AttachmentController::class, 'deleteAttachment']);
+    });
 });
 
 //for test fcm
@@ -69,6 +76,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'notifications'], function () {
         Route::get('/', [NotificationController::class, 'getNotifications']);
         Route::post('/mark-as-read', [NotificationController::class, 'markAsRead']);
+        Route::post('status',[\App\Http\Controllers\Api\UserController::class,'allowNotification'])->name('notification.status');
     });
 
     Route::group(['prefix' => 'reservations'], function () {
@@ -78,6 +86,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('{id}',  [\App\Http\Controllers\Api\ReservationsController::class, 'find']);
         Route::get('qrcode/{qrcode}',[\App\Http\Controllers\Api\ReservationsController::class, 'findByQrCode']);
         Route::post('{id}/status', [\App\Http\Controllers\Api\ReservationHistoryController::class, 'store']);
+        Route::post('attend', [\App\Http\Controllers\Api\ReservationHistoryController::class, 'reservationAttend']);
         Route::post('devices', [\App\Http\Controllers\Api\NabadatHistoryController::class, 'store']);
         Route::get('{id}/edit',[\App\Http\Controllers\Api\ReservationsController::class,'findForEdit']);
         Route::patch('{id}',[\App\Http\Controllers\Api\ReservationsController::class,'update']);
@@ -85,7 +94,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
 //    get All devices
-    Route::get('/devices', [DeviceController::class, 'listing']);
+    Route::get('devices', [DeviceController::class, 'listing']);
     //start center devices
     Route::group(['prefix' => 'center-devices'], function () {
         Route::get('/', [CenterDeviceController::class, 'listing']);
@@ -112,7 +121,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('{address}', [AddressController::class, 'find']);
         Route::post('/', [AddressController::class, 'store']);
         Route::post('{address}', [AddressController::class, 'update']);
-        Route::post('set-default/{address}', [AddressController::class, 'setDefault']);
         Route::post('set-default/{address}', [AddressController::class, 'setDefault']);
         Route::delete('{address}', [AddressController::class, 'destroy']);
     });

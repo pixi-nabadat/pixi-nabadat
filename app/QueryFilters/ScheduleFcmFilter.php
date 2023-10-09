@@ -17,6 +17,26 @@ class ScheduleFcmFilter extends QueryFilter
         return $this->builder->where('id',$term);
     }
 
+    public function trigger($term)
+    {
+        return $this->builder->where('trigger',$term);
+    }
+
+    public function start_date($term)
+    {
+        return $this->builder->where('start_date',$term);
+    }
+
+    public function end_date($term)
+    {
+        return $this->builder->where('end_date',$term);
+    }
+    
+    public function notification_via($term)
+    {
+        return $this->builder->where('notification_via',$term);
+    }
+
 
     public function is_active($term)
     {

@@ -1,6 +1,6 @@
 
 @can('edit_country')
-<a role="button" class="btn btn-warning" href="{{route('country.edit',$location->id)}}" >
+<a role="button" class="btn btn-primary" href="{{route('country.edit',$location->id)}}" >
     <i class="fa fa-pencil-square-o"></i>
 </a>
 @endcan

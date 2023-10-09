@@ -123,9 +123,9 @@
                                 </div>
                                 <!-- End InvoiceBot-->
                             </div>
-                            <div class="col-sm-12 text-center mt-3">
+                            {{-- <div class="col-sm-12 text-center mt-3">
                                 <a href="{{route('invoices.print',$invoice->id)}}" class="btn btn btn-primary me-2" type="button" data-bs-original-title="" title="">Print</a>
-                            </div>
+                            </div> --}}
                             <!-- End Invoice-->
                             <!-- End Invoice Holder-->
                             <!-- Container-fluid Ends-->

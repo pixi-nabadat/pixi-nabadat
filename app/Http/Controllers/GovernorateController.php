@@ -70,7 +70,7 @@ class GovernorateController extends Controller
             $toast = [
               'type'=>'error',
               'title'=>trans('error'),
-              'message'=>trans('lang.notfound')
+              'message'=>trans('lang.not_found')
             ];
             return back()->with('toast',$toast);
         }

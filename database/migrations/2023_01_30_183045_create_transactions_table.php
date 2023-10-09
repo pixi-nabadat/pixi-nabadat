@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\Invoice::class)->constrained();
             $table->foreignIdFor(\App\Models\User::class)->constrained();
-            $table->foreignIdFor(\App\Models\Package::class)->nullable()->constrained();
+            $table->foreignIdFor(\App\Models\Package::class)->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->integer('num_pulses');
             $table->double('center_dues');
             $table->double('nabadat_app_dues');

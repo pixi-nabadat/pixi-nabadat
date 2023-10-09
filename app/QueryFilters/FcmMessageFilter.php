@@ -32,6 +32,11 @@ class FcmMessageFilter extends QueryFilter
     {
         return $this->builder->where('content',$term);
     }
+    
+    public function fcm_action($term)
+    {
+        return $this->builder->where('fcm_action',$term);
+    }
 
 
 }

@@ -104,9 +104,9 @@
                             {{--status  --}}
                             <div class="col-md-12">
                                 <div class="col-form-label col-3">{{ __('lang.status') }}</div>
-                                <select id="status" name="center_id" class="form-select form-control-sm digits @error('price') is-invalid @enderror">
-                                    <option value="{{\App\Enum\PackageStatusEnum::APPROVED}}" {{$package->status == \App\Enum\PackageStatusEnum::APPROVED ? 'selected' : ''}}>{{ __('lang.approved') }}</option>
-                                    <option value="{{\App\Enum\PackageStatusEnum::REJECTED}}" {{$package->status == \App\Enum\PackageStatusEnum::REJECTED ? 'selected' : ''}}>{{ __('lang.cancel') }}</option>
+                                <select id="status" name="status" class="form-select form-control-sm digits @error('price') is-invalid @enderror">
+                                    <option value="{{\App\Enum\PackageStatusEnum::APPROVED}}" {{$package->getRawOriginal('status') == \App\Enum\PackageStatusEnum::APPROVED ? 'selected' : ''}}>{{ __('lang.approved') }}</option>
+                                    <option value="{{\App\Enum\PackageStatusEnum::REJECTED}}" {{$package->getRawOriginal('status') == \App\Enum\PackageStatusEnum::REJECTED ? 'selected' : ''}}>{{ __('lang.cancel') }}</option>
                                 </select>
                                 @error('status')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -128,7 +128,7 @@
                                     </div>
 
                                     <div class="form-group mt-3">
-                                        <img src="{{$package->attachments->first() !== null ? asset($package->attachments->first()->path."\\".$package->attachments->first()->filename) : asset('/uploads/packages/default.png')}}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                                        <img src="{{$package->attachments()->first() !== null ? asset($package->attachments()->first()->path."\\".$package->attachments()->first()->filename) : asset('/uploads/packages/default.png')}}" style="width: 500px" class="img-thumbnail image-preview " alt="">
                                     </div>
                                 </div>
                             </div>

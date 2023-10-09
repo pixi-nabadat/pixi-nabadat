@@ -20,7 +20,9 @@ class SliderController extends Controller
     public function index(SlidersDataTable $dataTable, Request $request)
     {
 
-        $filters = $request->all();
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
         $withRelations = ['center'];
         return $dataTable->with(['filters' => $filters, 'withRelations' => $withRelations])->render('dashboard.sliders.index');
 
@@ -28,13 +30,16 @@ class SliderController extends Controller
 
     public function edit($id)
     {
-        $slider = $this->sliderService->find($id);
-        if (!$slider) {
-            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.slider_not_found')];
+        try {
+            $withRelation = ['attachments'];
+            $slider = $this->sliderService->find(id: $id,withRelation: $withRelation);
+            $centers = $this->centerService->getAll();
+            return view('dashboard.sliders.edit', compact('slider', 'centers'));
+        }catch (\Exception $exception)
+        {
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => $exception->getMessage()];
             return back()->with('toast', $toast);
         }
-        $centers = $this->centerService->getAll();
-        return view('dashboard.sliders.edit', compact('slider', 'centers'));
     }//end of edit 
 
     public function create()
@@ -78,9 +83,7 @@ class SliderController extends Controller
     public function destroy($id)
     {
         try {
-            $result = $this->sliderService->delete($id);
-            if (!$result)
-                return apiResponse(message: trans('lang.not_found'), code: 404);
+            $this->sliderService->delete($id);
             return apiResponse(message: trans('lang.success'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);
@@ -89,20 +92,21 @@ class SliderController extends Controller
 
     public function show($id)
     {
-        $slider = $this->sliderService->find($id);
-        if (!$slider) {
-            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.slider_not_found')];
+        try {
+            $slider = $this->sliderService->find($id);
+            return view('dashboard.sliders.show', compact('slider'));
+        }catch (\Exception $exception)
+        {
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => $exception->getMessage()];
             return back()->with('toast', $toast);
         }
-        return view('dashboard.sliders.show', compact('slider'));
+
     } //end of show   
 
     public function status(Request $request)
     {
         try {
-            $result = $this->sliderService->status($request->id);
-            if (!$result)
-                return apiResponse(message: trans('lang.not_found'), code: 404);
+            $this->sliderService->status($request->id);
             return apiResponse(message: trans('lang.success'));
         } catch (\Exception $exception) {
             return apiResponse(message: $exception->getMessage(), code: 422);

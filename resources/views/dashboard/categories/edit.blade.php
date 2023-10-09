@@ -91,12 +91,15 @@
                                 </div>
 
                             {{--type  --}}
-                            <div class="col-md-12 d-flex my-3">
-                                <div class="col-form-label col-3">{{ __('lang.product_type') }}</div>
-                                <select id="type" name="type" class="js-example-basic-single col-sm-12">
+                            <div class="col-md-12">
+                                <label class="form-label mt-3" for="logo">{{ trans('lang.type') }}</label>
+                                <select id="type" name="type" class="form-select form-control">
                                     <option value="{{\App\Models\Category::USERTYPE}}"   @if($category->getRawOriginal('type') == \App\Models\Category::USERTYPE)selected @endif>{{ __('lang.user') }}</option>
                                     <option value="{{\App\Models\Category::CENTERTYPT}}" @if($category->getRawOriginal('type') == \App\Models\Category::CENTERTYPT)selected @endif>{{ __('lang.center') }}</option>
                                 </select>
+                                @error('type')
+                                <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                                 <div class="col-md-12">

@@ -74,12 +74,12 @@ class OrdersDataTable extends DataTable
             [
                 'data'=>'user_name',
                 'name'=>'user_name',
-                'title'=>'user_name',
+                'title'=>trans('lang.user_name'),
             ],
             [
                 'data'=>'user.phone',
                 'name'=>'user_phone',
-                'title'=>'user_phone',
+                'title'=>trans('lang.user_phone'),
             ],
             Column::make('shipping_fees')
             ->title(trans('lang.shipping_fees')),

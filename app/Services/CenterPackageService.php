@@ -34,19 +34,21 @@ class CenterPackageService extends BaseService
 
     public function store($data)
     {
+        $data['is_active'] = isset($data['is_active']) ? 1:0;
         $package = $this->model->create($data);
         if (isset($data['image'])) {
             $fileData = FileService::saveImage(file: $data['image'], path: 'uploads/packages');
             $package->storeAttachment($fileData);
         }
 
-        return $package;
+        return true;
 
     } //end of store
 
     public function delete($id)
     {
         $package = $this->find($id);
+        $package->deleteAttachments();
         return $package->delete();
 
     } //end of find
@@ -62,17 +64,18 @@ class CenterPackageService extends BaseService
         return $package;
     } //end of delete
 
-    public function update($id, $data): Model|Package
+    public function update($id, $data)
     {
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
         $package = $this->find($id);
         if (isset($data['image'])) {
-            $fileData = FileService::saveImage(file: $data['image'], path: 'uploads\packages', field_name: 'image');
-            $package->updateAttachment($fileData);
+            $package->deleteAttachments();
+            $fileData = FileService::saveImage(file: $data['image'], path: 'uploads/packages', field_name: 'image');
+            $package->storeAttachment($fileData);
         }
         $package->update($data);
         $package->save();
-        return $package;
+        return true;
     } //end of update
 
     public function status($id): bool

@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Device;
+use App\Services\DeviceService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -43,9 +44,9 @@ class DevicesDataTable extends DataTable
      * @param \App\Models\DevicesDataTable $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Device $model): QueryBuilder
+    public function query(DeviceService $deviceService): QueryBuilder
     {
-        return $model->newQuery();
+        return $deviceService->queryGet($this->filters);
     }
 
     /**

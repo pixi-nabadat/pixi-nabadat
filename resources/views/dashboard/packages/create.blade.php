@@ -30,7 +30,7 @@
                                     <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12 @error('price') is-invalid @enderror">
                                         <option selected>...</option>
                                         @foreach ($centers as $center)
-                                            <option value="{{ $center->id }}">{{ $center->name }}</option>
+                                            <option value="{{ $center->id }}">{{ $center->user->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('center_id')
@@ -101,9 +101,9 @@
                                     @enderror
                                 </div>
                                 {{--status  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <div class="col-form-label col-3">{{ __('lang.status') }}</div>
-                                    <select id="status" name="center_id" class="js-example-basic-single col-sm-12 @error('price') is-invalid @enderror">
+                                <div class="col-md-12">
+                                    <label class="form-label">{{ __('lang.status') }}</label>
+                                    <select id="status" name="status" class="js-example-basic-single col-sm-12 @error('price') is-invalid @enderror">
                                         <option value="1">{{ __('lang.approved') }}</option>
                                         <option value="0">{{ __('lang.cancel') }}</option>
                                     </select>
@@ -112,24 +112,17 @@
                                     @enderror
                                 </div>
                                 {{-- package image --}}
-                                <div class="card  col-md-12">
-                                    <div class="card-header py-4">
-                                        <h6>{{ __('lang.package_image') }}</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="col-md-12 d-flex">
-                                            <label class="form-label col-3" for="image">{{ trans('lang.image') }}</label>
-                                                <input name="image" class="form-control image @error('image') is-invalid @enderror"
-                                                    id="image" type="file">
-                                                @error('image')
-                                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                                @enderror
-                                        </div>
+                                <div class="col-md-12">
+                                    <label class="form-label" for="image">{{ trans('lang.image') }}</label>
+                                        <input name="image" class="form-control image @error('image') is-invalid @enderror"
+                                            id="image" type="file">
+                                        @error('image')
+                                            <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        @enderror
+                                </div>
 
-                                        <div class="form-group mt-3">
-                                            <img src="{{ asset('/uploads/packages/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
-                                        </div>
-                                    </div>
+                                <div class="form-group mt-3">
+                                    <img src="{{ asset('/uploads/packages/default.png') }}" style="width: 100px" class="image-preview " alt="">
                                 </div>
 
                                 {{--  is_active  --}}

@@ -143,7 +143,7 @@
                             </div>
 
                             <div class="form-group mt-3">
-                                <img src="{{ asset('/uploads/products/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                                <img src="{{ asset('/uploads/products/default.png') }}" style="width: 100px" class="image-preview " alt="">
                             </div>
                         </div>
                     </div>
@@ -163,7 +163,7 @@
                             </div>
 
                             <div class="form-group mt-3">
-                                <img src="{{ asset('/uploads/products/default.png') }}" style="width: 500px" class="img-thumbnail image-preview " alt="">
+                                <img src="{{ asset('/uploads/products/default.png') }}" style="width: 100px" class="image-preview " alt="">
                             </div>
                         </div>
                     </div>
@@ -214,7 +214,7 @@
                     {{-- tax --}}
                     <div class="card col-12">
                         <div class="card-header py-4">
-                            <h6>{{ __('lang.Vat_TAX') }}</h6>
+                            <h6>{{ __('lang.vat_tax') }}</h6>
                         </div>
                         <div class="card-body">
                             <div class="col-md-12 row">

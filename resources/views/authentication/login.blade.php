@@ -10,11 +10,11 @@
 @section('content')
 <div class="container-fluid">
    <div class="row">
-      <div class="col-xl-5"><img class="bg-img-cover bg-center" src="{{asset('assets/images/login/3.jpg')}}" alt="looginpage"></div>
-      <div class="col-xl-7 p-0">
+      {{-- <div class="col-xl-5"><img class="bg-img-cover bg-center" src="{{asset('assets/images/login/3.jpg')}}" alt="looginpage"></div> --}}
+      <div class="col-xl-12 p-0">
          <div class="login-card">
             <div>
-               <div><a class="logo text-start" href="index.html"><img class="img-fluid for-light" src="{{asset('assets/images/logo/login.png')}}" alt="looginpage"><img class="img-fluid for-dark" src="{{asset('assets/images/logo/logo_dark.png')}}" alt="looginpage"></a></div>
+               <div><a class="logo text-start" href="index.html"><img class="img-fluid for-light img-responsive" style="width:190px" src="{{asset('images/icons/5.png')}}" alt="looginpage"><img class="img-fluid for-dark" style="width:190px" src="{{asset('images/icons/5.png')}}" alt="looginpage"></a></div>
                <div class="login-main">
                   <form action="{{route('login')}}" method="post" role="form" class="theme-form">
                       @csrf

@@ -2,31 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\UserPackagesDataTable;
-use App\Exceptions\NotFoundException;
-use App\Exceptions\NotFoundHttpException;
-use App\Exceptions\StatusNotEquelException;
-use App\Http\Controllers\Controller;
-use Exception;
-use Illuminate\Http\Request;
-use App\Http\Requests\ReservationStoreRequest;
-use App\Http\Requests\ReservationUpdateRequest;
+use App\DataTables\UserPackagesDatatable;
 use App\Http\Requests\UserPackageStoreRequest;
-use App\Http\Requests\UserPA;
 use App\Http\Requests\UserPackageUpdateRequest;
-use App\Http\Resources\CentersResource;
-use App\Http\Resources\ReservationsResource;
 use App\Http\Resources\UserPackagesResource;
-use Carbon\Carbon;
-use App\Models\Reservation;
-use App\Services\ReservationService;
-use Illuminate\Validation\Rules\Unique;
-use App\Models\User;
 use App\Services\CenterService;
-use App\Services\PackageService;
 use App\Services\UserPackageService;
 use App\Services\UserService;
-use Illuminate\Support\Facades\Auth;
+use Exception;
+use Illuminate\Http\Request;
+
 
 class UserPackageController extends Controller
 {
@@ -40,11 +25,13 @@ class UserPackageController extends Controller
 
     }
 
-    public function index(Request $request, UserPackagesDataTable $dataTable)
+    public function index(Request $request, UserPackagesDatatable $dataTable)
     {
-        $withRelations = ['user','center'];
-        $filters = $request->all();
-        return $dataTable->with(['filters'=>$filters , 'withRelations' => $withRelations])->render('dashboard.userPackages.index');
+        $withRelations = ['user', 'center'];
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+        return $dataTable->with(['filters' => $filters, 'withRelations' => $withRelations])->render('dashboard.userPackages.index');
     }
 
     public function create()
@@ -64,7 +51,29 @@ class UserPackageController extends Controller
         return view('dashboard.userPackages.show', compact('userPackage'));
     } //end of show
 
-    public function edit(int $id)
+        /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function find(int $id)
+    {
+        try {
+            $withRelations = [];
+            $userPackage = $this->userPackageService->find($id, $withRelations);
+            if ($userPackage) {
+                $userPackage = new UserPackagesResource($userPackage);
+                return apiResponse(data: $userPackage, message: trans('lang.operation_success'), code: 200);
+            } else
+                return apiResponse(data: null, message: trans('lang.error_has_occurred'), code: 422);
+
+        } catch (Exception $e) {
+            return apiResponse(message: $e->getMessage(), code: 422);
+        }
+    } //end of show
+
+public function edit(int $id)
     {
         $userPackage = $this->userPackageService->find($id);
         if (!$userPackage) {
@@ -74,27 +83,6 @@ class UserPackageController extends Controller
         $users = $this->userService->getAll();
         $centers = $this->centerService->getAll();
         return view('dashboard.userPackages.edit', compact(['userPackage', 'users', 'centers']));
-    } //end of show
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function find(int $id)
-    {
-        try{
-            $withRelations = [];
-            $userPackage = $this->userPackageService->find($id,$withRelations);
-            if($userPackage){
-                $userPackage = new UserPackagesResource($userPackage);
-                return apiResponse(data: $userPackage, message: trans('lang.operation_success'), code: 200);
-            }else
-                return apiResponse(data: null, message: trans('lang.error_has_occurred'), code: 422);
-
-        }catch(Exception $e){
-            return apiResponse(message:  $e->getMessage(), code: 422);
-        }
     }
 
     /**
@@ -113,7 +101,8 @@ class UserPackageController extends Controller
             return redirect()->back()->with('toast', $toast);
         }
     }
-     /**
+
+    /**
      * @param UserPackageUpdateRequest $userPackageUpdateRequest
      * @return UserPackagesResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
@@ -129,6 +118,7 @@ class UserPackageController extends Controller
             return redirect()->back()->with('toast', $toast);
         }
     }
+
     /**
      * distory the user package
      * @param int $id

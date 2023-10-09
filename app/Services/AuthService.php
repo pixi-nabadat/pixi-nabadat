@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
-
+use App\Enum\ImageTypeEnum;
 use App\Exceptions\UserNotFoundException;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class AuthService extends BaseService
 {
@@ -16,7 +17,7 @@ class AuthService extends BaseService
         $identifierField = is_numeric($identifier) ? 'phone':'email';
         $credential = [$identifierField=>$identifier,'password'=>$password,'type'=>$type];
         if (!auth()->attempt($credential))
-            return throw new UserNotFoundException(__('lang.login failed'));
+            return throw new UserNotFoundException(__('lang.login_failed'));
         return User::where($identifierField, $identifier)->first();
     }
 
@@ -35,6 +36,24 @@ class AuthService extends BaseService
         return auth('sanctum')->user();
     }
 
+    public function update(User $user, array $data): User
+    {
+        $user->update($data);
+        return $user;
+    }
+
+    public function updateLogo(array $data)
+    {
+        $user = Auth::user();
+        if (isset($data['logo'])) {
+            $user->deleteAttachmentsLogo();
+            $fileData = FileService::saveImage(file: $data['logo'], path: 'uploads/users', field_name: 'logo');
+            $fileData['type'] = ImageTypeEnum::LOGO;
+            $user->storeAttachment($fileData);
+        }
+        return $user;
+
+    }
     public function setUserFcmToken(User $user , $fcm_token)
     {
         if (isset($fcm_token))

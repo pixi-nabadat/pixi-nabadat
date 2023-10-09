@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enum\ImageTypeEnum;
+use App\Observers\ProductObserver;
 use App\Traits\EscapeUnicodeJson;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -77,5 +78,21 @@ class Product extends Model
     public function defaultLogo(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
         return $this->morphOne(Attachment::class, 'attachmentable')->where('type', ImageTypeEnum::LOGO);
+    }
+
+    public function getImagePathAttribute(): string
+    {
+        return $this->relationLoaded('defaultLogo') && isset($this->defaultLogo) ? asset($this->defaultLogo->path."/".$this->defaultLogo->filename) : asset('assets/images/default-image.jpg');
+    }
+
+    public function getImageIdAttribute()
+    {
+        return $this->relationLoaded('defaultLogo') && isset($this->defaultLogo) ? $this->defaultLogo->id : null;
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::observe(ProductObserver::class);
     }
 }

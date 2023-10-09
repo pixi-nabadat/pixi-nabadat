@@ -36,8 +36,10 @@
             </div>
           </div>
         </li>
-        <li>                         <span class="header-search"><i data-feather="search"></i></span></li>
-        <li class="onhover-dropdown">
+        {{-- <li>
+          <span class="header-search"><i data-feather="search"></i></span>
+        </li> --}}
+        {{-- <li class="onhover-dropdown">
           <div class="notification-box"><i data-feather="bell"> </i><span class="badge rounded-pill badge-secondary">4                                </span></div>
           <ul class="notification-dropdown onhover-show-div">
             <li>
@@ -58,11 +60,11 @@
             </li>
             <li><a class="btn btn-primary" href="#">Check all notification</a></li>
           </ul>
-        </li>
-        <li>
+        </li> --}}
+        {{-- <li>
           <div class="mode"><i class="fa fa-moon-o"></i></div>
-        </li>
-        <li class="onhover-dropdown">
+        </li> --}}
+        {{-- <li class="onhover-dropdown">
           <i data-feather="message-square"></i>
           <ul class="chat-dropdown onhover-show-div">
             <li>
@@ -104,18 +106,19 @@
             </li>
             <li class="text-center"> <a class="btn btn-primary" href="#">View All     </a></li>
           </ul>
-        </li>
+        </li> --}}
         <li class="maximize"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>
         <li class="profile-nav onhover-dropdown p-0 me-0">
           <div class="media profile-media">
-            <img class="b-r-10" src="{{asset('assets/images/dashboard/profile.jpg')}}" alt="">
+            <img class="b-r-10" width="35px" src="{{asset(Auth::user()->image)}}" alt="">
             <div class="media-body">
               <span>{{ Auth::user()->name }}</span>
               <p class="mb-0 font-roboto">{{ Auth::user()->name }} <i class="middle fa fa-angle-down"></i></p>
             </div>
           </div>
           <ul class="profile-dropdown onhover-show-div">
-            <li><a href="#"><i data-feather="user"></i><span>profile </span></a></li>
+            <li><a href="{{ route('get_profile') }}"><i data-feather="user"></i><span>profile </span></a></li>
+            <li><a href="https://nabadatbase.pixiagency.com/"><i data-feather="user"></i><span>{{trans('lang.user_manual')}} </span></a></li>
             <li><a href="{{route('auth.logout')}}"><i data-feather="log-out"> </i><span>{{trans('lang.logout')}}</span></a></li>
           </ul>
         </li>

@@ -6,24 +6,24 @@
 <div class="sidebar-wrapper">
 	<div>
 		<div class="logo-wrapper">
-			 <a href="{{route('home')}}"><img class="img-fluid for-light" src="{{asset('assets/images/logo/logo.png')}}" alt=""><img class="img-fluid for-dark" src="{{asset('assets/images/logo/logo_dark.png')}}" alt=""></a>
+			 <a href="{{route('home')}}"><img class="img-fluid for-light" style="width:190px" src="{{asset('images/icons/5.png')}}" style="width:190px" alt=""><img class="img-fluid for-dark" style="width:190px" src="{{asset('images/icons/5.png')}}" alt=""></a>
 			<div class="back-btn"><i class="fa fa-angle-left"></i></div>
 			<div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
 		</div>
-		<div class="logo-icon-wrapper"><a href="{{route('home')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a></div>
+		<div class="logo-icon-wrapper"><a href="{{route('home')}}"><img class="img-fluid" style="width:190px" src="{{asset('images/icons/5.png')}}" alt=""></a></div>
 		<nav class="sidebar-main">
 			<div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
 			<div id="sidebar-menu">
 				<ul class="sidebar-links" id="simple-bar">
 					<li class="back-btn">
-						<a href="{{route('home')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a>
+						<a href="{{route('home')}}"><img class="img-fluid" style="width:190px" src="{{asset('images/icons/5.png')}}" alt=""></a>
 						<div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
 					</li>
 					<li class="sidebar-main-title">
-						<div>
-							<h6 class="lan-1">{{ trans('lang.General') }} </h6>
+						{{-- <div>
+							<h6 class="lan-1">{{ trans('lang.general') }} </h6>
                      		<p class="lan-2">{{ trans('lang.general_routes') }}</p>
-						</div>
+						</div> --}}
 					</li>
 					<li class="sidebar-list">
                         @can('view_country')
@@ -200,14 +200,15 @@
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/user-packages' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
-                            <li><a class="lan-5 {{ Route::currentRouteName()==route('packages.index') ? 'active' : '' }}" href="{{route('user-packages.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('user-packages.index') ? 'active' : '' }}" href="{{route('user-packages.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ Route::currentRouteName()==route('user-packages.create') ? 'active' : '' }}" href="{{route('user-packages.create')}}">{{ trans('lang.create') }}</a></li>
                         </ul>
                         {{--end User Packages --}}
                         @endcan
 
                         @can('view_cancel_reason')
                         {{--start Cancel Reason ---}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/cancelReasons' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.cancelReason') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/cancelReasons' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.cancel_reason') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/cancelReasons' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
