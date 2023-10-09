@@ -45,9 +45,6 @@ class PointsReminderCommand extends Command
         
         $scheduleFcmPointsSevenDays = $scheduleFcmForPoints->where('trigger',FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_7'])->first();
 
-        ScheduleFcm::UserReminderFcm($scheduleFcmPointsOneDay, User::where('id', 2)->get());
-        ScheduleFcm::UserReminderFcm($scheduleFcmPointsThreeDays, User::where('id', 2)->get());
-        ScheduleFcm::UserReminderFcm($scheduleFcmPointsSevenDays, User::where('id', 2)->get());
         $usersFilters = ['points_expire_date' => null];
         
         if($scheduleFcmPointsOneDay)
