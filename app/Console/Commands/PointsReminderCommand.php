@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Enum\FcmEventsNames;
 use App\Models\ScheduleFcm;
+use App\Models\User;
 use App\Services\UserService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -44,6 +45,9 @@ class PointsReminderCommand extends Command
         
         $scheduleFcmPointsSevenDays = $scheduleFcmForPoints->where('trigger',FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_7'])->first();
 
+        ScheduleFcm::UserReminderFcm($scheduleFcmPointsOneDay, User::where('id', 2)->get());
+        ScheduleFcm::UserReminderFcm($scheduleFcmPointsThreeDays, User::where('id', 2)->get());
+        ScheduleFcm::UserReminderFcm($scheduleFcmPointsSevenDays, User::where('id', 2)->get());
         $usersFilters = ['points_expire_date' => null];
         
         if($scheduleFcmPointsOneDay)
