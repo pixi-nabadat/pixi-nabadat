@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enum\PaymentStatusEnum;
 use App\Traits\Filterable;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -80,5 +81,10 @@ class Reservation extends Model
             Reservation::Expired => trans('lang.expired'),
             default => trans('lang.pending'),
         };
+    }
+
+    public function scopeStatus(Builder $builder , int $status): Builder
+    {
+        return $builder->whereHas('latestStatus',fn($query)=>$query->where('status',$status));
     }
 }

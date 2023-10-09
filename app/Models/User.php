@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable
 {
@@ -165,5 +166,13 @@ class User extends Authenticatable
                 return trans('lang.employee_type');
                 break;
         }
+    }
+
+    public function scopeWalletGreaterThan(Builder $builder , int $minimum_number_of_pulses, $days_number): Builder
+    {
+        return $builder->whereHas('nabadatWallet',fn($query)=>$query
+        ->where('total_pulses','>', $minimum_number_of_pulses)
+        ->where('updated_at', Carbon::parse(Carbon::now()->subDays($days_number))->format('Y-m-d'))
+        );
     }
 }
