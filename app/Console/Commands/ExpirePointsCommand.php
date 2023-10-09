@@ -29,7 +29,7 @@ class ExpirePointsCommand extends Command
      */
     public function handle()
     {
-        $currentDate =Carbon::today()->format('Y-m-d');
+        $currentDate = Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d');
         $users = User::query()->whereDate('points_expire_date','<=',$currentDate)->get();
         foreach($users as $user)
         {
