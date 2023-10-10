@@ -110,7 +110,7 @@
         <li class="maximize"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>
         <li class="profile-nav onhover-dropdown p-0 me-0">
           <div class="media profile-media">
-            <img class="b-r-10" width="35px" src="{{asset(Auth::user()->image)}}" alt="">
+            <img class="b-r-10" width="35px" src="{{asset(Auth::user()->load('attachments')->image)}}" alt="">
             <div class="media-body">
               <span>{{ Auth::user()->name }}</span>
               <p class="mb-0 font-roboto">{{ Auth::user()->name }} <i class="middle fa fa-angle-down"></i></p>
