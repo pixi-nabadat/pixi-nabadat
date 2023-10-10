@@ -1,0 +1,34 @@
+/* start contact section*/
+.contact-form{
+    background-color:#EEE;
+    padding-top:60px;
+    padding-bottom: 60px;
+}
+
+.contact-form form{
+    background-color: #FFF;
+    padding: 40px;
+    border-radius: 20px;
+}
+.contact-form span,
+.contact-form p{
+    color:#b1a8a8;
+}
+.contact-form form input,
+.contact-form form textarea{
+    background-color: #EEE;
+    border: none;
+}
+
+
+/* end contact section */
+
+/**** End overriding Bootstrap****/
+
+/*Start Media Query*/
+/*From 0 To Mobile*/
+@media (max-width:767px){
+    
+}
+
+/*End Media Query*/
