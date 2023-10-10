@@ -50,19 +50,19 @@ class PointsReminderCommand extends Command
         if($scheduleFcmPointsOneDay)
         {
             $userPointsOneDayRemain = app()->make(UserService::class)->queryGet(where_condition: $usersFilters, withRelation: [])
-            ->where('points_expire_date', Carbon::parse(Carbon::now()->addDay())->format('Y-m-d'))->get();
+            ->where('points_expire_date', Carbon::parse(Carbon::now()->setTimezone('Africa/Cairo')->addDay())->format('Y-m-d'))->get();
             ScheduleFcm::UserReminderFcm($scheduleFcmPointsOneDay, $userPointsOneDayRemain);
         }
         if($scheduleFcmPointsThreeDays)
         {
             $userPointsThreeDaysRemain = app()->make(UserService::class)->queryGet(where_condition: $usersFilters, withRelation: [])
-            ->where('points_expire_date', Carbon::parse(Carbon::now()->addDays(4))->format('Y-m-d'))->get();
+            ->where('points_expire_date', Carbon::parse(Carbon::now()->setTimezone('Africa/Cairo')->addDays(4))->format('Y-m-d'))->get();
             ScheduleFcm::UserReminderFcm($scheduleFcmPointsThreeDays, $userPointsThreeDaysRemain);
         }
         if($scheduleFcmPointsSevenDays)
         {
             $userPointsSevenDaysRemain = app()->make(UserService::class)->queryGet(where_condition: $usersFilters, withRelation: [])
-            ->where('points_expire_date', Carbon::parse(Carbon::now()->addDays(8))->format('Y-m-d'))->get();
+            ->where('points_expire_date', Carbon::parse(Carbon::now()->setTimezone('Africa/Cairo')->addDays(8))->format('Y-m-d'))->get();
             ScheduleFcm::UserReminderFcm($scheduleFcmPointsSevenDays, $userPointsSevenDaysRemain);
         }
         //end points expire reminder

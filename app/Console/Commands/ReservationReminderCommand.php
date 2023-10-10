@@ -50,13 +50,13 @@ class ReservationReminderCommand extends Command
         if($scheduleFcmReservationBeforeOneDay)
         {
             $reservationsOneDayReminder = app()->make(ReservationService::class)->queryGet(where_condition: $reservationFilter,withRelation: $withRelations)
-            ->where('check_date',  Carbon::now()->addDay()->format('Y-m-d'))->get();
+            ->where('check_date',  Carbon::now()->setTimezone('Africa/Cairo')->addDay()->format('Y-m-d'))->get();
             ScheduleFcm::ReservationCheckDateReminderFcm($scheduleFcmReservationBeforeOneDay, $reservationsOneDayReminder);
         }
         if($scheduleFcmReservationBeforeTwoDays)
         {
             $reservationsTwoDaysReminder =app()->make(ReservationService::class)->queryGet(where_condition: $reservationFilter,withRelation: $withRelations)
-            ->where('check_date',  Carbon::now()->addDays(2)->format('Y-m-d'))->get();
+            ->where('check_date',  Carbon::now()->setTimezone('Africa/Cairo')->addDays(2)->format('Y-m-d'))->get();
             ScheduleFcm::ReservationCheckDateReminderFcm($scheduleFcmReservationBeforeTwoDays, $reservationsTwoDaysReminder);
         }
         //end reservation check date reminder
