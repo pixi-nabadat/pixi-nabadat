@@ -65,12 +65,12 @@ class AuthController extends Controller
     {
         Session::flush();
         Auth::logout();
-        return Redirect(route('login'));
+        return Redirect()->route('login');
     }
 
     public function getProfile()
     {
-        $user = Auth::user();
+        $user = auth()->user()->load(['attachments']);
         $governorates = $this->locationService->getAll(['depth' => 1, 'is_active' => 1]);
         $cities = isset($user->location) ? $user->location->getSiblings() : [];
         $governorate_city = isset($user->location) ? $user->location->ancestors->whereNotNull('parent_id')->first():[];
@@ -90,7 +90,7 @@ class AuthController extends Controller
                 return back()->with('toast', $toast);    
             }
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
-            return redirect(route('/'))->with('toast', $toast);
+            return redirect()->route('home')->with('toast', $toast);
 
         }catch(Exception $e){
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.something_went_rong')];
@@ -108,7 +108,7 @@ class AuthController extends Controller
                 return back()->with('toast', $toast);    
             }
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
-            return redirect(route('/'))->with('toast', $toast);
+            return redirect()->route('home')->with('toast', $toast);
         }catch(Exception $e){
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.something_went_rong')];
             return back()->with('toast', $toast);
