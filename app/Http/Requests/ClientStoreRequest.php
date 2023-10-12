@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ClientStoreRequest extends FormRequest
@@ -33,7 +34,7 @@ class ClientStoreRequest extends FormRequest
             'is_active' => 'nullable',
             'allow_notification' => 'nullable',
             'location_id' => 'required|integer',
-            'date_of_birth' => 'nullable|date',
+            'date_of_birth' => 'nullable|date|before:'.Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d'),
         ];
     }
 

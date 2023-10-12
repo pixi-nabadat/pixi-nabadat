@@ -25,7 +25,7 @@
                             @csrf
                             <div class="row g-3">
                                 {{-- order --}}
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="form-label" for="order">{{ trans('lang.order') }}</label>
                                     <input name="order" class="form-control @error('order') is-invalid @enderror"
                                         id="order" type="number" required>
@@ -35,7 +35,7 @@
                                 </div>
                                 
                                 {{--centers  --}}
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="form-label">{{ __('lang.center') }}</label>
                                     <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12">
                                         <option selected>...</option>
@@ -54,7 +54,7 @@
 {{--                                    @enderror--}}
 {{--                                </div>--}}
                                 {{--  start date  --}}
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="form-label" for="start_date">@lang('lang.start_date')</label>
                                     <div class="input-group date" id="dt-start_date" data-target-input="nearest">
                                         <input name="start_date" class="datepicker-here form-control digits  @error('start_date') is-invalid @enderror" type="text" data-language="en" data-target="#dt-start_date" data-bs-original-title title>
@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
                                 {{--  end date  --}}
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="form-label" for="start_date">@lang('lang.end_date')</label>
                                     <div class="input-group date" id="dt-start_date" data-target-input="nearest">
                                         <input name="end_date" class="datepicker-here form-control digits  @error('end_date') is-invalid @enderror" type="text" data-language="en" data-target="#dt-end_date" data-bs-original-title title>

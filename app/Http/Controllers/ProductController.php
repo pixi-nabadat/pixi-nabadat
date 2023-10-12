@@ -53,7 +53,7 @@ class ProductController extends Controller
             $data = $request->validated();
             $data['added_by'] = auth()->id();
             $this->productService->store($data);
-            $toast = ['type' => 'success', 'title' => trans('lang.success'), 'message' => trans('lang.Product Saved Successfully')];
+            $toast = ['type' => 'success', 'title' => trans('lang.success'), 'message' => trans('lang.success_operation')];
             return redirect()->route('products.index')->with('toast', $toast);
         } catch (\Exception $ex) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
@@ -92,7 +92,7 @@ class ProductController extends Controller
         $withRelation = ['category:id,name','attachments'];
         $product = $this->productService->find(id: $id, withRelation: $withRelation);
         if (!$product) {
-            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.Product_not_found')];
+            $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.product_not_found')];
             return back()->with('toast', $toast);
         }
         return view('dashboard.products.show', compact('product'));

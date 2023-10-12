@@ -75,15 +75,15 @@
                         @endcan
 
                         @can('view_center')
-                        {{-- end centers --}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/centers' ? 'active' : '' }}" href="#"><i class="fa fa-home p-r-5"></i><span class="lan-6">{{ trans('lang.center') }}</span>
+                        {{-- start center --}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/centers' ? 'active' : '' }}" href="#"><i class="fa fa-map-marker p-r-5"></i><span class="lan-6">{{ trans('lang.center') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/centers' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('centers.index') ? 'active' : '' }}" href="{{route('centers.index')}}">{{ trans('lang.center') }}</a></li>
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('centers.create') ? 'active' : '' }}" href="{{route('centers.create')}}">{{ trans('lang.create_center') }}</a></li>
                         </ul>
-                        {{-- end centers --}}
+                        {{-- end center --}}
                         @endcan
 
                         @can('view_doctor')

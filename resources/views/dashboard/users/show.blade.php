@@ -108,24 +108,9 @@
                             {{-- date_of_birth --}}
                             <div class="col-md-12">
                                 <label class="form-label mt-3" for="name_ar">{{ trans('lang.date_of_birth') }}</label>
-                                <p class="form-control" id="name_ar">{{ $client->date_of_birth }}</p>
+                                <p class="form-control">{{ $client->date_of_birth }}</p>
                             </div>
                             <div class="col-md-12">
-                                <label class="form-label">{{ trans('lang.location') }}</label>
-
-                                <div class="col-md-12 mb-3">
-                                    <label class="form-label mt-3" for="name_ar">{{ trans('lang.choose_governorates') }}</label>
-                                    <p class="form-control" id="name_ar">{{ $client->date_of_birth }}</p>
-    
-                                    <div class="col-form-label">{{ trans('lang.choose_governorates') }}</div>
-                                    <select id="change_location" data-filling-name="location_id"
-                                        class="form-select form-control mb-3 @error('parent_id') is-invalid @enderror">
-                                        <option selected>{{ trans('lang.choose_governorates') }}</option>
-                                        @foreach ($governorates as $governorate)
-                                            <option value="{{ $governorate->id }}">{{ $governorate->title }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
                                 <div class="col-md-12 mb-3">
                                     <label class="form-label mt-3" for="name_ar">{{ trans('lang.city') }}</label>
                                     <p class="form-control" id="name_ar">{{ optional($client->location)->title ??"-" }}</p>

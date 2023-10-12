@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CouponStoreRequest extends BaseRequest
@@ -27,8 +28,8 @@ class CouponStoreRequest extends BaseRequest
             'code' => 'required|string|unique:coupons',
             'discount_type'=>'required',
             'discount'=>'required|numeric',
-            'start_date'=>'required|date',
-            'end_date'=>'required|after_or_equal:start_date',
+            'start_date'=>'required|date|after_or_equal:'.Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d'),
+            'end_date'=>'required|date|after_or_equal:start_date',
             'min_buy'=>'required|numeric',
             'allowed_usage'=>'required|numeric',
             'coupon_for'=>'required',

@@ -15,7 +15,7 @@ class Doctor extends Model
     const   ACTIVE = 1,
             NON_ACTIVE = 0;
     public $translatable = ['name', 'description'];
-    protected $fillable = ['name', 'description', 'phone', 'center_id', 'is_active'];
+    protected $fillable = ['name', 'description', 'phone', 'age', 'center_id', 'is_active'];
 
     public function center()
     {

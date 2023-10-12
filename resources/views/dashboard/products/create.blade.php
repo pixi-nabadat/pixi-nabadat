@@ -31,66 +31,72 @@
                         </div>
                         <div class="card-body row">
                                 {{-- name_ar  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3 " for="name_ar">{{ trans('lang.name_ar') }}</label>
+                                <div class="col-md-12 mt-3">
+                                    <label class="form-label" for="name_ar">{{ trans('lang.name_ar') }}</label>
                                     <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
                                         id="name_ar" type="text" required>
                                     @error('name.ar')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{-- name_en  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3" for="name_en">{{ trans('lang.name_en') }}</label>
+                                <div class="col-md-12 mt-3">
+                                    <label class="form-label" for="name_en">{{ trans('lang.name_en') }}</label>
                                     <input name="name[en]" class="form-control @error('name.en') is-invalid @enderror"
                                         id="name_en" type="text" required>
                                     @error('name.en')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{--categories  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <div class="col-form-label col-3">{{ __('lang.categories') }}</div>
+                                <div class="col-md-12 mt-3">
+                                    <div class="col-form-label">{{ __('lang.categories') }}</div>
                                     <select id="category_id" name="category_id" class="js-example-basic-single col-sm-12">
                                         <option></option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('category_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                  {{--type  --}}
-                                 <div class="col-md-12 d-flex my-3">
-                                    <div class="col-form-label col-3">{{ __('lang.product_type') }}</div>
+                                 <div class="col-md-12 mt-3">
+                                    <div class="form-label">{{ __('lang.product_type') }}</div>
                                     <select id="type" name="type" class="js-example-basic-single col-sm-12">
                                         <option value="{{\App\Models\Product::PRODUCTCENTER}}">{{ __('lang.center') }}</option>
                                         <option value="{{\App\Models\Product::PRODUCTUSER}}">{{ __('lang.user') }}</option>
                                     </select>
+                                    @error('type')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 {{--  purchase_price  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3" for="purchase_price">@lang('lang.purchase_price')</label>
+                                <div class="col-md-12 mt-3">
+                                    <label class="form-label" for="purchase_price">@lang('lang.purchase_price')</label>
                                     <input type="number" name="purchase_price" step="0.01"
                                         class="form-control @error('purchase_price') is-invalid @enderror">
                                     @error('purchase_price')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{--  unit_price  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3" for="unit_price">@lang('lang.unit_price')</label>
+                                <div class="col-md-12 mt-3">
+                                    <label class="form-label" for="unit_price">@lang('lang.unit_price')</label>
                                     <input type="number" name="unit_price" step="0.01"
                                         class="form-control @error('unit_price') is-invalid @enderror">
                                     @error('unit_price')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{--  stock  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3" for="stock">@lang('lang.stock')</label>
+                                <div class="col-md-12 mt-3">
+                                    <label class="form-label" for="stock">@lang('lang.stock')</label>
                                     <input type="number" name="stock" step="1"
                                         class="form-control @error('stock') is-invalid @enderror">
                                     @error('stock')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                         </div>
@@ -103,26 +109,26 @@
                         </div>
                         <div class="card-body row">
                                 {{-- description_ar --}}
-                                <div class="col-md-12  d-flex my-3">
-                                    <label class="form-label col-3"
+                                <div class="col-md-12 mt-3">
+                                    <label class="form-label"
                                         for="description_ar">{{ trans('lang.description_ar') }}</label>
                                     <input name="description[ar]"
                                         class="form-control  @error('description.ar') is-invalid @enderror"
                                         id="description_ar" type="text" required>
                                     @error('description.ar')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 {{-- description_en --}}
-                                <div class="col-md-12  d-flex my-3">
-                                    <label class="form-label  col-3"
+                                <div class="col-md-12 mt-3">
+                                    <label class="form-label"
                                         for="description_en">{{ trans('lang.description_en') }}</label>
                                     <input name="description[en]"
                                         class="form-control @error('description.en') is-invalid @enderror"
                                         id="description_en" type="text" required>
                                     @error('description.en')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                         </div>
@@ -176,30 +182,30 @@
                         <div class="card-body">
                             <div class="col-md-12 row">
                                 {{-- discount --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label  col-3" for="discount">@lang('lang.discount')</label>
-                                    <input type="number" name="discount" step="0.01"
+                                <div class="col-md-12">
+                                    <label class="form-label" for="discount">@lang('lang.discount')</label>
+                                    <input type="number" name="discount" value="0" step="0.01"
                                         class="form-control @error('discount') is-invalid @enderror">
                                     @error('discount')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{-- discount_start_date --}}
-                                <div class="col-md-12  d-flex my-3">
-                                    <label class="form-label  col-3" for="discount_start_date">@lang('lang.discount_start_date')</label>
+                                <div class="col-md-12 mt-3">
+                                    <label class="form-label" for="discount_start_date">@lang('lang.discount_start_date')</label>
                                     <input type="date" name="discount_start_date"
                                         class="form-control  @error('discount_end_date') is-invalid @enderror">
                                     @error('discount_start_date')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{-- discount_end_date --}}
-                                <div class="col-md-12  d-flex my-3">
-                                    <label class="form-label  col-3" for="discount_end_date">@lang('lang.discount_end_date')</label>
+                                <div class="col-md-12 mt-3">
+                                    <label class="form-label" for="discount_end_date">@lang('lang.discount_end_date')</label>
                                     <input type="date" name="discount_end_date"
                                         class="form-control @error('discount_end_date') is-invalid @enderror">
                                     @error('discount_end_date')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -218,9 +224,9 @@
                         </div>
                         <div class="card-body">
                             <div class="col-md-12 row">
-                                <label class="form-label  " for="tax">@lang('lang.tax')</label>
+                                <label class="form-label" for="tax">@lang('lang.tax')</label>
                                 <div class="col-md-6 ">
-                                    <input type="number" name="tax" step="0.01"
+                                    <input type="number" value="0" name="tax" step="0.01"
                                         class="form-control @error('tax') is-invalid @enderror">
                                     @error('tax')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
