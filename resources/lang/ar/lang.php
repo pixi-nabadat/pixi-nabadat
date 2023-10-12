@@ -324,5 +324,16 @@
 		'reservation_status'=>'حالة الحجز',
 		'am'=>'ص',
 
+		'title_en_should_be_string'=>'عنوان اللغه الانجليزية يجب ان يكون نصا',
+		'title_in_ar_should_be_required'=>'العنوان باللغه العربية مطلوب',
+		'currency_should_be_required'=>'العمله مطلوبه',
+        'parent_should_be_required'=>'الاب مطلوب',
+        'are_you_sure'=>'هل انت متاكد',
+        'center_created_successfully'=>'تم انشاء المركز بنجاح',
+        'center_updated_successfully'=>'تم تحديت المركز بنجاح',
+        'please_select_center'=>'من فضلك اختار مركز',
+        'product_not_found'=>'المنتج غير متوفر',
+		'name_should_be_string'=>'الاسم يجب ان يكون نصا',
+    	'name_should_be_required'=>'الاسم مطلوب',
     ]
 ?>

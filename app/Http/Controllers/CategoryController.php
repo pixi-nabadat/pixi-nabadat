@@ -41,7 +41,7 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request){
         try {
             $this->categoryService->store($request->validated());
-            $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'category Saved Successfully'];
+            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect()->route('categories.index')->with('toast', $toast);
         } catch (\Exception $ex) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];

@@ -56,7 +56,7 @@ class DeviceController extends Controller
     public function store(DeviceRequest $request){
         try {
             $this->deviceService->store($request->validated());
-            $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'Device Saved Successfully'];
+            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect()->route('devices.index')->with('toast', $toast);
         } catch (\Exception $ex) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];

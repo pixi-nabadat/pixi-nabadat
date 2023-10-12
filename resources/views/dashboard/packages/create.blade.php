@@ -25,8 +25,8 @@
                             @csrf
                             <div class="row g-3">
                                 {{--center  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
+                                <div class="col-md-12">
+                                    <div class="form-label">{{ __('lang.centers') }}</div>
                                     <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12 @error('price') is-invalid @enderror">
                                         <option selected>...</option>
                                         @foreach ($centers as $center)
@@ -34,25 +34,25 @@
                                         @endforeach
                                     </select>
                                     @error('center_id')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{-- English Name --}}
                                 <div class="col-md-12">
                                     <label class="form-label" for="name_en">{{ trans('lang.name_en') }}</label>
                                     <input name="name[en]" class="form-control @error('name.en') is-invalid @enderror"
-                                        id="name_en" type="text" required>
+                                        id="name_en" type="text">
                                     @error('name.en')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{-- Arabic Name --}}
                                 <div class="col-md-12">
                                     <label class="form-label" for="name_ar">{{ trans('lang.name_ar') }}</label>
                                     <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
-                                        id="name_ar" type="text" required>
+                                        id="name_ar" type="text">
                                     @error('name.ar')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{--  num_nabadat  --}}
@@ -61,7 +61,7 @@
                                     <input type="number" name="num_nabadat" step="1"
                                         class="form-control @error('num_nabadat') is-invalid @enderror">
                                     @error('num_nabadat')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{--  price  --}}
@@ -70,7 +70,7 @@
                                     <input type="number" name="price" step="0.01"
                                         class="form-control @error('price') is-invalid @enderror">
                                     @error('price')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{--  discount percentage  --}}
@@ -79,7 +79,7 @@
                                     <input type="number" name="discount_percentage" step="0.01"
                                         class="form-control @error('discount_percentage') is-invalid @enderror">
                                     @error('discount_percentage')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{--  start date  --}}
@@ -88,7 +88,7 @@
                                     <input type="date" name="start_date" step="1"
                                         class="form-control @error('start_date') is-invalid @enderror">
                                     @error('start_date')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{--  end date  --}}
@@ -97,7 +97,7 @@
                                     <input type="date" name="end_date" step="1"
                                         class="form-control @error('end_date') is-invalid @enderror">
                                     @error('end_date')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{--status  --}}
@@ -108,7 +108,7 @@
                                         <option value="0">{{ __('lang.cancel') }}</option>
                                     </select>
                                     @error('status')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{-- package image --}}
@@ -117,7 +117,7 @@
                                         <input name="image" class="form-control image @error('image') is-invalid @enderror"
                                             id="image" type="file">
                                         @error('image')
-                                            <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                            <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                 </div>
 

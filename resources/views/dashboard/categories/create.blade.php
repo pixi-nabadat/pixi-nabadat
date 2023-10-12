@@ -25,7 +25,7 @@
                             @csrf
 
                             <div class="row g-3">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="form-label" for="name_ar">{{ trans('lang.name_ar') }}</label>
                                     <input name="name[ar]" class="form-control @error('name.ar') is-invalid @enderror"
                                         id="name_ar" type="text" required>
@@ -34,7 +34,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="form-label" for="name_en">{{ trans('lang.name_en') }}</label>
                                     <input name="name[en]" class="form-control @error('name.en') is-invalid @enderror"
                                         id="name_en" type="text" required>
@@ -44,15 +44,15 @@
                                 </div>
 
                                 {{--type  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <div class="col-form-label col-3">{{ __('lang.product_type') }}</div>
+                                <div class="col-md-6">
+                                    <div class="form-label">{{ __('lang.product_type') }}</div>
                                     <select id="type" name="type" class="js-example-basic-single col-sm-12">
                                         <option value="{{\App\Models\Category::USERTYPE}}">{{ __('lang.user') }}</option>
                                         <option value="{{\App\Models\Category::CENTERTYPT}}">{{ __('lang.center') }}</option>
                                     </select>
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="form-label" for="logo">{{ trans('lang.logo') }}</label>
                                     <input name="logo" class="form-control image @error('logo') is-invalid @enderror"
                                         id="logo" type="file">

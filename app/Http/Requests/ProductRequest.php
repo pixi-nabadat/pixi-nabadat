@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends BaseRequest
@@ -33,8 +34,8 @@ class ProductRequest extends BaseRequest
             'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'discount'=>'required',
-            'discount_start_date'=>'nullable',
-            'discount_end_date'=>'nullable',
+            'discount_start_date'=>'nullable|date|after_or_equal:'.Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d'),
+            'discount_end_date'=>'nullable|date|after_or_equal:'.Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d'),
             'tax'=>'nullable',
             'featured'=>'nullable|string',
             'is_active'=>'nullable|string',
@@ -47,7 +48,7 @@ class ProductRequest extends BaseRequest
     {
         return [
             'name.*.string' => __('lang.name_should_be_string'),
-            'name.*.required' => __('lang.name__should_be_required'),
+            'name.*.required' => __('lang.name_should_be_required'),
         ];
     }
 }

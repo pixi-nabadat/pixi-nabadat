@@ -99,7 +99,7 @@ class ClientController extends Controller
         try {
             $data = $request->validated();
             $this->userService->store(data: $data);
-            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('success_operation')];
+            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect()->route('clients.index')->with('toast', $toast);
         } catch (\Exception $ex) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
