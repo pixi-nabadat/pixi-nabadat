@@ -54,7 +54,7 @@ class ReservationController extends Controller
         try {
             $data = $request->validated();
             $this->reservationService->store($data);
-            $toast = ['type' => 'success', 'title' => trans('lang.success'), 'message' => trans('lang.operation_success')];
+            $toast = ['type' => 'success', 'title' => trans('lang.success'), 'message' => trans('lang.success_operation')];
             return redirect()->route('reservations.index')->with('toast', $toast);
         } catch (\Exception $ex) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];

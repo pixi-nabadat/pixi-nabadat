@@ -94,7 +94,7 @@ public function edit(int $id)
         try {
             $data = $request->validated();
             $this->userPackageService->store($data);
-            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.operation_success')];
+            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect()->route('user-packages.index')->with('toast', $toast);
         } catch (\Exception $ex) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];
@@ -111,7 +111,7 @@ public function edit(int $id)
         try {
             $data = $request->validated();
             $this->userPackageService->update($id, $data);
-            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.operation_success')];
+            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect()->route('user-packages.index')->with('toast', $toast);
         } catch (\Exception $ex) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];

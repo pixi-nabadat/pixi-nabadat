@@ -344,12 +344,6 @@
 
             </div>
 
-
-            <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
-                <div class="btn-group mr-2" role="group" aria-label="Third group">
-                    <button class="btn btn-primary my-3" type="submit">{{ trans('lang.submit') }}</button>
-                </div>
-            </div>
         </div>
     </div>
     <!-- Container-fluid Ends-->

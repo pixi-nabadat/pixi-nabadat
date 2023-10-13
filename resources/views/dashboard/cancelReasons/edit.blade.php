@@ -24,25 +24,27 @@
                             action="{{ route('cancelReasons.update', $cancelReason) }}" method="post">
                             @csrf
                             @method('put')
-                            {{-- English Reason --}}
-                            <div class="col-md-12">
-                                <label class="form-label mt-3" for="reason_en">{{ trans('lang.reason_en') }}</label>
-                                <input name="reason[en]" value={{ $cancelReason->getTranslation('reason', 'en') }}
-                                    class="form-control @error('reason.en') is-invalid @enderror" id="reason_en"
-                                    type="text" required>
-                                @error('reason.en')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            {{-- Arabic Reason --}}
-                            <div class="col-md-12">
-                                <label class="form-label" for="reason_ar">{{ trans('lang.reason_ar') }}</label>
-                                <input name="reason[ar]" value={{ $cancelReason->getTranslation('reason', 'ar') }}
-                                    class="form-control @error('reason.ar') is-invalid @enderror" id="reason_ar"
-                                    type="text" required>
-                                @error('reason.ar')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                @enderror
+                            <div class="row g-3">
+                                {{-- English Reason --}}
+                                <div class="col-md-6">
+                                    <label class="form-label" for="reason_en">{{ trans('lang.reason_en') }}</label>
+                                    <input name="reason[en]" value={{ $cancelReason->getTranslation('reason', 'en') }}
+                                        class="form-control @error('reason.en') is-invalid @enderror" id="reason_en"
+                                        type="text" required>
+                                    @error('reason.en')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                {{-- Arabic Reason --}}
+                                <div class="col-md-6">
+                                    <label class="form-label" for="reason_ar">{{ trans('lang.reason_ar') }}</label>
+                                    <input name="reason[ar]" value={{ $cancelReason->getTranslation('reason', 'ar') }}
+                                        class="form-control @error('reason.ar') is-invalid @enderror" id="reason_ar"
+                                        type="text" required>
+                                    @error('reason.ar')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
                             {{-- is Active --}}
                             <div class="media my-3">

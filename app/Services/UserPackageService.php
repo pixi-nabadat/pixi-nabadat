@@ -102,10 +102,10 @@ class UserPackageService extends BaseService
     {
         $userPackage = $this->find($id);
         if(!$userPackage)
-            throw new NotFoundException(trans('lang.user_package_not_found'));
+            new NotFoundException(trans('lang.user_package_not_found'));
         $paymentStatus = $userPackage->payment_status;
         if($paymentStatus != PaymentStatusEnum::UNPAID)
-            throw new NotFoundException(trans('lang.not_allowed'));
+            new NotFoundException(trans('lang.not_allowed'));
         return $userPackage->delete();
 
     } //end of delete

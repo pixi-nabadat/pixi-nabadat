@@ -26,21 +26,21 @@
                             @csrf
                             <div class="row g-3">
                                 {{-- English Reason --}}
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="form-label" for="reason_en">{{ trans('lang.reason_en') }}</label>
                                     <input name="reason[en]" class="form-control @error('reason.en') is-invalid @enderror"
                                         id="reason_en" type="text" required>
                                     @error('reason.en')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{-- Arabic Reason --}}
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="form-label" for="reason_ar">{{ trans('lang.reason_ar') }}</label>
                                     <input name="reason[ar]" class="form-control @error('reason.ar') is-invalid @enderror"
                                         id="reason_ar" type="text" required>
                                     @error('reason.ar')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{-- is Active --}}

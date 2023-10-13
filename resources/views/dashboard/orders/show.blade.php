@@ -31,13 +31,13 @@
                                     {{-- user_name  --}}
                                     <div class="col-md-12 ">
                                         <label class="form-label"
-                                               for="user_name ">{{ trans('lang.user_name ') }}</label>
+                                               for="user_name ">{{ trans('lang.user_name') }}</label>
                                         <p class="form-control" id="user_name "> {{ $order->user->name }} </p>
                                     </div>
                                     {{-- user_phone  --}}
                                     <div class="col-md-12 ">
                                         <label class="form-label"
-                                               for="user_phone ">{{ trans('lang.user_phone ') }}</label>
+                                               for="user_phone ">{{ trans('lang.user_phone') }}</label>
                                         <p class="form-control" id="user_phone"> {{ $order->user->phone }} </p>
                                     </div>
                                     {{-- address_info --}}
@@ -181,7 +181,7 @@
     <script>
         function changeOrderStatus(id,status){
             swal({
-                title: "{{__('lang.are_you_sure_you?')}}",
+                title: "{{__('lang.are_you_sure')}}",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
