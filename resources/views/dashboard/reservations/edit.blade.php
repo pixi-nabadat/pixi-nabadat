@@ -38,8 +38,8 @@
                                         @csrf
                                         @method('put')
                                         {{--center  --}}
-                                        <div class="col-md-12 d-flex my-3">
-                                            <div class="col-form-label col-3">{{ __('lang.center') }}</div>
+                                        <div class="col-md-12 mt-3">
+                                            <div class="form-label">{{ __('lang.center') }}</div>
                                             <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12 @error('center_id') is-invalid @enderror">
                                                 @foreach ($centers as $center)
                                                     <option value="{{ $center->id }}"
@@ -48,13 +48,13 @@
                                                 @endforeach
                                             </select>
                                             @error('center_id')
-                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                                <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
         
                                         {{--user  --}}
-                                        <div class="col-md-12 d-flex my-3">
-                                            <div class="col-form-label col-3">{{ __('lang.user') }}</div>
+                                        <div class="col-md-12 mt-3">
+                                            <div class="form-label">{{ __('lang.user') }}</div>
                                             <select id="customer_id" name="customer_id" class="js-example-basic-single col-sm-12 @error('center_id') is-invalid @enderror">
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
@@ -63,16 +63,16 @@
                                                 @endforeach
                                             </select>
                                             @error('center_id')
-                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                                <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
         
                                         {{--check_date  --}}
-                                        <div class="col-md-12 d-flex my-3">
-                                            <div class="col-form-label col-3">{{ __('lang.check_date') }}</div>
+                                        <div class="col-md-12 mt-3">
+                                            <div class="form-label">{{ __('lang.check_date') }}</div>
                                             <input type="date" name="check_date" value="{{ $reservation->check_date }}" class="form-control">
                                             @error('check_date')
-                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                                <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="media mb-2">

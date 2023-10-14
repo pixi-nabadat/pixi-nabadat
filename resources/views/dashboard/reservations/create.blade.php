@@ -31,8 +31,8 @@
                         </div>
                         <div class="card-body row">
                                 {{--centers  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <div class="col-form-label col-3">{{ __('lang.center') }}</div>
+                                <div class="col-md-12 mt-3">
+                                    <div class="form-label">{{ __('lang.center') }}</div>
                                     <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12">
                                         <option selected disabled>...</option>
                                         @foreach ($centers as $center)
@@ -41,8 +41,8 @@
                                     </select>
                                 </div>
                                 {{--users  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <div class="col-form-label col-3">{{ __('lang.user') }}</div>
+                                <div class="col-md-12 mt-3">
+                                    <div class="form-label">{{ __('lang.user') }}</div>
                                     <select id="customer_id" name="customer_id" class="js-example-basic-single col-sm-12">
                                         <option selected disabled>...</option>
                                         @foreach ($users as $user)
@@ -51,12 +51,12 @@
                                     </select>
                                 </div>
                                 {{--  check_date  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <label class="form-label col-3" for="check_date">@lang('lang.check_date')</label>
+                                <div class="col-md-12 mt-3">
+                                    <label class="form-label" for="check_date">@lang('lang.check_date')</label>
                                     <input type="date" name="check_date" step="0.01"
                                         class="form-control @error('check_date') is-invalid @enderror">
                                     @error('check_date')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 

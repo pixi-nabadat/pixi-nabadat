@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -29,7 +30,7 @@ class ReservationStoreRequest extends BaseRequest
                 return $query->where('check_date', $this->check_date);
             })],
             'center_id'   => 'required|exists:centers,id',
-            'check_date'  => 'required|date',
+            'check_date'  => 'required|date|after_or_equal:'.Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d'),
         ];
     }
 

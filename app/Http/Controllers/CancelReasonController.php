@@ -41,7 +41,7 @@ class CancelReasonController extends Controller
     {
         try {
             $this->cancelReasonService->store($request->validated());
-            $toast = ['type' => 'success', 'title' => 'Success', 'message' => 'cancelReason Saved Successfully'];
+            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect()->route('cancelReasons.index')->with('toast', $toast);
         } catch (\Exception $ex) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];

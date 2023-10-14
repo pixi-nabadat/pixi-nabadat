@@ -25,8 +25,8 @@
                             @csrf
                             <div class="row g-3">
                                 {{--center  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
+                                <div class="col-md-6 mt-3">
+                                    <div class="form-label">{{ __('lang.centers') }}</div>
                                     <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12 @error('center') is-invalid @enderror">
                                         <option selected>...</option>
                                         @foreach ($centers as $center)
@@ -34,12 +34,12 @@
                                         @endforeach
                                     </select>
                                     @error('center_id')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{--user  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <div class="col-form-label col-3">{{ __('lang.users') }}</div>
+                                <div class="col-md-6 mt-3">
+                                    <div class="form-label">{{ __('lang.users') }}</div>
                                     <select id="user_id" name="user_id" class="js-example-basic-single col-sm-12 @error('user_id') is-invalid @enderror">
                                         <option selected>...</option>
                                         @foreach ($users as $user)
@@ -47,59 +47,59 @@
                                         @endforeach
                                     </select>
                                     @error('user_id')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 
                                 {{--  num_nabadat  --}}
-                                <div class="col-md-12">
+                                <div class="col-md-6 mt-3">
                                     <label class="form-label" for="num_nabadat">@lang('lang.num_nabadat')</label>
                                     <input type="number" name="num_nabadat" step="1"
                                         class="form-control @error('num_nabadat') is-invalid @enderror">
                                     @error('num_nabadat')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{--  price  --}}
-                                <div class="col-md-12">
+                                <div class="col-md-6 mt-3">
                                     <label class="form-label" for="price">@lang('lang.price')</label>
                                     <input type="number" name="price" step="0.01"
                                         class="form-control @error('price') is-invalid @enderror">
                                     @error('price')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{--  discount percentage  --}}
-                                <div class="col-md-12">
+                                <div class="col-md-6 mt-3">
                                     <label class="form-label" for="discount_percentage">@lang('lang.discount_percentage')</label>
                                     <input type="number" name="discount_percentage" step="0.01"
                                         class="form-control @error('discount_percentage') is-invalid @enderror">
                                     @error('discount_percentage')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{--payment_method  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <div class="col-form-label col-3">{{ __('lang.payment_method') }}</div>
+                                <div class="col-md-6 mt-3">
+                                    <div class="form-label">{{ __('lang.payment_method') }}</div>
                                     <select id="payment_method" name="payment_method" class="js-example-basic-single col-sm-12 @error('payment_method') is-invalid @enderror">
                                         <option selected>...</option>
                                         <option value="{{ App\Enum\PaymentMethodEnum::CASH }}">{{ App\Enum\PaymentMethodEnum::CASH }}</option>
                                         <option value="{{ App\Enum\PaymentMethodEnum::CREDIT }}">{{ App\Enum\PaymentMethodEnum::CREDIT }}</option>
                                     </select>
                                     @error('payment_method')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 {{--payment_status  --}}
-                                <div class="col-md-12 d-flex my-3">
-                                    <div class="col-form-label col-3">{{ __('lang.payment_status') }}</div>
+                                <div class="col-md-12 mt-3">
+                                    <div class="form-label">{{ __('lang.payment_status') }}</div>
                                     <select id="payment_status" name="payment_status" class="js-example-basic-single col-sm-12 @error('payment_status') is-invalid @enderror">
                                         <option selected>...</option>
                                         <option value="{{ App\Enum\PaymentStatusEnum::PAID }}">{{ App\Enum\PaymentStatusEnum::PAID }}</option>
                                         <option value="{{ App\Enum\PaymentStatusEnum::UNPAID }}">{{ App\Enum\PaymentStatusEnum::UNPAID }}</option>
                                     </select>
                                     @error('payment_status')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>

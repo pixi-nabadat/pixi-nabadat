@@ -27,7 +27,7 @@
                             <div class="row g-3">
                                 <div class="col-sm-12">
                                     <label class="form-label" for="name">{{ trans('lang.name') }}</label>
-                                    <input name="name" class="form-control @error('name') is-invalid @enderror"
+                                    <input name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror"
                                         id="name" type="text" required>
                                     @error('name')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -36,7 +36,7 @@
 
                                 <div class="col-md-12">
                                     <label class="form-label" for="email">{{ trans('lang.email') }}</label>
-                                    <input name="email" class="form-control @error('email') is-invalid @enderror"
+                                    <input name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror"
                                         id="email" type="email" required>
                                     @error('email')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -45,7 +45,7 @@
 
                                 <div class="col-md-12">
                                     <label class="form-label" for="phone">{{ trans('lang.phone') }}</label>
-                                    <input name="phone" class="form-control @error('phone') is-invalid @enderror"
+                                    <input name="phone" value="{{ old('phone') }}" class="form-control @error('phone') is-invalid @enderror"
                                         id="phone" type="phone" required>
                                     @error('phone')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -55,7 +55,7 @@
                                 {{-- password --}}
                                 <div class="col-md-12">
                                     <label class="form-label" for="password">{{ trans('lang.password') }}</label>
-                                    <input name="password" class="form-control @error('password') is-invalid @enderror"
+                                    <input name="password" value="{{ old('password') }}" class="form-control @error('password') is-invalid @enderror"
                                         id="password" type="password" required>
                                     @error('password')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -65,7 +65,7 @@
                                 {{-- device_logo --}}
                                 <div class="col-md-12">
                                     <label class="form-label" for="logo">{{ trans('lang.logo') }}</label>
-                                    <input name="logo" class="form-control image @error('logo') is-invalid @enderror"
+                                    <input name="logo" value="{{ old('logo') }}" class="form-control image @error('logo') is-invalid @enderror"
                                         id="logo" type="file">
                                     @error('logo')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
