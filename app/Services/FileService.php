@@ -48,7 +48,7 @@ class FileService
     protected static function getFileName(UploadedFile $file)
     {
         $filename = $file->getClientOriginalName();
-        $filename = date('Ymd') . '_' . time() .'.' . pathinfo($filename, PATHINFO_EXTENSION);
+        $filename = date('Ymd') . '_' . time() .'_'.random_int(100000, 999999).'.' . pathinfo($filename, PATHINFO_EXTENSION);
         return $filename;
     }
 
