@@ -44,12 +44,12 @@ class HomeController extends Controller
             $centers_filter['location_id'] =  $location_id;
 
 //        $data = Cache::remember('home-api', 60 * 60 * 24, function () use ($centers_filter) {
-            $data ['featured_products'] = ProductsResource::collection($this->productService->getAll(where_condition: ['featured' => 1], withRelation: ['defaultLogo']));
+            $data ['featured_products'] = ProductsResource::collection($this->productService->getAll(where_condition: ['is_active' => 1, 'featured' => 1], withRelation: ['attachments','defaultLogo']));
             $data['center_packages'] = PackagesResource::collection($this->packageService->listing(where_condition: ['is_active' => 1, 'in_duration' => true, 'status' => PackageStatusEnum::APPROVED], withRelation: ['attachments','center.user:id,center_id,name', 'center.defaultLogo']));
             $data['locations'] = LocationsResource::collection($this->locationService->getAll(filters: ['depth' => 2]));
             $data['coupons'] = CouponsResource::collection($this->couponService->listing(filters: ['in_period' => true, 'is_active' => true]));
             $data['featured_centers'] = CentersResource::collection($this->centerService->listing(filters: $centers_filter, withRelation: ['defaultLogo']));
-            $data['sliders'] = SlidersResource::collection($this->sliderService->listing(withRelations: ['attachments']));
+            $data['sliders'] = SlidersResource::collection($this->sliderService->listing(where_condition: ['is_active' => 1, 'in_duration', true], withRelations: ['attachments']));
 //            return $data;
 //        });
         return apiResponse(data: $data);
