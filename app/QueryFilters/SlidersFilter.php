@@ -51,4 +51,9 @@ class SlidersFilter extends QueryFilter
     {
         return $this->builder->where('order', $term);
     }
+
+    public function in_duration()
+    {
+        return $this->builder->active();
+    }
 }

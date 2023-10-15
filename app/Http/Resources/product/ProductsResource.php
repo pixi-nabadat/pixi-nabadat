@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\product;
 
+use App\Enum\ImageTypeEnum;
+use App\Http\Resources\AttachmentsResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductsResource extends JsonResource
