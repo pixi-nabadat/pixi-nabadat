@@ -20,11 +20,11 @@ class CartItemsResource extends JsonResource
             'name'              => $this->product->name,
             'quantity'          => $this->quantity,
             'price_before'      => $this->product->unit_price,
-            'price_after'       => $this->price_after_discount,
-            'discount'          => $this->product->product_discount,
-            'total_price'       => $this->quantity * $this->price_after_discount,
+            'price_after'       => $this->price,
+            'discount'          => $this->product->discount,
+            'total_price'       => $this->quantity * $this->price,
             'image'             => $this->product->image_path,
-            'points'             => changePoundsToPoints(money: $this->price_after_discount*$this->quantity),
+            'points'             => changePoundsToPoints(money: $this->price*$this->quantity),
         ];
     }
 }
