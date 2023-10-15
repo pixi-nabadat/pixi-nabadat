@@ -10,7 +10,7 @@ class Cart extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['coupon_id', 'sub_total', 'shipping_cost', 'address_id', 'net_total', 'grand_total', 'user_id', 'temp_user_id'];
+    protected $fillable = ['coupon_id', 'coupon_discount', 'sub_total', 'shipping_cost', 'address_id', 'net_total', 'grand_total', 'user_id', 'temp_user_id'];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -48,7 +48,6 @@ class Cart extends Model
             $coupon_usage = $user->coupons()->where('coupon_id',$this->coupon->id)->first();
             $coupon_usage_count = $coupon_usage->number_of_usage ?? 0 ;
         }
-
 
         if (
             Carbon::now(config('app.africa_timezone'))->gte(optional($this->coupon)->start_date) &&

@@ -21,7 +21,7 @@ class CartService extends BaseService
             ->items()
             ->updateOrCreate(
                 ['product_id' => $product_id],
-                ['price' => $product->unit_price, 'quantity' => $quantity]
+                ['price' => $product->unit_price - $product->discount, 'quantity' => $quantity]
             );
         return $this->getCart($temp_user_id);
     }
@@ -50,8 +50,10 @@ class CartService extends BaseService
             return;
         }
 
-        $grand_total = $items->sum(function ($item) {
-            return $item->quantity * ($item->product->unit_price - ($item->product->unit_price * $item->product->product_discount / 100));
+        $grand_total = $items->sum(function ($item) use($cart){
+            $grandTotalBeforeDiscount = $item->quantity * ($item->product->unit_price - ($item->product->unit_price * $item->product->discount / 100));
+            $couponDiscount = $grandTotalBeforeDiscount * ($cart->coupon_discount/100);
+            return $grandTotalBeforeDiscount - $couponDiscount + $cart->shipping_cost;
         });
 
         $sub_total = $items->sum(function ($item) {
@@ -108,6 +110,7 @@ class CartService extends BaseService
         if ($cart->grand_total < $coupon->min_buy)
             throw new NotFoundException(trans('lang.you_should_exceed_minimum_limitation_to_use_coupon : ') . $coupon->min_buy);
         $cart->coupon_id = $coupon->id;
+        $cart->coupon_discount = $coupon->discount;
         $cart->save();
         $cart->refresh();
         return true;
