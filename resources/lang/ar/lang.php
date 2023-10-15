@@ -335,5 +335,11 @@
         'product_not_found'=>'المنتج غير متوفر',
 		'name_should_be_string'=>'الاسم يجب ان يكون نصا',
     	'name_should_be_required'=>'الاسم مطلوب',
+		'package_is_paid'=>'عرض مدفوع مسبقا',
+    	'offers_not_found_or_package_paid'=>'العرض غير موجود او تم الدفع',
+    	'order_not_found'=>'الطلب غير متوفر',
+    	'coupon_not_available'=>'الكود غير متاح',
+    	'quantity_is_less_than'=>'الكميه اقل من',
+    	'quantity_is_more_than_stock_available'=>'الكميه اكبر من المخزون المتاح',
     ]
 ?>

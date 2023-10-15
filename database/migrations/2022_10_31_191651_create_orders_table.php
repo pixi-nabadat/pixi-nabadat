@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\User::class)->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->enum('payment_status',[\App\Enum\PaymentStatusEnum::PAID,\App\Enum\PaymentStatusEnum::UNPAID])->default(\App\Enum\PaymentStatusEnum::UNPAID);
             $table->enum('payment_method',[\App\Enum\PaymentMethodEnum::CASH,\App\Enum\PaymentMethodEnum::CREDIT])->nullable();
-            $table->json('address_info');
+            $table->longText('address_info');
             $table->foreignIdFor(\App\Models\Address::class)->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->double('shipping_fees')->default(0);
             $table->double('sub_total');

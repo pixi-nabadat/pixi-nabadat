@@ -333,5 +333,12 @@
         'product_not_found'=>'Product not found',
 		'name_should_be_string'=>'Name should be string',
     	'name_should_be_required'=>'Name should be required',
+    	'package_is_paid'=>'Package is paid',
+    	'offers_not_found_or_package_paid'=>'Offers not found or package paid',
+    	'order_not_found'=>'Order not found',
+    	'coupon_not_available'=>'Coupon not available',
+    	'quantity_is_less_than'=>'Quantity is less than',
+    	'quantity_is_more_than_stock_available'=>'Quantity is more than stock available',
+
     ]
 ?>
