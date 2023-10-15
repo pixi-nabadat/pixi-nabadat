@@ -20,7 +20,7 @@ class CartController extends Controller
 {
 
 
-    public function __construct(protected CartService $cartService,protected CouponService $couponService)
+    public function __construct(protected CartService $cartService,protected CouponService $couponService, protected ProductService $productService)
     {
     }
 
@@ -57,18 +57,18 @@ class CartController extends Controller
         }
     }
 
-    public function store(CartStoreRequest $request,ProductService $productService): \Illuminate\Http\Response|CartResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function store(CartStoreRequest $request): \Illuminate\Http\Response|CartResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
             DB::beginTransaction();
-            $product = $productService->find($request->product_id);
+            $product = $this->productService->find($request->product_id);
             if (!isset($product))
                 return apiResponse(message: trans('lang.product_not_found'));
             if ($request->quantity < 1)
-                return apiResponse(message: trans('lang.quantity_is_more_than_stock_available'). $product->stock);
+                return apiResponse(message: trans('lang.quantity_is_less_than').": 1");
 
             if ($request->quantity > $product->stock)
-                return apiResponse(message: trans('lang.quantity_is_more_than_stock_available'). $product->stock);
+                return apiResponse(message: trans('lang.quantity_is_more_than_stock_available').": ".$product->stock);
 
             $cart = $this->cartService->addItem(product_id: $request->product_id,quantity: $request->quantity, temp_user_id: $request->temp_user_id);
             DB::commit();

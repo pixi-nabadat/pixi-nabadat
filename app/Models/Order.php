@@ -78,7 +78,7 @@ class Order extends Model
                 return trans('lang.shipped');
 
             case self::DELIVERED :
-                return trans('lang.deliverd');
+                return trans('lang.delivered');
 
             case self::CANCELED :
                 return trans('lang.canceled');
