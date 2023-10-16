@@ -89,7 +89,7 @@ class UserService extends BaseService
             throw new NotFoundException(trans('lang.user_not_found'));
         if (isset($data['logo'])) {
             $user->deleteAttachmentsLogo();
-            $fileData = FileService::saveImage(file: $data['logo'], path: 'uploads\users', field_name: 'logo');
+            $fileData = FileService::saveImage(file: $data['logo'], path: 'uploads/users', field_name: 'logo');
             $fileData['type'] = ImageTypeEnum::LOGO;
             $user->storeAttachment($fileData);
         }
