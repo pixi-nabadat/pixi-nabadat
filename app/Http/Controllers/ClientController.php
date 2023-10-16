@@ -58,7 +58,7 @@ class ClientController extends Controller
             $client = $this->userService->find($id,$withRelation);
             $governorates = $this->locationService->getAll(['depth' => 1, 'is_active' => 1]);
             $cities = isset($client->location) ? $client->location->getSiblings() : [];
-            $governorate_city = $client->location->ancestors->whereNotNull('parent_id')->first() ?? null;
+            $governorate_city = isset($client->location) ? $client->location->ancestors->whereNotNull('parent_id')->first():null;
             return view('dashboard.users.edit', compact('client', 'governorates','cities','governorate_city'));
 
         }catch (Exception|NotFoundException $exception)
