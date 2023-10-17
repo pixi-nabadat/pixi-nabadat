@@ -40,7 +40,18 @@ class OrderService extends BaseService
             $deleted_at = Carbon::now();
 
         $pounds_for_points =  optional($order_data)->pounds_for_points ?? 0;
-        $grand_total = $order_data->grand_total_after_discount-$pounds_for_points;
+        $remain_pounds = 0;
+        $grand_total = $order_data->grand_total;
+        if($order_data->grand_total >= $pounds_for_points)
+        {
+            $grand_total = $order_data->grand_total-$pounds_for_points;
+        }else{
+            $grand_total = 0;
+            $remain_pounds = $pounds_for_points - $order_data->grand_total;
+        }
+        $userPoints = changePoundsToPoints($remain_pounds);
+        $user->points = $userPoints;
+        $user->save();
         $order = Order::create([
             'user_id' => $user->id,
             'payment_status' => $payment_status,
@@ -50,8 +61,8 @@ class OrderService extends BaseService
             'shipping_fees' => $shipping_address->city->shipping_cost ?? 0,
             'sub_total' => $order_data->sub_total,
             'grand_total' => $grand_total,
-            'coupon_discount' => optional($order_data->coupon)->discount ?? 0,
-            'points_discount' =>$pounds_for_points ,
+            'coupon_discount' => $order_data->coupon_discount,
+            'points_discount' =>$pounds_for_points - $remain_pounds ,
             'deleted_at' => $deleted_at
         ]);
 

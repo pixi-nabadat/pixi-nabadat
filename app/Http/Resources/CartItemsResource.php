@@ -19,12 +19,11 @@ class CartItemsResource extends JsonResource
             'product_id'        => $this->product_id,
             'name'              => $this->product->name,
             'quantity'          => $this->quantity,
-            'price_before'      => $this->product->unit_price,
-            'price_after'       => $this->price,
-            'discount'          => $this->product->discount,
-            'total_price'       => $this->quantity * $this->price,
+            'price_before'      => $this->price,
+            'price_after'       => $this->price - ($this->price * ($this->discount/100)),
+            'discount'          => $this->discount,
+            'total_price'       => $this->quantity * ($this->price - ($this->price * ($this->discount/100))),
             'image'             => $this->product->image_path,
-            'points'             => changePoundsToPoints(money: $this->price*$this->quantity),
         ];
     }
 }

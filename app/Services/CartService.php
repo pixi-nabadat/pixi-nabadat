@@ -21,7 +21,12 @@ class CartService extends BaseService
             ->items()
             ->updateOrCreate(
                 ['product_id' => $product_id],
-                ['price' => $product->unit_price - $product->discount, 'quantity' => $quantity]
+
+                [
+                    'price'    => $product->unit_price,
+                    'quantity' => $quantity,
+                    'discount' => $product->discount
+                ]
             );
         return $this->getCart($temp_user_id);
     }
@@ -51,13 +56,13 @@ class CartService extends BaseService
         }
 
         $grand_total = $items->sum(function ($item) use($cart){
-            $grandTotalBeforeDiscount = $item->quantity * ($item->product->unit_price - ($item->product->unit_price * $item->product->discount / 100));
+            $grandTotalBeforeDiscount = $item->quantity * ($item->price - ($item->price * $item->discount / 100));
             $couponDiscount = $grandTotalBeforeDiscount * ($cart->coupon_discount/100);
             return $grandTotalBeforeDiscount - $couponDiscount + $cart->shipping_cost;
         });
 
         $sub_total = $items->sum(function ($item) {
-            return $item->quantity * $item->product->unit_price;
+            return $item->quantity * ($item->price - ($item->price* ($item->discount/100)));
         });
 
         $cart->update([
