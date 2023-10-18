@@ -244,46 +244,30 @@
                                 <div class="container">
                                     <h2 class="h1">Customers Review</h2>
                                     <div class="row">
+                                        @foreach ($customer_reviews as $review)
+                                            
                                         <div class="col-md-4 col-sm-6">
                                             <div class="person wow pulse" data-offset="400" data-duration="1s">
                                                 <img class="img-circle img-responsive" width="150" src="{{ asset('assets/images/default-image.jpg') }}">
-                                                <h3>Chris Coyier</h3>
-                                                <p>this is the owner and the founder of of the amazing websites css-tricks</p>
-                                                <i class="fa fa-solid fa-star fa-2x"></i>
-                                                <i class="fa fa-solid fa-star fa-2x"></i>
-                                                <i class="fa fa-solid fa-star fa-2x"></i>
-                                                <i class="fa fa-solid fa-star fa-2x"></i>
-                                                <i class="fa fa-solid fa-star-half fa-2x"></i>
+                                                <h3>{{ $review->user->name }}</h3>
+                                                <p>{{ $review->comment }}</p>
+                                                <div>{{ $review->rate_number }}</div>
+                                                @for($i=1;$i<=5;$i++)
+                                                    @if($review->rate_number >= $i)
+                                                        <i class="fa fa-solid fa-star fa-2x"></i>
+                                                    @else
+                                                        @if($review->rate_number >($i-1) && $review->rate_number <$i)
+                                                            <i class="fa fa-star-half fa-2x"></i>
+                                                        @else
+                                                            <i class="fa fa-light fa-star-o fa-2x"></i>
+                                                        @endif
+                                                    @endif
+
+                                                @endfor
                                             </div>
                                         </div>
-                                        <div class="col-md-4 col-sm-6">
-                                            <div class="person wow pulse" data-offset="400" data-duration="1s">
-                                                <img class="img-circle img-responsive" width="150" src="{{ asset('assets/images/default-image.jpg') }}">
-                                                <h3>Leah Culver</h3>
-                                                <p>this is amazing hacker woman with much knowledge in hacking systems</p>
-                                                <i class="fa fa-solid fa-star fa-2x"></i>
-                                                <i class="fa fa-solid fa-star fa-2x"></i>
-                                                <i class="fa fa-solid fa-star fa-2x"></i>
-                                                <i class="fa fa-solid fa-star fa-2x"></i>
-                                                <i class="fa fa-solid fa-star-half fa-2x"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-sm-12">
-                                            <div class="person wow pulse" data-offset="400" data-duration="1s">
-                                                <img class="img-circle img-responsive" width="150" src="{{ asset('assets/images/default-image.jpg') }}">
-                                                <h3>Steve Jobs</h3>
-                                                <p>this is the man who change the world with his apple products</p>
-                                                <i class="fa fa-solid fa-star fa-2x"></i>
-                                                <i class="fa fa-solid fa-star fa-2x"></i>
-                                                <i class="fa fa-solid fa-star fa-2x"></i>
-                                                <i class="fa fa-solid fa-star fa-2x"></i>
-                                                <i class="fa fa-solid fa-star-half fa-2x"></i>
-                                            </div>
-                                        </div>
+                                        @endforeach
                                     </div>
-                                    
-                                    
-                                    
                                     
                                 </div>
                             </div>
