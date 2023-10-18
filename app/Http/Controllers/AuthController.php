@@ -30,7 +30,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         try {
-            $type = User::SUPERADMINTYPE ;
+            $type = [User::SUPERADMINTYPE, User::EMPLOYEE];
             $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password,type: $type);
             $toast = [
                 'type'=>'success',
