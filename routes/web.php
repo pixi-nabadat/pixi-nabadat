@@ -47,7 +47,7 @@ Route::prefix('authentication')->group(function () {
 });
 
 Route::get('/', function(){
-    return redirect('/lp');
+    return "<h1>Landing Page</h1>";
 })->name('landingPage.index');
 // Route::get('/', function(){
 //     return view('dashboard.landingPage.index');
