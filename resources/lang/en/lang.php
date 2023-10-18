@@ -314,6 +314,12 @@
 		'create_user_package'=>'Create user package',
 		'profile_image'=>'Profile image',
 		'total'=>'Total',
+		//start dashboard index
+		'due_panel'=>'Due panel',
+		'nabadat_panel'=>'nabadat panel',
+		'dougnhut_chart_data'=>'dougnhut chart data',
+		'cancel_average'=>'Cancel average',
+		//end dashboard index
 		'user_manual'=>'User manual',
 		'create_fcm'=>'Create FCM',
 		'flags'=>'Flags',

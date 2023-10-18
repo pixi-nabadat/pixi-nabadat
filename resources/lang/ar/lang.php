@@ -316,6 +316,12 @@
 		'create_user_package'=>'إنشاء عرض للمستخدك',
 		'profile_image'=>'صورة الملف الشخصى',
 		'total'=>'الكلى',
+		//start dashboard index
+		'due_panel'=>'لوحة المستحقات',
+		'nabadat_panel'=>'لوحة نبضات',
+		'dougnhut_chart_data'=>'مخطط بيانات دائرى',
+		'cancel_average'=>'متوسط الالغاء',
+		//end dashboard index
 		'user_manual'=>'دليل المستخدم',
 		'create_fcm'=>'انشاء fcm',
 		'flags'=>'أعلام',

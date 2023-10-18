@@ -30,6 +30,7 @@ use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\NabadatHistoryController;
 use App\Http\Controllers\PushNotificationController;
 use App\Http\Controllers\ReservationHistoryController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 //Language Change
