@@ -248,8 +248,9 @@
                                             
                                         <div class="col-md-4 col-sm-6">
                                             <div class="person wow pulse" data-offset="400" data-duration="1s">
-                                                <img class="img-circle img-responsive" width="150" src="{{ asset('assets/images/default-image.jpg') }}">
-                                                <h3>{{ $review->user->name }}</h3>
+                                                <img class="img-circle img-responsive" width="150" src="{{ $review->user->image }}">
+                                                <h5>{{ $review->user->name }}</h5>
+                                                <h4>{{ $review->ratable->name }}</h4>
                                                 <p>{{ $review->comment }}</p>
                                                 <div>{{ $review->rate_number }}</div>
                                                 @for($i=1;$i<=5;$i++)

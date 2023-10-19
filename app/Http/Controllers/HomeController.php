@@ -17,8 +17,7 @@ class HomeController extends Controller
         $centers_count = User::where('type',User::CENTERADMIN)->count();
         $products_count = Product::query()->count();
         $lastCustomers = User::where('type',User::CENTERADMIN)->latest()->take(3)->get();
-        $customerReviews = Rate::latest()->take(3)->get();
-
+        $customerReviews = Rate::whereHasMorph('ratable', [Center::class])->with('user.attachments')->latest()->take(3)->get();
         $topSellingProducts = Product::withCount('orderItems')
         ->whereHas('orderItems')
         ->orderBy('order_items_count', 'desc')
