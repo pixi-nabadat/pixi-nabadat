@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ClientUpdateRequest extends BaseRequest
@@ -30,8 +31,8 @@ class ClientUpdateRequest extends BaseRequest
             'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
             'password' => 'sometimes|nullable|string|max:255',
             'is_active' => 'nullable',
-            'location_id' => 'required|integer',
-            'date_of_birth'=>'nullable|date'
+            'location_id' => 'required|integer|exists:locations,id',
+            'date_of_birth'=>'nullable|date|before:'.Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d'),
         ];
     }
 

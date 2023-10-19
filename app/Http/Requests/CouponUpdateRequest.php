@@ -27,7 +27,7 @@ class CouponUpdateRequest extends BaseRequest
             'code' => 'required|string|unique:coupons,code,'.$this->coupon,
             'discount_type' => 'required',
             'discount'=>'required|numeric',
-            'start_date'=>'required|date|after_or_equal:'.Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d'),
+            'start_date'=>'required|date',
             'end_date'=>'required|date|after_or_equal:start_date',
             'min_buy'=>'required|numeric',
             'allowed_usage'=>'required|numeric',

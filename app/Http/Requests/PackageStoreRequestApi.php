@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 
 use App\Enum\PackageStatusEnum;
+use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 
 class PackageStoreRequestApi extends BaseRequest
@@ -41,8 +42,8 @@ class PackageStoreRequestApi extends BaseRequest
             ],
             'num_nabadat'          => 'required|integer',
             'price'                => 'required|numeric',
-            'start_date'           => 'required|date',
-            'end_date'             => 'required|date',
+            'start_date'           => 'required|date|after_or_equal:'.Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d'),
+            'end_date'             => 'required|date|after_or_equal:'.Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d'),
             'image'                => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'status'               => 'required|integer',
             'discount_percentage'  => ['numeric',Rule::requiredIf($this->status == PackageStatusEnum::APPROVED)],

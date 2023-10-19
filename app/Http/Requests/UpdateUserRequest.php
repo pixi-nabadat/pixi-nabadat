@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends BaseRequest
@@ -28,7 +29,7 @@ class UpdateUserRequest extends BaseRequest
             'phone'=>'required|string|unique:users,phone,'.$this->user_id,
             'email'=>'required|email|unique:users,email,'.$this->user_id,
             'password'=>'nullable|string|confirmed|min:6',
-            'date_of_birth'=>'nullable|date',
+            'date_of_birth'=>'nullable|date|before:'.Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d'),
             'location_id'=>'nullable|integer|exists:locations,id',
         ];
     }

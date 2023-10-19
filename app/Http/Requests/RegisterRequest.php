@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use Carbon\Carbon;
 
 class RegisterRequest extends BaseRequest
 {
@@ -28,7 +29,7 @@ class RegisterRequest extends BaseRequest
             'phone'=>'required|string|unique:users,phone',
             'email'=>'required|email|unique:users,email',
             'password'=>'required|string|confirmed|min:6',
-            'date_of_birth'=>'nullable|date',
+            'date_of_birth'=>'nullable|date|before:'.Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d'),
             'location_id'=>'nullable|integer|exists:locations,id',
         ];
     }

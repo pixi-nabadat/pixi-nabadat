@@ -28,7 +28,7 @@ class UpdateUserProfileRequest extends FormRequest
             'email' => 'required|email|unique:users,email,'.$this->user,
             'phone' => 'required|string|unique:users,phone,'.$this->user,
             'password' => 'sometimes|required|string|max:255',
-            'location_id' => 'required|integer',
+            'location_id' => 'required|integer|exists:locations,id',
         ];
     }
 }
