@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Models\Coupon;
 use App\Models\CouponUsage;
 use App\Models\Product;
+use App\Models\User;
 use Carbon\Carbon;
 
 class CartService extends BaseService
@@ -138,6 +139,9 @@ class CartService extends BaseService
             'user_id'=>$data['user_id'],
             'shipping_cost'=> $address->city->shipping_cost,
         ];
+        $oldCart = Cart::where('user_id', $data['user_id'])->first();
+        if($oldCart)
+            $oldCart->delete();
         $cart->update($cart_data);
         return true ;
     }
