@@ -47,9 +47,7 @@ Route::prefix('authentication')->group(function () {
     Route::view('maintenance', 'authentication.maintenance')->name('maintenance');
 });
 
-Route::get('/', function(){
-    return "<h1>Landing Page</h1>";
-})->name('landingPage.index');
+Route::get('/', HomeController::class)->name('/')->middleware('auth');
 // Route::get('/', function(){
 //     return view('dashboard.landingPage.index');
 // })->name('landingPage.index');
