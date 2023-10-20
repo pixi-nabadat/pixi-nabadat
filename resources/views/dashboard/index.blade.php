@@ -239,39 +239,43 @@
                 <div class="card">
                     <div class="card-body">
                         <!-- Start Section Our Team-->
-                        <section class="our_team text-center">
-                            <div class="team">
+                        <section class="text-left">
+                            {{-- <div class=""> --}}
                                 <div class="container">
-                                    <h2 class="h1">Customers Review</h2>
+                                    <h3 class="text-center">Customers Review</h3>
                                     <div class="row">
                                         @foreach ($customer_reviews as $review)
-                                            
-                                        <div class="col-md-4 col-sm-6">
-                                            <div class="person wow pulse" data-offset="400" data-duration="1s">
-                                                <img class="img-circle img-responsive" width="150" src="{{ $review->user->image }}">
-                                                <h5>{{ $review->user->name }}</h5>
-                                                <h4>{{ $review->ratable->name }}</h4>
-                                                <p>{{ $review->comment }}</p>
-                                                <div>{{ $review->rate_number }}</div>
-                                                @for($i=1;$i<=5;$i++)
-                                                    @if($review->rate_number >= $i)
-                                                        <i class="fa fa-solid fa-star fa-2x"></i>
-                                                    @else
-                                                        @if($review->rate_number >($i-1) && $review->rate_number <$i)
-                                                            <i class="fa fa-star-half fa-2x"></i>
-                                                        @else
-                                                            <i class="fa fa-light fa-star-o fa-2x"></i>
-                                                        @endif
-                                                    @endif
-
-                                                @endfor
-                                            </div>
+                                        <div class="col-sm-1 mt-3">
+                                            <img class="img-circle img-responsive" width="50" src="{{ $review->user->image }}">
                                         </div>
+                                        <div class="col-sm-5 mt-3">
+                                            <h4>{{ $review->user->name }}</h4>
+                                            <span>{{ $review->created_at }}</span>
+                                        </div>
+                                        <div class="col-sm-6 mt-3">
+                                            @for($i=1;$i<=5;$i++)
+                                                @if($review->rate_number >= $i)
+                                                    <i class="fa fa-solid fa-star fa-2x"></i>
+                                                @else
+                                                    @if($review->rate_number >($i-1) && $review->rate_number <$i)
+                                                        <i class="fa fa-star-half fa-2x"></i>
+                                                    @else
+                                                        <i class="fa fa-light fa-star-o fa-2x"></i>
+                                                    @endif
+                                                @endif
+
+                                            @endfor
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <h4>{{ $review->ratable->name }}</h4>
+                                            <p>{{ $review->comment }}</p>
+                                        </div>
+                                            
                                         @endforeach
                                     </div>
                                     
                                 </div>
-                            </div>
+                            {{-- </div> --}}
                         </section>
                         <!-- End Section Our Team-->
                     </div>
