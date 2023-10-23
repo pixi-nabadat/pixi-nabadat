@@ -138,6 +138,14 @@ class PermissionsTableSeeder extends Seeder
             ],
             //end coupons permissions
 
+            //start rates permissions
+            'rates'=>[
+                'edit_rate',
+                'delete_rate',
+                'view_rate'
+            ],
+            //end rates permissions
+
             //start products permissions
             'products'=>[
                 'create_product',
