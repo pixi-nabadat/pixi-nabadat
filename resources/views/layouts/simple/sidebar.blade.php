@@ -134,6 +134,17 @@
                         {{-- end coupon --}}
                         @endcan
 
+                        @can('view_rate')
+                        {{-- start rate ---}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/rates' ? 'active' : '' }}" href="#"><i class="fa fa-bar-chart-o p-r-5"></i><span class="lan-6">{{ trans('lang.rate') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/rates' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('rates.index') ? 'active' : '' }}" href="{{route('rates.index')}}">{{ trans('lang.view') }}</a></li>
+                        </ul>
+                        {{-- end rate --}}
+                        @endcan
+
                         @can('view_device')
 						{{-- start devices --}}
 						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/devices' ? 'active' : '' }}" href="#"><i class="fa fa-cubes p-r-5"></i><span class="lan-6">{{ trans('lang.devices') }}</span>

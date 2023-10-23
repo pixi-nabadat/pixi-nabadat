@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Rate extends Model
 {
-    use HasFactory;
+    // use HasFactory, Filterable;
+    use HasFactory,Filterable;
     const PRODUCT        = 1 ;
     const CENTER_DEVICE  = 2 ;
     const CENTER         = 3 ;
