@@ -25,7 +25,7 @@ class CenterService extends BaseService
 
     public function queryGet(array $where_condition = [], $withRelation = []): Builder
     {
-        $centers = $this->model->query()->active()->with($withRelation)->withCount('devices');
+        $centers = $this->model->query()->orderBy('created_at', 'desc')->active()->with($withRelation)->withCount('devices');
         return $centers->filter(new CentersFilter($where_condition));
     }
 

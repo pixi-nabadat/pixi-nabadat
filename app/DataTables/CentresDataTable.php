@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Center;
 use App\Services\CenterService;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
@@ -33,6 +34,9 @@ class CentresDataTable extends DataTable
             })
             ->editColumn('is_support_auto_service', function (Center $center) {
                 return  view('dashboard.components.switch-support-auto-service-btn',['model'=>$center,'url'=>route('centers.support-auto-service.changeStatus')]);
+            })
+            ->editColumn('created_at', function (Center $center) {
+                return Carbon::parse($center->created_at)->setTimezone('Africa/Cairo')->format('Y-m-d');
             })
             ->rawColumns(['action','phones','featured','is_active','is_support_auto_service']);
     }
@@ -108,6 +112,10 @@ class CentresDataTable extends DataTable
                 ->orderable(false),
             Column::make('devices_count')
                 ->title(trans('lang.devices'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('created_at')
+                ->title(trans('lang.created_at'))
                 ->searchable(false)
                 ->orderable(false),
             Column::computed('action')
