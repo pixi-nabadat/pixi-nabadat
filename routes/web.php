@@ -29,6 +29,7 @@ use App\Http\Controllers\FcmMessageController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\NabadatHistoryController;
 use App\Http\Controllers\PushNotificationController;
+use App\Http\Controllers\RateController;
 use App\Http\Controllers\ReservationHistoryController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -92,6 +93,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     });
     // End Settings
 
+    // start rates
+    Route::get('/rates', [RateController::class, 'index'])->name('rates.index');
+    Route::get('/rates/{id}', [RateController::class, 'show'])->name('rates.show');
+    Route::delete('/rates/{id}', [RateController::class, 'destroy'])->name('rates.destroy');
+    Route::post('rates/changeStatus', [RateController::class, 'status'])->name('rates.changeStatus');
+    // end rates
     //start reservations
     Route::resource('reservations', ReservationController::class);
     Route::post('reservation/history/{id}', [ReservationHistoryController::class, 'store'])->name('reservation-history.store');

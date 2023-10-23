@@ -347,5 +347,11 @@
     	'coupon_not_available'=>'الكود غير متاح',
     	'quantity_is_less_than'=>'الكميه اقل من',
     	'quantity_is_more_than_stock_available'=>'الكميه اكبر من المخزون المتاح',
+
+		'rates'=>'التقييمات',
+		'rate'=>'التقييم',
+		'ratable_name'=>'المقيم',
+		'comment'=>'التعليق',
+		'rate_number'=>'التقييم',
     ]
 ?>

@@ -345,6 +345,11 @@
     	'coupon_not_available'=>'Coupon not available',
     	'quantity_is_less_than'=>'Quantity is less than',
     	'quantity_is_more_than_stock_available'=>'Quantity is more than stock available',
-
+    	
+		'rates'=>'Rates',
+		'rate'=>'Rate',
+		'ratable_name'=>'Ratable name',
+		'comment'=>'Comment',
+		'rate_number'=>'Rate number',
     ]
 ?>
