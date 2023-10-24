@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Enum\CenterStatusEnum;
 use App\Models\Center;
 use App\Services\CenterService;
 use Carbon\Carbon;
@@ -22,6 +23,9 @@ class CentresDataTable extends DataTable
             })
             ->editColumn('address', function (Center $center) {
                 return $center->address;
+            })
+            ->editColumn('status', function (Center $center) {
+                return $center->center_status;
             })
             ->editColumn('phones', function (Center $center) {
                 return view('dashboard.centers._phones_column',compact('center'))->render();
@@ -107,6 +111,10 @@ class CentresDataTable extends DataTable
                 ->searchable(false)
                 ->orderable(false),
             Column::make('is_active')
+                ->title(trans('lang.is_active'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('status')
                 ->title(trans('lang.status'))
                 ->searchable(false)
                 ->orderable(false),

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\CenterStatusEnum;
 use App\Enum\ImageTypeEnum;
 use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
@@ -129,5 +130,21 @@ class Center extends Model
     {
         return $builder->whereHas('user',fn($query)=>$query->where('is_active',User::ACTIVE))
             ->whereNotNull('pulse_price')->whereNotNull('pulse_discount')->whereNotNull('app_discount');
+    }
+
+    public function getCenterStatusAttribute(){
+        switch($this->status){
+            case CenterStatusEnum::APPROVED:
+                return trans('lang.approved');
+                break;
+            case CenterStatusEnum::REJECTED:
+                return trans('lang.rejected');
+                break;
+            case CenterStatusEnum::UNDER_REVIEWING:
+                return trans('lang.under_reviewing');
+                break;
+            default:
+                return "-";
+        }
     }
 }
