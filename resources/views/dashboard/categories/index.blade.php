@@ -43,9 +43,11 @@
             <!-- Zero Configuration  Starts-->
             <div class="col-sm-12">
                 <div class="card">
+                    @can('create_category')
                     <div class="card-header">
                         <h5><a role="button" class="btn btn-primary " href={{ route('categories.create')}}><i class="fa fa-plus-circle"></i>{{trans('lang.add_category')}}</a></h5>
                     </div>
+                    @endcan
                     <div class="card-body">
                         <div class="table">
                             {!! $dataTable->table(['class'=>'table table-data table-striped table-bordered']) !!}

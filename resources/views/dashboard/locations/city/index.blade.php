@@ -50,9 +50,11 @@
 		</div>
 		<div class="col-sm-12">
 			<div class="card">
+				@can('create_city')
                 <div class="card-header">
 					<a role="button" class="btn btn-primary" href="{{ route('city.create')}}"><i class="fa fa-plus-circle"></i> {{ trans('lang.add_city')}}</a>
 				</div>
+				@endcan
 				<div class="card-body">
 					{!! $dataTable->table(['class'=>'table table-data table-striped table-bordered']) !!}
 				</div>
