@@ -16,9 +16,11 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="card">
+				@can('create_country')
                 <div class="card-header">
 					<a role="button" class="btn btn-primary" href="{{ route('country.create')}}"><i class="fa fa-plus-circle"></i> {{ trans('lang.add_country')}}</a>
 				</div>
+				@endcan
 				<div class="card-body">
 					{!! $dataTable->table(['width' => '100%','class'=>'table table-striped table-bordered']) !!}
 				</div>

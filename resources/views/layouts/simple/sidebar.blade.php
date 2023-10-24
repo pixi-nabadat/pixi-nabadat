@@ -33,7 +33,9 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/country' ? 'block;' : 'none;' }}">
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('country.index') ? 'active' : '' }}" href="{{route('country.index')}}">{{ trans('lang.countries') }}</a></li>
+                            @can('create_country')
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('country.create') ? 'active' : '' }}" href="{{route('country.create')}}">{{ trans('lang.create_country') }}</a></li>
+                            @endcan
                         </ul>
                         {{-- end country --}}
                         @endcan
@@ -45,7 +47,9 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('governorate.index') ? 'active' : '' }}" href="{{route('governorate.index')}}">{{ trans('lang.governorate') }}</a></li>
+                            @can('create_governorate')
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('governorate.create') ? 'active' : '' }}" href="{{route('governorate.create')}}">{{ trans('lang.create_governorate') }}</a></li>
+                            @endcan
                         </ul>
                         {{-- end governorate --}}
                         @endcan
@@ -57,7 +61,9 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('city.index') ? 'active' : '' }}" href="{{route('city.index')}}">{{ trans('lang.city') }}</a></li>
+                            @can('create_city')
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('city.create') ? 'active' : '' }}" href="{{route('city.create')}}">{{ trans('lang.create_city') }}</a></li>
+                            @endcan
                         </ul>
                         {{-- end city --}}
                         @endcan
@@ -69,7 +75,9 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/clients' ? 'block;' : 'none;' }}">
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('clients.index') ? 'active' : '' }}" href="{{route('clients.index')}}">{{ trans('lang.view') }}</a></li>
+                            @can('create_client')
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('clients.index') ? 'active' : '' }}" href="{{route('clients.create')}}">{{ trans('lang.create') }}</a></li>
+                            @endcan
                         </ul>
                         {{-- end clients --}}
                         @endcan
@@ -81,7 +89,9 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('centers.index') ? 'active' : '' }}" href="{{route('centers.index')}}">{{ trans('lang.center') }}</a></li>
+                            @can('create_center')
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('centers.create') ? 'active' : '' }}" href="{{route('centers.create')}}">{{ trans('lang.create_center') }}</a></li>
+                            @endcan
                         </ul>
                         {{-- end center --}}
                         @endcan
@@ -93,7 +103,9 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('doctors.index') ? 'active' : '' }}" href="{{route('doctors.index')}}">{{ trans('lang.view') }}</a></li>
+                            @can('create_doctor')
                             <li><a class="lan-4 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('doctors.index') ? 'active' : '' }}" href="{{route('doctors.create')}}">{{ trans('lang.create') }}</a></li>
+                            @endcan
                         </ul>
                         {{-- end doctors --}}
                         @endcan
@@ -152,7 +164,9 @@
 						</a>
 						<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
 							<li><a class="lan-5 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('devices.index') ? 'active' : '' }}" href="{{route('devices.index')}}">{{ trans('lang.view') }}</a></li>
-							<li><a class="lan-5 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('devices.create') ? 'active' : '' }}" href="{{route('devices.create')}}">{{ trans('lang.create') }}</a></li>
+							@can('create_device')
+                            <li><a class="lan-5 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('devices.create') ? 'active' : '' }}" href="{{route('devices.create')}}">{{ trans('lang.create') }}</a></li>
+                            @endcan
 						</ul>
 						{{-- end devices --}}
                         @endcan
@@ -164,7 +178,9 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('products.index') ? 'active' : '' }}" href="{{route('products.index')}}">{{ trans('lang.view') }}</a></li>
+                            @can('create_product')
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('products.create') ? 'active' : '' }}" href="{{route('products.create')}}">{{ trans('lang.create') }}</a></li>
+                            @endcan
                         </ul>
                         {{-- end product --}}
                         @endcan
@@ -176,7 +192,9 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('packages.index') ? 'active' : '' }}" href="{{route('packages.index')}}">{{ trans('lang.view') }}</a></li>
+                            @can('create_package')
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('packages.create') ? 'active' : '' }}" href="{{route('packages.create')}}">{{ trans('lang.create') }}</a></li>
+                            @endcan
                         </ul>
                         {{--end package --}}
                         @endcan
@@ -188,7 +206,9 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('employees.index') ? 'active' : '' }}" href="{{route('employees.index')}}">{{ trans('lang.view') }}</a></li>
+                            @can('create_employee')
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('employees.create') ? 'active' : '' }}" href="{{route('employees.create')}}">{{ trans('lang.create') }}</a></li>
+                            @endcan
                         </ul>
                         {{--end employee --}}
                         @endcan
@@ -200,7 +220,9 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('reservations.index') ? 'active' : '' }}" href="{{route('reservations.index')}}">{{ trans('lang.view') }}</a></li>
+                            @can('create_reservation')
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('reservations.create') ? 'active' : '' }}" href="{{route('reservations.create')}}">{{ trans('lang.create') }}</a></li>
+                            @endcan
                         </ul>
                         {{--end reservations --}}
                         @endcan
@@ -212,7 +234,9 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('user-packages.index') ? 'active' : '' }}" href="{{route('user-packages.index')}}">{{ trans('lang.view') }}</a></li>
+                            @can('create_user_package')
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('user-packages.create') ? 'active' : '' }}" href="{{route('user-packages.create')}}">{{ trans('lang.create') }}</a></li>
+                            @endcan
                         </ul>
                         {{--end User Packages --}}
                         @endcan
@@ -224,7 +248,9 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('cancelReasons.index') ? 'active' : '' }}" href="{{route('cancelReasons.index')}}">{{ trans('lang.view') }}</a></li>
+                            @can('create_cancel_reason')
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('cancelReasons.create') ? 'active' : '' }}" href="{{route('cancelReasons.create')}}">{{ trans('lang.create') }}</a></li>
+                            @endcan
                         </ul>
                         {{-- end Cancel Reason --}}
                         @endcan
