@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <form class="needs-validation datatables_parameters" novalidate="">
                             <div class="row g-3">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label class="form-label" for="validationCustom01">@lang('lang.status')</label>
                                     <select class="form-select" name="status" id="validationCustom01">
                                         <option value="" selected>Choose...</option>
@@ -29,14 +29,9 @@
                                         <option value="0">{{ trans('lang.not_active') }}</option>
                                     </select>
                                 </div>
-                                <div class="col-md-4">
-                                    <label class="form-label" for="validationCustom02">@lang('lang.phone')</label>
-                                    <input class="form-control" name="phone" id="validationCustom02" type="text" value="">
-                                    <div class="valid-feedback">Looks good!</div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label" for="validationCustom02">@lang('lang.age')</label>
-                                    <input class="form-control" name="age" id="validationCustom02" type="number" value="">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label" for="validationCustom02">@lang('lang.rate_number')</label>
+                                    <input class="form-control" name="rate_number" id="validationCustom02" type="number" value="">
                                     <div class="valid-feedback">Looks good!</div>
                                 </div>
                             </div>
