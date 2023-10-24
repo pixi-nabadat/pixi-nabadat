@@ -90,13 +90,19 @@
                             <p class="form-control" id="app_discount">{{ $center->app_discount }}</p>
                         </div>
 
+                        {{-- status --}}
+                        <div class="col-md-12 d-flex my-3">
+                            <label class="form-label col-3" for="status">{{ trans('lang.status') }}</label>
+                            <p class="form-control">{{ $center->center_status }}</p>
+                        </div>
+
                         {{-- phones  --}}
                         <div class="field_wrapper">
                             <div class="col-md-12 d-flex my-3">
                                 <label class="col-form-label col-3">{{ trans('lang.phones') }}</label>
                                 <div class="input-group">
                                     <select class="form-select form-control mb-3">
-                                    @foreach ($center->phones as $phone)
+                                    @foreach ($center->phones ?? [] as $phone)
                                         <option>{{ $phone }}</option>
                                     @endforeach
                                     </select>

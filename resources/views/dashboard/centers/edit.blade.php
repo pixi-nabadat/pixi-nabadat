@@ -170,6 +170,19 @@
                                     @enderror
                                 </div>
 
+                                {{-- status --}}
+                                <div class="col-md-12 mb-3">
+                                    <div class="col-form-label">{{ trans('lang.status') }}</div>
+                                    <select name="status" class="form-select form-control mb-3">
+                                        <option {{ $center->status == App\Enum\CenterStatusEnum::UNDER_REVIEWING ? "selected":"" }} value="{{ App\Enum\CenterStatusEnum::UNDER_REVIEWING }}">{{ trans('lang.under_reviewing') }}</option>
+                                        <option {{ $center->status == App\Enum\CenterStatusEnum::APPROVED ? "selected":"" }}  value="{{ App\Enum\CenterStatusEnum::APPROVED }}">{{ trans('lang.approved') }}</option>
+                                        <option {{ $center->status == App\Enum\CenterStatusEnum::REJECTED ? "selected":"" }}  value="{{ App\Enum\CenterStatusEnum::REJECTED }}">{{ trans('lang.rejected') }}</option>
+                                    </select>
+                                    @error('status')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
                                 {{-- phones  --}}
                                 <div class="field_wrapper">
                                     <div class="col-md-6 my-3">

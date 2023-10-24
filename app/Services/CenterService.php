@@ -101,6 +101,7 @@ class CenterService extends BaseService
             'lat' => Arr::get($data, 'lat'),
             'lng' => Arr::get($data, 'lng'),
             'google_map_url' => Arr::get($data, 'google_map_url'),
+            'status' => Arr::get($data, 'status'),
         ];
     }
 

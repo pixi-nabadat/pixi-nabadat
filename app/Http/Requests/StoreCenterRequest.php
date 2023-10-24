@@ -53,6 +53,7 @@ class StoreCenterRequest extends BaseRequest
             'pulse_discount'          => 'required|numeric',
             'app_discount'            => 'required|numeric',
             'google_map_url'          => 'string|nullable',
+            'status'                  => 'required|integer',
         ];
     }
 
