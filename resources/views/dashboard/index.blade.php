@@ -506,7 +506,7 @@
             segmentShowStroke: true,
             segmentStrokeColor: "#fff",
             segmentStrokeWidth: 2,
-            percentageInnerCutout: 50,
+            percentageInnerCutout: 0,
             animationSteps: 100,
             animationEasing: "easeOutBounce",
             animateRotate: true,
