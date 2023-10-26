@@ -43,7 +43,7 @@ class ProductController extends Controller
         try {
             $withRelation = [
                 'attachments',
-                'rates' =>fn($rates)=>$rates->where('status',ActivationStatusEnum::ACTIVE)->limit(8),
+                'rates' =>fn($rates)=>$rates->where('is_active',ActivationStatusEnum::ACTIVE)->limit(8),
                 'rates.user.attachments','defaultLogo'
             ];
             $product = $this->productService->find($id,$withRelation);
