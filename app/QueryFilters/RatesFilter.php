@@ -12,9 +12,9 @@ class RatesFilter extends QueryFilter
         parent::__construct($params);
     }
 
-    public function status($term)
+    public function is_active($term)
     {
-        return $this->builder->where('status',$term);
+        return $this->builder->where('is_active',$term);
     }
 
     public function rate_number($term)

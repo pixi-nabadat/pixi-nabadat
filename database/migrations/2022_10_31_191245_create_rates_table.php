@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->morphs('ratable');
-            $table->integer('status')->default(1);
+            $table->integer('is_active')->default(1);
             $table->string('comment')->nullable();
             $table->double('rate_number');
             $table->timestamps();

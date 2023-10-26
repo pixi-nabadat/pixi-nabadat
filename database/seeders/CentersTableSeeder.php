@@ -56,7 +56,7 @@ class CentersTableSeeder extends Seeder
         $user = User::where('type',User::CUSTOMERTYPE)->first();
         Rate::create([
             'user_id'=>$user->id,
-            'status'=>1,
+            'is_active'=>1,
             'comment'=>'test comment',
             'rate_number'=>3,
             'ratable_id'=>$center->id,

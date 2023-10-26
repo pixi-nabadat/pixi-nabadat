@@ -26,18 +26,18 @@ class RatesDatatable extends DataTable
                 return $rate->user->name;
             })
 
-            ->editcolumn('ratable_id', function (Rate $rate) {
+            ->editColumn('ratable_id', function (Rate $rate) {
                 return $rate->ratable_type == 'App\Models\CenterDevice' ? $rate->ratable->device->name:$rate->ratable->getTranslation('name', app()->getLocale());
             })
             
-            ->editcolumn('status', function (Rate $rate) {
+            ->editColumn('is_active', function (Rate $rate) {
                 return view('dashboard.components.switch-btn', ['model' => $rate, 'url' => route('rates.changeStatus')])->render();
             })
 
             ->addColumn('action', function (Rate $rate) {
                 return view('dashboard.rates.action', compact('rate'))->render();
             })
-            ->rawColumns(['action', 'status']);
+            ->rawColumns(['action', 'is_active']);
     }
 
     /**
@@ -78,7 +78,7 @@ class RatesDatatable extends DataTable
                 ->title(trans('lang.user')),
             Column::make('ratable_id')
                 ->title(trans('lang.ratable_name')),
-            Column::make('status')
+            Column::make('is_active')
                 ->title(trans('lang.status'))
                 ->searchable(false)
                 ->orderable(false),

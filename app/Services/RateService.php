@@ -56,7 +56,7 @@ class RateService extends BaseService
     public function status($id)
     {
         $rate = $this->find($id);
-        $rate->status = !$rate->status;
+        $rate->is_active = !$rate->is_active;
         return $rate->save();
 
     }//end of status
@@ -78,7 +78,7 @@ class RateService extends BaseService
                 'user_id'     => $data['user_id'],
                 'rate_number' => $data['rate_number'],
                 'comment'     => $data['comment'],
-                'status'   => 1
+                'is_active'   => 1
             ]);
         $this->refreshItemRate($model);
         return $model->load(['rates'=>fn($rates)=>$rates->orderBy('id','desc')]);

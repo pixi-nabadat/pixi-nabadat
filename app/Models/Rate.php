@@ -16,7 +16,7 @@ class Rate extends Model
     const RATABLE_TAYPES = [
         self::PRODUCT,self::CENTER_DEVICE,self::CENTER
     ];
-    protected $fillable = ['user_id','status','comment','rate_number','ratable_id','ratable_type'];
+    protected $fillable = ['user_id','is_active','comment','rate_number','ratable_id','ratable_type'];
 
     public function ratable(): \Illuminate\Database\Eloquent\Relations\MorphTo
     {
