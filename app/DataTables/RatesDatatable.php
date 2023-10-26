@@ -2,9 +2,6 @@
 
 namespace App\DataTables;
 
-use App\Models\Center;
-use App\Models\CenterDevice;
-use App\Models\Product;
 use App\Models\Rate;
 use App\Models\User;
 use App\Services\RateService;
@@ -83,8 +80,8 @@ class RatesDatatable extends DataTable
                 ->title(trans('lang.ratable_name')),
             Column::make('status')
                 ->title(trans('lang.status'))
-                ->exportable(false)
-                ->printable(false),
+                ->searchable(false)
+                ->orderable(false),
             Column::make('comment')
                 ->title(trans('lang.comment')),
             Column::make('rate_number')
