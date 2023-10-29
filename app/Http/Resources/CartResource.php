@@ -17,7 +17,7 @@ class CartResource extends JsonResource
         return [
             'id' => $this->id,
             'items_count' => (double)$this->items_count,
-            'saved' => $this->when($this->saved_amount > 0, $this->saved_amount),
+            'saved' => $this->when($this->saved_amount > 0, $this->saved_amount, 0),
             'discount' => $this->when((double)$this->discount > 0, (double)$this->discount),
             'sub_total' => (double)$this->sub_total,
             'net_total' => (double)$this->net_total, //before add shipping cost and decrease discount percentage
