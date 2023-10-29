@@ -114,7 +114,7 @@ class CartService extends BaseService
 
         $cart = $this->getCartByUser($data['temp_user_id']);
         if ($cart->grand_total < $coupon->min_buy)
-            throw new NotFoundException(trans('lang.you_should_exceed_minimum_limitation_to_use_coupon : ') . $coupon->min_buy);
+            throw new NotFoundException(trans('lang.you_should_exceed_minimum_limitation_to_use_coupon').": " . $coupon->min_buy);
         $cart->coupon_id = $coupon->id;
         $cart->coupon_discount = $coupon->discount;
         $cart->save();

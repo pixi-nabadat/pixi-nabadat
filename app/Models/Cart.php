@@ -37,57 +37,6 @@ class Cart extends Model
         return $this->belongsTo(Address::class, 'address_id');
     }
 
-    public function getGrandTotalAfterDiscountAttribute()
-    {
-        $coupon_usage_count = 0 ;
-        $value = $this->grand_total;
-        $user = auth('sanctum')->check() ? auth()->user() : null ;
-        if (!$this->relationLoaded('coupon')||empty($this->coupon))
-            return $value;
-        if ($user && isset($this->coupon)){
-            $coupon_usage = $user->coupons()->where('coupon_id',$this->coupon->id)->first();
-            $coupon_usage_count = $coupon_usage->number_of_usage ?? 0 ;
-        }
-
-        if (
-            Carbon::now(config('app.africa_timezone'))->gte(optional($this->coupon)->start_date) &&
-            Carbon::now(config('app.africa_timezone'))->lte(optional($this->coupon)->end_date) &&
-            optional($this->coupon)->coupon_for == Coupon::STORECOUPON && optional($this->coupon)->min_buy < $value &&
-            $this->coupon->allowed_usage >= $coupon_usage_count
-        ) {
-            if (optional($this->coupon)->discount_type == Coupon::DISCOUNT_PERCENTAGE)
-                $value = $value - ($value * (optional($this->coupon)->discount / 100));
-            if (optional($this->coupon)->discount_type == Coupon::DISCOUNT_FLAT)
-                $value = $value - optional($this->coupon)->discount;
-        }
-        return $value;
-
-    }
-
-    public function getDiscountAttribute(): int
-    {
-        $discount = 0;
-        if (!$this->relationLoaded('coupon'))
-            return $discount;
-        $checkIfCouponValied = $this->checkIfCouponAvaliable();
-        if ($checkIfCouponValied)
-            $discount = $this->coupon->discount;
-        return $discount;
-
-    }
-
-    private function checkIfCouponAvaliable()
-    {
-        if (
-            Carbon::now(config('app.africa_timezone'))->gte(optional($this->coupon)->start_date)
-            && Carbon::now(config('app.africa_timezone'))->lte(optional($this->coupon)->end_date)
-            && optional($this->coupon)->coupon_for == Coupon::STORECOUPON
-            && optional($this->coupon)->min_buy < $this->grand_total)
-            return true;
-        else
-            return false;
-    }
-
     public function getSavedAmountAttribute(): float|int
     {
         return $this->sub_total - ($this->grand_total - $this->shipping_cost);
