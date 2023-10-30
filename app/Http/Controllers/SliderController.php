@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use App\DataTables\SlidersDataTable;
 use App\Http\Requests\SliderRequest;
 use App\Http\Requests\SliderRequest as SliderUpdateRequest;
+use App\Models\Slider;
 use App\Services\CenterService;
+use App\Services\ProductService;
 use App\Services\SliderService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SliderController extends Controller
 {
-    public function __construct(private SliderService $sliderService, private CenterService $centerService)
+    public function __construct(private SliderService $sliderService, private CenterService $centerService, private ProductService $productService)
     {
 
     }
@@ -23,7 +25,7 @@ class SliderController extends Controller
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
         });
-        $withRelations = ['center'];
+        $withRelations = [];
         return $dataTable->with(['filters' => $filters, 'withRelations' => $withRelations])->render('dashboard.sliders.index');
 
     }//end of index
@@ -32,9 +34,14 @@ class SliderController extends Controller
     {
         try {
             $withRelation = ['attachments'];
+            $filters = ['is_active'=>1];
             $slider = $this->sliderService->find(id: $id,withRelation: $withRelation);
-            $centers = $this->centerService->getAll();
-            return view('dashboard.sliders.edit', compact('slider', 'centers'));
+            if($slider->type == Slider::CENTER)
+                $sliderables = $this->centerService->getAll(where_condition: $filters);
+            else
+                $sliderables = $this->productService->getAll(where_condition: $filters);
+
+            return view('dashboard.sliders.edit', compact('slider', 'sliderables'));
         }catch (\Exception $exception)
         {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => $exception->getMessage()];
@@ -44,8 +51,10 @@ class SliderController extends Controller
 
     public function create()
     {
-        $centers = $this->centerService->getAll();
-        return view('dashboard.sliders.create', compact('centers'));
+        $filters = ['is_active'=> 1];
+        $centers = $this->centerService->getAll(where_condition:$filters);
+        $products = $this->productService->getAll(where_condition:$filters);
+        return view('dashboard.sliders.create', compact('centers', 'products'));
     }//end of create
 
     public function store(SliderRequest $request)

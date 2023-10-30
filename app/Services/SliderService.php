@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Enum\ImageTypeEnum;
 use App\Exceptions\NotFoundException;
+use App\Models\Center;
+use App\Models\Product;
 use App\Models\Slider;
 use App\QueryFilters\SlidersFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -32,7 +34,12 @@ class SliderService extends BaseService
     public function store($data)
     {
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-        $slider = Slider::create($data);
+        $model = match ((int)$data['type']) {
+            Slider::CENTER  => Center::find($data['sliderable_id']),
+            Slider::PRODUCT => Product::find($data['sliderable_id']),
+        };
+        if (isset($model))
+            $slider = $model->sliders()->create($data);
         if (!$slider)
             return false ;
         if (isset($data['logo']))

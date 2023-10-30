@@ -39,24 +39,20 @@
                                 @enderror
                             </div>
                             
-                            {{--centers  --}}
+                            {{--sliderables  --}}
                             <div class="col-md-12">
+                                @if ($slider->type == App\Models\Slider::CENTER)
                                 <div class="col-form-label col-3">{{ __('lang.center') }}</div>
-                                <select id="center_id" name="center_id" class="js-example-basic-single col-sm-12">
-                                    @foreach ($centers as $center)
-                                        <option value="{{ $center->id }}" {{ $center->id == $slider->center_id ? "selected":"" }}>{{ $center->user->name }}</option>
+                                @else
+                                <div class="col-form-label col-3">{{ __('lang.product') }}</div>
+                                @endif
+                                <select name="sliderable_id" class="js-example-basic-single col-sm-12">
+                                    @foreach ($sliderables as $sliderable)
+                                        <option value="{{ $sliderable->id }}" {{ $sliderable->id == $slider->sliderable_id ? "selected":"" }}>{{ $sliderable->getTranslation('name', app()->getLocale()) }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            {{--  duration  --}}
-{{--                            <div class="col-md-12">--}}
-{{--                                <label class="form-label mt-3" for="duration">@lang('lang.duration')</label>--}}
-{{--                                <input type="time" name="duration" step="0.01"--}}
-{{--                                    class="form-control @error('duration') is-invalid @enderror" value={{ $slider->duration }}>--}}
-{{--                                @error('duration')--}}
-{{--                                    <div class="invalid-feedback text-danger">{{ $message }}</div>--}}
-{{--                                @enderror--}}
-{{--                            </div>--}}
+
                             {{--  start data  --}}
                             <div class="col-md-12">
                                 <label class="form-label mt-3" for="start_date">@lang('lang.start_date')</label>

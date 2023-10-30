@@ -27,7 +27,7 @@ class SliderController extends Controller
             $filters['is_active'] = 1;
             $filters['start_date'] = Carbon::now(config('app.africa_timezone'));
             $filters['end_date'] = Carbon::now(config('app.africa_timezone'));
-            $withRelation = ['center','attachments'];
+            $withRelation = ['sliderable','attachments'];
             $result = $this->sliderService->listing($filters,$withRelation);
             $sliders =  SlidersResource::collection($result);
             return apiResponse(data: $sliders, message: trans('lang.success_operation'));
