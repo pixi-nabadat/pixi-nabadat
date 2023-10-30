@@ -104,7 +104,7 @@ class PermissionsTableSeeder extends Seeder
 
             //start doctors permissions
             'doctors'=>[
-                'create_doc,tor',
+                'create_doctor',
                 'edit_doctor',
                 'delete_doctor',
                 'view_doctor'
