@@ -351,5 +351,7 @@
 		'ratable_name'=>'Ratable name',
 		'comment'=>'Comment',
 		'rate_number'=>'Rate number',
+		'add_center_slider'=>'Add center slider',
+		'add_product_slider'=>'Add product slider',
     ]
 ?>

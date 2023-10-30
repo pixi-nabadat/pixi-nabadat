@@ -353,5 +353,7 @@
 		'ratable_name'=>'المقيم',
 		'comment'=>'التعليق',
 		'rate_number'=>'التقييم',
+		'add_center_slider'=>'اضافة اسليدر لسنتر',
+		'add_product_slider'=>'اضافة اسليدر لمنتج',
     ]
 ?>
