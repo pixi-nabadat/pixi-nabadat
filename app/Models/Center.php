@@ -43,6 +43,10 @@ class Center extends Model
 
     public $translatable = ['description','address','name'];
 
+    public function sliders(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Slider::class, 'sliderable');
+    }
 
     public function location(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

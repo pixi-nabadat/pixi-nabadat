@@ -19,8 +19,14 @@ class SlidersDataTable extends DataTable
             ->addColumn('action', function (Slider $slider) {
                 return view('dashboard.sliders.action', compact('slider'))->render();
             })
-            ->editColumn('center_id', function (Slider $slider) {
-                return $slider->center->user->name;
+            ->editColumn('sliderable_id', function (Slider $slider) {
+                return $slider->sliderable->getTranslation('name', app()->getLocale());
+            })
+            ->editColumn('type', function (Slider $slider) {
+                return match((int)$slider->type){
+                    Slider::CENTER  => trans('lang.center'),
+                    Slider::PRODUCT => trans('lang.product')
+                };
             })
             ->addColumn('is_active', function (Slider $slider) {
                 return view('dashboard.components.switch-btn', ['model' => $slider, 'url' => route('sliders.status')])->render();
@@ -51,8 +57,8 @@ class SlidersDataTable extends DataTable
             Column::make('order')
                 ->title(trans('lang.order'))
                 ->orderable(true),
-            Column::make('center_id')
-                ->title(trans('lang.center_name'))
+            Column::make('sliderable_id')
+                ->title(trans('lang.sliderable_name'))
                 ->orderable(true),
             Column::make('start_date')
                 ->title(trans('lang.start_date'))
@@ -64,6 +70,10 @@ class SlidersDataTable extends DataTable
                 ->searchable(false),
             Column::make('is_active')
                 ->title(trans('lang.status'))
+                ->orderable(false)
+                ->searchable(false),
+            Column::make('type')
+                ->title(trans('lang.type'))
                 ->orderable(false)
                 ->searchable(false),
             Column::computed('action')

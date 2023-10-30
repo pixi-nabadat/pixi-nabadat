@@ -9,18 +9,22 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Slider extends Model
 {
     use HasFactory, Filterable, HasAttachment;
 
-    protected $fillable = ['order', 'center_id', 'start_date', 'end_date', 'is_active',];
+    const CENTER  = 1 ;
+    const PRODUCT = 2 ;
+    const SLIDERABLE_TAYPES = [
+        self::CENTER,self::PRODUCT
+    ];
 
+    protected $fillable = ['order', 'sliderable_type', 'sliderable_id', 'start_date', 'end_date', 'is_active', 'type'];
 
-    public function center(): BelongsTo
+    public function sliderable(): \Illuminate\Database\Eloquent\Relations\MorphTo
     {
-        return $this->belongsTo(Center::class);
+        return $this->morphTo();
     }
 
     public function attachments(): \Illuminate\Database\Eloquent\Relations\MorphOne

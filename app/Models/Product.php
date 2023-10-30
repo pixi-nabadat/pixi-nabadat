@@ -66,6 +66,11 @@ class Product extends Model
         return $this->morphMany(Rate::class, 'ratable');
     }
 
+    public function sliders(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Slider::class, 'sliderable');
+    }
+
     public function getTypeAttribute($value)
     {
         return $value == 1 ? trans('lang.center') : trans('lang.user');

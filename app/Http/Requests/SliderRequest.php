@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-
+use App\Models\Slider;
 use Carbon\Carbon;
 
 class SliderRequest extends BaseRequest
@@ -26,11 +26,12 @@ class SliderRequest extends BaseRequest
     {
         return [
             'order'      => 'required|integer',
-            'center_id'  => 'required|integer|exists:centers,id',
+            'sliderable_id'   => 'required|integer',
             'start_date' => 'required|date',
             'end_date'   => 'required|date|after_or_equal:start_date',
             'logo'       => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'is_active'  => 'nullable|string',
+            'type'       => 'nullable|integer|in:'.collect(Slider::SLIDERABLE_TAYPES)->implode(','),
         ];
     }
 

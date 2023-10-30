@@ -23,32 +23,21 @@ class SliderTableSeeder extends Seeder
      */
     public function run()
     {
-          $center = Center::first();
-          $slider1 =  Slider::create([
-               'center_id'=>$center->id,
-               'order'=>'1',
-               'start_date'=>Carbon::now()->format('Y-m-d'),
-               'end_date'=>Carbon::now()->addDays(5)->format('Y-m-d'),
-               'duration'=>20,
-               'is_active'=>true,
-           ]);
-
-        $slider2 =  Slider::create([
-            'center_id'=>$center->id,
+        $center = Center::first();
+        $slider1 = $center->sliders()->create([
             'order'=>'1',
             'start_date'=>Carbon::now()->format('Y-m-d'),
             'end_date'=>Carbon::now()->addDays(5)->format('Y-m-d'),
-            'duration'=>20,
             'is_active'=>true,
+            'type'=>Slider::CENTER,
         ]);
-
-        $slider3 =  Slider::create([
-            'center_id'=>$center->id,
+        $product = Product::first();
+        $slider2 = $product->sliders()->create([
             'order'=>'1',
             'start_date'=>Carbon::now()->format('Y-m-d'),
             'end_date'=>Carbon::now()->addDays(5)->format('Y-m-d'),
-            'duration'=>20,
             'is_active'=>true,
+            'type'=>Slider::PRODUCT,
         ]);
 
     }

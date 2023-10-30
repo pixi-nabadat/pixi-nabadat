@@ -3,6 +3,7 @@
 namespace App\QueryFilters;
 
 use App\Abstracts\QueryFilter;
+use App\Models\Slider;
 
 class SlidersFilter extends QueryFilter
 {
@@ -15,6 +16,11 @@ class SlidersFilter extends QueryFilter
     public function is_active($term)
     {
         return $this->builder->where('is_active', $term);
+    }
+
+    public function type($term)
+    {
+        return $this->builder->where('type', $term);
     }
 
     public function start_date($term)
@@ -44,7 +50,12 @@ class SlidersFilter extends QueryFilter
 
     public function center_id($term)
     {
-        return $this->builder->where('center_id', $term);
+        return $this->builder->where('type', Slider::CENTER)->where('sliderable_id', $term);
+    }
+
+    public function product_id($term)
+    {
+        return $this->builder->where('type', Slider::PRODUCT)->where('sliderable_id', $term);
     }
 
     public function order($term)
