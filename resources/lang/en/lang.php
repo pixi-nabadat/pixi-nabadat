@@ -353,5 +353,7 @@
 		'rate_number'=>'Rate number',
 		'add_center_slider'=>'Add center slider',
 		'add_product_slider'=>'Add product slider',
+		'you_exceed_allowed_usage_for_this_coupon' => 'You exceed allowed usage for this coupon',
+		'you_should_exceed_minimum_limitation_to_use_coupon' => 'You should exceed minimum limitation to use coupon',
     ]
 ?>
