@@ -22,5 +22,8 @@ class Location extends Model
 
     public $translatable = ['title'];
 
-
+    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Location::class, 'parent_id');
+    }
 }

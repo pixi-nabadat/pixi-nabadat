@@ -255,19 +255,29 @@
                                 <h6 class="mb-0 h6">@lang('lang.locations')</h6>
                             </div>
                             <div class="card-body row">
-                                <div class="col-md-12 mb-3">
-                                    <div class="col-form-label">{{ trans('lang.choose_governorates') }}</div>
-                                    <select id="change_location" name="location_id"
-                                        class="form-select form-control mb-3 @error('location_id') is-invalid @enderror">
-                                        <option selected>{{ trans('lang.choose_governorates') }}</option>
-                                        @foreach ($governorates as $governorate)
-                                            <option value="{{ $governorate->id }}" {{$governorate->id == $selected_governorate ? 'selected':''}}>{{ $governorate->title }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('location_id')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-12 mb-3">
+                                         <div class="col-form-label">{{ trans('lang.choose_governorates') }}</div>
+                                         <select id="change_location" data-filling-name="location_id"
+                                             class="form-select form-control mb-3 @error('parent_id') is-invalid @enderror">
+                                             <option selected>{{ trans('lang.choose_governorates') }}</option>
+                                             @foreach ($governorates as $governorate)
+                                                 <option {{ (($center->user->location->parent_id ?? null) == $governorate->id) ? "selected":"" }} value="{{ $governorate->id }}">{{ $governorate->getTranslation('title', app()->getLocale()) }}</option>
+                                             @endforeach
+                                         </select>
+                                     </div>
+                                     <div class="col-md-12 mb-3">
+                                         <div class="col-form-label">{{ trans('lang.city') }}</div>
+                                         <select name="location_id"
+                                             class="form-select form-control mb-3 @error('location_id') is-invalid @enderror"
+                                             id="city">
+                                             <option value="{{ $center->user->location_id }}" selected>{{ $center->user->location->getTranslation('title', app()->getLocale()) }}</option>
+                                            </select>
+                                         @error('location_id')
+                                             <div class="invalid-feedback">{{ $message }}</div>
+                                         @enderror
+                                     </div>
+                                 </div>
                             </div>
                         </div>
 

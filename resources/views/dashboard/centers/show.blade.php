@@ -152,7 +152,11 @@
                     <div class="card-body row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label col-3" for="governorate">{{ trans('lang.governorate') }}</label>
-                            <p class="form-control" id="governorate">{{ $center->user->location->title }}</p>
+                            <p class="form-control" id="governorate">{{ $center->user->location->parent->getTranslation('title', app()->getLocale()) }}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label col-3" for="city">{{ trans('lang.city') }}</label>
+                            <p class="form-control" id="city">{{ $center->user->location->getTranslation('title', app()->getLocale()) }}</p>
                         </div>
                     </div>
                 </div>
