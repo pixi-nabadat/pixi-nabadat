@@ -48,10 +48,10 @@ class Center extends Model
         return $this->morphMany(Slider::class, 'sliderable');
     }
 
-    public function location(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Location::class);
-    }
+    // public function location(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    // {
+    //     return $this->belongsTo(Location::class);
+    // }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\HasOne
     {

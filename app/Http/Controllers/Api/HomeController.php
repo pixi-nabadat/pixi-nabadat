@@ -38,10 +38,10 @@ class HomeController extends Controller
 
     public function index(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        $location_id = request()->input('location_id', null);
+        $governorate_id = request()->input('governorate_id', null);
         $centers_filter = ['is_active' => 1, 'featured' => 1];
-        if (isset($location_id))
-            $centers_filter['location_id'] =  $location_id;
+        if (isset($governorate_id))
+            $centers_filter['governorate_id'] =  $governorate_id;
 
 //        $data = Cache::remember('home-api', 60 * 60 * 24, function () use ($centers_filter) {
             $data ['featured_products'] = ProductsResource::collection($this->productService->getAll(where_condition: ['is_active' => 1, 'featured' => 1], withRelation: ['attachments','defaultLogo']));

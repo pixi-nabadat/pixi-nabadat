@@ -57,6 +57,16 @@ class CentersFilter extends QueryFilter
             });
     }
 
+    public function governorate_id($term)
+    {
+        if (isset($term))
+            return $this->builder->whereHas('user', function ($query) use ($term) {
+                $query->whereHas('location', function ($query) use ($term) {
+                    $query->where('parent_id', $term);
+                });
+            });
+    }
+
     public function appointment_id($term)
     {
         return $this->builder->whereHas('appointments',fn($query)=>$query->where('day_of_week',$term));
