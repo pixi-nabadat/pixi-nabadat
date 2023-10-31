@@ -138,6 +138,8 @@ class CenterService extends BaseService
         $userData = $this->prepareUserData($data);
         if (!isset($userData['password']))
             $userData['password'] = $center->user->password;
+        else
+            $userData['password'] = bcrypt($userData['password']);
         $center->user()->update($userData);
         return true;
     }
