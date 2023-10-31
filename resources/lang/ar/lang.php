@@ -355,6 +355,7 @@
 		'rate_number'=>'التقييم',
 		'add_center_slider'=>'اضافة اسليدر لسنتر',
 		'add_product_slider'=>'اضافة اسليدر لمنتج',
+		'sliderable_name'=>'اسم الاسليدر',
 		'you_exceed_allowed_usage_for_this_coupon' => 'لقد تخطيت الحد المسوح به لإستخدام الكوبون',
 		'you_should_exceed_minimum_limitation_to_use_coupon' => 'يجب تخطى الحد الادنى لاستخدام الكوبون',
     ]
