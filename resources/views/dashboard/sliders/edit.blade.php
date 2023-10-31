@@ -43,14 +43,19 @@
                             <div class="col-md-12">
                                 @if ($slider->type == App\Models\Slider::CENTER)
                                 <div class="col-form-label col-3">{{ __('lang.center') }}</div>
+                                <select name="sliderable_id" class="js-example-basic-single col-sm-12">
+                                    @foreach ($sliderables as $sliderable)
+                                        <option value="{{ $sliderable->id }}" {{ $sliderable->id == $slider->sliderable_id ? "selected":"" }}>{{ $sliderable->user->name }}</option>
+                                    @endforeach
+                                </select>
                                 @else
                                 <div class="col-form-label col-3">{{ __('lang.product') }}</div>
-                                @endif
                                 <select name="sliderable_id" class="js-example-basic-single col-sm-12">
                                     @foreach ($sliderables as $sliderable)
                                         <option value="{{ $sliderable->id }}" {{ $sliderable->id == $slider->sliderable_id ? "selected":"" }}>{{ $sliderable->getTranslation('name', app()->getLocale()) }}</option>
                                     @endforeach
                                 </select>
+                                @endif
                             </div>
 
                             {{--  start data  --}}
