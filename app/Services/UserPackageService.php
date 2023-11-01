@@ -222,7 +222,7 @@ class UserPackageService extends BaseService
         //user after paid for package earn point
         if ($userPackage->payment_status == PaymentStatusEnum::PAID) {
             $userPackage->load(['center','user']);
-            $amount_after_discount = $userPackage->price - ($userPackage->price * ($userPackage->center->app_discount / 100));
+            $amount_after_discount = $userPackage->price - ($userPackage->price * ($userPackage->discount_percentage / 100));
 //          set user points after pay the offer
             User::setPoints($userPackage->user, amount: $amount_after_discount);
 //          set center points after pay the offer
