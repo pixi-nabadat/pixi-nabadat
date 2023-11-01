@@ -35,6 +35,11 @@ class ReservationHistoryStoreRequest extends BaseRequest
         ];
     }
 
+    public function prepareForValidation()
+    {
+        $this->merge(['added_by'=>auth('sanctum')->user()->id]);
+    }
+
     public function messages()
     {
         return[

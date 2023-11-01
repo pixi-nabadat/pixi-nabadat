@@ -37,6 +37,6 @@ class ReservationAttendRequest extends BaseRequest
      */
     public function prepareForValidation()
     {
-        return $this->merge(['status'=>Reservation::ATTEND]);
+        return $this->merge(['status'=>Reservation::ATTEND, 'added_by'=>auth('sanctum')->user()->id]);
     }
 }

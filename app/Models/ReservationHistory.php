@@ -16,11 +16,17 @@ class ReservationHistory extends Model
         'status',
         'cancel_reason_id',
         'comment',
+        'added_by',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function added_by()
+    {
+        return $this->belongsTo(User::class, 'added_by');
     }
 
     public function reservation()

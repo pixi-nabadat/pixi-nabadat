@@ -42,9 +42,10 @@ class ReservationHistoryService extends BaseService
             'status' => $status,
             'cancel_reason_id' => $reservation_data['cancel_reason_id'] ?? null,
             'comment' => $reservation_data['comment'] ?? null,
+            'added_by' => $reservation_data['added_by'] ?? null,
         ]);
         if ($status == Reservation::CONFIRMED)
-            $reservation->update(Arr::except($reservation_data,'status'));
+            $reservation->update(Arr::except($reservation_data,['status', 'added_by']));
         $reservation->refresh();
         return true;
     }
