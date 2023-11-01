@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Reservation;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -29,7 +30,7 @@ class ReservationHistoryStoreRequest extends BaseRequest
             'status' => ['required','integer',Rule::in(Reservation::CONFIRMED,Reservation::APPROVED,Reservation::ATTEND,Reservation::COMPLETED,Reservation::CANCELED)],
             'period'=>'required_if:status,==,'.Reservation::CONFIRMED,
             'check_date'=>'required_if:status,==,'.Reservation::CONFIRMED,
-            'cancel_reason_id'=>[Rule::requiredIf($this->status == Reservation::CANCELED),Rule::exists('cancel_reasons','id')],
+            'cancel_reason_id'=>[Rule::requiredIf(auth('sanctum')->user()->center_id != null && $this->status == Reservation::CANCELED),Rule::exists('cancel_reasons','id')],
             'comment'=>'string|nullable'
         ];
     }

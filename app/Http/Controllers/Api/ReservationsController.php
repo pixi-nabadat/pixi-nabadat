@@ -61,7 +61,7 @@ class ReservationsController extends Controller
     public function find(int $id)
     {
         try {
-            $withRelations = ['latestStatus', 'nabadatHistory', 'user', 'center'];
+            $withRelations = ['latestStatus', 'nabadatHistory', 'user.attachments', 'center.defaultLogo'];
             $reservation = $this->reservationService->findById($id, $withRelations);
             if ($reservation)
                 return apiResponse(new ReservationsResource($reservation), trans('lang.operation_success'));
@@ -84,7 +84,7 @@ class ReservationsController extends Controller
     public function findByQrCode(string $id)
     {
         try {
-            $withRelations = ['latestStatus', 'nabadatHistory', 'user', 'center'];
+            $withRelations = ['latestStatus', 'nabadatHistory', 'user.attachments', 'center.defaultLogo'];
             $reservation = $this->reservationService->findByQrCode($id, $withRelations);
             if ($reservation)
                 return apiResponse(new ReservationsResource($reservation), trans('lang.operation_success'));

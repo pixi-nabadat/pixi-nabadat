@@ -14,6 +14,8 @@ class ReservationHistory extends Model
     protected $fillable = [
         'reservation_id',
         'status',
+        'cancel_reason_id',
+        'comment',
     ];
 
     public function user()
