@@ -56,7 +56,7 @@ class Package extends Model
 
     public function getPriceAfterDiscountAttribute()
     {
-        return $this->price - ($this->price * ($this->center->app_discount / 100));
+        return $this->price - ($this->price * ($this->discount_percentage / 100));
     }
 
     public function scopeActive(Builder $builder): void

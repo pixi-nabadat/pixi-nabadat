@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Enum\UserPackageStatusEnum;
 use App\Models\UserPackage;
 use App\Services\UserPackageService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
@@ -21,6 +22,15 @@ class UserPackagesDatatable extends DataTable
             })
             ->editColumn('user_id', function (UserPackage $userPackage) {
                 return $userPackage->user->name;
+            })
+            ->editColumn('status', function (UserPackage $userPackage) {
+                return match((int)$userPackage->status){
+                    UserPackageStatusEnum::ONGOING => trans('lang.ongoing'),
+                    UserPackageStatusEnum::READYFORUSE => trans('lang.ready_for_use'),
+                    UserPackageStatusEnum::PENDING => trans('lang.pending'),
+                    UserPackageStatusEnum::COMPLETED => trans('lang.completed'),
+
+                };
             })
             ->addColumn('center_id', function (UserPackage $userPackage) {
                 return $userPackage->center->name;

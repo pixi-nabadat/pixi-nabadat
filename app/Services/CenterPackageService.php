@@ -60,7 +60,7 @@ class CenterPackageService extends BaseService
     {
         $package = $this->model->query()->with($withRelation)->find($id);
         if (!$package)
-            throw new NotFoundException(trans('lang.package_not_fount'));
+            throw new NotFoundException(trans('lang.package_not_found'));
         return $package;
     } //end of delete
 
