@@ -31,11 +31,11 @@ class HomeController extends Controller
         ->orderBy('user_packages_count', 'desc')
         ->latest()->take(3)->get();
 
-        $cancelCenterCount = ReservationHistory::query()->where('status', Reservation::CANCELED)->whereNotNull(['cancel_reason_id','added_by'])->whereHas('added_by', function ($query) {
+        $cancelCenterCount = ReservationHistory::query()->where('status', Reservation::CANCELED)->whereNotNull(['added_by'])->whereHas('added_by', function ($query) {
             $query->whereNotNull('center_id');
         })->count();
 
-        $cancelClientCount = ReservationHistory::query()->where('status', Reservation::CANCELED)->whereNotNull(['cancel_reason_id','added_by'])->whereHas('added_by', function ($query) {
+        $cancelClientCount = ReservationHistory::query()->where('status', Reservation::CANCELED)->whereNotNull(['added_by'])->whereHas('added_by', function ($query) {
             $query->whereNull('center_id');
         })->count();
         $centerDues = Invoice::sum('total_center_dues');
