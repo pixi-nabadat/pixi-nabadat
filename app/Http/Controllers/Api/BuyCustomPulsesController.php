@@ -38,7 +38,7 @@ class BuyCustomPulsesController extends Controller
             $user = $user->load('defaultAddress');
             $userAddress = $user->defaultAddress->first();
             if (!isset($userAddress))
-                throw new \Exception(trans('user_desnot_have_default_address'));
+                throw new \Exception(trans('lang.user_desnot_have_default_address'));
             //create user package log
             $center = $this->centerService->find($request->center_id);
             $numNabadat = $request->num_nabadat;

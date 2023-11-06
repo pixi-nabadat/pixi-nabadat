@@ -21,6 +21,7 @@ class UserPackagesResource extends JsonResource
             'num_nabadat'         => $this->num_nabadat,
             'price'               => $this->price,
             'discount_percentage' => $this->discount_percentage,
+            'price_after_discount' =>$this->price - ($this->price *($this->discount_percentage/100)),
             'payment_method'      => $this->payment_method,
             'payment_status'      => $this->payment_status,
             'usage_status'        => $this->usage_status,

@@ -92,7 +92,7 @@ class BuyOfferController extends Controller
 
                 if ($result) {
                     $status_code = 200;
-                    $message = trans('lang.operation_success_please_paid_to-add_pulses_to_your-wallet');
+                    $message = trans('lang.operation_success_please_paid_to_add_pulses_to_your_wallet');
                 }
             }
             if ($status_code == 200)
