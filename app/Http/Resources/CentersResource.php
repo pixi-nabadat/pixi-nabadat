@@ -18,7 +18,7 @@ class CentersResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $this->user->name,
             'description' => $this->description,
             'address' => $this->address,
             'logo' => $this->image_path,
