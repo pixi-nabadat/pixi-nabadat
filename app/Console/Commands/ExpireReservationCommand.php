@@ -32,7 +32,9 @@ class ExpireReservationCommand extends Command
     {
         $currentDate = Carbon::now()->setTimezone('Africa/Cairo');
 
-        $reservations = Reservation::query()->whereHas('latestStatus',fn($query)=>$query->where('status','!=',Reservation::CONFIRMED))->whereDate('check_date','<',$currentDate)->get();
+        $reservations = Reservation::query()->whereDate('check_date','<',$currentDate)->whereHas('latestStatus', function ($query) {
+            $query->whereNotIn('status', [Reservation::COMPLETED, Reservation::Expired, Reservation::CANCELED]);
+        })->get();
         foreach($reservations as $reservation)
         {
             $reservationCheckDate = Carbon::parse($reservation->check_date);
