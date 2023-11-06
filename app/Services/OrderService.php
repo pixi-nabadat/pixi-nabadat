@@ -30,7 +30,7 @@ class OrderService extends BaseService
 
     public function queryGet(array $where_condition = [], array $withRelations = []): Builder
     {
-        $orders = Order::activeOrder()->with($withRelations);
+        $orders = Order::activeOrder()->with($withRelations)->orderBy('created_at', 'desc');
         return $orders->filter(new OrdersFilter($where_condition));
     }
 
