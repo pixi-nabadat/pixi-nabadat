@@ -139,7 +139,7 @@ class CartService extends BaseService
             'user_id'=>$data['user_id'],
             'shipping_cost'=> $address->city->shipping_cost,
         ];
-        $oldCart = Cart::where('user_id', $data['user_id'])->first();
+        $oldCart = Cart::where('user_id', $data['user_id'])->where('temp_user_id','<>',$data['temp_user_id'])->first();
         if($oldCart)
             $oldCart->delete();
         $cart->update($cart_data);
