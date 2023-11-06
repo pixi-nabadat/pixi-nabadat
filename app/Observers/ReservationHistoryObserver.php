@@ -2,13 +2,7 @@
 
 namespace App\Observers;
 
-use App\Enum\PaymentStatusEnum;
-use App\Enum\UserPackageStatusEnum;
-use App\Exceptions\NotFoundException;
-use App\Models\Reservation;
 use App\Models\ReservationHistory;
-use App\Models\User;
-use Carbon\Carbon;
 
 class ReservationHistoryObserver
 {

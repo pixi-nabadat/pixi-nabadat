@@ -356,5 +356,15 @@
 		'sliderable_name'=>'Sliderable name',
 		'you_exceed_allowed_usage_for_this_coupon' => 'You exceed allowed usage for this coupon',
 		'you_should_exceed_minimum_limitation_to_use_coupon' => 'You should exceed minimum limitation to use coupon',
-    ]
+		
+		'package_not_found'=>'Package not found',
+		'cancel'=>'Cancel',
+		'there_is_an_error'=>'There is an error',
+		'operation_success_please_paid_to_add_pulses_to_your_wallet'=>'Operation success please paid to add pulses to your wallet',
+		'reservation_not_found'=>'Reservation not found',
+		'the_current_status_is'=>'The current status is',
+		'and_devices_count_is'=>'And devices count is',
+		'reservation_status_updated_successfully'=>'Reservation status updated successfully',
+		'there_is_no_enough_pulses'=>'There is no enough pulses',
+	]
 ?>

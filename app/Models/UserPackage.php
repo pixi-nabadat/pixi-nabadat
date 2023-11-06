@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\UserPackageStatusEnum;
 use App\Observers\UserPackageObserver;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,6 +32,26 @@ class UserPackage extends Model
     public function center(): BelongsTo
     {
         return $this->belongsTo(Center::class)->with('user:id,center_id,name');
+    }
+
+    public static function setOngoingPackage(User $user): bool
+    {
+        $currentOngoingPackage = $user->package()->where('status',UserPackageStatusEnum::ONGOING)->first();
+        $currentOngoingPackage->remain = 0;
+        $currentOngoingPackage->used = $currentOngoingPackage->num_nabadat;
+        $currentOngoingPackage->status = UserPackageStatusEnum::COMPLETED;
+        $currentOngoingPackage->save();
+        $currentOngoingPackage->refresh();
+
+        $nextOngoingPackage = $user->package()->where('status',UserPackageStatusEnum::READYFORUSE)->orderBy('id','desc')->first();
+        if(!$nextOngoingPackage)
+        {
+            return false;
+        }else{
+            $nextOngoingPackage->status = UserPackageStatusEnum::ONGOING;
+            $nextOngoingPackage->save();  
+            return true;
+        }
     }
 
     protected static function boot()

@@ -29,7 +29,7 @@ class ReservationService extends BaseService
 
         $reservation->history()->create([
             'status' => Reservation::PENDING,
-            'added_by' => auth()->user()->id,
+            'added_by' => auth()->user()->id ?? null,
         ]);
 
         $reservation->refresh();

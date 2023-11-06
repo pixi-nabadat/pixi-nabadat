@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('status');
             $table->foreignIdFor(\App\Models\CancelReason::class)->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->string('comment')->nullable();
-            $table->foreignId('added_by')->references('id')->on('users')->onDelete(null)->onUpdate('cascade')->nullable();
+            $table->foreignId('added_by')->nullable()->references('id')->on('users')->onDelete(null)->onUpdate('cascade');
             $table->timestamps();
         });
     }

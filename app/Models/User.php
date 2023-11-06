@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enum\UserPackageStatusEnum;
+use App\Exceptions\NotFoundException;
 use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
 use App\Traits\HasAttachment;
@@ -174,5 +176,42 @@ class User extends Authenticatable
         ->where('total_pulses','>', $minimum_number_of_pulses)
         ->where('updated_at', Carbon::parse(Carbon::now()->subDays($days_number))->format('Y-m-d'))
         );
+    }
+
+    public function minWallet(int $pulses)
+    {
+        $this->nabadatWallet->used_amount = $this->nabadatWallet->used_amount + $pulses;
+        $this->nabadatWallet->save();
+    }
+
+    public function updateWallet(int $reservationPulses = 0)
+    {
+        $remainPluses = $reservationPulses;
+        $packageRemain = 0;
+        a:
+        $currentOngoingPackage = $this->package()->where('status',UserPackageStatusEnum::ONGOING)->first();
+        if(!$currentOngoingPackage)
+            throw new NotFoundException(trans('lang.there_is_no_enough_pulses'));
+        $packageRemain = $currentOngoingPackage->remain - $remainPluses;
+        if($packageRemain == 0)
+        {
+            $remainPluses -= $currentOngoingPackage->remain;
+            $status = UserPackage::setOngoingPackage($this);
+
+        }else if($packageRemain < 0)
+        {
+            $remainPluses -= $currentOngoingPackage->remain;
+            $status = UserPackage::setOngoingPackage($this);
+            if(!$status)
+                throw new NotFoundException(trans('lang.there_is_no_enough_pulses'));
+            goto a;
+        }else{
+            $currentOngoingPackage->remain -= $remainPluses;
+            $currentOngoingPackage->used = $currentOngoingPackage->used + $remainPluses;
+            $currentOngoingPackage->save();
+            $currentOngoingPackage->refresh();
+            $remainPluses = 0;
+        }
+        $this->minWallet($reservationPulses);
     }
 }

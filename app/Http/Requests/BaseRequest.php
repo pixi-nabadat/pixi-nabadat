@@ -22,7 +22,7 @@ class BaseRequest extends FormRequest
                   "error" => Arr::first($error),
               ];
           })->values()->toArray();
-          throw new HttpResponseException(response(['message'=>__('lang.invalid inputs'),'errors'=>$mappedErrors],422));
+          throw new HttpResponseException(response(['message'=>__('lang.invalid_inputs'),'errors'=>$mappedErrors],422));
       }
 
       throw (new ValidationException($validator))

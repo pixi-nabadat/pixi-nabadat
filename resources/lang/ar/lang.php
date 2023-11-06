@@ -358,5 +358,15 @@
 		'sliderable_name'=>'اسم الاسليدر',
 		'you_exceed_allowed_usage_for_this_coupon' => 'لقد تخطيت الحد المسوح به لإستخدام الكوبون',
 		'you_should_exceed_minimum_limitation_to_use_coupon' => 'يجب تخطى الحد الادنى لاستخدام الكوبون',
+	
+		'package_not_found'=>'العرض غير متوفر',
+		'cancel'=>'الغاء',
+		'there_is_an_error'=>'يوجد خطأ ما',
+		'operation_success_please_paid_to_add_pulses_to_your_wallet'=>'عملية ناجحه برجاء الدفع لاضافة النبضات الى المحفظه',
+		'reservation_not_found'=>'لم يتم العثور على الحجز',
+		'the_current_status_is'=>'الحالة الحالية هى',
+		'and_devices_count_is'=>'وعدد الاجهزه هوه',
+		'reservation_status_updated_successfully'=>'تم تحديث حالة الحجز بنجاح',
+		'there_is_no_enough_pulses'=>'لا يوجد عدد نبضات كافى',
     ]
 ?>

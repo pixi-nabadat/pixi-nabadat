@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Exceptions\StatusNotEquelException;
 use App\Models\Reservation;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class ReservationHistoryService extends BaseService
 {
@@ -37,8 +38,9 @@ class ReservationHistoryService extends BaseService
 
     private function setStatusAndUpdateReservationTime(Reservation $reservation, array $reservation_data): bool
     {
+        DB::beginTransaction();
         $status = $reservation_data['status'];
-        $reservation->history()->create([
+        $reservationHistory = $reservation->history()->create([
             'status' => $status,
             'cancel_reason_id' => $reservation_data['cancel_reason_id'] ?? null,
             'comment' => $reservation_data['comment'] ?? null,
@@ -46,7 +48,9 @@ class ReservationHistoryService extends BaseService
         ]);
         if ($status == Reservation::CONFIRMED)
             $reservation->update(Arr::except($reservation_data,['status', 'added_by']));
+        $reservationHistory->completeReservation();
         $reservation->refresh();
+        DB::commit();
         return true;
     }
 }
