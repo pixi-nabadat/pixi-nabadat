@@ -17,7 +17,7 @@ class OrderItemResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->product->name,
-            'image'=>$this->whenLoaded('defaultLogo',url(optional($this->defaultLogo)->path."\\".optional($this->defaultLogo)->filename)),
+            'image'=>$this->product->image_path,
             'quantity'=>$this->quantity,
             'price'=>$this->price,
             'discount'=>$this->discount,
