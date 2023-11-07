@@ -16,7 +16,7 @@ class HomeSearchResource extends JsonResource
     {
        return [
            'id'    =>$this->id,
-           'title' =>$this->name,
+           'title' =>$this->getTranslation('name', app()->getLocale()),
            'type'  => $this->search_flag,
            'type_text'  => $this->search_flag_text,
        ];
