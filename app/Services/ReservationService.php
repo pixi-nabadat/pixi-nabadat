@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\NotFoundException;
 use App\Models\Reservation;
+use App\Models\User;
 use App\QueryFilters\ReservationsFilter;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -24,6 +25,14 @@ class ReservationService extends BaseService
 
     public function store(array $data = [])
     {
+        $user = User::find($data['customer_id']);
+        if(!$user)
+            throw new NotFoundException(trans('lang.user_not_found'));
+        $oldRerservations = $user->reservation()->whereHas('latestStatus', function($query){
+            $query->whereNotIn('status', [Reservation::COMPLETED, Reservation::Expired, Reservation::CANCELED]);
+        });
+        if($oldRerservations->count())
+            throw new NotFoundException(trans('lang.there_is_another_reservation'));
         $data['qr_code'] = uniqid();
         $reservation = Reservation::create($data);
 

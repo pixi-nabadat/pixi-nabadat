@@ -73,6 +73,11 @@ class Center extends Model
         return $this->morphMany(Rate::class, 'ratable');
     }
 
+    public function reservation(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Reservation::class,'center_id');
+    }
+
     public function defaultLogo(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
         return $this->morphOne(Attachment::class,'attachmentable')->where('type', ImageTypeEnum::LOGO);
