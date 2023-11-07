@@ -28,7 +28,7 @@ class NabadatHistoryController extends Controller
             $request = $request->validated();
             $data = $this->nabadatHistoryService->store($request);
             if($data)
-                return apiResponse(data: new ReservationsResource($data),message: trans('lang.operation_success'));
+                return apiResponse(data: new ReservationsResource($data),message: trans('lang.success_operation'));
             else
                 return apiResponse( message: trans('lang.something_went_wrong.'), code: 422);
         }catch(Exception $e){

@@ -34,7 +34,7 @@ class UserPackage extends Model
         return $this->belongsTo(Center::class)->with('user:id,center_id,name');
     }
 
-    public static function setOngoingPackage(User $user): bool
+    public static function getNextReadyPackage(User $user): bool
     {
         $currentOngoingPackage = $user->package()->where('status',UserPackageStatusEnum::ONGOING)->first();
         $currentOngoingPackage->remain = 0;

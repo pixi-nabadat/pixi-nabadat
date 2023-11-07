@@ -178,40 +178,38 @@ class User extends Authenticatable
         );
     }
 
-    public function minWallet(int $pulses)
+    public function decreaseUserWallet(int $pulses)
     {
         $this->nabadatWallet->used_amount = $this->nabadatWallet->used_amount + $pulses;
         $this->nabadatWallet->save();
     }
 
-    public function updateWallet(int $reservationPulses = 0)
+    public function decreaseFromOffer(int $reservationPulses = 0)
     {
-        $remainPluses = $reservationPulses;
-        $packageRemain = 0;
-        a:
         $currentOngoingPackage = $this->package()->where('status',UserPackageStatusEnum::ONGOING)->first();
         if(!$currentOngoingPackage)
             throw new NotFoundException(trans('lang.there_is_no_enough_pulses'));
-        $packageRemain = $currentOngoingPackage->remain - $remainPluses;
+        $packageRemain = $currentOngoingPackage->remain - $reservationPulses;
         if($packageRemain == 0)
         {
-            $remainPluses -= $currentOngoingPackage->remain;
-            $status = UserPackage::setOngoingPackage($this);
-
+            $currentPackagePulses = $currentOngoingPackage->remain;
+            $status = UserPackage::getNextReadyPackage($this);
+            $this->decreaseUserWallet($currentPackagePulses);
         }else if($packageRemain < 0)
         {
-            $remainPluses -= $currentOngoingPackage->remain;
-            $status = UserPackage::setOngoingPackage($this);
+            $currentPackagePulses = $currentOngoingPackage->remain;
+            $remainPluses = $reservationPulses - $currentOngoingPackage->remain;
+            $status = UserPackage::getNextReadyPackage($this);
             if(!$status)
                 throw new NotFoundException(trans('lang.there_is_no_enough_pulses'));
-            goto a;
+            $this->decreaseUserWallet($currentPackagePulses);
+            $this->decreaseFromOffer(reservationPulses: $remainPluses);
         }else{
-            $currentOngoingPackage->remain -= $remainPluses;
-            $currentOngoingPackage->used = $currentOngoingPackage->used + $remainPluses;
+            $currentOngoingPackage->remain -= $reservationPulses;
+            $currentOngoingPackage->used += $reservationPulses;
             $currentOngoingPackage->save();
             $currentOngoingPackage->refresh();
-            $remainPluses = 0;
+            $this->decreaseUserWallet($reservationPulses);
         }
-        $this->minWallet($reservationPulses);
     }
 }

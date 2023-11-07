@@ -22,8 +22,8 @@ class NabadatHistoryService extends BaseService
         $reservation = Reservation::with('center')->find($data['reservation_id']);
         if($reservation->latestStatus->getRawOriginal('status') != Reservation::ATTEND)
             throw new Exception(trans('lang.not_allowed'));
-        $user = $reservation->user;
-        $center = $reservation->center;
+        // $user = $reservation->user;
+        // $center = $reservation->center;
         if (!$reservation)
            throw new NotFoundException(trans('lang.reservation_not_found'));
         $data['auto_service'] = $data['auto_service'] ?? 0;
@@ -36,7 +36,7 @@ class NabadatHistoryService extends BaseService
             'auto_service'  => $data['auto_service'],
         ]);
         $reservation->refresh();
-        app()->make(UserPackageService::class)->decreaseFromOffer(user: $user, center: $center, number_of_pulses: $data['num_nabadat']);
+        // app()->make(UserPackageService::class)->decreaseFromOffer(user: $user, center: $center, number_of_pulses: $data['num_nabadat']);
         return $reservation->load(['center','user','history']);
     }
 }

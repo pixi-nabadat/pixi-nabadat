@@ -21,7 +21,7 @@ class ReservationHistoryController extends Controller
     public function store(ReservationHistoryStoreRequest $request, $id)
     {
         try {
-            $reservation = $this->reservationService->findById($id);
+            $reservation = $this->reservationService->findById(id: $id, with: ['center','user','history']);
             $reservationHistoryData = $request->validated();
             $reservationHistoryData['added_by'] = $request->added_by;
             $this->reservationHistoryService->store($reservation, $reservationHistoryData);
@@ -35,7 +35,7 @@ class ReservationHistoryController extends Controller
     public function reservationAttend(ReservationAttendRequest $request)
     {
         try {
-            $reservation = $this->reservationService->findByQrCode($request->qr_code);
+            $reservation = $this->reservationService->findByQrCode(qr_code: $request->qr_code, with: ['center','user','history']);
             $reservationHistoryData = $request->validated();
             $reservationHistoryData['added_by'] = $request->added_by;
             $this->reservationHistoryService->store($reservation,$reservationHistoryData);
