@@ -18,6 +18,13 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Center::class)->constrained();
             $table->float('total_center_dues')->nullable();
             $table->float('total_nabadat_dues')->nullable();
+
+            $table->float('center_cash_dues')->nullable();
+            $table->float('nabadat_cash_dues')->nullable();
+
+            $table->float('center_credit_dues')->nullable();
+            $table->float('nabadat_credit_dues')->nullable();
+
             $table->smallInteger('status')->default(\App\Models\Invoice::PENDING);
             $table->date('completed_date')->nullable();
             $table->timestamps();

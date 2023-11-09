@@ -231,15 +231,71 @@ class UserPackageService extends BaseService
             $final_discount = $userPackage->center->app_discount - $userPackage->discount_percentage;
             $center_dues = $userPackage->price - ($userPackage->price * ($userPackage->center->app_discount / 100));
             $nabadat_app_dues =($final_discount > 0) ?  ($userPackage->price * ($final_discount/ 100)):0;
+            
+            if($userPackage->payment_method == PaymentMethodEnum::CASH)
+            {
+                $center_cash_dues = $center_dues;
+                $nabadat_cash_dues = $nabadat_app_dues;
+                $center_credit_dues = 0;
+                $nabadat_credit_dues = 0;
+            }
+
+            if($userPackage->payment_method == PaymentMethodEnum::CREDIT)
+            {
+                $center_credit_dues = $center_dues;
+                $nabadat_credit_dues = $nabadat_app_dues;
+                $center_cash_dues = 0;
+                $nabadat_cash_dues = 0;
+            }
+
             $invoice = Invoice::where('center_id',$userPackage->center->id)->where('status',Invoice::PENDING)->orderByDesc('id')->first();
             if ($invoice)
             {
+                if($userPackage->payment_method == PaymentMethodEnum::CASH)
+                {
+                    $center_cash_dues = $invoice->center_cash_dues + $center_dues;
+                    $nabadat_cash_dues = $invoice->nabadat_cash_dues + $nabadat_app_dues;
+
+                    $center_credit_dues = $invoice->center_credit_dues;
+                    $nabadat_credit_dues = $invoice->nabadat_credit_dues;
+
+                }
+
+                if($userPackage->payment_method == PaymentMethodEnum::CREDIT)
+                {
+                    $center_cash_dues = $invoice->center_cash_dues;
+                    $nabadat_cash_dues = $invoice->nabadat_cash_dues;
+
+                    $center_credit_dues = $invoice->center_credit_dues + $center_dues;
+                    $nabadat_credit_dues = $invoice->nabadat_credit_dues + $nabadat_app_dues;
+                }
                 $center_dues = $invoice->total_center_dues + $center_dues ;
                 $nabadat_app_dues = $invoice->total_nabadat_dues + $nabadat_app_dues;
-                $invoice->update(['total_center_dues'=>$center_dues, 'total_nabadat_dues'=>$nabadat_app_dues]);
+
+                $invoice->update([
+                    'total_center_dues'=>$center_dues,
+                    'total_nabadat_dues'=>$nabadat_app_dues,
+
+                    'center_cash_dues'=>$center_cash_dues,
+                    'nabadat_cash_dues'=>$nabadat_cash_dues,
+
+                    'center_credit_dues'=>$center_credit_dues,
+                    'nabadat_credit_dues'=>$nabadat_credit_dues
+                ]);
             }else
             {
-                $invoice = Invoice::create(['total_center_dues'=>$center_dues, 'total_nabadat_dues'=>$nabadat_app_dues,'center_id'=>$userPackage->center->id]);
+                $invoice = Invoice::create([
+                    'total_center_dues'=>$center_dues,
+                    'total_nabadat_dues'=>$nabadat_app_dues,
+
+                    'center_cash_dues'=>$center_cash_dues,
+                    'nabadat_cash_dues'=>$nabadat_cash_dues,
+
+                    'center_credit_dues'=>$center_credit_dues,
+                    'nabadat_credit_dues'=>$nabadat_credit_dues,
+
+                    'center_id'=>$userPackage->center->id
+                ]);
             }
             Transaction::createTransaction($userPackage,$invoice->id);
         }

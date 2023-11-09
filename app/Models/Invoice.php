@@ -14,8 +14,17 @@ class Invoice extends Model
     public const PENDING = 1;
     public const COMEPELETED = 2;
 
-    protected $fillable = ['center_id', 'total_center_dues', 'total_nabadat_dues', 'status', 'completed_date'];
-
+    protected $fillable = [
+        'center_id',
+        'total_center_dues',
+        'total_nabadat_dues',
+        'status',
+        'completed_date',
+        'center_cash_dues',
+        'nabadat_cash_dues',
+        'center_credit_dues',
+        'nabadat_credit_dues'
+    ];
     public function center(): BelongsTo
     {
         return $this->belongsTo(Center::class, 'center_id');

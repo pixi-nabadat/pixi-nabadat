@@ -85,6 +85,22 @@ class InvoicesDataTable extends DataTable
                 ->title(trans('lang.nabadat_dues'))
                 ->searchable(false)
                 ->orderable(false),
+            Column::make('center_cash_dues')
+                ->title(trans('lang.center_cash_dues'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('center_credit_dues')
+                ->title(trans('lang.center_credit_dues'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('nabadat_cash_dues')
+                ->title(trans('lang.nabadat_cash_dues'))
+                ->searchable(false)
+                ->orderable(false),
+            Column::make('nabadat_credit_dues')
+                ->title(trans('lang.nabadat_credit_dues'))
+                ->searchable(false)
+                ->orderable(false),
             Column::make('completed_date')
                 ->title(trans('lang.completed_date')),
             Column::computed('status')
@@ -105,7 +121,7 @@ class InvoicesDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'cancelReasons_' . date('YmdHis');
+        return 'invoices' . date('YmdHis');
     }
 
 }

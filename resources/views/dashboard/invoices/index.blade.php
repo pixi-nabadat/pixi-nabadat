@@ -64,7 +64,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="table">
+                        <div class="table" style="overflow-x: scroll">
                             {!! $dataTable->table(['class'=>'table table-data table-striped table-bordered']) !!}
                         </div>
                     </div>

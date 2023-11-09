@@ -368,5 +368,15 @@
 		'and_devices_count_is'=>'وعدد الاجهزه هوه',
 		'reservation_status_updated_successfully'=>'تم تحديث حالة الحجز بنجاح',
 		'there_is_no_enough_pulses'=>'لا يوجد عدد نبضات كافى',
+
+		'user_desnot_have_default_address'=>'لا يوجد عنوان افتراضى للمستخدم',
+		'address_set_successfully'=>'تم تعين العنوان بنجاح',
+		'center_cash_dues'=>'مستحقات المركز من الكاش',
+		'center_credit_dues'=>'مستحقات المركز من الائتمان',
+		'nabadat_cash_dues'=>'مستحقات نبضات من الكاش',
+		'nabadat_credit_dues'=>'مستحقات نبضات من الائتمان',
+		'company_dues'=>'مستحقات الشركة',
+		'invoice_pending'=>'فتوره قيد الانتظار',
+		'invoice_completed'=>'فتوره مكتملة',
     ]
 ?>

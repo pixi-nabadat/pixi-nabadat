@@ -119,7 +119,7 @@
 						<table>
 							<tr>
 								<td class="title">
-									<img src="https://nabadat.app/assets/images/logo/logo.png" style="width: 50%; max-width: 100px" />
+									<img src="https://admin.nabadat.app/images/icons/5.png" style="width: 50%; max-width: 100px" />
 								</td>
 
 								<td>
@@ -177,6 +177,18 @@
 				</tr>
 				<tr class="total">
 					<td colspan="5">Total Nabadat Dues: {{ $invoice->total_nabadat_dues }} LE</td>
+				</tr>
+				<tr class="total">
+					<td colspan="5">Total center cash amount: {{$invoice->center_cash_dues}} LE</td>
+				</tr>
+				<tr class="total">
+					<td colspan="5">Total center credit amount: {{$invoice->center_credit_dues}} LE</td>
+				</tr>
+				<tr class="total">
+					<td colspan="5">Total nabadat cash amount : {{$invoice->nabadat_cash_dues}} LE</td>
+				</tr>
+				<tr class="total">
+					<td colspan="5">Total nabadat credit amount: {{$invoice->nabadat_credit_dues}} LE</td>
 				</tr>
 			</table>
 		</div>

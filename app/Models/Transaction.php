@@ -10,7 +10,7 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id','package_id','invoice_id','num_pulses','center_dues','nabadat_app_dues','original_price','center_discount','user_discount'];
+    protected $fillable = ['user_id','package_id','invoice_id','num_pulses','center_dues','nabadat_app_dues','original_price','center_discount','user_discount', 'payment_method'];
 
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -43,7 +43,8 @@ class Transaction extends Model
             'original_price' => $userPackage->price,
             'center_discount' => $userPackage->center->app_discount,
             'user_discount' => $userPackage->discount_percentage,
-            'date' => Carbon::now(config('app.africa_timezone'))->format('Y-m-d'),
+            'payment_method' => $userPackage->payment_method,
+            // 'date' => Carbon::now(config('app.africa_timezone'))->format('Y-m-d'),
         ];
         self::create($center_financial_data);
     }

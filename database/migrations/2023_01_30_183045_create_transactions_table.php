@@ -1,5 +1,6 @@
 <?php
 
+use App\Enum\PaymentMethodEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->double('original_price');
             $table->double('center_discount');
             $table->double('user_discount');
+            $table->enum('payment_method',[PaymentMethodEnum::CASH,PaymentMethodEnum::CREDIT]);
             $table->timestamps();
         });
     }

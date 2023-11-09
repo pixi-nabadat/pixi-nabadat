@@ -366,5 +366,15 @@
 		'and_devices_count_is'=>'And devices count is',
 		'reservation_status_updated_successfully'=>'Reservation status updated successfully',
 		'there_is_no_enough_pulses'=>'There is no enough pulses',
+
+		'user_desnot_have_default_address'=>'User desnot have default address',
+		'address_set_successfully'=>'Address set successfully',
+		'center_cash_dues'=>'Center cash dues',
+		'center_credit_dues'=>'Center credit dues',
+		'nabadat_cash_dues'=>'Nabadat cash dues',
+		'nabadat_credit_dues'=>'Nabadat credit dues',
+		'company_dues'=>'Company dues',
+		'invoice_pending'=>'Invoice pending',
+		'invoice_completed'=>'Invoice completed',
 	]
 ?>
