@@ -67,14 +67,8 @@ class CouponUsageService extends BaseService
             return ['status'=>false, 'message'=> "your purchase balance less than coupon balance"];
         else{
 
-            $discount_type = $coupon->discount_type;
-            $newBalance = 0;
-            if($discount_type == 'percent'){
-                $newDiscount = ($netTotal * ($coupon->discount/100)) * ($usage + 1);
-                $newBalance = $netTotal- $newDiscount;
-            }else{
-                $newBalance = $netTotal- ($coupon->discount * ($usage + 1));
-            }
+            $newDiscount = ($netTotal * ($coupon->discount/100)) * ($usage + 1);
+            $newBalance = $netTotal- $newDiscount;
 
             return ['status'=>true, 'data'=> $newBalance];
         }

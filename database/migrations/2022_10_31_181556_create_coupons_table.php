@@ -18,7 +18,6 @@ return new class extends Migration
             $table->unsignedBigInteger('added_by');
             $table->foreign('added_by')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('code')->unique();
-            $table->enum('discount_type',['flat','percent'])->default('percent');
             $table->double('discount');
             $table->date('start_date');
             $table->date('end_date');

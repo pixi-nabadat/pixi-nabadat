@@ -25,7 +25,6 @@ class CouponsTableSeeder extends Seeder
            'added_by'=>User::where('type',User::SUPERADMINTYPE)->first()->id,
            'code'=>'test123',
            'discount'=>10,
-           'discount_type'=>Coupon::DISCOUNT_PERCENTAGE,
            'start_date'=>Carbon::now()->format('Y-m-d'),
            'end_date'=>Carbon::now()->addDays(5)->format('Y-m-d'),
            'min_buy'=>20,

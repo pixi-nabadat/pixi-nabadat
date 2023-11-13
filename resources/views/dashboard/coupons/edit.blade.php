@@ -61,15 +61,6 @@
                                         <option  {{ $coupon->coupon_for == \App\Models\Coupon::RESERVATIONCOUPON ? 'selected' : '' }} value = 'reservation'>{{trans('lang.reservation')}}</option>
                                     </select>
                                 </div>
-                                {{-- discount_type --}}
-                                <div class="col-md-6">
-                                    <label class="form-label">{{ __('lang.discount_type') }}</label>
-                                    <select id="select_discount_type" name="discount_type"
-                                        class="form-control">
-                                        <option {{ $coupon->discount_type == \App\Models\Coupon::DISCOUNT_FLAT ? 'selected' : '' }} value="{{\App\Models\Coupon::DISCOUNT_FLAT}}">{{trans('lang.flat')}}</option>
-                                        <option {{ $coupon->discount_type == \App\Models\Coupon::DISCOUNT_PERCENTAGE ? 'selected' : '' }} value="{{\App\Models\Coupon::DISCOUNT_PERCENTAGE}}">{{trans('lang.percent')}}</option>
-                                    </select>
-                                </div>
                                 {{-- discount --}}
                                 <div class="col-md-6">
                                     <label class="form-label" for="discount">@lang('lang.discount')</label>

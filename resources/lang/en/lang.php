@@ -91,7 +91,6 @@
 		'purchase_price'=>'Purchase price',
 		'unit_price'=>'Unit price',
 		'tax'=>'TAX',
-		'discount_type'=>'Discount type',
 		'discount'=>'Discount',
 		'discount_start_date'=>'Discount start date',
 		'discount_end_date'=>'Discount end date',

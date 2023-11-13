@@ -67,7 +67,7 @@ class User extends Authenticatable
             $pointsExpireDaysCount = config('global.center_points_expire_days_count') !== null ? config('global.center_points_expire_days_count') : Setting::get('points', 'center_points_expire_days_count');
         }
         $model->points += $pointsPerPound * $amount;
-        $model->points_expire_date = Carbon::now()->addDays($pointsExpireDaysCount);
+        $model->points_expire_date = Carbon::now()->setTimezone('Africa/Cairo')->addDays($pointsExpireDaysCount);
         $model->save();
         return true;
     }

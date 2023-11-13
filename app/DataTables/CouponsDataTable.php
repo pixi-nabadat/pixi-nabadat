@@ -29,7 +29,7 @@ class CouponsDataTable extends DataTable
                 return $coupon->creator->name;
             })
             ->editColumn('discount', function (Coupon $coupon) {
-                return $coupon->discount . ($coupon->discount_type == Coupon::DISCOUNT_PERCENTAGE ? ' %' : "L.E");
+                return $coupon->discount . '%';
             })
             ->editColumn('min_buy', function (Coupon $coupon) {
                 return $coupon->min_buy . " L.E";

@@ -91,7 +91,6 @@
 		'purchase_price'=>'سعر الشراء',
 		'unit_price'=>'سعر الوحدة',
 		'tax'=>'ضريبة',
-		'discount_type'=>'نوع الخصم',
 		'discount'=>'خصم',
 		'discount_start_date'=>'تاريخ بدء الخصم',
 		'discount_end_date'=>'تاريخ انتهاء الخصم',

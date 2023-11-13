@@ -36,15 +36,6 @@
                                     <label class="form-label" for="min_buy">{{ trans('lang.min_buy') }}</label>
                                     <p class="form-control" id="min_buy">{{ $coupon->min_buy }}</p>
                                 </div>
-                                {{-- discount_type --}}
-                                <div class="col-md-6  my-3">
-                                    <div class="col-form-label  col-3">{{ __('lang.discount_type') }}</div>
-                                    @if ($coupon->discount_type == 'percent')
-                                        <p class="form-control">{{ trans('lang.percent') }}</p>
-                                    @else
-                                        <p class="form-control">{{ trans('lang.flat') }}</p>
-                                    @endif
-                                </div>
                                 {{-- discount --}}
                                 <div class="col-md-6  my-3">
                                     <label class="form-label" for="discount">@lang('lang.discount')</label>

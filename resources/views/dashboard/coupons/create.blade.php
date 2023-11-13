@@ -61,15 +61,6 @@
                                         <option  value = 'reservation' selected>{{trans('lang.reservation')}}</option>
                                     </select>
                                 </div>
-                                {{-- discount_type --}}
-                                <div class="col-md-6">
-                                    <label class="form-label">{{ __('lang.discount_type') }}</label>
-                                    <select id="select_discount_type" name="discount_type"
-                                        class="col form-control">
-                                        <option  value = "{{\App\Models\Coupon::DISCOUNT_FLAT}}">   {{trans('lang.flat')}}</option>
-                                        <option  value = "{{\App\Models\Coupon::DISCOUNT_PERCENTAGE}}" selected>{{trans('lang.percent')}}</option>
-                                    </select>
-                                </div>
                                 {{-- discount --}}
                                 <div class="col-md-6">
                                     <label class="form-label" for="discount">@lang('lang.discount')</label>
