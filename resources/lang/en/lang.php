@@ -375,5 +375,6 @@
 		'company_dues'=>'Company dues',
 		'invoice_pending'=>'Invoice pending',
 		'invoice_completed'=>'Invoice completed',
+		'data_already_exists'=>'Data already exists',
 	]
 ?>

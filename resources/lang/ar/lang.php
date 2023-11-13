@@ -377,5 +377,6 @@
 		'company_dues'=>'مستحقات الشركة',
 		'invoice_pending'=>'فتوره قيد الانتظار',
 		'invoice_completed'=>'فتوره مكتملة',
+		'data_already_exists'=>'البيانات موجوده بالفعل',
     ]
 ?>
