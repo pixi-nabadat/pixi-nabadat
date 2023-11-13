@@ -59,10 +59,9 @@ class HomeController extends Controller
     {
         $keyword = $request->keyword;
         $product = Product::query()->where('name', 'Like', "%$keyword%")->select(['id', 'name as name'])->limit(10)->get();
-        $device = Device::query()->where('name', 'Like', "%$keyword%")->select(['id', 'name as name'])->limit(10)->get();
+        $device = Device::query()->has('center')->with('center')->where('name', 'Like', "%$keyword%")->select(['id', 'name as name'])->limit(10)->get();
         $center = Center::query()->where('name', 'LIKE', "%$keyword%")->select(['id','name'])->limit(10)->get();
-        $result = $product->union($device);
-        $finalResult = $result->union($center);
+        $finalResult = $product->concat($device)->concat($center);
         $search_results = HomeSearchResource::collection($finalResult);
         return apiResponse(data: $search_results);
     }

@@ -19,6 +19,7 @@ class HomeSearchResource extends JsonResource
            'title' =>$this->getTranslation('name', app()->getLocale()),
            'type'  => $this->search_flag,
            'type_text'  => $this->search_flag_text,
+           'center_id'  => $this->whenLoaded('center', $this->center, null),
        ];
     }
 }
