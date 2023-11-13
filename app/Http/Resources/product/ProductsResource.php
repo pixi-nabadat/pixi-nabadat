@@ -23,7 +23,7 @@ class ProductsResource extends JsonResource
             'discount' => $this->discount,
             'description' => $this->description,
             'rate' => $this->rate,
-            'price_after_discount' => getPriceAfterDiscount($this->unit_price, $this->product_discount),
+            'price_after_discount' => getPriceAfterDiscount($this->unit_price, $this->discount),
             'image' => ['path' => $this->image_path],
         ];
     }
