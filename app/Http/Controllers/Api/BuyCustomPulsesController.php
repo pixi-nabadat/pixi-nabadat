@@ -88,7 +88,7 @@ class BuyCustomPulsesController extends Controller
                 DB::commit();
             return apiResponse(data: $result_data, message: $message, code: $status_code);
         } catch (\Exception|NotFoundException $exception) {
-            return apiResponse(message: $exception, code: 422);
+            return apiResponse(message: $exception->getMessage(), code: 422);
         }
     } //end of index
 
