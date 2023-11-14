@@ -72,6 +72,11 @@ class CentersFilter extends QueryFilter
         return $this->builder->whereHas('appointments',fn($query)=>$query->where('day_of_week',$term));
     }
 
+    public function reservation_time($term)
+    {
+        return $this->builder->whereHas('appointments',fn($query)=>$query->where('day_text','like', '%'.$term.'%'));
+    }
+
     public function keyword($term)
     {
         return $this->builder->where('name', 'like', '%'.$term.'%');

@@ -53,4 +53,9 @@ class ProductsFilter extends QueryFilter
     {
         return $this->builder->where('name', 'like', '%'.$term.'%');
     }
+
+    public function rate($term)
+    {
+        return $this->builder->where('rate', $term);
+    }
 }

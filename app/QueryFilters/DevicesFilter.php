@@ -35,4 +35,14 @@ class DevicesFilter extends QueryFilter
         });
     }
 
+    public function governorate_id($term)
+    {
+        if (isset($term))
+            return $this->builder->whereHas('center.user', function ($query) use ($term) {
+                $query->whereHas('location', function ($query) use ($term) {
+                    $query->where('parent_id', $term);
+                });
+            });
+    }
+
 }
