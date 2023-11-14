@@ -25,7 +25,7 @@ class CartResource extends JsonResource
             'address_id' => $this->address_id,
             'tax' => (double)$this->tax,
             'shipping_cost' => (double)$this->shipping_cost,
-            'pounds_for_points'=>(double) changePoundsToPoints((float)$this->grand_total),
+            'pounds_for_points'=>(double) changePointsToPounds((float)$this->user?->points),
             'items' => CartItemsResource::collection($this->whenLoaded('items')),
         ];
     }
