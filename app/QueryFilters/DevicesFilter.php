@@ -19,7 +19,20 @@ class DevicesFilter extends QueryFilter
 
     public function keyword($term)
     {
-        return $this->builder->where('name', 'like', '%$term%');
+        return $this->builder->where('name', 'like', '%'.$term.'%');
+    }
+
+    public function rate($term)
+    {
+        return $this->builder->whereHas('center', function ($query) use ($term) {
+            $query->where('center_devices.rate', $term);
+        });
+    }
+    public function auto_service($term)
+    {
+        return $this->builder->whereHas('center', function ($query) use ($term) {
+            $query->where('center_devices.auto_service', $term);
+        });
     }
 
 }

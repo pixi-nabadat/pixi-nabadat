@@ -59,12 +59,7 @@ class HomeController extends Controller
 
     public function search(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        $filters = array_filter($request->get('filters', []), function ($value) {
-            return ($value !== null && $value !== false && $value !== '');
-        });
-        // $product = Product::query()->where('name', 'Like', "%$keyword%")->select(['id', 'name as name'])->limit(10)->get();
-        // $device = Device::query()->has('center')->with('center')->where('name', 'Like', "%$keyword%")->select(['id', 'name as name'])->limit(10)->get();
-        // $center = Center::query()->where('name', 'LIKE', "%$keyword%")->select(['id','name'])->limit(10)->get();
+        $filters = $request->all();
         $product = $this->productService->queryGet(where_condition: $filters, withRelation: [])->select(['id','name'])->limit(10)->get();
         $center = $this->centerService->queryGet(where_condition: $filters, withRelation: [])->select(['id','name'])->limit(10)->get();
         $device = $this->deviceService->queryGet(where_condition: $filters, withRelation: ['center'])->select(['id','name'])->limit(10)->get();

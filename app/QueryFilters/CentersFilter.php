@@ -74,7 +74,12 @@ class CentersFilter extends QueryFilter
 
     public function keyword($term)
     {
-        return $this->builder->where('name', 'like', '%$term%');
+        return $this->builder->where('name', 'like', '%'.$term.'%');
+    }
+
+    public function rate($term)
+    {
+        return $this->builder->where('rate', $term);
     }
 
 }
