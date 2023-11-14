@@ -24,9 +24,8 @@ class DeviceController extends Controller
     public function listing(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            if (auth('sanctum')->user()->center_id == null)
-                throw new NotFoundException('route not found');
-            $withRelations = [];
+            $withRelations = ['defaultImage'];
+            $where_condition = ['is_active=>1'];
             $devices = $this->deviceService->getAll(where_condition: $withRelations);
             return apiResponse(data: DeviceResource::collection($devices), message: trans('lang.success_operation'));
         } catch (\Exception $e) {

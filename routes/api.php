@@ -58,6 +58,9 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'fcm'], function () {
     Route::post('send-to-tokens', [\App\Http\Controllers\Api\NotificationController::class, 'sendFcmToToken']);
 });
+//    get All devices
+Route::get('devices', [DeviceController::class, 'listing']);
+
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => 'centers'], function () {
@@ -93,8 +96,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     });
 
-//    get All devices
-    Route::get('devices', [DeviceController::class, 'listing']);
     //start center devices
     Route::group(['prefix' => 'center-devices'], function () {
         Route::get('/', [CenterDeviceController::class, 'listing']);
