@@ -48,4 +48,9 @@ class ProductsFilter extends QueryFilter
     {
         return $this->builder->where('type',$term);
     }
+
+    public function keyword($term)
+    {
+        return $this->builder->where('name', 'like', '%$term%');
+    }
 }

@@ -17,4 +17,9 @@ class DevicesFilter extends QueryFilter
         return $this->builder->where('is_active', $term);
     }
 
+    public function keyword($term)
+    {
+        return $this->builder->where('name', 'like', '%$term%');
+    }
+
 }

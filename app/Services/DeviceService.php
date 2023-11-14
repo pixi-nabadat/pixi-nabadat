@@ -20,9 +20,9 @@ class DeviceService extends BaseService
         return $Devices->get();
     }
 
-    public function queryGet(array $where_condition = []): Builder
+    public function queryGet(array $where_condition = [], array $withRelation = []): Builder
     {
-        $Devices = Device::query();
+        $Devices = Device::query()->with($withRelation);
         return $Devices->filter(new DevicesFilter($where_condition));
     }
 

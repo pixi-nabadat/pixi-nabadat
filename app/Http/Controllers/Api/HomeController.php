@@ -17,6 +17,7 @@ use App\Models\Product;
 use App\Services\CenterPackageService;
 use App\Services\CenterService;
 use App\Services\CouponService;
+use App\Services\DeviceService;
 use App\Services\LocationService;
 use App\Services\ProductService;
 use App\Services\SliderService;
@@ -31,7 +32,8 @@ class HomeController extends Controller
                                 protected LocationService $locationService,
                                 protected SliderService   $sliderService,
                                 protected CouponService   $couponService,
-                                protected CenterPackageService $packageService)
+                                protected CenterPackageService $packageService,
+                                protected DeviceService $deviceService)
     {
     }
 
@@ -57,10 +59,16 @@ class HomeController extends Controller
 
     public function search(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        $keyword = $request->keyword;
-        $product = Product::query()->where('name', 'Like', "%$keyword%")->select(['id', 'name as name'])->limit(10)->get();
-        $device = Device::query()->has('center')->with('center')->where('name', 'Like', "%$keyword%")->select(['id', 'name as name'])->limit(10)->get();
-        $center = Center::query()->where('name', 'LIKE', "%$keyword%")->select(['id','name'])->limit(10)->get();
+        $filters = array_filter($request->get('filters', []), function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+        // $product = Product::query()->where('name', 'Like', "%$keyword%")->select(['id', 'name as name'])->limit(10)->get();
+        // $device = Device::query()->has('center')->with('center')->where('name', 'Like', "%$keyword%")->select(['id', 'name as name'])->limit(10)->get();
+        // $center = Center::query()->where('name', 'LIKE', "%$keyword%")->select(['id','name'])->limit(10)->get();
+        $product = $this->productService->queryGet(where_condition: $filters, withRelation: [])->select(['id','name'])->limit(10)->get();
+        $center = $this->centerService->queryGet(where_condition: $filters, withRelation: [])->select(['id','name'])->limit(10)->get();
+        $device = $this->deviceService->queryGet(where_condition: $filters, withRelation: ['center'])->select(['id','name'])->limit(10)->get();
+
         $finalResult = $product->concat($device)->concat($center);
         $search_results = HomeSearchResource::collection($finalResult);
         return apiResponse(data: $search_results);
