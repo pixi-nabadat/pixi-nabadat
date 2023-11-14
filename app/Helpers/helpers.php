@@ -187,10 +187,15 @@ if (!function_exists('changePoundsToPoints')) {
 
     function changePoundsToPoints(float $money): float
     {
-        if(Auth::user()->center_id)
-            return $money * setting('points','center_points_per_pound');
-        else
+        if(!Auth::check())
             return $money * setting('points','patient_points_per_pound');
+        else{
+
+            if(Auth::user()->center_id)
+                return $money * setting('points','center_points_per_pound');
+            else
+                return $money * setting('points','patient_points_per_pound');
+        }
     }
 }
 
