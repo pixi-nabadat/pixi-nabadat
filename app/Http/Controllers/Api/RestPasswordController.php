@@ -23,7 +23,7 @@ class RestPasswordController extends Controller
 
         $user = User::firstWhere('phone', $passwordReset->phone);
 
-        $user->update(['password'=>bcrypt($request->password)]);
+        $user->update(['password'=>$request->password]);
 
         $passwordReset->delete();
 
