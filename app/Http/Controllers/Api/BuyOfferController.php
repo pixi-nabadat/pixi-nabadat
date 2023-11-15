@@ -50,7 +50,7 @@ class BuyOfferController extends Controller
             //create user package log
             if ($request->payment_method == PaymentMethodEnum::CREDIT) {
 
-                $user_package_data = $this->getUserPackageDataForBuyOffer($package, $user, PaymentStatusEnum::UNPAID, PaymentMethodEnum::CREDIT, deleted_at: true);
+                $user_package_data = $this->getUserPackageDataForBuyOffer($package, $user, PaymentStatusEnum::UNPAID, PaymentMethodEnum::CREDIT);
 
                 $userPackage = $this->userPackageService->create($user_package_data);
 
@@ -82,7 +82,7 @@ class BuyOfferController extends Controller
 
                 $userPackage = $this->userPackageService->create($user_package_data);
 
-                $result = $this->userService->updateOrCreateNabadatWallet($user, $userPackage);
+                // $result = $this->userService->updateOrCreateNabadatWallet($user, $userPackage);
 
                 $status_code = 422;
 
@@ -90,7 +90,7 @@ class BuyOfferController extends Controller
 
                 $result_data = null;
 
-                if ($result) {
+                if ($userPackage) {
                     $status_code = 200;
                     $message = trans('lang.operation_success_please_paid_to_add_pulses_to_your_wallet');
                 }
@@ -141,7 +141,7 @@ class BuyOfferController extends Controller
 
     //start buy custom pulses
 
-    private function getUserPackageDataForBuyOffer(Package $package, $user, $payment_status = PaymentStatusEnum::UNPAID, $payment_method = PaymentMethodEnum::CASH, $deleted_at = null)
+    private function getUserPackageDataForBuyOffer(Package $package, $user, $payment_status = PaymentStatusEnum::UNPAID, $payment_method = PaymentMethodEnum::CASH)
     {
         $active_user_package = $user->package()->where('status', UserPackageStatusEnum::ONGOING)->where('payment_status', PaymentStatusEnum::PAID)->count();
         if (!$active_user_package)
@@ -161,7 +161,6 @@ class BuyOfferController extends Controller
             'status' => $status,
             'used_amount' => 0,
             'remain' => $package->num_nabadat,
-            'deleted_at' => isset($deleted_at) ? Carbon::now() : null
         ];
     }
 }

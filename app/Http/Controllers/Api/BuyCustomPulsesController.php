@@ -71,7 +71,7 @@ class BuyCustomPulsesController extends Controller
 
                 $user_package = $this->userPackageService->create($user_package_data);
 
-                $result = $this->userService->updateOrCreateNabadatWallet($user, $user_package);
+                // $result = $this->userService->updateOrCreateNabadatWallet($user, $user_package);
 
                 $status_code = 422;
 
@@ -79,7 +79,7 @@ class BuyCustomPulsesController extends Controller
 
                 $result_data = null;
 
-                if ($result) {
+                if ($user_package) {
                     $status_code = 200;
                     $message = trans('lang.operation_success_please_paid_to_add_pulses_to_your_wallet');
                 }

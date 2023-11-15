@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
+use App\Observers\OrderObserver;
 use App\Traits\EscapeUnicodeJson;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
     use Filterable,EscapeUnicodeJson;
-    use SoftDeletes;
 
     const
         PENDING     = 1,
@@ -21,7 +20,7 @@ class Order extends Model
         DELIVERED   = 4,
         CANCELED    = 5;
 
-    protected $fillable = ['user_id','payment_status','payment_method','address_info','address_id','shipping_fees','sub_total','grand_total','coupon_id','coupon_discount','points_discount','paymob_transaction_id','relatable_id','relatable_type','deleted_at'];
+    protected $fillable = ['user_id','payment_status','payment_method','address_info','address_id','shipping_fees','sub_total','grand_total','coupon_id','coupon_discount','points_discount','paymob_transaction_id','relatable_id','relatable_type'];
 
     protected $casts = [
         'address_info' => 'object'
@@ -83,5 +82,10 @@ class Order extends Model
             case self::CANCELED :
                 return trans('lang.canceled');
         }
+    }
+    protected static function boot()
+    {
+        parent::boot();
+        static::observe(OrderObserver::class);
     }
 }

@@ -164,6 +164,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     Route::post('orders/updateOrderStatus', [OrderController::class, 'updateOrderStatus'])->name('orders.updateOrderStatus');
     Route::resource('orders', OrderController::class);
+    Route::post('orders/payment-status', [OrderController::class, 'paymentStatus'])->name('orders.paymentStatus');
+
 
     Route::resource('invoices', InvoiceController::class);
     Route::post('invoices/settle', [InvoiceController::class, 'settleInvoice'])->name('invoices.settle');

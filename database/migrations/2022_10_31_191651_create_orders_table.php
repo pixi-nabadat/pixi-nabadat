@@ -27,7 +27,6 @@ return new class extends Migration
             $table->double('points_discount')->comment('number of pounds that get from points')->default(0);
             $table->double('paymob_transaction_id')->nullable();
             $table->nullableMorphs('relatable');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

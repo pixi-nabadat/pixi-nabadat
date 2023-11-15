@@ -20,7 +20,8 @@ class OrderController extends Controller
             $loadRelation = ['latestStatus','user:id,name,phone'];
             $filters = array_filter($request->get('filters', []), function ($value) {
                 return ($value !== null && $value !== false && $value !== '');
-            });    
+            });
+            $filters['is_order'] = 1;
             return $dataTable->with(['filters' => $filters, 'withRelations' => $loadRelation])->render('dashboard.orders.index');
         } catch (\Exception $exception) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => $exception->getMessage()];
@@ -50,4 +51,16 @@ class OrderController extends Controller
         return view('dashboard.orders.show', compact('order'));
     } //end of show
 
+    public function paymentStatus(Request $request)
+    {
+        try {
+            //first forget cash
+            $result = $this->orderService->paymentStatus($request->id);
+            if (!$result)
+                return apiResponse(message: trans('lang.not_found'), code: 404);
+            return apiResponse(message: trans('lang.success'));
+        } catch (\Exception $exception) {
+            return apiResponse(message: $exception->getMessage(), code: 422);
+        }
+    } //end of status
 }

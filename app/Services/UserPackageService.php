@@ -226,7 +226,7 @@ class UserPackageService extends BaseService
 //          set user points after pay the offer
             User::setPoints($userPackage->user, amount: $amount_after_discount);
 //          set center points after pay the offer
-            User::setPoints($userPackage->center->user, amount: $amount_after_discount);
+            // User::setPoints($userPackage->center->user, amount: $amount_after_discount);
 //          set financial for center
             $final_discount = $userPackage->center->app_discount - $userPackage->discount_percentage;
             $center_dues = $userPackage->price - ($userPackage->price * ($userPackage->center->app_discount / 100));

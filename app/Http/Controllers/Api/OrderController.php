@@ -40,6 +40,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $filters = array_merge($request->all(), ['user_id' => auth('sanctum')->id()]);
+        $filters['is_order'] = 1;
         $relations = ['latestStatus', 'items.product.defaultLogo'];
         $order = $this->orderService->listing($filters, $relations);
         return OrderResource::collection($order);
@@ -67,6 +68,7 @@ class OrderController extends Controller
             $user = auth('sanctum')->user();
             //1- get cart data for user
             $orderData = app()->make(CartService::class)->getCart($request->temp_user_id);
+
             if ($orderData->items->isEmpty())
                 throw new BadRequestHttpException(trans('lang.there_is_no-items_to_create_order'), 422);
 
@@ -74,18 +76,7 @@ class OrderController extends Controller
             $userAddress = app()->make(AddressService::class)->find(id: $request->address_id, withRelations: ['city:id,title,shipping_cost', 'user:id,name,phone,email']);
             if (!$userAddress)
                 throw new NotFoundException(trans('lang.address_not_found'));
-
-            $min_points = Setting::get('points', 'min_change_points');
-            if ($request->include_points && $user->points < Setting::get('points', 'min_change_points'))
-                throw new Exception(trans('lang.min_points_to_change_is :' . $min_points . " your points is : " . $user->points));
-            if ($request->include_points && $user->points >= Setting::get('points', 'min_change_points')) {
-                $poundsForPoints = changePointsToPounds($user->points);
-                $orderData->pounds_for_points = $poundsForPoints;
-                // reset user Points
-                $user->points = 0;
-                $user->save();
-            }
-            $order = $this->storeOrder($orderData, $userAddress, $user, $request->payment_method); // method store order in trait for multiple usage
+            $order = $this->storeOrder($orderData, $userAddress, $user, $request->payment_method, include_points: $request->include_points); // method store order in trait for multiple usage
             if ($request->payment_method == PaymentMethodEnum::CREDIT) {
                 $paymob_order_items = $this->prepareOrderItemsForPaymobOrder($order->items);
 
@@ -94,23 +85,27 @@ class OrderController extends Controller
                 $status_code = 422;
 
                 $message = trans('lang.there_is_an_error');
+                if($order->grand_total > 0)
+                {
+                    $result = $this->paymobService->payCredit(order_id: $order->id, items: $paymob_order_items, userAddress: $userAddress, total_amount_cents: $total_order_amount_in_cents);
+                
 
-                $result = $this->paymobService->payCredit(order_id: $order->id, items: $paymob_order_items, userAddress: $userAddress, total_amount_cents: $total_order_amount_in_cents);
-
-                if ($result['status']) {
-                    $status_code = 200;
-                    $message = null;
-                    DB::commit();
-                    $this->cartService->emptyCart($request->temp_user_id);
-                }// check if status true commit transaction and store order in database else order not stored in db
-
-                $result_data = $result['data'] ?? null;
-
-                $result = (object)[
-                    'payment_token' => $result_data,
-                    'payment_method' => PaymentMethodEnum::CREDIT
-                ];
-                return apiResponse(data: $result, message: $message, code: $status_code);
+                    if ($result['status']) {
+                        $status_code = 200;
+                        $message = null;
+                        DB::commit();
+                        $this->cartService->emptyCart($request->temp_user_id);
+                    }// check if status true commit transaction and store order in database else order not stored in db
+    
+                    $result_data = $result['data'] ?? null;
+    
+                    $result = (object)[
+                        'payment_token' => $result_data,
+                        'payment_method' => PaymentMethodEnum::CREDIT
+                    ];
+                    return apiResponse(data: $result, message: $message, code: $status_code);
+    
+                }
             }
 
             $this->cartService->emptyCart($request->temp_user_id);
@@ -155,7 +150,7 @@ class OrderController extends Controller
     public function checkPaymobPaymentStatus(Request $request): Response|Application|ResponseFactory
     {
         $result = $this->paymobService->paymentCallback($request);
-        if ($result != false) {
+        if ($result['success'] == "true"? true:false) {
             logger('merchant_order_id : ' . $result['merchant_order_id']);
             event(new OrderCreated($result));
             return apiResponse(message: trans('lang.payment_accepted'));

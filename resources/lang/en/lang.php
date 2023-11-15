@@ -376,5 +376,9 @@
 		'invoice_pending'=>'Invoice pending',
 		'invoice_completed'=>'Invoice completed',
 		'data_already_exists'=>'Data already exists',
+
+		'password_has_been_successfully_reset'=>'Password has been successfully reset',
+		'payment_accepted'=>'Payment accepted',
+		'there_is_an_error_try_again_later'=>'There is an error try again later',
 	]
 ?>

@@ -19,7 +19,7 @@ trait OrderTrait
      * @throws NotFoundException
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function storeOrder($orderData,$userAddress, User $user,$payment_type)
+    public function storeOrder($orderData,$userAddress, User $user,$payment_type, bool $include_points)
     {
 
 //    check availability stocks of products
@@ -27,8 +27,8 @@ trait OrderTrait
             if ($item->quantity > $item->product->stock)
                throw new NotFoundException(trans('lang.quantity_is_more_stock :product', ['product' => $item->product->name]));
         }
-        $deleted_at = $payment_type == PaymentMethodEnum::CREDIT ? true : null;
-        return app()->make(OrderService::class)->store(user: $user, order_data: $orderData, shipping_address: $userAddress, payment_type: $payment_type, deleted_at: $deleted_at);
+        // $deleted_at = $payment_type == PaymentMethodEnum::CREDIT ? true : null;
+        return app()->make(OrderService::class)->store(user: $user, order_data: $orderData, shipping_address: $userAddress, payment_type: $payment_type, include_points: $include_points);
     }
 
     public function setUserOfferAsOrder(User $user, array $order_data, array $items): \Illuminate\Database\Eloquent\Model

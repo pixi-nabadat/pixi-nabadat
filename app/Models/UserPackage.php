@@ -8,15 +8,14 @@ use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserPackage extends Model
 {
-    use HasFactory,Filterable,SoftDeletes;
+    use HasFactory,Filterable;
 
     protected $fillable = [
         'num_nabadat', 'price', 'center_id', 'user_id', 'package_id', 'discount_percentage',
-        'payment_method', 'payment_status', 'status', 'used', 'remain', 'deleted_at'
+        'payment_method', 'payment_status', 'status', 'used', 'remain',
     ];
 
     public function user(): BelongsTo

@@ -378,5 +378,9 @@
 		'invoice_pending'=>'فتوره قيد الانتظار',
 		'invoice_completed'=>'فتوره مكتملة',
 		'data_already_exists'=>'البيانات موجوده بالفعل',
+
+		'password_has_been_successfully_reset'=>'تم اعادة تعيين كلمة المرور',
+		'payment_accepted'=>'تم قبول الدفع',
+		'there_is_an_error_try_again_later'=>'يوجد خطاء برجاء اعادة المحاولة',
     ]
 ?>

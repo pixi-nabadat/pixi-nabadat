@@ -8,9 +8,11 @@ use App\Enum\PaymentStatusEnum;
 use App\Exceptions\NotFoundException;
 use App\Models\CouponUsage;
 use App\Models\Order;
+use App\Models\Setting;
 use App\Models\User;
 use App\QueryFilters\OrdersFilter;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 
 class OrderService extends BaseService
@@ -30,28 +32,38 @@ class OrderService extends BaseService
 
     public function queryGet(array $where_condition = [], array $withRelations = []): Builder
     {
-        $orders = Order::activeOrder()->with($withRelations)->orderBy('created_at', 'desc');
+        $orders = Order::with($withRelations)->orderBy('created_at', 'desc');
         return $orders->filter(new OrdersFilter($where_condition));
     }
 
-    public function store($user, $order_data, $shipping_address, $payment_status = PaymentStatusEnum::UNPAID, $payment_type = PaymentMethodEnum::CASH, $deleted_at = null, $relatable_id = null, $relatable_type = null)
+    public function store($user, $order_data, $shipping_address, $payment_status = PaymentStatusEnum::UNPAID, $payment_type = PaymentMethodEnum::CASH, $relatable_id = null, $relatable_type = null, bool $include_points = false)
     {
-        if (isset($deleted_at))
-            $deleted_at = Carbon::now();
-
-        $pounds_for_points =  optional($order_data)->pounds_for_points ?? 0;
+        // if (isset($deleted_at))
+        //     $deleted_at = Carbon::now();
+        $pounds_for_points = 0;
+        $min_points = Setting::get('points', 'min_change_points');
+        if ($include_points && $user->points < Setting::get('points', 'min_change_points'))
+            throw new Exception(trans('lang.min_points_to_change_is :' . $min_points . " your points is : " . $user->points));
+        if ($include_points && $user->points >= Setting::get('points', 'min_change_points')) {
+            $pounds_for_points = changePointsToPounds($user->points);
+        }
         $remain_pounds = 0;
         $grand_total = $order_data->grand_total;
-        if($order_data->grand_total >= $pounds_for_points)
+        if($include_points)
         {
-            $grand_total = $order_data->grand_total-$pounds_for_points;
-        }else{
-            $grand_total = 0;
-            $remain_pounds = $pounds_for_points - $order_data->grand_total;
+            if($order_data->grand_total >= $pounds_for_points || $pounds_for_points== 0)
+            {
+                $grand_total = $order_data->grand_total-$pounds_for_points;
+            }else{
+                $grand_total = 0;
+                $payment_status = PaymentStatusEnum::PAID;
+                $remain_pounds = $pounds_for_points - $order_data->grand_total;
+            }
+            $userPoints = changePoundsToPoints($remain_pounds);
+            $user->points = $userPoints;
+            $user->save();
         }
-        $userPoints = changePoundsToPoints($remain_pounds);
-        $user->points = $userPoints;
-        $user->save();
+        
         $order = Order::create([
             'user_id' => $user->id,
             'payment_status' => $payment_status,
@@ -63,7 +75,7 @@ class OrderService extends BaseService
             'grand_total' => $grand_total,
             'coupon_discount' => $order_data->coupon_discount,
             'points_discount' =>$pounds_for_points - $remain_pounds ,
-            'deleted_at' => $deleted_at
+            // 'deleted_at' => $deleted_at
         ]);
 
         $this->setOrderItems($order, $order_data);
@@ -88,9 +100,10 @@ class OrderService extends BaseService
 
     private function createOrderHistory(Order $order): void
     {
-       $order->history()->create([
-            'status' => Order::PENDING,
-        ]);
+        if(is_null($order->relatble_type))
+            $order->history()->create([
+                'status' => Order::PENDING,
+            ]);
     }
 
     private function updateCouponUsage($user_id, $temp_user_id, $coupon_id = null)
@@ -125,7 +138,7 @@ class OrderService extends BaseService
      */
     public function find(int $id, $with_relation = [])
     {
-        $order = Order::activeOrder()->with($with_relation)->find($id);
+        $order = Order::with($with_relation)->find($id);
         if (!$order)
             throw new NotFoundException(trans('lang.order_not_found'));
         return $order ;
@@ -146,4 +159,17 @@ class OrderService extends BaseService
             'type' => NotificationTypeEnum::ORDER
         ];
     }
+
+    public function paymentStatus($id)
+    {
+        $order = $this->find($id);
+        if($order->payment_status == PaymentStatusEnum::PAID)
+            $order->payment_status = PaymentStatusEnum::UNPAID;
+        else
+            $order->payment_status = PaymentStatusEnum::PAID;
+
+        return $order->save();
+
+    }//end of status
+
 }

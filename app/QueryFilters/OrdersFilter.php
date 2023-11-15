@@ -60,4 +60,9 @@ class OrdersFilter extends QueryFilter
     {
         return $this->builder->where('payment_status', $term);
     }
+
+    public function is_order($term)
+    {
+        return $term ? $this->builder->whereNull('relatable_type') : $this->builder->whereNotNull('relatable_type');
+    }
 }

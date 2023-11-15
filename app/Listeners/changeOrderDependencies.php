@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
+use App\Enum\UserPackageStatusEnum;
 use App\Events\OrderCreated;
 use App\Exceptions\NotFoundException;
 use App\Models\Order;
@@ -42,7 +43,7 @@ class changeOrderDependencies
         if (is_null($order_id))
             throw new NotFoundException('merchant_order_id_not_found');
 
-        $order = Order::withTrashed()->find($order_id);
+        $order = Order::find($order_id);
 
         if (!$order)
             throw new NotFoundException('merchant_order_id_not_found');
@@ -50,23 +51,23 @@ class changeOrderDependencies
         $user = User::with('nabadatWallet')->find($order->user_id);
 
         if (!is_null($order->relatable_id) && !is_null($order->relatable_type)) {
-            $userPackage = UserPackage::withTrashed()->find($order->relatable_id);
-            $userPackage->update(['deleted_at'=>null,'payment_status'=>PaymentStatusEnum::PAID]);
+            $userPackage = UserPackage::find($order->relatable_id);
+            $active_user_package = $user->package()->where('status', UserPackageStatusEnum::ONGOING)->where('payment_status', PaymentStatusEnum::PAID)->count();
+            if(!$active_user_package)
+                $status = UserPackageStatusEnum::ONGOING;
+            else
+                $status = UserPackageStatusEnum::READYFORUSE;
+    
+            $userPackage->update(['payment_status'=>PaymentStatusEnum::PAID, 'status'=>$status]);
             $this->userService->updateOrCreateNabadatWallet($user, $userPackage);
-            $order_data = [
-                'payment_status' => PaymentStatusEnum::PAID,
-                'paymob_transaction_id'=>$paymob_transaction_id
-            ];
-        }else
-            $order_data = [
-                'payment_status' => PaymentStatusEnum::PAID,
-                'paymob_transaction_id'=>$paymob_transaction_id,
-                'deleted_at' => null
-            ];
+        }
+
+        $order_data = [
+            'payment_status' => PaymentStatusEnum::PAID,
+            'paymob_transaction_id'=>$paymob_transaction_id
+        ];
 
         $order->update($order_data);
-
-        User::setPoints($user, amount: (float)$order->grand_total);
 
     }
 }
