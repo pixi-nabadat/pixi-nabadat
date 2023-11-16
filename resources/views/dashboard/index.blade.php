@@ -229,55 +229,64 @@
                     </div>
                 </div>
             </div>
-
-            {{-- start customers review --}}
             <div class="col-xs-12">
                 <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <h5>{{ trans('lang.customer_review') }}</h5>
+                            </div>
+                            <div class="col-sm-3">
+                                <a class="text-underline text-secondary" href="{{ route('rates.index') }}">{{ trans('lang.show_all') }}</a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-body">
-                        <!-- Start Section Our Team-->
-                        <section class="text-left">
-                            {{-- <div class=""> --}}
-                                <div class="container">
-                                    <h3 class="text-center">Customers Review</h3>
-                                    <div class="row">
-                                        @foreach ($customer_reviews as $review)
-                                        <div class="col-sm-1 mt-3">
+                        <div class="table table-striped table-responsive">
+                            <table>
+                                <head>
+                                    <td>#</td>
+                                    <td>{{ trans('lang.user_image') }}</td>
+                                    <td>{{ trans('lang.user_name') }}</td>
+                                    <td>{{ trans('lang.ratable_name') }}</td>
+                                    <td>{{ trans('lang.rate') }}</td>
+                                    <td>{{ trans('lang.comment') }}</td>
+                                    <td>{{ trans('lang.created_at') }}</td>
+                                </head>
+                                <body>
+                                    @foreach ($customer_reviews as $review)
+                                    <tr>
+                                        <td>{{ $review->id }}</td>
+                                        <td>
                                             <img class="img-circle img-responsive" width="50" src="{{ $review->user->image }}">
-                                        </div>
-                                        <div class="col-sm-5 mt-3">
-                                            <h4>{{ $review->user->name }}</h4>
-                                            <span>{{ $review->created_at }}</span>
-                                        </div>
-                                        <div class="col-sm-6 mt-3">
+                                        </td>
+                                        <td>{{ $review->user->name }}</td>
+                                        <td>{{ $review->ratable->name }}</td>
+                                        <td class="d-lg-none">{{ $review->rate_number }}</td>
+                                        <td class="d-none d-lg-block">
                                             @for($i=1;$i<=5;$i++)
                                                 @if($review->rate_number >= $i)
-                                                    <i class="fa fa-solid fa-star fa-2x"></i>
+                                                    <i class="fa fa-solid fa-star"></i>
                                                 @else
                                                     @if($review->rate_number >($i-1) && $review->rate_number <$i)
-                                                        <i class="fa fa-star-half fa-2x"></i>
+                                                        <i class="fa fa-star-half"></i>
                                                     @else
-                                                        <i class="fa fa-light fa-star-o fa-2x"></i>
+                                                        <i class="fa fa-light fa-star-o"></i>
                                                     @endif
                                                 @endif
 
                                             @endfor
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <h4>{{ $review->ratable->name }}</h4>
-                                            <p>{{ $review->comment }}</p>
-                                        </div>
-                                            
-                                        @endforeach
-                                    </div>
-                                    
-                                </div>
-                            {{-- </div> --}}
-                        </section>
-                        <!-- End Section Our Team-->
+                                        </td>
+                                        <td>{{ $review->comment }}</td>
+                                        <td>{{ $review->created_at }}</td>
+                                    </tr>
+                                    @endforeach
+                                </body>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-            {{-- end end customers review --}}
 
             {{-- start last customers registered --}}
             <div class="col-xs-12">

@@ -382,5 +382,8 @@
 		'password_has_been_successfully_reset'=>'تم اعادة تعيين كلمة المرور',
 		'payment_accepted'=>'تم قبول الدفع',
 		'there_is_an_error_try_again_later'=>'يوجد خطاء برجاء اعادة المحاولة',
+
+		'customer_review'=>'أراء العملاء',
+		'user_image'=>'صورة المستخدم',
     ]
 ?>

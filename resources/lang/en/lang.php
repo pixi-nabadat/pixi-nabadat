@@ -380,5 +380,7 @@
 		'password_has_been_successfully_reset'=>'Password has been successfully reset',
 		'payment_accepted'=>'Payment accepted',
 		'there_is_an_error_try_again_later'=>'There is an error try again later',
+		'customer_review'=>'Customer review',
+		'user_image'=>'User image',
 	]
 ?>
