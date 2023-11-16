@@ -252,6 +252,7 @@
                                     <td>{{ trans('lang.rate') }}</td>
                                     <td>{{ trans('lang.comment') }}</td>
                                     <td>{{ trans('lang.created_at') }}</td>
+                                    <td>{{ trans('lang.view') }}</td>
                                 </head>
                                 <body>
                                     @foreach ($customer_reviews as $review)
@@ -265,6 +266,7 @@
                                         <td>{{ $review->rate_number }}</td>
                                         <td>{{ $review->comment }}</td>
                                         <td>{{ $review->created_at }}</td>
+                                        <td><a href="{{ route("clients.show", $review->user_id) }}"><i class="btn btn-primary fa fa-eye"></i></a></td>
                                     </tr>
                                     @endforeach
                                 </body>
