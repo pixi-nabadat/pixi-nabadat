@@ -262,21 +262,7 @@
                                         </td>
                                         <td>{{ $review->user->name }}</td>
                                         <td>{{ $review->ratable->name }}</td>
-                                        <td class="d-lg-none">{{ $review->rate_number }}</td>
-                                        <td class="d-none d-lg-block">
-                                            @for($i=1;$i<=5;$i++)
-                                                @if($review->rate_number >= $i)
-                                                    <i class="fa fa-solid fa-star"></i>
-                                                @else
-                                                    @if($review->rate_number >($i-1) && $review->rate_number <$i)
-                                                        <i class="fa fa-star-half"></i>
-                                                    @else
-                                                        <i class="fa fa-light fa-star-o"></i>
-                                                    @endif
-                                                @endif
-
-                                            @endfor
-                                        </td>
+                                        <td>{{ $review->rate_number }}</td>
                                         <td>{{ $review->comment }}</td>
                                         <td>{{ $review->created_at }}</td>
                                     </tr>
