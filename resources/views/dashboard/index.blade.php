@@ -259,7 +259,7 @@
                                     <tr>
                                         <td>{{ $review->id }}</td>
                                         <td>
-                                            <img class="img-circle img-responsive" width="50" src="{{ $review->user->image }}">
+                                            <img class="b-r-10 img-responsive" width="50" src="{{ $review->user->image }}">
                                         </td>
                                         <td>{{ $review->user->name }}</td>
                                         <td>{{ $review->ratable->name }}</td>
