@@ -52,7 +52,7 @@ class changeOrderDependencies
 
         if (!is_null($order->relatable_id) && !is_null($order->relatable_type)) {
             $userPackage = UserPackage::find($order->relatable_id);
-            $active_user_package = $user->package()->where('status', UserPackageStatusEnum::ONGOING)->where('payment_status', PaymentStatusEnum::PAID)->count();
+            $active_user_package = $user->package()->where('center_id', $userPackage->center_id)->where('status', UserPackageStatusEnum::ONGOING)->where('payment_status', PaymentStatusEnum::PAID)->count();
             if(!$active_user_package)
                 $status = UserPackageStatusEnum::ONGOING;
             else

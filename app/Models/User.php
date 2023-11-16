@@ -184,9 +184,9 @@ class User extends Authenticatable
         $this->nabadatWallet->save();
     }
 
-    public function decreaseFromOffer(int $reservationPulses = 0)
+    public function decreaseFromOffer(Center $center, int $reservationPulses = 0)
     {
-        $currentOngoingPackage = $this->package()->where('status',UserPackageStatusEnum::ONGOING)->first();
+        $currentOngoingPackage = $this->package()->where('center_id', $center->id)->where('status',UserPackageStatusEnum::ONGOING)->first();
         if(!$currentOngoingPackage)
             throw new NotFoundException(trans('lang.there_is_no_enough_pulses'));
         $packageRemain = $currentOngoingPackage->remain - $reservationPulses;
@@ -203,7 +203,7 @@ class User extends Authenticatable
             if(!$status)
                 throw new NotFoundException(trans('lang.there_is_no_enough_pulses'));
             $this->decreaseUserWallet($currentPackagePulses);
-            $this->decreaseFromOffer(reservationPulses: $remainPluses);
+            $this->decreaseFromOffer(center: $center, reservationPulses: $remainPluses);
         }else{
             $currentOngoingPackage->remain -= $reservationPulses;
             $currentOngoingPackage->used += $reservationPulses;

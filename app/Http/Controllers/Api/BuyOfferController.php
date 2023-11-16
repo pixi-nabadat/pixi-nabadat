@@ -143,7 +143,7 @@ class BuyOfferController extends Controller
 
     private function getUserPackageDataForBuyOffer(Package $package, $user, $payment_status = PaymentStatusEnum::UNPAID, $payment_method = PaymentMethodEnum::CASH)
     {
-        $active_user_package = $user->package()->where('status', UserPackageStatusEnum::ONGOING)->where('payment_status', PaymentStatusEnum::PAID)->count();
+        $active_user_package = $user->package()->where('center_id', $package->center_id)->where('status', UserPackageStatusEnum::ONGOING)->where('payment_status', PaymentStatusEnum::PAID)->count();
         if (!$active_user_package)
             $status = $payment_status == PaymentStatusEnum::PAID ? UserPackageStatusEnum::ONGOING : UserPackageStatusEnum::PENDING;
         else

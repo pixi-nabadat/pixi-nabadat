@@ -131,7 +131,7 @@ class BuyCustomPulsesController extends Controller
 
     private function getUserPackageDataForCustomPulses(int $num_nabadat, $center, $user, $payment_status = PaymentStatusEnum::UNPAID, $payment_method = PaymentMethodEnum::CASH, $deleted_at = null)
     {
-        $active_user_package = $user->package()->where('status', UserPackageStatusEnum::ONGOING)->where('payment_status', PaymentStatusEnum::PAID)->count();
+        $active_user_package = $user->package()->where('center_id', $center->id)->where('status', UserPackageStatusEnum::ONGOING)->where('payment_status', PaymentStatusEnum::PAID)->count();
         if(!$active_user_package)
             $status = $payment_status == PaymentStatusEnum::PAID ? UserPackageStatusEnum::ONGOING: UserPackageStatusEnum::PENDING;
         else

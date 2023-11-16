@@ -22,6 +22,7 @@ class ReservationsResource extends JsonResource
             'check_day' => Carbon::parse($this->check_date)->locale($lang)->dayName,
             'qr_code' => $this->qr_code,
             'period' => $this->period,
+            'pulses_count'=>$this->whenLoaded('nabadatHistory',$this->nabadatHistory->sum('num_nabadat'),0),
             'customer' => $this->relationLoaded('user')?[
                 'id' => $this->user->id,
                 'name' => $this->user->name,

@@ -54,7 +54,7 @@ class ReservationHistory extends Model
             $reservation = $this->reservation;
             $reservationPulses   = $reservation->nabadatHistory->sum('num_nabadat');
             $user = $reservation->user;
-            $user->decreaseFromOffer(reservationPulses: $reservationPulses);    
+            $user->decreaseFromOffer(center: $reservation->center, reservationPulses: $reservationPulses);    
         }
     }
     protected static function boot()

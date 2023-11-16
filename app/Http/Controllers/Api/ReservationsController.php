@@ -26,7 +26,7 @@ class ReservationsController extends Controller
             $filters = $request->all();
             if (auth('sanctum')->user()->center_id == null)
                 throw new NotFoundException('route not found');
-            $withRelations = ['latestStatus', 'user'];
+            $withRelations = ['latestStatus', 'user', 'nabadatHistory'];
             $filters['center_id'] = auth('sanctum')->user()->center_id;
             $reservations = $this->reservationService->listing(filters: $filters, withRelation: $withRelations);
             return ReservationsResource::collection($reservations);
@@ -106,7 +106,7 @@ class ReservationsController extends Controller
     public function findForEdit(int $id)
     {
         try {
-            $reservation = $this->reservationService->findById($id);
+            $reservation = $this->reservationService->findById(id: $id, with: ['nabadatHistory']);
             if ($reservation)
                 return apiResponse(new ReservationsResource($reservation), trans('lang.operation_success'));
         } catch (\Exception $e) {

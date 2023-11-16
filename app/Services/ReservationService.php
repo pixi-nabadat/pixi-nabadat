@@ -42,7 +42,7 @@ class ReservationService extends BaseService
         ]);
 
         $reservation->refresh();
-        return $reservation->load('center.user:id,center_id,name,phone', 'latestStatus');
+        return $reservation->load('center.user:id,center_id,name,phone', 'latestStatus', 'nabadatHistory');
     }
 
     /**

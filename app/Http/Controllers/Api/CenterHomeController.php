@@ -22,7 +22,7 @@ class CenterHomeController extends Controller
     {
         $data=[];
         $centerId = auth('sanctum')->user()->center_id;
-        $data ['upcoming_reservations'] = ReservationsResource::collection($this->reservationService->queryGet(where_condition: ['center_id' => $centerId, 'status_in' => [Reservation::PENDING,Reservation::APPROVED]], withRelation: ['user.attachments', 'latestStatus'])->orderBy('id')->limit(10)->get());
+        $data ['upcoming_reservations'] = ReservationsResource::collection($this->reservationService->queryGet(where_condition: ['center_id' => $centerId, 'status_in' => [Reservation::PENDING,Reservation::APPROVED]], withRelation: ['user.attachments', 'latestStatus', 'nabadatHistory'])->orderBy('id')->limit(10)->get());
         $data ['finance'] = new FinanceResource($this->invoiceService->queryGet(filters: ['center_id' => $centerId, 'status' => Invoice::PENDING], withRelations: ['transactions'])->first());
         $data ['done_appointments'] =  $this->reservationService->queryGet(where_condition: ['center_id' => $centerId, 'status' => Reservation::COMPLETED])->count();
         //        return $data;
