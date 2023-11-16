@@ -31,7 +31,7 @@ class UsersDataTable extends DataTable
             ->editColumn('name', function(User $user){
                 return  $user->name ;
             })
-            ->editColumn('location', function (User $user) {
+            ->editColumn('location_id', function (User $user) {
                 return optional($user->location)->title ??"-";
             })
             ->addColumn('is_active', function(User $user){
@@ -85,7 +85,7 @@ class UsersDataTable extends DataTable
                 ->title(trans('lang.name')),
             Column::make('phone')
                 ->title(trans('lang.phone')),
-            Column::make('location')
+            Column::make('location_id')
                 ->title(trans('lang.location')),
             Column::make('points')
                 ->title(trans('lang.points'))
