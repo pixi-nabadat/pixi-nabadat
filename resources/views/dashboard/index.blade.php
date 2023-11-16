@@ -176,8 +176,8 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <div class="table">
-                            <table>
+                        <div>
+                            <table class="table table-striped table-responsive">
                                 <thead>
                                     <th>Top Selling Doctors</th>
                                 </thead>
@@ -205,8 +205,8 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <div class="table">
-                            <table>
+                        <div>
+                            <table class="table table-striped table-responsive">
                                 <thead>
                                     <th>Top Selling Products</th>
                                 </thead>
@@ -233,17 +233,17 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-sm-9">
+                            <div class="col-8">
                                 <h5>{{ trans('lang.customer_review') }}</h5>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-4">
                                 <a class="text-underline text-secondary" href="{{ route('rates.index') }}">{{ trans('lang.show_all') }}</a>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="table table-striped table-responsive">
-                            <table>
+                        <div style="overflow-x:scroll">
+                            <table class="table table-striped table-responsive">
                                 <head>
                                     <td>#</td>
                                     <td>{{ trans('lang.user_image') }}</td>
