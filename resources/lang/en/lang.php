@@ -382,5 +382,6 @@
 		'there_is_an_error_try_again_later'=>'There is an error try again later',
 		'customer_review'=>'Customer review',
 		'user_image'=>'User image',
+		'show_all'=>'Show all',
 	]
 ?>
