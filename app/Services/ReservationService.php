@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Events\PushEvent;
 use App\Exceptions\NotFoundException;
+use App\Models\FcmMessage;
 use App\Models\Reservation;
 use App\Models\User;
 use App\QueryFilters\ReservationsFilter;
@@ -42,6 +44,7 @@ class ReservationService extends BaseService
         ]);
 
         $reservation->refresh();
+        event(new PushEvent($reservation, FcmMessage::CREATE_USER_RESERVATION));
         return $reservation->load('center.user:id,center_id,name,phone', 'latestStatus', 'nabadatHistory');
     }
 
