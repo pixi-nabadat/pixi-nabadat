@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ReservationStoreRequest extends BaseRequest
+class ReservationStoreRequestApi extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,6 +32,11 @@ class ReservationStoreRequest extends BaseRequest
             'center_id'   => 'required|exists:centers,id',
             'check_date'  => 'required|date|after_or_equal:'.Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d'),
         ];
+    }
+
+    public function validationData()
+    {
+        return array_merge($this->all(),['customer_id'=>auth('sanctum')->id()]);
     }
 
     public function messages()

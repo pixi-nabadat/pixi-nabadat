@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Exceptions\NotFoundException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ReservationStoreRequest;
+use App\Http\Requests\ReservationStoreRequestApi;
 use App\Http\Requests\ReservationUpdateRequest;
 use App\Http\Resources\ReservationsResource;
 use App\Services\ReservationService;
@@ -48,10 +48,10 @@ class ReservationsController extends Controller
         }
     }
 
-    public function store(ReservationStoreRequest $reservationStoreRequest): \Illuminate\Http\Response|ReservationsResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function store(ReservationStoreRequestApi $request): \Illuminate\Http\Response|ReservationsResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $reservation = $this->reservationService->store($reservationStoreRequest->validated());
+            $reservation = $this->reservationService->store($request->validated());
             return apiResponse(data: new ReservationsResource($reservation));
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
