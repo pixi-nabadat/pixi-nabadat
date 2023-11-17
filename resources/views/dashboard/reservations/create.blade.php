@@ -39,6 +39,9 @@
                                             <option value="{{ $center->id }}">{{ $center->user->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('center_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 {{--users  --}}
                                 <div class="col-md-12 mt-3">
@@ -49,6 +52,9 @@
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('customer_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 {{--  check_date  --}}
                                 <div class="col-md-12 mt-3">
