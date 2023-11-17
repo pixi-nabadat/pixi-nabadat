@@ -5,8 +5,10 @@ namespace App\Services;
 use App\Enum\NotificationTypeEnum;
 use App\Enum\PaymentMethodEnum;
 use App\Enum\PaymentStatusEnum;
+use App\Events\PushEvent;
 use App\Exceptions\NotFoundException;
 use App\Models\CouponUsage;
+use App\Models\FcmMessage;
 use App\Models\Order;
 use App\Models\Setting;
 use App\Models\User;
@@ -131,6 +133,7 @@ class OrderService extends BaseService
         //set user points
         if ($data['status'] == Order::DELIVERED)
             User::setPoints($order->user, amount: (float)$order->grand_total);
+        event(new PushEvent(Order::find($order->id), FcmMessage::CHANGE_ORDER_STATUS));
     }
 
     /**
