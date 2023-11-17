@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderStoreRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\FcmMessage;
+use App\Models\Order;
 use App\Models\Setting;
 use App\Services\AddressService;
 use App\Services\CartService;
@@ -153,6 +154,7 @@ class OrderController extends Controller
         if ($result['success'] == "true"? true:false) {
             logger('merchant_order_id : ' . $result['merchant_order_id']);
             event(new OrderCreated($result));
+            event(new PushEvent(Order::find($result['merchant_order_id']), FcmMessage::CREATE_NEW_ORDER));
             return apiResponse(message: trans('lang.payment_accepted'));
         }
         return apiResponse(message: trans('lang.there_is_an_error_try_again_later'), code: 422);
