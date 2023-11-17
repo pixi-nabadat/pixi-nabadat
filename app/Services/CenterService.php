@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Enum\ImageTypeEnum;
+use App\Events\PushEvent;
 use App\Exceptions\NotFoundException;
 use App\Models\Center;
+use App\Models\FcmMessage;
 use App\Models\User;
 use App\QueryFilters\CentersFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -68,6 +70,7 @@ class CenterService extends BaseService
             $fileData['type'] = ImageTypeEnum::LOGO;
             $center->user->storeAttachment($fileData);
         }
+        event(new PushEvent($center, FcmMessage::DEAL_WITH_NEW_CENTER));
         return $center;
     }
 
