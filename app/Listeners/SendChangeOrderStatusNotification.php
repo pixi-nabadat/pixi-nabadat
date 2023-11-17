@@ -41,7 +41,7 @@ class SendChangeOrderStatusNotification
         //prepare data
         $user_name = $order->user->name ;
         $order_id = $order->id ;
-        $order_status = $order->orderStatus->status;
+        $order_status = $order->latestStatus->status;
         $title = $fcmMessage->title ;
         $body = $fcmMessage->content ;
         $replaced_values = [
