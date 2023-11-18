@@ -34,7 +34,7 @@
                                         @endforeach
                                     </select>
                                     @error('trigger')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -47,7 +47,7 @@
                                         @endforeach
                                     </select>
                                     @error('notification_via')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -57,7 +57,7 @@
                                         <input name="start_date" class="datepicker-here form-control digits" type="text" value="{{ $scheduleFcm->start_date }}" data-language="en" data-bs-original-title="" title="">
                                     </div>
                                     @error('start_date')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-12 my-3">
@@ -66,7 +66,7 @@
                                         <input name="end_date" class="datepicker-here form-control digits" type="text" value="{{ $scheduleFcm->end_date }}" data-language="en" data-bs-original-title="" title="">
                                     </div>
                                     @error('end_date')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -76,7 +76,7 @@
                                     <input name="title" class="form-control @error('title') is-invalid @enderror"
                                         id="title" type="text" value="{{ $scheduleFcm->title }}" required>
                                     @error('title')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -96,7 +96,7 @@
                                     <textarea name="content" class="form-control @error('content') is-invalid @enderror"
                                               id="content" type="text" required>{{ $scheduleFcm->content }}</textarea>
                                     @error('content')
-                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 

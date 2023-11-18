@@ -34,7 +34,7 @@
                                         @endforeach
                                     </select>
                                     @error('fcm_action')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -44,7 +44,7 @@
                                     <input name="title" class="form-control @error('title') is-invalid @enderror"
                                            id="title" type="text" value="{{ $fcmMessage->title }}" required>
                                     @error('title')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -64,7 +64,7 @@
                                     <textarea name="content" class="form-control @error('content') is-invalid @enderror"
                                               id="content" type="text" required>{{ $fcmMessage->content }}</textarea>
                                     @error('content')
-                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
