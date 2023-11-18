@@ -29,7 +29,7 @@
                             {{--  ratable name  --}}
                             <div class="col-md-12 d-flex my-3">
                                 <label class="form-label col-3" for="unit_price">@lang('lang.ratable_name')</label>
-                                <p class="form-control">{{ $rate->ratable_type == 'App\Models\CenterDevice' ? $rate->ratable->device->name:$rate->ratable->getTranslation('name', app()->getLocale()) }}</p>
+                                <p class="form-control">{{ $rate->ratable_type == App\Models\CenterDevice::class ? $rate->ratable->device->name:$rate->ratable->getTranslation('name', app()->getLocale()) }}</p>
                             </div>
                             {{--  comment  --}}
                             <div class="col-md-12 d-flex my-3">

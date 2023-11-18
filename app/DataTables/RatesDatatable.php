@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\CenterDevice;
 use App\Models\Rate;
 use App\Models\User;
 use App\Services\RateService;
@@ -27,7 +28,7 @@ class RatesDatatable extends DataTable
             })
 
             ->editColumn('ratable_id', function (Rate $rate) {
-                return $rate->ratable_type == 'App\Models\CenterDevice' ? $rate->ratable->device->name:$rate->ratable->getTranslation('name', app()->getLocale());
+                return $rate->ratable_type == CenterDevice::class ? $rate->ratable?->device->name:$rate->ratable->getTranslation('name', app()->getLocale());
             })
             
             ->editColumn('is_active', function (Rate $rate) {
