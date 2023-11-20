@@ -28,9 +28,8 @@ class ReservationStoreRequestApi extends BaseRequest
     {
         return [
             'customer_id' => ['required','exists:users,id', Rule::unique('reservations')->where(function ($query) {
-                return $query->where('check_date', $this->check_date)
-                ->whereNotIn('status', [Reservation::CANCELED,Reservation::Expired]);
-            })],
+                return $query->where('check_date', $this->check_date);
+            }),],
             'center_id'   => 'required|exists:centers,id',
             'check_date'  => 'required|date|after_or_equal:'.Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d'),
         ];
