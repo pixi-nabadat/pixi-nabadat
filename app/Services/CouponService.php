@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Events\PushEvent;
 use App\Models\Coupon;
+use App\Models\FcmMessage;
 use App\Models\User;
 use App\QueryFilters\CouponsFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -32,7 +34,9 @@ class CouponService extends BaseService
     {
         cache()->forget('home-api');
         $data['is_active'] = isset($data['is_active']) ? 1 : 0;
-        return Coupon::create($data);
+        $coupon = Coupon::create($data);
+        event(new PushEvent($coupon, FcmMessage::CREATE_NEW_COUPON_DISCOUNT));
+        return $coupon;
     } //end of store
 
     public function find(int $id)
