@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Events\PushEvent;
 use App\Exceptions\NotFoundException;
+use App\Models\FcmMessage;
 use App\Models\Package;
 use App\QueryFilters\PackagesFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -40,7 +42,7 @@ class CenterPackageService extends BaseService
             $fileData = FileService::saveImage(file: $data['image'], path: 'uploads/packages');
             $package->storeAttachment($fileData);
         }
-
+        event(new PushEvent($package, FcmMessage::CENTER_CREATE_NEW_OFFER));
         return true;
 
     } //end of store
