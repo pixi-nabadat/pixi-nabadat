@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Events\PushEvent;
 use App\Events\OrderCreated;
 use App\Listeners\changeOrderDependencies;
+use App\Listeners\SendCenterCreatedNotification;
+use App\Listeners\SendCenterOfferCreatedNotification;
 use App\Listeners\SendChangeOrderStatusNotification;
 use App\Listeners\SendCouponDiscountCreatedNotification;
 use App\Listeners\SendOrderCreatedNotification;
@@ -32,6 +34,8 @@ class EventServiceProvider extends ServiceProvider
             SendChangeOrderStatusNotification::class,
             SendReservationCreatedNotification::class,
             SendCouponDiscountCreatedNotification::class,
+            SendCenterCreatedNotification::class,
+            SendCenterOfferCreatedNotification::class,
         ]
     ];
 
