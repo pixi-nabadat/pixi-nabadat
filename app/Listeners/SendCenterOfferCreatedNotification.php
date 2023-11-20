@@ -37,7 +37,8 @@ class SendCenterOfferCreatedNotification
         if (!$fcmMessage)
             return;
         //prepare data
-        $center = $event->model ;
+        $package = $event->model ;
+        $center = $package->center;
         $center_user = $center->user;
         $location_name = $center_user->location->title ;
         $center_name = $center_user->name;
