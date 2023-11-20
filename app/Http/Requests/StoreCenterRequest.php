@@ -49,9 +49,9 @@ class StoreCenterRequest extends BaseRequest
             'featured'                => 'nullable|string',
             'support_payments'        => 'array|min:1',
             'support_payments.*'      => 'string|in:'.PaymentMethodEnum::CREDIT.','.PaymentMethodEnum::CASH,
-            'pulse_price'             => 'required|numeric',
-            'pulse_discount'          => 'required|numeric',
-            'app_discount'            => 'required|numeric',
+            'pulse_price'             => 'required|numeric|gt:0',
+            'pulse_discount'          => 'required|numeric|gte:0',
+            'app_discount'            => 'required|numeric|gte:0',
             'google_map_url'          => 'string|nullable',
             'status'                  => 'required|integer',
         ];

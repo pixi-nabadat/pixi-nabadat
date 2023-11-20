@@ -49,7 +49,7 @@ class StoreCenterRequestApi extends BaseRequest
             'avg_waiting_time'         => 'required',
             'support_payments'        => 'required|array|min:1',
             'support_payments.*'      => 'string|in:'.PaymentMethodEnum::CREDIT.','.PaymentMethodEnum::CASH,
-            'pulse_price'             => 'required|numeric',
+            'pulse_price'             => 'required|numeric|gt:0',
             'google_map_url'          => 'string|nullable',
         ];
     }
