@@ -105,6 +105,7 @@
                             <div class="col-md-12">
                                 <div class="col-form-label col-3">{{ __('lang.status') }}</div>
                                 <select id="status" name="status" class="form-select form-control-sm digits @error('price') is-invalid @enderror">
+                                    <option value="{{\App\Enum\PackageStatusEnum::UNDERACHIEVING}}" {{$package->getRawOriginal('status') == \App\Enum\PackageStatusEnum::UNDERACHIEVING ? 'selected' : ''}}>{{ __('lang.under_reviewing') }}</option>
                                     <option value="{{\App\Enum\PackageStatusEnum::APPROVED}}" {{$package->getRawOriginal('status') == \App\Enum\PackageStatusEnum::APPROVED ? 'selected' : ''}}>{{ __('lang.approved') }}</option>
                                     <option value="{{\App\Enum\PackageStatusEnum::REJECTED}}" {{$package->getRawOriginal('status') == \App\Enum\PackageStatusEnum::REJECTED ? 'selected' : ''}}>{{ __('lang.cancel') }}</option>
                                 </select>

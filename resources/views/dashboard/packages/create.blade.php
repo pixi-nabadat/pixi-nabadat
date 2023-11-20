@@ -104,8 +104,9 @@
                                 <div class="col-md-12">
                                     <label class="form-label">{{ __('lang.status') }}</label>
                                     <select id="status" name="status" class="js-example-basic-single col-sm-12 @error('price') is-invalid @enderror">
-                                        <option value="1">{{ __('lang.approved') }}</option>
-                                        <option value="0">{{ __('lang.cancel') }}</option>
+                                        <option value="{{ \App\Enum\PackageStatusEnum::APPROVED }}">{{ __('lang.approved') }}</option>
+                                        <option value="{{ \App\Enum\PackageStatusEnum::UNDERACHIEVING }}">{{ __('lang.under_reviewing') }}</option>
+                                        <option value="{{ \App\Enum\PackageStatusEnum::REJECTED }}">{{ __('lang.rejected') }}</option>
                                     </select>
                                     @error('status')
                                         <div class="text-danger">{{ $message }}</div>

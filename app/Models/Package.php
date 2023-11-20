@@ -42,10 +42,15 @@ class Package extends Model
         switch ($value) {
             case PackageStatusEnum::UNDERACHIEVING:
                 return trans('lang.under_reviewing');
+                break;
             case PackageStatusEnum::APPROVED:
                 return trans('lang.approved');
+                break;
             case PackageStatusEnum::REJECTED:
                 return trans('lang.rejected');
+                break;
+            default:
+                return "-";
         }
     }
 
