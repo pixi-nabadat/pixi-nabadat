@@ -111,10 +111,11 @@
                                             <div class="col-form-label col-3">{{ __('lang.next_status') }}</div>
                                             <select id="status" name="status" class="js-example-basic-single col-sm-12 @error('status') is-invalid @enderror">
                                                 <option selected disabled>...</option>
-                                                <option value="2">{{ trans('lang.confirmed') }}</option>
-                                                <option value="3">{{trans('lang.attend') }}</option>
-                                                <option value="4">{{ trans('lang.completed') }}</option>
-                                                <option value="5">{{ trans('lang.canceled') }}</option>
+                                                <option value="{{ App\Models\Reservation::APPROVED }}">{{ trans('lang.approved') }}</option>
+                                                <option value="{{ App\Models\Reservation::CONFIRMED }}">{{ trans('lang.confirmed') }}</option>
+                                                <option value="{{ App\Models\Reservation::ATTEND }}">{{trans('lang.attend') }}</option>
+                                                <option value="{{ App\Models\Reservation::COMPLETED }}">{{ trans('lang.completed') }}</option>
+                                                <option value="{{ App\Models\Reservation::CANCELED }}">{{ trans('lang.canceled') }}</option>
                                             </select>
                                             @error('status')
                                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
