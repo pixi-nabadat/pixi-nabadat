@@ -289,7 +289,7 @@
 		'create_new_order'=>'انشاء طلب جديد',
 		'change_order_status'=>'تغيير حالة الطلب',
 		'create_user_reservation'=>'انشاء حجز',
-		'cancel_center_reservation'=>'الغاء حجز',
+		'change_reservaion_status' =>'تغيير حالة الحجز',
 		'complete_user_reservation'=>'استكمال حجز',
 		'deal_with_new_center'=>'تعامل مع المركز الجديد',
 		'center_create_new_offer'=>'المركز انشاء عرض جديد',

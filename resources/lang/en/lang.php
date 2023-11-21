@@ -287,7 +287,7 @@
 		'create_new_order'=>'Create new order',
 		'change_order_status'=>'Change order status',
 		'create_user_reservation'=>'Create user reservation',
-		'cancel_center_reservation'=>'Cancel center reservation',
+		'change_reservation_status'=>'Change reservation status',
 		'complete_user_reservation'=>'Complete user reservation',
 		'deal_with_new_center'=>'Deal with new center',
 		'center_create_new_offer'=>'Center create new offer',

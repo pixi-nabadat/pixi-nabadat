@@ -10,7 +10,7 @@ use App\Services\PushNotificationService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SendReservationCanceledNotification
+class SendReservationStatusNotification
 {
     /**
      * Create the event listener.
@@ -30,20 +30,21 @@ class SendReservationCanceledNotification
      */
     public function handle(PushEvent $event)
     {
-        if (is_null($event->type) or $event->type != FcmMessage::CANCEL_CENTER_RESERVATION)
+        if (is_null($event->type) or $event->type != FcmMessage::CHANGE_RESERVATION_STATUS)
             return ;
 //        check if there is  an active fcm message for create order action
-        $fcmMessage = FcmMessage::query()->where('is_active',true)->where('fcm_action',FcmMessage::CANCEL_CENTER_RESERVATION)->first();
+        $fcmMessage = FcmMessage::query()->where('is_active',true)->where('fcm_action',FcmMessage::CHANGE_RESERVATION_STATUS)->first();
         if (!$fcmMessage)
             return;
 
         //prepare FCM data
-        $reservation = $event->model ;
+        $reservationHistory = $event->model;
+        $reservation = $reservationHistory->reservation;
         $user = $reservation->user;
         $center = $reservation->center;
         $user_name = $user->name ;
         $reservation_number = $reservation->id ;
-        $reservation_status = trans('lang.canceled');
+        $reservation_status = $reservationHistory->status;
         $center_name = $center->user->name;
 
         $body = $fcmMessage->content ;

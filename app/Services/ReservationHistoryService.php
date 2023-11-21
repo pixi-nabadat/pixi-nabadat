@@ -52,8 +52,7 @@ class ReservationHistoryService extends BaseService
             $reservation->update(Arr::except($reservation_data,['status', 'added_by']));
         $reservationHistory->completeReservation();
         $reservation->refresh();
-        if($status == Reservation::CANCELED)
-            event(new PushEvent($reservation, FcmMessage::CANCEL_CENTER_RESERVATION));
+        event(new PushEvent($reservationHistory, FcmMessage::CHANGE_RESERVATION_STATUS));
         DB::commit();
         return true;
     }

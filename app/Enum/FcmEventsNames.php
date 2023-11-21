@@ -21,7 +21,7 @@ class FcmEventsNames
         'CREATE_NEW_ORDER'              =>'create_new_order',
         'CHANGE_ORDER_STATUS'           =>'change_order_status',
         'CREATE_USER_RESERVATION'       =>'create_user_reservation',
-        'CANCEL_CENTER_RESERVATION'     =>'cancel_center_reservation',
+        'CHANGE_RESERVATION_STATUS'     =>'change_reservation_status',
         'COMPLETE_USER_RESERVATION'     =>'complete_user_reservation',
         'DEAL_WITH_NEW_CENTER'          =>'deal_with_new_center',
         'CENTER_CREATE_NEW_OFFER'       =>'center_create_new_offer',
