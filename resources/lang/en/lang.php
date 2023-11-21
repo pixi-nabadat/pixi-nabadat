@@ -383,5 +383,10 @@
 		'customer_review'=>'Customer review',
 		'user_image'=>'User image',
 		'show_all'=>'Show all',
+		'one_day_before_reservation' =>'One day before reservation',
+        'two_days_before_reservation' =>'Two days before reservation',
+        'nabadat_not_used_for_3_days' =>'Nabadat not used for 3 days',
+        'nabadat_not_used_for_7_days' =>'Nabadat not used for 7 days',
+        'nabadat_not_used_for_11_days' =>'Nabadat not used for 11 days',
 	]
 ?>

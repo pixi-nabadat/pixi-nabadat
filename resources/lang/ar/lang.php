@@ -386,5 +386,10 @@
 		'customer_review'=>'أراء العملاء',
 		'user_image'=>'صورة المستخدم',
 		'show_all'=>'عرض الكل',
+		'one_day_before_reservation' =>'قبل الحجز بيوم',
+        'two_days_before_reservation' =>'قبل الحجز بيومين',
+        'nabadat_not_used_for_3_days' =>'النبضات لم تستخدم لمدة 3 ايام',
+        'nabadat_not_used_for_7_days' =>'النبضات لم تستخدم لمدة 7 ايام',
+        'nabadat_not_used_for_11_days' =>'النبضات لم تستخدم لمدة 11 يوم',
     ]
 ?>

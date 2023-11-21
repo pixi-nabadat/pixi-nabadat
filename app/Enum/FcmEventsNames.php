@@ -9,12 +9,12 @@ class FcmEventsNames
         'EXPIRE_POINTS_BEFORE_3'        =>'expire_points_before_three_day',
         'EXPIRE_POINTS_BEFORE_7'        =>'expire_points_before_seven_day',
 
-        'ONE_DAY_BEFORE_RESERVATION'    =>'One day before reservation',
-        'TWO_DAYS_BEFORE_RESERVATION'   =>'two days before reservation',
+        'ONE_DAY_BEFORE_RESERVATION'    =>'one_day_before_reservation',
+        'TWO_DAYS_BEFORE_RESERVATION'   =>'two_days_before_reservation',
 
-        'NABADAT_NOT_USED_FOR_3'        =>'nabadat not used for 3 days',
-        'NABADAT_NOT_USED_FOR_7'        =>'nabadat not used for 7 days',
-        'NABADAT_NOT_USED_FOR_11'       =>'nabadat not used for 11 days',
+        'NABADAT_NOT_USED_FOR_3'        =>'nabadat_not_used_for_3_days',
+        'NABADAT_NOT_USED_FOR_7'        =>'nabadat_not_used_for_7_days',
+        'NABADAT_NOT_USED_FOR_11'       =>'nabadat_not_used_for_11_days',
     ];
 
     public static array $FCMACTIONS = [
