@@ -31,8 +31,6 @@ class ScheduleFcmService extends BaseService
     }
     public function store(array $data = [])
     {
-        $data['start_date'] = Carbon::parse($data['start_date']);
-        $data['end_date']   = Carbon::parse($data['end_date']);
         $data['is_active']  = isset($data['is_active'])? 1:0;
         $scheduleFcm = ScheduleFcm::create($data);
         return $scheduleFcm;
@@ -46,8 +44,6 @@ class ScheduleFcmService extends BaseService
         $scheduleFcm = $this->find($id);
         if (!$scheduleFcm)
             throw new NotFoundException(trans('lang.schedule_fcm_not_found'));
-        $data['start_date'] = Carbon::parse($data['start_date']);
-        $data['end_date']   = Carbon::parse($data['end_date']);
         $data['is_active']  = isset($data['is_active'])? 1:0;
         return $scheduleFcm->update($data);
     }

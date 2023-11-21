@@ -76,14 +76,6 @@ class ScheduleFcmDatatable extends DataTable
                 ->orderable(false),
             Column::make('trigger')
                 ->title(trans('lang.trigger')),
-            Column::make('start_date')
-                ->title(trans('lang.start_date'))
-                ->searchable(false)
-                ->orderable(false),
-            Column::make('end_date')
-                ->title(trans('lang.end_date'))
-                ->searchable(false)
-                ->orderable(false),
             Column::make('notification_via')
                 ->title(trans('lang.notification_via'))
                 ->searchable(true)

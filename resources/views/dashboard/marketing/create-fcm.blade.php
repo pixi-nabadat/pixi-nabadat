@@ -56,25 +56,6 @@
                                                 @enderror
                                             </div>
             
-                                            <div class="col-md-12 my-3">
-                                                <div class="col-form-label col-3">{{ __('lang.start_date') }}</div>
-                                                <div class="input-group">
-                                                    <input name="start_date" class="datepicker-here form-control digits" type="text" data-language="en" data-bs-original-title="" title="">
-                                                </div>
-                                                @error('start_date')
-                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                            <div class="col-md-12 my-3">
-                                                <div class="col-form-label col-3">{{ __('lang.end_date') }}</div>
-                                                <div class="input-group">
-                                                    <input name="end_date" class="datepicker-here form-control digits" type="text" data-language="en" data-bs-original-title="" title="">
-                                                </div>
-                                                @error('end_date')
-                                                <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-
                                             {{-- title --}}
                                             <div class="col-md-12">
                                                 <label class="form-label" for="title">{{ trans('lang.title') }}</label>

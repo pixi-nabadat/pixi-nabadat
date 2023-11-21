@@ -11,7 +11,7 @@ class ScheduleFcm extends Model
 {
     use HasFactory, Filterable;
     protected $fillable = [
-        'title', 'content', 'trigger', 'start_date', 'end_date', 'notification_via', 'is_active',
+        'title', 'content', 'trigger', 'notification_via', 'is_active',
     ];
 
     public static function ReservationCheckDateReminderFcm(ScheduleFcm $scheduleFcm, $reservations = [])
