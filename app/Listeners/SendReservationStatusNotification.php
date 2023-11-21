@@ -44,7 +44,7 @@ class SendReservationStatusNotification
         $center = $reservation->center;
         $user_name = $user->name ;
         $reservation_number = $reservation->id ;
-        $reservation_status = $reservationHistory->status;
+        $reservation_status = $reservation->latestStatus->status;
         $center_name = $center->user->name;
 
         $body = $fcmMessage->content ;
