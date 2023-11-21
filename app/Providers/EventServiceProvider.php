@@ -10,6 +10,7 @@ use App\Listeners\SendCenterOfferCreatedNotification;
 use App\Listeners\SendChangeOrderStatusNotification;
 use App\Listeners\SendCouponDiscountCreatedNotification;
 use App\Listeners\SendOrderCreatedNotification;
+use App\Listeners\SendReservationCanceledNotification;
 use App\Listeners\SendReservationCreatedNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -36,6 +37,7 @@ class EventServiceProvider extends ServiceProvider
             SendCouponDiscountCreatedNotification::class,
             SendCenterCreatedNotification::class,
             SendCenterOfferCreatedNotification::class,
+            SendReservationCanceledNotification::class,
         ]
     ];
 

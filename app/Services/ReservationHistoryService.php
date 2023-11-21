@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Events\PushEvent;
 use App\Exceptions\StatusNotEquelException;
+use App\Models\FcmMessage;
 use App\Models\Reservation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -50,6 +52,8 @@ class ReservationHistoryService extends BaseService
             $reservation->update(Arr::except($reservation_data,['status', 'added_by']));
         $reservationHistory->completeReservation();
         $reservation->refresh();
+        if($status == Reservation::CANCELED)
+            event(new PushEvent($reservation, FcmMessage::CANCEL_CENTER_RESERVATION));
         DB::commit();
         return true;
     }
