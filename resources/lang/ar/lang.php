@@ -391,5 +391,11 @@
         'nabadat_not_used_for_3_days' =>'النبضات لم تستخدم لمدة 3 ايام',
         'nabadat_not_used_for_7_days' =>'النبضات لم تستخدم لمدة 7 ايام',
         'nabadat_not_used_for_11_days' =>'النبضات لم تستخدم لمدة 11 يوم',
+		'there_is_no_items_to_create_order'=>'لا يوجد منتجات لانشاء الطلب',
+		'already_has_reservation_for_this_day'=>'يوجد حجز فى هذا اليوم',
+		'there_is_another_reservation'=>'يوجد حجز اخر',
+		'title_in_ar_should_be_required'=>'العنوان باللغه العربية مطلوب',
+		'location_should_be_required'=>'الموقع مطلوب',
+		'add_notification'=>'اضافة اشعال',
     ]
 ?>

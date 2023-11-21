@@ -41,7 +41,7 @@ class DoctorUpdateRequest extends BaseRequest
     {
         return [
             'title.*.string' => __('lang.title_en_should_be_string'),
-            'title.*.required' => __('lang.title_in_ar__should_be_required'),
+            'title.*.required' => __('lang.title_in_ar_should_be_required'),
         ];
     }
 

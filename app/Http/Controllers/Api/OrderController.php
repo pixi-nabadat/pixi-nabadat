@@ -71,7 +71,7 @@ class OrderController extends Controller
             $orderData = app()->make(CartService::class)->getCart($request->temp_user_id);
 
             if ($orderData->items->isEmpty())
-                throw new BadRequestHttpException(trans('lang.there_is_no-items_to_create_order'), 422);
+                throw new BadRequestHttpException(trans('lang.there_is_no_items_to_create_order'), 422);
 
             //2-get address info
             $userAddress = app()->make(AddressService::class)->find(id: $request->address_id, withRelations: ['city:id,title,shipping_cost', 'user:id,name,phone,email']);

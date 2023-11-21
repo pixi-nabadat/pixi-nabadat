@@ -388,5 +388,11 @@
         'nabadat_not_used_for_3_days' =>'Nabadat not used for 3 days',
         'nabadat_not_used_for_7_days' =>'Nabadat not used for 7 days',
         'nabadat_not_used_for_11_days' =>'Nabadat not used for 11 days',
+		'there_is_no_items_to_create_order'=>'There is no items to create order',
+		'already_has_reservation_for_this_day'=>'Already has reservation for this day',
+		'there_is_another_reservation'=>'There is another reservation',
+		'title_in_ar_should_be_required'=>'Title in ar should be required',
+		'location_should_be_required'=>'Location should be required',
+		'add_notification'=>'Add notification',
 	]
 ?>

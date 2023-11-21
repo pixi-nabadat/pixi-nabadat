@@ -63,7 +63,7 @@ class UpdateCenterRequest extends BaseRequest
     {
         return [
             'phone.*.string' => __('lang.phone_en_should_be_string'),
-            'name.*.required' => __('lang.title_in_ar__should_be_required'),
+            'name.*.required' => __('lang.title_in_ar_should_be_required'),
             'location_id.required' => __('lang.location_should_be_required'),
         ];
     }
