@@ -168,7 +168,7 @@
                                     <div class="col-md-12 mb-3">
                                         <div class="col-form-label">{{ trans('lang.city') }}</div>
                                         <select name="location_id" class="form-select form-control mb-3 @error('location_id') is-invalid @enderror" id="city">
-                                            <option value="{{ $client->location_id }}" selected>{{ $client->location->getTranslation('title', app()->getLocale()) }}</option>
+                                            <option value="{{ $client->location_id }}" selected>{{ optional($client->location)->getTranslation('title', app()->getLocale()) }}</option>
                                         </select>
                                         @error('location_id')
                                             <div class="invalid-feedback">{{ $message }}</div>
