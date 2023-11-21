@@ -52,6 +52,7 @@
             <!-- Zero Configuration  Starts-->
             <div class="col-sm-12">
                 <div class="card">
+                    {{-- TODO: add the fcm permission to create fcm --}}
                     <div class="card-header">
                         <h5><a role="button" class="btn btn-primary " href={{ route('fcm-messages.create')}}><i class="fa fa-plus-circle"></i>{{trans('lang.add_notification')}}</a></h5>
                     </div>
