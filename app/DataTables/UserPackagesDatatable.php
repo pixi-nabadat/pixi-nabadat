@@ -29,6 +29,7 @@ class UserPackagesDatatable extends DataTable
                     UserPackageStatusEnum::READYFORUSE => trans('lang.ready_for_use'),
                     UserPackageStatusEnum::PENDING => trans('lang.pending'),
                     UserPackageStatusEnum::COMPLETED => trans('lang.completed'),
+                    UserPackageStatusEnum::EXPIRED => trans('lang.expired'),
 
                 };
             })

@@ -8,4 +8,5 @@ class UserPackageStatusEnum
     const READYFORUSE = 2;
     const ONGOING     = 3;
     const COMPLETED   = 4;
+    const EXPIRED     = 5;
 }
