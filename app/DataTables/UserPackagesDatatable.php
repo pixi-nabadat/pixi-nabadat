@@ -24,14 +24,7 @@ class UserPackagesDatatable extends DataTable
                 return $userPackage->user->name;
             })
             ->editColumn('status', function (UserPackage $userPackage) {
-                return match((int)$userPackage->status){
-                    UserPackageStatusEnum::ONGOING => trans('lang.ongoing'),
-                    UserPackageStatusEnum::READYFORUSE => trans('lang.ready_for_use'),
-                    UserPackageStatusEnum::PENDING => trans('lang.pending'),
-                    UserPackageStatusEnum::COMPLETED => trans('lang.completed'),
-                    UserPackageStatusEnum::EXPIRED => trans('lang.expired'),
-
-                };
+                return $userPackage->getStatusAsString($userPackage->status);
             })
             ->addColumn('center_id', function (UserPackage $userPackage) {
                 return $userPackage->center->name;
