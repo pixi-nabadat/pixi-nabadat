@@ -53,6 +53,18 @@ class UserPackage extends Model
         }
     }
 
+    public function getStatusAsString(int $status)
+    {
+        return match((int)$status){
+            UserPackageStatusEnum::ONGOING => trans('lang.ongoing'),
+            UserPackageStatusEnum::READYFORUSE => trans('lang.ready_for_use'),
+            UserPackageStatusEnum::PENDING => trans('lang.pending'),
+            UserPackageStatusEnum::COMPLETED => trans('lang.completed'),
+            UserPackageStatusEnum::EXPIRED => trans('lang.expired'),
+
+        };
+    }
+
     protected static function boot()
     {
         parent::boot();

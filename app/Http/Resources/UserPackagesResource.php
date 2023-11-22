@@ -24,9 +24,10 @@ class UserPackagesResource extends JsonResource
             'price_after_discount' =>$this->price - ($this->price *($this->discount_percentage/100)),
             'payment_method'      => $this->payment_method,
             'payment_status'      => $this->payment_status,
-            'usage_status'        => $this->usage_status,
+            'status'              => $this->getStatusAsString($this->status),
             'used'                => $this->used,
             'remain'              => $this->remain,
+            'expire_date'         => $this->expire_date,
         ];
     }
 }
