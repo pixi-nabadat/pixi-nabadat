@@ -121,6 +121,17 @@
                                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
                                             @enderror
                                         </div> 
+                                        {{--check_date  --}}
+                                        <div class="media mb-2">
+                                            <div class="col-form-label col-3">{{ __('lang.check_date') }}</div>
+                                            <div>
+                                                <input type="date" name="check_date" value="{{ $reservation->check_date }}" class="form-control">
+                                                @error('check_date')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                        </div>
                                         {{--period  --}}
                                         <div class="media mb-2">
                                             <div class="col-form-label col-3">{{ __('lang.period') }}</div>
