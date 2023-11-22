@@ -25,7 +25,7 @@ return new class extends Migration
             $table->double('discount_percentage')->default(0);
             $table->enum('payment_method',[PaymentMethodEnum::CASH,PaymentMethodEnum::CREDIT]);
             $table->enum('payment_status',[PaymentStatusEnum::PAID,PaymentStatusEnum::UNPAID]);
-            $table->enum('status',[\App\Enum\UserPackageStatusEnum::PENDING,\App\Enum\UserPackageStatusEnum::READYFORUSE,\App\Enum\UserPackageStatusEnum::ONGOING,\App\Enum\UserPackageStatusEnum::COMPLETED]);
+            $table->enum('status',[\App\Enum\UserPackageStatusEnum::PENDING,\App\Enum\UserPackageStatusEnum::READYFORUSE,\App\Enum\UserPackageStatusEnum::ONGOING,\App\Enum\UserPackageStatusEnum::COMPLETED,\App\Enum\UserPackageStatusEnum::EXPIRED]);
             $table->integer('used')->default(0);
             $table->integer('remain')->default(0);
             $table->date('expire_date')->nullable();
