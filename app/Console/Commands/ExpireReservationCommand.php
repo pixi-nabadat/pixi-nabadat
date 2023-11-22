@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Events\PushEvent;
+use App\Models\FcmMessage;
 use App\Models\Reservation;
 use App\Models\User;
 use Carbon\Carbon;
@@ -44,6 +46,7 @@ class ExpireReservationCommand extends Command
                     'status' => Reservation::Expired
                 ]);
                 $reservation->save();
+                event(new PushEvent($reservation, FcmMessage::CHANGE_RESERVATION_STATUS));
             }
         }
         return Command::SUCCESS;

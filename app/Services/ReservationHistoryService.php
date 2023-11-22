@@ -52,7 +52,7 @@ class ReservationHistoryService extends BaseService
             $reservation->update(Arr::except($reservation_data,['status', 'added_by']));
         $reservationHistory->completeReservation();
         $reservation->refresh();
-        event(new PushEvent($reservationHistory, FcmMessage::CHANGE_RESERVATION_STATUS));
+        event(new PushEvent($reservation, FcmMessage::CHANGE_RESERVATION_STATUS));
         DB::commit();
         return true;
     }

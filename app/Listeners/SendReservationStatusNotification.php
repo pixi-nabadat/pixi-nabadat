@@ -38,8 +38,7 @@ class SendReservationStatusNotification
             return;
 
         //prepare FCM data
-        $reservationHistory = $event->model;
-        $reservation = $reservationHistory->reservation;
+        $reservation = $event->model;
         $user = $reservation->user;
         $center = $reservation->center;
         $user_name = $user->name ;
