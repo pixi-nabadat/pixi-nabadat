@@ -70,7 +70,7 @@ class UserPackageController extends Controller
             $withRelations = [];
             $userPackage = $this->userPackageService->find($id, $withRelations);
             $userPackage = new UserPackagesResource($userPackage);
-            return apiResponse(data: $userPackage, message: trans('lang.operation_success'), code: 200);
+            return apiResponse(data: $userPackage, message: trans('lang.success_operation'), code: 200);
         } catch (Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }

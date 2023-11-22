@@ -23,7 +23,7 @@ class ReservationHistoryController extends Controller
             if($reservation){
                 $reservationHistoryData = $request->validated();
                 $response = $this->reservationHistoryService->store($reservation, $reservationHistoryData);
-                $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.operation_success')];
+                $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.success_operation')];
                 return redirect()->route('reservations.index')->with('toast', $toast);
             }
         } catch (Exception $ex) {

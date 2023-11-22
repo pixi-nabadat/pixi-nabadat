@@ -64,7 +64,7 @@ class ReservationsController extends Controller
             $withRelations = ['latestStatus', 'nabadatHistory', 'user.attachments', 'center.defaultLogo'];
             $reservation = $this->reservationService->findById($id, $withRelations);
             if ($reservation)
-                return apiResponse(new ReservationsResource($reservation), trans('lang.operation_success'));
+                return apiResponse(new ReservationsResource($reservation), trans('lang.success_operation'));
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
@@ -87,7 +87,7 @@ class ReservationsController extends Controller
             $withRelations = ['latestStatus', 'nabadatHistory', 'user.attachments', 'center.defaultLogo'];
             $reservation = $this->reservationService->findByQrCode($id, $withRelations);
             if ($reservation)
-                return apiResponse(new ReservationsResource($reservation), trans('lang.operation_success'));
+                return apiResponse(new ReservationsResource($reservation), trans('lang.success_operation'));
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
@@ -97,7 +97,7 @@ class ReservationsController extends Controller
     {
         try {
             $this->reservationService->destroy($id);
-            return apiResponse(message: trans('lang.operation_success'));
+            return apiResponse(message: trans('lang.success_operation'));
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }
@@ -108,7 +108,7 @@ class ReservationsController extends Controller
         try {
             $reservation = $this->reservationService->findById(id: $id, with: ['nabadatHistory']);
             if ($reservation)
-                return apiResponse(new ReservationsResource($reservation), trans('lang.operation_success'));
+                return apiResponse(new ReservationsResource($reservation), trans('lang.success_operation'));
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
         }

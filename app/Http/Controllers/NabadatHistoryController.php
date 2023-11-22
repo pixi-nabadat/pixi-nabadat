@@ -25,7 +25,7 @@ class NabadatHistoryController extends Controller
         try{
             $request = $request->validated();
             $data = $this->nabadatHistoryService->store($request);
-            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.operation_success')];
+            $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.success_operation')];
             return redirect()->route('reservations.index')->with('toast', $toast);
         } catch (Exception $ex) {
             $toast = ['type' => 'error', 'title' => 'error', 'message' => $ex->getMessage(),];

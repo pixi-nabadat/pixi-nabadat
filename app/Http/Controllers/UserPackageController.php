@@ -64,7 +64,7 @@ class UserPackageController extends Controller
             $userPackage = $this->userPackageService->find($id, $withRelations);
             if ($userPackage) {
                 $userPackage = new UserPackagesResource($userPackage);
-                return apiResponse(data: $userPackage, message: trans('lang.operation_success'), code: 200);
+                return apiResponse(data: $userPackage, message: trans('lang.success_operation'), code: 200);
             } else
                 return apiResponse(data: null, message: trans('lang.error_has_occurred'), code: 422);
 
