@@ -99,6 +99,10 @@ class UserPackagesDatatable extends DataTable
                 ->title(trans('lang.remain'))
                 ->searchable(false)
                 ->orderable(false),
+            Column::make('expire_date')
+                ->title(trans('lang.expire_date'))
+                ->searchable(false)
+                ->orderable(false),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

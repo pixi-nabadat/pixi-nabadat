@@ -193,13 +193,13 @@ class User extends Authenticatable
         if($packageRemain == 0)
         {
             $currentPackagePulses = $currentOngoingPackage->remain;
-            $status = UserPackage::getNextReadyPackage($this);
+            $status = UserPackage::getNextReadyPackage(user: $this, center_id: $center->id);
             $this->decreaseUserWallet($currentPackagePulses);
         }else if($packageRemain < 0)
         {
             $currentPackagePulses = $currentOngoingPackage->remain;
             $remainPluses = $reservationPulses - $currentOngoingPackage->remain;
-            $status = UserPackage::getNextReadyPackage($this);
+            $status = UserPackage::getNextReadyPackage(user: $this, center_id: $center->id);
             if(!$status)
                 throw new NotFoundException(trans('lang.there_is_no_enough_pulses'));
             $this->decreaseUserWallet($currentPackagePulses);

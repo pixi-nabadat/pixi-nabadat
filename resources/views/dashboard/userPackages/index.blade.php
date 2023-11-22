@@ -108,9 +108,7 @@
                     </div>
                     @endcan
                     <div class="card-body">
-                        <div class="table">
                             {!! $dataTable->table(['class'=>'table table-data table-striped table-bordered']) !!}
-                        </div>
                     </div>
                 </div>
             </div>

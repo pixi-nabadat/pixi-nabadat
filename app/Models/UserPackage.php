@@ -15,7 +15,7 @@ class UserPackage extends Model
 
     protected $fillable = [
         'num_nabadat', 'price', 'center_id', 'user_id', 'package_id', 'discount_percentage',
-        'payment_method', 'payment_status', 'status', 'used', 'remain',
+        'payment_method', 'payment_status', 'status', 'used', 'remain', 'expire_date',
     ];
 
     public function user(): BelongsTo
@@ -33,16 +33,16 @@ class UserPackage extends Model
         return $this->belongsTo(Center::class)->with('user:id,center_id,name');
     }
 
-    public static function getNextReadyPackage(User $user): bool
+    public static function getNextReadyPackage(User $user, int $center_id): bool
     {
-        $currentOngoingPackage = $user->package()->where('status',UserPackageStatusEnum::ONGOING)->first();
+        $currentOngoingPackage = $user->package()->where('center_id', $center_id)->where('status',UserPackageStatusEnum::ONGOING)->first();
         $currentOngoingPackage->remain = 0;
         $currentOngoingPackage->used = $currentOngoingPackage->num_nabadat;
         $currentOngoingPackage->status = UserPackageStatusEnum::COMPLETED;
         $currentOngoingPackage->save();
         $currentOngoingPackage->refresh();
 
-        $nextOngoingPackage = $user->package()->where('status',UserPackageStatusEnum::READYFORUSE)->orderBy('id','desc')->first();
+        $nextOngoingPackage = $user->package()->where('center_id', $center_id)->where('status',UserPackageStatusEnum::READYFORUSE)->orderBy('id','desc')->first();
         if(!$nextOngoingPackage)
         {
             return false;

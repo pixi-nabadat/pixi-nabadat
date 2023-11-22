@@ -397,5 +397,6 @@
 		'title_in_ar_should_be_required'=>'العنوان باللغه العربية مطلوب',
 		'location_should_be_required'=>'الموقع مطلوب',
 		'add_notification'=>'اضافة اشعال',
+		'expire_date'=>'تاريخ الانتهاء',
     ]
 ?>

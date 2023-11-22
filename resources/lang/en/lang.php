@@ -394,5 +394,6 @@
 		'title_in_ar_should_be_required'=>'Title in ar should be required',
 		'location_should_be_required'=>'Location should be required',
 		'add_notification'=>'Add notification',
+		'expire_date'=>'Expire date',
 	]
 ?>

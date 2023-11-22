@@ -42,7 +42,7 @@ class UserPackageService extends BaseService
             throw new NotFoundException(trans("lang.offers_not_found_or_package_paid"));
         if($userPackage->payment_status == PaymentStatusEnum::PAID)
             throw new NotFoundException(trans("lang.package_is_paid"));
-        $ongoingPackage = $userPackage->user->package->where('status', UserPackageStatusEnum::ONGOING)->first();
+        $ongoingPackage = $userPackage->user->package->where('center_id', $data['center_id'])->where('status', UserPackageStatusEnum::ONGOING)->first();
         if(!$ongoingPackage)
             $data['status'] = $data['payment_status'] == PaymentStatusEnum::PAID ? UserPackageStatusEnum::ONGOING: UserPackageStatusEnum::PENDING;
         else
@@ -54,6 +54,8 @@ class UserPackageService extends BaseService
         $user = $userPackage->user;
         if($currentUserPackageStatus == PaymentStatusEnum::UNPAID && $data['payment_status'] == PaymentStatusEnum::PAID)
         {
+            $userPackage->expire_date = Carbon::now()->setTimezone('Africa/Cairo')->addYear()->format('Y-m-d');
+            $userPackage->save();
             app()->make(UserService::class)->updateOrCreateNabadatWallet(user: $user, userPackage: $userPackage);
         }
         return $userPackage;
@@ -68,7 +70,7 @@ class UserPackageService extends BaseService
         $user = User::find($data['user_id']);
         if(!$user)
             throw new NotFoundException(trans('lang.user_not_found'));
-        $userPackages = $user->package->where('status', UserPackageStatusEnum::ONGOING)->first();
+        $userPackages = $user->package->where('center_id', $data['center_id'])->where('status', UserPackageStatusEnum::ONGOING)->first();
         if(!$userPackages)
             $data['status'] = $data['payment_status'] == PaymentStatusEnum::PAID ? UserPackageStatusEnum::ONGOING: UserPackageStatusEnum::PENDING;
         else
@@ -77,6 +79,8 @@ class UserPackageService extends BaseService
         $userPackage = UserPackage::create($data);
         if($data['payment_status'] == PaymentStatusEnum::PAID)
         {
+            $userPackage->expire_date = Carbon::now()->setTimezone('Africa/Cairo')->addYear()->format('Y-m-d');
+            $userPackage->save();
             app()->make(UserService::class)->updateOrCreateNabadatWallet(user: $user, userPackage: $userPackage);
         }
         /**
