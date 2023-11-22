@@ -14,7 +14,7 @@ class ExpireUserPackageCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'userpackage:expire';
+    protected $signature = 'user-package:expire';
 
     /**
      * The console command description.
