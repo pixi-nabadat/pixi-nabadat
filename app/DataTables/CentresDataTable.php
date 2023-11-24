@@ -18,7 +18,7 @@ class CentresDataTable extends DataTable
                 'action', function (Center $center) {
                 return view('dashboard.centers.action', compact('center'))->render();
             })
-            ->addColumn('name', function (Center $center) {
+            ->editColumn('name', function (Center $center) {
                 return $center->user->name;
             })
             ->editColumn('address', function (Center $center) {
@@ -30,7 +30,7 @@ class CentresDataTable extends DataTable
             ->editColumn('phones', function (Center $center) {
                 return view('dashboard.centers._phones_column',compact('center'))->render();
             })
-            ->addColumn('featured', function(Center $center){
+            ->editColumn('featured', function(Center $center){
                 return view('dashboard.components.switch-featured-btn',['model'=>$center,'url'=>route('centers.featured')])->render();
             })
             ->editColumn('is_active', function (Center $center) {
@@ -87,7 +87,7 @@ class CentresDataTable extends DataTable
             Column::make('address')
                 ->title(trans('lang.address')),
             Column::make('phones')
-                ->searchable(false)
+                ->searchable(true)
                 ->orderable(false)
                 ->title(trans('lang.phones')),
             Column::make('pulse_price')
