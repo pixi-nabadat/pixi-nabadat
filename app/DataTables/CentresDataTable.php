@@ -19,7 +19,7 @@ class CentresDataTable extends DataTable
                 return view('dashboard.centers.action', compact('center'))->render();
             })
             ->editColumn('name', function (Center $center) {
-                return $center->user->name;
+                return $center->name;
             })
             ->editColumn('address', function (Center $center) {
                 return $center->address;
