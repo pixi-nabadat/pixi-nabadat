@@ -187,7 +187,6 @@
                                 <div class="field_wrapper">
                                     <div class="col-md-6 my-3">
                                         <div class="col-form-label">{{ trans('lang.other_phones') }}</div>
-                                        @foreach ($center->phones ?? [] as $phone)
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <a href="javascript:void(0);" class="add_button" title="Add field">
@@ -196,7 +195,21 @@
                                             </div>
                                             <input type="text"
                                                 class="form-control @error('phones') is-invalid @enderror" name="phones[]"
-                                                value="{{ $phone }}" placeholder="primary phone" />
+                                                value="" placeholder="primary phone" />
+                                        </div>
+                                        @foreach ($center->phones ?? [] as $phone)
+                                        <div class="input-group">
+                                            <div class="col-md-6 my-3 child">
+                                                <label class="col-form-label col-3"></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <a href="javascript:void(0);" class="remove_button" title="remove">
+                                                            <i class="fa fa-minus-circle fa-2x"></i>
+                                                        </a>
+                                                    </div>
+                                                    <input type="text" class="form-control" value={{ $phone }} name="phones[]">
+                                                </div>
+                                            </div>
                                         </div>
                                         @endforeach
                                         
@@ -517,7 +530,7 @@
                 '<i class="fa fa-minus-circle fa-2x"></i>' +
                 '</a>' +
                 '</div>' +
-                '<input type="text" class="form-control  @error('phone') is-invalid @enderror" name="phone[]"/></div></div>'; //New input field html
+                '<input type="text" class="form-control  @error('phone') is-invalid @enderror" name="phones[]"/></div></div>'; //New input field html
             var x = 1; //Initial field counter is 1
 
             //Once add button is clicked

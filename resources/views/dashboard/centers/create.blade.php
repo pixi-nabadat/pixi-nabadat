@@ -452,7 +452,7 @@
                 '<i class="fa fa-minus-circle fa-2x"></i>' +
                 '</a>' +
                 '</div>' +
-                '<input type="text" class="form-control  @error('phone') is-invalid @enderror" name="phone[]"/></div></div>'; //New input field html
+                '<input type="text" class="form-control  @error('phone') is-invalid @enderror" name="phones[]"/></div></div>'; //New input field html
             var x = 1; //Initial field counter is 1
 
             //Once add button is clicked
