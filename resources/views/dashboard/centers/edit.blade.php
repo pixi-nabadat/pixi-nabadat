@@ -187,6 +187,7 @@
                                 <div class="field_wrapper">
                                     <div class="col-md-6 my-3">
                                         <div class="col-form-label">{{ trans('lang.other_phones') }}</div>
+                                        @foreach ($center->phones ?? [] as $phone)
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <a href="javascript:void(0);" class="add_button" title="Add field">
@@ -195,21 +196,7 @@
                                             </div>
                                             <input type="text"
                                                 class="form-control @error('phones') is-invalid @enderror" name="phones[]"
-                                                value="" placeholder="primary phone" />
-                                        </div>
-                                        @foreach ($center->phones ?? [] as $phone)
-                                        <div class="input-group">
-                                            <div class="col-md-6 my-3 child">
-                                                <label class="col-form-label col-3"></label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <a href="javascript:void(0);" class="remove_button" title="remove">
-                                                            <i class="fa fa-minus-circle fa-2x"></i>
-                                                        </a>
-                                                    </div>
-                                                    <input type="text" class="form-control" value={{ $phone }} name="phones[]">
-                                                </div>
-                                            </div>
+                                                value="{{ $phone }}" placeholder="primary phone" />
                                         </div>
                                         @endforeach
                                         
@@ -284,7 +271,7 @@
                                          <select name="location_id"
                                              class="form-select form-control mb-3 @error('location_id') is-invalid @enderror"
                                              id="city">
-                                             <option value="{{ $center->user->location_id }}" selected>{{ $center->user->location->getTranslation('title', app()->getLocale()) }}</option>
+                                             <option value="{{ $center->user->location_id }}" selected>{{ $center->user->location?->getTranslation('title', app()->getLocale()) }}</option>
                                             </select>
                                          @error('location_id')
                                              <div class="invalid-feedback">{{ $message }}</div>

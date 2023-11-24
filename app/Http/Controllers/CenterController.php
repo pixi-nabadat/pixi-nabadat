@@ -75,14 +75,8 @@ class CenterController extends Controller
         try {
             $withRelation = ['user.attachments','attachments'];
             $center = $this->centerService->find($id, $withRelation);
-            $locations = $this->locationService->getLocationAncestors($center->user->location_id);
-            $locations = $locations->whereNotNull('parent_id');
-            $governorate = $locations->first() ;
-            $governorate_id = $governorate->id ;
-            $filters = ['depth' => 1, 'is_active' => 1];
-            $governorates = $this->locationService->getAll($filters);
-            $cites =$governorate->descendants;
-            return view('dashboard.centers.edit', ['center' => $center, 'governorates' => $governorates,'selected_governorate'=>$governorate_id, 'cities' => $cites]);
+            $governorates = $this->locationService->getAll(['depth' => 1, 'is_active' => 1]);  
+            return view('dashboard.centers.edit', ['center' => $center, 'governorates' => $governorates]);
         } catch (\Exception $exception) {
             $toast = [
                 'type' => 'error',
