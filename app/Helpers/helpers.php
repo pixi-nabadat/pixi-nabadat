@@ -180,9 +180,10 @@ if (!function_exists('changePointsToPounds')) {
         else{
 
             if(Auth::user()->center_id)
-                return round($points / setting('points','center_points_per_pound'),2);
+
+                return setting('points','center_points_per_pound') ? round($points / setting('points','center_points_per_pound'),2):0;
             else
-                return round($points / setting('points','patient_points_per_pound'),2);
+                return setting('points','patient_points_per_pound') ? round($points / setting('points','patient_points_per_pound'),2):0;
         }
     }
 }
