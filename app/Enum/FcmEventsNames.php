@@ -15,6 +15,8 @@ class FcmEventsNames
         'NABADAT_NOT_USED_FOR_3'        =>'nabadat_not_used_for_3_days',
         'NABADAT_NOT_USED_FOR_7'        =>'nabadat_not_used_for_7_days',
         'NABADAT_NOT_USED_FOR_11'       =>'nabadat_not_used_for_11_days',
+        
+        'USER_PACKAGE_EXPIRE_REMINDER'       =>'user_package_expire_reminder',
     ];
 
     public static array $FCMACTIONS = [

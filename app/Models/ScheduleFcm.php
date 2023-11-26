@@ -49,7 +49,6 @@ class ScheduleFcm extends Model
         {
             $replaced_values = [
                 '@USER_NAME@'=>$user->name,
-                '@EXPIRE_DATE@'=>$user->points_expire_date,
             ];
             $body = replaceFlags($body,$replaced_values);
             $tokens[0] = $user->device_token;

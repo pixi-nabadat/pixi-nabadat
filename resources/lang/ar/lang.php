@@ -398,5 +398,6 @@
 		'location_should_be_required'=>'الموقع مطلوب',
 		'add_notification'=>'اضافة اشعال',
 		'expire_date'=>'تاريخ الانتهاء',
+		'user_package_expire_reminder'=>'تزكير انتهاء الباقه',
     ]
 ?>

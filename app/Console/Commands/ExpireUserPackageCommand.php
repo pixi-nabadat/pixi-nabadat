@@ -31,12 +31,10 @@ class ExpireUserPackageCommand extends Command
     public function handle()
     {
         $currentDate = Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d');
-        $userPackages = UserPackage::query()->whereDate('expire_date','<=',$currentDate)->get();
+        $userPackages = UserPackage::query()->whereDate('expire_date', $currentDate)->get();
         foreach($userPackages as $package)
         {
-            $package->update([
-                'status'=> UserPackageStatusEnum::EXPIRED,
-            ]);
+           UserPackage::getNextReadyPackageForExpirePackage(user: $package->user, userPackage: $package);
         }
         return Command::SUCCESS;
     }

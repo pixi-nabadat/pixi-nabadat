@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Console\Commands\ExpirePointsCommand;
 use App\Console\Commands\ExpireReservationCommand;
 use App\Console\Commands\ExpireUserPackageCommand;
+use App\Console\Commands\ExpireUserPackageReminderCommand;
 use App\Console\Commands\PointsReminderCommand;
 use App\Console\Commands\PulsesReminderCommand;
 use App\Console\Commands\ReservationReminderCommand;
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
         $schedule->command(ReservationReminderCommand::class)->daily();
         $schedule->command(PointsReminderCommand::class)->daily();
         $schedule->command(ExpireUserPackageCommand::class)->daily();
+        $schedule->command(ExpireUserPackageReminderCommand::class)->daily();
     }
 
     /**

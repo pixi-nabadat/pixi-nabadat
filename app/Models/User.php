@@ -183,6 +183,13 @@ class User extends Authenticatable
         $this->nabadatWallet->used_amount = $this->nabadatWallet->used_amount + $pulses;
         $this->nabadatWallet->save();
     }
+    
+    //this method is used after a user package expired
+    public function decreaseUserWalletForExpirePackage(int $pulses)
+    {
+        $this->nabadatWallet->total_pulses = $this->nabadatWallet->total_pulses - $pulses;
+        $this->nabadatWallet->save();
+    }
 
     public function decreaseFromOffer(Center $center, int $reservationPulses = 0)
     {

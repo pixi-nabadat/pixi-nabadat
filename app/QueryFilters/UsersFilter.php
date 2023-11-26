@@ -59,4 +59,9 @@ class UsersFilter extends QueryFilter
         return $this->builder->where('email',$term);
     }
 
+    public function points_expire_date($term)
+    {
+        return $this->builder->where('points_expire_date',$term);
+    }
+
 }

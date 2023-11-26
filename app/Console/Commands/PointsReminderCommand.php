@@ -44,25 +44,26 @@ class PointsReminderCommand extends Command
         $scheduleFcmPointsThreeDays = $scheduleFcmForPoints->where('trigger',FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_3'])->first();
         
         $scheduleFcmPointsSevenDays = $scheduleFcmForPoints->where('trigger',FcmEventsNames::$EVENTS['EXPIRE_POINTS_BEFORE_7'])->first();
-
-        $usersFilters = ['points_expire_date' => null];
         
         if($scheduleFcmPointsOneDay)
         {
-            $userPointsOneDayRemain = app()->make(UserService::class)->queryGet(where_condition: $usersFilters, withRelation: [])
-            ->where('points_expire_date', Carbon::parse(Carbon::now()->setTimezone('Africa/Cairo')->addDay())->format('Y-m-d'))->get();
+            $expireDate   = Carbon::parse(Carbon::now()->setTimezone('Africa/Cairo')->addDay())->format('Y-m-d');
+            $usersFilters = ['points_expire_date'=> $expireDate];
+            $userPointsOneDayRemain = app()->make(UserService::class)->queryGet(where_condition: $usersFilters, withRelation: [])->get();
             ScheduleFcm::UserReminderFcm($scheduleFcmPointsOneDay, $userPointsOneDayRemain);
         }
         if($scheduleFcmPointsThreeDays)
         {
-            $userPointsThreeDaysRemain = app()->make(UserService::class)->queryGet(where_condition: $usersFilters, withRelation: [])
-            ->where('points_expire_date', Carbon::parse(Carbon::now()->setTimezone('Africa/Cairo')->addDays(4))->format('Y-m-d'))->get();
+            $expireDate   = Carbon::parse(Carbon::now()->setTimezone('Africa/Cairo')->addDay(4))->format('Y-m-d');
+            $usersFilters = ['points_expire_date'=> $expireDate];
+            $userPointsThreeDaysRemain = app()->make(UserService::class)->queryGet(where_condition: $usersFilters, withRelation: [])->get();
             ScheduleFcm::UserReminderFcm($scheduleFcmPointsThreeDays, $userPointsThreeDaysRemain);
         }
         if($scheduleFcmPointsSevenDays)
         {
-            $userPointsSevenDaysRemain = app()->make(UserService::class)->queryGet(where_condition: $usersFilters, withRelation: [])
-            ->where('points_expire_date', Carbon::parse(Carbon::now()->setTimezone('Africa/Cairo')->addDays(8))->format('Y-m-d'))->get();
+            $expireDate   = Carbon::parse(Carbon::now()->setTimezone('Africa/Cairo')->addDay(8))->format('Y-m-d');
+            $usersFilters = ['points_expire_date'=> $expireDate];
+            $userPointsSevenDaysRemain = app()->make(UserService::class)->queryGet(where_condition: $usersFilters, withRelation: [])->get();
             ScheduleFcm::UserReminderFcm($scheduleFcmPointsSevenDays, $userPointsSevenDaysRemain);
         }
         //end points expire reminder

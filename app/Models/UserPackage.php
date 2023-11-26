@@ -53,6 +53,30 @@ class UserPackage extends Model
         }
     }
 
+    //this method is used in expire user package command only
+    public static function getNextReadyPackageForExpirePackage(User $user, UserPackage $userPackage): bool
+    {
+        $userPackage->status = UserPackageStatusEnum::EXPIRED;
+        $userPackage->save();
+        $userPackage->refresh();
+        $user->decreaseUserWalletForExpirePackage($userPackage->remain);
+        $currentOngoingPackage = $user->package()->where('center_id', $userPackage->center_id)->where('status',UserPackageStatusEnum::ONGOING)->first();
+        if(!$currentOngoingPackage)
+        {
+            $nextOngoingPackage = $user->package()->where('center_id', $userPackage->center_id)->where('status',UserPackageStatusEnum::READYFORUSE)->orderBy('id','desc')->first();
+            if(!$nextOngoingPackage)
+            {
+                return false;
+            }else{
+                $nextOngoingPackage->status = UserPackageStatusEnum::ONGOING;
+                $nextOngoingPackage->save();  
+                return true;
+            }
+        }
+        return true;
+        
+    }
+
     public function getStatusAsString(int $status)
     {
         return match((int)$status){

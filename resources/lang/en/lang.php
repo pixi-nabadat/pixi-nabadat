@@ -395,5 +395,6 @@
 		'location_should_be_required'=>'Location should be required',
 		'add_notification'=>'Add notification',
 		'expire_date'=>'Expire date',
+		'user_package_expire_reminder'=>'User package expire reminder',
 	]
 ?>
