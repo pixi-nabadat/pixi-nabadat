@@ -29,17 +29,8 @@ class PackageStoreRequestApi extends BaseRequest
 
         return [
             'center_id'            => 'required|exists:centers,id',
-            'name.*'                 => 'required',
-            'name.en' => [
-                Rule::unique('packages', 'name->en')->where(function ($query) {
-                    return $query->where('name->en', $this->name['en']);
-                })
-            ],
-            'name.ar' => [
-                Rule::unique('packages', 'name->ar')->where(function ($query) {
-                    return $query->where('name->ar', $this->name['ar']);
-                })
-            ],
+            'name'                 => 'required|array',
+            'name.*'               => 'required|string',
             'num_nabadat'          => 'required|integer',
             'price'                => 'required|numeric',
             'start_date'           => 'required|date|after_or_equal:'.Carbon::now()->setTimezone('Africa/Cairo')->format('Y-m-d'),

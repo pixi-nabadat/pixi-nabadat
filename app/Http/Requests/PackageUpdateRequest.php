@@ -24,7 +24,8 @@ class PackageUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name.*'               => 'required|string|unique:packages,name,'.$this->package,
+            'name'                 => 'required|array',
+            'name.*'               => 'required|string',
             'num_nabadat'          => 'required|integer',
             'price'                => 'required|numeric',
             'start_date'           => 'required|date',
