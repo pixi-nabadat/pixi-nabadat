@@ -29,7 +29,7 @@ class FcmMessageUpdateRequest extends BaseRequest
             'title' => 'required|string',
             'content' => 'required|string',
             'is_active' => 'string|nullable',
-            'fcm_action' => ['required','unique:fcm_messages,fcm_action,'.$this->fcm_message,Rule::in(array_keys(FcmEventsNames::$FCMACTIONS))],
+            'fcm_action' => ['required',Rule::in(array_keys(FcmEventsNames::$FCMACTIONS)),'unique:fcm_messages,fcm_action,'.$this->fcm_message],
         ];
     }
 }
