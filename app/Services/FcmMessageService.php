@@ -42,7 +42,7 @@ class FcmMessageService extends BaseService
     {
         $fcm_message =  FcmMessage::find($fcm_message_id);
         if (!$fcm_message)
-            throw new NotFoundException(trans('lang.fcm message not found'),404);
+            throw new NotFoundException(trans('lang.fcm_message_not_found'),404);
         return $fcm_message;
     }
 

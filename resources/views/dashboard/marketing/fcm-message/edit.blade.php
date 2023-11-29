@@ -30,7 +30,7 @@
                                     <div class="col-form-label col-3">{{ trans('lang.action') }}</div>
                                     <select id="trigger_id" name="fcm_action" class="form-select btn-square digits">
                                         @foreach (\App\Enum\FcmEventsNames::$FCMACTIONS as $key=>$action)
-                                            <option value="{{ $key }}">{{ trans('lang.'.$action) }}</option>
+                                            <option value="{{ $key }}" {{ $fcmMessage->fcm_action == $key ? "selected":"" }}>{{ trans('lang.'.$action) }}</option>
                                         @endforeach
                                     </select>
                                     @error('fcm_action')

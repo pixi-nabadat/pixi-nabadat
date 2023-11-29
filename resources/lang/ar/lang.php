@@ -399,5 +399,6 @@
 		'add_notification'=>'اضافة اشعال',
 		'expire_date'=>'تاريخ الانتهاء',
 		'user_package_expire_reminder'=>'تزكير انتهاء الباقه',
+		'fcm_message_not_found'=>'لم يتم العثور على الحقل',
     ]
 ?>
