@@ -18,6 +18,7 @@ class Package extends Model
 {
     use HasFactory, Filterable, HasTranslations, HasAttachment, EscapeUnicodeJson;
 
+    const SEARCHFLAG = 4;
     public $translatable = ['name'];
     protected $fillable = ['center_id', 'name', 'num_nabadat', 'price', 'start_date', 'end_date', 'discount_percentage', 'status', 'is_active'];
 
@@ -28,9 +29,18 @@ class Package extends Model
 
     public function center(): BelongsTo
     {
-        return $this->belongsTo(Center::class,'center_id');
+        return $this->belongsTo(Center::class, 'center_id');
     }
 
+    public function getSearchFlagTextAttribute(): string
+    {
+        return trans('lang.packages') ;
+    }
+
+    public function getSearchFlagAttribute(): int
+    {
+        return self::SEARCHFLAG;
+    }
 
     public function attachments()
     {

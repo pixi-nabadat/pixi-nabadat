@@ -45,7 +45,7 @@ class CentersFilter extends QueryFilter
     public function name($term)
     {
         return $this->builder->whereHas('user', function ($query) use ($term) {
-            $query->where('name', 'LIKE', "%$term%");
+            $query->where('name', 'LIKE', "%".$term."%");
         });
     }
 

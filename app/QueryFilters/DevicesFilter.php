@@ -19,7 +19,8 @@ class DevicesFilter extends QueryFilter
 
     public function keyword($term)
     {
-        return $this->builder->where('name', 'like', '%'.$term.'%');
+        return $this->builder->where('name', 'like', '%'.$term.'%')
+        ->whereHas('center');
     }
 
     public function rate($term)

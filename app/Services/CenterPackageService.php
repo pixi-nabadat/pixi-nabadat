@@ -25,7 +25,7 @@ class CenterPackageService extends BaseService
 
     public function queryGet(array $where_condition = [], array $withRelation = []): Builder
     {
-        $packages = $this->model->orderBy('status')->with($withRelation);
+        $packages = $this->model->query()->with($withRelation)->orderBy('status');
         return $packages->filter(new PackagesFilter($where_condition));
     }
 

@@ -67,4 +67,8 @@ class PackagesFilter extends QueryFilter
     {
         return $this->builder->where('discount_percentage', $term);
     }
+    public function keyword($term)
+    {
+        return $this->builder->where('name', 'like', '%'.$term.'%');
+    }
 }

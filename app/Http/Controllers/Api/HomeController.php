@@ -60,11 +60,14 @@ class HomeController extends Controller
     public function search(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $filters = $request->all();
+        $filters['in_duration'] = 1;
+        $filters['is_active']   = 1;
         $product = $this->productService->queryGet(where_condition: $filters, withRelation: [])->select(['id','name'])->limit(10)->get();
-        $center = $this->centerService->queryGet(where_condition: $filters, withRelation: [])->select(['id','name'])->limit(10)->get();
-        $device = $this->deviceService->queryGet(where_condition: $filters, withRelation: ['center'])->select(['id','name'])->limit(10)->get();
+        $center  = $this->centerService->queryGet(where_condition:  $filters, withRelation: [])->select(['id','name'])->limit(10)->get();
+        $device  = $this->deviceService->queryGet(where_condition:  $filters, withRelation: ['center'])->select(['id','name'])->limit(10)->get();
+        $package = $this->packageService->queryGet(where_condition: $filters, withRelation: ['center'])->select(['id','name'])->limit(10)->get();
 
-        $finalResult = $product->concat($device)->concat($center);
+        $finalResult = $product->concat($device)->concat($center)->concat($package);
         $search_results = HomeSearchResource::collection($finalResult);
         return apiResponse(data: $search_results);
     }
