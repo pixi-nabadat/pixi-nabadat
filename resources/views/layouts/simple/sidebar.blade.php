@@ -271,9 +271,15 @@
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/fcm' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            @can('view_fcm_message')
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('fcm-messages.index') ? 'active' : '' }}" href="{{route('fcm-messages.index')}}">{{ trans('lang.fcm_messages') }}</a></li>
+                            @endcan
+                            @can('view_schedule_fcm')
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('schedule-fcm.index') ? 'active' : '' }}" href="{{route('schedule-fcm.index')}}">{{ trans('lang.schedule_fcm') }}</a></li>
+                            @endcan
+                            @can('create_fcm')
                             <li><a class="lan-5 {{ Route::currentRouteName()==route('fcm-messages.create') ? 'active' : '' }}" href="{{route('fcm-messages.create')}}">{{ trans('lang.create') }}</a></li>
+                            @endcan
                         </ul>
                         {{-- end fcm --}}
 

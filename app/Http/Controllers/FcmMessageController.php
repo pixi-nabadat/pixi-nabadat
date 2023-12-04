@@ -23,6 +23,7 @@ class FcmMessageController extends Controller
      */
     public function index(FcmMessagesDatatable $dataTable, Request $request)
     {
+        userCan(request: $request, permission: 'view_fcm_message');
         $withRelations = [];
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
@@ -35,8 +36,9 @@ class FcmMessageController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
+        userCan(request: $request, permission: 'create_fcm');
         $flags = FcmEventsNames::$FLAGS;
         $fcm_channels = FcmEventsNames::$CHANNELS;
         $triggers = FcmEventsNames::$EVENTS;
@@ -51,6 +53,7 @@ class FcmMessageController extends Controller
      */
     public function store(FcmMessageStoreRequest $request)
     {
+        userCan(request: $request, permission: 'create_fcm');
         try {
             $data = $request->validated();
             $this->fcmMessageService->store($data);
@@ -79,8 +82,9 @@ class FcmMessageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        userCan(request: $request, permission: 'edit_fcm_message');
         $fcmMessage = $this->fcmMessageService->find($id);
         if (!$fcmMessage)
         {
@@ -103,6 +107,7 @@ class FcmMessageController extends Controller
      */
     public function update(FcmMessageUpdateRequest $request, $id)
     {
+        userCan(request: $request, permission: 'edit_fcm_message');
         try {
             $data = $request->validated();
             $this->fcmMessageService->update($id, $data);
@@ -121,8 +126,9 @@ class FcmMessageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        userCan(request: $request, permission: 'delete_fcm_message');
         try {
             $result = $this->fcmMessageService->delete($id);
             if (!$result)
@@ -141,6 +147,7 @@ class FcmMessageController extends Controller
      */
     public function status(Request $request)
     {
+        userCan(request: $request, permission: 'change_fcm_message_status');
         try {
             $result = $this->fcmMessageService->status($request->id);
             if (!$result)

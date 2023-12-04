@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 if (!function_exists('apiResponse')) {
@@ -158,6 +159,15 @@ if (!function_exists('getLocale')) {
     function getLocale(): string
     {
         return app()->getLocale();
+    }
+}
+
+if (!function_exists('userCan')) {
+
+    function userCan(Request $request, string $permission)
+    {
+        if(!$request->user()->can($permission))
+            abort(403);
     }
 }
 

@@ -73,7 +73,9 @@
                 <div class="card">
                     {{-- TODO: add the fcm permission to create fcm --}}
                     <div class="card-header">
+                        @can('create_fcm')
                         <h5><a role="button" class="btn btn-primary " href={{ route('fcm-messages.create')}}><i class="fa fa-plus-circle"></i>{{trans('lang.add_notification')}}</a></h5>
+                        @endcan
                     </div>
                     <div class="card-body">
                         <div class="table">

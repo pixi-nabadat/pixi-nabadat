@@ -195,6 +195,26 @@ class PermissionsTableSeeder extends Seeder
             ],
             //end invoices permissions
 
+            //start fcm_messages permissions
+            'fcm_messages'=>[
+                'create_fcm',
+                'edit_fcm_message',
+                'delete_fcm_message',
+                'view_fcm_message',
+                'change_fcm_message_status',
+            ],
+            //end fcm_messages permissions
+
+            //start schedule_fcm permissions
+            'schedule_fcm'=>[
+                'create_schedule_fcm',
+                'edit_schedule_fcm',
+                'delete_schedule_fcm',
+                'view_schedule_fcm',
+                'change_schedule_fcm_status',
+            ],
+            //end schedule_fcm permissions
+
 
         ];
         $user = User::find(1);

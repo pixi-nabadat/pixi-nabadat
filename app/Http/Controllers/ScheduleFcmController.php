@@ -8,7 +8,6 @@ use App\Http\Requests\ScheduleFcmStoreRequest;
 use App\Http\Requests\ScheduleFcmUpdateRequest;
 use Illuminate\Http\Request;
 use App\Services\ScheduleFcmService;
-use Carbon\Carbon;
 
 class ScheduleFcmController extends Controller
 {
@@ -24,6 +23,7 @@ class ScheduleFcmController extends Controller
      */
     public function index(Request $request,ScheduleFcmDatatable $dataTable)
     {
+        userCan(request: $request, permission: 'view_schedule_fcm');
         $withRelations = [];
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
@@ -38,8 +38,9 @@ class ScheduleFcmController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function create(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
+        userCan(request: $request, permission: 'create_fcm');
         $flags = FcmEventsNames::$FLAGS;
         $fcm_channels = FcmEventsNames::$CHANNELS;
         $triggers = FcmEventsNames::$EVENTS;
@@ -54,6 +55,7 @@ class ScheduleFcmController extends Controller
      */
     public function store(ScheduleFcmStoreRequest $request)
     {
+        userCan(request: $request, permission: 'create_fcm');
         try {
             $data = $request->validated();
             $this->scheduleFcmService->store($data);
@@ -82,8 +84,9 @@ class ScheduleFcmController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        userCan(request: $request, permission: 'edit_schedule_fcm');
         $scheduleFcm = $this->scheduleFcmService->find($id);
         if (!$scheduleFcm)
         {
@@ -105,6 +108,7 @@ class ScheduleFcmController extends Controller
      */
     public function update(ScheduleFcmUpdateRequest $request, $id)
     {
+        userCan(request: $request, permission: 'edit_schedule_fcm');
         try {
             $data = $request->validated();
             $this->scheduleFcmService->update($id, $data);
@@ -123,8 +127,9 @@ class ScheduleFcmController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        userCan(request: $request, permission: 'delete_schedule_fcm');
         try {
             $result = $this->scheduleFcmService->delete($id);
             if (!$result)
@@ -143,6 +148,7 @@ class ScheduleFcmController extends Controller
      */
     public function status(Request $request)
     {
+        userCan(request: $request, permission: 'change_schedule_fcm_status');
         try {
             $result = $this->scheduleFcmService->status($request->id);
             if (!$result)
