@@ -400,5 +400,115 @@
 		'expire_date'=>'تاريخ الانتهاء',
 		'user_package_expire_reminder'=>'تزكير انتهاء الباقه',
 		'fcm_message_not_found'=>'لم يتم العثور على الحقل',
+
+		// start permissions translationa
+		'delete_country'=>'حذف الدوله',
+		'view_country'=>'عرض الدوله',
+		'delete_city'=>'حذف المدينه',
+		'view_city'=>'عرض المدينه',
+
+		'delete_governorate'=>'حذف المحافظة',
+		'view_governorate'=>'عرض المحافظة',
+
+		'create_employee'=>'إنشاء موظف',
+		'edit_employee'=>'تعديل موظف',
+		'delete_employee'=>'حذف موظف',
+		'view_employee'=>'عرض موظف',
+
+		'create_client'=>'إنشاء عميل',
+		'edit_client'=>'تعديل عميل',
+		'delete_client'=>'حذف عميل',
+		'view_client'=>'عرض عميل',
+
+		'edit_center'=>'تعديل مركز',
+		'delete_center'=>'حذف مركز',
+		'view_center'=>'عرض مركز',
+
+		'create_package'=>'إنشاء عرض',
+		'edit_package'=>'تعديل عرض',
+		'delete_package'=>'حذف عرض',
+		'view_package'=>'عرض عرض',
+
+		'edit_user_package'=>'تعديل عرض مستخدم',
+		'delete_user_package'=>'حذف عرض مستخدم',
+		'view_user_package'=>'عرض عرض مستخدم',
+
+		'create_device'=>'إنشاء جهاز',
+		'edit_device'=>'تعديل جهاز',
+		'delete_device'=>'حذف جهاز',
+		'view_device'=>'عرض جهاز',
+		'create_center_device'=>'إنشاء جهاز للمركز',
+		'edit_center_device'=>'تعديل جهاز للمركز',
+		'delete_center_device'=>'حذف جهاز للمركز',
+		'view_center_device'=>'عرض جهاز للمركز',
+
+		'create_reservation'=>'إنشاء حجز',
+		'edit_reservation'=>'تعديل حجز',
+		'delete_reservation'=>'حذف حجز',
+		'view_reservation'=>'عرض حجز',
+
+		'create_doctor'=>'إنشاء دكتور',
+		'edit_doctor'=>'تعديل دكتور',
+		'delete_doctor'=>'حذف دكتور',
+		'view_doctor'=>'عرض دكتور',
+
+		'create_category'=>'إنشاء صنف',
+		'edit_category'=>'تعديل صنف',
+		'delete_category'=>'حذف صنف',
+		'view_category'=>'عرض صنف',
+
+		'create_slider'=>'إنشاء اسليدر',
+		'edit_slider'=>'تعديل اسليدر',
+		'delete_slider'=>'حذف اسليدر',
+		'view_slider'=>'عرض اسليدر',
+
+		'create_coupon'=>'إنشاء كوبون',
+		'edit_coupon'=>'تعديل كوبون',
+		'delete_coupon'=>'حذف كوبون',
+		'view_coupon'=>'عرض كوبون',
+
+		'edit_rate'=>'تعديل تقييم',
+		'delete_rate'=>'حذف تقييم',
+		'view_rate'=>'عرض تقييم',
+
+		'create_product'=>'إنشاء منتج',
+		'edit_product'=>'تعديل منتج',
+		'delete_product'=>'حذف منتج',
+		'view_product'=>'عرض منتج',
+
+		'create_cancel_reason'=>'إنشاء سبب إلغاء',
+		'edit_cancel_reason'=>'تعديل سبب إلغاء',
+		'delete_cancel_reason'=>'حذف سبب إلغاء',
+		'view_cancel_reason'=>'عرض سبب إلغاء',
+
+		'create_order'=>'إنشاء طلب',
+		'edit_order'=>'تعديل طلب',
+		'delete_order'=>'حذف طلب',
+		'view_order'=>'عرض طلب',
+
+		'view_settings'=>'عرض الاعدادت',
+		'edit_general_settings'=>'تعديل الاعدادات العامه',
+		'edit_points_settings'=>'تعديل اعدادات النقاط',
+		'edit_terms_and_conditions_settings'=>'تعديل الشروط والاحكام',
+		'edit_social_media_settings'=>'تعديل اعدادات التواصل الاجتماعى',
+		'edit_schedule_fcm_settings'=>'تعديل اعدادات الاشعرات المجدوله',
+
+		'create_invoice'=>'إنشاء فاتوره',
+		'edit_invoice'=>'تعديل فاتوره',
+		'delete_invoice'=>'حذف فاتوره',
+		'view_invoice'=>'عرض فاتوره',
+
+		'edit_fcm_message'=>'تعديل رسائل fcm',
+		'delete_fcm_message'=>'حذف رسائل fcm',
+		'view_fcm_message'=>'عرض رسائل fcm',
+		'change_fcm_message_status'=>'تغيير حالة رسائل fcm',
+
+		'create_schedule_fcm'=>'إنشاء fcm مجدول',
+		'edit_schedule_fcm'=>'تعديل fcm مجدول',
+		'delete_schedule_fcm'=>'حذف fcm مجدول',
+		'view_schedule_fcm'=>'عرض fcm مجدول',
+		'change_schedule_fcm_status'=>'تغير حالة fcm مجدول',
+	 
+	// end permissions translations
     ]
 ?>

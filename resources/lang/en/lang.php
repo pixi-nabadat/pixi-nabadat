@@ -397,5 +397,115 @@
 		'expire_date'=>'Expire date',
 		'user_package_expire_reminder'=>'User package expire reminder',
 		'fcm_message_not_found'=>'Fcm message not found',
+
+		// start permissions translationa
+			'delete_country'=>'Delete country',
+			'view_country'=>'View country',
+			'delete_city'=>'Delete city',
+			'view_city'=>'View city',
+
+			'delete_governorate'=>'Delete governorate',
+			'view_governorate'=>'View governorate',
+
+			'create_employee'=>'Create employee',
+			'edit_employee'=>'Edit employee',
+			'delete_employee'=>'Delete employee',
+			'view_employee'=>'View employee',
+
+			'create_client'=>'Create client',
+			'edit_client'=>'Edit client',
+			'delete_client'=>'Delete client',
+			'view_client'=>'View client',
+
+			'edit_center'=>'Edit center',
+			'delete_center'=>'Delete center',
+			'view_center'=>'View center',
+
+			'create_package'=>'Create package',
+			'edit_package'=>'Edit package',
+			'delete_package'=>'Delete package',
+			'view_package'=>'View package',
+
+			'edit_user_package'=>'Edit user package',
+			'delete_user_package'=>'Delete user package',
+			'view_user_package'=>'View user package',
+
+			'create_device'=>'Create device',
+			'edit_device'=>'Edit device',
+			'delete_device'=>'Delete device',
+			'view_device'=>'View device',
+			'create_center_device'=>'Create center device',
+			'edit_center_device'=>'Edit center device',
+			'delete_center_device'=>'Delete center device',
+			'view_center_device'=>'View center device',
+
+			'create_reservation'=>'Create reservation',
+			'edit_reservation'=>'Edit reservation',
+			'delete_reservation'=>'Delete reservation',
+			'view_reservation'=>'View reservation',
+
+			'create_doctor'=>'Create doctor',
+			'edit_doctor'=>'Edit doctor',
+			'delete_doctor'=>'Delete doctor',
+			'view_doctor'=>'View doctor',
+
+			'create_category'=>'Create category',
+			'edit_category'=>'Edit category',
+			'delete_category'=>'Delete category',
+			'view_category'=>'View category',
+
+			'create_slider'=>'Create slider',
+			'edit_slider'=>'Edit slider',
+			'delete_slider'=>'Delete slider',
+			'view_slider'=>'View slider',
+
+			'create_coupon'=>'Create coupon',
+			'edit_coupon'=>'Edit coupon',
+			'delete_coupon'=>'Delete coupon',
+			'view_coupon'=>'View coupon',
+
+			'edit_rate'=>'Edit rate',
+			'delete_rate'=>'Delete rate',
+			'view_rate'=>'View rate',
+
+			'create_product'=>'Create product',
+			'edit_product'=>'Edit product',
+			'delete_product'=>'Delete product',
+			'view_product'=>'View product',
+
+			'create_cancel_reason'=>'Create cancel reason',
+			'edit_cancel_reason'=>'Edit cancel reason',
+			'delete_cancel_reason'=>'Delete cancel reason',
+			'view_cancel_reason'=>'View cancel reason',
+
+			'create_order'=>'Create order',
+			'edit_order'=>'Edit order',
+			'delete_order'=>'Delete order',
+			'view_order'=>'View order',
+
+			'view_settings'=>'View settings',
+			'edit_general_settings'=>'Edit general settings',
+			'edit_points_settings'=>'Edit points settings',
+			'edit_terms_and_conditions_settings'=>'Edit terms and conditions settings',
+			'edit_social_media_settings'=>'Edit social media settings',
+			'edit_schedule_fcm_settings'=>'Edit schedule fcm settings',
+
+			'create_invoice'=>'Create invoice',
+			'edit_invoice'=>'Edit invoice',
+			'delete_invoice'=>'Delete invoice',
+			'view_invoice'=>'View invoice',
+
+			'edit_fcm_message'=>'Edit fcm message',
+			'delete_fcm_message'=>'Delete fcm message',
+			'view_fcm_message'=>'View fcm message',
+			'change_fcm_message_status'=>'change fcm message status',
+
+			'create_schedule_fcm'=>'Create schedule fcm',
+			'edit_schedule_fcm'=>'Edit schedule fcm',
+			'delete_schedule_fcm'=>'Delete schedule fcm',
+			'view_schedule_fcm'=>'View schedule fcm',
+			'change_schedule_fcm_status'=>'Change schedule fcm status',
+		 
+		// end permissions translations
 	]
 ?>

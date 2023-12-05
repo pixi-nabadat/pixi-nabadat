@@ -112,8 +112,8 @@
                                                     @foreach($permission as $item)
                                                         <div class="mb-3 m-t-15">
                                                             <div class="form-check checkbox checkbox-primary mb-0">
-                                                                <input class="form-check-input" name="permissions[]" value="{{$item->name}}" id="checkbox-primary-{{$item->id}}" type="checkbox" data-bs-original-title="" title="{{$item->name}}">
-                                                                <label class="form-check-label" for="checkbox-primary-{{$item->id}}">{{$item->name}}</label>
+                                                                <input class="form-check-input" name="permissions[]" value="{{$item->name}}" id="checkbox-primary-{{$item->id}}" type="checkbox" data-bs-original-title="" title="{{ trans('lang.'.$item->name) }}">
+                                                                <label class="form-check-label" for="checkbox-primary-{{$item->id}}">{{ trans('lang.'.$item->name) }}</label>
                                                             </div>
                                                         </div>
                                                     @endforeach
