@@ -50,7 +50,7 @@ class InvoiceController extends Controller
 
     } //end of destroy
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
         userCan(request: $request, permission: 'view_invoice');
         $invoice = $this->invoiceService->find($id, ['center.user:id,center_id,name,phone', 'transactions.user:id,center_id,name,phone']);

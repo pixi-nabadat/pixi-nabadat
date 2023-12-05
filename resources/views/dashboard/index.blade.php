@@ -133,7 +133,7 @@
                     </div>
                 </div>
             </div> --}}
-            <div class="col-xl-6 box-col-12">
+            {{-- <div class="col-xl-6 box-col-12">
                 <div class="card">
                     <div class="card-header">
                         <h5>@lang('lang.due_panel')</h5>
@@ -142,8 +142,8 @@
                         <canvas id="duePanel"></canvas>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-6 box-col-12">
+            </div> --}}
+            <div class="col-xl-12 box-col-12">
                 <div class="card">
                     <div class="card-header">
                         <h5>@lang('lang.nabadat_panel')</h5>
