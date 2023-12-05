@@ -15,36 +15,40 @@ class CurrenciesTableDataSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Currency::create([
-            // [
+        \App\Models\Currency::create(
+            [
                 'name' => [
                     'en' => 'egyptian pound',
                     'ar' => 'الجنيه المصرى'
                 ],
                 'code' => '£EGP',
                 'symbol' => '£',
-            // ]
-            // [
-            //     'name' =>
-            //             [
-            //                 'en' => 'Dollar',
-            //                 'ar' => ' الدولار الامريكى'
-            //             ],
-            //     'code' => '$US',
-            //     'symbol' => '$',
-            // ],
-            // [
-            //     'name' =>
-            //             ['en' => 'Saudi riyal','ar' => 'الريال السعودى'],
-            //     'code' => '﷼SAR',
-            //     'symbol' => '﷼',
-            // ],
-            // [
-            //     'name' => ['ar' => 'اليورو الاوروبى', 'en' => 'Euro'],
-            //     'code' => '€EUR',
-            //     'symbol' => '€',
-            // ],
-        ]);
+                'exchange_rate' => 0.0,
+            ],
+            [
+                'name' =>
+                        [
+                            'en' => 'Dollar',
+                            'ar' => ' الدولار الامريكى'
+                        ],
+                'code' => '$US',
+                'symbol' => '$',
+                'exchange_rate' => 0.0,
+            ],
+            [
+                'name' =>
+                        ['en' => 'Saudi riyal','ar' => 'الريال السعودى'],
+                'code' => '﷼SAR',
+                'symbol' => '﷼',
+                'exchange_rate' => 0.0,
+            ],
+            [
+                'name' => ['ar' => 'اليورو الاوروبى', 'en' => 'Euro'],
+                'code' => '€EUR',
+                'symbol' => '€',
+                'exchange_rate' => 0.0,
+            ]
+        );
 
     }
 }
