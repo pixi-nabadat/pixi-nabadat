@@ -17,6 +17,7 @@ class DeviceController extends Controller
 
     public function index(DevicesDataTable $dataTable, Request $request)
     {
+        userCan(request: $request, permission: 'view_device');
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
         });
@@ -24,7 +25,9 @@ class DeviceController extends Controller
 
     }//end of index
 
-    public function edit($id){
+    public function edit(Request $request, $id)
+    {
+        userCan(request: $request, permission: 'edit_device');
         $withRelation = ['attachments'];
         $device = $this->deviceService->find($id,$withRelation);
         if (!$device)
@@ -35,12 +38,15 @@ class DeviceController extends Controller
         return view('dashboard.devices.edit', compact('device'));
     }//end of index
 
-    public function create(){
+    public function create(Request $request)
+    {
+        userCan(request: $request, permission: 'create_device');
         return view('dashboard.devices.create');
     }//end of index
 
     public function update(DeviceRequest $request, $id)
     {
+        userCan(request: $request, permission: 'edit_device');
         try {
 
             $this->deviceService->update($id,$request->validated());
@@ -53,7 +59,9 @@ class DeviceController extends Controller
         }
     } //end of update
 
-    public function store(DeviceRequest $request){
+    public function store(DeviceRequest $request)
+    {
+        userCan(request: $request, permission: 'create_device');
         try {
             $this->deviceService->store($request->validated());
             $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.success_operation')];
@@ -64,8 +72,9 @@ class DeviceController extends Controller
         }
     }//end of store
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        userCan(request: $request, permission: 'delete_device');
         try {
             $result = $this->deviceService->delete($id);
             if (!$result)
@@ -76,8 +85,9 @@ class DeviceController extends Controller
         }
     } //end of destroy
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        userCan(request: $request, permission: 'view_device');
         $withRelation = ['attachments'];
         $device = $this->deviceService->find($id,$withRelation);
         if (!$device)

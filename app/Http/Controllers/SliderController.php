@@ -21,7 +21,7 @@ class SliderController extends Controller
 
     public function index(SlidersDataTable $dataTable, Request $request)
     {
-
+        userCan(request: $request, permission: 'view_slider'); 
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
         });
@@ -30,8 +30,9 @@ class SliderController extends Controller
 
     }//end of index
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        userCan(request: $request, permission: 'edit_slider');
         try {
             $withRelation = ['attachments'];
             $filters = ['is_active'=>1];
@@ -49,8 +50,9 @@ class SliderController extends Controller
         }
     }//end of edit 
 
-    public function create()
+    public function create(Request $request)
     {
+        userCan(request: $request, permission: 'create_slider');
         $filters = ['is_active'=> 1];
         $centers = $this->centerService->getAll(where_condition:$filters);
         $products = $this->productService->getAll(where_condition:$filters);
@@ -59,6 +61,7 @@ class SliderController extends Controller
 
     public function store(SliderRequest $request)
     {
+        userCan(request: $request, permission: 'create_slider');
         try {
             $data = $request->validated();
             $data['start_date'] = Carbon::parse($data['start_date'])->format('Y-m-d');
@@ -75,6 +78,7 @@ class SliderController extends Controller
 
     public function update(SliderUpdateRequest $request, $id)
     {
+        userCan(request: $request, permission: 'edit_slider');
         try {
             $data = $request->validated();
             $data['start_date'] = Carbon::parse($data['start_date'])->format('Y-m-d');
@@ -89,8 +93,9 @@ class SliderController extends Controller
         }
     } //end of update
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        userCan(request: $request, permission: 'delete_slider');
         try {
             $this->sliderService->delete($id);
             return apiResponse(message: trans('lang.success'));
@@ -99,8 +104,9 @@ class SliderController extends Controller
         }
     } //end of destroy
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        userCan(request: $request, permission: 'view_slider');
         try {
             $slider = $this->sliderService->find($id);
             return view('dashboard.sliders.show', compact('slider'));

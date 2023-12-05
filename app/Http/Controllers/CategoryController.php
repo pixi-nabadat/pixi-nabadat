@@ -14,8 +14,9 @@ class CategoryController extends Controller
 
     }
 
-    public function index(CategoriesDataTable $dataTable, Request $request){
-
+    public function index(CategoriesDataTable $dataTable, Request $request)
+    {
+        userCan(request: $request, permission: 'view_category');
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
         });
@@ -24,7 +25,9 @@ class CategoryController extends Controller
 
     }//end of index
 
-    public function edit($id){
+    public function edit(Request $request, $id)
+    {
+        userCan(request: $request, permission: 'edit_category');
         $category = $this->categoryService->find($id);
         if (!$category)
         {
@@ -34,11 +37,15 @@ class CategoryController extends Controller
         return view('dashboard.categories.edit', compact('category'));
     }//end of edit
 
-    public function create(){
+    public function create(Request $request)
+    {
+        userCan(request: $request, permission: 'create_category');
         return view('dashboard.categories.create');
     }//end of create
 
-    public function store(CategoryRequest $request){
+    public function store(CategoryRequest $request)
+    {
+        userCan(request: $request, permission: 'create_category');
         try {
             $this->categoryService->store($request->validated());
             $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.success_operation')];
@@ -51,6 +58,7 @@ class CategoryController extends Controller
 
     public function update(CategoryRequest $request, $id)
     {
+        userCan(request: $request, permission: 'edit_category');
         try {
             $this->categoryService->update($id, $request->validated());
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
@@ -62,8 +70,9 @@ class CategoryController extends Controller
         }
     } //end of update
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        userCan(request: $request, permission: 'delete_category');
         try {
             $result = $this->categoryService->delete($id);
             if (!$result)
@@ -74,8 +83,9 @@ class CategoryController extends Controller
         }
     } //end of destroy
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        userCan(request: $request, permission: 'view_category');
         $category = $this->categoryService->find($id);
         if (!$category)
         {

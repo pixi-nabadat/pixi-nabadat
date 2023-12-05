@@ -18,6 +18,7 @@ class ReservationController extends Controller
 
     public function index(Request $request,ReservationDataTable $dataTable)
     {
+        userCan(request: $request, permission: 'view_reservation');
         $withRelations = ['user','center'];
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
@@ -25,8 +26,9 @@ class ReservationController extends Controller
         return $dataTable->with(['filters'=>$filters , 'withRelations' => $withRelations])->render('dashboard.reservations.index');
     }
     
-    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
+    public function edit(Request $request, $id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
+        userCan(request: $request, permission: 'edit_reservation');
         $withRelation = ['center', 'user'];
         $reservation = $this->reservationService->findById($id,$withRelation);
         if (!$reservation)
@@ -41,8 +43,9 @@ class ReservationController extends Controller
 
     } //end of edit
 
-    public function create()
+    public function create(Request $request)
     {
+        userCan(request: $request, permission: 'create_reservation');
         $centers = $this->centerService->getAll();
         $users_filter = ['type'=>User::CUSTOMERTYPE];
         $users = $this->userService->getAll(where_condition: $users_filter);
@@ -51,6 +54,7 @@ class ReservationController extends Controller
 
     public function store(ReservationStoreRequest $request): \Illuminate\Http\RedirectResponse
     {
+        userCan(request: $request, permission: 'create_reservation');
         try {
             $data = $request->validated();
             $this->reservationService->store($data);
@@ -64,6 +68,7 @@ class ReservationController extends Controller
 
     public function update(ReservationUpdateRequest $request, $id)
     {
+        userCan(request: $request, permission: 'edit_reservation');
         try {
             $data = $request->validated();
             $this->reservationService->update($id, $data);
@@ -76,8 +81,9 @@ class ReservationController extends Controller
         }
     } //end of update
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        userCan(request: $request, permission: 'delete_reservation');
         try {
             $result = $this->reservationService->destroy($id);
             if (!$result)
@@ -88,8 +94,9 @@ class ReservationController extends Controller
         }
     } //end of destroy
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        userCan(request: $request, permission: 'view_reservation');
         $withRelation = ['center','user'];
         $reservation = $this->reservationService->findById(id: $id, with: $withRelation);
         if (!$reservation) {

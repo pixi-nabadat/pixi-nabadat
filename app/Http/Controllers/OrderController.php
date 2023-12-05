@@ -16,6 +16,7 @@ class OrderController extends Controller
 
     public function index(OrdersDataTable $dataTable, Request $request)
     {
+        userCan(request: $request, permission: 'view_order');
         try {
             $loadRelation = ['latestStatus','user:id,name,phone'];
             $filters = array_filter($request->get('filters', []), function ($value) {
@@ -40,8 +41,9 @@ class OrderController extends Controller
         }
     } //end of update order Status
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        userCan(request: $request, permission: 'view_order');
         $loadRelation = ['user:id,name,phone' , 'items','latestStatus'];
         $order = $this->orderService->find($id,$loadRelation);
         if (!$order) {

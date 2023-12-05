@@ -18,7 +18,7 @@ class CityController extends Controller
 
     public function index(CitiesDataTable $dataTables,Request $request)
     {
-        
+        userCan(request: $request, permission: 'view_city');
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
         });
@@ -26,8 +26,9 @@ class CityController extends Controller
         return $dataTables->with(['filters'=>$filters])->render('dashboard.locations.city.index');
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        userCan(request: $request, permission: 'create_city');
         $filter = ['depth'=> 1];
         $governorates = $this->locationService->getAll($filter);
         return view('dashboard.locations.city.create',['governorates'=>$governorates]);
@@ -35,6 +36,7 @@ class CityController extends Controller
 
     public function store(StoreLocationRequest $request)
     {
+        userCan(request: $request, permission: 'create_city');
         //first forget cash
         cache()->forget('home-api');
         try {
@@ -49,8 +51,9 @@ class CityController extends Controller
         }
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        userCan(request: $request, permission: 'edit_city');
         $city = $this->locationService->getLocationById($id);
         if (!$city)
         {
@@ -71,6 +74,7 @@ class CityController extends Controller
 
     public function update($id, StoreLocationRequest $request)
     {
+        userCan(request: $request, permission: 'edit_city');
         //first forget cash
         cache()->forget('home-api');
         try {
@@ -92,8 +96,9 @@ class CityController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        userCan(request: $request, permission: 'delete_city');
         //first forget cash
         cache()->forget('home-api');
         try {

@@ -20,6 +20,7 @@ class EmployeeController extends Controller
 
     public function index(EmployeesDataTable $dataTable, Request $request)
     {
+        userCan(request: $request, permission: 'view_employee');
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
         });
@@ -29,8 +30,9 @@ class EmployeeController extends Controller
         return $dataTable->with(['filters'=>$filters,'withRelations'=>$withRelations])->render('dashboard.employees.index', ['governorates'=>$governorates]);
     }//end of index
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        userCan(request: $request, permission: 'edit_employee');
         $withRelation = ['attachments'];
         $employee = $this->employeeService->find($id,$withRelation);
         if (!$employee) {
@@ -44,8 +46,9 @@ class EmployeeController extends Controller
         return view('dashboard.employees.edit', compact('employee', 'permissions', 'governorates'));
     }//end of edit
 
-    public function create()
+    public function create(Request $request)
     {
+        userCan(request: $request, permission: 'create_employee');
         $permissions = Permission::all();
         $permissions = $permissions->groupBy('category');
         $filters = ['depth' => 1, 'is_active' => 1];
@@ -55,6 +58,7 @@ class EmployeeController extends Controller
 
     public function store(EmployeeStoreRequest $request)
     {
+        userCan(request: $request, permission: 'create_employee');
         try {
             $data = $request->validated();
             $this->employeeService->store(data: $data);
@@ -68,6 +72,7 @@ class EmployeeController extends Controller
 
     public function update(EmployeeUpdateRequest $request, $id)
     {
+        userCan(request: $request, permission: 'edit_employee');
         try {
             $data = $request->validated();
             $this->employeeService->update($id, $data);
@@ -80,8 +85,9 @@ class EmployeeController extends Controller
         }
     } //end of update
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        userCan(request: $request, permission: 'delete_employee');
         try {
             $result = $this->employeeService->delete($id);
             if (!$result)
@@ -92,8 +98,9 @@ class EmployeeController extends Controller
         }
     } //end of destroy
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        userCan(request: $request, permission: 'view_employee');
         $withRelations = ['attachments'];
         $employee = $this->employeeService->find($id, $withRelations);
         if (!$employee) {

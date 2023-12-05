@@ -15,6 +15,7 @@ class CancelReasonController extends Controller
 
     public function index(CancelReasonsDataTable $dataTable, Request $request)
     {
+        userCan(request: $request, permission: 'view_cancel_reason');
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
         });
@@ -22,8 +23,9 @@ class CancelReasonController extends Controller
     } //end of index
 
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        userCan(request: $request, permission: 'edit_cancel_reason');
         $cancelReason = $this->cancelReasonService->find($id);
         if (!$cancelReason) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.cancel_reason_not_found')];
@@ -32,13 +34,15 @@ class CancelReasonController extends Controller
         return view('dashboard.cancelReasons.edit', compact('cancelReason'));
     } //end of edit
 
-    public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function create(Request $request): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
+        userCan(request: $request, permission: 'create_cancel_reason');
         return view('dashboard.cancelReasons.create');
     } //end of create
 
     public function store(CancelReasonRequest $request): \Illuminate\Http\RedirectResponse
     {
+        userCan(request: $request, permission: 'create_cancel_reason');
         try {
             $this->cancelReasonService->store($request->validated());
             $toast = ['type' => 'success', 'title' => 'Success', 'message' => trans('lang.success_operation')];
@@ -51,6 +55,7 @@ class CancelReasonController extends Controller
 
     public function update(cancelReasonRequest $request, $id): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
+        userCan(request: $request, permission: 'edit_cancel_reason');
         try {
             $this->cancelReasonService->update($id, $request->validated());
             $toast = ['title' => 'Success', 'message' => trans('lang.success_operation')];
@@ -62,8 +67,9 @@ class CancelReasonController extends Controller
         }
     } //end of update
 
-    public function destroy($id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function destroy(Request $request, $id): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
+        userCan(request: $request, permission: 'delete_cancel_reason');
         try {
             $result = $this->cancelReasonService->delete($id);
             if (!$result)
@@ -74,8 +80,9 @@ class CancelReasonController extends Controller
         }
     } //end of destroy
 
-    public function show($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
+    public function show(Request $request, $id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
+        userCan(request: $request, permission: 'view_cancel_reason');
         $cancelReason = $this->cancelReasonService->find($id);
         if (!$cancelReason) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.cancel_reason_not_found')];

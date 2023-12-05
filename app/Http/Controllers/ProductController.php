@@ -18,6 +18,7 @@ class ProductController extends Controller
 
     public function index(ProductsDataTable $dataTable, Request $request)
     {
+        userCan(request: $request, permission: 'view_product');
         $loadRelation = ['user'];
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
@@ -27,8 +28,9 @@ class ProductController extends Controller
         return $dataTable->with(['filters' => $filters, 'withRelations' => $loadRelation])->render('dashboard.products.index', ['employees'=>$employees, 'categories'=>$categories]);
     } //end of index
 
-    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
+    public function edit(Request $request, $id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
+        userCan(request: $request, permission: 'edit_product');
         $withRelation = ['attachments'];
         $product = $this->productService->find($id,$withRelation);
         $categories = $this->categoryService->getAll();
@@ -41,14 +43,16 @@ class ProductController extends Controller
 
     } //end of edit
 
-    public function create()
+    public function create(Request $request)
     {
+        userCan(request: $request, permission: 'create_product');
         $categories = $this->categoryService->getAll();
         return view('dashboard.products.create', compact('categories'));
     } //end of create
 
     public function store(ProductRequest $request)
     {
+        userCan(request: $request, permission: 'create_product');
         try {
             $data = $request->validated();
             $data['added_by'] = auth()->id();
@@ -63,6 +67,7 @@ class ProductController extends Controller
 
     public function update(ProductRequest $request, $id)
     {
+        userCan(request: $request, permission: 'edit_product');
         try {
             $request->validated();
             $this->productService->update($id, $request->all());
@@ -75,8 +80,9 @@ class ProductController extends Controller
         }
     } //end of update
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        userCan(request: $request, permission: 'delete_product');
         try {
             $result = $this->productService->delete($id);
             if (!$result)
@@ -87,8 +93,9 @@ class ProductController extends Controller
         }
     } //end of destroy
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        userCan(request: $request, permission: 'view_product');
         $withRelation = ['category:id,name','attachments'];
         $product = $this->productService->find(id: $id, withRelation: $withRelation);
         if (!$product) {

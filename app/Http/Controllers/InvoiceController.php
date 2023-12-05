@@ -18,6 +18,7 @@ class InvoiceController extends Controller
 
     public function index(InvoicesDataTable $dataTable, Request $request)
     {
+        userCan(request: $request, permission: 'view_invoice');
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
         });
@@ -51,6 +52,7 @@ class InvoiceController extends Controller
 
     public function show($id)
     {
+        userCan(request: $request, permission: 'view_invoice');
         $invoice = $this->invoiceService->find($id, ['center.user:id,center_id,name,phone', 'transactions.user:id,center_id,name,phone']);
         return view('dashboard.invoices.show', compact('invoice'));
     } //end of show

@@ -17,6 +17,7 @@ class GovernorateController extends Controller
 
     public function index(GovernoratesDataTable $dataTables,Request $request)
     {
+        userCan(request: $request, permission: 'view_governorate');
         $request = $request->merge(['depth'=> 1,'is_active'=>$request->is_active??1]);
         return $dataTables->with(['filters'=>$request->all()])->render('dashboard.locations.governorate.index');
     }
@@ -32,8 +33,9 @@ class GovernorateController extends Controller
         return $governorates;
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        userCan(request: $request, permission: 'create_governorate');
         $filter = ['depth'=> 0];
         $countries = $this->locationService->getAll($filter);
         return view('dashboard.locations.governorate.create',['countries'=>$countries]);
@@ -41,6 +43,7 @@ class GovernorateController extends Controller
 
     public function store(StoreLocationRequest $request)
     {
+        userCan(request: $request, permission: 'create_governorate');
         //first forget cash
         cache()->forget('home-api');
         try {
@@ -62,8 +65,9 @@ class GovernorateController extends Controller
         }
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        userCan(request: $request, permission: 'edit_governorate');
         $governorate = $this->locationService->getLocationById($id);
         if (!$governorate)
         {
@@ -84,6 +88,7 @@ class GovernorateController extends Controller
 
     public function update($id, StoreLocationRequest $request)
     {
+        userCan(request: $request, permission: 'edit_governorate');
         //first forget cash
         cache()->forget('home-api');
         try {
@@ -105,8 +110,9 @@ class GovernorateController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        userCan(request: $request, permission: 'delete_governorate');
         //first forget cash
         cache()->forget('home-api');
         try {

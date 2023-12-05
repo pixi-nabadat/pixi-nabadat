@@ -27,6 +27,7 @@ class CenterController extends Controller
 
     public function index(CentresDataTable $dataTables, Request $request)
     {
+        userCan(request: $request, permission: 'view_center');
         $loadRelation = ['user.location'];
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
@@ -41,8 +42,9 @@ class CenterController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
+        userCan(request: $request, permission: 'create_center');
         $filters = ['depth' => 1, 'is_active' => 1];
         $governorates = $this->locationService->getAll($filters);
         return view('dashboard.centers.create', ['governorates' => $governorates]);
@@ -50,6 +52,7 @@ class CenterController extends Controller
 
     public function store(StoreCenterRequest $request): \Illuminate\Http\RedirectResponse
     {
+        userCan(request: $request, permission: 'create_center');
         try {
             DB::beginTransaction();
             $center = $this->centerService->store($request->validated());
@@ -70,8 +73,9 @@ class CenterController extends Controller
         }
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        userCan(request: $request, permission: 'edit_center');
         try {
             $withRelation = ['user.attachments','attachments'];
             $center = $this->centerService->find($id, $withRelation);
@@ -89,6 +93,7 @@ class CenterController extends Controller
 
     public function update($id, UpdateCenterRequest $request)
     {
+        userCan(request: $request, permission: 'edit_center');
         try {
             $this->centerService->update($id, $request->validated());
             $toast = [
@@ -106,8 +111,9 @@ class CenterController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        userCan(request: $request, permission: 'delete_center');
         try {
             $this->centerService->delete($id);
             return apiResponse(message: trans('lang.success'));
@@ -140,8 +146,9 @@ class CenterController extends Controller
         }
     } //end of changeStatus
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        userCan(request: $request, permission: 'view_center');
         $withRelation = ['user.attachments', 'attachments', 'devices'];
         $center = $this->centerService->find($id, $withRelation);
         $location = $this->locationService->getLocationAncestors($center->location_id);

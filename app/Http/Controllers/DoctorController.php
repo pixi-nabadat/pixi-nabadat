@@ -19,6 +19,7 @@ class DoctorController extends Controller
 
     public function index(DoctorsDataTable $dataTable, Request $request)
     {
+        userCan(request: $request, permission: 'view_doctor');
         $loadRelation = ['center.user:id,name,center_id'];
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
@@ -26,8 +27,9 @@ class DoctorController extends Controller
         return $dataTable->with(['filters' => $filters, 'withRelations' => $loadRelation])->render('dashboard.doctors.index');
     } //end of index
 
-    public function create()
+    public function create(Request $request)
     {
+        userCan(request: $request, permission: 'create_doctor');
         $withRelations = ['user:id,name,center_id'];
         $centers = app()->make(CenterService::class)->getAll(withRelations: $withRelations);
         return view('dashboard.doctors.create', compact('centers'));
@@ -42,8 +44,9 @@ class DoctorController extends Controller
 //        return view('dashboard.Doctors.show', compact('user', 'governorates'));
     } //end of show
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        userCan(request: $request, permission: 'edit_doctor');
         $doctor = $this->doctorService->find($id);
         if (!$doctor) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.doctor_not_found')];
@@ -56,6 +59,7 @@ class DoctorController extends Controller
 
     public function store(DoctorStoreRequest $request)
     {
+        userCan(request: $request, permission: 'create_doctor');
         try {
             $data = $request->validated();
             $this->doctorService->store($data);
@@ -69,6 +73,7 @@ class DoctorController extends Controller
 
     public function update(DoctorUpdateRequest $request, $id)
     {
+        userCan(request: $request, permission: 'edit_doctor');
         try {
             $data = $request->validated();
             $this->doctorService->update($id, $data);
@@ -80,8 +85,9 @@ class DoctorController extends Controller
         }
     } //end of update
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        userCan(request: $request, permission: 'delete_doctor');
         try {
             $result = $this->doctorService->delete($id);
             if (!$result)

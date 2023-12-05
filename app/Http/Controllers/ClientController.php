@@ -21,6 +21,7 @@ class ClientController extends Controller
 
     public function index(UsersDataTable $dataTable, Request $request)
     {
+        userCan(request: $request, permission: 'view_client');
         $withRelations = ['location:id,title'];
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
@@ -31,15 +32,17 @@ class ClientController extends Controller
         return $dataTable->with(['filters' => $filters, 'withRelations' => $withRelations])->render('dashboard.users.index', ['governorates'=>$governorates]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        userCan(request: $request, permission: 'create_client');
         $filters = ['depth' => 1, 'is_active' => 1];
         $governorates = $this->locationService->getAll($filters);
         return view('dashboard.users.create', compact('governorates'));
     }
 
-    public function show(int $id)
+    public function show(Request $request, int $id)
     {
+        userCan(request: $request, permission: 'view_client');
         $withRelations = ['attachments'];
         $client = $this->userService->find($id, $withRelations);
         if (!$client) {
@@ -51,8 +54,9 @@ class ClientController extends Controller
         return view('dashboard.users.show', compact('client','governorates'));
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        userCan(request: $request, permission: 'edit_client');
         try {
             $withRelation = ['attachments','location'];
             $client = $this->userService->find($id,$withRelation);
@@ -68,6 +72,7 @@ class ClientController extends Controller
 
     public function update(ClientUpdateRequest $request, $id)
     {
+        userCan(request: $request, permission: 'edit_client');
         try {
             $data = $request->validated();
             $this->userService->update($id, $data);
@@ -80,8 +85,9 @@ class ClientController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        userCan(request: $request, permission: 'delete_client');
         try {
             $result = $this->userService->delete($id);
             if (!$result)
@@ -94,6 +100,7 @@ class ClientController extends Controller
 
     public function store(ClientStoreRequest $request)
     {
+        userCan(request: $request, permission: 'create_client');
         try {
             $data = $request->validated();
             $this->userService->store(data: $data);

@@ -27,6 +27,7 @@ class UserPackageController extends Controller
 
     public function index(Request $request, UserPackagesDatatable $dataTable)
     {
+        userCan(request: $request, permission: 'view_user_package');
         $withRelations = ['user', 'center'];
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
@@ -34,15 +35,17 @@ class UserPackageController extends Controller
         return $dataTable->with(['filters' => $filters, 'withRelations' => $withRelations])->render('dashboard.userPackages.index');
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        userCan(request: $request, permission: 'create_user_package');
         $users = $this->userService->getAll();
         $centers = $this->centerService->getAll();
         return view('dashboard.userPackages.create', compact(['centers', 'users']));
     }//end of create
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        userCan(request: $request, permission: 'view_user_package');
         $userPackage = $this->userPackageService->find($id);
         if (!$userPackage) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.user_package_not_found')];
@@ -73,8 +76,9 @@ class UserPackageController extends Controller
         }
     } //end of show
 
-public function edit(int $id)
+    public function edit(Request $request, int $id)
     {
+        userCan(request: $request, permission: 'edit_user_package');
         $userPackage = $this->userPackageService->find($id);
         if (!$userPackage) {
             $toast = ['type' => 'error', 'title' => trans('lang.error'), 'message' => trans('lang.user_package_not_found')];
@@ -91,6 +95,7 @@ public function edit(int $id)
      */
     public function store(UserPackageStoreRequest $request)
     {
+        userCan(request: $request, permission: 'create_user_package');
         try {
             $data = $request->validated();
             $this->userPackageService->store($data);
@@ -108,6 +113,7 @@ public function edit(int $id)
      */
     public function update(int $id, UserPackageUpdateRequest $request)
     {
+        userCan(request: $request, permission: 'edit_user_package');
         try {
             $data = $request->validated();
             $this->userPackageService->update($id, $data);
@@ -123,8 +129,9 @@ public function edit(int $id)
      * distory the user package
      * @param int $id
      */
-    public function destroy(int $id)
+    public function destroy(Request $request, int $id)
     {
+        userCan(request: $request, permission: 'delete_user_package');
         try {
             $result = $this->userPackageService->delete($id);
             if (!$result)

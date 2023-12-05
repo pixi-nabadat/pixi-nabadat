@@ -22,6 +22,7 @@ class CouponController extends Controller
 
     public function index(CouponsDataTable $dataTable, Request $request)
     {
+        userCan(request: $request, permission: 'view_coupon');
         $filters = array_filter($request->get('filters', []), function ($value) {
             return ($value !== null && $value !== false && $value !== '');
         });
@@ -30,8 +31,9 @@ class CouponController extends Controller
 
     }//end of index
 
-    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
+    public function edit(Request $request, $id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
+        userCan(request: $request, permission: 'edit_coupon');
         $coupon = $this->couponService->find($id);
         if (!$coupon)
         {
@@ -41,13 +43,15 @@ class CouponController extends Controller
         return view('dashboard.coupons.edit', compact('coupon'));
     }//end of edit
 
-    public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function create(Request $request): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
+        userCan(request: $request, permission: 'create_coupon');
         return view('dashboard.coupons.create');
     }//end of create
 
     public function store(CouponStoreRequest $request): \Illuminate\Http\RedirectResponse
     {
+        userCan(request: $request, permission: 'create_coupon');
         //first forget cash
        $data = $request->validated();
        $data['start_date'] = Carbon::parse($data['start_date'])->format('Y-m-d');
@@ -65,6 +69,7 @@ class CouponController extends Controller
 
     public function update(CouponUpdateRequest $request, $id): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
+        userCan(request: $request, permission: 'edit_coupon');
         //first forget cash
         try {
             $this->couponService->update($id,  $request->validated());
@@ -77,8 +82,9 @@ class CouponController extends Controller
         }
     } //end of update
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        userCan(request: $request, permission: 'delete_coupon');
         //first forget cash
         try {
             $result = $this->couponService->delete($id);
@@ -90,8 +96,9 @@ class CouponController extends Controller
         }
     } //end of destroy
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        userCan(request: $request, permission: 'view_coupon');
         $coupon = $this->couponService->find($id);
         if (!$coupon)
         {

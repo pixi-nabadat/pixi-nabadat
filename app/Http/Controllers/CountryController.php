@@ -18,18 +18,21 @@ class CountryController extends Controller
 
     public function index(CountriesDataTable $dataTables,Request $request)
     {
+        userCan(request: $request, permission: 'view_country');
         $request = $request->merge(['depth'=>0,'is_active'=>$request->is_active??1]);
         return $dataTables->with(['filters'=>$request->all()])->render('dashboard.locations.country.index');
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        userCan(request: $request, permission: 'create_country');
         $currencies = Currency::all();
         return view('dashboard.locations.country.create', compact('currencies'));
     }
 
     public function store(StoreLocationRequest $request)
     {
+        userCan(request: $request, permission: 'create_country');
         try {
             $this->locationService->store($request->all());
             $toast=[
@@ -49,8 +52,9 @@ class CountryController extends Controller
         }
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        userCan(request: $request, permission: 'edit_country');
         $country = $this->locationService->getLocationById($id);
         if (!$country)
         {
@@ -67,6 +71,7 @@ class CountryController extends Controller
 
     public function update($id, StoreLocationRequest $request)
     {
+        userCan(request: $request, permission: 'edit_country');
         try {
             $this->locationService->update($id, $request->all());
             $toast=[
@@ -86,8 +91,9 @@ class CountryController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        userCan(request: $request, permission: 'delete_country');
         try {
             $result =  $this->locationService->delete($id);
             if(!$result)
