@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Auth;
 class AuthService extends BaseService
 {
 
-    public function loginWithUsernameOrPhone(string $identifier, string $password,$type = User::CUSTOMERTYPE) :User|Model
+    public function loginWithUsernameOrPhone(string $identifier, string $password,$type = User::CUSTOMERTYPE, bool $remember = false) :User|Model
     {
 
         $identifierField = is_numeric($identifier) ? 'phone':'email';
         $credential = [$identifierField=>$identifier,'password'=>$password,'type'=>$type];
-        if (!auth()->attempt($credential))
+        if (!auth()->attempt(credentials: $credential, remember: $remember))
             return throw new UserNotFoundException(__('lang.login_failed'));
         return User::where($identifierField, $identifier)->first();
     }

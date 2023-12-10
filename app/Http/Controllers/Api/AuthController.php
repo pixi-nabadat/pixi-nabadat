@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Exceptions\UserNotFoundException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
+use App\Http\Requests\LoginApiRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\StoreFcmTokenRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -23,12 +23,12 @@ class AuthController extends Controller
     {
     }
 
-    public function login(LoginRequest $request)
+    public function login(LoginApiRequest $request)
     {
 
         try {
             $type = $request->type ?? User::CUSTOMERTYPE ;
-            $user = $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password,type:$type);
+            $user = $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password,type:$type, remember: $request->remember);
             $this->authService->setUserFcmToken($user,$request->fcm_token);
             return new AuthUserResource($user);
         } catch (UserNotFoundException $e) {

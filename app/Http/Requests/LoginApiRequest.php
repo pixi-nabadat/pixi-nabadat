@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\User;
 
-class LoginRequest extends BaseRequest
+class LoginApiRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,7 @@ class LoginRequest extends BaseRequest
             'identifier'=>'required|string',
             'password'=>'required',
             'fcm_token'=>'nullable|string',
-            'remember' =>'nullable|string',
+            'remember' =>'nullable|boolean',
             'type'=>'nullable|in:'.User::SUPERADMINTYPE.','.User::CENTERADMIN.','.User::CUSTOMERTYPE
         ];
     }

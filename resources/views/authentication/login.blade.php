@@ -37,7 +37,7 @@
                      </div>
                      <div class="form-group mb-0">
                         <div class="checkbox p-0">
-                           <input id="checkbox1" type="checkbox">
+                           <input name="remember" id="checkbox1" type="checkbox">
                            <label class="text-muted" for="checkbox1">{{__('lang.remember_password')}}</label>
                         </div>
                         <button class="btn btn-primary btn-block" type="submit">{{__('lang.sign_in')}}</button>

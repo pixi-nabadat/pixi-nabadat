@@ -31,7 +31,8 @@ class AuthController extends Controller
     {
         try {
             $type = [User::SUPERADMINTYPE, User::EMPLOYEE];
-            $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password,type: $type);
+            $remember = $request->has('remember');
+            $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password,type: $type, remember: $remember);
             $toast = [
                 'type'=>'success',
                 'message'=>__('lang.sign_in'),
