@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
 class LocalizationController extends Controller
@@ -17,6 +15,10 @@ class LocalizationController extends Controller
         }
         $expire_in = 7 * 60 * 24;
         $previous_url = str_replace(url('/'), '', url()->previous());
+        $user = Auth::user();
+        $user->lang = $locale;
+        $user->save();
+        setLanguage($locale);
         return redirect($previous_url)->cookie('user-language', $locale,$expire_in);
 
     }
