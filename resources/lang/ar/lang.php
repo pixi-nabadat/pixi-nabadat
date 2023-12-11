@@ -510,5 +510,7 @@
 		'change_schedule_fcm_status'=>'تغير حالة fcm مجدول',
 	 
 	// end permissions translations
+		'unauthorized' =>'ليس لديك الصلاحيه',
+		'phone_or_password_incorrect' =>'خطاء فى هاتف او كلمة المرور',
     ]
 ?>

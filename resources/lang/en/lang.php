@@ -507,5 +507,8 @@
 			'change_schedule_fcm_status'=>'Change schedule fcm status',
 		 
 		// end permissions translations
+
+		'unauthorized' =>'Unauthorized',
+		'phone_or_password_incorrect' =>'Phone or password incorrect',
 	]
 ?>
