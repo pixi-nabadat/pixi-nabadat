@@ -30,6 +30,10 @@ class AuthController extends Controller
             $type = $request->type ?? User::CUSTOMERTYPE ;
             $user = $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password,type:$type, remember: $request->remember);
             $this->authService->setUserFcmToken($user,$request->fcm_token);
+            //start added new
+            $user->tokens()->delete();
+            $user['token'] = $user->createToken('personal-token')->plainTextToken;
+            //end added new
             return new AuthUserResource($user);
         } catch (UserNotFoundException $e) {
             return apiResponse($e->getMessage(), 'phone or password incorrect', $e->getCode());
