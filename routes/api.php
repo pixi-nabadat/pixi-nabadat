@@ -64,11 +64,6 @@ Route::get('devices', [DeviceController::class, 'listing']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
-    //start langguage
-    Route::post('set-lang/{locale}',[LocalizationController::class, 'setLang']);
-    Route::get('get-lang',[LocalizationController::class, 'getLang']);
-
-    //end language
     Route::group(['prefix' => 'centers'], function () {
         Route::get('doctors', [DoctorController::class, 'listing']);
         Route::post('store/doctor', [DoctorController::class, 'store']);
