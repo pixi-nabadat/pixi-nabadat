@@ -95,7 +95,7 @@ class Center extends Model
 
     public function userPackages(): HasMany
     {
-        return $this->hasMany(Package::class,'center_id');
+        return $this->hasMany(UserPackage::class,'center_id');
     }
 
     public function invoices(): HasMany

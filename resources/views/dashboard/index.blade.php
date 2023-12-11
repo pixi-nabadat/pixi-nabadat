@@ -506,8 +506,8 @@
             animateScale: false,
             legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
         };
-        var duePanel = document.getElementById("duePanel").getContext("2d");
-        var myDoughnutChart = new Chart(duePanel).Doughnut(duePanelData, doughnutOptions);
+        // var duePanel = document.getElementById("duePanel").getContext("2d");
+        // var myDoughnutChart = new Chart(duePanel).Doughnut(duePanelData, doughnutOptions);
         var nabadatPanel = document.getElementById("nabadatPanel").getContext("2d");
         var myDoughnutChart = new Chart(nabadatPanel).Doughnut(nabadatPanelData, doughnutOptions);
         var dougnhutChart = document.getElementById("dougnhutChartData").getContext("2d");
