@@ -19,7 +19,7 @@ class AuthUserResource extends JsonResource
 
        return [
         //    'token'=>$request->bearerToken()?? $this->getToken(),
-           'token'=>$this->token,
+           'token'=>$request->bearerToken()?? $this->token,
            'token_type'=>'Bearer',
            'user'=>[
             "id"=> $this->id,
