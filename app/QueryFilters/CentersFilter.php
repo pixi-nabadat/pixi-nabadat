@@ -57,6 +57,14 @@ class CentersFilter extends QueryFilter
             });
     }
 
+    public function device_id($term)
+    {
+        if (isset($term))
+            return $this->builder->whereHas('devices', function ($query) use ($term) {
+                $query->where('devices.id', $term);
+            });
+    }
+
     public function governorate_id($term)
     {
         if (isset($term))
