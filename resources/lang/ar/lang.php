@@ -512,5 +512,7 @@
 	// end permissions translations
 		'unauthorized' =>'ليس لديك الصلاحيه',
 		'phone_or_password_incorrect' =>'خطاء فى هاتف او كلمة المرور',
+		'phone_verified' =>'تم تاكيد الهاتف',
+		'incorrect' =>'غير صحيح',
     ]
 ?>

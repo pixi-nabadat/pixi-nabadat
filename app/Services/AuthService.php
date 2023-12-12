@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enum\ImageTypeEnum;
 use App\Exceptions\UserNotFoundException;
+use App\Models\ResetCodePassword;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,9 @@ class AuthService extends BaseService
      */
     public function register(array $data=[]): mixed
     {
-        return User::create($data);
+        $user = User::create($data);
+        ResetCodePassword::sendCode(phone: $data['phone']);
+        return $user;
     }
 
     public function getAuthUser()

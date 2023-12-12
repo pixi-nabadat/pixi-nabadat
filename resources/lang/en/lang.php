@@ -510,5 +510,7 @@
 
 		'unauthorized' =>'Unauthorized',
 		'phone_or_password_incorrect' =>'Phone or password incorrect',
+		'phone_verified' =>'Phone verified',
+		'incorrect' =>'Incorrect',
 	]
 ?>

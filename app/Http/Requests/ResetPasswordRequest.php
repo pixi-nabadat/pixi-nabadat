@@ -22,7 +22,7 @@ class ResetPasswordRequest extends BaseRequest
     public function rules()
     {
         return [
-            'code' => 'required|string|exists:reset_code_passwords',
+            'code' => 'required|numeric|exists:reset_code_passwords',
             'password' => 'required|string|min:6|confirmed',
         ];
     }

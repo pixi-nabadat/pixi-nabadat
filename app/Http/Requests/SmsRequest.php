@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class PhoneVerifyRequest extends BaseRequest
+class SmsRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class PhoneVerifyRequest extends BaseRequest
     public function rules()
     {
         return [
-            'code' => 'required|numeric|exists:reset_code_passwords',
+            'phone' => 'required|numeric|exists:users,phone',
         ];
     }
 

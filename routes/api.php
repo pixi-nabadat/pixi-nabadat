@@ -16,10 +16,10 @@ use App\Http\Controllers\Api\CenterPackageController;
 use App\Http\Controllers\Api\DeviceController;
 use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\HomeController;
-use App\Http\Controllers\Api\LocalizationController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\OtpController;
 use App\Http\Controllers\Api\PhoneVerifyController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RatesController;
@@ -42,7 +42,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
     Route::post('phone/verify', PhoneVerifyController::class);
-    Route::post('password/forget', PhoneVerifyController::class);
+    Route::post('password/forget', OtpController::class);
+    Route::post('resend/code', OtpController::class);
     Route::post('password/reset', RestPasswordController::class);
     Route::group(['middleware' => 'auth:sanctum'],function (){
         Route::post('user/set-fcm-token', [AuthController::class, 'setFcmToken']);
