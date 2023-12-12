@@ -112,9 +112,9 @@ class OrderController extends Controller
             $this->cartService->emptyCart($request->temp_user_id);
 
             DB::commit();
-            $notification_data = $this->orderService->notifiyUser($order);
+            // $notification_data = $this->orderService->notifiyUser($order);
 
-            notifyUser($order->user, $notification_data);
+            // notifyUser($order->user, $notification_data);
 //            event to fire fcm notification message
 
             event(new PushEvent($order, FcmMessage::CREATE_NEW_ORDER));

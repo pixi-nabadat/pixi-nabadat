@@ -147,21 +147,21 @@ class OrderService extends BaseService
         return $order ;
     }
 
-    public function notifiyUser(Order $order)
-    {
-        return [
-            'model_id' => $order->id,
-            'title' => [
-                'ar' => 'test',
-                'en' => 'test',
-            ],
-            'message' => [
-                'ar' => 'test',
-                'en' => 'test',
-            ],
-            'type' => NotificationTypeEnum::ORDER
-        ];
-    }
+    // public function notifiyUser(Order $order)
+    // {
+    //     return [
+    //         'model_id' => $order->id,
+    //         'title' => [
+    //             'ar' => 'test',
+    //             'en' => 'test',
+    //         ],
+    //         'message' => [
+    //             'ar' => 'test',
+    //             'en' => 'test',
+    //         ],
+    //         'type' => NotificationTypeEnum::ORDER
+    //     ];
+    // }
 
     public function paymentStatus($id)
     {
