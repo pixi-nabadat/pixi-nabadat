@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Enum\NotificationTypeEnum;
 use App\Events\PushEvent;
 use App\Models\FcmMessage;
 use App\Models\Order;
@@ -54,5 +55,18 @@ class SendOrderCreatedNotification
         $token =[$order->user->device_token];
         $data = ['order_id' => $order_id];
         app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $token,data: $data);
+        $notification_data =  [
+            'model_id' => $order_id,
+            'title' => [
+                'ar' => 'انشاء طلب',
+                'en' => 'Order created',
+            ],
+            'message' => [
+                'ar' => 'تم انشاء الطب بنجاح',
+                'en' => 'Your order created successfully'
+            ],
+            'type' => NotificationTypeEnum::ORDER
+        ];
+        notifyUser($order->user , $notification_data);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Enum\NotificationTypeEnum;
 use App\Events\PushEvent;
 use App\Models\FcmMessage;
 use App\Models\Order;
@@ -53,5 +54,18 @@ class SendChangeOrderStatusNotification
         $token =[$order->user->device_token];
         $data = ['order_id' => $order_id];
         app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $token,data: $data);
+        $notification_data =  [
+            'model_id' => $order_id,
+            'title' => [
+                'ar' => 'حالة الطلب',
+                'en' => 'Order status',
+            ],
+            'message' => [
+                'ar' => 'حالة الطلب الخا بك الان '.$order_status,
+                'en' => 'Your order status now is: '.$order_status,
+            ],
+            'type' => NotificationTypeEnum::ORDER
+        ];
+        notifyUser($order->user , $notification_data);
     }
 }

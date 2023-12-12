@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Enum\NotificationTypeEnum;
 use App\Enum\UserPackageStatusEnum;
 use App\Events\PushEvent;
 use App\Models\FcmMessage;
@@ -63,5 +64,18 @@ class SendReservationStatusNotification
         $data = ['reservation_id' => $reservation->id];
 
         app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $token,data: $data);
+        $notification_data =  [
+            'model_id' => $reservation_number,
+            'title' => [
+                'ar' => 'حالة الحجز',
+                'en' => 'Reservation status',
+            ],
+            'message' => [
+                'ar' => 'حالة الحجز الخاص بك الان هى: '.$reservation_status,
+                'en' => 'Your reservation status now is: '.$reservation_status
+            ],
+            'type' => NotificationTypeEnum::RESERVATION
+        ];
+        notifyUser($user , $notification_data);
     }
 }

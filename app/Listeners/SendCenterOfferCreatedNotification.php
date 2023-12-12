@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Enum\NotificationTypeEnum;
 use App\Events\PushEvent;
 use App\Models\FcmMessage;
 use App\Models\Order;
@@ -54,5 +55,18 @@ class SendCenterOfferCreatedNotification
         $body = replaceFlags($body,$replaced_values);
         $tokens = User::where('type',User::CUSTOMERTYPE)->pluck('device_token')->toArray();
         app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $tokens);
+        $notification_data =  [
+            'model_id' => $center->id,
+            'title' => [
+                'ar' => 'عرض جديد',
+                'en' => 'New Package',
+            ],
+            'message' => [
+                'ar' => 'مركز'.$center->getTranslation('name', 'ar').' انشاء عرض جديدالان',
+                'en' => 'center'.$center->getTranslation('name', 'en').' created new package',
+            ],
+            'type' => NotificationTypeEnum::CENTER
+        ];
+        notifyUser($center_user , $notification_data);
     }
 }

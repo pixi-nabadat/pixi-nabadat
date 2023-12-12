@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Enum\NotificationTypeEnum;
 use App\Enum\UserPackageStatusEnum;
 use App\Events\PushEvent;
 use App\Models\FcmMessage;
@@ -65,5 +66,18 @@ class SendReservationCreatedNotification
         $data = ['reservation_id' => $reservation->id];
 
         app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $token,data: $data);
+        $notification_data =  [
+            'model_id' => $reservation_number,
+            'title' => [
+                'ar' => 'انشاء حجز',
+                'en' => 'Order created',
+            ],
+            'message' => [
+                'ar' => 'تم انشاء الحجز بنجاح',
+                'en' => 'Your reservation created successfully'
+            ],
+            'type' => NotificationTypeEnum::RESERVATION
+        ];
+        notifyUser($user , $notification_data);
     }
 }
