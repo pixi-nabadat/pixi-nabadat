@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Enum\FcmEventsNames;
+use App\Services\EmailService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Filterable;
 use App\Services\PushNotificationService;
+use App\Services\SmsService;
 
 class ScheduleFcm extends Model
 {
@@ -33,7 +36,13 @@ class ScheduleFcm extends Model
             $body = replaceFlags($body,$replaced_values);
             // $tokens = $usersToken->toArray();
             $tokens[0] = $reservation->user->device_token;
-            app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $tokens);
+            // app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $tokens);
+            if($scheduleFcm->notification_via == FcmEventsNames::$CHANNELS['fcm'])
+                app()->make(PushNotificationService::class)->sendToTokens(title: $title,body: $body,tokens: $tokens);
+            else if($scheduleFcm->notification_via == FcmEventsNames::$CHANNELS['sms'])
+                app()->make(SmsService::class)->sendSMS(phones: $reservation->user->phone, message: $body);
+            else
+                app()->make(EmailService::class)->sendEmailNotification(user: $reservation->user, message: $body);
 
         }
 
@@ -56,5 +65,25 @@ class ScheduleFcm extends Model
 
         }
 
+    }
+
+    public static function sendNotification($users, ScheduleFcm $scheduleFcm)
+    {
+        // $title = $scheduleFcm->title ;
+        $body = $scheduleFcm->content ;
+        foreach($users as $user)
+        {
+            $replaced_values = [
+                '@USER_NAME@'=>$user->name,
+            ];
+            $body = replaceFlags($body,$replaced_values);
+            $tokens[0] = $user->device_token;
+            if($scheduleFcm->notification_via == FcmEventsNames::$CHANNELS['fcm'])
+                ScheduleFcm::UserReminderFcm($scheduleFcm, $user);
+            else if($scheduleFcm->notification_via == FcmEventsNames::$CHANNELS['sms'])
+                app()->make(SmsService::class)->sendSMS(phones: $user->phone, message: $body);
+            else
+                app()->make(EmailService::class)->sendEmailNotification(user: $user, message: $body);
+        }
     }
 }

@@ -49,19 +49,23 @@ class PulsesReminderCommand extends Command
         {
             $users = app()->make(UserService::class)->queryGet()
             ->walletGreaterThan(minimum_number_of_pulses:0,days_number:3)->get();
-            ScheduleFcm::UserReminderFcm($scheduleFcmNabadatThreeDays, $users);
+            // ScheduleFcm::UserReminderFcm($scheduleFcmNabadatThreeDays, $users);
+            ScheduleFcm::sendNotification(users: $users, scheduleFcm: $scheduleFcmNabadatThreeDays);
+
         }
         if($scheduleFcmNabadatSevenDays)
         {
             $users = app()->make(UserService::class)->queryGet()
             ->walletGreaterThan(minimum_number_of_pulses:0,days_number: 7)->get();
-            ScheduleFcm::UserReminderFcm($scheduleFcmNabadatSevenDays, $users);
+            // ScheduleFcm::UserReminderFcm($scheduleFcmNabadatSevenDays, $users);
+            ScheduleFcm::sendNotification(users: $users, scheduleFcm: $scheduleFcmNabadatSevenDays);
         }
         if($scheduleFcmNabadatElevenDays)
         {
             $users = app()->make(UserService::class)->queryGet()
             ->walletGreaterThan(minimum_number_of_pulses:0, days_number:11)->get();
-            ScheduleFcm::UserReminderFcm($scheduleFcmNabadatElevenDays, $users);
+            // ScheduleFcm::UserReminderFcm($scheduleFcmNabadatElevenDays, $users);
+            ScheduleFcm::sendNotification(users: $users, scheduleFcm: $scheduleFcmNabadatElevenDays);
         }
         //end nabadat usage reminder
         return Command::SUCCESS;

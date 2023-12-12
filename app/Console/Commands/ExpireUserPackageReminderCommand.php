@@ -42,7 +42,8 @@ class ExpireUserPackageReminderCommand extends Command
 
         if($scheduleFcm)
         {
-            ScheduleFcm::UserReminderFcm($scheduleFcm, $users);
+            // ScheduleFcm::UserReminderFcm($scheduleFcm, $users);
+            ScheduleFcm::sendNotification(users: $users, scheduleFcm: $scheduleFcm);
         }
 
         return Command::SUCCESS;

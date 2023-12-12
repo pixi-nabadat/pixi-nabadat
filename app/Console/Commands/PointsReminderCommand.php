@@ -50,21 +50,24 @@ class PointsReminderCommand extends Command
             $expireDate   = Carbon::parse(Carbon::now()->setTimezone('Africa/Cairo')->addDay())->format('Y-m-d');
             $usersFilters = ['points_expire_date'=> $expireDate];
             $userPointsOneDayRemain = app()->make(UserService::class)->queryGet(where_condition: $usersFilters, withRelation: [])->get();
-            ScheduleFcm::UserReminderFcm($scheduleFcmPointsOneDay, $userPointsOneDayRemain);
+            // ScheduleFcm::UserReminderFcm($scheduleFcmPointsOneDay, $userPointsOneDayRemain);
+            ScheduleFcm::sendNotification(users: $userPointsOneDayRemain, scheduleFcm: $scheduleFcmPointsOneDay);
         }
         if($scheduleFcmPointsThreeDays)
         {
             $expireDate   = Carbon::parse(Carbon::now()->setTimezone('Africa/Cairo')->addDay(4))->format('Y-m-d');
             $usersFilters = ['points_expire_date'=> $expireDate];
             $userPointsThreeDaysRemain = app()->make(UserService::class)->queryGet(where_condition: $usersFilters, withRelation: [])->get();
-            ScheduleFcm::UserReminderFcm($scheduleFcmPointsThreeDays, $userPointsThreeDaysRemain);
+            // ScheduleFcm::UserReminderFcm($scheduleFcmPointsThreeDays, $userPointsThreeDaysRemain);
+            ScheduleFcm::sendNotification(users: $userPointsThreeDaysRemain, scheduleFcm: $scheduleFcmPointsThreeDays);
         }
         if($scheduleFcmPointsSevenDays)
         {
             $expireDate   = Carbon::parse(Carbon::now()->setTimezone('Africa/Cairo')->addDay(8))->format('Y-m-d');
             $usersFilters = ['points_expire_date'=> $expireDate];
             $userPointsSevenDaysRemain = app()->make(UserService::class)->queryGet(where_condition: $usersFilters, withRelation: [])->get();
-            ScheduleFcm::UserReminderFcm($scheduleFcmPointsSevenDays, $userPointsSevenDaysRemain);
+            // ScheduleFcm::UserReminderFcm($scheduleFcmPointsSevenDays, $userPointsSevenDaysRemain);
+            ScheduleFcm::sendNotification(users: $userPointsSevenDaysRemain, scheduleFcm: $scheduleFcmPointsSevenDays);
         }
         //end points expire reminder
         return Command::SUCCESS;
