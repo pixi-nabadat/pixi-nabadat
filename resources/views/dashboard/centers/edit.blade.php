@@ -187,7 +187,7 @@
                                 <div class="field_wrapper">
                                     <div class="col-md-6 my-3">
                                         <div class="col-form-label">{{ trans('lang.other_phones') }}</div>
-                                        @foreach ($center->phones ?? [] as $phone)
+                                        {{-- @if (!$center->phones ?? 0) --}}
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <a href="javascript:void(0);" class="add_button" title="Add field">
@@ -196,7 +196,19 @@
                                             </div>
                                             <input type="text"
                                                 class="form-control @error('phones') is-invalid @enderror" name="phones[]"
-                                                value="{{ $phone }}" placeholder="primary phone" />
+                                                value="" placeholder="primary phone" />
+                                        </div>
+                                        {{-- @endif --}}
+                                        @foreach ($center->phones ?? [] as $phone)
+                                        <div class="col-md-12 my-3 child">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <a href="javascript:void(0);" class="remove_button" title="remove">
+                                                        <i class="fa fa-minus-circle fa-2x"></i>
+                                                    </a>
+                                                </div>
+                                                <input type="text" value="{{ $phone }}" class="form-control  @error('phone') is-invalid @enderror" name="phones[]"/>
+                                            </div>
                                         </div>
                                         @endforeach
                                         
@@ -509,8 +521,7 @@
             var addButton = $('.add_button'); //Add button selector
             var wrapper = $('.field_wrapper'); //Input field wrapperr
             var fieldHTML =
-                '<div class="col-md-6 my-3 child">' +
-                '<label class="col-form-label col-3"></label>' +
+                '<div class="col-md-12 my-3 child">' +
                 '<div class="input-group">' +
                 '<div class="input-group-prepend">' +
                 '<a href="javascript:void(0);" class="remove_button" title="remove">' +
