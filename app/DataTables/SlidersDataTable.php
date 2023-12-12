@@ -20,7 +20,7 @@ class SlidersDataTable extends DataTable
                 return view('dashboard.sliders.action', compact('slider'))->render();
             })
             ->editColumn('sliderable_id', function (Slider $slider) {
-                return $slider->sliderable->getTranslation('name', app()->getLocale());
+                return $slider->sliderable?->getTranslation('name', app()->getLocale());
             })
             ->editColumn('type', function (Slider $slider) {
                 return match((int)$slider->type){
