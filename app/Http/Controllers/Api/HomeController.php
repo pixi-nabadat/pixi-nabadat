@@ -65,7 +65,7 @@ class HomeController extends Controller
         $product = $this->productService->queryGet(where_condition: $filters, withRelation: [])->select(['id','name'])->limit(10)->get();
         $center  = $this->centerService->queryGet(where_condition:  $filters, withRelation: [])->select(['id','name'])->limit(10)->get();
         $device  = $this->deviceService->queryGet(where_condition:  $filters, withRelation: ['center'])->select(['id','name'])->limit(10)->get();
-        $package = $this->packageService->queryGet(where_condition: $filters, withRelation: ['center'])->select(['id','name'])->limit(10)->get();
+        $package = $this->packageService->queryGet(where_condition: $filters, withRelation: ['center'])->limit(10)->get();
 
         $finalResult = $product->concat($device)->concat($center)->concat($package);
         $search_results = HomeSearchResource::collection($finalResult);
