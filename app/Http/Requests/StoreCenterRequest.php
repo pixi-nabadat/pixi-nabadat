@@ -30,7 +30,7 @@ class StoreCenterRequest extends BaseRequest
             'phones'                 => 'nullable|array',
             'phones.*'               => 'nullable|string',
             'location_id'            => 'required|integer',
-            'primary_phone'          => 'required|string',
+            'primary_phone'          => 'required|numeric|unique:users,phone',
             'lat'                    => 'nullable|string',
             'lng'                    => 'nullable|string',
             'address'                => 'required|array',
