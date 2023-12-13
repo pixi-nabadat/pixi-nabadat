@@ -189,6 +189,7 @@ class CenterService extends BaseService
         $center = $this->find($id);
         $center->deleteAttachments();
         $center->user->deleteAttachments();
+        $center->sliders()->delete();
         return $center->delete();
     }
 
