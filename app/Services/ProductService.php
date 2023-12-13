@@ -70,6 +70,7 @@ class ProductService extends BaseService
         $product = $this->find($id);
         if ($product) {
             $product->deleteAttachments();
+            $product->sliders()->delete();
             return $product->delete();
         }
         return false;
