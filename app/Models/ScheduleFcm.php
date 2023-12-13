@@ -42,8 +42,7 @@ class ScheduleFcm extends Model
             else if($scheduleFcm->notification_via == FcmEventsNames::$CHANNELS['sms'])
                 app()->make(SmsService::class)->sendSMS(phones: $reservation->user->phone, message: $body);
             else
-                app()->make(EmailService::class)->sendEmailNotification(user: $reservation->user, message: $body);
-
+                $reservation->user->notify(new \App\Notifications\SendEmailNotification(message: $body));
         }
 
     }
@@ -83,7 +82,7 @@ class ScheduleFcm extends Model
             else if($scheduleFcm->notification_via == FcmEventsNames::$CHANNELS['sms'])
                 app()->make(SmsService::class)->sendSMS(phones: $user->phone, message: $body);
             else
-                app()->make(EmailService::class)->sendEmailNotification(user: $user, message: $body);
+                $user->notify(new \App\Notifications\SendEmailNotification(message: $body));
         }
     }
 }
