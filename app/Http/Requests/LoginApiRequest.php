@@ -27,7 +27,7 @@ class LoginApiRequest extends BaseRequest
             'identifier'=>'required|string',
             'password'=>'required',
             'fcm_token'=>'nullable|string',
-            'remember' =>'nullable|boolean',
+            'remember' =>'nullable|boolean:in:[0,1]',
             'type'=>'nullable|in:'.User::SUPERADMINTYPE.','.User::CENTERADMIN.','.User::CUSTOMERTYPE
         ];
     }

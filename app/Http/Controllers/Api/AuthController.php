@@ -28,7 +28,8 @@ class AuthController extends Controller
 
         try {
             $type = $request->type ?? User::CUSTOMERTYPE ;
-            $user = $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password,type:$type, remember: $request->remember);
+            $remember = isset($request->remember) ? $request->remember:0;
+            $user = $this->authService->loginWithUsernameOrPhone(identifier: $request->identifier, password: $request->password,type:$type, remember: $remember);
             if(!$user->is_active)
                 return apiResponse(message: trans('lang.unauthorized'), code: 403);
             $this->authService->setUserFcmToken($user,$request->fcm_token);
