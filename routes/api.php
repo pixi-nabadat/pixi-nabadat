@@ -146,6 +146,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 Route::get('home', [HomeController::class, 'index']);
 Route::get('home/search', [HomeController::class, 'search']);
 
+//start company data
+Route::get('company/data', [HomeController::class, 'companyData']);
+//end company data
 
 //callback form paymob getaway
 Route::any('paymob/payment/done', [OrderController::class, 'checkPaymobPaymentStatus']);

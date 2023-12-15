@@ -69,7 +69,7 @@
             </div>
             @endcan
 
-            @can('edit_terms_conditions_settings')
+            @can('edit_terms_and_conditions_settings')
             <div class="col-sm-6 col-xl-3 xl-50 col-lg-6 box-col-6">
                 <a href="{{route('terms_and_conditions.settings')}}">
                     <div class="card social-widget-card">

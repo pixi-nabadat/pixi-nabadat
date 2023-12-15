@@ -515,5 +515,6 @@
 		'phone_verified' =>'تم تاكيد الهاتف',
 		'incorrect' =>'غير صحيح',
 		'company_name' =>'اسم الشركة',
+		'terms_and_condition' =>'الشروط والاحكام',
     ]
 ?>

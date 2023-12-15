@@ -513,5 +513,6 @@
 		'phone_verified' =>'Phone verified',
 		'incorrect' =>'Incorrect',
 		'company_name' =>'Company name',
+		'terms_and_condition' =>'Terms and condition',
 	]
 ?>

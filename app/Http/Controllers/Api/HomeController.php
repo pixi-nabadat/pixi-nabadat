@@ -72,4 +72,24 @@ class HomeController extends Controller
         return apiResponse(data: $search_results);
     }
 
+    public function companyData()
+    {
+        return apiResponse(data: [
+            'company_name'         => [
+                'ar' => config('global.company_name_ar'),
+                'en' => config('global.company_name_en'),
+            ],
+            'phones' => [
+                'primary_phone'=> config('global.primary_phone'),
+                'phone2' => config('global.phone2'),
+                'phone3' => config('global.phone3'),
+                'phone4' => config('global.phone4'),
+            ],
+            'company_logo' => asset('uploads/settings/'.config('global.company_logo')),
+            'address' => config('global.address'),
+            'location_id' => config('global.location_id'),
+            'description' => config('global.description'),
+            'terms_and_conditions' => config('global.terms_and_conditions'),
+        ], message: trans('lang.success_operation'));
+    }
 }
