@@ -514,5 +514,6 @@
 		'phone_or_password_incorrect' =>'خطاء فى هاتف او كلمة المرور',
 		'phone_verified' =>'تم تاكيد الهاتف',
 		'incorrect' =>'غير صحيح',
+		'company_name' =>'اسم الشركة',
     ]
 ?>
