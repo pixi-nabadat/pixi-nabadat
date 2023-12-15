@@ -71,6 +71,7 @@ class ProductService extends BaseService
         if ($product) {
             $product->deleteAttachments();
             $product->sliders()->delete();
+            $product->rates()->delete();
             return $product->delete();
         }
         return false;

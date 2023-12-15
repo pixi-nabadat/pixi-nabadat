@@ -28,7 +28,7 @@ class RatesDatatable extends DataTable
             })
 
             ->editColumn('ratable_id', function (Rate $rate) {
-                return $rate->ratable_type == CenterDevice::class ? $rate->ratable?->device->name:$rate->ratable->getTranslation('name', app()->getLocale());
+                return $rate->ratable_type == CenterDevice::class ? $rate->ratable?->device->name:$rate->ratable?->getTranslation('name', app()->getLocale());
             })
             
             ->editColumn('is_active', function (Rate $rate) {

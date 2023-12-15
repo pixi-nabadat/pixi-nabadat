@@ -191,6 +191,7 @@ class CenterService extends BaseService
         $center->user->deleteAttachments();
         $center->user->delete();
         $center->sliders()->delete();
+        $center->rates()->delete();
         return $center->delete();
     }
 
