@@ -514,5 +514,7 @@
 		'incorrect' =>'Incorrect',
 		'company_name' =>'Company name',
 		'terms_and_condition' =>'Terms and condition',
+		'logged_in_successfully'=>'Logged in successfully',
+		'code_is_invalid'=>'Code is invalid',
 	]
 ?>

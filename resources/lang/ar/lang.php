@@ -516,5 +516,7 @@
 		'incorrect' =>'غير صحيح',
 		'company_name' =>'اسم الشركة',
 		'terms_and_condition' =>'الشروط والاحكام',
+		'logged_in_successfully'=>'تم تسجيل الدخول بنجاح',
+		'code_is_invalid'=>'الكود غير صالح',
     ]
 ?>
