@@ -22,9 +22,12 @@
                         <form class="needs-validation datatables_parameters" novalidate="">
                             <div class="row g-3">
                                 <div class="col-md-4">
-                                    <label class="form-label" for="validationCustom02">@lang('lang.center_id')</label>
-                                    <input class="form-control" name="center_id" id="validationCustom02" type="number" value="">
-                                    <div class="valid-feedback">Looks good!</div>
+                                    <label class="form-label">{{trans("lang.center")}}</label>
+                                    <select name="center_id" class="js-example-placeholder-multiple col-sm-12 @error('center_id') is-invalid @enderror" multiple="multiple">
+                                        @foreach ($centers as $center)
+                                        <option value="{{ $center->id }}">{{ $center->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label" for="validationCustom02">@lang('lang.center_phone')</label>

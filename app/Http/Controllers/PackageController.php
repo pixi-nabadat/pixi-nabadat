@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\PackagesDataTable;
 use App\Http\Requests\PackageStoreRequest;
 use App\Http\Requests\PackageUpdateRequest;
+use App\Models\Center;
 use App\Services\CenterService;
 use App\Services\CenterPackageService;
 use Illuminate\Http\Request;
@@ -23,7 +24,8 @@ class PackageController extends Controller
             return ($value !== null && $value !== false && $value !== '');
         });
         $withRelations = ['center'] ;
-        return $dataTable->with(['filters'=>$filters,'withRelations'=>$withRelations])->render('dashboard.packages.index');
+        $centers = Center::all();
+        return $dataTable->with(['filters'=>$filters,'withRelations'=>$withRelations])->render('dashboard.packages.index', ['centers'=>$centers]);
     }//end of index
 
     public function edit(Request $request, $id)
