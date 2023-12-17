@@ -23,7 +23,7 @@
                             <div class="row g-3">
                                 <div class="col-md-4">
                                     <label class="form-label">{{trans("lang.center")}}</label>
-                                    <select name="center_id" class="js-example-placeholder-multiple col-sm-12 @error('center_id') is-invalid @enderror" multiple="multiple">
+                                    <select name="center_id" class="js-example-placeholder-multiple col-sm-12 @error('center_id') is-invalid @enderror">
                                         @foreach ($centers as $center)
                                         <option value="{{ $center->id }}">{{ $center->name }}</option>
                                         @endforeach
