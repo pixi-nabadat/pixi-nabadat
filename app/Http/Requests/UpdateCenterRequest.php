@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enum\PaymentMethodEnum;
+use App\Models\Center;
 use Illuminate\Validation\Rule;
 
 class UpdateCenterRequest extends BaseRequest
@@ -24,15 +25,16 @@ class UpdateCenterRequest extends BaseRequest
      */
     public function rules()
     {
+        $userId = Center::find($this->center)->user->id;
         return [
 
             'name'                   => 'required|array',
             'name.*'                 => 'required|string',
-            'user_name'                 => 'required|string',
+            // 'user_name'                 => 'required|string',
             'phones'                 => 'nullable|array',
             'phones.*'               => 'nullable|string',
             'location_id'            => 'required|integer',
-            'primary_phone'          => 'required|numeric|unique:users,phone',
+            'primary_phone'          => 'required|numeric|unique:users,phone,'.$userId,
             'lat'                    => 'nullable|string',
             'lng'                    => 'nullable|string',
             'address'                => 'required|array',

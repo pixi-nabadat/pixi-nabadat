@@ -77,7 +77,7 @@ class CenterService extends BaseService
     private function prepareUserData($data): array
     {
         return [
-            'name' => Arr::get($data, 'user_name'),
+            'name' => Arr::get($data, 'name.en'),
             'email' => Arr::get($data, 'email'),
             'phone' => Arr::get($data, 'primary_phone'),
             'password' => Arr::get($data, 'password'),
