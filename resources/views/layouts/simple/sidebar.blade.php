@@ -28,7 +28,7 @@
 					<li class="sidebar-list">
                         @can('view_country')
                         {{-- start country --}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/country' ? 'active' : '' }}" href="#"><i class="fa fa-solid fa-flag p-r-5"></i><span class="lan-6">{{ trans('lang.country') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/country' ? 'active' : '' }}" href="#"><i class="fa fa-solid fa-flag p-r-5"></i><span class="lan-6"> {{ trans('lang.country') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == 'country' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/country' ? 'block;' : 'none;' }}">
@@ -42,7 +42,7 @@
 
                         @can('view_governorate')
                         {{-- start governorate --}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/governorate' ? 'active' : '' }}" href="#"><i class="fa fa-solid fa-globe p-r-5"></i><span class="lan-6">{{ trans('lang.governorate') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/governorate' ? 'active' : '' }}" href="#"><i class="fa fa-solid fa-globe p-r-5"></i><span class="lan-6"> {{ trans('lang.governorate') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/governorate' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -56,7 +56,7 @@
 
                         @can('view_city')
                         {{-- end city --}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/city' ? 'active' : '' }}" href="#"><i class="fa fa-map-marker p-r-5"></i><span class="lan-6">{{ trans('lang.city') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/city' ? 'active' : '' }}" href="#"><i class="fa fa-map-marker p-r-5"></i><span class="lan-6"> {{ trans('lang.city') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/city' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -70,7 +70,7 @@
 
                         @can('view_client')
                         {{--start clients--}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/clients' ? 'active' : '' }}" href="#"><i class="fa fa-user p-r-5"></i><span class="lan-6">{{ trans('lang.clients') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/clients' ? 'active' : '' }}" href="#"><i class="fa fa-user p-r-5"></i><span class="lan-6"> {{ trans('lang.clients') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/doctors' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/clients' ? 'block;' : 'none;' }}">
@@ -84,7 +84,7 @@
 
                         @can('view_center')
                         {{-- start center --}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/centers' ? 'active' : '' }}" href="#"><i class="fa fa-map-marker p-r-5"></i><span class="lan-6">{{ trans('lang.center') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/centers' ? 'active' : '' }}" href="#"><i class="fa fa-map-marker p-r-5"></i><span class="lan-6"> {{ trans('lang.center') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/centers' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -98,7 +98,7 @@
 
                         @can('view_doctor')
                         {{-- start doctors --}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/doctors' ? 'active' : '' }}" href="#"><i class="fa fa-user p-r-5"></i><span class="lan-6">{{ trans('lang.doctors') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/doctors' ? 'active' : '' }}" href="#"><i class="fa fa-user p-r-5"></i><span class="lan-6"> {{ trans('lang.doctors') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/doctors' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -112,7 +112,7 @@
 
                         @can('view_category')
                         {{-- start categories ---}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/categories' ? 'active' : '' }}" href="#"><i class="fa fa-cube p-r-5"></i><span class="lan-6">{{ trans('lang.category') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/categories' ? 'active' : '' }}" href="#"><i class="fa fa-cube p-r-5"></i><span class="lan-6"> {{ trans('lang.category') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/categories' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -124,7 +124,7 @@
 
                         @can('view_slider')
                         {{-- start slider --}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/sliders' ? 'active' : '' }}" href="#"><i class="fa fa-solid fa-sliders p-r-5"></i><span class="lan-6">{{ trans('lang.slider') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/sliders' ? 'active' : '' }}" href="#"><i class="fa fa-solid fa-sliders p-r-5"></i><span class="lan-6"> {{ trans('lang.slider') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/sliders' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -136,7 +136,7 @@
 
                         @can('view_coupon')
                         {{-- start coupon ---}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/coupons' ? 'active' : '' }}" href="#"><i class="fa fa-sort-numeric-asc p-r-5"></i><span class="lan-6">{{ trans('lang.coupon') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/coupons' ? 'active' : '' }}" href="#"><i class="fa fa-sort-numeric-asc p-r-5"></i><span class="lan-6"> {{ trans('lang.coupon') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/coupons' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -148,7 +148,7 @@
 
                         @can('view_rate')
                         {{-- start rate ---}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/rates' ? 'active' : '' }}" href="#"><i class="fa fa-bar-chart-o p-r-5"></i><span class="lan-6">{{ trans('lang.rate') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/rates' ? 'active' : '' }}" href="#"><i class="fa fa-bar-chart-o p-r-5"></i><span class="lan-6"> {{ trans('lang.rate') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/rates' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -159,7 +159,7 @@
 
                         @can('view_device')
 						{{-- start devices --}}
-						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/devices' ? 'active' : '' }}" href="#"><i class="fa fa-cubes p-r-5"></i><span class="lan-6">{{ trans('lang.devices') }}</span>
+						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/devices' ? 'active' : '' }}" href="#"><i class="fa fa-cubes p-r-5"></i><span class="lan-6"> {{ trans('lang.devices') }}</span>
 							<div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/devices' ? 'down' : 'right' }}"></i></div>
 						</a>
 						<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -173,7 +173,7 @@
 
                         @can('view_product')
                          {{-- start product ---}}
-                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/products' ? 'active' : '' }}" href="#"><i class="fa fa-solid fa-shopping-bag p-r-5"></i><span class="lan-6">{{ trans('lang.product') }}</span>
+                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/products' ? 'active' : '' }}" href="#"><i class="fa fa-solid fa-shopping-bag p-r-5"></i><span class="lan-6"> {{ trans('lang.product') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/products' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -187,7 +187,7 @@
 
                         @can('view_package')
                         {{-- start package --}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/packages' ? 'active' : '' }}" href="#"><i class="fa fa-solid fa-suitcase p-r-5"></i><span class="lan-6">{{ trans('lang.package') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/packages' ? 'active' : '' }}" href="#"><i class="fa fa-solid fa-suitcase p-r-5"></i><span class="lan-6"> {{ trans('lang.package') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/packages' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -201,7 +201,7 @@
 
                         @can('view_employee')
                         {{-- start employee --}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/employees' ? 'active' : '' }}" href="#"><i class="fa fa-users p-r-5"></i><span class="lan-6">{{ trans('lang.employee') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/employees' ? 'active' : '' }}" href="#"><i class="fa fa-users p-r-5"></i><span class="lan-6"> {{ trans('lang.employee') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/employees' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -215,7 +215,7 @@
 
                         @can('view_reservation')
                         {{-- start reservations --}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/reservations' ? 'active' : '' }}" href="#"><i class="fa fa-check-circle p-r-5"></i><span class="lan-6">{{ trans('lang.reservations') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/reservations' ? 'active' : '' }}" href="#"><i class="fa fa-check-circle p-r-5"></i><span class="lan-6"> {{ trans('lang.reservations') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/reservations' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -229,7 +229,7 @@
 
                         @can('view_user_package')
                         {{-- start User Packages --}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/user-packages' ? 'active' : '' }}" href="#"><i class="fa fa-solid fa-cube p-r-5"></i><span class="lan-6">{{ trans('lang.user_packages') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/user-packages' ? 'active' : '' }}" href="#"><i class="fa fa-solid fa-cube p-r-5"></i><span class="lan-6"> {{ trans('lang.user_packages') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/user-packages' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -243,7 +243,7 @@
 
                         @can('view_cancel_reason')
                         {{--start Cancel Reason ---}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/cancelReasons' ? 'active' : '' }}" href="#"><i class="fa fa-ban p-r-5"></i><span class="lan-6">{{ trans('lang.cancel_reason') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/cancelReasons' ? 'active' : '' }}" href="#"><i class="fa fa-ban p-r-5"></i><span class="lan-6"> {{ trans('lang.cancel_reason') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/cancelReasons' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -257,7 +257,7 @@
 
                         @can('view_order')
                         {{--start orders ---}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/orders' ? 'active' : '' }}" href="#"><i class="fa fa-cart-plus p-r-5"></i><span class="lan-6">{{ trans('lang.orders') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/orders' ? 'active' : '' }}" href="#"><i class="fa fa-cart-plus p-r-5"></i><span class="lan-6"> {{ trans('lang.orders') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/orders' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -267,7 +267,7 @@
                         @endcan
 
                         {{--start fcm ---}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/fcm' ? 'active' : '' }}" href="#"><i class="fa fa-bell p-r-5"></i><span class="lan-6">{{ trans('lang.fcm') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/fcm' ? 'active' : '' }}" href="#"><i class="fa fa-bell p-r-5"></i><span class="lan-6"> {{ trans('lang.fcm') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/fcm' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -285,7 +285,7 @@
 
                         @can('view_settings')
                         {{--start Settings ---}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/settings' ? 'active' : '' }}" href="#"><i class="fa fa-gear p-r-5"></i><span class="lan-6">{{ trans('lang.settings') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/settings' ? 'active' : '' }}" href="#"><i class="fa fa-gear p-r-5"></i><span class="lan-6"> {{ trans('lang.settings') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/settings' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
@@ -296,7 +296,7 @@
 
                         @can('view_invoice')
                         {{--start invoices  ---}}
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/invoices' ? 'active' : '' }}" href="#"><i class="fa fa-file p-r-5"></i><span class="lan-6">{{ trans('lang.invoices') }}</span>
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/invoices' ? 'active' : '' }}" href="#"><i class="fa fa-file p-r-5"></i><span class="lan-6"> {{ trans('lang.invoices') }}</span>
                             <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/centerDevices' ? 'down' : 'right' }}"></i></div>
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
