@@ -518,5 +518,6 @@
 		'terms_and_condition' =>'الشروط والاحكام',
 		'logged_in_successfully'=>'تم تسجيل الدخول بنجاح',
 		'code_is_invalid'=>'الكود غير صالح',
+		'there_is_no_user_wallet'=> 'لا يوجد محفظه',
     ]
 ?>

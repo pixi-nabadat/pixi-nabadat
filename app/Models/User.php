@@ -180,6 +180,8 @@ class User extends Authenticatable
 
     public function decreaseUserWallet(int $pulses)
     {
+        if(!$this->nabadatWallet)
+            throw new NotFoundException(trans('lang.there_is_no_user_wallet'));
         $this->nabadatWallet->used_amount = $this->nabadatWallet->used_amount + $pulses;
         $this->nabadatWallet->save();
     }
