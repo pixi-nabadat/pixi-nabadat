@@ -15,11 +15,10 @@ class HomeSearchResource extends JsonResource
     public function toArray($request)
     {
        return [
-           'id'    =>$this->id,
-           'title' =>$this->getTranslation('name', app()->getLocale()),
-           'type'  => $this->search_flag,
-           'type_text'  => $this->search_flag_text,
-           'center_id'  => $this->whenLoaded('center', $this->search_flag == 3 ? $this->center : [$this->center], null),
+           'products' => HomeSearchItemResource::collection($this->get(0)),
+           'centers'  => HomeSearchItemResource::collection($this->get(1)),
+           'devices'  => HomeSearchItemResource::collection($this->get(2)),
+           'packages' => HomeSearchItemResource::collection($this->get(3)),
        ];
     }
 }

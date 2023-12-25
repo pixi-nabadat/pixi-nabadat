@@ -67,8 +67,13 @@ class HomeController extends Controller
         $device  = $this->deviceService->queryGet(where_condition:  $filters, withRelation: ['center'])->select(['id','name'])->limit(10)->get();
         $package = $this->packageService->queryGet(where_condition: $filters, withRelation: ['center'])->limit(10)->get();
 
-        $finalResult = $product->concat($device)->concat($center)->concat($package);
-        $search_results = HomeSearchResource::collection($finalResult);
+        $finalResult = collect([
+            $product,
+            $center,
+            $device,
+            $package,
+        ]);
+        $search_results = new HomeSearchResource($finalResult);
         return apiResponse(data: $search_results);
     }
 
