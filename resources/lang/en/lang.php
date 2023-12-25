@@ -517,5 +517,9 @@
 		'logged_in_successfully'=>'Logged in successfully',
 		'code_is_invalid'=>'Code is invalid',
 		'there_is_no_user_wallet'=>'There is no user wallet',
+		'top_selling_doctors'=>'Top selling doctors',
+		'top_selling_products'=>'Top selling products',
+		'last_customers'=>'Last customers',
+		'total_sales'=>'Total sales',
 	]
 ?>

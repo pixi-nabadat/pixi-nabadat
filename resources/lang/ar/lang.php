@@ -34,7 +34,7 @@
         'slug' => 'Slug',
         'choose_currency' => 'إختار العمله',
         'choose_governorate' => 'إختار المحافظه',
-        'add_country' => 'ADD COUNTRY',
+        'add_country' => 'اضافة دوله',
         'add_governorate' => 'اضافه محافظه',
         'add_city' => 'إضافه مدينه ',
         'countries' => 'الدول',
@@ -203,7 +203,7 @@
 		'regular_price'=>'السعر العادى',
 		'num_devices'=>'عدد الأجهزة',
 		'content'=>'محتوى',
-		'fcm_action'=>'FCM Action',
+		'fcm_action'=>'حدث FCM',
 		'fcm_message'=>'FCM رسائل',
 		'general'=>'عام',
 		'social_media'=>'وسائل التواصل الاجتماعي',
@@ -519,5 +519,9 @@
 		'logged_in_successfully'=>'تم تسجيل الدخول بنجاح',
 		'code_is_invalid'=>'الكود غير صالح',
 		'there_is_no_user_wallet'=> 'لا يوجد محفظه',
+		'top_selling_doctors'=>'اكثر المراكز مبيعا',
+		'top_selling_products'=>'اكثر المنتجات مبيعا',
+		'last_customers'=>'العملاء الجدد',
+		'total_sales'=>'اجمالى المبيعات',
     ]
 ?>
