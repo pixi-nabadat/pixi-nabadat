@@ -179,13 +179,13 @@
                         <div>
                             <table class="table table-striped table-responsive">
                                 <thead>
-                                    <th>Top Selling Doctors</th>
+                                    <th>{{ trans('lang.top_selling_doctors') }}</th>
                                 </thead>
                                 <body>
                                     <tr>
-                                        <td>Logo</td>
-                                        <td>Name</td>
-                                        <td>phone</td>
+                                        <td>{{ trans('lang.logo') }}</td>
+                                        <td>{{ trans('lang.name') }}</td>
+                                        <td>{{ trans('lang.phone') }}</td>
                                     </tr>
                                     @foreach ($top_selling_doctors as $doctor)
                                     <tr>
@@ -208,13 +208,13 @@
                         <div>
                             <table class="table table-striped table-responsive">
                                 <thead>
-                                    <th>Top Selling Products</th>
+                                    <th>{{ trans('lang.top_selling_products') }}</th>
                                 </thead>
                                 <body>
                                     <tr>
-                                        <td>Product</td>
-                                        <td>Stock</td>
-                                        <td>Total Sales</td>
+                                        <td>{{ trans('lang.product') }}</td>
+                                        <td>{{ trans('lang.stock') }}</td>
+                                        <td>{{ trans('lang.total_sales') }}</td>
                                     </tr>
                                     @foreach ($top_selling_products as $product)
                                     <tr>
@@ -284,7 +284,7 @@
                         <section class="our_team text-center">
                             <div class="team">
                                 <div class="container">
-                                    <h2 class="h1">Last Customers</h2>
+                                    <h2 class="h1">{{ trans('lang.last_customers') }}</h2>
                                     <div class="row">
                                         @foreach ($last_customers as $customer)
                                         <div class="col-md-4 col-sm-6">
