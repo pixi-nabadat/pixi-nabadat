@@ -30,6 +30,9 @@ class HomeSearchItemResource extends JsonResource
             case 4:
                 $logo = $this->image_path;
                 break;
+            case 5:
+                $logo = $this->image_path;
+                break;
             default: 
                 $logo = asset('assets/images/default-image.jpg');
         }

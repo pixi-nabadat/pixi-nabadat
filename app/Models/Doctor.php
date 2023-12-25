@@ -14,12 +14,25 @@ class Doctor extends Model
 
     const   ACTIVE = 1,
             NON_ACTIVE = 0;
+
+    const SEARCHFLAG = 5;
+
     public $translatable = ['name', 'description'];
     protected $fillable = ['name', 'description', 'phone', 'age', 'center_id', 'is_active'];
 
     public function center()
     {
         return $this->belongsTo(Center::class);
+    }
+
+    public function getSearchFlagTextAttribute(): string
+    {
+        return trans('lang.doctors') ;
+    }
+
+    public function getSearchFlagAttribute(): int
+    {
+        return self::SEARCHFLAG;
     }
 
     public function defaultLogo()

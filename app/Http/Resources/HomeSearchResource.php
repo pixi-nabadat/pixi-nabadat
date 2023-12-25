@@ -19,6 +19,7 @@ class HomeSearchResource extends JsonResource
            'centers'  => HomeSearchItemResource::collection($this->get(1)),
            'devices'  => HomeSearchItemResource::collection($this->get(2)),
            'packages' => HomeSearchItemResource::collection($this->get(3)),
+           'doctors'  => HomeSearchItemResource::collection($this->get(4)),
        ];
     }
 }

@@ -37,4 +37,9 @@ class DoctorsFilter extends QueryFilter
         return $this->builder->where('age', $term);
     }
 
+    public function keyword($term)
+    {
+        return $this->builder->where('name', 'like', '%'.$term.'%');
+    }
+    
 }

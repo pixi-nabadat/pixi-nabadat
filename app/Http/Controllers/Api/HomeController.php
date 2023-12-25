@@ -18,6 +18,7 @@ use App\Services\CenterPackageService;
 use App\Services\CenterService;
 use App\Services\CouponService;
 use App\Services\DeviceService;
+use App\Services\DoctorService;
 use App\Services\LocationService;
 use App\Services\ProductService;
 use App\Services\SliderService;
@@ -33,7 +34,8 @@ class HomeController extends Controller
                                 protected SliderService   $sliderService,
                                 protected CouponService   $couponService,
                                 protected CenterPackageService $packageService,
-                                protected DeviceService $deviceService)
+                                protected DeviceService $deviceService,
+                                protected DoctorService $doctorService)
     {
     }
 
@@ -66,12 +68,14 @@ class HomeController extends Controller
         $center  = $this->centerService->queryGet(where_condition:  $filters, withRelation: ['defaultLogo'])->select(['id','name'])->limit(10)->get();
         $device  = $this->deviceService->queryGet(where_condition:  $filters, withRelation: ['center', 'defaultImage'])->select(['id','name'])->limit(10)->get();
         $package = $this->packageService->queryGet(where_condition: $filters, withRelation: ['center', 'attachments'])->limit(10)->get();
+        $doctor = $this->doctorService->queryGet(filters: $filters, withRelation: ['center', 'defaultLogo'])->limit(10)->get();
 
         $finalResult = collect([
             $product,
             $center,
             $device,
             $package,
+            $doctor,
         ]);
         $search_results = new HomeSearchResource($finalResult);
         return apiResponse(data: $search_results);
