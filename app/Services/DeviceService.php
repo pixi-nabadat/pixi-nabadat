@@ -14,9 +14,9 @@ class DeviceService extends BaseService
 
     use AttachmentTrait;
 
-    public function getAll(array $where_condition = [])
+    public function getAll(array $where_condition = [], array $withRelations = [])
     {
-        $Devices = $this->queryGet($where_condition);
+        $Devices = $this->queryGet($where_condition, $withRelations);
         return $Devices->get();
     }
 

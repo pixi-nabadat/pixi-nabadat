@@ -24,9 +24,9 @@ class DeviceController extends Controller
     public function listing(Request $request): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $withRelations = ['defaultImage'];
-            $where_condition = ['is_active=>1'];
-            $devices = $this->deviceService->getAll(where_condition: $withRelations);
+            $withRelations = ['defaultImage', 'attachments'];
+            $where_condition = ['is_active'=>1];
+            $devices = $this->deviceService->getAll(where_condition: $where_condition, withRelations: $withRelations);
             return apiResponse(data: DeviceResource::collection($devices), message: trans('lang.success_operation'));
         } catch (\Exception $e) {
             return apiResponse(message: $e->getMessage(), code: 422);
