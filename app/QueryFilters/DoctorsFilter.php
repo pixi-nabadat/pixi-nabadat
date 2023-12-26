@@ -42,4 +42,26 @@ class DoctorsFilter extends QueryFilter
         return $this->builder->where('name', 'like', '%'.$term.'%');
     }
     
+    public function governorate_id($term)
+    {
+        if (isset($term))
+            return $this->builder->whereHas('center', function ($query) use ($term) {
+                $query->whereHas('user', function($query) use ($term){
+                    $query->whereHas('location', function ($query) use ($term) {
+                        $query->where('parent_id', $term);
+                    });
+                });
+            });
+    }
+
+    public function location_id($term)
+    {
+        if (isset($term))
+            return $this->builder->whereHas('center', function ($query) use ($term) {
+                $query->whereHas('user', function($query) use ($term){
+                    $query->where('location_id', $term);
+                });
+            });
+    }
+
 }
