@@ -25,6 +25,12 @@
       *{
         font-family: 'Alexandria', sans-serif !important;
       }
+      .fa{
+        font: normal normal normal 20px/1 FontAwesome !important;
+      }
+      .fa-3x{
+        font-size: 3em !important;
+      }
     </style>
   </head>
   <body @if(Route::current()->getName() == 'index') onload="startTime()" @endif>
