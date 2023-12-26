@@ -16,10 +16,16 @@
     <link rel="shortcut icon" href="{{asset('images/icons/5.png')}}" type="image/x-icon">
     <title> Nabadat Control Panel </title>
     <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
+    {{-- <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet"> --}}
+    <link href="https://fonts.googleapis.com/css?family=Alexandria:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
     @include('layouts.simple.css')
     @yield('style')
+    <style>
+      *{
+        font-family: 'Alexandria', sans-serif !important;
+      }
+    </style>
   </head>
   <body @if(Route::current()->getName() == 'index') onload="startTime()" @endif>
     <div class="loader-wrapper">
