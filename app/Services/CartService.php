@@ -57,7 +57,7 @@ class CartService extends BaseService
         }
 
         $grand_total = $items->sum(function ($item) use($cart){
-            $grandTotalBeforeDiscount = $item->quantity * ($item->price - ($item->price * ($item->discount / 100)));
+            $grandTotalBeforeDiscount = $item->quantity * ($item->price - ($item->price * ($item->discount / 100))) + ($item->quantity * $item->product->tax);//TODO: add product tax here
             $couponDiscount = $grandTotalBeforeDiscount * ($cart->coupon_discount/100);
             return $grandTotalBeforeDiscount - $couponDiscount;
         });
