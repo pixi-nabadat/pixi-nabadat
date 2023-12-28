@@ -42,7 +42,6 @@
                         </div>
                         <button class="btn btn-primary btn-block" type="submit">{{__('lang.sign_in')}}</button>
                      </div>
-                     <p class="mt-4 mb-0">{{__('lang.create_account')}}<a class="ms-2" href="{{ route('sign-up') }}">{{__('lang.create_account')}}</a></p>
                   </form>
                </div>
             </div>
