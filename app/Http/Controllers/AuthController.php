@@ -50,18 +50,6 @@ class AuthController extends Controller
 
     }
 
-    public function registerForm(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
-    {
-        return view('authentication.sign-up');
-    }
-
-
-    public function register(RegisterRequest $request)
-    {
-
-    }
-
-
     public function logout()
     {
         Session::flush();
