@@ -23,7 +23,9 @@ class PackagesFilter extends QueryFilter
 
     public function is_active($term)
     {
-        return $this->builder->where('is_active', $term);
+        return $this->builder->where('is_active', $term)->whereHas('center.user', function ($query) use ($term) {
+            $query->where('is_active', $term);
+        });
     }
 
     public function status($term)
