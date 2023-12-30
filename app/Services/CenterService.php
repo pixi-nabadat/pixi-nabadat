@@ -27,7 +27,7 @@ class CenterService extends BaseService
 
     public function queryGet(array $where_condition = [], $withRelation = []): Builder
     {
-        $centers = $this->model->query()->orderBy('created_at', 'desc')->active()->with($withRelation)->withCount('devices');
+        $centers = $this->model->query()->orderBy('created_at', 'desc')->with($withRelation)->withCount('devices');
         return $centers->filter(new CentersFilter($where_condition));
     }
 
@@ -172,7 +172,7 @@ class CenterService extends BaseService
     public function changeStatus($id)
     {
 //        todo check you pass id of user not center
-        $user = $this->find($id);
+        $user = User::find($id);
         $user->is_active = !$user->is_active;
         return $user->save();
     }
