@@ -57,10 +57,10 @@ class Order extends Model
         return trans('lang.'.$value) ;
     }
 
-    public function getPaymentStatusAttribute($value): array|string|\Illuminate\Contracts\Translation\Translator|\Illuminate\Contracts\Foundation\Application|null
-    {
-        return trans('lang.'.$value) ;
-    }
+    // public function getPaymentStatusAttribute($value): array|string|\Illuminate\Contracts\Translation\Translator|\Illuminate\Contracts\Foundation\Application|null
+    // {
+    //     return trans('lang.'.$value) ;
+    // }
 
     public function getOrderStatusTextAttribute()
     {

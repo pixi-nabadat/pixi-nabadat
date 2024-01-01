@@ -42,9 +42,6 @@ class OrdersDataTable extends DataTable
             ->addColumn('coupon_discount', function (Order $order) {
                 return $order->coupon_discount;
             })
-            ->addColumn('payment_status', function (Order $order) {
-                return $order->payment_status;
-            })
             ->editColumn('payment_status', function (Order $order) {
                 return view('dashboard.components.switch-order-btn', ['model' => $order, 'url' => route('orders.paymentStatus')])->render();
             })
