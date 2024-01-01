@@ -109,7 +109,7 @@ class OrderController extends Controller
                 }
             }
 
-            // $this->cartService->emptyCart($request->temp_user_id);
+            $this->cartService->emptyCart($request->temp_user_id);
 
             DB::commit();
             // $notification_data = $this->orderService->notifiyUser($order);
