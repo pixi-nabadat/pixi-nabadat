@@ -43,7 +43,7 @@
                                     {{-- address_info --}}
                                     <div class="col-md-12  my-3">
                                         <label class="form-label" for="address_info">@lang('lang.address_info')</label>
-                                        <p class="form-control" id="address_info">{{ $order->address_info->adderss }}</p>
+                                        <p class="form-control" id="address_info">{{ json_decode($order->address_info)->address }}</p>
                                     </div>
                                 </div>
                             </div>
