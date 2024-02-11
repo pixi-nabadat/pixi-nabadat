@@ -142,8 +142,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     Route::resource('categories', CategoryController::class);
     Route::post('categories/changeStatus', [CategoryController::class, 'changeStatus'])->name('categories.changeStatus');
-    Route::resource('package-categories', PackageCategoryController::class);
-    Route::post('package-categories/changeStatus', [PackageCategoryController::class, 'changeStatus'])->name('package-categories.changeStatus');
+    // Route::resource('package-categories', PackageCategoryController::class);
+    // Route::post('package-categories/changeStatus', [PackageCategoryController::class, 'changeStatus'])->name('package-categories.changeStatus');
 
     Route::resource('coupons', CouponController::class);
     Route::post('coupons/status', [CouponController::class, 'status'])->name('coupons.status');

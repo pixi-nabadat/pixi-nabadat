@@ -168,7 +168,7 @@ Route::group(['prefix' => 'coupon'], function () {
 });
 //end apply coupon
 Route::get('categories', [CategoryController::class, 'listing']);
-Route::get('package-categories', [PackageCategoryController::class, 'listing']);
+// Route::get('package-categories', [PackageCategoryController::class, 'listing']);
 Route::get('products', [ProductController::class, 'listing']);
 Route::get('products/{id}/show', [ProductController::class, 'show']);
 
