@@ -523,5 +523,14 @@
 		'top_selling_products'=>'اكثر المنتجات مبيعا',
 		'last_customers'=>'العملاء الجدد',
 		'total_sales'=>'اجمالى المبيعات',
+
+		'package_categories'=>'اصناف الباكدج',
+		'package_category'=>'الصنف',
+		'add_package_categories'=>'اضافة صنف باكدج',
+		'create_package_category'=>'انشاء صنف بكادج',
+		'edit_package_category'=>'تعديل صنف باكدج',
+		'delete_package_category'=>'حذف صنف باكدج',
+		'view_package_category'=>'عرض صنف بكادج',
+		'select_one'=>'اختيار',
     ]
 ?>

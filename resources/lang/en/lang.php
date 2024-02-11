@@ -521,5 +521,13 @@
 		'top_selling_products'=>'Top selling products',
 		'last_customers'=>'Last customers',
 		'total_sales'=>'Total sales',
+		'package_categories'=>'Package categories',
+		'package_category'=>'Package category',
+		'add_package_categories'=>'Add package categories',
+		'create_package_category'=>'Create package category',
+		'edit_package_category'=>'Edit package category',
+		'delete_package_category'=>'Delete package category',
+		'view_package_category'=>'View package category',
+		'select_one'=>'Select one',
 	]
 ?>
