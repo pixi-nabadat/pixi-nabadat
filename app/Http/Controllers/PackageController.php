@@ -6,13 +6,15 @@ use App\DataTables\PackagesDataTable;
 use App\Http\Requests\PackageStoreRequest;
 use App\Http\Requests\PackageUpdateRequest;
 use App\Models\Center;
+use App\Models\PackageCategory;
 use App\Services\CenterService;
 use App\Services\CenterPackageService;
+use App\Services\PackageCategoryService;
 use Illuminate\Http\Request;
 
 class PackageController extends Controller
 {
-    public function __construct(private CenterPackageService $packageService, private CenterService $centerService)
+    public function __construct(private CenterPackageService $packageService, private CenterService $centerService, private PackageCategoryService $packageCategoryService)
     {
 
     }
@@ -25,7 +27,8 @@ class PackageController extends Controller
         });
         $withRelations = ['center'] ;
         $centers = Center::all();
-        return $dataTable->with(['filters'=>$filters,'withRelations'=>$withRelations])->render('dashboard.packages.index', ['centers'=>$centers]);
+        $packageCategories = $this->packageCategoryService->getAll(where_condition: ['is_Active'=> PackageCategory::ACTIVE]);
+        return $dataTable->with(['filters'=>$filters,'withRelations'=>$withRelations])->render('dashboard.packages.index', ['centers'=>$centers, 'packageCategories'=>$packageCategories]);
     }//end of index
 
     public function edit(Request $request, $id)
@@ -38,14 +41,16 @@ class PackageController extends Controller
             return back()->with('toast', $toast);
         }
         $centers = $this->centerService->getAll();
-        return view('dashboard.packages.edit', compact('package', 'centers'));
+        $packageCategories = $this->packageCategoryService->getAll(where_condition: ['is_Active'=> PackageCategory::ACTIVE]);
+        return view('dashboard.packages.edit', compact('package', 'centers', 'packageCategories'));
     }//end of edit
 
     public function create(Request $request)
     {
         userCan(request: $request, permission: 'create_package');
         $centers = $this->centerService->getAll();
-        return view('dashboard.packages.create', compact('centers'));
+        $packageCategories = $this->packageCategoryService->getAll(where_condition: ['is_Active'=> PackageCategory::ACTIVE]);
+        return view('dashboard.packages.create', compact('centers', 'packageCategories'));
     }//end of create
 
     public function store(PackageStoreRequest $request)

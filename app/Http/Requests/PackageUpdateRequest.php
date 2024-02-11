@@ -34,6 +34,7 @@ class PackageUpdateRequest extends BaseRequest
             'image'                => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'status'               => 'nullable|integer',
             'is_active'            => 'nullable|string',
+            'package_category_id' => 'required|exists:package_categories,id'
         ];
     }
 }

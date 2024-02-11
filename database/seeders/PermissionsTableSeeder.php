@@ -120,6 +120,15 @@ class PermissionsTableSeeder extends Seeder
             ],
             //end categories permissions
 
+            //start package categories permissions
+            'package_categories'=>[
+                'create_package_category',
+                'edit_package_category',
+                'delete_package_category',
+                'view_package_category'
+            ],
+            //end package categories permissions
+
             //start sliders permissions
             'sliders'=>[
                 'create_slider',

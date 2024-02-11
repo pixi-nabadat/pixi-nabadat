@@ -36,6 +36,7 @@ class PackagesTableSeeder extends Seeder
             'discount_percentage'=>20 ,
             'status'=>PackageStatusEnum::APPROVED ,
             'is_active'=>ActivationStatusEnum::ACTIVE ,
+            'package_category_id'=>1 ,
         ]);
     }
 }

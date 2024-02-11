@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\BuyOfferController;
 use App\Http\Controllers\Api\CancelReasonController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\PackageCategoryController;
 use App\Http\Controllers\Api\CenterController;
 use App\Http\Controllers\Api\CenterDeviceController;
 use App\Http\Controllers\Api\CenterHomeController;
@@ -167,6 +168,7 @@ Route::group(['prefix' => 'coupon'], function () {
 });
 //end apply coupon
 Route::get('categories', [CategoryController::class, 'listing']);
+Route::get('package-categories', [PackageCategoryController::class, 'listing']);
 Route::get('products', [ProductController::class, 'listing']);
 Route::get('products/{id}/show', [ProductController::class, 'show']);
 

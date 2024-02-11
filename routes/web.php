@@ -4,6 +4,7 @@ use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CancelReasonController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PackageCategoryController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CenterDeviceController;
 use App\Http\Controllers\CityController;
@@ -141,6 +142,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     Route::resource('categories', CategoryController::class);
     Route::post('categories/changeStatus', [CategoryController::class, 'changeStatus'])->name('categories.changeStatus');
+    Route::resource('package-categories', PackageCategoryController::class);
+    Route::post('package-categories/changeStatus', [PackageCategoryController::class, 'changeStatus'])->name('package-categories.changeStatus');
 
     Route::resource('coupons', CouponController::class);
     Route::post('coupons/status', [CouponController::class, 'status'])->name('coupons.status');

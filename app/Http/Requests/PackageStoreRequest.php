@@ -38,6 +38,7 @@ class PackageStoreRequest extends BaseRequest
             'image'                => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'status'               => 'required|integer',
             'discount_percentage'  => ['numeric',Rule::requiredIf($this->status == PackageStatusEnum::APPROVED)],
+            'package_category_id' => 'required|exists:package_categories,id'
         ];
     }
 

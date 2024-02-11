@@ -20,7 +20,18 @@ class Package extends Model
 
     const SEARCHFLAG = 4;
     public $translatable = ['name'];
-    protected $fillable = ['center_id', 'name', 'num_nabadat', 'price', 'start_date', 'end_date', 'discount_percentage', 'status', 'is_active'];
+    protected $fillable = [
+        'center_id',
+        'name',
+        'num_nabadat',
+        'price',
+        'start_date',
+        'end_date',
+        'discount_percentage',
+        'status',
+        'is_active',
+        'package_category_id',
+    ];
 
     public function subscriber(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

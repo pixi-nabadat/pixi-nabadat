@@ -30,6 +30,14 @@
                                     </select>
                                 </div>
                                 <div class="col-md-4">
+                                    <label class="form-label">{{trans("lang.package_category")}}</label>
+                                    <select name="package_category_id" class="js-example-placeholder-multiple col-sm-12 @error('package_category_id') is-invalid @enderror">
+                                        @foreach ($packageCategories as $package_category)
+                                        <option value="{{ $package_category->id }}">{{ $package_category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
                                     <label class="form-label" for="validationCustom02">@lang('lang.center_phone')</label>
                                     <input class="form-control" name="center_phone" id="validationCustom02" type="number" value="">
                                     <div class="valid-feedback">Looks good!</div>

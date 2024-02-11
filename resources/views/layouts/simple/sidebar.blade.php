@@ -122,6 +122,18 @@
                         {{-- end categories --}}
                         @endcan
 
+                        @can('view_package_category')
+                        {{-- start package categories ---}}
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/package-categories' ? 'active' : '' }}" href="#"><i class="fa fa-cube p-r-5"></i><span class="lan-6"> {{ trans('lang.package_category') }}</span>
+                            <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/package-categories' ? 'down' : 'right' }}"></i></div>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/widgets' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-5 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('package-categories.index') ? 'active' : '' }}" href="{{route('package-categories.index')}}">{{ trans('lang.view') }}</a></li>
+                            <li><a class="lan-5 {{ \Illuminate\Support\Facades\Route::currentRouteName()==route('package-categories.create') ? 'active' : '' }}" href="{{route('package-categories.create')}}">{{ trans('lang.create') }}</a></li>
+                        </ul>
+                        {{-- end package categories --}}
+                        @endcan
+
                         @can('view_slider')
                         {{-- start slider --}}
                         <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/sliders' ? 'active' : '' }}" href="#"><i class="fa fa-solid fa-sliders p-r-5"></i><span class="lan-6"> {{ trans('lang.slider') }}</span>

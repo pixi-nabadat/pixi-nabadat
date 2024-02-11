@@ -24,6 +24,19 @@
                             action="{{ route('packages.store') }}">
                             @csrf
                             <div class="row g-3">
+                                {{--package category id  --}}
+                                <div class="col-md-12">
+                                    <div class="form-label">{{ __('lang.package_category') }}</div>
+                                    <select id="package_category_id" name="package_category_id" class="js-example-basic-single col-sm-12 @error('package_category_id') is-invalid @enderror">
+                                        <option selected>...</option>
+                                        @foreach ($packageCategories as $packageCategory)
+                                            <option value="{{ $packageCategory->id }}">{{ $packageCategory->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('package_category_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                                 {{--center  --}}
                                 <div class="col-md-12">
                                     <div class="form-label">{{ __('lang.centers') }}</div>
@@ -37,6 +50,7 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                
                                 {{-- English Name --}}
                                 <div class="col-md-12">
                                     <label class="form-label" for="name_en">{{ trans('lang.name_en') }}</label>

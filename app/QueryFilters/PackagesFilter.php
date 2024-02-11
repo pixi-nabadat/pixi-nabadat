@@ -86,6 +86,11 @@ class PackagesFilter extends QueryFilter
             });
     }
 
+    public function package_category_id($term)
+    {
+        return $this->builder->where('package_category_id',$term);
+    }
+
     public function location_id($term)
     {
         if (isset($term))

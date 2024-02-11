@@ -25,6 +25,7 @@ return new class extends Migration
             $table->double('discount_percentage')->default(0.0);
             $table->integer('status')->default(\App\Enum\PackageStatusEnum::UNDERACHIEVING);
             $table->boolean('is_active')->default(\App\Enum\ActivationStatusEnum::ACTIVE);
+            $table->foreignIdFor(\App\Models\PackageCategory::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

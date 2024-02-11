@@ -24,6 +24,18 @@
                             action="{{ route('packages.update', $package) }}" method="post">
                             @csrf
                             @method('put')
+                            {{--package category id  --}}
+                            <div class="col-md-12">
+                                <div class="form-label">{{ __('lang.package_category') }}</div>
+                                <select id="package_category_id" name="package_category_id" class="js-example-basic-single col-sm-12 @error('package_category_id') is-invalid @enderror">
+                                    @foreach ($packageCategories as $packageCategory)
+                                        <option value="{{ $packageCategory->id }} {{ $packageCategory->id == $package->package_category_id ? "selected":"" }}">{{ $packageCategory->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('package_category_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                             {{--center  --}}
                             <div class="col-md-12">
                                 <div class="col-form-label col-3">{{ __('lang.centers') }}</div>
