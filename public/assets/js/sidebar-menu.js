@@ -15,9 +15,9 @@ if ($('#pageWrapper').hasClass('compact-wrapper')) {
     jQuery('.sidebar-title').click(function () {
         jQuery('.sidebar-title').removeClass('active').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
         jQuery('.sidebar-submenu, .menu-content').slideUp('normal');
-        jQuery('.menu-content').slideUp('normal');
+        // jQuery('.menu-content').slideUp('normal');
         if (jQuery(this).next().is(':hidden') == true) {
-            jQuery(this).addClass('active');
+            // jQuery(this).addClass('active');
             jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
             jQuery(this).next().slideDown('normal');
         } else {
@@ -278,8 +278,8 @@ $("#left-arrow").click(function () {
 
 // page active
 if ($('#pageWrapper').hasClass('compact-wrapper')) {
-    // $(".sidebar-wrapper nav").find("a").removeClass("active");
-    // $(".sidebar-wrapper nav").find("li").removeClass("active");
+    $(".sidebar-wrapper nav").find("a").removeClass("active");
+    $(".sidebar-wrapper nav").find("li").removeClass("active");
 
     var current = window.location.pathname
     $(".sidebar-wrapper nav ul>li a").filter(function () {
