@@ -107,6 +107,16 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                
+                                {{-- confirmation_password --}}
+                                <div class="col-md-12">
+                                    <label class="form-label" for="password_confirmation">{{ trans('lang.password_confirmation') }}</label>
+                                    <input name="password_confirmation" value="{{ old('password_confirmation') }}" class="form-control @error('password_confirmation') is-invalid @enderror"
+                                        id="password_confirmation" type="password" required>
+                                    @error('password_confirmation')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
                                 {{-- device_logo --}}
                                 <div class="col-md-12">

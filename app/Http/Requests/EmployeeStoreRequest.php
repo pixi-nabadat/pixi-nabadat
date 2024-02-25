@@ -28,7 +28,7 @@ class EmployeeStoreRequest extends BaseRequest
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|string|unique:users,phone',
             'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
-            'password' => 'required|string|max:255',
+            'password' => 'required|string|max:255|confirmed',
             'is_active' => 'nullable',
             'location_id' => 'required|integer',
             'date_of_birth' => 'nullable|date',

@@ -67,12 +67,21 @@
                                     @enderror
                                 </div>
 
-{{--                                password--}}
+                                {{--password--}}
                                 <div class="col-md-6 mb-3">
                                     <div class="col-form-label">{{ trans('lang.password') }}</div>
                                     <input name="password" class="form-control @error('password') is-invalid @enderror"
                                            id="name_ar" type="password" required>
                                     @error('password')
+                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                {{--password--}}
+                                <div class="col-md-6 mb-3">
+                                    <div class="col-form-label">{{ trans('lang.password_confirmation') }}</div>
+                                    <input name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror"
+                                           id="name_ar" type="password_confirmation" required>
+                                    @error('password_confirmation')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

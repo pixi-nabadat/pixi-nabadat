@@ -28,7 +28,7 @@ class EmployeeUpdateRequest extends BaseRequest
             'email' => 'required|email|unique:users,email,'.$this->employee,
             'phone' => 'required|string|unique:users,phone,'.$this->employee,
             'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg',
-            'password' => 'sometimes|required|string|max:255',
+            'password' => 'sometimes|required|string|max:255|confirmed',
             'is_active' => 'nullable',
             'location_id' => 'required|integer',
             'permissions' => 'required|array',
