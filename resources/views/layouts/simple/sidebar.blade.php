@@ -8,7 +8,7 @@
 		<div class="logo-wrapper">
 			 <a href="{{route('home')}}"><img class="img-fluid for-light" style="width:190px" src="{{asset('images/icons/5.png')}}" style="width:190px" alt=""><img class="img-fluid for-dark" style="width:190px" src="{{asset('images/icons/5.png')}}" alt=""></a>
 			<div class="back-btn"><i class="fa fa-angle-left"></i></div>
-			<div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
+			{{-- <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div> --}}
 		</div>
 		<div class="logo-icon-wrapper"><a href="{{route('home')}}"><img class="img-fluid" style="width:190px" src="{{asset('images/icons/5.png')}}" alt=""></a></div>
 		<nav class="sidebar-main">
